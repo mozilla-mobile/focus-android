@@ -30,7 +30,7 @@ import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.Matchers.allOf;
 
 @RunWith(AndroidJUnit4.class)
-public class MainActivityTest2 {
+public class FBTest {
 
     @Rule
     public ActivityTestRule<MainActivity> mActivityTestRule = new ActivityTestRule<>(MainActivity.class);
@@ -65,9 +65,9 @@ public class MainActivityTest2 {
 
         // Set Password
         UiObject passwordInput = mDevice.findObject(new UiSelector()
-                //.instance(1)
-                //.className(EditText.class));
-                .resourceId("u_0_2"));
+                .instance(1)
+                .className(EditText.class));
+
         passwordInput.waitForExists(timeOut);
         passwordInput.setText("testPassword");
 
