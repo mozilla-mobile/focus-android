@@ -36,9 +36,9 @@ public class FBTest {
     public ActivityTestRule<MainActivity> mActivityTestRule = new ActivityTestRule<>(MainActivity.class);
 
     @Test
-    public void mainActivityTest2() throws UiObjectNotFoundException {
+    public void FBTest() throws UiObjectNotFoundException {
         final UiDevice mDevice = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation());
-        final int timeOut = 1000 * 60;
+        final int timeOut = 1000 * 20;
 
 
         ViewInteraction appCompatTextView = onView(
@@ -50,7 +50,7 @@ public class FBTest {
         inlineAutocompleteEditText.perform(replaceText("www.facebook.com"), closeSoftKeyboard());
 
         ViewInteraction inlineAutocompleteEditText2 = onView(
-                allOf(withId(R.id.url_edit), withText("www.facebook.com"), isDisplayed()));
+                allOf(withId(R.id.url_edit), withText("www.facebook.com")));
         inlineAutocompleteEditText2.perform(pressImeActionButton());
 
         mDevice.wait(Until.findObject(By.clazz(WebView.class)), timeOut);
