@@ -62,13 +62,14 @@ public class FBTest {
 
         emailInput.waitForExists(timeOut);
         emailInput.setText("android_wppcmrq_facebook@tfbnw.net");
-        /*
+
         // Set Password
         UiObject passwordInput = mDevice.findObject(new UiSelector()
                 .instance(1)
                 .className(EditText.class));
 
         passwordInput.waitForExists(timeOut);
+        /*
         passwordInput.setText("testPassword");
 
         // Confirm Button Click
