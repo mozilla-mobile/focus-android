@@ -69,9 +69,8 @@ public class FBTest {
                 .className(EditText.class));
 
         passwordInput.waitForExists(timeOut);
-        /*
         passwordInput.setText("testPassword");
-
+        /*
         // Confirm Button Click
         UiObject buttonLogin = mDevice.findObject(new UiSelector()
                 //.instance(0)
