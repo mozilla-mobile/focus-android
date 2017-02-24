@@ -70,13 +70,14 @@ public class FBTest {
 
         passwordInput.waitForExists(timeOut);
         passwordInput.setText("testPassword");
-        /*
+
         // Confirm Button Click
         UiObject buttonLogin = mDevice.findObject(new UiSelector()
                 //.instance(0)
                 //.className(Button.class));
                 .description("Log In "));
         buttonLogin.waitForExists(timeOut);
+        /*
         buttonLogin.clickAndWaitForNewWindow();
         */
     }
