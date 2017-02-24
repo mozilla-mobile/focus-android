@@ -77,9 +77,9 @@ public class FBTest {
                 //.className(Button.class));
                 .description("Log In "));
         buttonLogin.waitForExists(timeOut);
-        /*
+
         buttonLogin.clickAndWaitForNewWindow();
-        */
+        
     }
 
 }
