@@ -62,7 +62,7 @@ public class FBTest {
 
         emailInput.waitForExists(timeOut);
         emailInput.setText("android_wppcmrq_facebook@tfbnw.net");
-
+        /*
         // Set Password
         UiObject passwordInput = mDevice.findObject(new UiSelector()
                 .instance(1)
@@ -78,6 +78,7 @@ public class FBTest {
                 .description("Log In "));
         buttonLogin.waitForExists(timeOut);
         buttonLogin.clickAndWaitForNewWindow();
+        */
     }
 
 }
