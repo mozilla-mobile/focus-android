@@ -118,6 +118,11 @@ public class BrowserFragment extends Fragment implements View.OnClickListener, P
                 popupMenu.getMenuInflater().inflate(R.menu.menu_browser, popupMenu.getMenu());
                 popupMenu.getMenu().findItem(R.id.forward).setEnabled(webView.canGoForward());
                 popupMenu.getMenu().findItem(R.id.back).setEnabled(webView.canGoBack());
+
+                // TODO: populate this with the actual browser name (#26)
+                final String browserName = "<other browser>";
+                popupMenu.getMenu().findItem(R.id.open).setTitle(getResources().getString(R.string.menu_open_with, browserName));
+
                 popupMenu.setOnMenuItemClickListener(this);
                 popupMenu.setGravity(Gravity.TOP);
                 popupMenu.show();
