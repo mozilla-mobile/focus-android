@@ -48,7 +48,8 @@
 
         <activity android:name=".activity.HelpActivity" />
 
-        <activity android:name=".activity.RightsActivity" />
+        <activity android:name=".activity.RightsActivity"
+            android:label="@string/your_rights"/>
 
         <service
             android:name=".customtabs.CustomTabsService"
