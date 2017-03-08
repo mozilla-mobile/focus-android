@@ -23,6 +23,8 @@ import org.mozilla.focus.utils.Settings;
 import org.mozilla.focus.webkit.NestedWebView;
 import org.mozilla.focus.webkit.TrackingProtectionWebViewClient;
 
+import java.lang.ref.WeakReference;
+
 /**
  * WebViewProvider for creating a WebKit based IWebVIew implementation.
  */
@@ -40,7 +42,7 @@ public class WebViewProvider {
         final WebkitView webkitView = new WebkitView(context, attrs);
 
         setupView(webkitView);
-        configureSettings(context, webkitView.getSettings());
+        configureSettings(context, webkitView);
 
         return webkitView;
     }
@@ -51,7 +53,8 @@ public class WebViewProvider {
     }
 
     @SuppressLint("SetJavaScriptEnabled") // We explicitly want to enable JavaScript
-    private static void configureSettings(Context context, WebSettings settings) {
+    private static void configureSettings(final Context context, final WebView webView) {
+        final WebSettings settings = webView.getSettings();
         final Settings appSettings = new Settings(context);
 
         settings.setJavaScriptEnabled(true);
@@ -66,12 +69,16 @@ public class WebViewProvider {
         // via file:///android_asset/res, so at least error page images won't be blocked.
         settings.setAllowFileAccess(false);
 
+        // Note: we also add a listener within the WebkitView itself, since this pref can change
+        // while the WebView is shown
         settings.setBlockNetworkImage(appSettings.shouldBlockImages());
     }
 
     private static class WebkitView extends NestedWebView implements IWebView {
         private Callback callback;
         private TrackingProtectionWebViewClient client;
+        final Settings settings;
+        final Settings.BooleanPrefListener prefListener;
 
         public WebkitView(Context context, AttributeSet attrs) {
             super(context, attrs);
@@ -80,6 +87,22 @@ public class WebViewProvider {
 
             setWebViewClient(client);
             setWebChromeClient(createWebChromeClient());
+
+            settings = new Settings(getContext());
+            prefListener = new Settings.BooleanPrefListener(settings) {
+                @Override
+                public void onPrefChanged(final boolean blockImages) {
+                    WebkitView.this.getSettings().setBlockNetworkImage(blockImages);
+
+                    if (blockImages) {
+                        // Images that are already cached will still be rendered even after enabling
+                        // this setting. To avoid confusing anyone who is actively testing this setting
+                        // it's probably best to clear the cache to make sure absolutely no images
+                        // are shown. (The cache will be cleared when erase()'ing anyway.)
+                        WebkitView.this.clearCache(true);
+                    }
+                }
+            };
         }
 
         @Override
@@ -141,6 +164,20 @@ public class WebViewProvider {
                     }
                 }
             };
+        }
+
+        @Override
+        protected void onAttachedToWindow() {
+            super.onAttachedToWindow();
+
+            settings.subscribeToBlockImagesPreference(prefListener);
+        }
+
+        @Override
+        protected void onDetachedFromWindow() {
+            super.onDetachedFromWindow();
+
+            prefListener.unsubscribe();
         }
     }
 }

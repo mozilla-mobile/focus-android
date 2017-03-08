@@ -20,6 +20,43 @@ public class Settings {
     private final SharedPreferences preferences;
     private final Resources resources;
 
+    public static abstract class BooleanPrefListener implements SharedPreferences.OnSharedPreferenceChangeListener {
+        private final Settings settings;
+
+        private String prefKey;
+
+        public BooleanPrefListener(final Settings settings) {
+            this.settings = settings;
+        }
+
+        public abstract void onPrefChanged(final boolean newValue);
+
+        @Override
+        public final void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+            if (key.equals(prefKey)) {
+                onPrefChanged(settings.shouldBlockImages());
+            }
+        }
+
+        /* package-private */ final void subscribeToPreference(final String prefKey) {
+            if (prefKey != null) {
+                throw new IllegalStateException("PrefListener is already subscribed");
+            }
+
+            this.prefKey = prefKey;
+            settings.preferences.registerOnSharedPreferenceChangeListener(this);
+        }
+
+        public final void unsubscribe() {
+            if (prefKey == null) {
+                throw new IllegalStateException("Unable to unsubscribe a non-subscribed PrefListener");
+            }
+
+            settings.preferences.unregisterOnSharedPreferenceChangeListener(this);
+            this.prefKey = null;
+        }
+    }
+
     public Settings(Context context) {
         preferences = PreferenceManager.getDefaultSharedPreferences(context);
         resources = context.getResources();
@@ -29,6 +66,10 @@ public class Settings {
         return preferences.getBoolean(
                 resources.getString(R.string.pref_key_performance_block_images),
                 false);
+    }
+
+    public void subscribeToBlockImagesPreference(final BooleanPrefListener listener) {
+        listener.subscribeToPreference(resources.getString(R.string.pref_key_performance_block_images));
     }
 
     public boolean shouldShowFirstrun() {
