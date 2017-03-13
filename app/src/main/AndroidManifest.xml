@@ -51,6 +51,9 @@
         <activity android:name=".activity.RightsActivity"
             android:label="@string/your_rights"/>
 
+        <activity android:name=".activity.InfoActivity"
+                  android:theme="@style/SettingsTheme"/>
+
         <service
             android:name=".customtabs.CustomTabsService"
             android:exported="true">
@@ -58,6 +61,9 @@
                 <action android:name="android.support.customtabs.action.CustomTabsService" />
             </intent-filter>
         </service>
+
+        <meta-data android:name="android.webkit.WebView.MetricsOptOut"
+                   android:value="true" />
     </application>
 
 </manifest>
