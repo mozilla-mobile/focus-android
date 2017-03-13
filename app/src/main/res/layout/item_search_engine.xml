@@ -6,9 +6,6 @@
     android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="48dp"
-    android:background="?android:attr/selectableItemBackground"
-    android:focusable="true"
-    android:clickable="true"
     android:paddingStart="16dp"
     android:paddingEnd="16dp">
 
@@ -16,15 +13,15 @@
         android:id="@+id/icon"
         android:layout_width="24dp"
         android:layout_height="24dp"
-        android:layout_gravity="center_vertical"/>
+        android:layout_gravity="center_vertical"
+        android:background="#555555" />
 
     <TextView
         android:id="@+id/title"
         android:layout_width="0dp"
         android:layout_height="48dp"
         android:layout_weight="1"
-        android:layout_marginStart="32dp"
-        android:textColor="#ff212121"
+        android:layout_marginStart="16dp"
         android:textSize="16sp"
         android:gravity="center_vertical" />
 
