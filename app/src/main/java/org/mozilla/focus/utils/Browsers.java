@@ -36,9 +36,12 @@ public class Browsers {
         OPERA("com.opera.browser"),
         OPERA_BETA("com.opera.browser.beta"),
         OPERA_MINI("com.opera.mini.native"),
+        OPERA_MINI_BETA("com.opera.mini.native.beta"),
 
         UC_BROWSER("com.UCMobile.intl"),
         UC_BROWSER_MINI("com.uc.browser.en"),
+
+        ANDROID_STOCK_BROWSER("com.android.browser"),
 
         SAMSUNG_INTERNET("com.sec.android.app.sbrowser"),
         DOLPHIN_BROWSER("mobi.mgeek.TunnyBrowser"),
@@ -63,13 +66,12 @@ public class Browsers {
         final PackageManager packageManager = context.getPackageManager();
 
         final Map<String, ActivityInfo> browsers = resolveBrowsers(packageManager, url);
-        if (browsers.size() <= 1) {
-            // If there's a default browser set then modern Android systems won't return other options
-            // anymore when using queryIntentActivities(). That's annoying and our only option is
-            // to go through a list of known browsers and see if anyone of them is installed and
-            // wants to handle our URL.
-            findKnownBrowsers(packageManager, browsers, url);
-        }
+
+        // If there's a default browser set then modern Android systems won't return other browsers
+        // anymore when using queryIntentActivities(). That's annoying and our only option is
+        // to go through a list of known browsers and see if anyone of them is installed and
+        // wants to handle our URL.
+        findKnownBrowsers(packageManager, browsers, url);
 
         this.browsers = browsers;
         this.defaultBrowser = findDefault(packageManager, url);
