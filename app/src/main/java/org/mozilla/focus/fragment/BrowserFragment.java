@@ -23,6 +23,7 @@ import org.mozilla.focus.menu.BrowserMenu;
 import org.mozilla.focus.open.OpenWithFragment;
 import org.mozilla.focus.utils.Browsers;
 import org.mozilla.focus.utils.ViewUtils;
+import org.mozilla.focus.utils.IntentUtils;
 import org.mozilla.focus.web.IWebView;
 
 /**
@@ -111,6 +112,15 @@ public class BrowserFragment extends Fragment implements View.OnClickListener {
             public void onProgress(int progress) {
                 progressView.setProgress(progress);
             }
+
+            @Override
+            public void handleExternalUrl(final String url) {
+                    final String fallback = IntentUtils.handleExternalUri(getActivity(), url);
+
+                    if (fallback != null) {
+                        webView.loadUrl(fallback);
+                    }
+            }
         });
 
         webView.loadUrl(url);
@@ -144,7 +154,8 @@ public class BrowserFragment extends Fragment implements View.OnClickListener {
                         .commit();
 
                 ViewUtils.showBrandedSnackbar(getActivity().findViewById(android.R.id.content),
-                        R.string.feedback_erase);
+                        R.string.feedback_erase,
+                        getResources().getInteger(R.integer.erase_snackbar_delay));
 
                 break;
 

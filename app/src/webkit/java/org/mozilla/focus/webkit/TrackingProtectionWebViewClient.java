@@ -6,8 +6,11 @@ package org.mozilla.focus.webkit;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.net.http.SslError;
 import android.os.AsyncTask;
 import android.support.annotation.WorkerThread;
+import android.webkit.HttpAuthHandler;
+import android.webkit.SslErrorHandler;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebResourceResponse;
 import android.webkit.WebView;
@@ -104,4 +107,37 @@ public class TrackingProtectionWebViewClient extends WebViewClient {
         return super.shouldOverrideUrlLoading(view, url);
     }
 
+    @Override
+    public void onReceivedError(final WebView webView, int errorCode,
+                                final String description, String failingUrl) {
+
+        // This is a hack: onReceivedError(WebView, WebResourceRequest, WebResourceError) is API 23+ only,
+        // - the WebResourceRequest would let us know if the error affects the main frame or not. As a workaround
+        // we just check whether the failing URL is the current URL, which is enough to detect an error
+        // in the main frame.
+
+        // The API 23+ version also return a *slightly* more usable description, via WebResourceError.getError();
+        // e.g.. "There was a network error.", whereas this version provides things like "net::ERR_NAME_NOT_RESOLVED"
+        if (failingUrl.equals(currentPageURL) &&
+                ErrorPage.supportsErrorCode(errorCode)) {
+            ErrorPage.loadErrorPage(webView, currentPageURL, errorCode);
+            return;
+        }
+
+        super.onReceivedError(webView, errorCode, description, failingUrl);
+    }
+
+    @Override
+    public void onReceivedSslError(WebView view, SslErrorHandler handler, SslError error) {
+        handler.cancel();
+
+        // Webkit can try to load the favicon for a bad page when you set a new URL. If we then
+        // loadErrorPage() again, webkit tries to load the favicon again. We end up in onReceivedSSlError()
+        // again, and we get an infinite loop of reloads (we also erroneously show the favicon URL
+        // in the toolbar, but that's less noticeable). Hence we check whether this error is from
+        // the desired page, or a page resource:
+        if (error.getUrl().equals(currentPageURL)) {
+            ErrorPage.loadErrorPage(view, error.getUrl(), WebViewClient.ERROR_FAILED_SSL_HANDSHAKE);
+        }
+    }
 }
