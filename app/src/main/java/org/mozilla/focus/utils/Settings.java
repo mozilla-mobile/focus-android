@@ -9,10 +9,12 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.preference.PreferenceManager;
+import android.support.annotation.Nullable;
 
 import org.mozilla.focus.BuildConfig;
 import org.mozilla.focus.R;
 import org.mozilla.focus.fragment.FirstrunFragment;
+import org.mozilla.focus.search.SearchEngine;
 
 /**
  * A simple wrapper for SharedPreferences that makes reading preference a little bit easier.
@@ -46,5 +48,19 @@ public class Settings {
         return preferences.getBoolean(
                 resources.getString(R.string.pref_key_secure),
                 true);
+    }
+
+    @Nullable
+    public String getDefaultSearchEngineName() {
+        return preferences.getString(
+                resources.getString(R.string.pref_key_search_engine),
+                null);
+    }
+
+    public void setDefaultSearchEngine(SearchEngine searchEngine) {
+        preferences.edit()
+                .putString(resources.getString(R.string.pref_key_search_engine),
+                        searchEngine.getName())
+                .apply();
     }
 }

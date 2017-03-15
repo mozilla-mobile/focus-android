@@ -5,8 +5,12 @@
 
 package org.mozilla.focus.utils;
 
+import android.content.Context;
 import android.net.Uri;
 import android.text.TextUtils;
+
+import org.mozilla.focus.search.SearchEngine;
+import org.mozilla.focus.search.SearchEngineManager;
 
 public class UrlUtils {
     public static String normalize(String input) {
@@ -17,12 +21,6 @@ public class UrlUtils {
         }
 
         return uri.toString();
-    }
-
-    public static boolean isHttps(String url) {
-        // TODO: This should actually check the certificate!
-
-        return url.startsWith("https:");
     }
 
     /**
@@ -42,10 +40,10 @@ public class UrlUtils {
         return text.contains(" ");
     }
 
-    public static String createSearchUrl(String rawUrl) {
-        return Uri.parse("https://duckduckgo.com/").buildUpon()
-                .appendQueryParameter("q", rawUrl)
-                .build()
-                .toString();
+    public static String createSearchUrl(Context context, String searchTerm) {
+        final SearchEngine searchEngine = SearchEngineManager.getInstance()
+                .getDefaultSearchEngine(context);
+
+        return searchEngine.buildSearchUrl(searchTerm);
     }
 }
