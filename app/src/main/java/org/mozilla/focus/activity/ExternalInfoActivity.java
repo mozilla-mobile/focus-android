@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.support.customtabs.CustomTabsIntent;
 
+import org.mozilla.focus.R;
 import org.mozilla.focus.customtabs.CustomTabsHelper;
 import org.mozilla.focus.utils.SupportUtils;
 
@@ -19,6 +20,8 @@ public class ExternalInfoActivity {
 
         if (ctPackage != null) {
             CustomTabsIntent.Builder builder = new CustomTabsIntent.Builder();
+            builder.setToolbarColor(context.getResources().getColor(R.color.colorPrimary));
+
             CustomTabsIntent customTabIntent = builder.build();
 
             customTabIntent.intent.setPackage(ctPackage);
