@@ -34,4 +34,9 @@ public class ExternalInfoActivity {
         final String manifestoURL = SupportUtils.getManifestoURL();
         launchURL(context, manifestoURL);
     }
+
+    public static void launchDefaultBrowserInfo(final Context context) {
+        final String url = "https://support.mozilla.org/kb/make-firefox-default-browser-android?utm_source=inproduct&amp;utm_medium=settings&amp;utm_campaign=mobileandroid";
+        launchURL(context, url);
+    }
 }
