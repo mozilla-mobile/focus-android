@@ -120,6 +120,12 @@ public class CustomTabsHelper {
                     break;
                 }
             }
+
+            // If we have > 1 CT supporting packages, none of which were in our list of known apps,
+            // pick the first one:
+            if (sPackageNameToUse == null) {
+                sPackageNameToUse = packagesSupportingCustomTabs.get(0);
+            }
         }
         return sPackageNameToUse;
     }
