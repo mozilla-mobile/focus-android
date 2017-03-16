@@ -33,10 +33,27 @@ import java.util.List;
  */
 public class CustomTabsHelper {
     private static final String TAG = "CustomTabsHelper";
-    static final String STABLE_PACKAGE = "com.android.chrome";
-    static final String BETA_PACKAGE = "com.chrome.beta";
-    static final String DEV_PACKAGE = "com.chrome.dev";
-    static final String LOCAL_PACKAGE = "com.google.android.apps.chrome";
+
+    static final String[] PACKAGES = new String[] {
+            // Prefer Focus and Firefox release versions
+            "org.mozilla.focus",
+            "org.mozilla.klar",
+            "org.mozilla.firefox",
+            // And fallback to beta/aurora/dev/nightly:
+            "org.mozilla.focus.beta",
+            "org.mozilla.klar.beta",
+            "org.mozilla.firefox_beta",
+            "org.mozilla.focus.debug",
+            "org.mozilla.klar.debug",
+            "org.mozilla.fennec_aurora",
+            "org.mozilla.fennec",
+            // If none of those exist there's also chrome:
+            "com.android.chrome",
+            "com.chrome.beta",
+            "com.chrome.dev",
+            "com.google.android.apps.chrome"
+    };
+
     private static final String EXTRA_CUSTOM_TABS_KEEP_ALIVE =
             "android.support.customtabs.extra.KEEP_ALIVE";
     private static final String ACTION_CUSTOM_TABS_CONNECTION =
@@ -96,14 +113,13 @@ public class CustomTabsHelper {
                 && !hasSpecializedHandlerIntents(context, activityIntent)
                 && packagesSupportingCustomTabs.contains(defaultViewHandlerPackageName)) {
             sPackageNameToUse = defaultViewHandlerPackageName;
-        } else if (packagesSupportingCustomTabs.contains(STABLE_PACKAGE)) {
-            sPackageNameToUse = STABLE_PACKAGE;
-        } else if (packagesSupportingCustomTabs.contains(BETA_PACKAGE)) {
-            sPackageNameToUse = BETA_PACKAGE;
-        } else if (packagesSupportingCustomTabs.contains(DEV_PACKAGE)) {
-            sPackageNameToUse = DEV_PACKAGE;
-        } else if (packagesSupportingCustomTabs.contains(LOCAL_PACKAGE)) {
-            sPackageNameToUse = LOCAL_PACKAGE;
+        } else {
+            for (final String ctPackage : PACKAGES) {
+                if (packagesSupportingCustomTabs.contains(ctPackage)) {
+                    sPackageNameToUse = ctPackage;
+                    break;
+                }
+            }
         }
         return sPackageNameToUse;
     }
@@ -139,6 +155,6 @@ public class CustomTabsHelper {
      * @return All possible chrome package names that provide custom tabs feature.
      */
     public static String[] getPackages() {
-        return new String[]{"", STABLE_PACKAGE, BETA_PACKAGE, DEV_PACKAGE, LOCAL_PACKAGE};
+        return PACKAGES;
     }
 }
