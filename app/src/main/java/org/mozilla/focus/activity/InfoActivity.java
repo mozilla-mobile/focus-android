@@ -66,9 +66,10 @@ public class InfoActivity extends AppCompatActivity {
                 if (url.equals("manifesto:")) {
                     ExternalInfoActivity.launchManifesto(view.getContext());
                     return true;
+                } else {
+                    ExternalInfoActivity.launchURL(view.getContext(), url);
+                    return true;
                 }
-
-                return super.shouldOverrideUrlLoading(view, url);
             }
         });
 

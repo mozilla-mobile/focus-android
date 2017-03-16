@@ -14,7 +14,7 @@ import org.mozilla.focus.utils.SupportUtils;
  */
 public class ExternalInfoActivity {
 
-    private static void launchURL(final Context context, final String url) {
+    public static void launchURL(final Context context, final String url) {
         final String ctPackage = CustomTabsHelper.getPackageNameToUse(context);
 
         if (ctPackage != null) {
