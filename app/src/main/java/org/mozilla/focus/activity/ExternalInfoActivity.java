@@ -25,6 +25,9 @@ public class ExternalInfoActivity {
             customTabIntent.launchUrl(context, Uri.parse(url));
         } else {
             // Fallback to InfoActivity if there's really no custom tabs support in existence.
+            // We use no title, since it's hard or impossible to determine the title for most
+            // pages (moreover there's little value in doing so, since this should happen to
+            // a minimal number of users).
             final Intent intent = InfoActivity.getIntentFor(context, url, "");
             context.startActivity(intent);
         }
@@ -37,6 +40,11 @@ public class ExternalInfoActivity {
 
     public static void launchDefaultBrowserInfo(final Context context) {
         final String url = "https://support.mozilla.org/kb/make-firefox-default-browser-android?utm_source=inproduct&amp;utm_medium=settings&amp;utm_campaign=mobileandroid";
+        launchURL(context, url);
+    }
+
+    public static void launchSumoPage(final Context context, final String sumoTag) {
+        final String url = SupportUtils.getSumoURLForTopic(context, sumoTag);
         launchURL(context, url);
     }
 }
