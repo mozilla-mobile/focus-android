@@ -19,7 +19,6 @@ import android.webkit.WebViewClient;
 
 import org.mozilla.focus.R;
 import org.mozilla.focus.utils.HtmlLoader;
-import org.mozilla.focus.utils.SupportUtils;
 
 import java.util.Map;
 
@@ -61,7 +60,17 @@ public class InfoActivity extends AppCompatActivity {
         // By default WebView will try to open links and redirects in an external browser (and sumo
         // links usually use a redirect to get to the desired target page). Somehow, setting a default
         // WebViewClient() is enough to disable that behaviour.
-        webView.setWebViewClient(new WebViewClient());
+        webView.setWebViewClient(new WebViewClient() {
+            @Override
+            public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                if (url.equals("manifesto:")) {
+                    ExternalInfoActivity.launchManifesto(view.getContext());
+                    return true;
+                }
+
+                return super.shouldOverrideUrlLoading(view, url);
+            }
+        });
 
         loadURL(url, webView);
 
@@ -87,7 +96,7 @@ public class InfoActivity extends AppCompatActivity {
 
             final Map<String, String> substitutionMap = new ArrayMap<>();
             final String appName = webView.getContext().getResources().getString(R.string.app_name);
-            final String learnMoreURL = SupportUtils.getManifestoURL();
+            final String learnMoreURL = "manifesto:";
 
             final String aboutContent = resources.getString(R.string.about_content, appName, learnMoreURL);
             substitutionMap.put("%about-content%", aboutContent);

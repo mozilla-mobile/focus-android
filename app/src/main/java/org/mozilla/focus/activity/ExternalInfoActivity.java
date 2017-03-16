@@ -15,13 +15,12 @@ import org.mozilla.focus.utils.SupportUtils;
 public class ExternalInfoActivity {
 
     private static void launchURL(final Context context, final String url) {
-        CustomTabsIntent.Builder builder = new CustomTabsIntent.Builder();
-
-        CustomTabsIntent customTabIntent = builder.build();
-
         final String ctPackage = CustomTabsHelper.getPackageNameToUse(context);
 
         if (ctPackage != null) {
+            CustomTabsIntent.Builder builder = new CustomTabsIntent.Builder();
+            CustomTabsIntent customTabIntent = builder.build();
+
             customTabIntent.intent.setPackage(ctPackage);
             customTabIntent.launchUrl(context, Uri.parse(url));
         } else {
