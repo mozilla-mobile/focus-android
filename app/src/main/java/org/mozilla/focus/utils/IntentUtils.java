@@ -70,7 +70,7 @@ public class IntentUtils {
             }
             final CharSequence externalAppTitle = info.loadLabel(packageManager);
 
-            showConfirmationDialog(activity, intent, uri, R.string.external_app_prompt, externalAppTitle);
+            showConfirmationDialog(activity, intent, activity.getString(R.string.external_app_prompt_title), R.string.external_app_prompt, externalAppTitle);
             return null;
         } else { // matchingActivities.size() > 1
             // By explicitly showing the chooser, we can avoid having a (default) app from opening
@@ -114,7 +114,7 @@ public class IntentUtils {
     // end up needing more or a variable number we can change this, but java varargs are a bit messy
     // so let's try to avoid that seeing as it's not needed right now.
     private static void showConfirmationDialog(final Activity activity, final Intent targetIntent, final String title, final @StringRes int messageResource, final CharSequence param) {
-        final AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+        final AlertDialog.Builder builder = new AlertDialog.Builder(activity, R.style.DialogStyle);
 
         final CharSequence ourAppName = activity.getResources().getString(R.string.app_name);
 
