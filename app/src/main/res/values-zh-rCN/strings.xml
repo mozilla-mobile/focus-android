@@ -13,6 +13,7 @@
   <string name="menu_about">关于</string>
   <string name="menu_help">帮助</string>
   <string name="menu_rights">您的权利</string>
+  <string name="about_content"><![CDATA[<p xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">%1$s &#35753;&#24744;&#25484;&#25511;&#32447;&#19978;&#29983;&#27963;&#12290;</p>\n<p xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">"&#20351;&#29992;&#23427;&#20316;&#20026;&#38544;&#31169;&#27983;&#35272;&#22120;&#65306;\n  "<ul>"\n    "<li>&#22312;&#24212;&#29992;&#20013;&#25628;&#32034;&#21644;&#27983;&#35272;</li>"\n    "<li>&#23631;&#34109;&#36319;&#36394;&#22120;&#65288;&#25110;&#26356;&#26032;&#35774;&#32622;&#20197;&#20801;&#35768;&#36319;&#36394;&#22120;&#65289;</li>"\n    "<li>&#33258;&#21160;&#21024;&#38500; Cookie &#21450;&#25628;&#32034;&#21644;&#27983;&#35272;&#35760;&#24405;</li>"\n  "</ul>\n</p>\n<p xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">%1$s &#30001; Mozilla &#20986;&#21697;&#12290;&#25105;&#20204;&#30340;&#20351;&#21629;&#26159;&#20419;&#25104;&#20581;&#24247;&#12289;&#24320;&#25918;&#30340;&#20114;&#32852;&#32593;&#12290;<br/>\n<a href="%2$s">&#35814;&#32454;&#20102;&#35299;</a></p>]]></string>
   <string name="preference_category_search">搜索</string>
   <string name="preference_search_engine_default">默认</string>
   <string name="preference_dialog_title_search_engine">默认搜索</string>
@@ -29,6 +30,7 @@
   <string name="preference_category_mozilla">Mozilla</string>
   <string name="preference_mozilla_telemetry">发送匿名使用统计数据</string>
   <string name="preference_mozilla_telemetry_summary">详细了解</string>
+  <string name="preference_about">关于 %1$s</string>
   <string name="content_description_clear_input">清空输入框</string>
   <string name="content_description_dismiss_input">关闭</string>
   <string name="content_description_erase">清除浏览记录</string>
@@ -43,9 +45,10 @@
   <string name="firstrun_button">了解了！</string>
   <string name="firstrun_footer">也请了解，您使用的网站和服务仍然可能获知您造访的内容。</string>
   <string name="your_rights">您的权利</string>
-  <string name="external_app_prompt">此链接将在 %2$s 中打开。您确定要退出 %1$s 吗？</string>
-  <string name="external_app_prompt_no_app_title">没有应用可处理此链接</string>
-  <string name="external_app_prompt_no_app">您的设备上没有可以打开此链接的应用。是否要退出 %1$s 并打开 %2$s 以查找适合的应用？</string>
+  <string name="external_app_prompt_title">在另一个应用中打开链接</string>
+  <string name="external_app_prompt">您可以离开 %1$s 以在 %2$s 中打开此链接。</string>
+  <string name="external_app_prompt_no_app_title">查找可以打开链接的应用</string>
+  <string name="external_app_prompt_no_app">您的设备上的应用都不能打开此链接。您可以离开 %1$s 以搜索 %2$s 来找出适合的应用。</string>
   <string name="external_multiple_apps_matched_exit">退出隐私浏览模式？</string>
   <string name="errorpage_title">加载页面遇到问题</string>
   <string name="errorpage_refresh">重试</string>
