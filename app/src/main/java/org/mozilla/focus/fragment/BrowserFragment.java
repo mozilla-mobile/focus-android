@@ -70,7 +70,7 @@ public class BrowserFragment extends Fragment implements View.OnClickListener {
         urlView.setText(url);
         urlView.setOnClickListener(this);
 
-        backgroundTransition = (TransitionDrawable) view.findViewById(R.id.urlbar).getBackground();
+        backgroundTransition = (TransitionDrawable) view.findViewById(R.id.background).getBackground();
 
         final View refreshButton = view.findViewById(R.id.refresh);
         if (refreshButton != null) {
@@ -133,12 +133,8 @@ public class BrowserFragment extends Fragment implements View.OnClickListener {
             }
 
             @Override
-            public void handleExternalUrl(final String url) {
-                final String fallback = IntentUtils.handleExternalUri(getActivity(), url);
-
-                if (fallback != null) {
-                    webView.loadUrl(fallback);
-                }
+            public boolean handleExternalUrl(final String url) {
+                return IntentUtils.handleExternalUri(getContext(), webView, url);
             }
         });
 
