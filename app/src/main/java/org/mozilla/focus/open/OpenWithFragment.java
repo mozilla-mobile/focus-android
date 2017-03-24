@@ -11,7 +11,9 @@ import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
+import android.support.design.widget.BottomSheetBehavior;
 import android.support.design.widget.BottomSheetDialog;
 import android.support.v7.app.AppCompatDialogFragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -60,6 +62,8 @@ public class OpenWithFragment extends AppCompatDialogFragment implements AppAdap
     }
 
     static class CustomWidthBottomSheetDialog extends BottomSheetDialog {
+        private View contentView;
+
         public CustomWidthBottomSheetDialog(@NonNull Context context) {
             super(context);
         }
@@ -67,9 +71,42 @@ public class OpenWithFragment extends AppCompatDialogFragment implements AppAdap
         @Override
         protected void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
-            int width = getContext().getResources().getDimensionPixelSize(R.dimen.bottom_sheet_width);
-            getWindow().setLayout(width > 0 ? width : ViewGroup.LayoutParams.MATCH_PARENT,
-                    ViewGroup.LayoutParams.MATCH_PARENT);
+
+            // The support library makes the bottomsheet full width on all devices (and then uses a 16:9
+            // keyline). On tablets, the system bottom sheets use a narrower width - lets do that too:
+            if (getContext().getResources().getBoolean(R.bool.is_tablet)) {
+                int width = getContext().getResources().getDimensionPixelSize(R.dimen.tablet_bottom_sheet_width);
+                getWindow().setLayout(width, ViewGroup.LayoutParams.MATCH_PARENT);
+            }
+        }
+
+        @Override
+        public void setContentView(View contentView) {
+            super.setContentView(contentView);
+
+            this.contentView = contentView;
+        }
+
+        @Override
+        public void setContentView(@LayoutRes int layoutResId) {
+            throw new IllegalStateException("CustomWidthBottomSheetDialog only supports setContentView(View)");
+        }
+
+        @Override
+        public void setContentView(View view, ViewGroup.LayoutParams params) {
+            throw new IllegalStateException("CustomWidthBottomSheetDialog only supports setContentView(View)");
+        }
+
+        @Override
+        public void show() {
+            if (getContext().getResources().getBoolean(R.bool.is_tablet)) {
+                final int peekHeight = getContext().getResources().getDimensionPixelSize(R.dimen.tablet_bottom_sheet_peekheight);
+
+                BottomSheetBehavior<View> bsBehaviour = BottomSheetBehavior.from((View) contentView.getParent());
+                bsBehaviour.setPeekHeight(peekHeight);
+            }
+
+            super.show();
         }
     }
 
