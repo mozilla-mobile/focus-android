@@ -25,7 +25,7 @@ import org.mozilla.focus.widget.InlineAutocompleteEditText;
 /**
  * Fragment for displaying he URL input controls.
  */
-public class UrlInputFragment extends Fragment implements View.OnClickListener, InlineAutocompleteEditText.OnTextChangeListener, InlineAutocompleteEditText.OnCommitListener {
+public class UrlInputFragment extends Fragment implements View.OnClickListener, InlineAutocompleteEditText.OnTextChangeListener, InlineAutocompleteEditText.OnCommitListener, InlineAutocompleteEditText.OnCommitAutoCompleteListener {
     public static final String ARGUMENT_URL = "url";
 
     public static UrlInputFragment create() {
@@ -81,6 +81,8 @@ public class UrlInputFragment extends Fragment implements View.OnClickListener, 
         urlView.setOnCommitListener(this);
 
         urlView.setOnTextChangeListener(this);
+
+        urlView.setOnCommitAutocompleteListener(this);
 
         if (getArguments().containsKey(ARGUMENT_URL)) {
             urlView.setText(getArguments().getString(ARGUMENT_URL));
@@ -169,15 +171,25 @@ public class UrlInputFragment extends Fragment implements View.OnClickListener, 
             clearView.setVisibility(View.GONE);
             searchViewContainer.setVisibility(View.GONE);
         } else {
-            clearView.setVisibility(View.VISIBLE);
-
-            final String hint = getString(R.string.search_hint, originalText);
-
-            final SpannableString content = new SpannableString(hint);
-            content.setSpan(new StyleSpan(Typeface.BOLD), hint.length() - originalText.length(), hint.length(), 0);
-
-            searchView.setText(content);
-            searchViewContainer.setVisibility(View.VISIBLE);
+            decorateSearchView(originalText);
         }
     }
+
+    @Override
+    public void onCommitAutoComplete(String autocompleteText) {
+        decorateSearchView(autocompleteText);
+    }
+
+    private void decorateSearchView(String text) {
+        clearView.setVisibility(View.VISIBLE);
+
+        final String hint = getString(R.string.search_hint, text);
+
+        final SpannableString content = new SpannableString(hint);
+        content.setSpan(new StyleSpan(Typeface.BOLD), hint.length() - text.length(), hint.length(), 0);
+
+        searchView.setText(content);
+        searchViewContainer.setVisibility(View.VISIBLE);
+    }
+
 }

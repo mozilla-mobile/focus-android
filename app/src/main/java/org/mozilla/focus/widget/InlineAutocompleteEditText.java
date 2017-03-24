@@ -51,6 +51,10 @@ public class InlineAutocompleteEditText extends android.support.v7.widget.AppCom
         void onTextChange(String originalText, String autocompleteText);
     }
 
+    public interface OnCommitAutoCompleteListener {
+        void onCommitAutoComplete(String autocompleteText);
+    }
+
     private static final String LOGTAG = "GeckoToolbarEditText";
     private static final NoCopySpan AUTOCOMPLETE_SPAN = new NoCopySpan.Concrete();
 
@@ -61,6 +65,7 @@ public class InlineAutocompleteEditText extends android.support.v7.widget.AppCom
     private OnFilterListener mFilterListener;
     private OnSearchStateChangeListener mSearchStateChangeListener;
     private OnTextChangeListener mTextChangeListener;
+    private OnCommitAutoCompleteListener mCommitAutoCompleteListener;
 
     // The previous autocomplete result returned to us
     private String mAutoCompleteResult = "";
@@ -88,6 +93,10 @@ public class InlineAutocompleteEditText extends android.support.v7.widget.AppCom
 
     public void setOnFilterListener(OnFilterListener listener) {
         mFilterListener = listener;
+    }
+
+    public void setOnCommitAutocompleteListener(OnCommitAutoCompleteListener listener) {
+        mCommitAutoCompleteListener = listener;
     }
 
     void setOnSearchStateChangeListener(OnSearchStateChangeListener listener) {
@@ -279,6 +288,11 @@ public class InlineAutocompleteEditText extends android.support.v7.widget.AppCom
         if (mFilterListener != null) {
             mFilterListener.onFilter(text.toString(), null);
         }
+
+        if(mCommitAutoCompleteListener != null) {
+            mCommitAutoCompleteListener.onCommitAutoComplete(text.toString());
+        }
+
         return true;
     }
 
