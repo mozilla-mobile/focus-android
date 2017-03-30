@@ -10,6 +10,7 @@ import android.graphics.drawable.TransitionDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,9 +26,6 @@ import org.mozilla.focus.utils.UrlUtils;
 import org.mozilla.focus.utils.ViewUtils;
 import org.mozilla.focus.utils.IntentUtils;
 import org.mozilla.focus.web.IWebView;
-
-import java.net.URI;
-import java.net.URISyntaxException;
 
 /**
  * Fragment for displaying the browser UI.
@@ -76,7 +74,7 @@ public class BrowserFragment extends WebFragment implements View.OnClickListener
     public View inflateLayout(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_browser, container, false);
 
-        urlView = (TextView) view.findViewById(R.id.url);
+        urlView = (TextView) view.findViewById(R.id.display_url);
         updateURL(getInitialUrl());
         urlView.setOnClickListener(this);
 
@@ -165,6 +163,34 @@ public class BrowserFragment extends WebFragment implements View.OnClickListener
         };
     }
 
+
+    public boolean onBackPressed() {
+        if (canGoBack()) {
+            goBack();
+        } else {
+            eraseAndShowHomeScreen();
+        }
+
+        return true;
+    }
+
+    private void eraseAndShowHomeScreen() {
+        final IWebView webView = getWebView();
+        if (webView != null) {
+            webView.cleanup();
+        }
+
+        getActivity().getSupportFragmentManager()
+                .beginTransaction()
+                .setCustomAnimations(0, R.anim.erase_animation)
+                .replace(R.id.container, HomeFragment.create(), HomeFragment.FRAGMENT_TAG)
+                .commit();
+
+        ViewUtils.showBrandedSnackbar(getActivity().findViewById(android.R.id.content),
+                R.string.feedback_erase,
+                getResources().getInteger(R.integer.erase_snackbar_delay));
+    }
+
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
@@ -173,33 +199,19 @@ public class BrowserFragment extends WebFragment implements View.OnClickListener
                 menu.show(menuView);
                 break;
 
-            case R.id.url:
+            case R.id.display_url:
+                final Fragment urlFragment = UrlInputFragment.createWithBrowserScreenAnimation(getUrl(), urlView);
+
                 getActivity().getSupportFragmentManager()
                         .beginTransaction()
-                        .add(R.id.container, UrlInputFragment.create(getWebView().getUrl()))
-                        .addToBackStack("url_entry")
+                        .add(R.id.container, urlFragment, UrlInputFragment.FRAGMENT_TAG)
                         .commit();
                 break;
 
             case R.id.erase: {
-                final IWebView webView = getWebView();
-                if (webView != null) {
-                    webView.cleanup();
-                }
-
-                getActivity().getSupportFragmentManager()
-                        .beginTransaction()
-                        .setCustomAnimations(0, R.anim.erase_animation)
-                        .replace(R.id.container, HomeFragment.create(), HomeFragment.FRAGMENT_TAG)
-                        .commit();
-
-                ViewUtils.showBrandedSnackbar(getActivity().findViewById(android.R.id.content),
-                        R.string.feedback_erase,
-                        getResources().getInteger(R.integer.erase_snackbar_delay));
-
+                eraseAndShowHomeScreen();
                 break;
             }
-
 
             case R.id.back: {
                 final IWebView webView = getWebView();
@@ -310,7 +322,6 @@ public class BrowserFragment extends WebFragment implements View.OnClickListener
 
         forwardButton.setEnabled(canGoForward);
         forwardButton.setAlpha(canGoForward ? 1.0f : 0.5f);
-
         backButton.setEnabled(canGoBack);
         backButton.setAlpha(canGoBack ? 1.0f : 0.5f);
     }
