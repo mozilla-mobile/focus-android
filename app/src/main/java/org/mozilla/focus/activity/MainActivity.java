@@ -43,26 +43,40 @@ public class MainActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_main);
 
-        if (Intent.ACTION_VIEW.equals(getIntent().getAction())) {
-            final String url = getIntent().getDataString();
 
-            if (appSettings.shouldShowFirstrun()) {
-                pendingUrl = url;
-                showFirstrun();
+        if (savedInstanceState == null) {
+            WebViewProvider.performCleanup(this);
+
+            if (Intent.ACTION_VIEW.equals(getIntent().getAction())) {
+                final String url = getIntent().getDataString();
+
+                if (appSettings.shouldShowFirstrun()) {
+                    pendingUrl = url;
+                    showFirstrun();
+                } else {
+                    showBrowserScreen(url);
+                }
             } else {
-                showBrowserScreen(url);
-            }
-        } else {
-            if (appSettings.shouldShowFirstrun()) {
-                showFirstrun();
-            } else {
-                showHomeScreen();
+                if (appSettings.shouldShowFirstrun()) {
+                    showFirstrun();
+                } else {
+                    showHomeScreen();
+                }
             }
         }
 
         WebViewProvider.preload(this);
 
         PreferenceManager.setDefaultValues(this, R.xml.settings, false);
+    }
+
+    @Override
+    protected void onPause() {
+        if (isFinishing()) {
+            WebViewProvider.performCleanup(this);
+        }
+
+        super.onPause();
     }
 
     @Override

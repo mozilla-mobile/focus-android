@@ -40,6 +40,16 @@ public class WebViewProvider {
         TrackingProtectionWebViewClient.triggerPreload(context);
     }
 
+    public static void performCleanup(final Context context) {
+        // Although most of the (cookie/cache/etc) data isn't instance specific, the cleanup methods
+        // aren't static, hence we need to grab a WebView instance:
+        final WebkitView webView = new WebkitView(context, null);
+        // Calls our data cleanup code:
+        webView.cleanup();
+        // Calls the system webview cleanup/deinit code:
+        webView.destroy();
+    }
+
     public static View create(Context context, AttributeSet attrs) {
         final WebkitView webkitView = new WebkitView(context, attrs);
 
@@ -238,6 +248,11 @@ public class WebViewProvider {
                 @Override
                 public void onProgressChanged(WebView view, int newProgress) {
                     if (callback != null) {
+                        // This is the earliest point where we might be able to confirm a redirected
+                        // URL: we don't necessarily get a shouldInterceptRequest() after a redirect,
+                        // so we can only check the updated url in onProgressChanges(), or in onPageFinished()
+                        // (which is even later).
+                        callback.onURLChanged(view.getUrl());
                         callback.onProgress(newProgress);
                     }
                 }
