@@ -34,6 +34,12 @@ public class SearchEngineManager extends BroadcastReceiver {
 
     private List<SearchEngine> searchEngines;
 
+    /**
+     * A flag indicating that data has been loaded, or is loading. This lets us detect if data
+     * has been requested without a preceeding init().
+     */
+    private boolean loadHasBeenTriggered = false;
+
     public static SearchEngineManager getInstance() {
         return instance;
     }
@@ -67,6 +73,7 @@ public class SearchEngineManager extends BroadcastReceiver {
 
     @WorkerThread
     private synchronized void loadFromDisk(Context context) {
+        loadHasBeenTriggered = true;
         final AssetManager assetManager = context.getAssets();
         final Locale locale = Locale.getDefault();
         final List<SearchEngine> searchEngines = new ArrayList<>();
@@ -87,11 +94,11 @@ public class SearchEngineManager extends BroadcastReceiver {
                 final String fileName = engineName + ".xml";
 
                 if (localeEngines.contains(fileName)) {
-                    searchEngines.add(SearchEngineParser.load(assetManager, localePath + "/" + fileName));
+                    searchEngines.add(SearchEngineParser.load(assetManager, engineName, localePath + "/" + fileName));
                 } else if (languageEngines.contains(fileName)) {
-                    searchEngines.add(SearchEngineParser.load(assetManager, languagePath + "/" + fileName));
+                    searchEngines.add(SearchEngineParser.load(assetManager, engineName, languagePath + "/" + fileName));
                 } else if (defaultEngines.contains(fileName)) {
-                    searchEngines.add(SearchEngineParser.load(assetManager, defaultPath + "/" + fileName));
+                    searchEngines.add(SearchEngineParser.load(assetManager, engineName, defaultPath + "/" + fileName));
                 } else {
                     Log.e(LOG_TAG, "Couldn't find configuration for engine: " + engineName);
                 }
@@ -157,6 +164,10 @@ public class SearchEngineManager extends BroadcastReceiver {
     }
 
     public void awaitLoadingSearchEnginesLocked() {
+        if (!loadHasBeenTriggered) {
+            throw new IllegalStateException("Attempting to retrieve search engines without a corresponding init()");
+        }
+
         while (searchEngines == null) {
             try {
                 wait();
