@@ -23,6 +23,7 @@ import org.mozilla.focus.menu.BrowserMenu;
 import org.mozilla.focus.open.OpenWithFragment;
 import org.mozilla.focus.telemetry.TelemetryWrapper;
 import org.mozilla.focus.utils.Browsers;
+import org.mozilla.focus.utils.KeyboardUtil;
 import org.mozilla.focus.utils.UrlUtils;
 import org.mozilla.focus.utils.ViewUtils;
 import org.mozilla.focus.utils.IntentUtils;
@@ -115,6 +116,8 @@ public class BrowserFragment extends WebFragment implements View.OnClickListener
 
         menuView = view.findViewById(R.id.menu);
         menuView.setOnClickListener(this);
+
+        new KeyboardUtil(getActivity(), view);
 
         return view;
     }
