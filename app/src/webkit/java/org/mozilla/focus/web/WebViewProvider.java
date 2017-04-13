@@ -17,7 +17,6 @@ import android.view.View;
 import android.webkit.CookieManager;
 import android.webkit.WebBackForwardList;
 import android.webkit.WebChromeClient;
-import android.webkit.WebHistoryItem;
 import android.webkit.WebSettings;
 import android.webkit.WebStorage;
 import android.webkit.WebView;
@@ -78,6 +77,10 @@ public class WebViewProvider {
 
         // So we hide the controls after enabling zooming
         settings.setDisplayZoomControls(false);
+
+        // To respect the html viewport:
+        settings.setLoadWithOverviewMode(true);
+        settings.setUseWideViewPort(true);
 
         // Disable access to arbitrary local files by webpages - assets can still be loaded
         // via file:///android_asset/res, so at least error page images won't be blocked.
