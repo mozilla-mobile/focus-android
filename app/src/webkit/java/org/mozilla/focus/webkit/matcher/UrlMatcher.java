@@ -14,6 +14,7 @@ import android.support.annotation.VisibleForTesting;
 import android.util.JsonReader;
 
 import org.mozilla.focus.R;
+import org.mozilla.focus.utils.IOUtils;
 import org.mozilla.focus.webkit.matcher.util.FocusString;
 
 import java.io.IOException;
@@ -78,10 +79,10 @@ public class UrlMatcher implements  SharedPreferences.OnSharedPreferenceChangeLi
 
             try {
                 BlocklistProcessor.loadCategoryMap(jsonReader, categoryMap, BlocklistProcessor.ListType.BASE_LIST);
-
-                jsonReader.close();
             } catch (IOException e) {
                 throw new IllegalStateException("Unable to parse blacklist");
+            } finally {
+                IOUtils.safeClose(jsonReader);
             }
         }
 
@@ -92,10 +93,10 @@ public class UrlMatcher implements  SharedPreferences.OnSharedPreferenceChangeLi
 
                 try {
                     BlocklistProcessor.loadCategoryMap(jsonReader, categoryMap, BlocklistProcessor.ListType.OVERRIDE_LIST);
-
-                    jsonReader.close();
                 } catch (IOException e) {
                     throw new IllegalStateException("Unable to parse override blacklist");
+                } finally {
+                    IOUtils.safeClose(jsonReader);
                 }
             }
         }
@@ -109,6 +110,8 @@ public class UrlMatcher implements  SharedPreferences.OnSharedPreferenceChangeLi
                 entityList = EntityListProcessor.getEntityMapFromJSON(jsonReader);
             } catch (IOException e) {
                 throw new IllegalStateException("Unable to parse entity list");
+            } finally {
+                IOUtils.safeClose(jsonReader);
             }
 
         }
