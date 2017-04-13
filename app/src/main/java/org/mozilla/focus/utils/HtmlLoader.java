@@ -27,11 +27,8 @@ public class HtmlLoader {
                                            @NonNull final @RawRes int resourceID,
                                            @Nullable final Map<String, String> substitutionTable) {
 
-        BufferedReader fileReader = null;
-
-        try {
-            final InputStream fileStream = context.getResources().openRawResource(resourceID);
-            fileReader = new BufferedReader(new InputStreamReader(fileStream));
+        try (final BufferedReader fileReader =
+                     new BufferedReader(new InputStreamReader(context.getResources().openRawResource(resourceID)))) {
 
             final StringBuilder outputBuffer = new StringBuilder();
 
@@ -49,15 +46,6 @@ public class HtmlLoader {
             return outputBuffer.toString();
         } catch (final IOException e) {
             throw new IllegalStateException("Unable to load error page data");
-        } finally {
-            try {
-                if (fileReader != null) {
-                    fileReader.close();
-                }
-            } catch (IOException e) {
-                // There's pretty much nothing we can do here. It doesn't seem right to crash
-                // just because we couldn't close a file?
-            }
         }
     }
 
@@ -66,17 +54,14 @@ public class HtmlLoader {
     public static String loadPngAsDataURI(@NonNull final Context context,
                                           @NonNull final @DrawableRes int resourceID) {
 
+        final StringBuilder builder = new StringBuilder();
+        builder.append("data:image/png;base64,");
+
         // We are copying the approach BitmapFactory.decodeResource(Resources, int, Options)
         // uses - you are explicitly allowed to open Drawables, but the method has a @RawRes
         // annotation (despite officially supporting Drawables).
         //noinspection ResourceType
-        final InputStream pngInputStream = context.getResources().openRawResource(resourceID);
-        final BufferedReader reader = new BufferedReader(new InputStreamReader(pngInputStream));
-
-        final StringBuilder builder = new StringBuilder();
-        builder.append("data:image/png;base64,");
-
-        try {
+        try (final InputStream pngInputStream = context.getResources().openRawResource(resourceID)) {
             // Base64 encodes 3 bytes at a time, make sure we have a multiple of 3 here
             // I don't know what a sensible chunk size is, let's just go with 300b.
             final byte[] data = new byte[3*100];
