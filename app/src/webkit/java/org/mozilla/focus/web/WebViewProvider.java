@@ -26,7 +26,9 @@ import android.webkit.WebViewDatabase;
 import org.mozilla.focus.BuildConfig;
 import org.mozilla.focus.R;
 
+import org.mozilla.focus.utils.FileUtils;
 import org.mozilla.focus.utils.Settings;
+import org.mozilla.focus.utils.ThreadUtils;
 import org.mozilla.focus.webkit.NestedWebView;
 import org.mozilla.focus.webkit.TrackingProtectionWebViewClient;
 
@@ -245,6 +247,15 @@ public class WebViewProvider {
         }
 
         @Override
+        public void destroy() {
+            super.destroy();
+
+            // WebView might save data to disk once it gets destroyed. In this case our cleanup call
+            // might not have been able to see this data. Let's do it again.
+            deleteContentFromKnownLocations();
+        }
+
+        @Override
         public void cleanup() {
             clearFormData();
             clearHistory();
@@ -261,6 +272,25 @@ public class WebViewProvider {
             // It isn't entirely clear how this differs from WebView.clearFormData()
             webViewDatabase.clearFormData();
             webViewDatabase.clearHttpAuthUsernamePassword();
+
+            deleteContentFromKnownLocations();
+        }
+
+        private void deleteContentFromKnownLocations() {
+            final Context context = getContext();
+
+            ThreadUtils.postToBackgroundThread(new Runnable() {
+                @Override
+                public void run() {
+                    // We call all methods on WebView to delete data. But some traces still remain
+                    // on disk. This will wipe the whole webview directory.
+                    FileUtils.deleteWebViewDirectory(context);
+
+                    // WebView stores some files in the cache directory. We do not use it ourselves
+                    // so let's truncate it.
+                    FileUtils.truncateCacheDirectory(context);
+                }
+            });
         }
 
         private WebChromeClient createWebChromeClient() {
