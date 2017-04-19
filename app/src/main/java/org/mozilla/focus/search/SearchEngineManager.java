@@ -32,13 +32,13 @@ public class SearchEngineManager extends BroadcastReceiver {
 
     private static SearchEngineManager instance = new SearchEngineManager();
 
-    private List<SearchEngine> searchEngines;
+    private volatile List<SearchEngine> searchEngines;
 
     /**
      * A flag indicating that data has been loaded, or is loading. This lets us detect if data
      * has been requested without a preceeding init().
      */
-    private boolean loadHasBeenTriggered = false;
+    private volatile boolean loadHasBeenTriggered = false;
 
     public static SearchEngineManager getInstance() {
         return instance;
