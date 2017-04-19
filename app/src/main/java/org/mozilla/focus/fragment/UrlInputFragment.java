@@ -197,6 +197,12 @@ public class UrlInputFragment extends Fragment implements View.OnClickListener, 
     }
 
     private void animateAndDismiss() {
+        // Don't allow any more clicks: dismissView is still visible until the animation ends,
+        // but we don't want to restart animations and/or trigger hiding again (which could potentially
+        // cause crashes since we don't know what state we're in). Ignoring further clicks is the simplest
+        // solution, since dismissView is about to disappear anyway.
+        dismissView.setClickable(false);
+
         final String animation = getArguments().getString(ARGUMENT_ANIMATION);
 
         if (ANIMATION_HOME_SCREEN.equals(animation)) {
@@ -412,6 +418,14 @@ public class UrlInputFragment extends Fragment implements View.OnClickListener, 
 
     @Override
     public void onFilter(String searchText, InlineAutocompleteEditText view) {
+        // If the UrlInputFragment has already been hidden, don't bother with filtering. Because of the text
+        // input architecture on Android it's possible for onFilter() to be called after we've already
+        // hidden the Fragment, see the relevant bug for more background:
+        // https://github.com/mozilla-mobile/focus-android/issues/441#issuecomment-293691141
+        if (!isVisible()) {
+            return;
+        }
+
         urlAutoCompleteFilter.onFilter(searchText, view);
 
         if (searchText.length() == 0) {

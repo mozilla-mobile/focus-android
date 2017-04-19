@@ -14,6 +14,7 @@ import android.support.annotation.VisibleForTesting;
 import android.util.JsonReader;
 
 import org.mozilla.focus.R;
+import org.mozilla.focus.utils.IOUtils;
 import org.mozilla.focus.webkit.matcher.util.FocusString;
 
 import java.io.IOException;
@@ -72,28 +73,18 @@ public class UrlMatcher implements  SharedPreferences.OnSharedPreferenceChangeLi
         final Map<String, String> categoryPrefMap = loadDefaultPrefMap(context);
 
         final Map<String, Trie> categoryMap = new HashMap<>(5);
-        {
-            InputStream inputStream = context.getResources().openRawResource(blockListFile);
-            JsonReader jsonReader = new JsonReader(new InputStreamReader(inputStream));
-
-            try {
-                BlocklistProcessor.loadCategoryMap(jsonReader, categoryMap, BlocklistProcessor.ListType.BASE_LIST);
-
-                jsonReader.close();
-            } catch (IOException e) {
-                throw new IllegalStateException("Unable to parse blacklist");
-            }
+        try (final JsonReader jsonReader =
+                     new JsonReader(new InputStreamReader(context.getResources().openRawResource(blockListFile)))) {
+            BlocklistProcessor.loadCategoryMap(jsonReader, categoryMap, BlocklistProcessor.ListType.BASE_LIST);
+        } catch (IOException e) {
+            throw new IllegalStateException("Unable to parse blacklist");
         }
 
         if (blockListOverrides != null) {
             for (int i = 0; i < blockListOverrides.length; i++) {
-                InputStream inputStream = context.getResources().openRawResource(blockListOverrides[i]);
-                JsonReader jsonReader = new JsonReader(new InputStreamReader(inputStream));
-
-                try {
+                try (final JsonReader jsonReader =
+                             new JsonReader(new InputStreamReader(context.getResources().openRawResource(blockListOverrides[i])))) {
                     BlocklistProcessor.loadCategoryMap(jsonReader, categoryMap, BlocklistProcessor.ListType.OVERRIDE_LIST);
-
-                    jsonReader.close();
                 } catch (IOException e) {
                     throw new IllegalStateException("Unable to parse override blacklist");
                 }
@@ -101,16 +92,10 @@ public class UrlMatcher implements  SharedPreferences.OnSharedPreferenceChangeLi
         }
 
         final EntityList entityList;
-        {
-            InputStream inputStream = context.getResources().openRawResource(entityListFile);
-            JsonReader jsonReader = new JsonReader(new InputStreamReader(inputStream));
-
-            try {
-                entityList = EntityListProcessor.getEntityMapFromJSON(jsonReader);
-            } catch (IOException e) {
-                throw new IllegalStateException("Unable to parse entity list");
-            }
-
+        try (final JsonReader jsonReader = new JsonReader(new InputStreamReader(context.getResources().openRawResource(entityListFile)))){
+            entityList = EntityListProcessor.getEntityMapFromJSON(jsonReader);
+        } catch (IOException e) {
+            throw new IllegalStateException("Unable to parse entity list");
         }
 
         return new UrlMatcher(context, categoryPrefMap, categoryMap, entityList);
