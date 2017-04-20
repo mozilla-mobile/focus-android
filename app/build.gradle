@@ -1,4 +1,6 @@
 apply plugin: 'com.android.application'
+apply plugin: 'findbugs'
+
 
 android {
     compileSdkVersion 25
@@ -97,6 +99,11 @@ dependencies {
     compile 'com.android.support:design:25.3.1'
     compile 'com.android.support:cardview-v7:25.3.1'
     compile 'com.android.support:recyclerview-v7:25.3.1'
+    compile ("com.google.code.findbugs:annotations:3.0.1") {
+        // We really only need the SuppressFBWarnings annotation, everything else can be ignored.
+        // Without this we get weird failures due to dependencies.
+        transitive = false
+    }
 
     compile(name: 'telemetry-b4d7c57', ext: 'aar')
 
@@ -107,11 +114,13 @@ dependencies {
 
     testCompile 'junit:junit:4.12'
     testCompile "org.robolectric:robolectric:3.3.2"
+
     androidTestCompile 'com.android.support.test.espresso:espresso-idling-resource:2.2.2'
     androidTestCompile 'com.android.support.test.uiautomator:uiautomator-v18:2.1.2'
     androidTestCompile 'com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     }
+    androidTestCompile 'com.squareup.okhttp3:mockwebserver:3.7.0'
 }
 
 task buildBlocklists(type:Exec) {
@@ -229,5 +238,30 @@ task stringsCleanUpdate()  {
             workingDir '../l10n-repo/'
             commandLine 'git', 'reset', '--hard', 'origin/master'
         }
+    }
+}
+
+
+task findbugs(type: FindBugs) {
+    // Flip this switch to fail the build when issues are found
+    ignoreFailures = false
+
+    effort = "max"
+    // This selects what level of bugs to report: low means low priority issues will be reported
+    // (in addition to medium+high), which corresponds to warning about everything.
+    // TODO: boost this to low once low priority issues are fixed.
+    reportLevel = "medium"
+
+    excludeFilter = new File("${project.rootDir}/findbugs/exclude.xml")
+
+    classes = files("${project.rootDir}/app/build/intermediates/classes")
+    source = fileTree('src/main/java/')
+    classpath = files()
+
+    // Only one report format is supported. Html is easier for me to read, so let's use that
+    // (xml is the one that's enabled by default).
+    reports {
+        xml.enabled = false
+        html.enabled = true
     }
 }

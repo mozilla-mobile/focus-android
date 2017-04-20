@@ -7,9 +7,11 @@ package org.mozilla.focus.web;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.VisibleForTesting;
 import android.text.TextUtils;
 import android.util.AttributeSet;
@@ -25,7 +27,9 @@ import android.webkit.WebViewDatabase;
 import org.mozilla.focus.BuildConfig;
 import org.mozilla.focus.R;
 
+import org.mozilla.focus.utils.FileUtils;
 import org.mozilla.focus.utils.Settings;
+import org.mozilla.focus.utils.ThreadUtils;
 import org.mozilla.focus.webkit.NestedWebView;
 import org.mozilla.focus.webkit.TrackingProtectionWebViewClient;
 
@@ -33,6 +37,8 @@ import org.mozilla.focus.webkit.TrackingProtectionWebViewClient;
  * WebViewProvider for creating a WebKit based IWebVIew implementation.
  */
 public class WebViewProvider {
+    private static final String KEY_CURRENTURL = "currenturl";
+
     /**
      * Preload webview data. This allows the webview implementation to load resources and other data
      * it might need, in advance of intialising the view (at which time we are probably wanting to
@@ -54,9 +60,11 @@ public class WebViewProvider {
 
     public static View create(Context context, AttributeSet attrs) {
         final WebkitView webkitView = new WebkitView(context, attrs);
+        final WebSettings settings = webkitView.getSettings();
 
         setupView(webkitView);
-        configureSettings(context, webkitView.getSettings());
+        configureDefaultSettings(context, settings);
+        applyAppSettings(context, settings);
 
         return webkitView;
     }
@@ -67,9 +75,7 @@ public class WebViewProvider {
     }
 
     @SuppressLint("SetJavaScriptEnabled") // We explicitly want to enable JavaScript
-    private static void configureSettings(Context context, WebSettings settings) {
-        final Settings appSettings = new Settings(context);
-
+    private static void configureDefaultSettings(Context context, WebSettings settings) {
         settings.setJavaScriptEnabled(true);
 
         // Enabling built in zooming shows the controls by default
@@ -92,9 +98,6 @@ public class WebViewProvider {
         settings.setAllowFileAccessFromFileURLs(false);
         settings.setAllowUniversalAccessFromFileURLs(false);
 
-        // We could consider calling setLoadsImagesAutomatically() here too (This will block images not laoded over the network too)
-        settings.setBlockNetworkImage(appSettings.shouldBlockImages());
-
         settings.setUserAgentString(buildUserAgentString(context, settings));
 
         // Right now I do not know why we should allow loading content from a content provider
@@ -113,6 +116,13 @@ public class WebViewProvider {
         settings.setSaveFormData(false);
         //noinspection deprecation - This method is deprecated but let's call it in case WebView implementations still obey it.
         settings.setSavePassword(false);
+    }
+
+    private static void applyAppSettings(Context context, WebSettings settings) {
+        final Settings appSettings = new Settings(context);
+
+        // We could consider calling setLoadsImagesAutomatically() here too (This will block images not loaded over the network too)
+        settings.setBlockNetworkImage(appSettings.shouldBlockImages());
     }
 
     /**
@@ -180,7 +190,7 @@ public class WebViewProvider {
         return uaBuilder.toString();
     }
 
-    private static class WebkitView extends NestedWebView implements IWebView {
+    private static class WebkitView extends NestedWebView implements IWebView, SharedPreferences.OnSharedPreferenceChangeListener {
         private Callback callback;
         private FocusWebViewClient client;
 
@@ -218,20 +228,58 @@ public class WebViewProvider {
         }
 
         @Override
+        protected void onAttachedToWindow() {
+            super.onAttachedToWindow();
+
+            PreferenceManager.getDefaultSharedPreferences(getContext()).registerOnSharedPreferenceChangeListener(this);
+        }
+
+        @Override
+        protected void onDetachedFromWindow() {
+            super.onDetachedFromWindow();
+
+            PreferenceManager.getDefaultSharedPreferences(getContext()).unregisterOnSharedPreferenceChangeListener(this);
+        }
+
+        @Override
+        public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+            applyAppSettings(getContext(), getSettings());
+        }
+
+        @Override
         public void restoreWebviewState(Bundle savedInstanceState) {
             // We need to have a different method name because restoreState() returns
             // a WebBackForwardList, and we can't overload with different return types:
             final WebBackForwardList backForwardList = restoreState(savedInstanceState);
 
-            // restoreState doesn't actually load the current page, it just restores navigation history,
-            // so we also need to explicitly reload:
-            client.notifyCurrentURL(backForwardList.getCurrentItem().getUrl());
-            reload();
+            // Pages are only added to the back/forward list when loading finishes. If a new page is
+            // loading when the Activity is paused/killed, then that page won't be in the list,
+            // and needs to be restored separately to the history list. We detect this by checking
+            // whether the last fully loaded page (getCurrentItem()) matches the last page that the
+            // WebView was actively loading (which was retrieved during onSaveInstanceState():
+            // WebView.getUrl() always returns the currently loading or loaded page).
+            // If the app is paused/killed before the initial page finished loading, then the entire
+            // list will be null - so we need to additionally check whether the list even exists.
+
+            final String desiredURL = savedInstanceState.getString(KEY_CURRENTURL);
+            client.notifyCurrentURL(desiredURL);
+
+            if (backForwardList != null &&
+                    backForwardList.getCurrentItem().getUrl().equals(desiredURL)) {
+                // restoreState doesn't actually load the current page, it just restores navigation history,
+                // so we also need to explicitly reload in this case:
+                reload();
+            } else {
+                loadUrl(desiredURL);
+            }
         }
 
         @Override
         public void onSaveInstanceState(Bundle outState) {
             saveState(outState);
+            // See restoreWebViewState() for an explanation of why we need to save this in _addition_
+            // to WebView's state
+            outState.putString(KEY_CURRENTURL, getUrl());
         }
 
         @Override
@@ -252,6 +300,15 @@ public class WebViewProvider {
         }
 
         @Override
+        public void destroy() {
+            super.destroy();
+
+            // WebView might save data to disk once it gets destroyed. In this case our cleanup call
+            // might not have been able to see this data. Let's do it again.
+            deleteContentFromKnownLocations();
+        }
+
+        @Override
         public void cleanup() {
             clearFormData();
             clearHistory();
@@ -268,6 +325,25 @@ public class WebViewProvider {
             // It isn't entirely clear how this differs from WebView.clearFormData()
             webViewDatabase.clearFormData();
             webViewDatabase.clearHttpAuthUsernamePassword();
+
+            deleteContentFromKnownLocations();
+        }
+
+        private void deleteContentFromKnownLocations() {
+            final Context context = getContext();
+
+            ThreadUtils.postToBackgroundThread(new Runnable() {
+                @Override
+                public void run() {
+                    // We call all methods on WebView to delete data. But some traces still remain
+                    // on disk. This will wipe the whole webview directory.
+                    FileUtils.deleteWebViewDirectory(context);
+
+                    // WebView stores some files in the cache directory. We do not use it ourselves
+                    // so let's truncate it.
+                    FileUtils.truncateCacheDirectory(context);
+                }
+            });
         }
 
         private WebChromeClient createWebChromeClient() {
