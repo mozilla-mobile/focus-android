@@ -99,6 +99,11 @@ dependencies {
     compile 'com.android.support:design:25.3.1'
     compile 'com.android.support:cardview-v7:25.3.1'
     compile 'com.android.support:recyclerview-v7:25.3.1'
+    compile ("com.google.code.findbugs:annotations:3.0.1") {
+        // We really only need the SuppressFBWarnings annotation, everything else can be ignored.
+        // Without this we get weird failures due to dependencies.
+        transitive = false
+    }
 
     compile(name: 'telemetry-b4d7c57', ext: 'aar')
 
@@ -239,10 +244,12 @@ task stringsCleanUpdate()  {
 
 task findbugs(type: FindBugs) {
     // Flip this switch to fail the build when issues are found
-    ignoreFailures = true
+    ignoreFailures = false
 
-    effort = "default"
-    // Switch this to "max" for moar checking - let's do this when we fix all existing issues?
+    effort = "max"
+    // This selects what level of bugs to report: low means low priority issues will be reported
+    // (in addition to medium+high), which corresponds to warning about everything.
+    // TODO: boost this to low once low priority issues are fixed.
     reportLevel = "medium"
 
     excludeFilter = new File("${project.rootDir}/findbugs/exclude.xml")

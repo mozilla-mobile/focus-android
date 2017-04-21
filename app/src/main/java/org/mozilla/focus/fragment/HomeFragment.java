@@ -5,10 +5,12 @@
 
 package org.mozilla.focus.fragment;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.PopupMenu;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -31,6 +33,21 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Popu
     }
 
     private View fakeUrlBarView;
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+
+        final FragmentActivity activity = getActivity();
+        if (activity != null && Intent.ACTION_VIEW.equals(activity.getIntent().getAction())) {
+            // If this activity was launched from a ACTION_VIEW intent then pressing back will send
+            // the user back to the previous application (finishing this activity). However if the
+            // user presses "erase" we will send the user back to the home screen. Pressing back
+            // in a new browsing session should send the user back to the home screen instead of
+            // the previous app. Therefore we clear the intent once we show the home screen.
+            activity.setIntent(new Intent(Intent.ACTION_MAIN));
+        }
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -63,6 +80,9 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Popu
                 popupMenu.setGravity(Gravity.TOP);
                 popupMenu.show();
                 break;
+
+            default:
+                throw new IllegalStateException("Unhandled view ID in onClick()");
         }
     }
 
@@ -74,24 +94,25 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Popu
             case R.id.settings:
                 Intent settingsIntent = new Intent(getActivity(), SettingsActivity.class);
                 startActivity(settingsIntent);
-                break;
+                return true;
 
             case R.id.about:
                 Intent aboutIntent = InfoActivity.getAboutIntent(getActivity());
                 startActivity(aboutIntent);
-                break;
+                return true;
 
             case R.id.rights:
                 Intent rightsIntent = InfoActivity.getRightsIntent(getActivity());
                 startActivity(rightsIntent);
-                break;
+                return true;
 
             case R.id.help:
                 Intent helpIntent = InfoActivity.getHelpIntent(getActivity());
                 startActivity(helpIntent);
-                break;
-        }
+                return true;
 
-        return false;
+            default:
+                throw new IllegalStateException("Unhandled view ID in onMenuItemClick()");
+        }
     }
 }

@@ -5,6 +5,8 @@
 
 package org.mozilla.focus.fragment;
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.graphics.drawable.TransitionDrawable;
@@ -17,16 +19,18 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.mozilla.focus.R;
 import org.mozilla.focus.activity.SettingsActivity;
 import org.mozilla.focus.menu.BrowserMenu;
+import org.mozilla.focus.notification.BrowsingNotificationService;
 import org.mozilla.focus.open.OpenWithFragment;
 import org.mozilla.focus.telemetry.TelemetryWrapper;
 import org.mozilla.focus.utils.Browsers;
+import org.mozilla.focus.utils.IntentUtils;
 import org.mozilla.focus.utils.UrlUtils;
 import org.mozilla.focus.utils.ViewUtils;
-import org.mozilla.focus.utils.IntentUtils;
 import org.mozilla.focus.web.IWebView;
 
 import java.lang.ref.WeakReference;
@@ -69,8 +73,10 @@ public class BrowserFragment extends WebFragment implements View.OnClickListener
     private WeakReference<LoadStateListener> loadStateListenerWeakReference = new WeakReference<>(null);
 
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public void onAttach(Context context) {
+        super.onAttach(context);
+
+        BrowsingNotificationService.start(context);
     }
 
     @Override
@@ -208,12 +214,28 @@ public class BrowserFragment extends WebFragment implements View.OnClickListener
         };
     }
 
+    private boolean isStartedFromExternalApp() {
+        final Activity activity = getActivity();
+        if (activity == null) {
+            return false;
+        }
+
+        final Intent intent = activity.getIntent();
+        return intent != null && Intent.ACTION_VIEW.equals(intent.getAction());
+    }
 
     public boolean onBackPressed() {
         if (canGoBack()) {
+            // Go back in web history
             goBack();
         } else {
-            eraseAndShowHomeScreen();
+            if (isStartedFromExternalApp()) {
+                // We have been started from a VIEW intent. Go back to the previous app immediately (No erase).
+                getActivity().finish();
+            } else {
+                // Just go back to the home screen.
+                eraseAndShowHomeScreen();
+            }
 
             TelemetryWrapper.eraseBackEvent();
         }
@@ -221,11 +243,13 @@ public class BrowserFragment extends WebFragment implements View.OnClickListener
         return true;
     }
 
-    private void eraseAndShowHomeScreen() {
+    public void eraseAndShowHomeScreen() {
         final IWebView webView = getWebView();
         if (webView != null) {
             webView.cleanup();
         }
+
+        BrowsingNotificationService.stop(getContext());
 
         getActivity().getSupportFragmentManager()
                 .beginTransaction()
