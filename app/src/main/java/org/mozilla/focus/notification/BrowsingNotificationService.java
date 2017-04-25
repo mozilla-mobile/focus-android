@@ -17,6 +17,7 @@ import android.support.v4.app.NotificationManagerCompat;
 
 import org.mozilla.focus.R;
 import org.mozilla.focus.activity.MainActivity;
+import org.mozilla.focus.telemetry.TelemetryWrapper;
 import org.mozilla.focus.web.WebViewProvider;
 
 /**
@@ -98,6 +99,8 @@ public class BrowsingNotificationService extends Service {
                 }
 
                 startActivity(activityIntent);
+
+                TelemetryWrapper.eraseNotificationEvent();
                 return Service.START_NOT_STICKY;
 
             default:
