@@ -200,7 +200,8 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public View onCreateView(String name, Context context, AttributeSet attrs) {
         if (name.equals(IWebView.class.getName())) {
-            return WebViewProvider.create(this, attrs);
+            View v = WebViewProvider.create(this, attrs);
+            return v;
         }
 
         return super.onCreateView(name, context, attrs);

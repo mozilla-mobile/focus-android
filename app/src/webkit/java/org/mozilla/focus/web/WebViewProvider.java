@@ -17,6 +17,7 @@ import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.View;
 import android.webkit.CookieManager;
+import android.webkit.DownloadListener;
 import android.webkit.WebBackForwardList;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
@@ -26,7 +27,6 @@ import android.webkit.WebViewDatabase;
 
 import org.mozilla.focus.BuildConfig;
 import org.mozilla.focus.R;
-
 import org.mozilla.focus.utils.FileUtils;
 import org.mozilla.focus.utils.Settings;
 import org.mozilla.focus.utils.ThreadUtils;
@@ -86,7 +86,6 @@ public class WebViewProvider {
 
         // To respect the html viewport:
         settings.setLoadWithOverviewMode(true);
-        settings.setUseWideViewPort(true);
 
         // Also increase text size to fill the viewport (this mirrors the behaviour of Firefox,
         // Chrome does this in the current Chrome Dev, but not Chrome release).
@@ -201,6 +200,7 @@ public class WebViewProvider {
 
             setWebViewClient(client);
             setWebChromeClient(createWebChromeClient());
+            setDownloadListener(createDownloadListener());
 
             if (BuildConfig.DEBUG) {
                 setWebContentsDebuggingEnabled(true);
@@ -357,6 +357,18 @@ public class WebViewProvider {
                         // (which is even later).
                         callback.onURLChanged(view.getUrl());
                         callback.onProgress(newProgress);
+                    }
+                }
+            };
+        }
+
+        private DownloadListener createDownloadListener() {
+            return new DownloadListener() {
+                @Override
+                public void onDownloadStart(String url, String userAgent, String contentDisposition, String mimetype, long contentLength) {
+                    if (callback != null) {
+                        final Download download = new Download(url, userAgent, contentDisposition, mimetype, contentLength);
+                        callback.onDownloadStart(download);
                     }
                 }
             };

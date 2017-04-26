@@ -7,6 +7,7 @@ package org.mozilla.focus.fragment;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
+import android.animation.ObjectAnimator;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -27,6 +28,7 @@ import org.mozilla.focus.autocomplete.UrlAutoCompleteFilter;
 import org.mozilla.focus.telemetry.TelemetryWrapper;
 import org.mozilla.focus.utils.UrlUtils;
 import org.mozilla.focus.utils.ViewUtils;
+import org.mozilla.focus.widget.HintFrameLayout;
 import org.mozilla.focus.widget.InlineAutocompleteEditText;
 
 /**
@@ -44,6 +46,8 @@ public class UrlInputFragment extends Fragment implements View.OnClickListener, 
 
     private static final String ANIMATION_HOME_SCREEN = "home_screen";
     private static final String ANIMATION_BROWSER_SCREEN = "browser_screen";
+
+    private static final int ANIMATION_DURATION = 200;
 
     /**
      * Create a new UrlInputFragment and animate the url input view from the position/size of the
@@ -96,7 +100,7 @@ public class UrlInputFragment extends Fragment implements View.OnClickListener, 
 
     private UrlAutoCompleteFilter urlAutoCompleteFilter;
     private View dismissView;
-    private View urlInputContainerView;
+    private HintFrameLayout urlInputContainerView;
     private View urlInputBackgroundView;
     private View toolbarBackgroundView;
 
@@ -134,7 +138,7 @@ public class UrlInputFragment extends Fragment implements View.OnClickListener, 
         toolbarBackgroundView = view.findViewById(R.id.toolbar_background);
         urlInputBackgroundView = view.findViewById(R.id.url_input_background);
 
-        urlInputContainerView = view.findViewById(R.id.url_input_container);
+        urlInputContainerView = (HintFrameLayout) view.findViewById(R.id.url_input_container);
         urlInputContainerView.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
             @Override
             public boolean onPreDraw() {
@@ -241,16 +245,16 @@ public class UrlInputFragment extends Fragment implements View.OnClickListener, 
             urlInputContainerView.setScaleY(heightScale);
             urlInputContainerView.setTranslationX(leftDelta);
             urlInputContainerView.setTranslationY(topDelta);
+            urlInputContainerView.setAnimationOffset(1.0f);
 
             toolbarBackgroundView.setAlpha(0);
-            toolbarBackgroundView.setTranslationY(-toolbarBackgroundView.getHeight());
 
             dismissView.setAlpha(0);
         }
 
         // Move the URL bar from its position on the home screen to the actual position (and scale it).
         urlInputContainerView.animate()
-                .setDuration(200)
+                .setDuration(ANIMATION_DURATION)
                 .scaleX(reverse ? widthScale : 1)
                 .scaleY(reverse ? heightScale : 1)
                 .translationX(reverse ? leftDelta : 0)
@@ -262,6 +266,12 @@ public class UrlInputFragment extends Fragment implements View.OnClickListener, 
                         ViewUtils.updateAlphaIfViewExists(getActivity(), R.id.fake_urlbar, 0f);
 
                         urlInputContainerView.setAlpha(1);
+
+                        if (reverse) {
+                            urlView.setText("");
+                            urlView.setCursorVisible(false);
+                            urlView.clearFocus();
+                        }
                     }
 
                     @Override
@@ -272,21 +282,28 @@ public class UrlInputFragment extends Fragment implements View.OnClickListener, 
                             ViewUtils.updateAlphaIfViewExists(getActivity(), R.id.fake_urlbar, 1f);
 
                             dismiss();
+                        } else {
+                            urlView.setCursorVisible(true);
                         }
                     }
                 });
 
+        final ObjectAnimator hintAnimator = ObjectAnimator.ofFloat(
+                urlInputContainerView, "animationOffset", reverse ? 0f : 1f, reverse ? 1f : 0f);
+
+        hintAnimator.setDuration(ANIMATION_DURATION);
+        hintAnimator.start();
+
         // Let the toolbar background come int from the top
         toolbarBackgroundView.animate()
                 .alpha(reverse ? 0 : 1)
-                .translationY(reverse ? -toolbarBackgroundView.getHeight() : 0)
-                .setDuration(200)
+                .setDuration(ANIMATION_DURATION)
                 .setInterpolator(new DecelerateInterpolator());
 
         // Use an alpha animation on the transparent black background
         dismissView.animate()
                 .alpha(reverse ? 0 : 1)
-                .setDuration(200);
+                .setDuration(ANIMATION_DURATION);
     }
 
     private void playBrowserScreenAnimation(final boolean reverse) {
@@ -306,21 +323,33 @@ public class UrlInputFragment extends Fragment implements View.OnClickListener, 
                 urlInputBackgroundView.setScaleY(heightScale);
                 urlInputBackgroundView.setTranslationX(-containerMargin);
                 urlInputBackgroundView.setTranslationY(-containerMargin);
+                urlInputContainerView.setAnimationOffset(0f);
+
+                clearView.setAlpha(0);
             }
 
             // Let the URL input use the full width/height and then shrink to the actual size
             urlInputBackgroundView.animate()
-                    .setDuration(200)
-                    .scaleX(1)
-                    .scaleY(1)
+                    .setDuration(ANIMATION_DURATION)
+                    .scaleX(reverse ? widthScale : 1)
+                    .scaleY(reverse ? heightScale : 1)
                     .alpha(reverse ? 0 : 1)
                     .translationX(reverse ? -containerMargin : 0)
                     .translationY(reverse ? -containerMargin : 0)
                     .setListener(new AnimatorListenerAdapter() {
                         @Override
+                        public void onAnimationStart(Animator animation) {
+                            if (reverse) {
+                                clearView.setAlpha(0);
+                            }
+                        }
+
+                        @Override
                         public void onAnimationEnd(Animator animation) {
                             if (reverse) {
                                 dismiss();
+                            } else {
+                                clearView.setAlpha(1);
                             }
                         }
                     });
@@ -339,7 +368,7 @@ public class UrlInputFragment extends Fragment implements View.OnClickListener, 
 
             // The URL moves from the right (at least if the lock is visible) to it's actual position
             urlView.animate()
-                    .setDuration(200)
+                    .setDuration(ANIMATION_DURATION)
                     .translationX(reverse ? leftDelta : 0);
         }
 
@@ -350,13 +379,7 @@ public class UrlInputFragment extends Fragment implements View.OnClickListener, 
 
         // The darker background appears with an alpha animation
         toolbarBackgroundView.animate()
-                .setDuration(200)
-                .alpha(reverse ? 0 : 1);
-
-        // And the clear button appears slightly delayed so that it doesn't clash with the menu button
-        clearView.animate()
-                .setStartDelay(100)
-                .setDuration(200)
+                .setDuration(ANIMATION_DURATION)
                 .alpha(reverse ? 0 : 1);
     }
 
