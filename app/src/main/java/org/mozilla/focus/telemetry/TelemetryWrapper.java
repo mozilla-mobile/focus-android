@@ -64,6 +64,8 @@ public final class TelemetryWrapper {
         private static final String APP = "app";
         private static final String MENU = "menu";
         private static final String BACK_BUTTON = "back_button";
+        private static final String NOTIFICATION = "notification";
+        private static final String SHORTCUT = "shortcut";
     }
 
     private static class Value {
@@ -207,6 +209,14 @@ public final class TelemetryWrapper {
 
     public static void eraseBackEvent() {
         TelemetryEvent.create(Category.ACTION, Method.CLICK, Object.BACK_BUTTON, Value.ERASE).queue();
+    }
+
+    public static void eraseNotificationEvent() {
+        TelemetryEvent.create(Category.ACTION, Method.CLICK, Object.NOTIFICATION, Value.ERASE).queue();
+    }
+
+    public static void eraseShortcutEvent() {
+        TelemetryEvent.create(Category.ACTION, Method.CLICK, Object.SHORTCUT, Value.ERASE).queue();
     }
 
     public static void settingsEvent(String key, String value) {
