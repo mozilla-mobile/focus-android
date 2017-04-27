@@ -161,7 +161,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         if (fromShortcut) {
-            TelemetryWrapper.eraseEvent();
+            TelemetryWrapper.eraseShortcutEvent();
         }
     }
 
