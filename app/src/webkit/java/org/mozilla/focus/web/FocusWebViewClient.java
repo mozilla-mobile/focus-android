@@ -7,6 +7,7 @@ package org.mozilla.focus.web;
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.net.http.SslError;
 import android.support.v4.util.ArrayMap;
 import android.webkit.SslErrorHandler;
@@ -116,7 +117,9 @@ public class FocusWebViewClient extends TrackingProtectionWebViewClient {
                 view.post(new Runnable() {
                     @Override
                     public void run() {
-                        callback.onURLChanged(currentPageURL);
+                        if (callback != null) {
+                            callback.onURLChanged(currentPageURL);
+                        }
                     }
                 });
             }
@@ -182,7 +185,9 @@ public class FocusWebViewClient extends TrackingProtectionWebViewClient {
         // (The API 24+ version of shouldOverrideUrlLoading() lets us determine whether
         // the request is for the main frame, and if it's not we could then completely
         // skip the external URL handling.)
-        if (!UrlUtils.isSupportedProtocol(url) &&
+        final Uri uri = Uri.parse(url);
+        if (!UrlUtils.isSupportedProtocol(uri.getScheme()) &&
+                callback != null &&
                 callback.handleExternalUrl(url)) {
             return true;
         }

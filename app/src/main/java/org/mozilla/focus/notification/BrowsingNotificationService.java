@@ -17,6 +17,7 @@ import android.support.v4.app.NotificationManagerCompat;
 
 import org.mozilla.focus.R;
 import org.mozilla.focus.activity.MainActivity;
+import org.mozilla.focus.telemetry.TelemetryWrapper;
 import org.mozilla.focus.web.WebViewProvider;
 
 /**
@@ -97,7 +98,13 @@ public class BrowsingNotificationService extends Service {
                     activityIntent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                 }
 
+                // This doesn't seem to be needed on Android 7.1. It is needed on Android 6, or otherwise
+                // we crash with "AndroidRuntimeException: Calling startActivity() from outside of an Activity context requires the FLAG_ACTIVITY_NEW_TASK flag."
+                activityIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+
                 startActivity(activityIntent);
+
+                TelemetryWrapper.eraseNotificationEvent();
                 return Service.START_NOT_STICKY;
 
             default:
