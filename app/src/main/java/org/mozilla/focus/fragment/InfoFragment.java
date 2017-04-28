@@ -83,12 +83,12 @@ public class InfoFragment extends WebFragment {
                 return false;
             }
 
-            @Override
-            public void onLinkLongPress(final String url) {
-            }
 
             @Override
             public void onDownloadStart(Download download) {
+            }
+
+            public void onLongPress(IWebView.HitTarget hitTarget) {
             }
 
             @Override
