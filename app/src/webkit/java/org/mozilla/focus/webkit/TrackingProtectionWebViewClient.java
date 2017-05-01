@@ -110,11 +110,4 @@ public class TrackingProtectionWebViewClient extends WebViewClient {
 
         super.onPageStarted(view, url, favicon);
     }
-
-    @Override
-    public boolean shouldOverrideUrlLoading(WebView view, String url) {
-        currentPageURL = url;
-
-        return super.shouldOverrideUrlLoading(view, url);
-    }
 }
