@@ -10,6 +10,7 @@ import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.support.v4.app.NotificationCompat;
@@ -95,9 +96,11 @@ public class BrowsingNotificationService extends Service {
                     activityIntent.setFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                 }
 
-                // This doesn't seem to be needed on Android 7.1. It is needed on Android 6, or otherwise
-                // we crash with "AndroidRuntimeException: Calling startActivity() from outside of an Activity context requires the FLAG_ACTIVITY_NEW_TASK flag."
-                activityIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N) {
+                    // This doesn't seem to be needed on Android 7.1. It is needed on Android 6, or otherwise
+                    // we crash with "AndroidRuntimeException: Calling startActivity() from outside of an Activity context requires the FLAG_ACTIVITY_NEW_TASK flag."
+                    activityIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                }
 
                 startActivity(activityIntent);
 
