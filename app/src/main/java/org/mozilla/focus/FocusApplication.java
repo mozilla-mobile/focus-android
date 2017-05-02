@@ -19,9 +19,9 @@ public class FocusApplication extends Application {
     public void onCreate() {
         super.onCreate();
 
-        enableStrictMode();
-
         PreferenceManager.setDefaultValues(this, R.xml.settings, false);
+
+        enableStrictMode();
 
         SearchEngineManager.getInstance().init(this);
 
@@ -36,12 +36,12 @@ public class FocusApplication extends Application {
 
         StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder()
                 .detectAll()
-                .penaltyLog()
+                .penaltyDeath()
                 .build());
 
         StrictMode.setVmPolicy(new StrictMode.VmPolicy.Builder()
                 .detectAll()
-                .penaltyLog()
+                .penaltyDeath()
                 .build());
     }
 }
