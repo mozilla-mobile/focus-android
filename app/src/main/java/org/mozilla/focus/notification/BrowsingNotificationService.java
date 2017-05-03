@@ -13,11 +13,11 @@ import android.content.Intent;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.support.v4.app.NotificationCompat;
-import android.support.v4.app.NotificationManagerCompat;
 
 import org.mozilla.focus.R;
 import org.mozilla.focus.activity.MainActivity;
 import org.mozilla.focus.telemetry.TelemetryWrapper;
+import org.mozilla.focus.web.BrowsingSession;
 import org.mozilla.focus.web.WebViewProvider;
 
 /**
@@ -70,12 +70,11 @@ public class BrowsingNotificationService extends Service {
     public int onStartCommand(Intent intent, int flags, int startId) {
         switch (intent.getAction()) {
             case ACTION_START:
-                startForeground(NOTIFICATION_ID, buildNotification());
+                startBrowsingSession();
                 break;
 
             case ACTION_STOP:
-                stopForeground(true);
-                stopSelf();
+                stopBrowsingSession();
                 break;
 
             case ACTION_FOREGROUND:
@@ -117,6 +116,18 @@ public class BrowsingNotificationService extends Service {
         // our activity had no chance to cleanup the browsing data. Let's try to do it from here.
         WebViewProvider.performCleanup(this);
 
+        stopBrowsingSession();
+    }
+
+    private void startBrowsingSession() {
+        BrowsingSession.getInstance().start();
+
+        startForeground(NOTIFICATION_ID, buildNotification());
+    }
+
+    private void stopBrowsingSession() {
+        BrowsingSession.getInstance().stop();
+
         stopForeground(true);
         stopSelf();
     }
@@ -129,7 +140,7 @@ public class BrowsingNotificationService extends Service {
 
         return new NotificationCompat.Builder(this)
                 .setOngoing(true)
-                .setSmallIcon(R.drawable.ic_notification)
+                .setSmallIcon(R.drawable.ic_delete)
                 .setContentTitle(getString(R.string.app_name))
                 .setContentText(getString(R.string.notification_erase_text))
                 .setContentIntent(pendingIntent)
