@@ -29,6 +29,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import org.mozilla.focus.R;
+import org.mozilla.focus.activity.InstallFirefoxActivity;
 import org.mozilla.focus.activity.SettingsActivity;
 import org.mozilla.focus.menu.BrowserMenu;
 import org.mozilla.focus.notification.BrowsingNotificationService;
@@ -202,7 +203,10 @@ public class BrowserFragment extends WebFragment implements View.OnClickListener
             public void onPageFinished(boolean isSecure) {
                 updateIsLoading(false);
 
-                backgroundTransition.startTransition(ANIMATION_DURATION);
+                if (isBlockingEnabled()) {
+                    // We only show the colorful background gradient when content blocking is enabled.
+                    backgroundTransition.startTransition(ANIMATION_DURATION);
+                }
 
                 progressView.announceForAccessibility(getString(R.string.accessibility_announcement_loading_finished));
 
@@ -466,9 +470,7 @@ public class BrowserFragment extends WebFragment implements View.OnClickListener
                     intent.setPackage(browsers.getFirefoxBrandedBrowser().packageName);
                     startActivity(intent);
                 } else {
-                    final Intent intent = new Intent(Intent.ACTION_VIEW,
-                            Uri.parse("market://details?id=" + Browsers.KnownBrowser.FIREFOX.packageName));
-                    startActivity(intent);
+                    InstallFirefoxActivity.open(getContext());
                 }
 
                 TelemetryWrapper.openFirefoxEvent();

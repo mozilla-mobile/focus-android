@@ -10,7 +10,6 @@ import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
 
-import org.mozilla.focus.BuildConfig;
 import org.mozilla.focus.search.SearchEngine;
 import org.mozilla.focus.search.SearchEngineManager;
 
@@ -18,7 +17,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 
 public class UrlUtils {
-    public static String normalize(String input) {
+    public static String normalize(@NonNull String input) {
         Uri uri = Uri.parse(input);
 
         if (TextUtils.isEmpty(uri.getScheme())) {
@@ -84,6 +83,10 @@ public class UrlUtils {
     public static boolean isSupportedProtocol(final String url) {
         return isPermittedResourceProtocol(url) ||
                 url.startsWith("error");
+    }
+
+    public static boolean isInternalErrorURL(final String url) {
+        return "data:text/html;charset=utf-8;base64,".equals(url);
     }
 
     public static boolean urlsMatchExceptForTrailingSlash(final @NonNull String url1, final @NonNull String url2) {
