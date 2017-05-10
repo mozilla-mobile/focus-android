@@ -5,18 +5,24 @@
 
 package org.mozilla.focus.fragment;
 
+import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.PopupMenu;
+import android.text.TextUtils;
+import android.view.ContextMenu;
 import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import org.mozilla.focus.R;
 import org.mozilla.focus.activity.InfoActivity;
@@ -25,14 +31,16 @@ import org.mozilla.focus.activity.SettingsActivity;
 /**
  * Fragment displaying the "home" screen when launching the app.
  */
-public class HomeFragment extends Fragment implements View.OnClickListener, PopupMenu.OnMenuItemClickListener {
+public class HomeFragment extends Fragment implements View.OnClickListener,
+        PopupMenu.OnMenuItemClickListener,
+        View.OnCreateContextMenuListener{
     public static final String FRAGMENT_TAG = "home";
 
     public static HomeFragment create() {
         return new HomeFragment();
     }
 
-    private View fakeUrlBarView;
+    private TextView fakeUrlBarView;
 
     @Override
     public void onAttach(Context context) {
@@ -54,8 +62,10 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Popu
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_home, container, false);
 
-        fakeUrlBarView = view.findViewById(R.id.fake_urlbar);
+        fakeUrlBarView = (TextView) view.findViewById(R.id.fake_urlbar);
         fakeUrlBarView.setOnClickListener(this);
+
+        fakeUrlBarView.setOnCreateContextMenuListener(this);
 
         view.findViewById(R.id.menu).setOnClickListener(this);
 
@@ -114,6 +124,55 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Popu
 
             default:
                 throw new IllegalStateException("Unhandled view ID in onMenuItemClick()");
+        }
+    }
+
+    String pasteAndGoClipContent = null;
+
+    private void showUrlbarContextMenu(final Context context, final ContextMenu menu) {
+        final ClipboardManager clipboard = (ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
+
+        if (clipboard.hasPrimaryClip()) {
+            pasteAndGoClipContent = clipboard.getPrimaryClip().getItemAt(0).coerceToText(context).toString();
+        } else {
+            pasteAndGoClipContent = null;
+        }
+
+        final MenuInflater inflater = getActivity().getMenuInflater();
+        inflater.inflate(R.menu.menu_urlinput, menu);
+
+        if (TextUtils.isEmpty(pasteAndGoClipContent)) {
+            menu.findItem(R.id.paste_go).setEnabled(false);
+        }
+    }
+
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.paste_go:
+                final FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+
+                // TODO: animate
+                fakeUrlBarView.setText(pasteAndGoClipContent);
+                fragmentManager
+                        .beginTransaction()
+                        .replace(R.id.container, BrowserFragment.create(pasteAndGoClipContent), BrowserFragment.FRAGMENT_TAG)
+                        .commit();
+            default:
+                return super.onContextItemSelected(item);
+        }
+    }
+
+    @Override
+    public void onCreateContextMenu(final ContextMenu menu,
+                                    final View view,
+                                    final ContextMenu.ContextMenuInfo menuInfo) {
+        switch (view.getId()) {
+            case R.id.fake_urlbar:
+                showUrlbarContextMenu(view.getContext(), menu);
+                break;
+            default:
+                throw new IllegalStateException("Unhandled view ID in onLongClick()");
         }
     }
 }
