@@ -13,6 +13,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
 
+import org.mozilla.focus.utils.SafeIntent;
 import org.mozilla.focus.utils.UrlUtils;
 
 /**
@@ -24,15 +25,23 @@ public class TextActionActivity extends Activity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        final String searchText = getIntent().getCharSequenceExtra(Intent.EXTRA_PROCESS_TEXT).toString();
+        final SafeIntent intent = new SafeIntent(getIntent());
+
+        final CharSequence searchTextCharSequence = intent.getCharSequenceExtra(Intent.EXTRA_PROCESS_TEXT);
+        final String searchText;
+        if (searchTextCharSequence != null) {
+            searchText = searchTextCharSequence.toString();
+        } else {
+            searchText = "";
+        }
         final String searchUrl = UrlUtils.createSearchUrl(this, searchText);
 
-        final Intent intent = new Intent(this, MainActivity.class);
-        intent.setAction(Intent.ACTION_VIEW);
-        intent.putExtra(MainActivity.EXTRA_TEXT_SELECTION, true);
-        intent.setData(Uri.parse(searchUrl));
+        final Intent searchIntent = new Intent(this, MainActivity.class);
+        searchIntent.setAction(Intent.ACTION_VIEW);
+        searchIntent.putExtra(MainActivity.EXTRA_TEXT_SELECTION, true);
+        searchIntent.setData(Uri.parse(searchUrl));
 
-        startActivity(intent);
+        startActivity(searchIntent);
 
         finish();
     }

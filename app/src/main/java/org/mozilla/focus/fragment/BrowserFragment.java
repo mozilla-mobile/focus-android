@@ -7,8 +7,12 @@ package org.mozilla.focus.fragment;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.Dialog;
 import android.app.DownloadManager;
+import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
@@ -18,9 +22,12 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.CookieManager;
@@ -32,6 +39,7 @@ import org.mozilla.focus.R;
 import org.mozilla.focus.activity.InstallFirefoxActivity;
 import org.mozilla.focus.activity.SettingsActivity;
 import org.mozilla.focus.menu.BrowserMenu;
+import org.mozilla.focus.menu.WebContextMenu;
 import org.mozilla.focus.notification.BrowsingNotificationService;
 import org.mozilla.focus.open.OpenWithFragment;
 import org.mozilla.focus.telemetry.TelemetryWrapper;
@@ -238,12 +246,7 @@ public class BrowserFragment extends WebFragment implements View.OnClickListener
 
             @Override
             public void onLongPress(final IWebView.HitTarget hitTarget) {
-                if (hitTarget.isLink) {
-                    final Intent shareIntent = new Intent(Intent.ACTION_SEND);
-                    shareIntent.setType("text/plain");
-                    shareIntent.putExtra(Intent.EXTRA_TEXT, hitTarget.linkURL);
-                    startActivity(shareIntent);
-                }
+                WebContextMenu.show(getActivity(), hitTarget);
             }
 
             @Override
@@ -321,6 +324,8 @@ public class BrowserFragment extends WebFragment implements View.OnClickListener
             return false;
         }
 
+        // No SafeIntent needed here because intent.getAction() is safe (SafeIntent simply calls intent.getAction()
+        // without any wrapping):
         final Intent intent = activity.getIntent();
         return intent != null && Intent.ACTION_VIEW.equals(intent.getAction());
     }
