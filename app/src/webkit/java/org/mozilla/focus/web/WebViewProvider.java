@@ -83,7 +83,8 @@ public class WebViewProvider {
         settings.setAllowFileAccessFromFileURLs(false);
         settings.setAllowUniversalAccessFromFileURLs(false);
 
-        settings.setUserAgentString(buildUserAgentString(context, settings));
+        final String appName = context.getResources().getString(R.string.useragent_appname);
+        settings.setUserAgentString(buildUserAgentString(context, settings, appName));
 
         // Right now I do not know why we should allow loading content from a content provider
         settings.setAllowContentAccess(false);
@@ -142,10 +143,10 @@ public class WebViewProvider {
         }
 
         // If we didn't find a chrome token, we just append the focus token at the end:
-        return TextUtils.join(" ", tokens) + focusToken;
+        return TextUtils.join(" ", tokens) + " " + focusToken;
     }
 
-    private static String buildUserAgentString(final Context context, final WebSettings settings) {
+    @VisibleForTesting static String buildUserAgentString(final Context context, final WebSettings settings, final String appName) {
         final StringBuilder uaBuilder = new StringBuilder();
 
         uaBuilder.append("Mozilla/5.0");
@@ -167,7 +168,7 @@ public class WebViewProvider {
             throw new IllegalStateException("Unable find package details for Focus", e);
         }
 
-        final String focusToken = context.getResources().getString(R.string.useragent_appname) + "/" + appVersion;
+        final String focusToken = appName + "/" + appVersion;
         uaBuilder.append(getUABrowserString(existingWebViewUA, focusToken));
 
         return uaBuilder.toString();
