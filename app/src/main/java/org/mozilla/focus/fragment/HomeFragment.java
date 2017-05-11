@@ -152,11 +152,9 @@ public class HomeFragment extends Fragment implements View.OnClickListener,
             case R.id.paste_go:
                 final FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
 
-                // TODO: animate
-                fakeUrlBarView.setText(pasteAndGoClipContent);
                 fragmentManager
                         .beginTransaction()
-                        .replace(R.id.container, BrowserFragment.create(pasteAndGoClipContent), BrowserFragment.FRAGMENT_TAG)
+                        .replace(R.id.container, BrowserFragment.createWithHomeScreenAnimation(pasteAndGoClipContent, fakeUrlBarView), BrowserFragment.FRAGMENT_TAG)
                         .commit();
             default:
                 return super.onContextItemSelected(item);

@@ -7,12 +7,8 @@ package org.mozilla.focus.fragment;
 
 import android.Manifest;
 import android.app.Activity;
-import android.app.Dialog;
 import android.app.DownloadManager;
-import android.content.ClipData;
-import android.content.ClipboardManager;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
@@ -22,16 +18,18 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AlertDialog;
+import android.transition.Fade;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
+import android.view.animation.AccelerateInterpolator;
+import android.view.animation.DecelerateInterpolator;
 import android.webkit.CookieManager;
 import android.webkit.URLUtil;
+import android.widget.FrameLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -64,12 +62,42 @@ public class BrowserFragment extends WebFragment implements View.OnClickListener
     private static final String ARGUMENT_URL = "url";
     private static final String RESTORE_KEY_DOWNLOAD = "download";
 
+    private static final String ARGUMENT_ANIMATION = "animation";
+    private static final String ANIMATION_HOME_SCREEN = "home_screen";
+
+    private static final String ARGUMENT_X = "x";
+    private static final String ARGUMENT_Y = "y";
+    private static final String ARGUMENT_WIDTH = "width";
+    private static final String ARGUMENT_HEIGHT = "height";
+
     public static BrowserFragment create(String url) {
         Bundle arguments = new Bundle();
         arguments.putString(ARGUMENT_URL, url);
 
         BrowserFragment fragment = new BrowserFragment();
         fragment.setArguments(arguments);
+
+        return fragment;
+    }
+
+    public static BrowserFragment createWithHomeScreenAnimation(final String url, final View fakeUrlBarView) {
+        final int[] screenLocation = new int[2];
+        fakeUrlBarView.getLocationOnScreen(screenLocation);
+
+        Bundle arguments = new Bundle();
+        arguments.putString(ARGUMENT_URL, url);
+
+        arguments.putString(ARGUMENT_ANIMATION, ANIMATION_HOME_SCREEN);
+
+        arguments.putInt(ARGUMENT_X, screenLocation[0]);
+        arguments.putInt(ARGUMENT_Y, screenLocation[1]);
+        arguments.putInt(ARGUMENT_WIDTH, fakeUrlBarView.getWidth());
+        arguments.putInt(ARGUMENT_HEIGHT, fakeUrlBarView.getHeight());
+
+        BrowserFragment fragment = new BrowserFragment();
+        fragment.setArguments(arguments);
+
+        fragment.setEnterTransition(new Fade());
 
         return fragment;
     }
@@ -85,6 +113,9 @@ public class BrowserFragment extends WebFragment implements View.OnClickListener
     private View backButton;
     private View refreshButton;
     private View stopButton;
+
+    private View webView;
+    private FrameLayout fakeUrlFrame;
 
     private boolean isLoading = false;
 
@@ -121,6 +152,23 @@ public class BrowserFragment extends WebFragment implements View.OnClickListener
         urlView = (TextView) view.findViewById(R.id.display_url);
         updateURL(getInitialUrl());
         urlView.setOnClickListener(this);
+
+        webView = view.findViewById(R.id.webview);
+        fakeUrlFrame = (FrameLayout) view.findViewById(R.id.fake_url_frame);
+
+        final String animation = getArguments().getString(ARGUMENT_ANIMATION);
+        if (ANIMATION_HOME_SCREEN.equals(animation)) {
+            urlView.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
+                @Override
+                public boolean onPreDraw() {
+                    urlView.getViewTreeObserver().removeOnPreDrawListener(this);
+
+                    playHomeScreenAnimation();
+
+                    return true;
+                }
+            });
+        }
 
         backgroundTransition = (TransitionDrawable) view.findViewById(R.id.background).getBackground();
 
@@ -498,6 +546,75 @@ public class BrowserFragment extends WebFragment implements View.OnClickListener
                 break;
             }
         }
+    }
+
+    /**
+     * Play animation between home screen and the URL input.
+     */
+    private void playHomeScreenAnimation() {
+        final TextView fakeUrlText = (TextView) fakeUrlFrame.findViewById(R.id.fake_url_text);
+        final View fakeBackground = fakeUrlFrame.findViewById(R.id.fake_url_background);
+
+        // Fade in the webview to make the url bar movement more obvious
+        webView.setAlpha(0f);
+        webView.animate()
+                .alpha(1f)
+                .setDuration(ANIMATION_DURATION)
+                .setInterpolator(new AccelerateInterpolator());
+
+
+        int[] realUrlScreenLocation = new int[2];
+        urlView.getLocationOnScreen(realUrlScreenLocation);
+
+        float widthScale = (float) getArguments().getInt(ARGUMENT_WIDTH) / urlView.getWidth();
+        float heightScale = (float) getArguments().getInt(ARGUMENT_HEIGHT) / urlView.getHeight();
+
+        fakeUrlFrame.setVisibility(View.VISIBLE);
+
+        fakeUrlFrame.getLayoutParams().width = urlView.getWidth();
+        fakeUrlFrame.getLayoutParams().height = urlView.getHeight();
+        fakeUrlFrame.setScaleX(widthScale);
+        fakeUrlFrame.setScaleY(heightScale);
+        fakeUrlFrame.setX(getArguments().getInt(ARGUMENT_X));
+        fakeUrlFrame.setY(getArguments().getInt(ARGUMENT_Y));
+
+        // Hide the real urlView until we're done animating. toolbar uses animateLayoutChanges=true,
+        // so setting View.GONE/VISIBLE results in unwanted animations - instead we just hide using alpha:
+        urlView.setAlpha(0f);
+        // Also fade in the text - no text was visible in the HomeFragment:
+        fakeUrlText.setAlpha(0f);
+
+        fakeUrlText.setText(urlView.getText());
+
+        // The main animation - the url frame scales and moves the other two views as needed
+        fakeUrlFrame.animate()
+                .x(realUrlScreenLocation[0])
+                .y(realUrlScreenLocation[1])
+                .scaleX(1)
+                .scaleY(1)
+                .setInterpolator(new DecelerateInterpolator())
+                .setDuration(ANIMATION_DURATION)
+                .withEndAction(new Runnable() {
+                    @Override
+                    public void run() {
+                        urlView.setAlpha(1f);
+                        fakeUrlFrame.setVisibility(View.GONE);
+                    }
+                });
+
+
+        // The fake url view only needs to fade in
+        fakeUrlText.animate()
+                .setDuration(ANIMATION_DURATION)
+                .alpha(1)
+                .setInterpolator(new DecelerateInterpolator());
+
+
+        // And the background needs to fade out
+        fakeBackground.animate()
+                .setDuration(ANIMATION_DURATION)
+                .alpha(0)
+                .setInterpolator(new AccelerateInterpolator());
     }
 
     private void updateToolbarButtonStates() {

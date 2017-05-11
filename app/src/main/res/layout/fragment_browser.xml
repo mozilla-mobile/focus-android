@@ -3,9 +3,10 @@
    - License, v. 2.0. If a copy of the MPL was not distributed with this
    - file, You can obtain one at http://mozilla.org/MPL/2.0/. -->
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             xmlns:app="http://schemas.android.com/apk/res-auto"
+             xmlns:tools="http://schemas.android.com/tools">
 
     <View
         android:id="@+id/background"
@@ -70,4 +71,39 @@
             android:contentDescription="@string/content_description_erase" />
 
     </org.mozilla.focus.widget.ResizableKeyboardLayout>
+
+    <FrameLayout
+        android:id="@+id/fake_url_frame"
+        android:visibility="gone"
+        android:layout_width="0dp"
+        android:layout_height="0dp">
+
+        <!-- The background is faded out independently of the other animations, hence it needs
+             its own view -->
+        <View
+            android:id="@+id/fake_url_background"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/urlbar_background"/>
+
+        <!-- lint: We need to use singleLine=true for the fading edge to work (which is officially deprecated,
+             but still needed), hence we ignore deprecated warnings here.. -->
+        <TextView
+            tools:ignore="Deprecated"
+            android:id="@+id/fake_url_text"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1"
+            android:ellipsize="none"
+            android:requiresFadingEdge="horizontal"
+            android:gravity="center_vertical"
+            android:lines="1"
+            android:maxLines="1"
+            android:singleLine="true"
+            android:textColor="#ffffff"
+            android:textSize="15sp" />
+
+    </FrameLayout>
+
 </FrameLayout>
