@@ -12,6 +12,7 @@ import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.VisibleForTesting;
+import android.support.v4.util.ArrayMap;
 import android.util.JsonReader;
 
 import org.mozilla.focus.R;
@@ -46,7 +47,7 @@ public class UrlMatcher implements  SharedPreferences.OnSharedPreferenceChangeLi
     private static final String WEBFONTS = "Webfonts";
 
     private static Map<String, String> loadDefaultPrefMap(final Context context) {
-        Map<String, String> tempMap = new HashMap<>(5);
+        Map<String, String> tempMap = new ArrayMap<>();
 
         tempMap.put(context.getString(R.string.pref_key_privacy_block_ads), "Advertising");
         tempMap.put(context.getString(R.string.pref_key_privacy_block_analytics), "Analytics");
@@ -257,11 +258,10 @@ public class UrlMatcher implements  SharedPreferences.OnSharedPreferenceChangeLi
         final FocusString revhost = FocusString.create(resourceHost).reverse();
 
         for (final Map.Entry<String, Trie> category : categories.entrySet()) {
-            if (enabledCategories.contains(category.getKey())) {
-                if (category.getValue().findNode(revhost) != null) {
-                    previouslyMatched.add(resourceURLString);
-                    return true;
-                }
+            if (enabledCategories.contains(category.getKey()) &&
+                    category.getValue().findNode(revhost) != null) {
+                previouslyMatched.add(resourceURLString);
+                return true;
             }
         }
 
