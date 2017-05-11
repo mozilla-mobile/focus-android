@@ -38,10 +38,12 @@
     <string name="menu_help">Help</string>
     <string name="menu_rights">Your Rights</string>
 
-    <!-- Menu item: This is the label of a switch in the menu that allows the user to temporarily
-         enable / disable the blocking of trackers for the current browsing session - for example if
-         the current website doesn't work correctly with blocked content. -->
-    <string name="menu_block_trackers">Block trackers</string>
+    <!-- Menu item: This is the label for a menu entry that shows how many trackers have been blocked
+         for the currently loaded website. The number of blocked trackers is shown below this label.
+         Next to this label is a switch that allows the user to temporarily enable / disable the
+         blocking of trackers for the current browsing session - for example if the current website
+         doesn't work correctly with blocked content. -->
+    <string name="menu_trackers_blocked_title">Trackers blocked</string>
 
     <!-- This is the title of a dialog that shows all the share targets (apps or contacts) when
          sharing an URL. -->
@@ -240,4 +242,13 @@ be temporary, and you can try again later.</li>
 
     <string name="error_generic_title">Oops</string>
     <string name="error_generic_message">We can’t load this page for some reason.</string>
+
+    <!-- Label used in the contextmenu shown when long-pressing on a link -->
+    <string name="contextmenu_link_share">Share link</string>
+    <!-- Label used in the contextmenu shown when long-pressing on a link -->
+    <string name="contextmenu_link_copy">Copy link address</string>
+    <!-- Label used in the contextmenu shown when long-pressing on an image -->
+    <string name="contextmenu_image_share">Share image</string>
+    <!-- Label used in the contextmenu shown when long-pressing on an image -->
+    <string name="contextmenu_image_copy">Copy image address</string>
 </resources>
