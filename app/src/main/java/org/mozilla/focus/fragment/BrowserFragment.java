@@ -50,6 +50,7 @@ import org.mozilla.focus.utils.UrlUtils;
 import org.mozilla.focus.utils.ViewUtils;
 import org.mozilla.focus.web.Download;
 import org.mozilla.focus.web.IWebView;
+import org.mozilla.focus.widget.AnimatedProgressBar;
 
 import java.lang.ref.WeakReference;
 
@@ -77,7 +78,7 @@ public class BrowserFragment extends WebFragment implements View.OnClickListener
     private Download pendingDownload;
     private TransitionDrawable backgroundTransition;
     private TextView urlView;
-    private ProgressBar progressView;
+    private AnimatedProgressBar progressView;
     private View lockView;
     private View menuView;
 
@@ -142,7 +143,7 @@ public class BrowserFragment extends WebFragment implements View.OnClickListener
 
         lockView = view.findViewById(R.id.lock);
 
-        progressView = (ProgressBar) view.findViewById(R.id.progress);
+        progressView = (AnimatedProgressBar) view.findViewById(R.id.progress);
 
         view.findViewById(R.id.erase).setOnClickListener(this);
 
@@ -218,7 +219,7 @@ public class BrowserFragment extends WebFragment implements View.OnClickListener
 
                 progressView.announceForAccessibility(getString(R.string.accessibility_announcement_loading_finished));
 
-                progressView.setVisibility(View.INVISIBLE);
+                progressView.setVisibility(View.GONE);
 
                 if (isSecure) {
                     lockView.setVisibility(View.VISIBLE);
