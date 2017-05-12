@@ -11,6 +11,14 @@
     android:paddingStart="16dp"
     android:paddingEnd="0dp">
 
+    <ImageButton
+        android:id="@+id/customtab_close"
+        android:background="?android:attr/selectableItemBackgroundBorderless"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:contentDescription="@string/content_description_customtab_exit"
+        android:visibility="gone"/>
+
     <ImageView
         android:id="@+id/lock"
         android:layout_width="24dp"
@@ -41,6 +49,16 @@
         android:singleLine="true"
         android:textColor="#ffffff"
         android:textSize="15sp" />
+
+    <!-- The contentDescription is supplied by other applications in the Custom Tab Intent, and
+         is therefore set programatically. -->
+    <ImageButton
+        tools:ignore="contentDescription"
+        android:id="@+id/customtab_actionbutton"
+        android:visibility="gone"
+        android:background="?android:attr/selectableItemBackgroundBorderless"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"/>
 
     <ImageButton
         android:id="@+id/menu"
