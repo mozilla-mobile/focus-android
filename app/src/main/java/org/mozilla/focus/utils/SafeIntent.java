@@ -94,9 +94,14 @@ public class SafeIntent {
         }
     }
 
-    public Bundle getBundleExtra(final String name) {
+    public SafeBundle getBundleExtra(final String name) {
         try {
-            return intent.getBundleExtra(name);
+            final Bundle bundle = intent.getBundleExtra(name);
+            if (bundle != null) {
+                return new SafeBundle(bundle);
+            } else {
+                return null;
+            }
         } catch (OutOfMemoryError e) {
             Log.w(LOGTAG, "Couldn't get intent extras: OOM. Malformed?");
             return null;
@@ -121,6 +126,18 @@ public class SafeIntent {
     public <T extends Parcelable> T getParcelableExtra(final String name) {
         try {
             return intent.getParcelableExtra(name);
+        } catch (OutOfMemoryError e) {
+            Log.w(LOGTAG, "Couldn't get intent extras: OOM. Malformed?");
+            return null;
+        } catch (RuntimeException e) {
+            Log.w(LOGTAG, "Couldn't get intent extras.", e);
+            return null;
+        }
+    }
+
+    public <T extends Parcelable> ArrayList<T> getParcelableArrayListExtra(final String name) {
+        try {
+            return intent.getParcelableArrayListExtra(name);
         } catch (OutOfMemoryError e) {
             Log.w(LOGTAG, "Couldn't get intent extras: OOM. Malformed?");
             return null;
