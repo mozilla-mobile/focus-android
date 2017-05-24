@@ -66,7 +66,7 @@
 
     <!-- This is the label of an action we offer when the user selects text in other third-party apps.
          Clicking this action will launch Focus and perform a search in the default search engine. -->
-    <string name="text_selection_search_action">Private Search</string>
+    <string name="text_selection_search_action">Search Privately</string>
 
     <!-- Content of about focus. Argument 1 is the app name (Firefox Focus/Firefox Klar/etc).
          Argument 2 is the url for the learn-more link. -->
@@ -169,6 +169,10 @@
 
     <!-- Content description (not visible, for screen readers etc.): Custom Tab exit button - closes the custom tab and returns to the previous app. -->
     <string name="content_description_customtab_exit">Return to previous app</string>
+
+    <!-- Content description (not visible, for screen readers etc.): This is the description for the switch in the menu that temporarily disables/enables
+         content blocking for the current session -->
+    <string name="content_description_blocking_switch">Block trackers</string>
 
     <!-- This is a context menu item shown when long pressing on the URL bar. Selecting it will copy the text from the clipboard into the URL bar and open the URL or perform a search. -->
     <string name="context_menu_paste_go">Paste &amp; Go</string>
