@@ -14,15 +14,15 @@ In addition to the core ping an event ping for UI telemetry is generated and sen
 
 #### Settings
 
-As part of the event ping the most recent state of the user's setting is sent:
+As part of the event ping the most recent state of the user's setting is sent (default values in **bold**):
 
-* Search engine selection (`pref_search_engine`: search engine identifier)
-* Block ad trackers (`pref_privacy_block_ads`: true/false)
-* Block analytics trackers (`pref_privacy_block_other`: true/false)
-* Block social trackers (`pref_privacy_block_social`: true/false)
-* Block content trackers (`pref_privacy_block_analytics`: true/false)
-* Block web fonts (`pref_performance_block_webfonts`: true/false)
-* Block images (`pref_performance_block_images`: true/false)
+* Search engine selection (`pref_search_engine`: search engine identifier; *default value depends on user's locale*)
+* Block ad trackers (`pref_privacy_block_ads`: **true**/false)
+* Block analytics trackers (`pref_privacy_block_other`: true/**false**)
+* Block social trackers (`pref_privacy_block_social`: **true**/false)
+* Block content trackers (`pref_privacy_block_analytics`: **true**/false)
+* Block web fonts (`pref_performance_block_webfonts`: true/**false**)
+* Block images (`pref_performance_block_images`: true/**false**)
 
 #### Events
 
@@ -43,6 +43,7 @@ The event ping contains a list of events ([see event format on readthedocs.io](h
 * (BrowserContextMenu) Copy link menu item selected ("action", "copy", "browser_contextmenu", "link")
 * (BrowserContextMenu) Share Image menu item selected ("action", "share", "browser_contextmenu", "image")
 * (BrowserContextMenu) Copy Image menu item selected ("action", "copy", "browser_contextmenu", "image")
+* (BrowserContextMenu) Save Image menu item selected ("action", "save", "browser_contextmenu", "image")
 * (Search) Query entered: - ("action", "type_query", "search_bar")
 * (Search) Query/Hint clicked: - ("action", "select_query", "search_bar")
 * (Erase) UI button clicked - ("action", "click", "erase_button")
