@@ -21,7 +21,7 @@ import org.mozilla.focus.web.BrowsingSession;
 
     private BrowserFragment fragment;
 
-    /* package */ BlockingItemViewHolder(View itemView, BrowserFragment fragment) {
+    /* package */ BlockingItemViewHolder(View itemView, final BrowserFragment fragment) {
         super(itemView);
 
         this.fragment = fragment;
@@ -45,7 +45,11 @@ import org.mozilla.focus.web.BrowsingSession;
         BrowsingSession.getInstance().setTrackingCountListener(new BrowsingSession.TrackingCountListener() {
             @Override
             public void onTrackingCountChanged(int trackingCount) {
-                updateTrackingCount(trackerCounter, trackingCount);
+                if (fragment.isBlockingEnabled()) {
+                    updateTrackingCount(trackerCounter, trackingCount);
+                } else {
+                    disableTrackingCount(trackerCounter);
+                }
             }
         });
     }
@@ -55,6 +59,15 @@ import org.mozilla.focus.web.BrowsingSession;
             @Override
             public void run() {
                 view.setText(String.valueOf(count));
+            }
+        });
+    }
+
+    private void disableTrackingCount(final TextView view) {
+        ThreadUtils.postToMainThread(new Runnable() {
+            @Override
+            public void run() {
+                view.setText("-");
             }
         });
     }
