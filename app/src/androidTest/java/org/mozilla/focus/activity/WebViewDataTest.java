@@ -112,8 +112,11 @@ public class WebViewDataTest {
                         .setBody(TestHelper.readTestAsset("test.html"))
                         .addHeader("Set-Cookie", "sphere=battery; Expires=Wed, 21 Oct 2035 07:28:00 GMT;"));
                 webServer.enqueue(new MockResponse()
+                        .setBody(TestHelper.readTestAsset("rabbit.jpg")));
+                webServer.enqueue(new MockResponse()
                         .setBody(TestHelper.readTestAsset("service-worker.js"))
                         .setHeader("Content-Type", "text/javascript"));
+
                 webServer.start();
             } catch (IOException e) {
                 throw new AssertionError("Could not start web server", e);
@@ -178,7 +181,8 @@ public class WebViewDataTest {
         // Make sure all resources have been loaded from the web server
         assertPathsHaveBeenRequested(webServer,
                 "/copper/truck/destroy?smoke=violet", // Actual URL
-                "/copper/truck/service-worker.js"); // Our service worker is installed
+                "/copper/truck/service-worker.js", // Our service worker is installed
+                "/copper/truck/rabbit.jpg"); // loaded image
 
         // Now let's assert that there are no surprises in the data directory
 
@@ -240,6 +244,4 @@ public class WebViewDataTest {
     private void assertIsEmpty(File directory) {
         assertTrue(directory.isDirectory() && directory.list().length == 0);
     }
-
-
 }
