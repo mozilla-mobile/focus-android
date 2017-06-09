@@ -108,9 +108,11 @@ android {
 
         focusWebkitRelease {
             java.srcDir 'src/focusRelease/java'
+            manifest.srcFile 'src/focusRelease/AndroidManifest.xml'
         }
         focusGeckoRelease {
             java.srcDir 'src/focusRelease/java'
+            manifest.srcFile 'src/focusRelease/AndroidManifest.xml'
         }
         klarWebkitRelease {
             java.srcDir 'src/klarRelease/java'
@@ -147,7 +149,7 @@ dependencies {
 
     compile(name: 'telemetry-2b0baee', ext: 'aar')
 
-    focusCompile 'com.adjust.sdk:adjust-android:4.11.1'
+    focusCompile 'com.adjust.sdk:adjust-android:4.11.4'
     focusCompile 'com.google.android.gms:play-services-analytics:10.2.6' // Required by Adjust
 
     geckoCompile(name: 'geckoview-latest', ext: 'aar')
