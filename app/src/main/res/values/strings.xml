@@ -291,4 +291,7 @@ be temporary, and you can try again later.</li>
     <string name="firstrun_skip_button">Skip</string>
     <string name="firstrun_next_button">Next</string>
 
+    <!-- This is shown instead of the number of blocked trackers if content blocking is disabled -->
+    <string name="content_blocking_disabled">-</string>
+
 </resources>
