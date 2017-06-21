@@ -29,8 +29,8 @@ import okhttp3.mockwebserver.MockWebServer;
 
 import static android.support.test.espresso.action.ViewActions.click;
 import static org.junit.Assert.assertTrue;
+import static org.mozilla.focus.activity.TestHelper.waitingTime;
 import static org.mozilla.focus.fragment.FirstrunFragment.FIRSTRUN_PREF;
-
 
 @RunWith(AndroidJUnit4.class)
 public class ImageSelectTest {
@@ -58,13 +58,10 @@ public class ImageSelectTest {
 
             try {
                 webServer.enqueue(new MockResponse()
-                        .setBody(TestHelper.readTestAsset("test.html"))
+                        .setBody(TestHelper.readTestAsset("image_test.html"))
                         .addHeader("Set-Cookie", "sphere=battery; Expires=Wed, 21 Oct 2035 07:28:00 GMT;"));
                 webServer.enqueue(new MockResponse()
                         .setBody(TestHelper.readTestAsset("rabbit.jpg")));
-                webServer.enqueue(new MockResponse()
-                        .setBody(TestHelper.readTestAsset("service-worker.js"))
-                        .setHeader("Content-Type", "text/javascript"));
 
                 webServer.start();
             } catch (IOException e) {
@@ -77,6 +74,7 @@ public class ImageSelectTest {
             super.afterActivityFinished();
 
             try {
+                webServer.close();
                 webServer.shutdown();
             } catch (IOException e) {
                 throw new AssertionError("Could not stop web server", e);
@@ -91,8 +89,12 @@ public class ImageSelectTest {
             .description("Smiley face")
             .enabled(true));
     private UiObject imageMenuTitle = TestHelper.mDevice.findObject(new UiSelector()
-            .resourceId("org.mozilla.focus.debug:id/title")
+            .resourceId("org.mozilla.focus.debug:id/topPanel")
             .enabled(true));
+    private UiObject imageMenuTitleText = TestHelper.mDevice.findObject(new UiSelector()
+            .className("android.widget.TextView")
+            .enabled(true)
+            .instance(0));
     private UiObject shareMenu = TestHelper.mDevice.findObject(new UiSelector()
             .resourceId("org.mozilla.focus.debug:id/design_menu_item_text")
             .text("Share image")
@@ -105,10 +107,13 @@ public class ImageSelectTest {
             .resourceId("org.mozilla.focus.debug:id/design_menu_item_text")
             .text("Save image")
             .enabled(true));
+    private UiObject warning = TestHelper.mDevice.findObject(new UiSelector()
+            .resourceId("org.mozilla.focus.debug:id/warning")
+            .text("Saved and shared images will not be deleted when you erase Firefox Focus (Dev) history.")
+            .enabled(true));
 
     @Test
     public void ImageMenuTest() throws InterruptedException, UiObjectNotFoundException, IOException {
-        final long waitingTime = TestHelper.waitingTime;
         final String imagePath = webServer.url(TEST_PATH).toString() + "rabbit.jpg";
 
         // Load website with service worker
@@ -129,10 +134,12 @@ public class ImageSelectTest {
         rabbitImage.dragTo(rabbitImage,5);
         imageMenuTitle.waitForExists(waitingTime);
         Assert.assertTrue(imageMenuTitle.exists());
-        Assert.assertEquals(imageMenuTitle.getText(), webServer.url(TEST_PATH).toString() + "rabbit.jpg");
+        Assert.assertEquals(imageMenuTitleText.getText(),
+                webServer.url(TEST_PATH).toString() + "rabbit.jpg");
         Assert.assertTrue(shareMenu.exists());
         Assert.assertTrue(copyMenu.exists());
         Assert.assertTrue(saveMenu.exists());
+        Assert.assertTrue(warning.exists());
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             copyMenu.click();
         }
@@ -154,5 +161,79 @@ public class ImageSelectTest {
             TestHelper.mDevice.pressKeyCode(KeyEvent.KEYCODE_PASTE);
             Assert.assertEquals(TestHelper.inlineAutocompleteEditText.getText(), imagePath);
         }
+    }
+
+    @Test
+    public void ShareImageTest() throws UiObjectNotFoundException {
+
+        // Load website with service worker
+        TestHelper.urlBar.waitForExists(waitingTime);
+        TestHelper.urlBar.click();
+        TestHelper.inlineAutocompleteEditText.waitForExists(waitingTime);
+        TestHelper.inlineAutocompleteEditText.clearTextField();
+        TestHelper.inlineAutocompleteEditText.setText(webServer.url(TEST_PATH).toString());
+        TestHelper.hint.waitForExists(waitingTime);
+        TestHelper.pressEnterKey();
+        TestHelper.webView.waitForExists(waitingTime);
+
+        // Assert website is loaded
+        assertTrue("Website title loaded", titleMsg.exists());
+
+        // Find image and long tap it
+        Assert.assertTrue(rabbitImage.exists());
+        rabbitImage.dragTo(rabbitImage,5);
+        imageMenuTitle.waitForExists(waitingTime);
+        Assert.assertTrue(shareMenu.exists());
+        Assert.assertTrue(copyMenu.exists());
+        Assert.assertTrue(saveMenu.exists());
+        shareMenu.click();
+
+        // For simulators, where apps are not installed, it'll take to message app
+        TestHelper.shareMenuHeader.waitForExists(waitingTime);
+        Assert.assertTrue(TestHelper.shareMenuHeader.exists());
+        Assert.assertTrue(TestHelper.shareAppList.exists());
+        TestHelper.pressBackKey();
+        TestHelper.floatingEraseButton.perform(click());
+        TestHelper.erasedMsg.waitForExists(waitingTime);
+    }
+
+    @Test
+    public void DownloadImageMenuTest() throws UiObjectNotFoundException {
+
+        // Load website with service worker
+        TestHelper.urlBar.waitForExists(waitingTime);
+        TestHelper.urlBar.click();
+        TestHelper.inlineAutocompleteEditText.waitForExists(waitingTime);
+        TestHelper.inlineAutocompleteEditText.clearTextField();
+        TestHelper.inlineAutocompleteEditText.setText("http://www.google.com");
+        TestHelper.hint.waitForExists(waitingTime);
+        TestHelper.pressEnterKey();
+        TestHelper.webView.waitForExists(waitingTime);
+
+        // Find image and long tap it
+        UiObject webImage = TestHelper.mDevice.findObject(new UiSelector()
+                .className("android.view.View")
+                .instance(2)
+                .enabled(true));
+        webImage.waitForExists(waitingTime);
+        Assert.assertTrue(webImage.exists());
+        webImage.dragTo(webImage,5);
+        imageMenuTitle.waitForExists(waitingTime);
+        Assert.assertTrue(imageMenuTitle.exists());
+        Assert.assertTrue(shareMenu.exists());
+        Assert.assertTrue(copyMenu.exists());
+        Assert.assertTrue(saveMenu.exists());
+        saveMenu.click();
+
+        TestHelper.mDevice.openNotification();
+        UiObject savedNotification = TestHelper.mDevice.findObject(new UiSelector()
+                .text("Download complete.")
+                .resourceId("android:id/text")
+                .enabled(true));
+        savedNotification.waitForExists(waitingTime);
+        Assert.assertTrue(savedNotification.exists());
+        TestHelper.pressBackKey();
+        TestHelper.floatingEraseButton.perform(click());
+        TestHelper.erasedMsg.waitForExists(waitingTime);
     }
 }

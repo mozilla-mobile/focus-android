@@ -21,7 +21,7 @@ import org.mozilla.focus.web.BrowsingSession;
 
     private BrowserFragment fragment;
 
-    /* package */ BlockingItemViewHolder(View itemView, BrowserFragment fragment) {
+    /* package */ BlockingItemViewHolder(View itemView, final BrowserFragment fragment) {
         super(itemView);
 
         this.fragment = fragment;
@@ -30,12 +30,26 @@ import org.mozilla.focus.web.BrowsingSession;
         switchView.setChecked(fragment.isBlockingEnabled());
         switchView.setOnCheckedChangeListener(this);
 
+        final View helpView = itemView.findViewById(R.id.help_trackers);
+        helpView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (browserFragment != null) {
+                    browserFragment.onClick(view);
+                }
+            }
+        });
+
         final TextView trackerCounter = (TextView) itemView.findViewById(R.id.trackers_count);
 
         BrowsingSession.getInstance().setTrackingCountListener(new BrowsingSession.TrackingCountListener() {
             @Override
             public void onTrackingCountChanged(int trackingCount) {
-                updateTrackingCount(trackerCounter, trackingCount);
+                if (fragment.isBlockingEnabled()) {
+                    updateTrackingCount(trackerCounter, trackingCount);
+                } else {
+                    disableTrackingCount(trackerCounter);
+                }
             }
         });
     }
@@ -45,6 +59,15 @@ import org.mozilla.focus.web.BrowsingSession;
             @Override
             public void run() {
                 view.setText(String.valueOf(count));
+            }
+        });
+    }
+
+    private void disableTrackingCount(final TextView view) {
+        ThreadUtils.postToMainThread(new Runnable() {
+            @Override
+            public void run() {
+                view.setText("-");
             }
         });
     }

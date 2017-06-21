@@ -15,6 +15,7 @@ import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v7.app.AlertDialog;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -22,15 +23,15 @@ import android.widget.TextView;
 
 import org.mozilla.focus.R;
 import org.mozilla.focus.telemetry.TelemetryWrapper;
+import org.mozilla.focus.utils.UrlUtils;
 import org.mozilla.focus.web.Download;
 import org.mozilla.focus.web.IWebView;
 
 public class WebContextMenu {
 
     private static View createTitleView(final @NonNull Context context, final @NonNull String title) {
-        final View titleView = LayoutInflater.from(context).inflate(R.layout.dialog_title, null);
-        ((TextView) titleView.findViewById(R.id.title)).setText(title);
-
+        final TextView titleView = (TextView) LayoutInflater.from(context).inflate(R.layout.context_menu_title, null);
+        titleView.setText(title);
         return titleView;
     }
 
@@ -54,8 +55,8 @@ public class WebContextMenu {
         }
         builder.setCustomTitle(titleView);
 
-        final NavigationView menu = new NavigationView(context);
-        builder.setView(menu);
+        final View view = LayoutInflater.from(context).inflate(R.layout.context_menu, null);
+        builder.setView(view);
 
         builder.setOnCancelListener(new DialogInterface.OnCancelListener() {
             @Override
@@ -68,7 +69,17 @@ public class WebContextMenu {
 
         final Dialog dialog = builder.create();
 
+        final NavigationView menu = (NavigationView) view.findViewById(R.id.context_menu);
         setupMenuForHitTarget(dialog, menu, callback, hitTarget);
+
+        final TextView warningView = (TextView) view.findViewById(R.id.warning);
+        if (hitTarget.isImage) {
+            //noinspection deprecation -- Mew API is only available on 24+
+            warningView.setText(Html.fromHtml(
+                    context.getString(R.string.contextmenu_image_warning, context.getString(R.string.app_name))));
+        } else {
+            warningView.setVisibility(View.GONE);
+        }
 
         dialog.show();
     }
@@ -88,7 +99,9 @@ public class WebContextMenu {
         navigationView.getMenu().findItem(R.id.menu_link_copy).setVisible(hitTarget.isLink);
         navigationView.getMenu().findItem(R.id.menu_image_share).setVisible(hitTarget.isImage);
         navigationView.getMenu().findItem(R.id.menu_image_copy).setVisible(hitTarget.isImage);
-        navigationView.getMenu().findItem(R.id.menu_image_save).setVisible(hitTarget.isImage);
+
+        navigationView.getMenu().findItem(R.id.menu_image_save).setVisible(
+                hitTarget.isImage && UrlUtils.isHttpOrHttps(hitTarget.imageURL));
 
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -115,6 +128,7 @@ public class WebContextMenu {
                     case R.id.menu_image_save: {
                         final Download download = new Download(hitTarget.imageURL, null, null, null, -1, Environment.DIRECTORY_PICTURES);
                         callback.onDownloadStart(download);
+                        TelemetryWrapper.saveImageEvent();
                         return true;
                     }
                     case R.id.menu_link_copy:

@@ -56,11 +56,13 @@ public final class TelemetryWrapper {
         private static final String FOREGROUND = "foreground";
         private static final String BACKGROUND = "background";
         private static final String SHARE = "share";
+        private static final String SAVE = "save";
         private static final String COPY = "copy";
         private static final String OPEN = "open";
         private static final String INTENT_URL = "intent_url";
         private static final String INTENT_CUSTOM_TAB = "intent_custom_tab";
         private static final String TEXT_SELECTION_INTENT = "text_selection_intent";
+        private static final String SHOW = "show";
     }
 
     private static class Object {
@@ -75,8 +77,9 @@ public final class TelemetryWrapper {
         private static final String BLOCKING_SWITCH = "blocking_switch";
         private static final String BROWSER = "browser";
         private static final String BROWSER_CONTEXTMENU = "browser_contextmenu";
-        private static final String CUSTOM_TAB_CLOSE_BUTTON = "custom_tab_close_button";
-        private static final String CUSTOM_TAB_ACTION_BUTTON = "custom_tab_action_button";
+        private static final String CUSTOM_TAB_CLOSE_BUTTON = "custom_tab_close_but";
+        private static final String CUSTOM_TAB_ACTION_BUTTON = "custom_tab_action_bu";
+        private static final String FIRSTRUN = "firstrun";
     }
 
     private static class Value {
@@ -87,6 +90,8 @@ public final class TelemetryWrapper {
         private static final String IMAGE = "image";
         private static final String LINK = "link";
         private static final String CUSTOM_TAB = "custom_tab";
+        private static final String SKIP = "skip";
+        private static final String FINISH = "finish";
     }
 
     private static class Extra {
@@ -144,7 +149,8 @@ public final class TelemetryWrapper {
                             resources.getString(R.string.pref_key_privacy_block_analytics),
                             resources.getString(R.string.pref_key_privacy_block_social),
                             resources.getString(R.string.pref_key_privacy_block_other),
-                            resources.getString(R.string.pref_key_performance_block_webfonts))
+                            resources.getString(R.string.pref_key_performance_block_webfonts),
+                            resources.getString(R.string.pref_key_locale))
                     .setCollectionEnabled(telemetryEnabled)
                     .setUploadEnabled(telemetryEnabled);
 
@@ -211,8 +217,22 @@ public final class TelemetryWrapper {
     /**
      * Sends a list of the custom tab options that a custom-tab intent made use of.
      */
-    public static void customTabsIntentEvent(final String options) {
-        TelemetryEvent.create(Category.ACTION, Method.INTENT_CUSTOM_TAB, Object.APP, options).queue();
+    public static void customTabsIntentEvent(final List<String> options) {
+        final TelemetryEvent event = TelemetryEvent.create(Category.ACTION, Method.INTENT_CUSTOM_TAB, Object.APP);
+
+        // We can send at most 10 extras per event - we just ignore the rest if there are too many
+        final int extrasCount;
+        if (options.size() > 10) {
+            extrasCount = 10;
+        } else {
+            extrasCount = options.size();
+        }
+
+        for (final String option : options.subList(0, extrasCount)) {
+            event.extra(option, "true");
+        }
+
+        event.queue();
     }
 
     public static void closeCustomTabEvent() {
@@ -287,6 +307,10 @@ public final class TelemetryWrapper {
         TelemetryEvent.create(Category.ACTION, Method.SHARE, Object.BROWSER_CONTEXTMENU, Value.IMAGE).queue();
     }
 
+    public static void saveImageEvent() {
+        TelemetryEvent.create(Category.ACTION, Method.SAVE, Object.BROWSER_CONTEXTMENU, Value.IMAGE).queue();
+    }
+
     public static void copyLinkEvent() {
         TelemetryEvent.create(Category.ACTION, Method.COPY, Object.BROWSER_CONTEXTMENU, Value.LINK).queue();
     }
@@ -317,5 +341,17 @@ public final class TelemetryWrapper {
 
     public static void blockingSwitchEvent(boolean isBlockingEnabled) {
         TelemetryEvent.create(Category.ACTION, Method.CLICK, Object.BLOCKING_SWITCH, String.valueOf(isBlockingEnabled)).queue();
+    }
+
+    public static void showFirstRunPageEvent(int page) {
+        TelemetryEvent.create(Category.ACTION, Method.SHOW, Object.FIRSTRUN, String.valueOf(page)).queue();
+    }
+
+    public static void skipFirstRunEvent() {
+        TelemetryEvent.create(Category.ACTION, Method.CLICK, Object.FIRSTRUN, Value.SKIP).queue();
+    }
+
+    public static void finishFirstRunEvent() {
+        TelemetryEvent.create(Category.ACTION, Method.CLICK, Object.FIRSTRUN, Value.FINISH).queue();
     }
 }

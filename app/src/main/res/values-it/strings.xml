@@ -31,6 +31,8 @@
   <string name="preference_privacy_block_social">Blocca traccianti social</string>
   <string name="preference_privacy_block_content">Blocca altri contenuti traccianti</string>
   <string name="preference_privacy_block_content_summary">Alcuni video e pagine web potrebbero non funzionare</string>
+  <string name="preference_privacy_secure_mode">Invisibile</string>
+  <string name="preference_privacy_secure_mode_summary">Disattiva la modalità invisibile per poter salvare screenshot e visualizzare i siti visitati con %1$s nell’elenco delle app recenti.</string>
   <string name="preference_category_performance">Prestazioni</string>
   <string name="preference_performance_block_webfonts">Blocca web font</string>
   <string name="preference_performance_block_webfonts_summary">Alcune immagini e icone potrebbero non essere visualizzate</string>
@@ -52,11 +54,8 @@
   <string name="content_description_back">Torna indietro</string>
   <string name="content_description_stop">Interrompi il caricamento del sito</string>
   <string name="content_description_customtab_exit">Torna all’applicazione precedente</string>
+  <string name="content_description_blocking_switch">Blocca elementi traccianti</string>
   <string name="context_menu_paste_go">Incolla e vai</string>
-  <string name="firstrun_title">Naviga come se nessuno ti stesse guardando.</string>
-  <string name="firstrun_description">Blocca automaticamente gli elementi in grado di tracciarti durante la navigazione. Poi, con un semplice tocco, elimina le pagine visitate, i cookie e le password dal dispositivo.</string>
-  <string name="firstrun_button">Ho capito!</string>
-  <string name="firstrun_footer">Per essere chiari, i siti web visitati e i servizi utilizzati potranno comunque stabilire dove sei stato.</string>
   <string name="your_rights">I tuoi diritti</string>
   <string name="external_app_prompt_title">Apri link in un’altra app</string>
   <string name="external_app_prompt">È possibile uscire da %1$s e aprire questo link in %2$s.</string>
@@ -79,10 +78,20 @@
   <string name="error_sslhandshake_title">Connessione sicura non riuscita</string>
   <string name="error_sslhandshake_message"><![CDATA[<ul xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">"\n  "<li>Potrebbe trattarsi di un problema nella configurazione del server oppure di un tentativo da parte di qualcuno di sostituirsi al server stesso.</li>"\n  "<li>Se &#232; stato possibile connettersi a questo server in passato, il problema potrebbe essere solo temporaneo. Si consiglia di riprovare in seguito.</li>\n</ul>]]></string>
   <string name="error_generic_title">Oops</string>
-  <string name="error_generic_message">Non è stato possibile caricare questa pagina per qualche motivo.</string>
+  <string name="error_generic_message">Per qualche motivo non è stato possibile caricare questa pagina.</string>
   <string name="contextmenu_link_share">Condividi link</string>
   <string name="contextmenu_link_copy">Copia indirizzo link</string>
   <string name="contextmenu_image_share">Condividi immagine</string>
   <string name="contextmenu_image_copy">Copia indirizzo immagine</string>
   <string name="contextmenu_image_save">Salva immagine</string>
+  <string name="contextmenu_image_warning"><![CDATA["Le immagini salvate e condivise "<b xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">non verranno eliminate</b>" quando si elimina la cronologia di %1$s."]]></string>
+  <string name="firstrun_tracking_title">Naviga come se nessuno ti stesse guardando</string>
+  <string name="firstrun_tracking_text">Blocca automaticamente il tracciamento durante la navigazione. Poi rimuovi le pagine visitate e i cookie toccando l’icona del cestino nell’app o nelle notifiche.</string>
+  <string name="firstrun_defaultbrowser_title">Potenzia la tua privacy</string>
+  <string name="firstrun_defaultbrowser_text">Imposta %1$s come browser predefinito e goditi tutti i vantaggi della navigazione anonima quando apri link da altre app Android.</string>
+  <string name="firstrun_breaking_title">Una soluzione veloce quando\nil blocco “rompe” una pagina</string>
+  <string name="firstrun_breaking_text">Se una pagina sembra non funzionare correttamente con il blocco degli elementi traccianti, disattivalo con un semplice tocco nel menu strumenti.</string>
+  <string name="firstrun_close_button">Ho capito!</string>
+  <string name="firstrun_skip_button">Ignora</string>
+  <string name="firstrun_next_button">Avanti</string>
 </resources>

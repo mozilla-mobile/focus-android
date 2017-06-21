@@ -19,7 +19,7 @@
   <string name="shortcut_erase_short_label">Eliminar</string>
   <string name="shortcut_erase_long_label">Eliminar historial de navegación</string>
   <string name="text_selection_search_action">Búsqueda privada</string>
-  <string name="about_content"><![CDATA[<p xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">%1$s te da el control.</p>\n<p xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">"&#218;salo como navegador privado:\n  "<ul>"\n    "<li>Busca y navega en la propia aplicaci&#243;n</li>"\n    "<li>Bloquea a los rastreadores (o actualiza los ajustes para permitirlos)</li>"\n    "<li>Limpia para borrar cookies y los historiales de b&#250;squeda y navegaci&#243;n</li>"\n  "</ul>\n</p>\n<p xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">Mozilla es la autora de %1$s. Nuestra misi&#243;n es promover un Internet saludable y abierto.<br/>\n<a href="%2$s">Descubre m&#225;s</a></p>]]></string>
+  <string name="about_content"><![CDATA[<p xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">%1$s te da el control.</p>\n<p xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">"&#218;salo como navegador privado:\n  "<ul>"\n    "<li>Busca y navega en la propia aplicaci&#243;n</li>"\n    "<li>Bloquea a los rastreadores (o cambia los ajustes para permitirlos)</li>"\n    "<li>Limpia para borrar cookies y los historiales de b&#250;squeda y navegaci&#243;n</li>"\n  "</ul>\n</p>\n<p xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">Mozilla es la autora de %1$s. Nuestra misi&#243;n es promover un Internet saludable y abierto.<br/>\n<a href="%2$s">Descubre m&#225;s</a></p>]]></string>
   <string name="preference_category_search">Búsqueda</string>
   <string name="preference_search_engine_default">Predeterminado</string>
   <string name="preference_language">Idioma</string>
@@ -31,6 +31,8 @@
   <string name="preference_privacy_block_social">Bloquear rastreadores sociales</string>
   <string name="preference_privacy_block_content">Bloquear rastreadores de otros contenidos</string>
   <string name="preference_privacy_block_content_summary">Puede interferir con algunos vídeos y páginas web</string>
+  <string name="preference_privacy_secure_mode">Invisible</string>
+  <string name="preference_privacy_secure_mode_summary">Desactiva el modo invisible para hacer capturas de pantalla y ver los sitios que has visitado con %1$s en la lista de aplicaciones recientes</string>
   <string name="preference_category_performance">Rendimiento</string>
   <string name="preference_performance_block_webfonts">Bloquear fuentes web</string>
   <string name="preference_performance_block_webfonts_summary">Puede hacer que falten iconos o imágenes</string>
@@ -52,11 +54,8 @@
   <string name="content_description_back">Ir a la página anterior</string>
   <string name="content_description_stop">Parar la carga de esta página</string>
   <string name="content_description_customtab_exit">Volver a la aplicación anterior</string>
+  <string name="content_description_blocking_switch">Bloquear rastreadores</string>
   <string name="context_menu_paste_go">Pegar e ir</string>
-  <string name="firstrun_title">Navega sin que nadie te observe.</string>
-  <string name="firstrun_description">Bloquea automáticamente a los rastreadores online mientras navegas. Luego, elimina las páginas visitadas, búsquedas, cookies y contraseñas de tu dispositivo.</string>
-  <string name="firstrun_button">¡Entendido!</string>
-  <string name="firstrun_footer">Para ser honestos, aún así las páginas y servicios que usas pueden saber dónde has estado.</string>
   <string name="your_rights">Tus derechos</string>
   <string name="external_app_prompt_title">Abrir enlace con otra aplicación</string>
   <string name="external_app_prompt">Puedes salir de %1$s para abrir este enlace en %2$s.</string>
@@ -77,7 +76,7 @@
   <string name="error_unsupportedprotocol_title">No se entendió la dirección</string>
   <string name="error_unsupportedprotocol_message"><![CDATA[<ul xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">"\n  "<li>Puede que necesites instalar otro software para abrir esta direcci&#243;n.</li>\n</ul>]]></string>
   <string name="error_sslhandshake_title">Falló la conexión segura</string>
-  <string name="error_sslhandshake_message"><![CDATA[<ul xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">"\n  "<li>Puede que haya un problema con la configuraci&#243;n del servidor o puede\nque alguien est&#233; intentando suplantar el servidor.</li>"\n  "<li>Si ya te hab&#237;as conectado antes a este servidor sin problemas, puede que el error\nsea temporal y puedes intentarlo m&#225;s tarde.</li>\n</ul>]]></string>
+  <string name="error_sslhandshake_message"><![CDATA[<ul xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">"\n  "<li>Puede que haya un problema con la configuraci&#243;n del servidor o puede\nque alguien est&#233; intentando suplantar al servidor.</li>"\n  "<li>Si ya te hab&#237;as conectado antes a este servidor sin problemas, puede que el error\nsea temporal y puedes intentarlo m&#225;s tarde.</li>\n</ul>]]></string>
   <string name="error_generic_title">Ups</string>
   <string name="error_generic_message">Por alguna razón, no podemos cargar esta página.</string>
   <string name="contextmenu_link_share">Compartir enlace</string>
@@ -85,4 +84,14 @@
   <string name="contextmenu_image_share">Compartir imagen</string>
   <string name="contextmenu_image_copy">Copiar dirección de la imagen</string>
   <string name="contextmenu_image_save">Guardar imagen</string>
+  <string name="contextmenu_image_warning"><![CDATA["Las imágenes guardadas y compartidas "<b xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">no se borrar&#225;n</b>" cuando elimines el historial de %1$s."]]></string>
+  <string name="firstrun_tracking_title">Navega como si nadie te observara</string>
+  <string name="firstrun_tracking_text">Bloquea automáticamente los rastreadores mientras navegas. Luego, elimina las páginas visitadas y las cookies tocando el ícono de la papelera en la aplicación o en las notificaciones.</string>
+  <string name="firstrun_defaultbrowser_title">Potencia tu privacidad</string>
+  <string name="firstrun_defaultbrowser_text">Establece %1$s como tu navegador predeterminado y disfruta de una navegación privada cuando te conectas a la Web desde otras aplicaciones Android.</string>
+  <string name="firstrun_breaking_title">Una solución rápida cuando\nel bloqueo causa problemas</string>
+  <string name="firstrun_breaking_text">Cuando una página parezca no funcionar por el bloqueo de rastreadores, desactívalo tocando el menú de herramientas.</string>
+  <string name="firstrun_close_button">¡Entendido!</string>
+  <string name="firstrun_skip_button">Saltar</string>
+  <string name="firstrun_next_button">Siguiente</string>
 </resources>

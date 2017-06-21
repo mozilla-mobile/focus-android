@@ -6,6 +6,7 @@
 package org.mozilla.focus.widget;
 
 import android.annotation.TargetApi;
+import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
@@ -20,6 +21,7 @@ import android.widget.Switch;
 import org.mozilla.focus.R;
 import org.mozilla.focus.activity.InfoActivity;
 import org.mozilla.focus.utils.Browsers;
+import org.mozilla.focus.utils.SupportUtils;
 
 @TargetApi(Build.VERSION_CODES.N)
 public class DefaultBrowserPreference extends Preference {
@@ -54,14 +56,27 @@ public class DefaultBrowserPreference extends Preference {
 
     @Override
     protected void onClick() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            Intent intent = new Intent(Settings.ACTION_MANAGE_DEFAULT_APPS_SETTINGS);
-            getContext().startActivity(intent);
-        } else {
-            final String url = getContext().getResources().getString(R.string.url_sumo_default_browser);
+        final Context context = getContext();
 
-            final Intent intent = InfoActivity.getIntentFor(getContext(), url, getTitle().toString());
-            getContext().startActivity(intent);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            openDefaultAppsSettings(context);
+        } else {
+            openSumoPage(context);
         }
+    }
+
+    private void openDefaultAppsSettings(Context context) {
+        try {
+            Intent intent = new Intent(Settings.ACTION_MANAGE_DEFAULT_APPS_SETTINGS);
+            context.startActivity(intent);
+        } catch (ActivityNotFoundException e) {
+            // In some cases, a matching Activity may not exist (according to the Android docs).
+            openSumoPage(context);
+        }
+    }
+
+    private void openSumoPage(Context context) {
+        final Intent intent = InfoActivity.getIntentFor(context, SupportUtils.DEFAULT_BROWSER_URL, getTitle().toString());
+        context.startActivity(intent);
     }
 }

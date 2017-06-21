@@ -20,6 +20,7 @@ import java.util.Objects;
 
 import static android.support.test.espresso.action.ViewActions.click;
 import static junit.framework.Assert.assertTrue;
+import static org.mozilla.focus.activity.TestHelper.waitingTime;
 import static org.mozilla.focus.fragment.FirstrunFragment.FIRSTRUN_PREF;
 
 // This test toggles blocking within the browser view
@@ -27,7 +28,6 @@ import static org.mozilla.focus.fragment.FirstrunFragment.FIRSTRUN_PREF;
 @RunWith(AndroidJUnit4.class)
 public class ToggleBlockTest {
 
-    final long waitingTime = TestHelper.waitingTime;
     @Rule
     public ActivityTestRule<MainActivity> mActivityTestRule
             = new ActivityTestRule<MainActivity>(MainActivity.class) {
@@ -42,17 +42,13 @@ public class ToggleBlockTest {
 
             PreferenceManager.getDefaultSharedPreferences(appContext)
                     .edit()
-                    .putBoolean(FIRSTRUN_PREF, false)
+                    .putBoolean(FIRSTRUN_PREF, true)
                     .apply();
         }
     };
 
     @Test
     public void SimpleToggleTest() throws UiObjectNotFoundException {
-
-        /* Wait for app to load, and take the First View screenshot */
-        TestHelper.firstViewBtn.waitForExists(waitingTime);
-        TestHelper.firstViewBtn.click();
 
         // Open mozilla webpage
         TestHelper.urlBar.waitForExists(waitingTime);
@@ -77,7 +73,7 @@ public class ToggleBlockTest {
         // check that it blocked 0 tracker
         TestHelper.menuButton.perform(click());
         TestHelper.blockCounterItem.waitForExists(waitingTime);
-        assertTrue(Objects.equals(TestHelper.blockCounterItem.getText(), "0"));
+        assertTrue(Objects.equals(TestHelper.blockCounterItem.getText(), "-"));
         assertTrue(!TestHelper.blockToggleSwitch.isChecked());
         TestHelper.blockToggleSwitch.click();
         TestHelper.webView.waitForExists(waitingTime);
@@ -87,8 +83,6 @@ public class ToggleBlockTest {
     public void PreDisableTrackerTest() throws UiObjectNotFoundException {
 
         // Go to settings, disable 'Block Analytic Trackers'
-        TestHelper.firstViewBtn.waitForExists(waitingTime);
-        TestHelper.firstViewBtn.click();
         TestHelper.urlBar.waitForExists(waitingTime);
         TestHelper.menuButton.perform(click());
         TestHelper.settingsMenuItem.click();

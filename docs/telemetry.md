@@ -14,15 +14,16 @@ In addition to the core ping an event ping for UI telemetry is generated and sen
 
 #### Settings
 
-As part of the event ping the most recent state of the user's setting is sent:
+As part of the event ping the most recent state of the user's setting is sent (default values in **bold**):
 
-* Search engine selection (`pref_search_engine`: search engine identifier)
-* Block ad trackers (`pref_privacy_block_ads`: true/false)
-* Block analytics trackers (`pref_privacy_block_other`: true/false)
-* Block social trackers (`pref_privacy_block_social`: true/false)
-* Block content trackers (`pref_privacy_block_analytics`: true/false)
-* Block web fonts (`pref_performance_block_webfonts`: true/false)
-* Block images (`pref_performance_block_images`: true/false)
+* Search engine selection (`pref_search_engine`: search engine identifier; *default value depends on user's locale*)
+* Block ad trackers (`pref_privacy_block_ads`: **true**/false)
+* Block analytics trackers (`pref_privacy_block_other`: true/**false**)
+* Block social trackers (`pref_privacy_block_social`: **true**/false)
+* Block content trackers (`pref_privacy_block_analytics`: **true**/false)
+* Block web fonts (`pref_performance_block_webfonts`: true/**false**)
+* Block images (`pref_performance_block_images`: true/**false**)
+* Locale override (`pref_locale`: **empty string**/<locale-code>). **empty string** indicates "System Default" locale is selected.
 
 #### Events
 
@@ -35,14 +36,15 @@ The event ping contains a list of events ([see event format on readthedocs.io](h
 * (Browsing) Incoming custom tab intent from third-party app - ("action", "intent_custom_tab", "app", options). Options is a list of enabled custom tab options as requested by the third-party app, e.g. [hasToolbarColor, hasCloseButton] etc.
 * (Browsing) Text selection action from third-party app ("action", "text_selection_intent", "app")
 * (Browsing) Long press on image or link, or image in link ("action", "long_press", "browser")
-* (CustomTab) Custom Tab close button clicked - ("action", "click", "custom_tab_close_button")
-* (CustomTab) Custom Tab action button clicked - ("action", "click", "custom_tab_action_button")
+* (CustomTab) Custom Tab close button clicked - ("action", "click", "custom_tab_close_but")
+* (CustomTab) Custom Tab action button clicked - ("action", "click", "custom_tab_action_bu")
 * (CustomTab) Browser Menu custom tab item selected - ("action", "open", "menu", "custom_tab")
 * (BrowserContextMenu) Context menu dismissed without any selection ("action", "cancel", "browser_contextmenu")
 * (BrowserContextMenu) Share Link menu item selected ("action", "share", "browser_contextmenu", "link")
 * (BrowserContextMenu) Copy link menu item selected ("action", "copy", "browser_contextmenu", "link")
 * (BrowserContextMenu) Share Image menu item selected ("action", "share", "browser_contextmenu", "image")
 * (BrowserContextMenu) Copy Image menu item selected ("action", "copy", "browser_contextmenu", "image")
+* (BrowserContextMenu) Save Image menu item selected ("action", "save", "browser_contextmenu", "image")
 * (Search) Query entered: - ("action", "type_query", "search_bar")
 * (Search) Query/Hint clicked: - ("action", "select_query", "search_bar")
 * (Erase) UI button clicked - ("action", "click", "erase_button")
@@ -55,6 +57,9 @@ The event ping contains a list of events ([see event format on readthedocs.io](h
 * Open default app for URL - ("action", "open", "menu", "default")
 * Open Firefox directly - ("action", "open", "menu", "firefox")
 * Open an app for this URL from a list of available apps - ("action", "open", "menu", "selection")
+* (Firstrun) Showing a first run page: ("action", "show", "firstrun", "<page>") (Page numbers start at 0. Initially when the firstrun tour is shown an event for the first page (0) is fired.
+* (Firstrun) Skip button is pressed: ("action", "click", "firstrun", "skip")
+* (Firstrun) Finish button on the last page of the tour is pressed: ("action", "click", "firstrun", "finish")
 
 #### Limits
 

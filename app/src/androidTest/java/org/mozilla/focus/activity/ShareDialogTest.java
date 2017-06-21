@@ -20,6 +20,7 @@ import org.junit.runner.RunWith;
 
 import static android.support.test.espresso.action.ViewActions.click;
 import static junit.framework.Assert.assertTrue;
+import static org.mozilla.focus.activity.TestHelper.waitingTime;
 import static org.mozilla.focus.fragment.FirstrunFragment.FIRSTRUN_PREF;
 
 // This test opens share menu
@@ -40,29 +41,17 @@ public class ShareDialogTest {
 
             PreferenceManager.getDefaultSharedPreferences(appContext)
                     .edit()
-                    .putBoolean(FIRSTRUN_PREF, false)
+                    .putBoolean(FIRSTRUN_PREF, true)
                     .apply();
         }
     };
 
     @Test
     public void shareTest() throws InterruptedException, UiObjectNotFoundException {
-        final long waitingTime = TestHelper.waitingTime;
 
         UiObject shareBtn = TestHelper.mDevice.findObject(new UiSelector()
                 .resourceId("org.mozilla.focus.debug:id/share")
                 .enabled(true));
-        UiObject shareMenuHeader = TestHelper.mDevice.findObject(new UiSelector()
-                .resourceId("android:id/title")
-                .text("Share via")
-                .enabled(true));
-        UiObject shareAppList = TestHelper.mDevice.findObject(new UiSelector()
-                .resourceId("android:id/resolver_list")
-                .enabled(true));
-
-        /* Wait for app to load, and take the First View screenshot */
-        TestHelper.firstViewBtn.waitForExists(waitingTime);
-        TestHelper.firstViewBtn.click();
 
         /* Go to a webpage */
         TestHelper.urlBar.waitForExists(waitingTime);
@@ -80,9 +69,9 @@ public class ShareDialogTest {
         shareBtn.click();
 
         // For simulators, where apps are not installed, it'll take to message app
-        shareMenuHeader.waitForExists(waitingTime);
-        assertTrue(shareMenuHeader.exists());
-        assertTrue(shareAppList.exists());
+        TestHelper.shareMenuHeader.waitForExists(waitingTime);
+        assertTrue(TestHelper.shareMenuHeader.exists());
+        assertTrue(TestHelper.shareAppList.exists());
         TestHelper.pressBackKey();
     }
 }

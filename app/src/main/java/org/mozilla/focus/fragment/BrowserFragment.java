@@ -13,10 +13,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.graphics.drawable.TransitionDrawable;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
@@ -32,6 +33,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import org.mozilla.focus.R;
+import org.mozilla.focus.activity.InfoActivity;
 import org.mozilla.focus.activity.InstallFirefoxActivity;
 import org.mozilla.focus.locale.LocaleAwareAppCompatActivity;
 import org.mozilla.focus.menu.BrowserMenu;
@@ -40,6 +42,8 @@ import org.mozilla.focus.notification.BrowsingNotificationService;
 import org.mozilla.focus.open.OpenWithFragment;
 import org.mozilla.focus.telemetry.TelemetryWrapper;
 import org.mozilla.focus.utils.Browsers;
+import org.mozilla.focus.utils.ColorUtils;
+import org.mozilla.focus.utils.DrawableUtils;
 import org.mozilla.focus.utils.IntentUtils;
 import org.mozilla.focus.utils.UrlUtils;
 import org.mozilla.focus.utils.ViewUtils;
@@ -73,11 +77,13 @@ public class BrowserFragment extends WebFragment implements View.OnClickListener
     }
 
     private Download pendingDownload;
+    private View backgroundView;
     private TransitionDrawable backgroundTransition;
     private TextView urlView;
     private AnimatedProgressBar progressView;
-    private View lockView;
-    private View menuView;
+    private ImageView lockView;
+    private ImageButton menuView;
+    private WeakReference<BrowserMenu> menuWeakReference = new WeakReference<>(null);
 
     private View forwardButton;
     private View backButton;
@@ -95,6 +101,18 @@ public class BrowserFragment extends WebFragment implements View.OnClickListener
         super.onAttach(context);
 
         BrowsingNotificationService.start(context);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+
+        final BrowserMenu menu = menuWeakReference.get();
+        if (menu != null) {
+            menu.dismiss();
+
+            menuWeakReference.clear();
+        }
     }
 
     @Override
@@ -119,7 +137,8 @@ public class BrowserFragment extends WebFragment implements View.OnClickListener
         urlView = (TextView) view.findViewById(R.id.display_url);
         updateURL(getInitialUrl());
 
-        backgroundTransition = (TransitionDrawable) view.findViewById(R.id.background).getBackground();
+        backgroundView = view.findViewById(R.id.background);
+        backgroundTransition = (TransitionDrawable) backgroundView.getBackground();
 
         if ((refreshButton = view.findViewById(R.id.refresh)) != null) {
             refreshButton.setOnClickListener(this);
@@ -137,11 +156,11 @@ public class BrowserFragment extends WebFragment implements View.OnClickListener
             backButton.setOnClickListener(this);
         }
 
-        lockView = view.findViewById(R.id.lock);
+        lockView = (ImageView) view.findViewById(R.id.lock);
 
         progressView = (AnimatedProgressBar) view.findViewById(R.id.progress);
 
-        menuView = view.findViewById(R.id.menu);
+        menuView = (ImageButton) view.findViewById(R.id.menu);
         menuView.setOnClickListener(this);
 
         if (BrowsingSession.getInstance().isCustomTab()) {
@@ -162,9 +181,6 @@ public class BrowserFragment extends WebFragment implements View.OnClickListener
 
     private void initialiseCustomTabUi(final @NonNull View view) {
         final CustomTabConfig customTabConfig = BrowsingSession.getInstance().getCustomTabConfig();
-        if (customTabConfig == null) {
-            throw new IllegalStateException("Can't initialise custom tab UI for non custom-tab session");
-        }
 
         // Unfortunately there's no simpler way to have the FAB only in normal-browser mode.
         // - ViewStub: requires splitting attributes for the FAB between the ViewStub, and actual FAB layout file.
@@ -176,9 +192,16 @@ public class BrowserFragment extends WebFragment implements View.OnClickListener
         final ViewGroup eraseContainer = (ViewGroup) erase.getParent();
         eraseContainer.removeView(erase);
 
+        final int textColor;
+
         final View toolbar = view.findViewById(R.id.urlbar);
         if (customTabConfig.toolbarColor != null) {
             toolbar.setBackgroundColor(customTabConfig.toolbarColor);
+
+            textColor = ColorUtils.getReadableTextColor(customTabConfig.toolbarColor);
+            urlView.setTextColor(textColor);
+        } else {
+            textColor = Color.WHITE;
         }
 
         final ImageView closeButton = (ImageView) view.findViewById(R.id.customtab_close);
@@ -190,7 +213,9 @@ public class BrowserFragment extends WebFragment implements View.OnClickListener
             closeButton.setImageBitmap(customTabConfig.closeButtonIcon);
         } else {
             // Always set the icon in case it's been overridden by a previous CT invocation
-            closeButton.setImageResource(R.drawable.ic_close);
+            final Drawable closeIcon = DrawableUtils.loadAndTintDrawable(getContext(), R.drawable.ic_close, textColor);
+
+            closeButton.setImageDrawable(closeIcon);
         }
 
         if (customTabConfig.disableUrlbarHiding) {
@@ -211,7 +236,10 @@ public class BrowserFragment extends WebFragment implements View.OnClickListener
                 @Override
                 public void onClick(View v) {
                     try {
-                        pendingIntent.send();
+                        final Intent intent = new Intent();
+                        intent.setData(Uri.parse(getUrl()));
+
+                        pendingIntent.send(getContext(), 0, intent);
                     } catch (PendingIntent.CanceledException e) {
                         // There's really nothing we can do here...
                     }
@@ -219,6 +247,13 @@ public class BrowserFragment extends WebFragment implements View.OnClickListener
                 }
             });
         }
+
+        // We need to tint some icons.. We already tinted the close button above. Let's tint our other icons too.
+        final Drawable lockIcon = DrawableUtils.loadAndTintDrawable(getContext(), R.drawable.ic_lock, textColor);
+        lockView.setImageDrawable(lockIcon);
+
+        final Drawable menuIcon = DrawableUtils.loadAndTintDrawable(getContext(), R.drawable.ic_menu, textColor);
+        menuView.setImageDrawable(menuIcon);
     }
 
     @Override
@@ -269,8 +304,10 @@ public class BrowserFragment extends WebFragment implements View.OnClickListener
 
                 progressView.announceForAccessibility(getString(R.string.accessibility_announcement_loading));
 
+
                 backgroundTransition.resetTransition();
 
+                progressView.setProgress(0);
                 progressView.setVisibility(View.VISIBLE);
 
                 updateToolbarButtonStates();
@@ -280,10 +317,7 @@ public class BrowserFragment extends WebFragment implements View.OnClickListener
             public void onPageFinished(boolean isSecure) {
                 updateIsLoading(false);
 
-                if (isBlockingEnabled()) {
-                    // We only show the colorful background gradient when content blocking is enabled.
-                    backgroundTransition.startTransition(ANIMATION_DURATION);
-                }
+                backgroundTransition.startTransition(ANIMATION_DURATION);
 
                 progressView.announceForAccessibility(getString(R.string.accessibility_announcement_loading_finished));
 
@@ -453,6 +487,8 @@ public class BrowserFragment extends WebFragment implements View.OnClickListener
 
                 BrowserMenu menu = new BrowserMenu(getActivity(), this, customTabConfig);
                 menu.show(menuView);
+
+                menuWeakReference = new WeakReference<>(menu);
                 break;
 
             case R.id.display_url:
@@ -498,14 +534,9 @@ public class BrowserFragment extends WebFragment implements View.OnClickListener
             }
 
             case R.id.share: {
-                final IWebView webView = getWebView();
-                if (webView == null) {
-                    return;
-                }
-
                 final Intent shareIntent = new Intent(Intent.ACTION_SEND);
                 shareIntent.setType("text/plain");
-                shareIntent.putExtra(Intent.EXTRA_TEXT, webView.getUrl());
+                shareIntent.putExtra(Intent.EXTRA_TEXT, getUrl());
                 startActivity(Intent.createChooser(shareIntent, getString(R.string.share_dialog_title)));
 
                 TelemetryWrapper.shareEvent();
@@ -517,12 +548,7 @@ public class BrowserFragment extends WebFragment implements View.OnClickListener
                 break;
 
             case R.id.open_default: {
-                final IWebView webView = getWebView();
-                if (webView == null) {
-                    return;
-                }
-
-                final Browsers browsers = new Browsers(getContext(), webView.getUrl());
+                final Browsers browsers = new Browsers(getContext(), getUrl());
 
                 final ActivityInfo defaultBrowser = browsers.getDefaultBrowser();
 
@@ -532,7 +558,7 @@ public class BrowserFragment extends WebFragment implements View.OnClickListener
                     throw new IllegalStateException("<Open with $Default> was shown when no default browser is set");
                 }
 
-                final Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(webView.getUrl()));
+                final Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(getUrl()));
                 intent.setPackage(defaultBrowser.packageName);
                 startActivity(intent);
 
@@ -541,15 +567,10 @@ public class BrowserFragment extends WebFragment implements View.OnClickListener
             }
 
             case R.id.open_firefox: {
-                final IWebView webView = getWebView();
-                if (webView == null) {
-                    return;
-                }
-
-                final Browsers browsers = new Browsers(getContext(), webView.getUrl());
+                final Browsers browsers = new Browsers(getContext(), getUrl());
 
                 if (browsers.hasFirefoxBrandedBrowserInstalled()) {
-                    final Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(webView.getUrl()));
+                    final Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(getUrl()));
                     intent.setPackage(browsers.getFirefoxBrandedBrowser().packageName);
                     startActivity(intent);
                 } else {
@@ -561,15 +582,10 @@ public class BrowserFragment extends WebFragment implements View.OnClickListener
             }
 
             case R.id.open_select_browser: {
-                final IWebView webView = getWebView();
-                if (webView == null) {
-                    return;
-                }
-
-                final Browsers browsers = new Browsers(getContext(), webView.getUrl());
+                final Browsers browsers = new Browsers(getContext(), getUrl());
 
                 final OpenWithFragment fragment = OpenWithFragment.newInstance(
-                        browsers.getInstalledBrowsers(), webView.getUrl());
+                        browsers.getInstalledBrowsers(), getUrl());
                 fragment.show(getFragmentManager(), OpenWithFragment.FRAGMENT_TAG);
 
                 TelemetryWrapper.openSelectionEvent();
@@ -583,6 +599,16 @@ public class BrowserFragment extends WebFragment implements View.OnClickListener
                 TelemetryWrapper.closeCustomTabEvent();
                 break;
             }
+
+            case R.id.help:
+                Intent helpIntent = InfoActivity.getHelpIntent(getActivity());
+                startActivity(helpIntent);
+                break;
+
+            case R.id.help_trackers:
+                Intent trackerHelpIntent = InfoActivity.getTrackerHelpIntent(getActivity());
+                startActivity(trackerHelpIntent);
+                break;
 
             default:
                 throw new IllegalArgumentException("Unhandled menu item in BrowserFragment");
@@ -611,10 +637,13 @@ public class BrowserFragment extends WebFragment implements View.OnClickListener
         stopButton.setVisibility(isLoading ? View.VISIBLE : View.GONE);
     }
 
-    @Nullable
+    @NonNull
     public String getUrl() {
-        final IWebView webView = getWebView();
-        return webView != null ? webView.getUrl() : null;
+        // getUrl() is used for things like sharing the current URL. We could try to use the webview,
+        // but sometimes it's null, and sometimes it returns a null URL. Sometimes it returns a data:
+        // URL for error pages. The URL we show in the toolbar is (A) always correct and (B) what the
+        // user is probably expecting to share, so lets use that here:
+        return urlView.getText().toString();
     }
 
     public boolean canGoForward() {
@@ -657,6 +686,9 @@ public class BrowserFragment extends WebFragment implements View.OnClickListener
         if (webView != null) {
             webView.setBlockingEnabled(enabled);
         }
+
+        backgroundView.setBackgroundResource(enabled ? R.drawable.animated_background : R.drawable.animated_background_disabled);
+        backgroundTransition = (TransitionDrawable) backgroundView.getBackground();
     }
 
     public boolean isBlockingEnabled() {

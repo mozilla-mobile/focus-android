@@ -17,6 +17,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import static junit.framework.Assert.assertTrue;
+import static org.mozilla.focus.activity.TestHelper.waitingTime;
 import static org.mozilla.focus.fragment.FirstrunFragment.FIRSTRUN_PREF;
 
 @RunWith(AndroidJUnit4.class)
@@ -35,18 +36,15 @@ public class URLCompletionTest {
                     .getApplicationContext();
             PreferenceManager.getDefaultSharedPreferences(appContext)
                     .edit()
-                    .putBoolean(FIRSTRUN_PREF, false)
+                    .putBoolean(FIRSTRUN_PREF, true)
                     .apply();
         }
     };
 
     @Test
     public void CompletionTest() throws InterruptedException, UiObjectNotFoundException {
-        final long waitingTime = TestHelper.waitingTime;
 
         /* Open website */
-        TestHelper.firstViewBtn.waitForExists(waitingTime);
-        TestHelper.firstViewBtn.click();
         TestHelper.urlBar.waitForExists(waitingTime);
         TestHelper.urlBar.click();
 

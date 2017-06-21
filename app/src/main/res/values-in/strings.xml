@@ -13,10 +13,17 @@
   <string name="menu_about">Tentang</string>
   <string name="menu_help">Bantuan</string>
   <string name="menu_rights">Hak Anda</string>
+  <string name="menu_trackers_blocked_title">Pelacak terblokir</string>
+  <string name="share_dialog_title">Bagikan via</string>
+  <string name="notification_erase_text">Hapus riwayat penjelajahan</string>
+  <string name="shortcut_erase_short_label">Hapus</string>
+  <string name="shortcut_erase_long_label">Hapus riwayat penjelajahan</string>
+  <string name="text_selection_search_action">Mencari Secara Privat</string>
   <string name="about_content"><![CDATA[<p xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">%1$s menempatkan Anda dalam kendali.</p>\n<p xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">"Gunakan sebagai peramban privat:\n  "<ul>"\n    "<li>Cari dan menjelajah langsung di dalam aplikasi</li>"\n    "<li>Memblokir pelacak (atau ubah di pengaturan untuk izinkan pelacak)</li>"\n    "<li>Hapus untuk menghilangkan kuki termasuk juga pencarian dan riwayat penjelajahan</li>"\n  "</ul>"\n "</p>\n<p xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">%1$s diproduksi oleh Mozilla. Misi kami adalah untuk memelihara Internet yang sehat dan terbuka.<br/>" "<a href="%2$s">Pelajari lebih lanjut</a></p>]]></string>
   <string name="preference_category_search">Cari</string>
   <string name="preference_search_engine_default">Baku</string>
   <string name="preference_language">Bahasa</string>
+  <string name="preference_language_systemdefault">Bawaan sistem</string>
   <string name="preference_dialog_title_search_engine">Pencarian baku</string>
   <string name="preference_category_privacy">Privasi</string>
   <string name="preference_privacy_block_ads">Blokir pelacak iklan</string>
@@ -24,6 +31,8 @@
   <string name="preference_privacy_block_social">Blokir pelacak sosial</string>
   <string name="preference_privacy_block_content">Blokir pelacak konten lainnya</string>
   <string name="preference_privacy_block_content_summary">Mungkin menghentikan beberapa video dan laman Web</string>
+  <string name="preference_privacy_secure_mode">Mode Siluman</string>
+  <string name="preference_privacy_secure_mode_summary">Nonaktifkan mode siluman untuk mengambil tangkapan layar dan melihat situs yang Anda kunjungi menggunakan %1$s di daftar Aplikasi Terakhir</string>
   <string name="preference_category_performance">Kinerja</string>
   <string name="preference_performance_block_webfonts">Blokir font Web</string>
   <string name="preference_performance_block_webfonts_summary">Dapat menyebabkan hilangnya ikon atau gambar</string>
@@ -44,11 +53,9 @@
   <string name="content_description_reload">Muat ulang situs web</string>
   <string name="content_description_back">Arahkan kembali</string>
   <string name="content_description_stop">Berhenti memuat situs web</string>
+  <string name="content_description_customtab_exit">Kembali ke aplikasi sebelumnya</string>
+  <string name="content_description_blocking_switch">Blokir pelacak</string>
   <string name="context_menu_paste_go">Tempelkan &amp; Kunjungi</string>
-  <string name="firstrun_title">Menjelajah seperti tidak ada yang mengawasi.</string>
-  <string name="firstrun_description">Blokir pelacak daring secara otomatis ketika Anda menjelajah. Kemudian ketuk untuk menghapus laman yang dikunjungi, pencarian, kuki, dan sandi dari perangkat Anda.</string>
-  <string name="firstrun_button">Oke, beres!</string>
-  <string name="firstrun_footer">Agar jelas, situs dan layanan yang Anda gunakan masih dapat mengetahui di mana Anda berada.</string>
   <string name="your_rights">Hak Anda</string>
   <string name="external_app_prompt_title">Buka tautan di aplikasi lainnya</string>
   <string name="external_app_prompt">Anda dapat meninggalkan %1$s untuk membuka tautan ini di %2$s.</string>
@@ -72,5 +79,19 @@
   <string name="error_sslhandshake_message"><![CDATA[<ul xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">"\n  "<li>Hal ini mungkin dikarenakan ada masalah terkait dengan konfigurasi server, atau bisa jadi ada seseorang mencoba untuk berkedok sebagai server.</li>"\n  "<li>Jika Anda berhasil tersambung ke server ini sebelumnya, gangguan dapat bersifat sementara, dan Anda dapat mencoba kembali nanti.</li>\n</ul>]]></string>
   <string name="error_generic_title">Ups</string>
   <string name="error_generic_message">Kami tidak dapat memuat laman ini karena sejumlah alasan.</string>
+  <string name="contextmenu_link_share">Bagikan tautan</string>
+  <string name="contextmenu_link_copy">Salin alamat tautan</string>
+  <string name="contextmenu_image_share">Bagikan gambar</string>
+  <string name="contextmenu_image_copy">Salin alamat gambar</string>
   <string name="contextmenu_image_save">Simpan gambar</string>
+  <string name="contextmenu_image_warning"><![CDATA["Gambar yang disimpan dan dibagikan "<b xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">tidak akan dihapus</b>" ketika Anda menghapus riwayat %1$s."]]></string>
+  <string name="firstrun_tracking_title">Menjelajah seperti tidak ada yang mengawasi</string>
+  <string name="firstrun_tracking_text">Secara otomatis memblokir pelacak daring ketika Anda menjelajah. Kemudian menghapus laman yang dikunjungi dan kuki dengan satu sentuhan pada ikon tempat sampah pada aplikasi atau di notifikasi Anda.</string>
+  <string name="firstrun_defaultbrowser_title">Perkuat privasi Anda</string>
+  <string name="firstrun_defaultbrowser_text">Atur %1$s sebagai peramban utama Anda dan dapatkan keuntungan penjelajahan pribadi ketika Anda menautkan ke Web dari aplikasi Android lainnya.</string>
+  <string name="firstrun_breaking_title">Perbaikan cepat ketika\nmemblokir = merusak</string>
+  <string name="firstrun_breaking_text">Ketika dampak dari memblokir pelacak daring adalah situs terasa seperti bermasalah, matikan pemblokiran dengan sekali sentuh pada menu alat.</string>
+  <string name="firstrun_close_button">Oke, beres!</string>
+  <string name="firstrun_skip_button">Lewati</string>
+  <string name="firstrun_next_button">Lanjutkan</string>
 </resources>

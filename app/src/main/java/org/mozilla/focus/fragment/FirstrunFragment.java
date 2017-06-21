@@ -5,10 +5,13 @@
 package org.mozilla.focus.fragment;
 
 import android.content.Context;
+import android.graphics.drawable.TransitionDrawable;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewPager;
 import android.transition.Transition;
 import android.transition.TransitionInflater;
 import android.view.LayoutInflater;
@@ -17,6 +20,8 @@ import android.view.ViewGroup;
 
 import org.mozilla.focus.R;
 import org.mozilla.focus.activity.MainActivity;
+import org.mozilla.focus.firstrun.FirstrunPagerAdapter;
+import org.mozilla.focus.telemetry.TelemetryWrapper;
 
 public class FirstrunFragment extends Fragment implements View.OnClickListener {
     public static final String FRAGMENT_TAG = "firstrun";
@@ -27,6 +32,8 @@ public class FirstrunFragment extends Fragment implements View.OnClickListener {
         return new FirstrunFragment();
     }
 
+    private ViewPager viewPager;
+
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -35,19 +42,92 @@ public class FirstrunFragment extends Fragment implements View.OnClickListener {
                 inflateTransition(R.transition.firstrun_exit);
 
         setExitTransition(transition);
+
+        // We will send a telemetry event whenever a new firstrun page is shown. However this page
+        // listener won't fire for the initial page we are showing. So we are going to firing here.
+        TelemetryWrapper.showFirstRunPageEvent(0);
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_firstrun, container, false);
 
-        view.findViewById(R.id.firstrun_exitbutton).setOnClickListener(this);
+        view.findViewById(R.id.skip).setOnClickListener(this);
+
+        final View background = view.findViewById(R.id.background);
+        final FirstrunPagerAdapter adapter = new FirstrunPagerAdapter(container.getContext(), this);
+
+        viewPager = (ViewPager) view.findViewById(R.id.pager);
+
+        viewPager.setPageTransformer(true, new ViewPager.PageTransformer() {
+            @Override
+            public void transformPage(View page, float position) {
+                page.setAlpha(1 - (0.5f * Math.abs(position)));
+            }
+        });
+        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageSelected(int position) {
+                TelemetryWrapper.showFirstRunPageEvent(position);
+            }
+
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {}
+
+            @Override
+            public void onPageScrollStateChanged(int state) {}
+        });
+
+        viewPager.setClipToPadding(false);
+        viewPager.setAdapter(adapter);
+        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageSelected(int position) {
+                final TransitionDrawable drawable = (TransitionDrawable) background.getBackground();
+
+                if (position == adapter.getCount() - 1) {
+                    drawable.startTransition(200);
+                } else {
+                    drawable.resetTransition();
+                }
+            }
+
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {}
+
+            @Override
+            public void onPageScrollStateChanged(int state) {}
+        });
+
+        final TabLayout tabLayout = (TabLayout) view.findViewById(R.id.tabs);
+        tabLayout.setupWithViewPager(viewPager, true);
 
         return view;
     }
 
     @Override
-    public void onClick(View v) {
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.next:
+                viewPager.setCurrentItem(viewPager.getCurrentItem() + 1);
+                break;
+
+            case R.id.skip:
+                finishFirstrun();
+                TelemetryWrapper.skipFirstRunEvent();
+                break;
+
+            case R.id.finish:
+                finishFirstrun();
+                TelemetryWrapper.finishFirstRunEvent();
+                break;
+
+            default:
+                throw new IllegalArgumentException("Unknown view");
+        }
+    }
+
+    private void finishFirstrun() {
         PreferenceManager.getDefaultSharedPreferences(getContext())
                 .edit()
                 .putBoolean(FIRSTRUN_PREF, true)

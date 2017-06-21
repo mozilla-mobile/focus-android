@@ -16,6 +16,7 @@ import org.mozilla.focus.utils.SafeBundle;
 import org.mozilla.focus.utils.SafeIntent;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -206,7 +207,10 @@ public class CustomTabConfig {
         }
 
         if (intent.hasExtra(CustomTabsIntent.EXTRA_SECONDARY_TOOLBAR_COLOR)) {
-            unsupportedFeatureList.add("hasBottomToolbarColor");
+            // Disabled to not send more than 10 telemetry extras (See #629): hasBottomToolbar will
+            // be enough to determine whether this is a feature we should support.
+
+            // unsupportedFeatureList.add("hasBottomToolbarColor");
         }
 
         if (intent.hasExtra(CustomTabsIntent.EXTRA_EXIT_ANIMATION_BUNDLE)) {
@@ -214,7 +218,10 @@ public class CustomTabConfig {
         }
 
         if (intent.hasExtra(CustomTabsIntent.EXTRA_ENABLE_INSTANT_APPS)) {
-            unsupportedFeatureList.add("enablesInstantApps");
+            // Disabled to not send more than 10 telemetry extras (See #629): Instant apps are not
+            // something we are interested in here.
+
+            // unsupportedFeatureList.add("enablesInstantApps");
         }
 
         if (intent.hasExtra(CustomTabsIntent.EXTRA_TITLE_VISIBILITY_STATE)) {
@@ -237,7 +244,7 @@ public class CustomTabConfig {
     /**
      * Get a list of options enabled in the custom tabs intent, e.g. [hasToolbarColor, hasCloseButton].
      */
-    public String getOptionsList() {
+    public List<String> getOptionsList() {
         // A list of custom-tab features that are used, stored for telemetry purposed
         final List<String> featureList = new LinkedList<>(unsupportedFeatureList);
 
@@ -265,7 +272,6 @@ public class CustomTabConfig {
             featureList.add("hasCustomizedMenu");
         }
 
-        // List.toString() returns a nicely formatted list like "[item1, item2, etc]":
-        return featureList.toString();
+        return Collections.unmodifiableList(featureList);
     }
 }

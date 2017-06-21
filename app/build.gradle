@@ -8,12 +8,12 @@ apply plugin: 'pmd'
 
 android {
     compileSdkVersion 25
-    buildToolsVersion "25.0.2"
+    buildToolsVersion "25.0.3"
     defaultConfig {
         applicationId "org.mozilla"
         minSdkVersion 21
         targetSdkVersion 25
-        versionCode 1
+        versionCode 5
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
@@ -30,12 +30,14 @@ android {
     buildTypes {
         release {
             minifyEnabled true
+            shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
         beta {
             initWith debug
 
             minifyEnabled true
+            shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             applicationIdSuffix ".beta"
         }
@@ -107,9 +109,11 @@ android {
 
         focusWebkitRelease {
             java.srcDir 'src/focusRelease/java'
+            manifest.srcFile 'src/focusRelease/AndroidManifest.xml'
         }
         focusGeckoRelease {
             java.srcDir 'src/focusRelease/java'
+            manifest.srcFile 'src/focusRelease/AndroidManifest.xml'
         }
         klarWebkitRelease {
             java.srcDir 'src/klarRelease/java'
@@ -148,8 +152,8 @@ dependencies {
 
     compile(name: 'telemetry-2b0baee', ext: 'aar')
 
-    focusCompile 'com.adjust.sdk:adjust-android:4.11.1'
-    focusCompile 'com.google.android.gms:play-services-analytics:10.2.0' // Required by Adjust
+    focusCompile 'com.adjust.sdk:adjust-android:4.11.4'
+    focusCompile 'com.google.android.gms:play-services-analytics:10.2.6' // Required by Adjust
 
     geckoCompile(name: 'geckoview-latest', ext: 'aar')
 
@@ -336,6 +340,154 @@ task stringsCleanUpdate()  {
             commandLine 'git', 'reset', '--hard', 'origin/master'
         }
     }
+}
+
+// -------------------------------------------------------------------------------------------------
+// L10N: Generate list of locales
+// Focus provides its own (Android independent) locale switcher. That switcher requires a list
+// of locale codes. We generate that list here to avoid having to manually maintain a list of locales:
+// -------------------------------------------------------------------------------------------------
+
+def getEnabledLocales() {
+    def resDir = file('src/main/res')
+
+    def potentialLanguageDirs = resDir.listFiles(new FilenameFilter() {
+        @Override
+        boolean accept(File dir, String name) {
+            return name.startsWith("values-");
+        }
+    })
+
+    def langs = potentialLanguageDirs.findAll {
+        // Only select locales where strings.xml exists
+        // Some locales might only contain e.g. sumo URLS in urls.xml, and should be skipped (see es vs es-ES/es-MX/etc)
+        return  file(new File(it, "strings.xml")).exists()
+    } .collect {
+        // And reduce down to actual values-* names
+        return it.name
+    } .collect {
+        return it.substring("values-".length())
+    } .collect {
+        if (it.length() > 3 && it.contains("-r")) {
+            // Android resource dirs add an "r" prefix to the region - we need to strip that for java usage
+            // Add 1 to have the index of the r, without the dash
+            def regionPrefixPosition = it.indexOf("-r") + 1
+
+            return it.substring(0, regionPrefixPosition) + it.substring(regionPrefixPosition + 1)
+        } else {
+            return it
+        }
+    } .collect {
+        return '"' + it + '"'
+    }
+
+    // en-US is the default language (in "values") and therefore needs to be added separately
+    langs << "\"en-US\""
+
+    return langs
+}
+
+def generatedLocaleListDir = 'src/main/java/org/mozilla/focus/generated'
+def generatedLocaleListFilename = 'LocaleList.java'
+
+task generateLocaleList {
+    doLast {
+        def dir = file(generatedLocaleListDir)
+        dir.mkdir()
+        def localeList = file(new File(dir, generatedLocaleListFilename))
+
+        localeList.delete()
+        localeList.createNewFile()
+        localeList << "package org.mozilla.focus.generated;" << "\n" << "\n"
+        localeList << "import java.util.Arrays;" << "\n"
+        localeList << "import java.util.Collections;" << "\n"
+        localeList << "import java.util.List;" << "\n"
+        localeList << "\n"
+        localeList << "public class LocaleList {" << "\n"
+        // findbugs doesn't like "public static final String[]", see http://findbugs.sourceforge.net/bugDescriptions.html#MS_MUTABLE_ARRAY
+        localeList << "    public static final List<String> BUNDLED_LOCALES = Collections.unmodifiableList(Arrays.asList(new String[] { "
+        localeList << getEnabledLocales().join(",") + " }));" << "\n"
+        localeList << "}" << "\n"
+    }
+}
+
+tasks.whenTaskAdded { task ->
+    if (name.contains("compile")) {
+        task.dependsOn generateLocaleList
+    }
+}
+
+clean.doLast {
+    file(generatedLocaleListDir).deleteDir()
+}
+
+// -------------------------------------------------------------------------------------------------
+// L10N: Verify locales
+// -------------------------------------------------------------------------------------------------
+
+// Fetches the available locales - this doesn't always match the actually available locales (getEnabledLocales()),
+// e.g. if there were import problems:
+def getTranslatedLocales() {
+    def localesDir = file('../l10n-repo/locales')
+
+    def potentialLanguageDirs = localesDir.listFiles(new FilenameFilter() {
+        @Override
+        boolean accept(File dir, String name) {
+            return !name.equals("templates");
+        }
+    })
+
+    def langs = potentialLanguageDirs.collect {
+        // Reduce from list of files to actual names
+        return it.name
+    } .collect {
+        switch(it) {
+            case "id":
+                return "in"
+            case "he":
+                return "iw"
+            default:
+                return it;
+        }
+    } .collect {
+        return '"' + it + '"'
+    }
+
+    langs << "\"en-US\""
+
+    return langs
+}
+
+task verifyLocales << {
+    group = 'Localization'
+    description = 'Verify that all locales in the L10N repository were imported'
+
+    def l10nRepo = file("../l10n-repo")
+    if (!l10nRepo.isDirectory()) {
+        throw new GradleException('l10n-repo does not exist, ensure you have run |gradle stringsSetup|')
+    }
+
+    def availableLocales = getTranslatedLocales()
+    def successfullyImportedLocales = getEnabledLocales()
+
+    def missingLocales = availableLocales.clone()
+    missingLocales.removeAll(successfullyImportedLocales)
+
+    if (missingLocales.size > 0) {
+        throw new GradleException('The following locales were not successfully imported: ' + missingLocales.join(","))
+    }
+
+    def unexpectedLocales = successfullyImportedLocales.clone()
+    unexpectedLocales.removeAll(availableLocales)
+
+    if (unexpectedLocales.size > 0) {
+        throw new GradleException('Project has additional locales: ' + unexpectedLocales.join(","))
+    }
+}
+
+// Ensure we always check locale import imported all locales:
+stringsImport.doLast {
+    tasks.verifyLocales.execute()
 }
 
 // -------------------------------------------------------------------------------------------------

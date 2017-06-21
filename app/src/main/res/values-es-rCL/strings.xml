@@ -13,9 +13,17 @@
   <string name="menu_about">Acerca de</string>
   <string name="menu_help">Ayuda</string>
   <string name="menu_rights">Tus derechos</string>
+  <string name="menu_trackers_blocked_title">Rastreadores bloqueados</string>
+  <string name="share_dialog_title">Compartir vía</string>
+  <string name="notification_erase_text">Eliminar historial de navegación</string>
+  <string name="shortcut_erase_short_label">Eliminar</string>
+  <string name="shortcut_erase_long_label">Eliminar historial de navegación</string>
+  <string name="text_selection_search_action">Búsqueda privada</string>
   <string name="about_content"><![CDATA[<p xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">%1$s te pone al control.</p>\n<p xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">"&#218;salo como un navegador privado:\n  "<ul>"\n    "<li>Busca y navega directo desde la app</li>"\n    "<li>Bloquea rastreadores (o cambia los ajustes para permitirlos)</li>"\n    "<li>Mantente libre de cookies y del historial de b&#250;squeda y navegaci&#243;n</li>"\n  "</ul>\n</p>\n<p xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">%1$s es producido por Mozilla. Nuestra misi&#243;n es fomentar un Internet sano y abierto.<br/>\n<a href="%2$s">Aprender m&#225;s</a></p>]]></string>
   <string name="preference_category_search">Buscar</string>
   <string name="preference_search_engine_default">Predeterminado</string>
+  <string name="preference_language">Idioma</string>
+  <string name="preference_language_systemdefault">Predeterminado del sistema</string>
   <string name="preference_dialog_title_search_engine">Buscador predeterminado</string>
   <string name="preference_category_privacy">Privacidad</string>
   <string name="preference_privacy_block_ads">Bloquear rastreadores de publicidad</string>
@@ -23,6 +31,8 @@
   <string name="preference_privacy_block_social">Bloquear rastreadores sociales</string>
   <string name="preference_privacy_block_content">Bloquear otros rastreadores de contenido</string>
   <string name="preference_privacy_block_content_summary">Puede interferir con algunos videos y páginas Web</string>
+  <string name="preference_privacy_secure_mode">Sigilo</string>
+  <string name="preference_privacy_secure_mode_summary">Desactiva el modo sigilo para tomar capturas y ver los sitios que visitaste usando %1$s en tu lista de aplicaciones recientes</string>
   <string name="preference_category_performance">Rendimiento</string>
   <string name="preference_performance_block_webfonts">Bloquear fuentes Web</string>
   <string name="preference_performance_block_webfonts_summary">Puede resultar en íconos o imágenes faltantes</string>
@@ -43,11 +53,9 @@
   <string name="content_description_reload">Recargar sitio</string>
   <string name="content_description_back">Navegar hacia atrás</string>
   <string name="content_description_stop">Dejar de cargar el sitio</string>
+  <string name="content_description_customtab_exit">Regresar a la app anterior</string>
+  <string name="content_description_blocking_switch">Bloquear rastreadores</string>
   <string name="context_menu_paste_go">Pegar e ir</string>
-  <string name="firstrun_title">Navega como si nadie te estuviese mirando.</string>
-  <string name="firstrun_description">Bloquea automáticamente rastreadores en línea mientras navegas. Luego toca para eliminar las páginas visitadas, búsquedas, cookies y contraseñas de tu dispositivo.</string>
-  <string name="firstrun_button">Ok, me quedó clarito</string>
-  <string name="firstrun_footer">Es decir, los sitios y servicios que uses todavía pueden saber donde has estado.</string>
   <string name="your_rights">Tus derechos</string>
   <string name="external_app_prompt_title">Abrir enlace en otra app</string>
   <string name="external_app_prompt">Puedes salir de %1$s para abrir este enlace en %2$s.</string>
@@ -71,4 +79,19 @@
   <string name="error_sslhandshake_message"><![CDATA[<ul xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">"\n  "<li>Este puede ser un problema con la configuraci&#243;n del servidor, o puede ser alguien tratando de suplantar al servidor.</li>"\n  "<li>"Si te has conectado exitosamente a este servidor en el pasado, el error quiz&#225; sea temporal y debieras poder volver a intentarlo m&#225;s tarde. "</li>\n</ul>]]></string>
   <string name="error_generic_title">Chuta</string>
   <string name="error_generic_message">No pudimos cargar esta página por alguna razón.</string>
+  <string name="contextmenu_link_share">Compartir enlace</string>
+  <string name="contextmenu_link_copy">Copiar dirección del enlace</string>
+  <string name="contextmenu_image_share">Compartir imagen</string>
+  <string name="contextmenu_image_copy">Copiar dirección de la imagen</string>
+  <string name="contextmenu_image_save">Guardar imagen</string>
+  <string name="contextmenu_image_warning"><![CDATA["Las imágenes guardadas y compartidas "<b xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">no ser&#225;n eliminadas</b>" cuando borres el historial de %1$s."]]></string>
+  <string name="firstrun_tracking_title">Navega como si nadie te mirase</string>
+  <string name="firstrun_tracking_text">Bloquea automáticamente los rastreadores en línea cuando navegas. Luego, elimina las páginas visitadas y las cookies con solo tocar el ícono de la papelera en tus notificaciones.</string>
+  <string name="firstrun_defaultbrowser_title">Potencia tu privacidad</string>
+  <string name="firstrun_defaultbrowser_text">Ajusta %1$s como tu navegador predeterminado y recibe los beneficios de la navegación privada cuando te enlacen a la Web desde otras apps de Android.</string>
+  <string name="firstrun_breaking_title">Una rápida solución cuando\nbloquear = romper</string>
+  <string name="firstrun_breaking_text">Cuando el lado negativo de bloquear los rastreadores en líneas sea que un sitio te aparezca roto, desactiva el bloqueo con un toque en el menú herramientas.</string>
+  <string name="firstrun_close_button">Ok, ¡ya caché!</string>
+  <string name="firstrun_skip_button">Saltar</string>
+  <string name="firstrun_next_button">Siguiente</string>
 </resources>

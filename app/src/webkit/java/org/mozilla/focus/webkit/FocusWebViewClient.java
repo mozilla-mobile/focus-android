@@ -17,6 +17,7 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
 import org.mozilla.focus.R;
+import org.mozilla.focus.locale.Locales;
 import org.mozilla.focus.utils.HtmlLoader;
 import org.mozilla.focus.utils.SupportUtils;
 import org.mozilla.focus.utils.UrlUtils;
@@ -185,6 +186,13 @@ import java.util.Map;
             return true;
         }
 
+        // Allow pages to blank themselves by loading about:blank. While it's a little incorrect to let pages
+        // access our internal URLs, Chrome allows loads to about:blank and, to ensure our behavior conforms
+        // to the behavior that most of the web is developed against, we do too.
+        if (url.equals("about:blank")) {
+            return false;
+        }
+
         // shouldOverrideUrlLoading() is called for both the main frame, and iframes.
         // That can get problematic if an iframe tries to load an unsupported URL.
         // We then try to either handle that URL (ask to open relevant app), or extract
@@ -269,7 +277,7 @@ import java.util.Map;
     }
 
     private void loadAbout(final WebView webView) {
-        final Resources resources = webView.getContext().getResources();
+        final Resources resources = Locales.getLocalizedResources(webView.getContext());
 
         final Map<String, String> substitutionMap = new ArrayMap<>();
         final String appName = webView.getContext().getResources().getString(R.string.app_name);
