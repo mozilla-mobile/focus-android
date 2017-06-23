@@ -17,6 +17,7 @@ import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.TransitionDrawable;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -26,6 +27,8 @@ import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.webkit.CookieManager;
 import android.webkit.URLUtil;
 import android.widget.ImageButton;
@@ -200,6 +203,12 @@ public class BrowserFragment extends WebFragment implements View.OnClickListener
 
             textColor = ColorUtils.getReadableTextColor(customTabConfig.toolbarColor);
             urlView.setTextColor(textColor);
+
+            final Window window = getActivity().getWindow();
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+                window.setStatusBarColor(ColorUtils.darken(customTabConfig.toolbarColor, 0.25));
+            }
         } else {
             textColor = Color.WHITE;
         }

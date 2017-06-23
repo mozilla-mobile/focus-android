@@ -26,4 +26,19 @@ public class ColorUtils {
         // humans perceive color.
         return (int) (0.299 * red + 0.587 * green + 0.114 * blue);
     }
+
+    public static int darken(final int color, final double fraction) {
+        int red = Color.red(color);
+        int green = Color.green(color);
+        int blue = Color.blue(color);
+        red = darkenColor(red, fraction);
+        green = darkenColor(green, fraction);
+        blue = darkenColor(blue, fraction);
+        final int alpha = Color.alpha(color);
+        return Color.argb(alpha, red, green, blue);
+    }
+
+    private static int darkenColor(final int color, final double fraction) {
+        return (int) Math.max(color - (color * fraction), 0);
+    }
 }
