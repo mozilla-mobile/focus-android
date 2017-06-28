@@ -59,6 +59,10 @@ public class Settings {
         return preferences.getBoolean(getPreferenceKey(R.string.pref_key_secure), true);
     }
 
+    public boolean shouldUseOnionRouting() {
+        return preferences.getBoolean(getPreferenceKey(R.string.pref_key_tor), false);
+    }
+
     @Nullable
     public String getDefaultSearchEngineName() {
         return preferences.getString(getPreferenceKey(R.string.pref_key_search_engine), null);
