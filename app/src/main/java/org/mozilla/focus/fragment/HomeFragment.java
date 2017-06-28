@@ -21,6 +21,7 @@ import org.mozilla.focus.R;
 import org.mozilla.focus.activity.InfoActivity;
 import org.mozilla.focus.locale.LocaleAwareAppCompatActivity;
 import org.mozilla.focus.locale.LocaleAwareFragment;
+import org.mozilla.focus.utils.Settings;
 
 /**
  * Fragment displaying the "home" screen when launching the app.
@@ -71,7 +72,27 @@ public class HomeFragment
 
         view.findViewById(R.id.menu).setOnClickListener(this);
 
+        if (Settings.getInstance(getActivity()).shouldUseOnionRouting())
+            view.findViewById(R.id.tv_onion_routing_reminder).setVisibility(View.VISIBLE);
+        else
+            view.findViewById(R.id.tv_onion_routing_reminder).setVisibility(View.GONE);
+
         return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        View view = getView();
+
+        if (view != null)
+        {
+            if (Settings.getInstance(getActivity()).shouldUseOnionRouting())
+                view.findViewById(R.id.tv_onion_routing_reminder).setVisibility(View.VISIBLE);
+            else
+                view.findViewById(R.id.tv_onion_routing_reminder).setVisibility(View.GONE);
+        }
     }
 
     @Override

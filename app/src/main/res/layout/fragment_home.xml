@@ -66,6 +66,19 @@
             android:textColor="#eeeeee"
             android:textSize="14sp" />
 
+
+        <TextView
+            android:id="@+id/tv_onion_routing_reminder"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:lineSpacingExtra="7sp"
+            android:paddingTop="30dp"
+            android:text="@string/onion_routing_enabled"
+            android:textColor="#eeeeee"
+            android:textSize="14sp"
+            android:visibility="gone"
+            />
     </LinearLayout>
 
 </FrameLayout>

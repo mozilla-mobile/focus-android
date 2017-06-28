@@ -302,4 +302,6 @@ be temporary, and you can try again later.</li>
     <!-- Indicator that no trackers are being blocked because content blocking is disabled; normally shows the number of blocked trackers -->
     <string name="content_blocking_disabled">-</string>
 
+    <!-- home screen display to remind the user their web traffic will go through Tor -->
+    <string name="onion_routing_enabled">Onion routing mode enabled.\nPrepare for world travel.</string>
 </resources>
