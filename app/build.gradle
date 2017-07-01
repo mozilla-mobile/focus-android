@@ -1,4 +1,5 @@
 apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
 apply plugin: 'findbugs'
 apply plugin: 'jacoco'
 apply plugin: 'jacoco-android'
@@ -120,6 +121,7 @@ android {
         klarGeckoRelease {
             java.srcDir 'src/klarRelease/java'
         }
+        main.java.srcDirs += 'src/main/kotlin'
     }
 }
 
@@ -133,6 +135,7 @@ repositories {
     flatDir {
         dirs 'libs'
     }
+    mavenCentral()
 }
 
 dependencies {
@@ -164,6 +167,7 @@ dependencies {
         exclude group: 'com.android.support', module: 'support-annotations'
     }
     androidTestCompile 'com.squareup.okhttp3:mockwebserver:3.7.0'
+    compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
 }
 
 // -------------------------------------------------------------------------------------------------
