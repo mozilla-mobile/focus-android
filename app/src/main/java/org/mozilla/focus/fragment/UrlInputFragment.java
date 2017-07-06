@@ -26,6 +26,7 @@ import android.widget.TextView;
 import org.mozilla.focus.R;
 import org.mozilla.focus.autocomplete.UrlAutoCompleteFilter;
 import org.mozilla.focus.telemetry.TelemetryWrapper;
+import org.mozilla.focus.utils.ThreadUtils;
 import org.mozilla.focus.utils.UrlUtils;
 import org.mozilla.focus.utils.ViewUtils;
 import org.mozilla.focus.widget.HintFrameLayout;
@@ -127,6 +128,8 @@ public class UrlInputFragment extends Fragment implements View.OnClickListener, 
     private View urlInputBackgroundView;
     private View toolbarBackgroundView;
 
+    private volatile boolean isAnimating;
+
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_urlinput, container, false);
@@ -139,7 +142,7 @@ public class UrlInputFragment extends Fragment implements View.OnClickListener, 
 
         searchViewContainer = view.findViewById(R.id.search_hint_container);
 
-        searchView =  (TextView)view.findViewById(R.id.search_hint);
+        searchView =  (TextView) view.findViewById(R.id.search_hint);
         searchView.setOnClickListener(this);
 
         urlAutoCompleteFilter = new UrlAutoCompleteFilter();
@@ -150,7 +153,8 @@ public class UrlInputFragment extends Fragment implements View.OnClickListener, 
         urlView.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
-                if (hasFocus) {
+                // Avoid showing keyboard again when returning to the previous page by back key.
+                if (hasFocus && !isAnimating) {
                     ViewUtils.showKeyboard(urlView);
                 }
             }
@@ -225,6 +229,13 @@ public class UrlInputFragment extends Fragment implements View.OnClickListener, 
     }
 
     private void animateAndDismiss() {
+        ThreadUtils.assertOnUiThread();
+
+        if (isAnimating) {
+            // We are already animating some state change. Ignore all other requests.
+            return;
+        }
+
         // Don't allow any more clicks: dismissView is still visible until the animation ends,
         // but we don't want to restart animations and/or trigger hiding again (which could potentially
         // cause crashes since we don't know what state we're in). Ignoring further clicks is the simplest
@@ -246,6 +257,13 @@ public class UrlInputFragment extends Fragment implements View.OnClickListener, 
      * Play animation between home screen and the URL input.
      */
     private void playHomeScreenAnimation(final boolean reverse) {
+        if (isAnimating) {
+            // We are already animating, let's ignore another request.
+            return;
+        }
+
+        isAnimating = true;
+
         int[] screenLocation = new int[2];
         urlInputContainerView.getLocationOnScreen(screenLocation);
 
@@ -306,6 +324,8 @@ public class UrlInputFragment extends Fragment implements View.OnClickListener, 
                         } else {
                             urlView.setCursorVisible(true);
                         }
+
+                        isAnimating = false;
                     }
                 });
 
@@ -328,6 +348,13 @@ public class UrlInputFragment extends Fragment implements View.OnClickListener, 
     }
 
     private void playBrowserScreenAnimation(final boolean reverse) {
+        if (isAnimating) {
+            // We are already animating, let's ignore another request.
+            return;
+        }
+
+        isAnimating = true;
+
         {
             float containerMargin = ((FrameLayout.LayoutParams) urlInputContainerView.getLayoutParams()).bottomMargin;
 
@@ -372,6 +399,8 @@ public class UrlInputFragment extends Fragment implements View.OnClickListener, 
                             } else {
                                 clearView.setAlpha(1);
                             }
+
+                            isAnimating = false;
                         }
                     });
         }
@@ -405,27 +434,33 @@ public class UrlInputFragment extends Fragment implements View.OnClickListener, 
     }
 
     private void dismiss() {
+        // This method is called from animation callbacks. In the short time frame between the animation
+        // starting and ending the activity can be paused. In this case this code can throw an
+        // IllegalStateException because we already saved the state (of the activity / fragment) before
+        // this transaction is committed. To avoid this we commit while allowing a state loss here.
+        // We do not save any state in this fragment (It's getting destroyed) so this should not be a problem.
         getActivity().getSupportFragmentManager()
                 .beginTransaction()
                 .remove(this)
-                .commit();
+                .commitAllowingStateLoss();
     }
 
     @Override
     public void onCommit() {
-        ViewUtils.hideKeyboard(urlView);
+        final String input = urlView.getText().toString();
+        if (!input.trim().isEmpty()) {
+            ViewUtils.hideKeyboard(urlView);
 
-        final String rawUrl = urlView.getText().toString();
+            final boolean isUrl = UrlUtils.isUrl(input);
 
-        final boolean isUrl = UrlUtils.isUrl(rawUrl);
+            final String url = isUrl
+                    ? UrlUtils.normalize(input)
+                    : UrlUtils.createSearchUrl(getContext(), input);
 
-        final String url = isUrl
-                ? UrlUtils.normalize(rawUrl)
-                : UrlUtils.createSearchUrl(getContext(), rawUrl);
+            openUrl(url);
 
-        openUrl(url);
-
-        TelemetryWrapper.urlBarEvent(isUrl);
+            TelemetryWrapper.urlBarEvent(isUrl);
+        }
     }
 
     private void onSearch() {

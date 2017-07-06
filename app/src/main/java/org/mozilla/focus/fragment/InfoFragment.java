@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.ProgressBar;
 
 import org.mozilla.focus.R;
+import org.mozilla.focus.utils.IntentUtils;
 import org.mozilla.focus.web.Download;
 import org.mozilla.focus.web.IWebView;
 
@@ -80,7 +81,9 @@ public class InfoFragment extends WebFragment {
 
             @Override
             public boolean handleExternalUrl(final String url) {
-                return false;
+                final IWebView webView = getWebView();
+
+                return webView != null && IntentUtils.handleExternalUri(getContext(), webView, url);
             }
 
 
@@ -92,8 +95,13 @@ public class InfoFragment extends WebFragment {
             public void onLongPress(IWebView.HitTarget hitTarget) {}
 
             @Override
-            public void onURLChanged(String url) {
-            }
+            public void onURLChanged(String url) {}
+
+            @Override
+            public void onEnterFullScreen(@NonNull IWebView.FullscreenCallback callback, @Nullable View view) {}
+
+            @Override
+            public void onExitFullScreen() {}
         };
     }
 
