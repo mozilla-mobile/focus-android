@@ -16,6 +16,7 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 
 import org.mozilla.focus.R;
 import org.mozilla.focus.activity.InfoActivity;
@@ -72,10 +73,7 @@ public class HomeFragment
 
         view.findViewById(R.id.menu).setOnClickListener(this);
 
-        if (Settings.getInstance(getActivity()).shouldUseOnionRouting())
-            view.findViewById(R.id.tv_onion_routing_reminder).setVisibility(View.VISIBLE);
-        else
-            view.findViewById(R.id.tv_onion_routing_reminder).setVisibility(View.GONE);
+        checkOnionRoutingMode(view);
 
         return view;
     }
@@ -84,15 +82,7 @@ public class HomeFragment
     public void onResume() {
         super.onResume();
 
-        View view = getView();
-
-        if (view != null)
-        {
-            if (Settings.getInstance(getActivity()).shouldUseOnionRouting())
-                view.findViewById(R.id.tv_onion_routing_reminder).setVisibility(View.VISIBLE);
-            else
-                view.findViewById(R.id.tv_onion_routing_reminder).setVisibility(View.GONE);
-        }
+        checkOnionRoutingMode(getView());
     }
 
     @Override
@@ -148,4 +138,29 @@ public class HomeFragment
                 throw new IllegalStateException("Unhandled view ID in onMenuItemClick()");
         }
     }
+
+    private void checkOnionRoutingMode (View view)
+    {
+        if (Settings.getInstance(getActivity()).shouldUseOnionRouting()) {
+            view.findViewById(R.id.tv_onion_routing_reminder).setVisibility(View.VISIBLE);
+            view.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    
+                    // we should create a "Focus Onion" (Fonion!) onion page to send people to
+                    String onionUrl =  "http://expyuzz4wqqyqhjn.onion/";
+                    UrlInputFragment fragment = UrlInputFragment.createWithHomeScreenAnimation(onionUrl, fakeUrlBarView);
+
+                    getActivity().getSupportFragmentManager().beginTransaction()
+                            .add(R.id.container, fragment, UrlInputFragment.FRAGMENT_TAG)
+                            .commit();
+                }
+            });
+        }
+        else
+            view.findViewById(R.id.tv_onion_routing_reminder).setVisibility(View.GONE);
+
+    }
+
+
 }

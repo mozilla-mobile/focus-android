@@ -72,6 +72,29 @@ public class UrlInputFragment extends Fragment implements View.OnClickListener, 
 
     /**
      * Create a new UrlInputFragment and animate the url input view from the position/size of the
+     * fake url bar view.
+     */
+    public static UrlInputFragment createWithHomeScreenAnimation(String url, View fakeUrlBarView) {
+        int[] screenLocation = new int[2];
+        fakeUrlBarView.getLocationOnScreen(screenLocation);
+
+        Bundle arguments = new Bundle();
+        arguments.putString(ARGUMENT_ANIMATION, ANIMATION_HOME_SCREEN);
+        arguments.putString(ARGUMENT_URL, url);
+
+        arguments.putInt(ARGUMENT_X, screenLocation[0]);
+        arguments.putInt(ARGUMENT_Y, screenLocation[1]);
+        arguments.putInt(ARGUMENT_WIDTH, fakeUrlBarView.getWidth());
+        arguments.putInt(ARGUMENT_HEIGHT, fakeUrlBarView.getHeight());
+
+        UrlInputFragment fragment = new UrlInputFragment();
+        fragment.setArguments(arguments);
+
+        return fragment;
+    }
+
+    /**
+     * Create a new UrlInputFragment and animate the url input view from the position/size of the
      * browser toolbar's URL view.
      */
     public static UrlInputFragment createWithBrowserScreenAnimation(String url, View urlView) {

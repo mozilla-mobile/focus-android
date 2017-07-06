@@ -122,5 +122,11 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
                     .replace(R.id.container, new SettingsFragment())
                     .commit();
         }
+        else if (key.equals(getString(R.string.pref_key_tor)))
+        {
+            // And ensure that the calling activity knows onion routing status has changed
+            getActivity().setResult(SettingsActivity.ACTIVITY_RESULT_ONION_ROUTING_CHANGED);
+
+        }
     }
 }
