@@ -13,6 +13,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.TransitionDrawable;
@@ -41,6 +42,7 @@ import org.mozilla.focus.menu.BrowserMenu;
 import org.mozilla.focus.menu.WebContextMenu;
 import org.mozilla.focus.notification.BrowsingNotificationService;
 import org.mozilla.focus.open.OpenWithFragment;
+import org.mozilla.focus.shortcut.HomeScreen;
 import org.mozilla.focus.telemetry.TelemetryWrapper;
 import org.mozilla.focus.utils.Browsers;
 import org.mozilla.focus.utils.ColorUtils;
@@ -679,6 +681,19 @@ public class BrowserFragment extends WebFragment implements View.OnClickListener
             case R.id.help_trackers:
                 Intent trackerHelpIntent = InfoActivity.getTrackerHelpIntent(getActivity());
                 startActivity(trackerHelpIntent);
+                break;
+
+            case R.id.add_to_homescreen:
+                final IWebView webView = getWebView();
+                if (webView == null) {
+                    return;
+                }
+
+                final Bitmap icon = webView.getIcon();
+                final String url = webView.getUrl();
+                final String title = webView.getTitle();
+
+                HomeScreen.installShortCut(getContext(), icon, url, title);
                 break;
 
             default:
