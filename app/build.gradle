@@ -165,6 +165,8 @@ dependencies {
         exclude group: 'com.android.support', module: 'support-annotations'
     }
     androidTestCompile 'com.squareup.okhttp3:mockwebserver:3.7.0'
+
+    compile 'info.guardianproject.netcipher:netcipher:2.0.0-alpha1'
 }
 
 // -------------------------------------------------------------------------------------------------

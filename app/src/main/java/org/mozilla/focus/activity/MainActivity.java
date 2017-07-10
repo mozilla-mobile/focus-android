@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 
@@ -26,6 +27,7 @@ import org.mozilla.focus.utils.Settings;
 import org.mozilla.focus.web.BrowsingSession;
 import org.mozilla.focus.web.IWebView;
 import org.mozilla.focus.web.WebViewProvider;
+import org.mozilla.focus.webkit.WebkitProxy;
 
 public class MainActivity extends LocaleAwareAppCompatActivity {
     public static final String ACTION_ERASE = "erase";
@@ -112,6 +114,20 @@ public class MainActivity extends LocaleAwareAppCompatActivity {
         } else {
             getWindow().clearFlags(WindowManager.LayoutParams.FLAG_SECURE);
         }
+
+        try {
+
+            WebViewProvider.performCleanup(this);
+            if (Settings.getInstance(this).shouldUseOnionRouting()) {
+                WebkitProxy.setProxy(getApplicationContext(), "localhost", 8118);
+            } else {
+                WebkitProxy.resetProxy(getApplicationContext(),"");
+            }
+        }
+        catch (Exception e)
+        {
+            Log.e("Tor","error enabling webkit proxying",e);
+        }
     }
 
     @Override
@@ -132,6 +148,16 @@ public class MainActivity extends LocaleAwareAppCompatActivity {
         BrowsingNotificationService.background(this);
 
         TelemetryWrapper.stopMainActivity();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (resultCode == SettingsActivity.ACTIVITY_RESULT_ONION_ROUTING_CHANGED) {
+            finish();
+            startActivity(new Intent(this,MainActivity.class));
+        }
     }
 
     @Override

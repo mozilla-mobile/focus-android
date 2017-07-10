@@ -18,11 +18,13 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 
 import org.mozilla.focus.R;
 import org.mozilla.focus.activity.InfoActivity;
 import org.mozilla.focus.locale.LocaleAwareAppCompatActivity;
 import org.mozilla.focus.locale.LocaleAwareFragment;
+import org.mozilla.focus.utils.Settings;
 
 /**
  * Fragment displaying the "home" screen when launching the app.
@@ -73,7 +75,16 @@ public class HomeFragment
 
         view.findViewById(R.id.menu).setOnClickListener(this);
 
+        checkOnionRoutingMode(view);
+
         return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        checkOnionRoutingMode(getView());
     }
 
     @Override
@@ -141,4 +152,29 @@ public class HomeFragment
                 throw new IllegalStateException("Unhandled view ID in onMenuItemClick()");
         }
     }
+
+    private void checkOnionRoutingMode (View view)
+    {
+        if (Settings.getInstance(getActivity()).shouldUseOnionRouting()) {
+            view.findViewById(R.id.tv_onion_routing_reminder).setVisibility(View.VISIBLE);
+            view.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    
+                    // we should create a "Focus Onion" (Fonion!) onion page to send people to
+                    String onionUrl =  "http://expyuzz4wqqyqhjn.onion/";
+                    UrlInputFragment fragment = UrlInputFragment.createWithHomeScreenAnimation(onionUrl, fakeUrlBarView);
+
+                    getActivity().getSupportFragmentManager().beginTransaction()
+                            .add(R.id.container, fragment, UrlInputFragment.FRAGMENT_TAG)
+                            .commit();
+                }
+            });
+        }
+        else
+            view.findViewById(R.id.tv_onion_routing_reminder).setVisibility(View.GONE);
+
+    }
+
+
 }

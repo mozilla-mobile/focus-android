@@ -15,7 +15,9 @@ import org.mozilla.focus.locale.LocaleAwareAppCompatActivity;
 import org.mozilla.focus.settings.SettingsFragment;
 
 public class SettingsActivity extends LocaleAwareAppCompatActivity {
+
     public static final int ACTIVITY_RESULT_LOCALE_CHANGED = 1;
+    public static final int ACTIVITY_RESULT_ONION_ROUTING_CHANGED = 2;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {

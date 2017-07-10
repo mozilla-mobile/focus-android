@@ -20,10 +20,13 @@ import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
 
+import org.mozilla.focus.utils.Settings;
+import org.mozilla.gecko.BaseGeckoInterface;
 import org.mozilla.gecko.GeckoProfile;
 import org.mozilla.gecko.GeckoThread;
 import org.mozilla.gecko.GeckoView;
 import org.mozilla.gecko.GeckoViewSettings;
+import org.mozilla.gecko.PrefsHelper;
 
 /**
  * WebViewProvider implementation for creating a Gecko based implementation of IWebView.
@@ -38,6 +41,15 @@ public class WebViewProvider {
         settings.setBoolean(GeckoViewSettings.USE_MULTIPROCESS, false);
         settings.setBoolean(GeckoViewSettings.USE_PRIVATE_MODE, true);
         settings.setBoolean(GeckoViewSettings.USE_TRACKING_PROTECTION, true);
+
+        if (Settings.getInstance(context).shouldUseOnionRouting()) {
+            PrefsHelper.setPref("network.proxy.type", 1); //manual proxy settings
+            PrefsHelper.setPref("network.proxy.socks", "localhost"); //manual proxy settings
+            PrefsHelper.setPref("network.proxy.socks_port", 9050); //manual proxy settings
+            PrefsHelper.setPref("network.proxy.socks_version", 5); //manual proxy settings
+            PrefsHelper.setPref("network.proxy.socks_remote_dns", true); //manual proxy settings
+        }
+
         final GeckoView geckoView = new GeckoWebView(context, attrs, settings);
 
         return geckoView;

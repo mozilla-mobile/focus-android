@@ -114,6 +114,14 @@
      name of the app (e.g. Firefox Focus). -->
     <string name="preference_privacy_secure_mode_summary">Turn off stealth mode to take screenshots and see sites you’ve visited using %1$s in your Recent Apps list</string>
 
+    <!-- Preference Title: Secure Mode is a setting that prevents the app's content to show up in the "recent apps" screen
+     and prevents the user from taking screenshots or casting the app to other displays. -->
+    <string name="preference_privacy_tor_mode">Onion Routing</string>
+    <!-- Preference Summary: Secure Mode is a setting that prevents the app's content to show up in the "recent apps" screen
+     and prevents the user from taking screenshots or casting the app to other displays. %1$s will be replaced with the
+     short name of the app (e.g. Focus). -->
+    <string name="preference_privacy_tor_mode_summary">Enable enhanced network surveillance defenses through the use of Orbot: Tor for Android</string>
+
     <string name="preference_category_performance">Performance</string>
     <string name="preference_performance_block_webfonts">Block Web fonts</string>
     <!-- This text is shown below the setting for disabling web fonts. Some websites use icons/images from a font and those do not show up if fonts are blocked.-->
@@ -315,4 +323,6 @@ be temporary, and you can try again later.</li>
     <!-- Indicator that no trackers are being blocked because content blocking is disabled; normally shows the number of blocked trackers -->
     <string name="content_blocking_disabled">-</string>
 
+    <!-- home screen display to remind the user their web traffic will go through Tor -->
+    <string name="onion_routing_enabled">Onion routing mode enabled.\nPrepare for world travel.</string>
 </resources>

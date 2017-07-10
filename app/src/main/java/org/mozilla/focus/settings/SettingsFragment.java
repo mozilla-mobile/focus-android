@@ -25,6 +25,8 @@ import org.mozilla.focus.widget.DefaultBrowserPreference;
 
 import java.util.Locale;
 
+import info.guardianproject.netcipher.proxy.OrbotHelper;
+
 public class SettingsFragment extends PreferenceFragment implements SharedPreferences.OnSharedPreferenceChangeListener {
     private boolean localeUpdated;
 
@@ -66,6 +68,14 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
         if (secureModePreference != null) {
             secureModePreference.setSummary(getString(R.string.preference_privacy_secure_mode_summary, getString(R.string.app_name)));
         }
+
+        final Preference onionRoutingPreference = findPreference(getString(R.string.pref_key_tor));
+        if (onionRoutingPreference != null) {
+            if (!OrbotHelper.isOrbotInstalled(getActivity())) {
+                onionRoutingPreference.setEnabled(false);
+            }
+        }
+
     }
 
     @Override
@@ -111,6 +121,12 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
             getFragmentManager().beginTransaction()
                     .replace(R.id.container, new SettingsFragment())
                     .commit();
+        }
+        else if (key.equals(getString(R.string.pref_key_tor)))
+        {
+            // And ensure that the calling activity knows onion routing status has changed
+            getActivity().setResult(SettingsActivity.ACTIVITY_RESULT_ONION_ROUTING_CHANGED);
+
         }
     }
 }
