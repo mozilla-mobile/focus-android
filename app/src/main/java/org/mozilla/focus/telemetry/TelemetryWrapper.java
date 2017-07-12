@@ -16,6 +16,7 @@ import org.mozilla.focus.R;
 import org.mozilla.focus.search.SearchEngine;
 import org.mozilla.focus.search.SearchEngineManager;
 import org.mozilla.focus.utils.AppConstants;
+import org.mozilla.focus.utils.Browsers;
 import org.mozilla.telemetry.Telemetry;
 import org.mozilla.telemetry.TelemetryHolder;
 import org.mozilla.telemetry.config.TelemetryConfiguration;
@@ -43,6 +44,7 @@ public final class TelemetryWrapper {
 
     private static class Category {
         private static final String ACTION = "action";
+        private static final String PREF = "pref";
     }
 
     private static class Method {
@@ -81,6 +83,7 @@ public final class TelemetryWrapper {
         private static final String CUSTOM_TAB_CLOSE_BUTTON = "custom_tab_close_but";
         private static final String CUSTOM_TAB_ACTION_BUTTON = "custom_tab_action_bu";
         private static final String FIRSTRUN = "firstrun";
+        private static final String IS_DEFAULT = "is_default_browser";
     }
 
     private static class Value {
@@ -94,6 +97,8 @@ public final class TelemetryWrapper {
         private static final String SKIP = "skip";
         private static final String FINISH = "finish";
         private static final String OPEN = "open";
+        private static final String TRUE = "true";
+        private static final String FALSE  = "false";
     }
 
     private static class Extra {
@@ -196,6 +201,7 @@ public final class TelemetryWrapper {
     public static void stopMainActivity() {
         TelemetryHolder.get()
                 .queuePing(TelemetryCorePingBuilder.TYPE)
+                .queueEvent(isDefaultBrowserEvent())
                 .queuePing(TelemetryEventPingBuilder.TYPE)
                 .scheduleUpload();
     }
@@ -206,6 +212,14 @@ public final class TelemetryWrapper {
         } else {
             TelemetryWrapper.searchEnterEvent();
         }
+    }
+
+    private static TelemetryEvent isDefaultBrowserEvent() {
+        final Context context = TelemetryHolder.get().getConfiguration().getContext();
+        final Browsers browsers = new Browsers(context, "http://www.mozilla.org");
+        final String isDefault = browsers.isDefaultBrowser(context) ? Value.TRUE : Value.FALSE;
+
+        return TelemetryEvent.create(Category.PREF, Method.BACKGROUND, Object.IS_DEFAULT, isDefault);
     }
 
     private static void browseEvent() {
