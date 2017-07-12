@@ -13,10 +13,20 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <!-- The toolbar gradient background extends from under the system status bar to the app's Toolbar.
+             This view is broken up into two views:
+             - This view, for the status bar
+             - The AppBarLayout, for the application's Toolbar
+
+             The height of this view is set dynamically to match the system status bar height because
+             there is no way to access this value statically: see the associated code in BrowserFragment.
+
+             A previous implementation used one view for the gradient, which is slightly simpler, but ran
+             into draw order problems (#785). -->
         <View
-            android:id="@+id/background"
+            android:id="@+id/status_bar_background"
             android:layout_width="match_parent"
-            android:layout_height="81dp"
+            android:layout_height="0dp"
             android:background="@drawable/animated_background" />
 
         <org.mozilla.focus.widget.ResizableKeyboardLayout
@@ -38,7 +48,7 @@
                 android:id="@+id/appbar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@android:color/transparent"
+                android:background="@drawable/animated_background"
                 app:elevation="0dp"
                 android:clipChildren="false">
 

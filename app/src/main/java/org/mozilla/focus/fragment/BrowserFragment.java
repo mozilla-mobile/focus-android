@@ -20,6 +20,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.annotation.UiThread;
 import android.support.design.widget.AppBarLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
@@ -32,10 +33,10 @@ import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import org.mozilla.focus.R;
 import org.mozilla.focus.activity.InfoActivity;
 import org.mozilla.focus.activity.InstallFirefoxActivity;
+import org.mozilla.focus.animation.TransitionDrawableGroup;
 import org.mozilla.focus.locale.LocaleAwareAppCompatActivity;
 import org.mozilla.focus.menu.BrowserMenu;
 import org.mozilla.focus.menu.WebContextMenu;
@@ -46,6 +47,7 @@ import org.mozilla.focus.utils.Browsers;
 import org.mozilla.focus.utils.ColorUtils;
 import org.mozilla.focus.utils.DrawableUtils;
 import org.mozilla.focus.utils.IntentUtils;
+import org.mozilla.focus.utils.ScreenUtils;
 import org.mozilla.focus.utils.UrlUtils;
 import org.mozilla.focus.utils.ViewUtils;
 import org.mozilla.focus.web.BrowsingSession;
@@ -55,6 +57,7 @@ import org.mozilla.focus.web.IWebView;
 import org.mozilla.focus.widget.AnimatedProgressBar;
 
 import java.lang.ref.WeakReference;
+import java.util.Arrays;
 
 /**
  * Fragment for displaying the browser UI.
@@ -78,8 +81,9 @@ public class BrowserFragment extends WebFragment implements View.OnClickListener
     }
 
     private Download pendingDownload;
-    private View backgroundView;
-    private TransitionDrawable backgroundTransition;
+    private View appBarLayout;
+    private View statusBarBackgroundView;
+    private TransitionDrawableGroup backgroundTransitionGroup;
     private TextView urlView;
     private AnimatedProgressBar progressView;
     private ImageView lockView;
@@ -153,8 +157,12 @@ public class BrowserFragment extends WebFragment implements View.OnClickListener
         urlView = (TextView) view.findViewById(R.id.display_url);
         updateURL(getInitialUrl());
 
-        backgroundView = view.findViewById(R.id.background);
-        backgroundTransition = (TransitionDrawable) backgroundView.getBackground();
+        appBarLayout = view.findViewById(R.id.appbar);
+        statusBarBackgroundView = view.findViewById(R.id.status_bar_background);
+        backgroundTransitionGroup = getUpdatedBackgroundTransitionGroup();
+
+        progressView = (AnimatedProgressBar) view.findViewById(R.id.progress);
+        setStatusBarBackgroundViewHeight(); // must be called after statusBarBackgroundView & progressView init.
 
         if ((refreshButton = view.findViewById(R.id.refresh)) != null) {
             refreshButton.setOnClickListener(this);
@@ -174,8 +182,6 @@ public class BrowserFragment extends WebFragment implements View.OnClickListener
 
         lockView = (ImageView) view.findViewById(R.id.lock);
 
-        progressView = (AnimatedProgressBar) view.findViewById(R.id.progress);
-
         menuView = (ImageButton) view.findViewById(R.id.menu);
         menuView.setOnClickListener(this);
 
@@ -186,6 +192,21 @@ public class BrowserFragment extends WebFragment implements View.OnClickListener
         }
 
         return view;
+    }
+
+    /**
+     * Sets the height of {@link #statusBarBackgroundView} to the status bar height. See this view's
+     * declaration in fragment_browser.xml for details.
+     */
+    @UiThread
+    private void setStatusBarBackgroundViewHeight() {
+        // The progress bar divides this view from the other background view so we draw underneath the progress bar
+        // so that when it's transparent, the two background views look continuous.
+        final int backgroundViewHeight =
+                ScreenUtils.getStatusBarHeight(getActivity().getWindow()) + progressView.getLayoutParams().height;
+        final ViewGroup.LayoutParams layoutParams = statusBarBackgroundView.getLayoutParams();
+        layoutParams.height = backgroundViewHeight;
+        statusBarBackgroundView.setLayoutParams(layoutParams);
     }
 
     private void initialiseNormalBrowserUi(final @NonNull View view) {
@@ -320,8 +341,7 @@ public class BrowserFragment extends WebFragment implements View.OnClickListener
 
                 progressView.announceForAccessibility(getString(R.string.accessibility_announcement_loading));
 
-
-                backgroundTransition.resetTransition();
+                backgroundTransitionGroup.resetTransition();
 
                 progressView.setProgress(5);
                 progressView.setVisibility(View.VISIBLE);
@@ -333,7 +353,7 @@ public class BrowserFragment extends WebFragment implements View.OnClickListener
             public void onPageFinished(boolean isSecure) {
                 updateIsLoading(false);
 
-                backgroundTransition.startTransition(ANIMATION_DURATION);
+                backgroundTransitionGroup.startTransition(ANIMATION_DURATION);
 
                 progressView.announceForAccessibility(getString(R.string.accessibility_announcement_loading_finished));
 
@@ -774,8 +794,22 @@ public class BrowserFragment extends WebFragment implements View.OnClickListener
             webView.setBlockingEnabled(enabled);
         }
 
-        backgroundView.setBackgroundResource(enabled ? R.drawable.animated_background : R.drawable.animated_background_disabled);
-        backgroundTransition = (TransitionDrawable) backgroundView.getBackground();
+        final int backgroundResource = enabled ? R.drawable.animated_background : R.drawable.animated_background_disabled;
+        statusBarBackgroundView.setBackgroundResource(backgroundResource);
+        appBarLayout.setBackgroundResource(backgroundResource);
+        backgroundTransitionGroup = getUpdatedBackgroundTransitionGroup(); // must be called after resource update.
+    }
+
+    /**
+     * Returns an updated drawable group for the background views, based on their current view resources.
+     *
+     * For more details on these background views, see comments around their declaration in fragment_browser.xml.
+     */
+    private TransitionDrawableGroup getUpdatedBackgroundTransitionGroup() {
+        return new TransitionDrawableGroup(Arrays.asList(
+                (TransitionDrawable) statusBarBackgroundView.getBackground(),
+                (TransitionDrawable) appBarLayout.getBackground()
+        ));
     }
 
     public boolean isBlockingEnabled() {
