@@ -101,7 +101,7 @@ public class TrashcanTest {
 
         // Initialize UiDevice instance
         final int LAUNCH_TIMEOUT = 5000;
-        final String FOCUS_DEBUG_APP = "org.mozilla.focus.debug";
+        final String FOCUS_DEBUG_APP = "org.mozilla.focus.beta";
 
         // Open a webpage
         TestHelper.urlBar.waitForExists(waitingTime);

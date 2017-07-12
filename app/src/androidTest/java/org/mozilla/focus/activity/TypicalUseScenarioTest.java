@@ -95,7 +95,7 @@ public class TypicalUseScenarioTest {
         TestHelper.webView.waitForExists(waitingTime);
         assertTrue (TestHelper.browserURLbar.getText().contains("https://www.google"));
         TestHelper.lockIcon.waitForExists(waitingTime);
-        assertTrue (TestHelper.lockIcon.exists());
+        assertTrue (TestHelper.lockIcon.isEnabled());
 
         // Let's delete my history again
         TestHelper.floatingEraseButton.perform(click());

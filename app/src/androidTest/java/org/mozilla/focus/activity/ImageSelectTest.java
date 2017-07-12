@@ -89,26 +89,26 @@ public class ImageSelectTest {
             .description("Smiley face")
             .enabled(true));
     private UiObject imageMenuTitle = TestHelper.mDevice.findObject(new UiSelector()
-            .resourceId("org.mozilla.focus.debug:id/topPanel")
+            .resourceId("org.mozilla.focus.beta:id/topPanel")
             .enabled(true));
     private UiObject imageMenuTitleText = TestHelper.mDevice.findObject(new UiSelector()
             .className("android.widget.TextView")
             .enabled(true)
             .instance(0));
     private UiObject shareMenu = TestHelper.mDevice.findObject(new UiSelector()
-            .resourceId("org.mozilla.focus.debug:id/design_menu_item_text")
+            .resourceId("org.mozilla.focus.beta:id/design_menu_item_text")
             .text("Share image")
             .enabled(true));
     private UiObject copyMenu = TestHelper.mDevice.findObject(new UiSelector()
-            .resourceId("org.mozilla.focus.debug:id/design_menu_item_text")
+            .resourceId("org.mozilla.focus.beta:id/design_menu_item_text")
             .text("Copy image address")
             .enabled(true));
     private UiObject saveMenu = TestHelper.mDevice.findObject(new UiSelector()
-            .resourceId("org.mozilla.focus.debug:id/design_menu_item_text")
+            .resourceId("org.mozilla.focus.beta:id/design_menu_item_text")
             .text("Save image")
             .enabled(true));
     private UiObject warning = TestHelper.mDevice.findObject(new UiSelector()
-            .resourceId("org.mozilla.focus.debug:id/warning")
+            .resourceId("org.mozilla.focus.beta:id/warning")
             .text("Saved and shared images will not be deleted when you erase Firefox Focus history.")
             .enabled(true));
 
