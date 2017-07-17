@@ -73,6 +73,9 @@ public final class TestHelper {
             .resourceId("org.mozilla.focus.debug:id/url_edit")
             .focused(true)
             .enabled(true));
+    static UiObject cleartextField = mDevice.findObject(new UiSelector()
+            .resourceId("org.mozilla.focus.debug:id/clear")
+            .enabled(true));
     static UiObject hint = mDevice.findObject(new UiSelector()
             .resourceId("org.mozilla.focus.debug:id/search_hint")
             .clickable(true));
@@ -103,6 +106,10 @@ public final class TestHelper {
     static UiObject notificationBarDeleteItem = TestHelper.mDevice.findObject(new UiSelector()
             .text("Erase browsing history")
             .resourceId("android:id/text")
+            .enabled(true));
+    static UiObject notificationOpenItem = TestHelper.mDevice.findObject(new UiSelector()
+            .resourceId("android:id/action0")
+            .descriptionContains("Open")
             .enabled(true));
     static UiObject FocusInRecentApps = TestHelper.mDevice.findObject(new UiSelector()
             .text("Focus (Dev)")

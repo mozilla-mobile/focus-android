@@ -24,6 +24,7 @@ As part of the event ping the most recent state of the user's setting is sent (d
 * Block web fonts (`pref_performance_block_webfonts`: true/**false**)
 * Block images (`pref_performance_block_images`: true/**false**)
 * Locale override (`pref_locale`: **empty string**/<locale-code>). **empty string** indicates "System Default" locale is selected.
+* Focus is set as the default browser (`pref_default_browser`: true/**false**)
 
 #### Events
 
@@ -48,7 +49,8 @@ The event ping contains a list of events ([see event format on readthedocs.io](h
 * (Search) Query entered: - ("action", "type_query", "search_bar")
 * (Search) Query/Hint clicked: - ("action", "select_query", "search_bar")
 * (Erase) UI button clicked - ("action", "click", "erase_button")
-* (Erase) device’s back button pressed - ("action", "click", "back_button", "erase")
+* (Erase) Device's back button pressed -> User goes back to home screen ("action", "click", "back_button", "erase_home")
+* (Erase) Device's back button pressed -> User goes back to third-party app ("action", "click", "back_button", "erase_app")
 * (Erase) Notification clicked - ("action", "click", "notification", "erase")
 * (Erase) Home screen shortcut clicked - ("action", "click", "shortcut", "erase")
 * Enable/Disable content blocking for session - ("action", "click", "blocking_switch", "true/false")
