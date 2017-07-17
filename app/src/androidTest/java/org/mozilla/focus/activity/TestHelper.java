@@ -73,6 +73,9 @@ public final class TestHelper {
             .resourceId("org.mozilla.focus.beta:id/url_edit")
             .focused(true)
             .enabled(true));
+    static UiObject cleartextField = mDevice.findObject(new UiSelector()
+            .resourceId("org.mozilla.focus.debug:id/clear")
+            .enabled(true));
     static UiObject hint = mDevice.findObject(new UiSelector()
             .resourceId("org.mozilla.focus.beta:id/search_hint")
             .clickable(true));
