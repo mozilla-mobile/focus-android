@@ -47,6 +47,8 @@ public interface IWebView {
 
         void onDownloadStart(Download download);
 
+        void onDownloadDialogConfirmed(Download download);
+
         void onLongPress(final HitTarget hitTarget);
 
         /**
