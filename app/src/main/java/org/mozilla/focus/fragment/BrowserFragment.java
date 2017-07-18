@@ -9,7 +9,6 @@ import android.Manifest;
 import android.app.Activity;
 import android.app.DownloadManager;
 import android.app.PendingIntent;
-import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
@@ -24,7 +23,6 @@ import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
-import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
@@ -46,6 +44,7 @@ import org.mozilla.focus.activity.InstallFirefoxActivity;
 import org.mozilla.focus.broadcastreceiver.DownloadBroadcastReceiver;
 import org.mozilla.focus.locale.LocaleAwareAppCompatActivity;
 import org.mozilla.focus.menu.BrowserMenu;
+import org.mozilla.focus.menu.DownloadDialogMenu;
 import org.mozilla.focus.menu.WebContextMenu;
 import org.mozilla.focus.notification.BrowsingNotificationService;
 import org.mozilla.focus.open.OpenWithFragment;
@@ -67,14 +66,13 @@ import java.lang.ref.WeakReference;
 /**
  * Fragment for displaying the browser UI.
  */
-public class BrowserFragment extends WebFragment implements View.OnClickListener, DownloadDialogFragment.DownloadDialogListener {
+public class BrowserFragment extends WebFragment implements View.OnClickListener {
     public static final String FRAGMENT_TAG = "browser";
 
     private static int REQUEST_CODE_STORAGE_PERMISSION = 101;
     private static final int ANIMATION_DURATION = 300;
     private static final String ARGUMENT_URL = "url";
     private static final String RESTORE_KEY_DOWNLOAD = "download";
-    private static final String DOWNLOAD_DIALOG_TAG = "should-download-prompt-dialog";
 
     public static BrowserFragment create(String url) {
         Bundle arguments = new Bundle();
@@ -424,7 +422,7 @@ public class BrowserFragment extends WebFragment implements View.OnClickListener
                 if (PackageManager.PERMISSION_GRANTED == ContextCompat.checkSelfPermission(getContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
                     // Long press image displays its own dialog and we handle other download cases here
                     if (!isDownloadFromLongPressImage(download)) {
-                        showDownloadPromptDialog(download);
+                        DownloadDialogMenu.show(getContext(), this, download);
                     } else {
                         // Download dialog has already been shown from long press on image. Proceed with download.
                         queueDownload(download);
@@ -441,6 +439,11 @@ public class BrowserFragment extends WebFragment implements View.OnClickListener
 
                     requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_CODE_STORAGE_PERMISSION);
                 }
+            }
+
+            @Override
+            public void onDownloadDialogConfirmed(Download download) {
+                queueDownload(download);
             }
         };
     }
@@ -498,23 +501,10 @@ public class BrowserFragment extends WebFragment implements View.OnClickListener
         }
 
         if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-            showDownloadPromptDialog(pendingDownload);
+            DownloadDialogMenu.show(getContext(), createCallback(), pendingDownload);
         }
 
         pendingDownload = null;
-    }
-
-    void showDownloadPromptDialog(Download download) {
-        final DialogFragment newFragment = DownloadDialogFragment.newInstance(download);
-        newFragment.setTargetFragment(BrowserFragment.this, 300);
-        newFragment.show(getFragmentManager(), DOWNLOAD_DIALOG_TAG);
-    }
-
-    @Override
-    public void onFinishDownloadDialog(Download download, boolean shouldDownload) {
-        if (shouldDownload) {
-            queueDownload(download);
-        }
     }
 
     @Override

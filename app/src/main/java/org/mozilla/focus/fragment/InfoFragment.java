@@ -95,6 +95,10 @@ public class InfoFragment extends WebFragment {
             }
 
             @Override
+            public void onDownloadDialogConfirmed(Download download) {
+            }
+
+            @Override
             public void onLongPress(IWebView.HitTarget hitTarget) {}
 
             @Override
