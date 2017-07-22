@@ -1,0 +1,105 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+  <string name="action_cancel">Utzi</string>
+  <string name="action_ok">Onartu</string>
+  <string name="urlbar_hint">Helbidea bilatu edo idatzi</string>
+  <string name="teaser">Nabigatze pribatu automatikoa.\nNabigatu. Ezabatu. Errepikatu.</string>
+  <string name="feedback_erase">Zure bilaketa historia ezabatu egin da.</string>
+  <string name="search_hint">%1$s bilatu</string>
+  <string name="menu_share">Partekatu…</string>
+  <string name="menu_open_with_default_browser">Honekin ireki: %1$s</string>
+  <string name="menu_open_with_a_browser">Honekin ireki…</string>
+  <string name="menu_settings">Ezarpenak</string>
+  <string name="menu_trackers_blocked_title">Blokeatutako aztarnariak</string>
+  <string name="share_dialog_title">Honen bidez partekatu</string>
+  <string name="notification_erase_text">Nabigazio historia ezabatu</string>
+  <string name="notification_action_open">Ireki</string>
+  <string name="shortcut_erase_short_label">Ezabatu</string>
+  <string name="shortcut_erase_long_label">Nabigazio historia ezabatu</string>
+  <string name="text_selection_search_action">Bilaketa pribatua</string>
+  <string name="about_content"><![CDATA[<p xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">%1$s kontrola emango dizu.</p>\n<p xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">"Nabigatzaile pribatu gisa erabili:\n  "<ul>"\n    "<li>Aplikazioan bertan bilatu eta nabigatu</li>"\n    "<li>Aztarnariak blokeatu (edo, onartzeko, ezarpenak aldatu)</li>"\n    "<li>Kookiak eta bilaketa eta nabigazio historiak ezabatzeko garbitu</li>"\n  "</ul>\n</p>\n<p xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">Mozilla %1$sen egilea da. Gure helburua Internet osasungarri eta irekia sustatzea da.<br/>\n<a href="%2$s">Descubre m&#225;s</a></p>]]></string>
+  <string name="preference_category_search">Bilaketa</string>
+  <string name="preference_search_engine_default">Lehenetsia</string>
+  <string name="preference_language">Hizkuntza</string>
+  <string name="preference_language_systemdefault">Sistemaren lehenetsia</string>
+  <string name="preference_dialog_title_search_engine">Bilatzaile lehenetsia</string>
+  <string name="preference_category_privacy">Pribatutasuna</string>
+  <string name="preference_privacy_block_ads">Publizitaterako aztarnariak blokeatu</string>
+  <string name="preference_privacy_block_analytics">Analisirako aztarnariak blokeatu</string>
+  <string name="preference_privacy_block_social">Sare sozialen aztarnariak blokeatu</string>
+  <string name="preference_privacy_block_content">Beste edukien aztarnariak blokeatu</string>
+  <string name="preference_privacy_block_content_summary">Zenbait bideo eta web orrirekin interferitu dezake</string>
+  <string name="preference_privacy_secure_mode">Ikustezina</string>
+  <string name="preference_privacy_secure_mode_summary">Modu ikustezina desaktibatu pantaila-argazkiak atera eta %1$s(r)ekin bisitatu duzun tokiak aplikazio erabili berrien zerrendan ikusi ahal izateko</string>
+  <string name="preference_category_performance">Errendimendua</string>
+  <string name="preference_performance_block_webfonts">Web iturriak blokeatu</string>
+  <string name="preference_performance_block_webfonts_summary">Ikono edo irudiak faltan izatea eragin dezake</string>
+  <string name="preference_performance_block_images">Irudiak blokeatu</string>
+  <string name="preference_default_browser">Nabigatzaile lehenetsia bihurtu</string>
+  <string name="preference_category_mozilla">Mozilla</string>
+  <string name="preference_mozilla_telemetry">Erabilpen datu anonimoak bidali</string>
+  <string name="preference_mozilla_telemetry_summary">Gehiago aurkitu</string>
+  <string name="preference_about">Honakoari buruz: %1$s</string>
+  <string name="content_description_clear_input">Erregistroa garbitu</string>
+  <string name="content_description_dismiss_input">Ez ikusia egin</string>
+  <string name="content_description_erase">Nabigazio historia ezabatu</string>
+  <string name="content_description_lock">Konexioa segurua</string>
+  <string name="accessibility_announcement_loading">Kargatzen</string>
+  <string name="accessibility_announcement_loading_finished">Orria kargatuta</string>
+  <string name="content_description_menu">Aukera gehiago</string>
+  <string name="content_description_forward">Aurrera joan</string>
+  <string name="content_description_reload">Orria birkargatu</string>
+  <string name="content_description_back">Lehengo orrira joan</string>
+  <string name="content_description_stop">Orri honen karga gelditu</string>
+  <string name="content_description_customtab_exit">Lehengo aplikaziora bueltatu</string>
+  <string name="content_description_blocking_switch">Aztarnariak blokeatu</string>
+  <string name="context_menu_paste_go">Itsatsi eta joan</string>
+  <string name="your_rights">Zure eskubideak</string>
+  <string name="external_app_prompt_title">Esteka beste aplikazio batekin ireki</string>
+  <string name="external_app_prompt">%1$setik irten zaitezke %2$sn esteka hau irekitzeko</string>
+  <string name="external_app_prompt_no_app_title">Esteka hau ireki dezakeen aplikazioa bilatu</string>
+  <string name="external_app_prompt_no_app">Zure gailuan dagoen aplikazioen artean batek ere ezin du esteka hau ireki. %1$stik atera zaitezke %2$sn aplikazio bateragarria bilatzeko.</string>
+  <string name="external_multiple_apps_matched_exit">Nabigazio pribatutik irten?</string>
+  <string name="download_snackbar_finished">%1$s osatua</string>
+  <string name="download_snackbar_open">Ireki</string>
+  <string name="download_dialog_warning"><![CDATA["Jaitsitako artxiboak "<b xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">ez dira ezabatuko</b>" honakoaren historia ezabatzen duzunean: %1$s."]]></string>
+  <string name="download_dialog_title">Artxiboa jaitsi</string>
+  <string name="download_dialog_action_cancel">Utzi</string>
+  <string name="download_dialog_action_download">Jaitsi</string>
+  <string name="errorpage_title">Arazoa orria kargatzean</string>
+  <string name="errorpage_refresh">Berriro saiatu</string>
+  <string name="error_connectionfailure_title">Ezin izan da konektatu</string>
+  <string name="error_connectionfailure_message"><![CDATA[<ul xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">"\n        "<li>Baliteke gunea tenporalki okupatuta edo ez eskuragarri egotea. Saia zaitez berriro minutu batzuen ondoren.</li>"\n        "<li>Ezin baduzu inolako orririk kargatu, zure gailuaren datu edo Wi-Fi konexioa egiazta ezazu</li>"\n      "</ul>]]></string>
+  <string name="error_timeout_title">Konexioa iraungi da</string>
+  <string name="error_hostLookup_title">Ezin izan da zerbitzaria aurkitu</string>
+  <string name="error_hostLookup_message"><![CDATA[<ul xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">"\n        "<li>"Egiazta ezazu helbideak ez duela inolako akatsik, hala nola\n          "<strong>ww</strong>".example.com ondokoaren ordez\n          "<strong>www</strong>.example.com</li>"\n        "<li>Ezin baduzu orririk kargatu, egiazta ezazu datu zein Wi-Fi konexioa zure gailuan</li>"\n      "</ul>]]></string>
+  <string name="error_malformedURI_title">Helbidea ez da baliagarria</string>
+  <string name="error_malformedURI_message"><![CDATA[<ul xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">"\n  "<li>Web helbideak normalean honela idazten dira:  "<strong>http://www.example.com/</strong></li>"\n  "<li>Ziurtatu zaitez barra zeiharrak erabiltzeaz(<strong>/</strong>).</li>\n</ul>]]></string>
+  <string name="error_redirectLoop_title">Orria ez da modu egokian berbideratzen ari</string>
+  <string name="error_redirectLoop_message"><![CDATA[<ul xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">"\n  "<li>Batzuetan arazoa kookiak desgaitzeagatik edo ez onartzeagatik gertatzen da. </li>\n</ul>]]></string>
+  <string name="error_unsupportedprotocol_title">Ez da helbidea ulertu</string>
+  <string name="error_unsupportedprotocol_message"><![CDATA[<ul xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">"\n  "<li>Baliteke beste software bat instalatu behar izatea honako helbidea ireki ahal izateko</li>\n</ul>]]></string>
+  <string name="error_sslhandshake_title">Konexio seguruak huts egin du</string>
+  <string name="error_sslhandshake_message"><![CDATA[<ul xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">"\n  "<li>Agian zerbitzariaren konfigurazio arazo bat dago; edota norbait zerbitzaria ordezkatzen saiatzen ari da</li>"\n   "Zerbitzari honetara aurretik arazorik gabe konektatu bazara, baliteke akatsa behin-behinekoa izatea eta beranduago konektatu ahal izatea. </li>\n</ul>]]></string>
+  <string name="error_generic_title">Ups</string>
+  <string name="error_generic_message">Arrazoiren batengatik, ezin dugu orri hau kargatu.</string>
+  <string name="contextmenu_link_share">Esteka partekatu</string>
+  <string name="contextmenu_link_copy">Estekaren helbidea kopiatu</string>
+  <string name="contextmenu_image_share">Irudia partekatu</string>
+  <string name="contextmenu_image_copy">Irudiaren helbidea partekatu</string>
+  <string name="contextmenu_image_save">Irudia gorde</string>
+  <string name="contextmenu_image_warning"><![CDATA["Gordetako eta partekatutako irudiak"<b xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">ez dira gordeko</b>" honako historia ezabatzen duzunean: %1$s."]]></string>
+  <string name="firstrun_tracking_title">Nabigatu inor ere begira egongo ez balitz bezala</string>
+  <string name="firstrun_tracking_text">Aztarnariak automatikoki blokeatzen du nabigatzen ari zaren bitartean. Gero, ikusitako orriak eta kookiak ezabatzen ditu aplikazioan edo jakinarazpenetan dagoen paperontzi ikonoa ukituz</string>
+  <string name="firstrun_defaultbrowser_title">Zure pribatutasuna indartu</string>
+  <string name="firstrun_defaultbrowser_text">%1$s zure nabigatzaile lehenetsi gisa ezarri eta Webera Android beste aplikazio batzuetatik konektatzen zarenean nabigazio pribatuaz gozatu</string>
+  <string name="firstrun_breaking_title">Blokeoa arazoak ematen\ndituenerako konponbide arina</string>
+  <string name="firstrun_breaking_text">Itxuraz aztarnarien blokeoa dela eta orri batek funtzionatzen ez duenean, desaktibatu lanabesen menuan ukituz</string>
+  <string name="firstrun_close_button">Ulertuta!</string>
+  <string name="firstrun_skip_button">Jauzi</string>
+  <string name="firstrun_next_button">Hurrengoa</string>
+  <string name="content_blocking_disabled">-</string>
+  <string name="menu_about">Honi buruz</string>
+  <string name="menu_help">Laguntza</string>
+  <string name="menu_rights">Zure eskubideak</string>
+</resources>
