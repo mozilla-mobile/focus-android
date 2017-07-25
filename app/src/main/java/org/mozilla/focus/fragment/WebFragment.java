@@ -64,7 +64,7 @@ public abstract class WebFragment extends LocaleAwareFragment {
                 webView.loadUrl(url);
             }
         } else {
-            webView.restoreWebviewState(savedInstanceState);
+            webView.restoreWebViewState(savedInstanceState);
         }
 
         onCreateViewCalled();
@@ -102,7 +102,7 @@ public abstract class WebFragment extends LocaleAwareFragment {
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
-        webView.onSaveInstanceState(outState);
+        webView.saveWebViewState(outState);
 
         super.onSaveInstanceState(outState);
     }
