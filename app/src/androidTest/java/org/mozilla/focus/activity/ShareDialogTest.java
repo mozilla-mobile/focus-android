@@ -50,7 +50,7 @@ public class ShareDialogTest {
     public void shareTest() throws InterruptedException, UiObjectNotFoundException {
 
         UiObject shareBtn = TestHelper.mDevice.findObject(new UiSelector()
-                .resourceId("org.mozilla.focus.debug:id/share")
+                .resourceId("org.mozilla.focus.beta:id/share")
                 .enabled(true));
 
         /* Go to a webpage */

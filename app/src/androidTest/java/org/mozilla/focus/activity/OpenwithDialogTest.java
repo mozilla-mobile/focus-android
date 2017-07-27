@@ -50,14 +50,14 @@ public class OpenwithDialogTest {
     public void OpenTest() throws InterruptedException, UiObjectNotFoundException {
 
         UiObject openWithBtn = TestHelper.mDevice.findObject(new UiSelector()
-                .resourceId("org.mozilla.focus.debug:id/open_select_browser")
+                .resourceId("org.mozilla.focus.beta:id/open_select_browser")
                 .enabled(true));
         UiObject openWithTitle = TestHelper.mDevice.findObject(new UiSelector()
                 .className("android.widget.TextView")
                 .text("Open with…")
                 .enabled(true));
         UiObject openWithList = TestHelper.mDevice.findObject(new UiSelector()
-                .resourceId("org.mozilla.focus.debug:id/apps")
+                .resourceId("org.mozilla.focus.beta:id/apps")
                 .enabled(true));
 
         /* Go to mozilla page */

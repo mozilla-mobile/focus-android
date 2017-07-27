@@ -51,15 +51,15 @@ public final class TestHelper {
                     "blocking = breaking")
             .enabled(true));
     static UiObject nextBtn = mDevice.findObject(new UiSelector()
-            .resourceId("org.mozilla.focus.debug:id/next")
+            .resourceId("org.mozilla.focus.beta:id/next")
             .enabled(true));
     static UiObject finishBtn = mDevice.findObject(new UiSelector()
-            .resourceId("org.mozilla.focus.debug:id/finish")
+            .resourceId("org.mozilla.focus.beta:id/finish")
             .enabled(true));
 
     /********* Main View Locators ***********/
     static UiObject urlBar = mDevice.findObject(new UiSelector()
-            .resourceId("org.mozilla.focus.debug:id/fake_urlbar")
+            .resourceId("org.mozilla.focus.beta:id/fake_urlbar")
             .clickable(true));
     static ViewInteraction menuButton = onView(
             allOf(withId(R.id.menu),
@@ -67,17 +67,17 @@ public final class TestHelper {
 
     /********* Web View Locators ***********/
     static UiObject browserURLbar = mDevice.findObject(new UiSelector()
-            .resourceId("org.mozilla.focus.debug:id/display_url")
+            .resourceId("org.mozilla.focus.beta:id/display_url")
             .clickable(true));
     static UiObject inlineAutocompleteEditText = mDevice.findObject(new UiSelector()
-            .resourceId("org.mozilla.focus.debug:id/url_edit")
+            .resourceId("org.mozilla.focus.beta:id/url_edit")
             .focused(true)
             .enabled(true));
     static UiObject cleartextField = mDevice.findObject(new UiSelector()
             .resourceId("org.mozilla.focus.debug:id/clear")
             .enabled(true));
     static UiObject hint = mDevice.findObject(new UiSelector()
-            .resourceId("org.mozilla.focus.debug:id/search_hint")
+            .resourceId("org.mozilla.focus.beta:id/search_hint")
             .clickable(true));
     static UiObject webView = mDevice.findObject(new UiSelector()
             .className("android.webkit.Webview")
@@ -94,15 +94,14 @@ public final class TestHelper {
             .description("You might need to install other software to open this address.")
             .enabled(true));
     static UiObject browserViewSettingsMenuItem = mDevice.findObject(new UiSelector()
-            .resourceId("org.mozilla.focus.debug:id/settings")
+            .resourceId("org.mozilla.focus.beta:id/settings")
             .clickable(true));
     static UiObject erasedMsg = TestHelper.mDevice.findObject(new UiSelector()
             .text("Your browsing history has been erased.")
-            .resourceId("org.mozilla.focus.debug:id/snackbar_text")
+            .resourceId("org.mozilla.focus.beta:id/snackbar_text")
             .enabled(true));
     static UiObject lockIcon = mDevice.findObject(new UiSelector()
-            .resourceId("org.mozilla.focus.debug:id/lock")
-            .description("Secure connection"));
+            .resourceId("org.mozilla.focus.beta:id/lock"));
     static UiObject notificationBarDeleteItem = TestHelper.mDevice.findObject(new UiSelector()
             .text("Erase browsing history")
             .resourceId("android:id/text")
@@ -110,10 +109,6 @@ public final class TestHelper {
     static UiObject notificationOpenItem = TestHelper.mDevice.findObject(new UiSelector()
             .resourceId("android:id/action0")
             .descriptionContains("Open")
-            .enabled(true));
-    static UiObject FocusInRecentApps = TestHelper.mDevice.findObject(new UiSelector()
-            .text("Focus (Dev)")
-            .resourceId("com.android.systemui:id/title")
             .enabled(true));
 
     /********* Main View Menu Item Locators ***********/
@@ -132,11 +127,11 @@ public final class TestHelper {
             .className("android.widget.LinearLayout")
             .instance(3));
     static UiObject blockCounterItem = mDevice.findObject(new UiSelector()
-            .resourceId("org.mozilla.focus.debug:id/trackers_count"));
+            .resourceId("org.mozilla.focus.beta:id/trackers_count"));
     static UiObject blockToggleSwitch = mDevice.findObject(new UiSelector()
-            .resourceId("org.mozilla.focus.debug:id/blocking_switch"));
+            .resourceId("org.mozilla.focus.beta:id/blocking_switch"));
     static UiObject menulist = mDevice.findObject(new UiSelector()
-            .resourceId("org.mozilla.focus.debug:id/list")
+            .resourceId("org.mozilla.focus.beta:id/list")
             .enabled(true));
 
     /********** Share Menu Dialog ********************/
@@ -152,7 +147,7 @@ public final class TestHelper {
     static UiScrollable settingsList = new UiScrollable(new UiSelector()
             .resourceId("android:id/list").scrollable(true));
     static UiObject settingsHeading = mDevice.findObject(new UiSelector()
-            .resourceId("org.mozilla.focus.debug:id/toolbar")
+            .resourceId("org.mozilla.focus.beta:id/toolbar")
             .enabled(true));
     static UiObject navigateUp = mDevice.findObject(new UiSelector()
             .description("Navigate up"));
@@ -160,7 +155,7 @@ public final class TestHelper {
             .className("android.widget.Switch")
             .instance(1));
     static UiObject refreshBtn = mDevice.findObject(new UiSelector()
-            .resourceId("org.mozilla.focus.debug:id/refresh")
+            .resourceId("org.mozilla.focus.beta:id/refresh")
             .enabled(true));
 
     private TestHelper () throws UiObjectNotFoundException {

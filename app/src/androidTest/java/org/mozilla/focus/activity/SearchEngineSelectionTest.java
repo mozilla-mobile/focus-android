@@ -58,10 +58,10 @@ public class SearchEngineSelectionTest {
         UiObject SearchEngineList = new UiScrollable(new UiSelector()
                 .resourceId("android:id/select_dialog_listview").enabled(true));
         UiObject GoogleSelection = SearchEngineList.getChild(new UiSelector()
-                .resourceId("org.mozilla.focus.debug:id/title")
+                .resourceId("org.mozilla.focus.beta:id/title")
                 .text("Google"));
         UiObject YahooSelection = SearchEngineList.getChild(new UiSelector()
-                .resourceId("org.mozilla.focus.debug:id/title")
+                .resourceId("org.mozilla.focus.beta:id/title")
                 .text("Yahoo"));
         UiObject googleWebView = TestHelper.mDevice.findObject(new UiSelector()
                 .description("mozilla focus - Google Search")
