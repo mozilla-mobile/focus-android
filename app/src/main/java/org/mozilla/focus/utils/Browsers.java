@@ -192,7 +192,7 @@ public class Browsers {
      * Does this user have browsers installed that are not Focus, Firefox or the default browser?
      */
     public boolean hasMultipleThirdPartyBrowsers(Context context) {
-        if (browsers.size() > 2) {
+        if (browsers.size() > 1) {
             // There are more than us and Firefox.
             return true;
         }
@@ -208,6 +208,10 @@ public class Browsers {
         }
 
         return false;
+    }
+
+    public boolean hasOtherBrowsers() {
+        return browsers.size() > 0;
     }
 
     public boolean isInstalled(KnownBrowser browser) {
