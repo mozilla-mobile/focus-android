@@ -56,7 +56,9 @@ public class AppAdapter extends RecyclerView.Adapter<AppViewHolder> {
         final List<App> apps = new ArrayList<>(infoArray.length);
 
         for (ActivityInfo info : infoArray) {
-            apps.add(new App(context, info));
+            if (!info.packageName.equals(context.getPackageName())) {
+                apps.add(new App(context, info));
+            }
         }
 
         Collections.sort(apps, new Comparator<App>() {
