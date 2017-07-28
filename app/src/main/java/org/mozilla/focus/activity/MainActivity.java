@@ -21,6 +21,7 @@ import org.mozilla.focus.fragment.HomeFragment;
 import org.mozilla.focus.fragment.UrlInputFragment;
 import org.mozilla.focus.locale.LocaleAwareAppCompatActivity;
 import org.mozilla.focus.notification.BrowsingNotificationService;
+import org.mozilla.focus.shortcut.HomeScreen;
 import org.mozilla.focus.telemetry.TelemetryWrapper;
 import org.mozilla.focus.utils.SafeIntent;
 import org.mozilla.focus.utils.Settings;
@@ -250,6 +251,8 @@ public class MainActivity extends LocaleAwareAppCompatActivity {
 
         if (intent.getBooleanExtra(EXTRA_TEXT_SELECTION, false)) {
             TelemetryWrapper.textSelectionIntentEvent();
+        } else if (intent.hasExtra(HomeScreen.ADD_TO_HOMESCREEN_TAG)) {
+            TelemetryWrapper.openHomescreenShortcutEvent();
         } else if (BrowsingSession.getInstance().isCustomTab()) {
             TelemetryWrapper.customTabsIntentEvent(BrowsingSession.getInstance().getCustomTabConfig().getOptionsList());
         } else {
