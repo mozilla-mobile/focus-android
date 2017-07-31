@@ -211,10 +211,6 @@ public class Browsers {
         return false;
     }
 
-    public boolean hasOtherBrowsers() {
-        return browsers.size() > 0;
-    }
-
     public boolean isInstalled(KnownBrowser browser) {
         return browsers.containsKey(browser.packageName);
     }
