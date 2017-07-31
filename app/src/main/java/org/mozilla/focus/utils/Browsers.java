@@ -192,6 +192,7 @@ public class Browsers {
      * Does this user have browsers installed that are not Focus, Firefox or the default browser?
      */
     public boolean hasMultipleThirdPartyBrowsers(Context context) {
+        // since Focus is no longer included in Browser list, only check for Firefox
         if (browsers.size() > 1) {
             // There are more than us and Firefox.
             return true;
