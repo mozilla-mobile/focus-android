@@ -5,10 +5,10 @@
 
 _Browse like no one’s watching. The new Firefox Focus automatically blocks a wide range of online trackers — from the moment you launch it to the second you leave it. Easily erase your history, passwords and cookies, so you won’t get followed by things like unwanted ads._
 
-<a href="https://f-droid.org/packages/org.mozilla.klar/" target="_blank">
-<img src="https://f-droid.org/badge/get-it-on.png" alt="Get it on F-Droid" height="90"/></a>
 <a href="https://play.google.com/store/apps/details?id=org.mozilla.focus" target="_blank">
 <img src="https://play.google.com/intl/en_us/badges/images/generic/en-play-badge.png" alt="Get it on Google Play" height="90"/></a>
+
+You can also get the app from Github, just [here](https://github.com/mozilla-mobile/focus-android/releases).
 
 Getting Involved
 ----------------
