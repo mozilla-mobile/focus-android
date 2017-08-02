@@ -18,6 +18,7 @@ import java.io.UnsupportedEncodingException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URLDecoder;
+import java.util.List;
 
 public class UrlUtils {
     public static String normalize(@NonNull String input) {
@@ -67,11 +68,12 @@ public class UrlUtils {
     /**
      * @return The search terms for the first search performed with the default search engine or the current URL.
      */
-    public static String getSearchTermsOrUrl(Context context, String url) {
+    public static String getSearchTermsOrUrl(String url) {
         String searchTermsOrUrl = null;
+        final SearchEngine foundSearchEngine = UrlUtils.isDefaultSearchUrl(url);
 
-        if (UrlUtils.isDefaultSearchUrl(context, url)) {
-            searchTermsOrUrl = UrlUtils.getSearchTermsFromUrl(context, url);
+        if (foundSearchEngine != null) {
+            searchTermsOrUrl = UrlUtils.getSearchTermsFromUrl(url, foundSearchEngine);
         }
 
         if (TextUtils.isEmpty(searchTermsOrUrl)) {
@@ -82,54 +84,38 @@ public class UrlUtils {
     }
 
     /**
-     * @return If a url matches the form of a first search URL for the current default search engine.
+     * @return The detected search engine or null if one was not matched with the URL
      */
-    private static boolean isDefaultSearchUrl(Context context, String urlSearch) {
+    private static SearchEngine isDefaultSearchUrl(String urlSearch) {
         if (TextUtils.isEmpty(urlSearch)) {
-            return false;
+            return null;
         }
 
-        final SearchEngine searchEngine = SearchEngineManager.getInstance()
-                .getDefaultSearchEngine(context);
-
-        final String baseSearchUrl = searchEngine.getBaseSearchUrl();
-        if (TextUtils.isEmpty(baseSearchUrl)) {
-            return false;
+        final String representativeSnippet = UrlUtils.getRepresentativeSnippet(urlSearch);
+        final List<SearchEngine> searchEngines = SearchEngineManager.getInstance().getSearchEngines();
+        for (SearchEngine searchEngine : searchEngines) {
+            if (representativeSnippet.contains(searchEngine.getName().toLowerCase())) {
+                return searchEngine;
+            }
         }
-        // %7B is a placeholder for search terms - if it is a default search engine url, the urls should match before the placeholder.
-        if (baseSearchUrl.contains("%7B")) {
-            final int searchPlaceholderIndex = baseSearchUrl.lastIndexOf("%7B");
-            return urlSearch.startsWith(baseSearchUrl.substring(0, searchPlaceholderIndex));
-        } else {
-            return false;
-        }
+        return null;
     }
 
     /**
      * @return The search parameters decoded from the search url or null if they could not be extracted.
      */
-    private static String getSearchTermsFromUrl(Context context, String url) {
+    private static String getSearchTermsFromUrl(String url, SearchEngine searchEngine) {
         String searchParams = null;
         final Uri uri = Uri.parse(url);
         try {
-            final String queryKey = getSearchQueryKeyForSearchEngine(context);
-            if (queryKey != null) {
+            final String queryKey = searchEngine.getSearchTermsParamName();
+            if (queryKey != null && url.contains(queryKey)) {
                 searchParams = URLDecoder.decode(uri.getQueryParameter(queryKey), "UTF-8");
             }
         } catch (UnsupportedEncodingException exception) {
             searchParams = null;
         }
         return searchParams;
-    }
-
-    /**
-     * @return The key needed to access the search terms from the URI.
-     */
-    private static String getSearchQueryKeyForSearchEngine(Context context) {
-        final SearchEngine searchEngine = SearchEngineManager.getInstance()
-                .getDefaultSearchEngine(context);
-
-        return searchEngine.getSearchTermsParamName();
     }
 
     public static String stripUserInfo(@Nullable String url) {
@@ -210,5 +196,30 @@ public class UrlUtils {
         }
 
         return host.substring(start);
+    }
+
+    /**
+     * Get the representative part of the URL. Usually this is the host (without common prefixes).
+     */
+    public static String getRepresentativeSnippet(@NonNull String url) {
+        Uri uri = Uri.parse(url);
+
+        // Use the host if available
+        String snippet = uri.getHost();
+
+        if (TextUtils.isEmpty(snippet)) {
+            // If the uri does not have a host (e.g. file:// uris) then use the path
+            snippet = uri.getPath();
+        }
+
+        if (TextUtils.isEmpty(snippet)) {
+            // If we still have no snippet then just return the question mark
+            return "?";
+        }
+
+        // Strip common prefixes that we do not want to use to determine the representative characterS
+        snippet = UrlUtils.stripCommonSubdomains(snippet);
+
+        return snippet;
     }
 }

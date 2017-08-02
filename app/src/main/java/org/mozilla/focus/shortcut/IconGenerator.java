@@ -10,8 +10,6 @@ import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.net.Uri;
-import android.support.annotation.NonNull;
 import android.support.annotation.VisibleForTesting;
 import android.text.TextUtils;
 import android.util.TypedValue;
@@ -82,7 +80,7 @@ public class IconGenerator {
             return "?";
         }
 
-        final String snippet = getRepresentativeSnippet(url);
+        final String snippet = UrlUtils.getRepresentativeSnippet(url);
         for (int i = 0; i < snippet.length(); i++) {
             char c = snippet.charAt(i);
 
@@ -95,28 +93,4 @@ public class IconGenerator {
         return "?";
     }
 
-    /**
-     * Get the representative part of the URL. Usually this is the host (without common prefixes).
-     */
-    private static String getRepresentativeSnippet(@NonNull String url) {
-        Uri uri = Uri.parse(url);
-
-        // Use the host if available
-        String snippet = uri.getHost();
-
-        if (TextUtils.isEmpty(snippet)) {
-            // If the uri does not have a host (e.g. file:// uris) then use the path
-            snippet = uri.getPath();
-        }
-
-        if (TextUtils.isEmpty(snippet)) {
-            // If we still have no snippet then just return the question mark
-            return "?";
-        }
-
-        // Strip common prefixes that we do not want to use to determine the representative characterS
-        snippet = UrlUtils.stripCommonSubdomains(snippet);
-
-        return snippet;
-    }
 }
