@@ -75,11 +75,18 @@ public class BrowserFragment extends WebFragment implements View.OnClickListener
     private static int REQUEST_CODE_STORAGE_PERMISSION = 101;
     private static final int ANIMATION_DURATION = 300;
     private static final String ARGUMENT_URL = "url";
+    private static final String ARGUMENT_WAS_SEARCH = "was_search";
+    private static final String ARGUMENT_SEARCH_TERMS = "search_terms";
     private static final String RESTORE_KEY_DOWNLOAD = "download";
+    private boolean wasSearch;
+    private String searchTerms;
+    private String localSearchUrl;
 
-    public static BrowserFragment create(String url) {
+    public static BrowserFragment create(String url, boolean wasSearch, String terms) {
         Bundle arguments = new Bundle();
         arguments.putString(ARGUMENT_URL, url);
+        arguments.putBoolean(ARGUMENT_WAS_SEARCH, wasSearch);
+        arguments.putString(ARGUMENT_SEARCH_TERMS, terms);
 
         BrowserFragment fragment = new BrowserFragment();
         fragment.setArguments(arguments);
@@ -150,6 +157,14 @@ public class BrowserFragment extends WebFragment implements View.OnClickListener
         return getArguments().getString(ARGUMENT_URL);
     }
 
+    public boolean getWasSearch() {
+        return getArguments().getBoolean(ARGUMENT_WAS_SEARCH);
+    }
+
+    public String getSearchTerms() {
+        return getArguments().getString(ARGUMENT_SEARCH_TERMS);
+    }
+
     private void updateURL(final String url) {
         urlView.setText(UrlUtils.stripUserInfo(url));
     }
@@ -172,6 +187,9 @@ public class BrowserFragment extends WebFragment implements View.OnClickListener
 
         urlView = (TextView) view.findViewById(R.id.display_url);
         updateURL(getInitialUrl());
+
+        wasSearch = getWasSearch();
+        searchTerms = getSearchTerms();
 
         final View toolbarContent = view.findViewById(R.id.toolbar_content);
 
@@ -752,8 +770,12 @@ public class BrowserFragment extends WebFragment implements View.OnClickListener
                 break;
 
             case R.id.display_url:
+                if (wasSearch) {
+                    localSearchUrl = getUrl();
+                }
                 final Fragment urlFragment = UrlInputFragment
-                        .createAsOverlay(getUrl(), urlView);
+                        .createAsOverlay(getUrl(), urlView, wasSearch, searchTerms, localSearchUrl);
+                wasSearch = false;
 
                 getActivity().getSupportFragmentManager()
                         .beginTransaction()
@@ -939,7 +961,9 @@ public class BrowserFragment extends WebFragment implements View.OnClickListener
         }
     }
 
-    public void loadUrl(final String url) {
+    public void loadUrl(final String url, boolean value, String terms) {
+        searchTerms = terms;
+        wasSearch = value;
         final IWebView webView = getWebView();
         if (webView != null) {
             webView.loadUrl(url);
