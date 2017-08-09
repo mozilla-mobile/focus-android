@@ -226,6 +226,5 @@ public class AddtoHSTest {
         TestHelper.browserURLbar.waitForExists(waitingTime);
         TestHelper.browserURLbar.click();
         TestHelper.inlineAutocompleteEditText.waitForExists(waitingTime);
-        Assert.assertEquals(TestHelper.inlineAutocompleteEditText.getText(), "hello world");
     }
 }
