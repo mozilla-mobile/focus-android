@@ -8,9 +8,11 @@ package org.mozilla.focus.fragment;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.app.Activity;
+import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.speech.RecognizerIntent;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.PopupMenu;
@@ -36,6 +38,11 @@ import org.mozilla.focus.utils.UrlUtils;
 import org.mozilla.focus.utils.ViewUtils;
 import org.mozilla.focus.widget.InlineAutocompleteEditText;
 
+import java.util.ArrayList;
+import java.util.Locale;
+
+import static android.app.Activity.RESULT_OK;
+
 /**
  * Fragment for displaying he URL input controls.
  */
@@ -53,6 +60,8 @@ public class UrlInputFragment extends LocaleAwareFragment implements View.OnClic
     private static final String ANIMATION_BROWSER_SCREEN = "browser_screen";
 
     private static final int ANIMATION_DURATION = 200;
+
+    private static final int REQ_CODE_SPEECH_INPUT = 100;
 
     /**
      * Create a new UrlInputFragment with a gradient background (and the Focus logo). This configuration
@@ -118,6 +127,7 @@ public class UrlInputFragment extends LocaleAwareFragment implements View.OnClic
     private View urlInputBackgroundView;
     private View toolbarBackgroundView;
     private View menuView;
+    View speechButton;
 
     private @Nullable PopupMenu displayedPopupMenu;
 
@@ -132,6 +142,14 @@ public class UrlInputFragment extends LocaleAwareFragment implements View.OnClic
 
         clearView = view.findViewById(R.id.clear);
         clearView.setOnClickListener(this);
+
+        speechButton = view.findViewById(R.id.speechButton);
+        speechButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startSpeechToText();
+            }
+        });
 
         searchViewContainer = view.findViewById(R.id.search_hint_container);
 
@@ -242,6 +260,33 @@ public class UrlInputFragment extends LocaleAwareFragment implements View.OnClic
 
             default:
                 throw new IllegalStateException("Unhandled view in onClick()");
+        }
+    }
+
+    private  void startSpeechToText(){
+
+        Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
+        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
+        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, Locale.getDefault());
+        intent.putExtra(RecognizerIntent.EXTRA_PROMPT, "Speak The Site Where You Want To Go!");
+        try{
+            startActivityForResult(intent, REQ_CODE_SPEECH_INPUT);
+        }catch (ActivityNotFoundException e){
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        switch (requestCode) {
+            case REQ_CODE_SPEECH_INPUT:
+                if (resultCode == RESULT_OK && null != data) {
+                    ArrayList<String> result = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
+                    urlView.setText(result.get(0));
+                }
+                break;
         }
     }
 
