@@ -85,7 +85,7 @@ public class Browsers {
         findKnownBrowsers(packageManager, browsers, uri);
 
         this.browsers = browsers;
-        this.defaultBrowser = findDefault(packageManager, uri);
+        this.defaultBrowser = findDefault(packageManager);
         this.firefoxBrandedBrowser = findFirefoxBrandedBrowser();
     }
 
@@ -152,26 +152,15 @@ public class Browsers {
         }
     }
 
-    private ActivityInfo findDefault(PackageManager packageManager, @NonNull Uri uri) {
-        final Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+    private ActivityInfo findDefault(PackageManager packageManager) {
+        Intent browserIntent = new Intent("android.intent.action.VIEW", Uri.parse("http://"));
+        ResolveInfo resolveInfo = packageManager.resolveActivity(browserIntent, PackageManager.MATCH_DEFAULT_ONLY);
 
-        final ResolveInfo resolveInfo = packageManager.resolveActivity(intent, 0);
-        if (resolveInfo == null || resolveInfo.activityInfo == null) {
-            return null;
+        if (resolveInfo != null) {
+            return resolveInfo.activityInfo;
         }
 
-        if (!resolveInfo.activityInfo.exported) {
-            // We are not allowed to launch this activity.
-            return null;
-        }
-
-        if (!browsers.containsKey(resolveInfo.activityInfo.packageName)) {
-            // This default browser wasn't returned when we asked for *all* browsers. It's likely
-            // that this is actually the resolver activity (aka intent chooser). Let's ignore it.
-            return null;
-        }
-
-        return resolveInfo.activityInfo;
+        return null;
     }
 
     /**
