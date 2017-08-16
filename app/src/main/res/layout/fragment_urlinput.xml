@@ -105,7 +105,7 @@
                     android:paddingEnd="8dp"
                     android:paddingStart="8dp"
                     android:layout_gravity="end"
-                    android:src="@drawable/mic1"
+                    android:src="@drawable/ic_mic_white_24dp"
                     android:background="?android:attr/selectableItemBackgroundBorderless"
                     android:contentDescription="@string/content_description_microphone"/>
 
