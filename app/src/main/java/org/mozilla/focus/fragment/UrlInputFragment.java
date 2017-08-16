@@ -263,15 +263,15 @@ public class UrlInputFragment extends LocaleAwareFragment implements View.OnClic
         }
     }
 
-    private  void startSpeechToText(){
+    private  void startSpeechToText() {
 
         Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
         intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
         intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, Locale.getDefault());
         intent.putExtra(RecognizerIntent.EXTRA_PROMPT, "Speak The Site Where You Want To Go!");
-        try{
+        try {
             startActivityForResult(intent, REQ_CODE_SPEECH_INPUT);
-        }catch (ActivityNotFoundException e){
+        } catch (ActivityNotFoundException e) {
             e.printStackTrace();
         }
     }
