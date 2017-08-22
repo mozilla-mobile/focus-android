@@ -243,7 +243,7 @@ public class MainActivity extends LocaleAwareAppCompatActivity {
         getSupportFragmentManager()
                 .beginTransaction()
                 .replace(R.id.container,
-                        BrowserFragment.create(url), BrowserFragment.FRAGMENT_TAG)
+                        BrowserFragment.create(url, false, null), BrowserFragment.FRAGMENT_TAG)
                 .commit();
 
         final SafeIntent intent = new SafeIntent(getIntent());

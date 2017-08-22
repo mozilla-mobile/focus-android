@@ -15,6 +15,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.PopupMenu;
 import android.text.SpannableString;
+import android.text.TextUtils;
 import android.text.style.StyleSpan;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -49,10 +50,17 @@ public class UrlInputFragment extends LocaleAwareFragment implements View.OnClic
     private static final String ARGUMENT_WIDTH = "width";
     private static final String ARGUMENT_HEIGHT = "height";
     private static final String ARGUMENT_OVERLAY = "translucent";
+    private static final String ARGUMENT_WAS_SEARCH = "was_search";
+    private static final String ARGUMENT_SEARCH_TERMS = "search_terms";
+    private static final String ARGUMENT_LOCAL_SEARCH_URL = "local_search_url";
 
     private static final String ANIMATION_BROWSER_SCREEN = "browser_screen";
 
     private static final int ANIMATION_DURATION = 200;
+
+    private String searchTerms;
+    private String localSearchUrl;
+    private boolean wasSearch;
 
     /**
      * Create a new UrlInputFragment with a gradient background (and the Focus logo). This configuration
@@ -73,7 +81,7 @@ public class UrlInputFragment extends LocaleAwareFragment implements View.OnClic
         if (isOverlay()) {
             getActivity().getSupportFragmentManager()
                     .beginTransaction()
-                    .replace(R.id.container, UrlInputFragment.createAsOverlay(ARGUMENT_URL, urlView), UrlInputFragment.FRAGMENT_TAG)
+                    .replace(R.id.container, UrlInputFragment.createAsOverlay(ARGUMENT_URL, urlView, wasSearch, searchTerms, localSearchUrl), UrlInputFragment.FRAGMENT_TAG)
                     .commit();
         } else {
             getActivity().getSupportFragmentManager()
@@ -87,7 +95,7 @@ public class UrlInputFragment extends LocaleAwareFragment implements View.OnClic
      * Create a new UrlInputFragment as an overlay shown on top of a different view (e.g. the
      * current website).
      */
-    public static UrlInputFragment createAsOverlay(String url, View urlView) {
+    public static UrlInputFragment createAsOverlay(String url, View urlView, boolean wasSearch, String terms, String localSearchUrl) {
         final Bundle arguments = new Bundle();
         arguments.putString(ARGUMENT_ANIMATION, ANIMATION_BROWSER_SCREEN);
         arguments.putString(ARGUMENT_URL, url);
@@ -101,10 +109,18 @@ public class UrlInputFragment extends LocaleAwareFragment implements View.OnClic
         arguments.putInt(ARGUMENT_WIDTH, urlView.getWidth());
         arguments.putInt(ARGUMENT_HEIGHT, urlView.getHeight());
 
+        arguments.putBoolean(ARGUMENT_WAS_SEARCH, wasSearch);
+        arguments.putString(ARGUMENT_SEARCH_TERMS, terms);
+        arguments.putString(ARGUMENT_LOCAL_SEARCH_URL, localSearchUrl);
+
         final UrlInputFragment fragment = new UrlInputFragment();
         fragment.setArguments(arguments);
 
         return fragment;
+    }
+
+    private boolean getWasSearch() {
+        return getArguments().getBoolean(ARGUMENT_WAS_SEARCH);
     }
 
     private InlineAutocompleteEditText urlView;
@@ -183,8 +199,39 @@ public class UrlInputFragment extends LocaleAwareFragment implements View.OnClic
         }
 
         urlView.setOnCommitListener(this);
+        boolean urlOrSearchShown = false;
 
-        if (getArguments().containsKey(ARGUMENT_URL)) {
+        // Should we show the search terms or a URL in the urlView?
+        if (getArguments().containsKey(ARGUMENT_SEARCH_TERMS) && getArguments().containsKey(ARGUMENT_WAS_SEARCH)) {
+            searchTerms = getArguments().getString(ARGUMENT_SEARCH_TERMS);
+            wasSearch = getWasSearch();
+            // If the first search was completed hold the search terms.
+            if ((wasSearch && !TextUtils.isEmpty(searchTerms))) {
+                urlView.setText(searchTerms);
+                clearView.setVisibility(View.VISIBLE);
+                wasSearch = false;
+                urlOrSearchShown = true;
+            } else if (getArguments().containsKey(ARGUMENT_LOCAL_SEARCH_URL) && getArguments().containsKey(ARGUMENT_URL)) {
+                localSearchUrl = getArguments().getString(ARGUMENT_LOCAL_SEARCH_URL);
+                final String currentURL = getArguments().getString(ARGUMENT_URL);
+                if (!TextUtils.isEmpty(localSearchUrl) && !TextUtils.isEmpty(currentURL)) {
+                    // Checking if the local search URL we kept track of matches the current URL of the page.
+                    // This will tell us if we should still show the search terms instead of the URL.
+                    if (localSearchUrl.equals(currentURL)) {
+                        urlView.setText(searchTerms);
+                        clearView.setVisibility(View.VISIBLE);
+                        urlOrSearchShown = true;
+                        // Otherwise let's show the URL.
+                    } else {
+                        urlView.setText(currentURL);
+                        clearView.setVisibility(View.VISIBLE);
+                        urlOrSearchShown = true;
+                    }
+                }
+            }
+        }
+
+        if (getArguments().containsKey(ARGUMENT_URL) && !urlOrSearchShown) {
             urlView.setText(getArguments().getString(ARGUMENT_URL));
             clearView.setVisibility(View.VISIBLE);
         }
@@ -437,6 +484,12 @@ public class UrlInputFragment extends LocaleAwareFragment implements View.OnClic
             ViewUtils.hideKeyboard(urlView);
 
             final boolean isUrl = UrlUtils.isUrl(input);
+            if (!isUrl) {
+                wasSearch = true;
+                searchTerms = input;
+            } else {
+                wasSearch = false;
+            }
 
             final String url = isUrl
                     ? UrlUtils.normalize(input)
@@ -449,7 +502,9 @@ public class UrlInputFragment extends LocaleAwareFragment implements View.OnClic
     }
 
     private void onSearch() {
-        final String searchUrl = UrlUtils.createSearchUrl(getContext(), urlView.getOriginalText());
+        wasSearch = true;
+        searchTerms = urlView.getOriginalText();
+        final String searchUrl = UrlUtils.createSearchUrl(getContext(), searchTerms);
 
         openUrl(searchUrl);
 
@@ -469,7 +524,7 @@ public class UrlInputFragment extends LocaleAwareFragment implements View.OnClic
             // Reuse existing visible fragment - in this case we know the user is already browsing.
             // The fragment might exist if we "erased" a browsing session, hence we need to check
             // for visibility in addition to existence.
-            browserFragment.loadUrl(url);
+            browserFragment.loadUrl(url, wasSearch, searchTerms);
 
             // And this fragment can be removed again.
             fragmentManager.beginTransaction()
@@ -478,7 +533,7 @@ public class UrlInputFragment extends LocaleAwareFragment implements View.OnClic
         } else {
             fragmentManager
                     .beginTransaction()
-                    .replace(R.id.container, BrowserFragment.create(url), BrowserFragment.FRAGMENT_TAG)
+                    .replace(R.id.container, BrowserFragment.create(url, wasSearch, searchTerms), BrowserFragment.FRAGMENT_TAG)
                     .commit();
         }
     }
