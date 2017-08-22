@@ -93,6 +93,23 @@
                     android:textColorHint="@color/inactive_text"
                     android:textSize="15sp" />
 
+
+                <ImageButton
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:id="@+id/speechButton"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:paddingTop="8dp"
+                    android:paddingBottom="8dp"
+                    android:paddingEnd="8dp"
+                    android:paddingStart="8dp"
+                    android:layout_gravity="end"
+                    android:src="@drawable/ic_mic_white_24dp"
+                    android:background="?android:attr/selectableItemBackgroundBorderless"
+                    android:contentDescription="@string/content_description_microphone"/>
+
+
                 <ImageButton
                     android:id="@+id/clear"
                     android:layout_width="40dp"
