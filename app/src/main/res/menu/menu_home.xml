@@ -15,4 +15,8 @@
     <item
         android:id="@+id/settings"
         android:title="@string/menu_settings" />
+    <item
+        android:id="@+id/qrScanner"
+        android:title="@string/menu_qrReader"
+        android:icon="@drawable/ic_qrcode_scan" />
 </menu>
