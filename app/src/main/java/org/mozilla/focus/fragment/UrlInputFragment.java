@@ -54,8 +54,6 @@ public class UrlInputFragment extends LocaleAwareFragment implements View.OnClic
     private static final String ARGUMENT_HEIGHT = "height";
     private static final String ARGUMENT_OVERLAY = "translucent";
 
-    private String pasteString = "";
-
     private static final String ANIMATION_BROWSER_SCREEN = "browser_screen";
 
     private static final int ANIMATION_DURATION = 200;
@@ -126,6 +124,8 @@ public class UrlInputFragment extends LocaleAwareFragment implements View.OnClic
     private View toolbarBackgroundView;
     private View menuView;
 
+    private String pasteString;
+
     private @Nullable PopupMenu displayedPopupMenu;
 
     private volatile boolean isAnimating;
@@ -149,11 +149,11 @@ public class UrlInputFragment extends LocaleAwareFragment implements View.OnClic
         searchViewClip.setOnClickListener(this);
 
         ClipboardManager clipboard = (ClipboardManager) getContext().getSystemService(CLIPBOARD_SERVICE);
-        ClipData clip = clipboard.getPrimaryClip();
 
-        if (clip != null && clip.getItemCount() > 0) {
+        if (clipboard.hasPrimaryClip()) {
+            ClipData clip = clipboard.getPrimaryClip();
             ClipData.Item item = clip.getItemAt(0);
-            pasteString = item.getText().toString();
+            pasteString = item.coerceToText(getContext()).toString();
         }
 
         urlAutoCompleteFilter = new UrlAutoCompleteFilter();
@@ -549,7 +549,7 @@ public class UrlInputFragment extends LocaleAwareFragment implements View.OnClic
 
             searchView.setText(content);
 
-            if (pasteString.equals("")) {
+            if (pasteString == null) {
                 searchViewClip.setVisibility(View.GONE);
             } else {
                 searchViewClip.setText(hintClip);
