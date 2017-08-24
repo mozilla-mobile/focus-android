@@ -8,6 +8,8 @@ package org.mozilla.focus.fragment;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.app.Activity;
+import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -41,6 +43,8 @@ import org.mozilla.focus.utils.ThreadUtils;
 import org.mozilla.focus.utils.UrlUtils;
 import org.mozilla.focus.utils.ViewUtils;
 import org.mozilla.focus.widget.InlineAutocompleteEditText;
+
+import static android.content.Context.CLIPBOARD_SERVICE;
 
 /**
  * Fragment for displaying he URL input controls.
@@ -106,6 +110,7 @@ public class UrlInputFragment extends LocaleAwareFragment implements View.OnClic
     private View clearView;
     private View searchViewContainer;
     private TextView searchView;
+    private TextView searchViewClip;
 
     private UrlAutoCompleteFilter urlAutoCompleteFilter;
     private View dismissView;
@@ -113,6 +118,8 @@ public class UrlInputFragment extends LocaleAwareFragment implements View.OnClic
     private View urlInputBackgroundView;
     private View toolbarBackgroundView;
     private View menuView;
+
+    private String pasteString;
 
     private @Nullable PopupMenu displayedPopupMenu;
 
@@ -144,6 +151,17 @@ public class UrlInputFragment extends LocaleAwareFragment implements View.OnClic
 
         searchView =  (TextView) view.findViewById(R.id.search_hint);
         searchView.setOnClickListener(this);
+
+        searchViewClip =  (TextView) view.findViewById(R.id.search_hint_clip);
+        searchViewClip.setOnClickListener(this);
+
+        ClipboardManager clipboard = (ClipboardManager) getContext().getSystemService(CLIPBOARD_SERVICE);
+
+        if (clipboard.hasPrimaryClip()) {
+            ClipData clip = clipboard.getPrimaryClip();
+            ClipData.Item item = clip.getItemAt(0);
+            pasteString = item.coerceToText(getContext()).toString();
+        }
 
         urlAutoCompleteFilter = new UrlAutoCompleteFilter();
         urlAutoCompleteFilter.loadDomainsInBackground(getContext().getApplicationContext());
@@ -242,6 +260,10 @@ public class UrlInputFragment extends LocaleAwareFragment implements View.OnClic
 
             case R.id.search_hint:
                 onSearch();
+                break;
+
+            case R.id.search_hint_clip:
+                onSearchClip();
                 break;
 
             case R.id.dismiss:
@@ -477,6 +499,14 @@ public class UrlInputFragment extends LocaleAwareFragment implements View.OnClic
         TelemetryWrapper.searchSelectEvent();
     }
 
+    private void onSearchClip() {
+        final String searchUrl = UrlUtils.createSearchUrl(getContext(), pasteString);
+
+        openUrl(searchUrl);
+
+        TelemetryWrapper.searchSelectEvent();
+    }
+
     private void openUrl(String url) {
         final FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
 
@@ -530,11 +560,19 @@ public class UrlInputFragment extends LocaleAwareFragment implements View.OnClic
             }
 
             final String hint = getString(R.string.search_hint, searchText);
+            final String hintClip = getString(R.string.search_hint, pasteString);
 
             final SpannableString content = new SpannableString(hint);
             content.setSpan(new StyleSpan(Typeface.BOLD), hint.length() - searchText.length(), hint.length(), 0);
 
             searchView.setText(content);
+
+            if (pasteString == null) {
+                searchViewClip.setVisibility(View.GONE);
+            } else {
+                searchViewClip.setText(hintClip);
+            }
+
             searchViewContainer.setVisibility(View.VISIBLE);
         }
     }
