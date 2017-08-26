@@ -17,6 +17,10 @@ android {
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
         multiDexEnabled true
+
+        jackOptions {
+            enabled true
+        }
     }
 
     dexOptions {
@@ -127,6 +131,10 @@ android {
         klarWebkitDebug {
             res.srcDir 'src/klarDebug/res'
         }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
     }
 }
 
