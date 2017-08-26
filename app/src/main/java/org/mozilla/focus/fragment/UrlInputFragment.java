@@ -8,16 +8,15 @@ package org.mozilla.focus.fragment;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.app.Activity;
+import android.content.ClipData;
+import android.content.ClipboardManager;
+import android.content.Context;
 import android.content.Intent;
-import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.PopupMenu;
-import android.text.SpannableString;
-import android.text.style.StyleSpan;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -32,11 +31,13 @@ import org.mozilla.focus.activity.InfoActivity;
 import org.mozilla.focus.autocomplete.UrlAutoCompleteFilter;
 import org.mozilla.focus.locale.LocaleAwareAppCompatActivity;
 import org.mozilla.focus.locale.LocaleAwareFragment;
+import org.mozilla.focus.search.SearchTextView;
 import org.mozilla.focus.session.Session;
 import org.mozilla.focus.session.SessionManager;
 import org.mozilla.focus.session.Source;
 import org.mozilla.focus.telemetry.TelemetryWrapper;
 import org.mozilla.focus.utils.Settings;
+import org.mozilla.focus.utils.StringUtils;
 import org.mozilla.focus.utils.ThreadUtils;
 import org.mozilla.focus.utils.UrlUtils;
 import org.mozilla.focus.utils.ViewUtils;
@@ -106,6 +107,8 @@ public class UrlInputFragment extends LocaleAwareFragment implements View.OnClic
     private View clearView;
     private View searchViewContainer;
     private TextView searchView;
+    private View clipboardContainer;
+    private SearchTextView clipboardView;
 
     private UrlAutoCompleteFilter urlAutoCompleteFilter;
     private View dismissView;
@@ -120,6 +123,14 @@ public class UrlInputFragment extends LocaleAwareFragment implements View.OnClic
 
     private Session session;
 
+    private ClipboardManager clipboardManager;
+    private final ClipboardManager.OnPrimaryClipChangedListener clipChangedListener = new ClipboardManager.OnPrimaryClipChangedListener() {
+        @Override
+        public void onPrimaryClipChanged() {
+            onClipboardItem();
+        }
+    };
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -128,6 +139,8 @@ public class UrlInputFragment extends LocaleAwareFragment implements View.OnClic
         if (sessionUUID != null) {
             session = SessionManager.getInstance().getSessionByUUID(sessionUUID);
         }
+        clipboardManager = (ClipboardManager) getContext().getSystemService(Context.CLIPBOARD_SERVICE);
+        clipboardManager.addPrimaryClipChangedListener(clipChangedListener);
     }
 
     @Override
@@ -144,6 +157,11 @@ public class UrlInputFragment extends LocaleAwareFragment implements View.OnClic
 
         searchView =  (TextView) view.findViewById(R.id.search_hint);
         searchView.setOnClickListener(this);
+
+        clipboardContainer = view.findViewById(R.id.clipboard_container);
+
+        clipboardView = view.findViewById(R.id.clipboard_hint);
+        clipboardView.setOnClickListener(this);
 
         urlAutoCompleteFilter = new UrlAutoCompleteFilter();
         urlAutoCompleteFilter.loadDomainsInBackground(getContext().getApplicationContext());
@@ -227,6 +245,8 @@ public class UrlInputFragment extends LocaleAwareFragment implements View.OnClic
             // Only show keyboard if we are not displaying the first run tour on top.
             showKeyboard();
         }
+
+        onClipboardItem();
     }
 
     public void showKeyboard() {
@@ -242,6 +262,10 @@ public class UrlInputFragment extends LocaleAwareFragment implements View.OnClic
 
             case R.id.search_hint:
                 onSearch();
+                break;
+
+            case R.id.clipboard_hint:
+                onClipboardSelect();
                 break;
 
             case R.id.dismiss:
@@ -281,6 +305,8 @@ public class UrlInputFragment extends LocaleAwareFragment implements View.OnClic
         if (displayedPopupMenu != null) {
             displayedPopupMenu.dismiss();
         }
+
+        clipboardManager.removePrimaryClipChangedListener(clipChangedListener);
     }
 
     private void animateFirstDraw() {
@@ -477,6 +503,12 @@ public class UrlInputFragment extends LocaleAwareFragment implements View.OnClic
         TelemetryWrapper.searchSelectEvent();
     }
 
+    private void onClipboardSelect() {
+        final String searchUrl = UrlUtils.createSearchUrl(getContext(), clipboardView.getOriginalText());
+
+        openUrl(searchUrl);
+    }
+
     private void openUrl(String url) {
         final FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
 
@@ -529,12 +561,7 @@ public class UrlInputFragment extends LocaleAwareFragment implements View.OnClic
                 dismissView.setVisibility(View.VISIBLE);
             }
 
-            final String hint = getString(R.string.search_hint, searchText);
-
-            final SpannableString content = new SpannableString(hint);
-            content.setSpan(new StyleSpan(Typeface.BOLD), hint.length() - searchText.length(), hint.length(), 0);
-
-            searchView.setText(content);
+            searchView.setText(StringUtils.createSpannableSearchHint(getContext(), searchText));
             searchViewContainer.setVisibility(View.VISIBLE);
         }
     }
@@ -565,6 +592,23 @@ public class UrlInputFragment extends LocaleAwareFragment implements View.OnClic
 
             default:
                 throw new IllegalStateException("Unhandled view ID in onMenuItemClick()");
+        }
+    }
+
+    private void onClipboardItem() {
+        ClipData clip = clipboardManager.getPrimaryClip();
+        CharSequence text = null;
+        if (clip != null) {
+            text = clip.getItemAt(0).getText();
+        }
+        if (text != null) {
+            String clipString = String.valueOf(text).trim();
+            if (!clipString.isEmpty()) {
+                clipboardView.setSpanText(String.valueOf(text).trim());
+                clipboardContainer.setVisibility(View.VISIBLE);
+            } else {
+                clipboardContainer.setVisibility(View.GONE);
+            }
         }
     }
 }
