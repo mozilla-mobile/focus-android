@@ -5,6 +5,7 @@
 
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/background"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -138,12 +139,14 @@
         android:background="@color/colorUrlInputBackground"
         android:contentDescription="@string/content_description_dismiss_input" />
 
-    <FrameLayout
+    <LinearLayout
         android:id="@+id/search_hint_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:orientation="vertical"
         android:visibility="gone"
-        android:layout_marginTop="81dp">
+        android:layout_marginTop="81dp"
+        tools:visibility="visible">
 
         <TextView
             android:id="@+id/search_hint"
@@ -166,6 +169,36 @@
             android:background="#33ffffff"
             android:layout_gravity="bottom" />
 
-    </FrameLayout>
+        <FrameLayout
+            android:id="@+id/clipboard_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <org.mozilla.focus.search.SearchTextView
+                android:id="@+id/clipboard_hint"
+                android:layout_width="match_parent"
+                android:layout_height="54dp"
+                android:background="?android:attr/selectableItemBackground"
+                android:drawablePadding="16dp"
+                android:drawableStart="@drawable/ic_clipboard"
+                android:ellipsize="end"
+                android:gravity="center_vertical"
+                android:lines="1"
+                android:padding="16dp"
+                android:text="Hello World!"
+                android:textColor="@color/searchHintTextColor"
+                android:textSize="14sp"
+                android:visibility="visible"
+                tools:visibility="visible" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_gravity="bottom"
+                android:background="#33ffffff" />
+
+        </FrameLayout>
+
+    </LinearLayout>
 
 </FrameLayout>
