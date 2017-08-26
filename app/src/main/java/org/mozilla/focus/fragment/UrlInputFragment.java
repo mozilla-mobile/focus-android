@@ -46,7 +46,7 @@ import org.mozilla.focus.widget.InlineAutocompleteEditText;
 /**
  * Fragment for displaying he URL input controls.
  */
-public class UrlInputFragment extends LocaleAwareFragment implements View.OnClickListener, InlineAutocompleteEditText.OnCommitListener, InlineAutocompleteEditText.OnFilterListener, PopupMenu.OnMenuItemClickListener, ClipboardManager.OnPrimaryClipChangedListener {
+public class UrlInputFragment extends LocaleAwareFragment implements View.OnClickListener, InlineAutocompleteEditText.OnCommitListener, InlineAutocompleteEditText.OnFilterListener, PopupMenu.OnMenuItemClickListener {
     public static final String FRAGMENT_TAG = "url_input";
 
     private static final String ARGUMENT_ANIMATION = "animation";
@@ -124,6 +124,12 @@ public class UrlInputFragment extends LocaleAwareFragment implements View.OnClic
     private Session session;
 
     private ClipboardManager clipboardManager;
+    private final ClipboardManager.OnPrimaryClipChangedListener clipChangedListener = new ClipboardManager.OnPrimaryClipChangedListener() {
+        @Override
+        public void onPrimaryClipChanged() {
+            onClipboardItem();
+        }
+    };
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -134,7 +140,7 @@ public class UrlInputFragment extends LocaleAwareFragment implements View.OnClic
             session = SessionManager.getInstance().getSessionByUUID(sessionUUID);
         }
         clipboardManager = (ClipboardManager) getContext().getSystemService(Context.CLIPBOARD_SERVICE);
-        clipboardManager.addPrimaryClipChangedListener(this);
+        clipboardManager.addPrimaryClipChangedListener(clipChangedListener);
     }
 
     @Override
@@ -300,7 +306,7 @@ public class UrlInputFragment extends LocaleAwareFragment implements View.OnClic
             displayedPopupMenu.dismiss();
         }
 
-        clipboardManager.removePrimaryClipChangedListener(this);
+        clipboardManager.removePrimaryClipChangedListener(clipChangedListener);
     }
 
     private void animateFirstDraw() {
@@ -596,15 +602,13 @@ public class UrlInputFragment extends LocaleAwareFragment implements View.OnClic
             text = clip.getItemAt(0).getText();
         }
         if (text != null) {
-            clipboardView.setSpanText(String.valueOf(text).trim());
-            clipboardContainer.setVisibility(View.VISIBLE);
-            return;
+            String clipString = String.valueOf(text).trim();
+            if (!clipString.isEmpty()) {
+                clipboardView.setSpanText(String.valueOf(text).trim());
+                clipboardContainer.setVisibility(View.VISIBLE);
+            } else {
+                clipboardContainer.setVisibility(View.GONE);
+            }
         }
-        clipboardContainer.setVisibility(View.GONE);
-    }
-
-    @Override
-    public void onPrimaryClipChanged() {
-        onClipboardItem();
     }
 }
