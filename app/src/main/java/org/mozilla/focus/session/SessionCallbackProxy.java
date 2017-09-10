@@ -56,6 +56,10 @@ public class SessionCallbackProxy implements IWebView.Callback {
     @Override
     public void onURLChanged(String url) {
         session.setUrl(url);
+        if (session.isSearch()) {
+            session.setSearch(false);
+            session.setSearchUrl(url);
+        }
     }
 
 
