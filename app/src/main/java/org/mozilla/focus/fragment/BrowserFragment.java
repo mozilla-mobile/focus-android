@@ -442,6 +442,9 @@ public class BrowserFragment extends WebFragment implements View.OnClickListener
             public void onURLChanged(final String url) {}
 
             @Override
+            public void onRequest(boolean isTriggeredByUserGesture) {}
+
+            @Override
             public void onProgress(int progress) {}
 
             @Override

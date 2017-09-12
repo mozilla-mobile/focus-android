@@ -13,9 +13,9 @@ import android.net.Uri;
 import android.net.http.SslCertificate;
 import android.net.http.SslError;
 import android.os.Bundle;
-import android.support.v4.util.ArrayMap;
 import android.support.v4.view.ViewCompat;
 import android.text.TextUtils;
+import android.util.ArrayMap;
 import android.view.View;
 import android.webkit.SslErrorHandler;
 import android.webkit.WebResourceRequest;
@@ -42,11 +42,10 @@ import java.util.Map;
     private static final String STATE_KEY_URL = "client_last_url";
     private static final String STATE_KEY_CERTIFICATE = "client_last_certificate";
 
-    private boolean errorReceived;
     private Context context;
-
     private String restoredUrl;
     private SslCertificate restoredCertificate;
+    private boolean errorReceived;
 
     /* package */ FocusWebViewClient(Context context) {
         super(context);
@@ -118,7 +117,7 @@ import java.util.Map;
     }
 
     @Override
-    public WebResourceResponse shouldInterceptRequest(WebView view, WebResourceRequest request) {
+    public WebResourceResponse shouldInterceptRequest(WebView view, final WebResourceRequest request) {
         // Only update the user visible URL if:
         // 1. The purported site URL has actually been requested
         // 2. And it's being loaded for the main frame (and not a fake/hidden/iframe request)
@@ -142,6 +141,10 @@ import java.util.Map;
                         }
                     }
                 });
+            }
+
+            if (callback != null) {
+                callback.onRequest(request.hasGesture());
             }
         }
 
