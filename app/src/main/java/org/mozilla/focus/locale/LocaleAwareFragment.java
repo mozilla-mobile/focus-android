@@ -14,7 +14,7 @@ public abstract class LocaleAwareFragment extends LifecycleFragment {
 
     /**
      * Is called whenever the application locale has changed. Your fragment must either update
-     * all localised Strings, or replace itself with an updated version.
+     * all localized Strings, or replace itself with an updated version.
      */
     public abstract void applyLocale();
 
