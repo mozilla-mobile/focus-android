@@ -23,7 +23,7 @@ public abstract class LocaleAwareAppCompatActivity
 
     /**
      * Is called whenever the application locale has changed. Your Activity must either update
-     * all localised Strings, or replace itself with an updated version.
+     * all localized Strings, or replace itself with an updated version.
      */
     public abstract void applyLocale();
 
