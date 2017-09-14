@@ -172,7 +172,7 @@ public class UrlInputFragment extends LocaleAwareFragment implements View.OnClic
         if (isOverlay()) {
             view.findViewById(R.id.brand_background).setVisibility(View.GONE);
         } else {
-            view.findViewById(R.id.background).setBackgroundResource(R.drawable.background_home);
+            view.findViewById(R.id.background).setBackgroundResource(R.drawable.background_gradient);
 
             dismissView.setVisibility(View.GONE);
             toolbarBackgroundView.setVisibility(View.GONE);
