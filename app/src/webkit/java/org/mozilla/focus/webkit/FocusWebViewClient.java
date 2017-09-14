@@ -132,12 +132,14 @@ import java.util.Map;
             // not have a trailing URL (usually no trailing / when a link is entered via UrlInputFragment),
             // hence we do a somewhat convoluted test:
             final String requestURL = request.getUrl().toString();
-            if (UrlUtils.urlsMatchExceptForTrailingSlash(currentPageURL, requestURL)) {
+            final String currentURL = currentPageURL;
+
+            if (UrlUtils.urlsMatchExceptForTrailingSlash(currentURL, requestURL)) {
                 view.post(new Runnable() {
                     @Override
                     public void run() {
                         if (callback != null) {
-                            callback.onURLChanged(currentPageURL);
+                            callback.onURLChanged(currentURL);
                         }
                     }
                 });
@@ -208,8 +210,8 @@ import java.util.Map;
             // The URL which is supplied in onPageFinished() could be fake (see #301), but webview's
             // URL is always correct _except_ for error pages
             final String viewURL = view.getUrl();
-            if (!UrlUtils.isInternalErrorURL(viewURL)) {
-                callback.onURLChanged(view.getUrl());
+            if (!UrlUtils.isInternalErrorURL(viewURL) && viewURL != null) {
+                callback.onURLChanged(viewURL);
             }
         }
         super.onPageFinished(view, url);
