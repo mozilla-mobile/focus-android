@@ -145,6 +145,13 @@ repositories {
 }
 
 dependencies {
+
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+
+
     compile "com.android.support:appcompat-v7:$support_libraries_version"
     compile "com.android.support:customtabs:$support_libraries_version"
     compile "com.android.support:design:$support_libraries_version"
@@ -162,6 +169,7 @@ dependencies {
     }
 
     compile 'org.mozilla.telemetry:telemetry:1.1.1'
+    compile 'com.journeyapps:zxing-android-embedded:3.4.0'
 
     focusCompile 'com.adjust.sdk:adjust-android:4.11.4'
     focusCompile 'com.google.android.gms:play-services-analytics:10.2.6' // Required by Adjust

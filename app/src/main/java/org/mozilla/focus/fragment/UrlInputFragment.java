@@ -8,9 +8,12 @@ package org.mozilla.focus.fragment;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.app.Activity;
+import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.graphics.Typeface;
+import android.net.Uri;
 import android.os.Bundle;
+import android.speech.RecognizerIntent;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentManager;
@@ -26,7 +29,13 @@ import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.widget.FrameLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.google.zxing.integration.android.IntentIntegrator;
+import com.google.zxing.integration.android.IntentResult;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.mozilla.focus.R;
 import org.mozilla.focus.activity.InfoActivity;
 import org.mozilla.focus.autocomplete.UrlAutoCompleteFilter;
@@ -36,12 +45,16 @@ import org.mozilla.focus.session.Session;
 import org.mozilla.focus.session.SessionManager;
 import org.mozilla.focus.session.Source;
 import org.mozilla.focus.telemetry.TelemetryWrapper;
-import org.mozilla.focus.utils.Settings;
 import org.mozilla.focus.utils.ThreadUtils;
 import org.mozilla.focus.utils.UrlUtils;
 import org.mozilla.focus.utils.ViewUtils;
 import org.mozilla.focus.widget.InlineAutocompleteEditText;
 import org.mozilla.focus.widget.ResizableKeyboardLinearLayout;
+
+import java.util.ArrayList;
+import java.util.Locale;
+
+import static android.app.Activity.RESULT_OK;
 
 /**
  * Fragment for displaying he URL input controls.
@@ -60,6 +73,8 @@ public class UrlInputFragment extends LocaleAwareFragment implements View.OnClic
     private static final String ANIMATION_BROWSER_SCREEN = "browser_screen";
 
     private static final int ANIMATION_DURATION = 200;
+
+    private static final int REQ_CODE_SPEECH_INPUT = 100;
 
     public static UrlInputFragment createWithoutSession() {
         final Bundle arguments = new Bundle();
@@ -115,6 +130,12 @@ public class UrlInputFragment extends LocaleAwareFragment implements View.OnClic
     private View toolbarBackgroundView;
     private View menuView;
 
+    View speechButton;
+
+    View qrCodeButton;
+
+    private IntentIntegrator qrScan;
+
     private @Nullable PopupMenu displayedPopupMenu;
 
     private volatile boolean isAnimating;
@@ -158,6 +179,26 @@ public class UrlInputFragment extends LocaleAwareFragment implements View.OnClic
 
         menuView = view.findViewById(R.id.menu);
 
+        speechButton = view.findViewById(R.id.speechButton);
+        speechButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startSpeechToText();
+            }
+        });
+
+        qrCodeButton = view.findViewById(R.id.qrCodeButton);
+        qrScan = new IntentIntegrator(getActivity());
+
+        qrCodeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+             public void onClick(View v) {
+
+             qrScan.initiateScan();
+
+         }
+        });
+
         urlInputContainerView = view.findViewById(R.id.url_input_container);
         urlInputContainerView.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
             @Override
@@ -197,6 +238,69 @@ public class UrlInputFragment extends LocaleAwareFragment implements View.OnClic
         return view;
     }
 
+    private  void startSpeechToText() {
+
+        Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
+        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
+        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, Locale.getDefault());
+        intent.putExtra(RecognizerIntent.EXTRA_PROMPT, "Speak The Site Where You Want To Go!");
+        try {
+            startActivityForResult(intent, REQ_CODE_SPEECH_INPUT);
+        } catch (ActivityNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        //super.onActivityResult(requestCode, resultCode, data);
+
+        switch (requestCode) {
+            case REQ_CODE_SPEECH_INPUT:
+                if (resultCode == RESULT_OK && null != data) {
+                    ArrayList<String> result = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
+                    urlView.setText(result.get(0));
+                    if(urlView != null) {
+                        Intent intent = new Intent(Intent.ACTION_VIEW);
+                        intent.setData(Uri.parse("http://" + urlView.getText().toString()));
+                        startActivity(intent);
+                    }
+
+                }
+                break;
+        }
+
+        IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
+        if (result != null) {
+            //if qrcode has nothing in it
+            if (result.getContents() == null) {
+                Toast.makeText(getContext(), "Result Not Found", Toast.LENGTH_LONG).show();
+            } else {
+                //if qr contains data
+                try {
+                    //converting the data to json
+                    JSONObject obj = new JSONObject(result.getContents());
+                    //urlView.setText(obj.getString("url"));
+                    //setting values to textviews
+                    //textViewName.setText(obj.getString("name"));
+                    //textViewAddress.setText(obj.getString("address"));
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    //if control comes here
+                    //that means the encoded format not matches
+                    // in this case you can display whatever data is available on the qrcode
+                    //to a toast
+                    Toast.makeText(getContext(), result.getContents(), Toast.LENGTH_LONG).show();
+
+                }
+            }
+        } else {
+            super.onActivityResult(requestCode, resultCode, data);
+        }
+
+
+    }
+
     @Override
     public void applyLocale() {
         if (isOverlay()) {
@@ -225,23 +329,23 @@ public class UrlInputFragment extends LocaleAwareFragment implements View.OnClic
         return false;
     }
 
-    @Override
-    public void onStart() {
-        super.onStart();
-
-        if (!Settings.getInstance(getContext()).shouldShowFirstrun()) {
-            // Only show keyboard if we are not displaying the first run tour on top.
-            showKeyboard();
-        }
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-
-        // Reset the keyboard layout to avoid a jarring animation when the view is started again. (#1135)
-        keyboardLinearLayout.reset();
-    }
+//    @Override
+//    public void onStart() {
+//        super.onStart();
+//
+//        if (!Settings.getInstance(getContext()).shouldShowFirstrun()) {
+//            // Only show keyboard if we are not displaying the first run tour on top.
+//            showKeyboard();
+//        }
+//    }
+//
+//    @Override
+//    public void onStop() {
+//        super.onStop();
+//
+//        // Reset the keyboard layout to avoid a jarring animation when the view is started again. (#1135)
+//        keyboardLinearLayout.reset();
+//    }
 
     public void showKeyboard() {
         ViewUtils.showKeyboard(urlView);
@@ -250,6 +354,11 @@ public class UrlInputFragment extends LocaleAwareFragment implements View.OnClic
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
+
+            case R.id.qrCodeButton:
+                qrScan.initiateScan();
+                break;
+
             case R.id.clear:
                 clear();
                 break;

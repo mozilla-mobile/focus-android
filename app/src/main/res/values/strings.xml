@@ -152,6 +152,11 @@
     <!-- Content description (not visible, for screen readers etc.): Clear text in URL bar -->
     <string name="content_description_clear_input">Clear input</string>
 
+
+    <string name="content_description_microphone">Microphone</string>
+
+    <string name="content_description_qrCodeReader">QR Code Reader</string>
+
     <!-- Content description (not visible, for screen readers etc.): Clicking on the website overlay
      while in typing mode will dismiss and go back to the browser. This text will be read when the
      overlay if focused. See https://github.com/mozilla-mobile/focus-android/issues/50 -->
