@@ -18,6 +18,7 @@ import android.support.test.uiautomator.UiObjectNotFoundException;
 import android.support.test.uiautomator.UiSelector;
 import android.support.test.uiautomator.Until;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Rule;
 import org.junit.Test;
@@ -85,6 +86,11 @@ public class SwitchContextTest {
         }
     };
 
+    @After
+    public void tearDown() throws Exception {
+        mActivityTestRule.getActivity().finishAndRemoveTask();
+    }
+
     private UiObject titleMsg = TestHelper.mDevice.findObject(new UiSelector()
             .description("focus test page")
             .enabled(true));
@@ -97,9 +103,8 @@ public class SwitchContextTest {
     public void ForegroundTest() throws InterruptedException, UiObjectNotFoundException {
 
         // Open a webpage
-        TestHelper.urlBar.waitForExists(waitingTime);
-        TestHelper.urlBar.click();
         TestHelper.inlineAutocompleteEditText.waitForExists(waitingTime);
+        Assert.assertTrue(TestHelper.inlineAutocompleteEditText.exists());
         TestHelper.inlineAutocompleteEditText.clearTextField();
         TestHelper.inlineAutocompleteEditText.setText(webServer.url(TEST_PATH).toString());
         TestHelper.hint.waitForExists(waitingTime);
@@ -113,7 +118,12 @@ public class SwitchContextTest {
         // Switch out of Focus, pull down system bar and select open action
         TestHelper.pressHomeKey();
         TestHelper.openNotification();
-        TestHelper.notificationOpenItem.waitForExists(waitingTime);
+
+        // If simulator has more recent message, the options need to be expanded
+        if (!TestHelper.notificationOpenItem.waitForExists(waitingTime)) {
+            TestHelper.notificationExpandSwitch.click();
+            assertTrue(TestHelper.notificationOpenItem.exists());
+        }
         TestHelper.notificationOpenItem.click();
 
         // Verify that it's on the main view, showing the previous browsing session
@@ -124,19 +134,52 @@ public class SwitchContextTest {
     }
 
     @Test
+    public void EraseandOpenTest() throws InterruptedException, UiObjectNotFoundException {
+
+        // Open a webpage
+        TestHelper.inlineAutocompleteEditText.waitForExists(waitingTime);
+        Assert.assertTrue(TestHelper.inlineAutocompleteEditText.exists());
+        TestHelper.inlineAutocompleteEditText.clearTextField();
+        TestHelper.inlineAutocompleteEditText.setText(webServer.url(TEST_PATH).toString());
+        TestHelper.hint.waitForExists(waitingTime);
+        TestHelper.pressEnterKey();
+
+        // Assert website is loaded
+        TestHelper.webView.waitForExists(waitingTime);
+        Assert.assertTrue("Website title loaded", titleMsg.exists());
+        assertTrue(rabbitImage.exists());
+
+        // Switch out of Focus, pull down system bar and select open action
+        TestHelper.pressHomeKey();
+        TestHelper.openNotification();
+
+        // If simulator has more recent message, the options need to be expanded
+        if (!TestHelper.notificationEraseOpenItem.waitForExists(waitingTime)) {
+            TestHelper.notificationExpandSwitch.click();
+            assertTrue(TestHelper.notificationEraseOpenItem.exists());
+        }
+        TestHelper.notificationEraseOpenItem.click();
+
+        // Verify that it's on the main view, showing the initial view
+        TestHelper.erasedMsg.waitForExists(waitingTime);
+        assertTrue(TestHelper.erasedMsg.exists());
+        assertTrue(TestHelper.inlineAutocompleteEditText.exists());
+        assertTrue(TestHelper.initialView.exists());
+        assertTrue(!rabbitImage.exists());
+    }
+
+    @Test
     public void settingsToFocus() throws InterruptedException, UiObjectNotFoundException, RemoteException {
 
         // Initialize UiDevice instance
         final int LAUNCH_TIMEOUT = 5000;
-        final String FOCUS_DEBUG_APP = "com.android.settings";
+        final String SETTINGS_APP = "com.android.settings";
         final UiObject settingsTitle = TestHelper.mDevice.findObject(new UiSelector()
                 .text("Settings")
                 .packageName("com.android.settings")
                 .enabled(true));
 
         // Open a webpage
-        TestHelper.urlBar.waitForExists(waitingTime);
-        TestHelper.urlBar.click();
         TestHelper.inlineAutocompleteEditText.waitForExists(waitingTime);
         TestHelper.inlineAutocompleteEditText.clearTextField();
         TestHelper.inlineAutocompleteEditText.setText(webServer.url(TEST_PATH).toString());
@@ -162,14 +205,19 @@ public class SwitchContextTest {
                 .getTargetContext()
                 .getApplicationContext();
         final Intent intent = context.getPackageManager()
-                .getLaunchIntentForPackage(FOCUS_DEBUG_APP);
+                .getLaunchIntentForPackage(SETTINGS_APP);
         context.startActivity(intent);
 
         // Verify that it's in the Settings, then switch to Focus
         settingsTitle.waitForExists(waitingTime);
         assertTrue(settingsTitle.exists());
         TestHelper.openNotification();
-        TestHelper.notificationOpenItem.waitForExists(waitingTime);
+
+        // If simulator has more recent message, the options need to be expanded
+        if (!TestHelper.notificationOpenItem.waitForExists(waitingTime)) {
+            TestHelper.notificationExpandSwitch.click();
+            assertTrue(TestHelper.notificationOpenItem.exists());
+        }
         TestHelper.notificationOpenItem.click();
 
         // Verify that it's on the main view, showing the previous browsing session

@@ -15,11 +15,13 @@ import android.support.test.uiautomator.UiObjectNotFoundException;
 import android.support.test.uiautomator.UiScrollable;
 import android.support.test.uiautomator.UiSelector;
 
+import org.junit.After;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import static android.support.test.espresso.action.ViewActions.click;
+import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertTrue;
 import static org.mozilla.focus.activity.TestHelper.waitingTime;
 import static org.mozilla.focus.fragment.FirstrunFragment.FIRSTRUN_PREF;
@@ -46,6 +48,11 @@ public class SearchEngineSelectionTest {
         }
     };
 
+    @After
+    public void tearDown() throws Exception {
+        mActivityTestRule.getActivity().finishAndRemoveTask();
+    }
+
     @Test
     public void SearchTest() throws InterruptedException, UiObjectNotFoundException {
 
@@ -71,6 +78,7 @@ public class SearchEngineSelectionTest {
                 .className("android.webkit.WebView"));
 
         /* Go to Settings and select the Search Engine */
+        assertTrue(TestHelper.inlineAutocompleteEditText.waitForExists(waitingTime));
         TestHelper.menuButton.perform(click());
         TestHelper.settingsMenuItem.click();
         TestHelper.settingsHeading.waitForExists(waitingTime);
@@ -85,7 +93,6 @@ public class SearchEngineSelectionTest {
         TestHelper.pressBackKey();
 
         /* load blank spaces and press enter key for search, it should not do anything */
-        TestHelper.urlBar.click();
         TestHelper.inlineAutocompleteEditText.waitForExists(waitingTime);
         TestHelper.inlineAutocompleteEditText.clearTextField();
         TestHelper.inlineAutocompleteEditText.setText("   ");
@@ -102,6 +109,16 @@ public class SearchEngineSelectionTest {
         TestHelper.hint.click();
 
         /* Browser shows google search webview*/
+        googleWebView.waitForExists(waitingTime);
+        assertTrue (TestHelper.browserURLbar.getText().contains("google"));
+        assertTrue (TestHelper.browserURLbar.getText().contains("mozilla"));
+        assertTrue (TestHelper.browserURLbar.getText().contains("focus"));
+
+        /* tap url bar, and check it displays search term instead of URL */
+        TestHelper.browserURLbar.click();
+        TestHelper.inlineAutocompleteEditText.waitForExists(waitingTime);
+        assertEquals(TestHelper.inlineAutocompleteEditText.getText(), "mozilla focus");
+        TestHelper.pressEnterKey();
         googleWebView.waitForExists(waitingTime);
         assertTrue (TestHelper.browserURLbar.getText().contains("google"));
         assertTrue (TestHelper.browserURLbar.getText().contains("mozilla"));
@@ -134,5 +151,10 @@ public class SearchEngineSelectionTest {
         assertTrue (TestHelper.browserURLbar.getText().contains("yahoo"));
         assertTrue (TestHelper.browserURLbar.getText().contains("mozilla"));
         assertTrue (TestHelper.browserURLbar.getText().contains("focus"));
+
+        /* tap url bar, and check it displays search term instead of URL */
+        TestHelper.browserURLbar.click();
+        TestHelper.inlineAutocompleteEditText.waitForExists(waitingTime);
+        assertEquals(TestHelper.inlineAutocompleteEditText.getText(), "mozilla focus");
     }
 }

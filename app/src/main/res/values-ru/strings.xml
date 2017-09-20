@@ -9,6 +9,7 @@
   <string name="menu_share">Поделиться…</string>
   <string name="menu_open_with_default_browser">Открыть в %1$s</string>
   <string name="menu_open_with_a_browser">Открыть в…</string>
+  <string name="menu_add_to_home_screen">Добавить на домашний экран</string>
   <string name="menu_settings">Параметры</string>
   <string name="menu_about">О программе</string>
   <string name="menu_help">Справка</string>
@@ -17,6 +18,7 @@
   <string name="share_dialog_title">Поделиться через</string>
   <string name="notification_erase_text">Удалить историю веб-сёрфинга</string>
   <string name="notification_action_open">Открыть</string>
+  <string name="notification_action_erase_and_open">Удалить и открыть</string>
   <string name="shortcut_erase_short_label">Удалить</string>
   <string name="shortcut_erase_long_label">Удалить историю веб-сёрфинга</string>
   <string name="text_selection_search_action">Искать приватно</string>
@@ -33,19 +35,25 @@
   <string name="preference_privacy_block_content">Блокировать другие трекеры содержимого</string>
   <string name="preference_privacy_block_content_summary">Может нарушить работу некоторых видео и веб-страниц</string>
   <string name="preference_privacy_secure_mode">Невидимка</string>
-  <string name="preference_privacy_secure_mode_summary">Выключите режим невидимки, чтобы делать скриншоты и видеть сайты, которые вы посещали, используя %1$s, в вашем списке последних приложений</string>
+  <string name="preference_privacy_stealth_summary">Скрыть веб-страницы при переключении приложений</string>
   <string name="preference_category_performance">Производительность</string>
   <string name="preference_performance_block_webfonts">Блокировать веб-шрифты</string>
   <string name="preference_performance_block_webfonts_summary">Может привести к отсутствию значков или изображений</string>
   <string name="preference_performance_block_images">Блокировать изображения</string>
-  <string name="preference_default_browser">Сделать браузером по умолчанию</string>
+  <string name="preference_default_browser2">Сделать %1$s браузером по умолчанию</string>
   <string name="preference_category_mozilla">Mozilla</string>
-  <string name="preference_mozilla_telemetry">Отправлять анонимные данные об использовании</string>
+  <string name="preference_mozilla_telemetry2">Отправлять данные об использовании</string>
   <string name="preference_mozilla_telemetry_summary">Подробнее</string>
+  <string name="preference_mozilla_telemetry_summary2">Mozilla обязуется собирать только ту информацию, которая необходима для работы %1$s и его улучшения в будущем.</string>
+  <string name="preference_privacy_notice">Политика приватности</string>
   <string name="preference_about">О %1$s</string>
   <string name="content_description_clear_input">Очистить ввод</string>
   <string name="content_description_dismiss_input">Пропустить</string>
   <string name="content_description_erase">Удалить историю веб-сёрфинга</string>
+  <string name="content_description_fab_expand">Развернуть</string>
+  <string name="content_description_tab_counter">Открытых вкладок: %1$s</string>
+  <string name="content_description_open_tab">Открыть вкладку</string>
+  <string name="content_description_close_tab">Закрыть вкладку</string>
   <string name="content_description_lock">Защищённое соединение</string>
   <string name="accessibility_announcement_loading">Загрузка</string>
   <string name="accessibility_announcement_loading_finished">Веб-сайт загружен</string>
@@ -91,15 +99,33 @@
   <string name="contextmenu_image_share">Поделиться изображением</string>
   <string name="contextmenu_image_copy">Копировать адрес изображения</string>
   <string name="contextmenu_image_save">Сохранить изображение</string>
+  <string name="contextmenu_open_in_new_tab">Открыть ссылку в новой вкладке</string>
   <string name="contextmenu_image_warning"><![CDATA["Сохранённые и отправленные фотографии "<b xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">&#1085;&#1077; &#1073;&#1091;&#1076;&#1091;&#1090; &#1091;&#1076;&#1072;&#1083;&#1077;&#1085;&#1099;</b>, когда вы сотрёте историю %1$s.]]></string>
-  <string name="firstrun_tracking_title">Сёрфите Интернет не опасаясь слежки</string>
-  <string name="firstrun_tracking_text">Автоматически блокируйте онлайн-трекеры при веб-сёрфинге. Затем стирайте историю посещения страниц и куки одним касанием значка корзины в приложении или ваших уведомлениях.</string>
   <string name="firstrun_defaultbrowser_title">Усильте свою приватность</string>
-  <string name="firstrun_defaultbrowser_text">Установите %1$s в качестве браузера по умолчанию и получите преимущества приватного веб-сёрфинга, когда вы заходите в Интернет из других Android приложений.</string>
-  <string name="firstrun_breaking_title">Быстрая починка, когда\nблокировка трекеров = поломка сайта</string>
-  <string name="firstrun_breaking_text">Когда из-за блокировки онлайн-трекеров сайт ломается, отключите блокировку одним касанием меню.</string>
+  <string name="firstrun_defaultbrowser_text2">Поднимите приватный просмотр на новый уровень. Блокируйте рекламу и другое содержимое, которое может отслеживать вас и замедлять загрузку страниц.</string>
+  <string name="firstrun_search_title">Ваш поиск, Ваш Интернет</string>
+  <string name="firstrun_search_text">Искали что-то другое? Выберите другую поисковую систему по умолчанию в настройках.</string>
+  <string name="firstrun_shortcut_title">Добавьте ярлыки на домашний экран</string>
+  <string name="firstrun_shortcut_text">С %1$s вы сможете быстро вернуться к любимым сайтам. Просто выберите «Добавить на домашний экран» из меню %1$s.</string>
+  <string name="firstrun_privacy_title">Сделайте приватность своей привычкой</string>
+  <string name="firstrun_privacy_text">Установите %1$s своим браузером по умолчанию и получите преимущества приватного веб-сёрфинга, когда вы открываете веб-страницы из других приложений.</string>
   <string name="firstrun_close_button">ОК, понятно!</string>
   <string name="firstrun_skip_button">Пропустить</string>
   <string name="firstrun_next_button">Далее</string>
   <string name="content_blocking_disabled">-</string>
+  <string name="dialog_addtohomescreen_title">Добавить на домашний экран</string>
+  <string name="dialog_addtohomescreen_action_add">Добавить</string>
+  <string name="dialog_addtohomescreen_action_cancel">Отмена</string>
+  <string name="dialog_addtohomescreen_tracking_protection">Ссылка будет открываться без защиты от отслеживания</string>
+  <string name="dialog_opentab_title">Открыть ссылку в выбранной вкладке</string>
+  <string name="dialog_opentab_action_open">Открыть</string>
+  <string name="notification_browsing_session_channel_name">Приватная сессия</string>
+  <string name="notification_browsing_session_channel_description">Уведомления позволяют стереть вашу сессию в %1$s одним касанием. Вам не нужно открывать приложение или видеть, что запущено в вашем браузере.</string>
+  <string name="tabs_tray_action_erase">Удалить историю веб-сёрфинга</string>
+  <string name="download_firefox">Загрузить Firefox</string>
+  <string name="your_rights_content1">%1$s является бесплатной программой с открытым исходным кодом, созданной Mozilla и другими участниками.</string>
+  <string name="your_rights_content2"><![CDATA["%1$s предоставляется вам на условиях "<a xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2" href="%2$s">Mozilla Public License</a>" и других лицензий для открытого исходного кода."]]></string>
+  <string name="your_rights_content3"><![CDATA["Вы не получаете никаких прав или лицензий на товарные знаки Mozilla Foundation или любой из сторон, включая имена или логотипы Mozilla, Firefox или %1$s. Дополнительную информацию можно найти "<a xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2" href="%2$s">&#1079;&#1076;&#1077;&#1089;&#1100;</a>.]]></string>
+  <string name="your_rights_content4"><![CDATA["Дополнительный исходный код для %1$s доступен на условиях различных других "<a xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2" href="%2$s">&#1083;&#1080;&#1094;&#1077;&#1085;&#1079;&#1080;&#1081;</a>" для бесплатного и открытого исходного кода."]]></string>
+  <string name="your_rights_content5"><![CDATA["%1$s также использует списки блокировки, предоставленные Disconnect, Inc. как отдельные и независимые произведения на условиях "<a xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2" href="%2$s">GNU General Public License v3</a>" и доступные "<a xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2" href="%3$s">&#1079;&#1076;&#1077;&#1089;&#1100;</a>.]]></string>
 </resources>

@@ -9,6 +9,7 @@
   <string name="menu_share">Dividi…</string>
   <string name="menu_open_with_default_browser">Malfermi per %1$s</string>
   <string name="menu_open_with_a_browser">Malfermi per…</string>
+  <string name="menu_add_to_home_screen">Aldoni al hejmekrano</string>
   <string name="menu_settings">Agordoj</string>
   <string name="menu_about">Pri</string>
   <string name="menu_help">Helpo</string>
@@ -17,6 +18,7 @@
   <string name="share_dialog_title">Dividi per</string>
   <string name="notification_erase_text">Forviŝi retuman historion</string>
   <string name="notification_action_open">Malfermi</string>
+  <string name="notification_action_erase_and_open">Forigi kaj malfermi</string>
   <string name="shortcut_erase_short_label">Forviŝi</string>
   <string name="shortcut_erase_long_label">Forviŝi retuman historion</string>
   <string name="text_selection_search_action">Serĉi private</string>
@@ -33,19 +35,25 @@
   <string name="preference_privacy_block_content">Bloki spurilojn en aliaj enhavoj</string>
   <string name="preference_privacy_block_content_summary">Tio povas misfunkciigi kelkajn filmetojn kaj retpaĝojn</string>
   <string name="preference_privacy_secure_mode">Kaŝreĝimo</string>
-  <string name="preference_privacy_secure_mode_summary">Malŝaltu kaŝreĝimon por fari ekrankopiojn kaj por vidi retejojn, kiujn vi vizitis per %1$s, en via listo de ĵusaj programoj</string>
+  <string name="preference_privacy_stealth_summary">Kaŝi retpaĝojn dum ŝanĝo de programo</string>
   <string name="preference_category_performance">Efikeco</string>
   <string name="preference_performance_block_webfonts">Bloki retajn tiparojn</string>
   <string name="preference_performance_block_webfonts_summary">Tio povus malaperigi emblemojn aŭ bildojn</string>
   <string name="preference_performance_block_images">Bloki bildojn</string>
-  <string name="preference_default_browser">Igi ĉefa retumilo</string>
+  <string name="preference_default_browser2">Igi %1$s via norma retumilo</string>
   <string name="preference_category_mozilla">Mozilla</string>
-  <string name="preference_mozilla_telemetry">Sendi anonimajn datumojn pri uzo</string>
+  <string name="preference_mozilla_telemetry2">Sendi datumojn pri uzo</string>
   <string name="preference_mozilla_telemetry_summary">Pli da informo</string>
+  <string name="preference_mozilla_telemetry_summary2">Mozilla penas kolekti nur la datumojn nepre bezonatajn por provizi kaj plibonigi %1$s por ĉiuj.</string>
+  <string name="preference_privacy_notice">Rimarko pri privateco</string>
   <string name="preference_about">Pri %1$s</string>
   <string name="content_description_clear_input">Viŝi kampon</string>
   <string name="content_description_dismiss_input">Ignori</string>
   <string name="content_description_erase">Viŝi retuman historion</string>
+  <string name="content_description_fab_expand">Malfaldi</string>
+  <string name="content_description_tab_counter">Malfermitaj langetoj: %1$s</string>
+  <string name="content_description_open_tab">Malfermi langeton</string>
+  <string name="content_description_close_tab">Fermi langeton</string>
   <string name="content_description_lock">Sekura konekto</string>
   <string name="accessibility_announcement_loading">Ŝargado</string>
   <string name="accessibility_announcement_loading_finished">Retejo ŝargita</string>
@@ -91,15 +99,33 @@
   <string name="contextmenu_image_share">Dividi bildon</string>
   <string name="contextmenu_image_copy">Kopii adreson de bildo</string>
   <string name="contextmenu_image_save">Konservi bildon</string>
+  <string name="contextmenu_open_in_new_tab">Malfermi ligilon en nova langeto</string>
   <string name="contextmenu_image_warning"><![CDATA["Konservitaj kaj dividitaj bildoj "<b xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">ne estos forigitaj</b>" kiam vi viŝas la historion de %1$s."]]></string>
-  <string name="firstrun_tracking_title">Retumi kvazaŭ neniu vin vidus</string>
-  <string name="firstrun_tracking_text">Aŭtomate bloki enretajn spurilojn dum retumo. Poste forigi vizititajn paĝojn kaj kuketojn per tuŝeto sur la rubuja emblemo en la programo aŭ en viaj sciigoj.</string>
   <string name="firstrun_defaultbrowser_title">Plibonigi vian privatecon</string>
-  <string name="firstrun_defaultbrowser_text">Agordu %1$s kiel via norma retumilo kaj havu la avantaĝojn de privata retumo kiam vi iras al la reto el aliaj programoj de Android.</string>
-  <string name="firstrun_breaking_title">Se pro blokado io malfunkcias</string>
-  <string name="firstrun_breaking_text">Kiam pro blokado de enretaj spuriloj iu retpaĝo aspektas difektite, malaktivigu blokadon per tuŝeto sur la ila menuo.</string>
-  <string name="firstrun_close_button">Bone, mi komprenas!</string>
+  <string name="firstrun_defaultbrowser_text2">Privata retumo pli altnivela, kun blokado de reklamoj kaj aliaj enhavoj, kiuj povas spuri vin trans retejoj kaj malrapidigi la ŝargon de paĝoj.</string>
+  <string name="firstrun_search_title">Via serĉo laŭ via maniero</string>
+  <string name="firstrun_search_text">Ĉu vi serĉas ion alian, malsaman? Elektu alian norman serĉilon en la agordoj.</string>
+  <string name="firstrun_shortcut_title">Aldoni rektajn alirojn al via hejmekrano</string>
+  <string name="firstrun_shortcut_text">En %1$s, por reiri rapide al viaj plej ŝatataj retejoj, elektu \"Aldoni al hejmekrano\" en la menuo.</string>
+  <string name="firstrun_privacy_title">Alkutimiĝu al la privateco</string>
+  <string name="firstrun_privacy_text">Elektu %1$s kiel via normal retumilo kaj ricevu ĉiujn avantaĝojn de la privata retumo, kiam vi malfermas paĝojn el aliaj programoj.</string>
+  <string name="firstrun_close_button">En ordo, mi komprenis!</string>
   <string name="firstrun_skip_button">Ignori</string>
   <string name="firstrun_next_button">Sekva</string>
   <string name="content_blocking_disabled">-</string>
+  <string name="dialog_addtohomescreen_title">Aldoni al hejmekrano</string>
+  <string name="dialog_addtohomescreen_action_add">Aldoni</string>
+  <string name="dialog_addtohomescreen_action_cancel">Nuligi</string>
+  <string name="dialog_addtohomescreen_tracking_protection">La ŝparvojo estos malfermita sen protekto kontraŭ spurado</string>
+  <string name="dialog_opentab_title">Malfermi ligilon en elektita langeto</string>
+  <string name="dialog_opentab_action_open">Malfermi</string>
+  <string name="notification_browsing_session_channel_name">Privata retuma seanco</string>
+  <string name="notification_browsing_session_channel_description">Sciigoj permesas al vi viŝi vian seancon de %1$s per tuŝeto. Vi ne bezonas malfermi la programon aŭ vidi kio estas en via retumilo.</string>
+  <string name="tabs_tray_action_erase">Viŝi retuman historion</string>
+  <string name="download_firefox">Elŝuti Firefox</string>
+  <string name="your_rights_content1">"%1$s estas libera kaj malfermitkoda programaro, farita de Mozilla kaj aliaj kontribuintoj. "</string>
+  <string name="your_rights_content2"><![CDATA["%1$s estas liverita al vi sub la kondiĉoj de la "<a xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2" href="%2$s">Publika permesilo de Mozilla</a>" aŭ aliaj malfermitkodaj permesiloj."]]></string>
+  <string name="your_rights_content3"><![CDATA["Neniu rajto por la registritaj markoj de Mozilla Foundation aŭ de iu alia estas ceditaj al vi. Tio inkluzivas, sed ne nur tion, la nomon aŭ emblemon de Mozilla, Firefox aŭ %1$s.  Pli da informo pri registritaj markoj troveblas "<a xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2" href="%2$s">&#265;i tie</a>.]]></string>
+  <string name="your_rights_content4"><![CDATA["Aldona fonta kodo por %1$s estas havebla sub pluraj aliaj libera kaj malfermitkodaj "<a xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2" href="%2$s">permesiloj</a>.]]></string>
+  <string name="your_rights_content5"><![CDATA["%1$s uzas ankaŭ listojn de blokado provizitaj de Disconnect, Inc. kiel apartajn kaj sendependajn verkojn sub la "<a xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2" href="%2$s">&#284;enerala publika permesilo de GNU v3</a>" kiu haveblas "<a xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2" href="%3$s">&#265;i tie</a>.]]></string>
 </resources>

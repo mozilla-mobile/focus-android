@@ -76,7 +76,7 @@ public class Browsers {
 
         final Uri uri = Uri.parse(url);
 
-        final Map<String, ActivityInfo> browsers = resolveBrowsers(packageManager, uri);
+        final Map<String, ActivityInfo> browsers = resolveBrowsers(context, packageManager, uri);
 
         // If there's a default browser set then modern Android systems won't return other browsers
         // anymore when using queryIntentActivities(). That's annoying and our only option is
@@ -85,7 +85,7 @@ public class Browsers {
         findKnownBrowsers(packageManager, browsers, uri);
 
         this.browsers = browsers;
-        this.defaultBrowser = findDefault(packageManager, uri);
+        this.defaultBrowser = findDefault(context, packageManager, uri);
         this.firefoxBrandedBrowser = findFirefoxBrandedBrowser();
     }
 
@@ -102,7 +102,7 @@ public class Browsers {
         return null;
     }
 
-    private Map<String, ActivityInfo> resolveBrowsers(PackageManager packageManager, @NonNull Uri uri) {
+    private Map<String, ActivityInfo> resolveBrowsers(Context context, PackageManager packageManager, @NonNull Uri uri) {
         final Map<String, ActivityInfo> browsers = new HashMap<>();
 
         final Intent intent = new Intent(Intent.ACTION_VIEW);
@@ -111,7 +111,9 @@ public class Browsers {
         final List<ResolveInfo> infos = packageManager.queryIntentActivities(intent, 0);
 
         for (ResolveInfo info : infos) {
-            browsers.put(info.activityInfo.packageName, info.activityInfo);
+            if (!context.getPackageName().equals(info.activityInfo.packageName)) {
+                browsers.put(info.activityInfo.packageName, info.activityInfo);
+            }
         }
 
         return browsers;
@@ -150,7 +152,7 @@ public class Browsers {
         }
     }
 
-    private ActivityInfo findDefault(PackageManager packageManager, @NonNull Uri uri) {
+    private ActivityInfo findDefault(Context context, PackageManager packageManager, @NonNull Uri uri) {
         final Intent intent = new Intent(Intent.ACTION_VIEW, uri);
 
         final ResolveInfo resolveInfo = packageManager.resolveActivity(intent, 0);
@@ -163,7 +165,8 @@ public class Browsers {
             return null;
         }
 
-        if (!browsers.containsKey(resolveInfo.activityInfo.packageName)) {
+        if (!browsers.containsKey(resolveInfo.activityInfo.packageName)
+                && !resolveInfo.activityInfo.packageName.equals(context.getPackageName())) {
             // This default browser wasn't returned when we asked for *all* browsers. It's likely
             // that this is actually the resolver activity (aka intent chooser). Let's ignore it.
             return null;
@@ -182,6 +185,20 @@ public class Browsers {
                 && !defaultBrowser.packageName.equals(context.getPackageName());
     }
 
+    /**
+     * Is (regular) the default browser of the user?
+     */
+    public boolean isFirefoxDefaultBrowser() {
+        if (defaultBrowser == null) {
+            return false;
+        }
+
+        return defaultBrowser.packageName.equals(KnownBrowser.FIREFOX.packageName)
+                || defaultBrowser.packageName.equals(KnownBrowser.FIREFOX_BETA.packageName)
+                || defaultBrowser.packageName.equals(KnownBrowser.FIREFOX_AURORA.packageName)
+                || defaultBrowser.packageName.equals(KnownBrowser.FIREFOX_NIGHTLY.packageName);
+    }
+
     public @Nullable ActivityInfo getDefaultBrowser() {
         return defaultBrowser;
     }
@@ -190,7 +207,7 @@ public class Browsers {
      * Does this user have browsers installed that are not Focus, Firefox or the default browser?
      */
     public boolean hasMultipleThirdPartyBrowsers(Context context) {
-        if (browsers.size() > 2) {
+        if (browsers.size() > 1) {
             // There are more than us and Firefox.
             return true;
         }

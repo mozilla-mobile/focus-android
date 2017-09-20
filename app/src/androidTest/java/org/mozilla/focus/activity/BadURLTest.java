@@ -14,6 +14,7 @@ import android.support.test.uiautomator.UiObject;
 import android.support.test.uiautomator.UiObjectNotFoundException;
 import android.support.test.uiautomator.UiSelector;
 
+import org.junit.After;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -46,6 +47,11 @@ public class BadURLTest {
         }
     };
 
+    @After
+    public void tearDown() throws Exception {
+        mActivityTestRule.getActivity().finishAndRemoveTask();
+    }
+
     @Test
     public void BadURLcheckTest() throws InterruptedException, UiObjectNotFoundException {
 
@@ -55,8 +61,6 @@ public class BadURLTest {
         .text("Open link in another app"));
 
         /* provide an invalid URL */
-        TestHelper.urlBar.waitForExists(waitingTime);
-        TestHelper.urlBar.click();
         TestHelper.inlineAutocompleteEditText.waitForExists(waitingTime);
         TestHelper.inlineAutocompleteEditText.clearTextField();
         TestHelper.inlineAutocompleteEditText.setText("htps://www.mozilla.org");
@@ -71,8 +75,6 @@ public class BadURLTest {
 
         /* provide market URL that is handled by Google Play app */
         TestHelper.floatingEraseButton.perform(click());
-        TestHelper.urlBar.waitForExists(waitingTime);
-        TestHelper.urlBar.click();
         TestHelper.inlineAutocompleteEditText.waitForExists(waitingTime);
         TestHelper.inlineAutocompleteEditText.clearTextField();
         TestHelper.inlineAutocompleteEditText.setText("market://details?id=org.mozilla.firefox&referrer=" +

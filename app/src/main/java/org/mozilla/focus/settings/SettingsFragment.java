@@ -7,6 +7,7 @@ package org.mozilla.focus.settings;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.preference.ListPreference;
 import android.preference.Preference;
@@ -37,14 +38,19 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
 
     @Override
     public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen, Preference preference) {
-        if (preference.getKey().equals(getResources().getString(R.string.pref_key_about))) {
+        final Resources resources = getResources();
+
+        if (preference.getKey().equals(resources.getString(R.string.pref_key_about))) {
             final Intent intent = InfoActivity.getAboutIntent(getActivity());
             startActivity(intent);
-        } else if (preference.getKey().equals(getResources().getString(R.string.pref_key_help))) {
+        } else if (preference.getKey().equals(resources.getString(R.string.pref_key_help))) {
             Intent helpIntent = InfoActivity.getHelpIntent(getActivity());
             startActivity(helpIntent);
-        } else if (preference.getKey().equals(getResources().getString(R.string.pref_key_rights))) {
+        } else if (preference.getKey().equals(resources.getString(R.string.pref_key_rights))) {
             final Intent intent = InfoActivity.getRightsIntent(getActivity());
+            startActivity(intent);
+        } else if (preference.getKey().equals(resources.getString(R.string.pref_key_privacy_notice))) {
+            final Intent intent = InfoActivity.getPrivacyNoticeIntent(getActivity());
             startActivity(intent);
         }
 
@@ -60,11 +66,6 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
         final DefaultBrowserPreference preference = (DefaultBrowserPreference) findPreference(getString(R.string.pref_key_default_browser));
         if (preference != null) {
             preference.update();
-        }
-
-        final Preference secureModePreference = findPreference(getString(R.string.pref_key_secure));
-        if (secureModePreference != null) {
-            secureModePreference.setSummary(getString(R.string.preference_privacy_secure_mode_summary, getString(R.string.app_name)));
         }
     }
 

@@ -5,15 +5,18 @@ apply plugin: 'jacoco-android'
 apply plugin: 'pmd'
 apply plugin: 'checkstyle'
 
+apply from: "$project.rootDir/tools/gradle/versionCode.gradle"
+
 android {
-    compileSdkVersion 25
-    buildToolsVersion "25.0.3"
+    compileSdkVersion 26
+    buildToolsVersion "26.0.1"
     defaultConfig {
         applicationId "org.mozilla"
         minSdkVersion 21
-        targetSdkVersion 25
-        versionCode 6
-        versionName "1.1"
+        targetSdkVersion 26
+        versionCode 11 // This versionCode is "frozen" for local builds. For "release" builds we
+                       // override this with a generated versionCode at build time.
+        versionName "2.1"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
         multiDexEnabled true
@@ -24,7 +27,7 @@ android {
     }
 
     // We have a three dimensional build configuration:
-    // BUILD TYPE (debug, beta, release) X PRODUCT FLAVOR (focus, klar) X ENGINE FLAVOR (webkit, gecko)
+    // BUILD TYPE (debug, beta, release) X PRODUCT FLAVOR (focus, klar) X ENGINE FLAVOR (webview, gecko)
 
     buildTypes {
         release {
@@ -34,7 +37,6 @@ android {
         }
         beta {
             initWith debug
-
             minifyEnabled true
             shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
@@ -76,8 +78,8 @@ android {
             applicationIdSuffix ".klar"
         }
 
-        // We can build with two engines: webkit or gecko
-        webkit {
+        // We can build with two engines: webview or gecko
+        webview {
             dimension "engine"
         }
 
@@ -106,19 +108,26 @@ android {
             }
         }
 
-        focusWebkitRelease {
+        focusWebviewRelease {
             java.srcDir 'src/focusRelease/java'
             manifest.srcFile 'src/focusRelease/AndroidManifest.xml'
+            res.srcDir 'src/focusRelease/res'
         }
-        focusGeckoRelease {
-            java.srcDir 'src/focusRelease/java'
-            manifest.srcFile 'src/focusRelease/AndroidManifest.xml'
-        }
-        klarWebkitRelease {
+        klarWebviewRelease {
             java.srcDir 'src/klarRelease/java'
+            res.srcDir 'src/klarRelease/res'
         }
-        klarGeckoRelease {
-            java.srcDir 'src/klarRelease/java'
+        focusWebviewBeta {
+            res.srcDir 'src/focusBeta/res'
+        }
+        klarWebviewBeta {
+            res.srcDir 'src/klarBeta/res'
+        }
+        focusWebviewDebug {
+            res.srcDir 'src/focusDebug/res'
+        }
+        klarWebviewDebug {
+            res.srcDir 'src/klarDebug/res'
         }
     }
 }
@@ -136,11 +145,15 @@ repositories {
 }
 
 dependencies {
-    compile 'com.android.support:appcompat-v7:25.3.1'
-    compile 'com.android.support:customtabs:25.3.1'
-    compile 'com.android.support:design:25.3.1'
-    compile 'com.android.support:cardview-v7:25.3.1'
-    compile 'com.android.support:recyclerview-v7:25.3.1'
+    compile "com.android.support:appcompat-v7:$support_libraries_version"
+    compile "com.android.support:customtabs:$support_libraries_version"
+    compile "com.android.support:design:$support_libraries_version"
+    compile "com.android.support:cardview-v7:$support_libraries_version"
+    compile "com.android.support:recyclerview-v7:$support_libraries_version"
+
+    compile "android.arch.lifecycle:runtime:1.0.0-alpha9"
+    compile "android.arch.lifecycle:extensions:1.0.0-alpha9"
+    annotationProcessor "android.arch.lifecycle:compiler:1.0.0-alpha9"
 
     compile ("com.google.code.findbugs:annotations:3.0.1") {
         // We really only need the SuppressFBWarnings annotation, everything else can be ignored.
@@ -148,7 +161,7 @@ dependencies {
         transitive = false
     }
 
-    compile 'org.mozilla.telemetry:telemetry:1.1.0'
+    compile 'org.mozilla.telemetry:telemetry:1.1.1'
 
     focusCompile 'com.adjust.sdk:adjust-android:4.11.4'
     focusCompile 'com.google.android.gms:play-services-analytics:10.2.6' // Required by Adjust
@@ -156,60 +169,42 @@ dependencies {
     geckoCompile(name: 'geckoview-latest', ext: 'aar')
 
     testCompile 'junit:junit:4.12'
-    testCompile "org.robolectric:robolectric:3.3.2"
+    testCompile "org.robolectric:robolectric:3.4.2"
     testCompile 'org.mockito:mockito-core:2.7.22'
 
-    androidTestCompile 'com.android.support.test.espresso:espresso-idling-resource:2.2.2'
-    androidTestCompile 'com.android.support.test.uiautomator:uiautomator-v18:2.1.2'
-    androidTestCompile 'com.android.support.test.espresso:espresso-core:2.2.2', {
+    androidTestCompile 'com.android.support.test.uiautomator:uiautomator-v18:2.1.3'
+
+    androidTestCompile "com.android.support.test.espresso:espresso-core:$espresso_version", {
         exclude group: 'com.android.support', module: 'support-annotations'
     }
+    androidTestCompile "com.android.support.test.espresso:espresso-idling-resource:$espresso_version"
+    androidTestCompile "com.android.support.test.espresso:espresso-web:$espresso_version", {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    }
+
     androidTestCompile 'com.squareup.okhttp3:mockwebserver:3.7.0'
 }
 
 // -------------------------------------------------------------------------------------------------
-// Replace placeholders in shortcuts.xml (Android requires a hard-coded package name. But we use
-// different packages based on flavor.
-// Code based on workaround (comment 16): https://issuetracker.google.com/issues/37124066
+//  Dynamically set versionCode (See tools/build/versionCode.gradle
 // -------------------------------------------------------------------------------------------------
 
-def replacePlaceholdersInFile(basePath, fileName, placeholders) {
-    def file = new File(basePath, fileName);
+android.applicationVariants.all { variant ->
+    def buildType = variant.buildType.name
+    def isBetaOrRelease = buildType == "release" || buildType == "beta"
 
-    if (!file.exists()) {
-        throw new GradleException("Unable to replace placeholders in " + file.toString() + ". File cannot be found.")
+    if (isBetaOrRelease) {
+        variant.mergedFlavor.versionCode = generatedVersionCode
     }
 
-    logger.debug("Replacing placeholders in " + file.toString())
-    logger.debug("Placeholders: " + placeholders.toString())
-
-    def content = file.getText('UTF-8')
-
-    placeholders.each { entry ->
-        content = content.replaceAll("\\\$\\{${entry.key}\\}", entry.value)
-    }
-
-    file.write(content, 'UTF-8')
-}
-
-afterEvaluate {
-    android.applicationVariants.all { variant ->
-        variant.outputs.each { output ->
-            output.processResources.doFirst {
-                // prepare placeholder map from manifestPlaceholders including applicationId placeholder
-                def placeholders = variant.mergedFlavor.manifestPlaceholders + [applicationId: variant.applicationId]
-
-                replacePlaceholdersInFile(resDir, 'xml-v25/shortcuts.xml', placeholders)
-            }
-        }
-    }
+    println("Build type: " + buildType + " (versionCode = " + variant.mergedFlavor.versionCode + ")")
 }
 
 // -------------------------------------------------------------------------------------------------
 // Generate blocklists
 // -------------------------------------------------------------------------------------------------
 
-def blockListOutputDir = 'src/webkit/res/raw'
+def blockListOutputDir = 'src/webview/res/raw'
 
 task buildBlocklists(type:Copy) {
     from('../shavar-prod-lists') {
@@ -229,7 +224,7 @@ clean.doLast {
 
 tasks.whenTaskAdded { task ->
     def name = task.name
-    if (name.contains("generate") && name.contains("Config") && name.contains("Webkit")) {
+    if (name.contains("generate") && name.contains("Config") && name.contains("Webview")) {
         task.dependsOn buildBlocklists
     }
 }
@@ -239,23 +234,23 @@ tasks.whenTaskAdded { task ->
 // -------------------------------------------------------------------------------------------------
 
 android.applicationVariants.all { variant ->
-    def variantName = variant.getName();
+    def variantName = variant.getName()
 
-    print(variantName + ": ")
+    print("Adjust token (" + variantName + "): ")
 
     if (variantName.contains("Release") && variantName.contains("focus")) {
         def token = System.getenv("ADJUST_TOKEN_FOCUS") ?: null
 
         if (token != null) {
             buildConfigField 'String', 'ADJUST_TOKEN', '"' + token + '"'
-            println "Added adjust token set from environment variable"
+            println "(Added from environment variable)"
         } else {
             buildConfigField 'String', 'ADJUST_TOKEN', 'null'
-            println("Not setting adjust token (environment variable not set)")
+            println("X_X")
         }
     } else {
         buildConfigField 'String', 'ADJUST_TOKEN', 'null'
-        println("Not setting adjust token (Not a focus release build)")
+        println("--")
     }
 }
 

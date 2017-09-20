@@ -14,6 +14,7 @@ import android.support.test.uiautomator.UiObject;
 import android.support.test.uiautomator.UiObjectNotFoundException;
 import android.support.test.uiautomator.UiSelector;
 
+import org.junit.After;
 import org.junit.Rule;
 import org.junit.Test;
 
@@ -48,6 +49,11 @@ public class AdBlockingTest {
         }
     };
 
+    @After
+    public void tearDown() throws Exception {
+        mActivityTestRule.getActivity().finishAndRemoveTask();
+    }
+
     @Test
     public void AdBlockTest() throws InterruptedException, UiObjectNotFoundException {
 
@@ -61,8 +67,6 @@ public class AdBlockingTest {
                 .resourceId("ad_iframe"));
 
         // Let's go to ads-blocker.com/testing/
-        TestHelper.urlBar.waitForExists(waitingTime);
-        TestHelper.urlBar.click();
 
         TestHelper.inlineAutocompleteEditText.waitForExists(waitingTime);
         TestHelper.inlineAutocompleteEditText.clearTextField();

@@ -3,24 +3,26 @@
   <string name="action_cancel">取消</string>
   <string name="action_ok">确定</string>
   <string name="urlbar_hint">搜索或输入网址</string>
-  <string name="teaser">全自动的私密浏览。\n无痕浏览，无需劳心。</string>
+  <string name="teaser">全自动的私密浏览。\n无痕浏览，不必劳心。</string>
   <string name="feedback_erase">您的浏览记录已清除。</string>
   <string name="search_hint">搜索 %1$s</string>
   <string name="menu_share">分享…</string>
   <string name="menu_open_with_default_browser">用 %1$s 打开</string>
-  <string name="menu_open_with_a_browser">打开方式…</string>
+  <string name="menu_open_with_a_browser">用其他应用打开…</string>
+  <string name="menu_add_to_home_screen">添加到主屏幕</string>
   <string name="menu_settings">设置</string>
   <string name="menu_about">关于</string>
   <string name="menu_help">帮助</string>
   <string name="menu_rights">您的权利</string>
   <string name="menu_trackers_blocked_title">拦截的跟踪器数量</string>
   <string name="share_dialog_title">分享方式</string>
-  <string name="notification_erase_text">擦除浏览记录</string>
+  <string name="notification_erase_text">清除浏览记录</string>
   <string name="notification_action_open">打开</string>
-  <string name="shortcut_erase_short_label">擦除</string>
-  <string name="shortcut_erase_long_label">擦除浏览记录</string>
+  <string name="notification_action_erase_and_open">清除并打开</string>
+  <string name="shortcut_erase_short_label">清除</string>
+  <string name="shortcut_erase_long_label">清除浏览记录</string>
   <string name="text_selection_search_action">私密搜索</string>
-  <string name="about_content"><![CDATA[<p xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">%1$s &#35753;&#24744;&#25484;&#25511;&#32447;&#19978;&#29983;&#27963;&#12290;</p>\n<p xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">"&#21487;&#20197;&#29992;&#20316;&#38544;&#31169;&#27983;&#35272;&#22120;&#65306;\n  "<ul>"\n    "<li>&#30452;&#25509;&#22312;&#24212;&#29992;&#20013;&#25628;&#32034;&#21644;&#27983;&#35272;</li>"\n    "<li>&#25318;&#25130;&#36319;&#36394;&#22120;&#65288;&#20063;&#21487;&#35843;&#25972;&#20026;&#20801;&#35768;&#36319;&#36394;&#22120;&#65289;</li>"\n    "<li>&#33258;&#21160;&#28165;&#38500; Cookie&#12289;&#25628;&#32034;&#35760;&#24405;&#21644;&#27983;&#35272;&#35760;&#24405;</li>"\n  "</ul>\n</p>\n<p xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">%1$s &#30001; Mozilla &#20986;&#21697;&#12290;&#25105;&#20204;&#30340;&#20351;&#21629;&#26159;&#20419;&#25104;&#20581;&#24247;&#12289;&#24320;&#25918;&#30340;&#20114;&#32852;&#32593;&#12290;<br/>\n<a href="%2$s">&#35814;&#32454;&#20102;&#35299;</a></p>]]></string>
+  <string name="about_content"><![CDATA[<p xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">%1$s &#35753;&#24744;&#25484;&#25511;&#32447;&#19978;&#29983;&#27963;&#12290;</p>\n<p xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">"&#29992;&#20316;&#38544;&#31169;&#27983;&#35272;&#22120;&#65292;&#21487;&#20197;&#65306;\n  "<ul>"\n    "<li>&#30452;&#25509;&#22312;&#24212;&#29992;&#20013;&#25628;&#32034;&#21644;&#27983;&#35272;</li>"\n    "<li>&#25318;&#25130;&#36319;&#36394;&#22120;&#65288;&#20063;&#21487;&#35843;&#25972;&#20026;&#20801;&#35768;&#36319;&#36394;&#22120;&#65289;</li>"\n    "<li>&#33258;&#21160;&#28165;&#38500; Cookie&#12289;&#25628;&#32034;&#35760;&#24405;&#21644;&#27983;&#35272;&#35760;&#24405;</li>"\n  "</ul>\n</p>\n<p xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">%1$s &#30001; Mozilla &#20986;&#21697;&#12290;&#25105;&#20204;&#30340;&#20351;&#21629;&#26159;&#20419;&#25104;&#20581;&#24247;&#12289;&#24320;&#25918;&#30340;&#20114;&#32852;&#32593;&#12290;<br/>\n<a href="%2$s">&#35814;&#32454;&#20102;&#35299;</a></p>]]></string>
   <string name="preference_category_search">搜索</string>
   <string name="preference_search_engine_default">默认</string>
   <string name="preference_language">语言</string>
@@ -33,19 +35,25 @@
   <string name="preference_privacy_block_content">拦截其他内容跟踪器</string>
   <string name="preference_privacy_block_content_summary">可能对某些网页与视频有影响</string>
   <string name="preference_privacy_secure_mode">隐形</string>
-  <string name="preference_privacy_secure_mode_summary">关闭隐形模式才可以截图，并可在“最近应用列表”中看到您用 %1$s 访问过的网站</string>
+  <string name="preference_privacy_stealth_summary">切换应用时隐藏网页</string>
   <string name="preference_category_performance">性能</string>
   <string name="preference_performance_block_webfonts">拦截网络字体</string>
   <string name="preference_performance_block_webfonts_summary">可能造成图标或图像缺失</string>
   <string name="preference_performance_block_images">拦截图像</string>
-  <string name="preference_default_browser">设为默认浏览器</string>
+  <string name="preference_default_browser2">使 %1$s 成为默认浏览器</string>
   <string name="preference_category_mozilla">Mozilla</string>
-  <string name="preference_mozilla_telemetry">发送匿名的使用统计数据</string>
+  <string name="preference_mozilla_telemetry2">发送使用统计</string>
   <string name="preference_mozilla_telemetry_summary">详细了解</string>
+  <string name="preference_mozilla_telemetry_summary2">Mozilla 仅收集必要的信息用以改进 %1$s 以适合大众。</string>
+  <string name="preference_privacy_notice">隐私声明</string>
   <string name="preference_about">关于 %1$s</string>
   <string name="content_description_clear_input">清空输入内容</string>
   <string name="content_description_dismiss_input">关闭</string>
   <string name="content_description_erase">清除浏览记录</string>
+  <string name="content_description_fab_expand">展开</string>
+  <string name="content_description_tab_counter">已打开 %1$s 个标签页</string>
+  <string name="content_description_open_tab">打开标签页</string>
+  <string name="content_description_close_tab">关闭标签页</string>
   <string name="content_description_lock">安全连接</string>
   <string name="accessibility_announcement_loading">正在载入</string>
   <string name="accessibility_announcement_loading_finished">网站已载入</string>
@@ -56,12 +64,12 @@
   <string name="content_description_stop">停止载入网站</string>
   <string name="content_description_customtab_exit">返回之前的应用</string>
   <string name="content_description_blocking_switch">拦截跟踪器</string>
-  <string name="context_menu_paste_go">粘贴并访问</string>
+  <string name="context_menu_paste_go">粘贴并前往</string>
   <string name="your_rights">您的权利</string>
   <string name="external_app_prompt_title">用另一个应用打开链接</string>
-  <string name="external_app_prompt">"您可以离开 %1$s，用  %2$s 打开此链接。"</string>
+  <string name="external_app_prompt">您可以离开 %1$s，用 %2$s 打开此链接。</string>
   <string name="external_app_prompt_no_app_title">寻找可以打开此链接的应用</string>
-  <string name="external_app_prompt_no_app">您的设备上的应用都不能打开此链接。您可以离开 %1$s，到 %2$s 寻找适合的应用。</string>
+  <string name="external_app_prompt_no_app">您的设备上的应用都不能打开此链接。您可以离开 %1$s，到 %2$s 找找适合的应用。</string>
   <string name="external_multiple_apps_matched_exit">退出隐私浏览模式？</string>
   <string name="download_snackbar_finished">%1$s 下载完毕</string>
   <string name="download_snackbar_open">打开</string>
@@ -91,15 +99,33 @@
   <string name="contextmenu_image_share">分享图像</string>
   <string name="contextmenu_image_copy">复制图像地址</string>
   <string name="contextmenu_image_save">保存图像</string>
+  <string name="contextmenu_open_in_new_tab">在新标签页打开链接</string>
   <string name="contextmenu_image_warning"><![CDATA[清除 %1$s 的历史记录时，<b xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">&#19981;&#20250;&#21024;&#38500;</b>已保存和已分享的图像。]]></string>
-  <string name="firstrun_tracking_title">畅游网络，拒绝监视。</string>
-  <string name="firstrun_tracking_text">上网时自动拦截网络跟踪器。之后可以点按应用中或通知栏中的垃圾桶图标，即可移除访问记录和 Cookie。</string>
   <string name="firstrun_defaultbrowser_title">强化您的隐私</string>
-  <string name="firstrun_defaultbrowser_text">将 %1$s 设为您的默认浏览器，让您从其他 Android 应用打开链接时，也能受隐私浏览功能的保护。</string>
-  <string name="firstrun_breaking_title">快速解决\n拦截导致的问题</string>
-  <string name="firstrun_breaking_text">若拦截网络追踪器造成某些网站无法正常使用，您可以在工具菜单中点选暂时关闭拦截功能。</string>
+  <string name="firstrun_defaultbrowser_text2">隐私浏览模式变得更强大了。能拦截广告，还能拦截在不同网站跟踪您，又拖慢网页载入的内容。</string>
+  <string name="firstrun_search_title">用你的方式搜你所寻</string>
+  <string name="firstrun_search_text">想搜点不一样的东西？可在设置里选择换个默认搜索引擎。</string>
+  <string name="firstrun_shortcut_title">在主屏幕中添加快捷方式</string>
+  <string name="firstrun_shortcut_text">快速用 %1$s 回到您喜爱的网站。只需在 %1$s 菜单中选择“添加到主屏幕”。</string>
+  <string name="firstrun_privacy_title">让隐私成为一种习惯</string>
+  <string name="firstrun_privacy_text">将 %1$s 设为您的默认浏览器，用其他应用打开网页时即可享受隐私浏览。</string>
   <string name="firstrun_close_button">明白了！</string>
   <string name="firstrun_skip_button">跳过</string>
   <string name="firstrun_next_button">下一步</string>
   <string name="content_blocking_disabled">-</string>
+  <string name="dialog_addtohomescreen_title">添加到主屏幕</string>
+  <string name="dialog_addtohomescreen_action_add">添加</string>
+  <string name="dialog_addtohomescreen_action_cancel">取消</string>
+  <string name="dialog_addtohomescreen_tracking_protection">快捷方式打开时跟踪保护将被禁用</string>
+  <string name="dialog_opentab_title">指定用来打开链接的标签页</string>
+  <string name="dialog_opentab_action_open">打开</string>
+  <string name="notification_browsing_session_channel_name">隐私浏览会话</string>
+  <string name="notification_browsing_session_channel_description">通知您可以一键清除您的 %1$s 浏览记录。清除无需打开应用或查看浏览器中的内容。</string>
+  <string name="tabs_tray_action_erase">清除浏览记录</string>
+  <string name="download_firefox">下载 Firefox</string>
+  <string name="your_rights_content1">%1$s 是由 Mozilla 及贡献者制作的一款自由的开源软件。</string>
+  <string name="your_rights_content2"><![CDATA["%1$s 依照 "<a xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2" href="%2$s">Mozilla &#20844;&#20849;&#35768;&#21487;&#35777;</a>及其他一些开源许可证向您授权。]]></string>
+  <string name="your_rights_content3"><![CDATA[您没有取得 Mozilla 基金会或任何一方的商标的任何权利或许可，包括 Mozilla、Firefox 和 %1$s 名称或徽标的许可。有关信息请查阅<a xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2" href="%2$s">&#27492;&#22788;</a>。]]></string>
+  <string name="your_rights_content4"><![CDATA[%1$s 其他源代码以各类自由和开源<a xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2" href="%2$s">&#35768;&#21487;&#35777;</a>开放。]]></string>
+  <string name="your_rights_content5"><![CDATA["%1$s 还使用 Disconnect 公司提供的阻止列表，它是以 "<a xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2" href="%2$s">GNU &#36890;&#29992;&#20844;&#20849;&#35768;&#21487;&#35777; v3</a>" 提供的一个独立的作品，可在"<a xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2" href="%3$s">&#36825;&#37324;</a>找到。]]></string>
 </resources>

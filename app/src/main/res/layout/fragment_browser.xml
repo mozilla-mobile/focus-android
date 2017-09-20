@@ -5,23 +5,23 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <FrameLayout
+    <LinearLayout
         android:id="@+id/browser_container"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
         <View
-            android:id="@+id/background"
+            android:id="@+id/status_bar_background"
             android:layout_width="match_parent"
-            android:layout_height="81dp"
+            android:layout_height="25dp"
             android:background="@drawable/animated_background" />
 
-        <org.mozilla.focus.widget.ResizableKeyboardLayout
+        <org.mozilla.focus.widget.ResizableKeyboardCoordinatorLayout
             app:viewToHideWhenActivated="@+id/erase"
-            android:layout_marginTop="25dp"
+            android:layout_marginTop="0dp"
             android:id="@+id/main_content"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -34,40 +34,24 @@
                 android:layout_height="match_parent"
                 app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
-            <android.support.design.widget.AppBarLayout
-                android:id="@+id/appbar"
-                android:layout_width="match_parent"
+            <include
+                layout="@layout/browser_display_toolbar"/>
+
+            <org.mozilla.focus.widget.FloatingSessionsButton
+                android:id="@+id/tabs"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@android:color/transparent"
-                app:elevation="0dp"
-                android:clipChildren="false">
+                android:layout_gravity="end|bottom"
+                android:layout_marginBottom="@dimen/floating_action_button_margin"
+                android:layout_marginEnd="@dimen/floating_action_button_margin"
+                android:elevation="4dp"
+                android:visibility="gone"
+                app:backgroundTint="@color/colorMultitasking"
+                app:rippleColor="@color/colorMultitaskingPressed"
+                app:layout_behavior="org.mozilla.focus.widget.FloatingActionButtonBehavior"
+                app:fabSize="normal" />
 
-                <FrameLayout
-                    android:id="@+id/urlbar"
-                    android:layout_width="match_parent"
-                    android:layout_height="56dp"
-                    app:layout_scrollFlags="scroll|enterAlways|snap"
-                    android:clipChildren="false">
-
-                    <include layout="@layout/toolbar"/>
-
-                    <org.mozilla.focus.widget.AnimatedProgressBar
-                        android:id="@+id/progress"
-                        style="@style/Base.Widget.AppCompat.ProgressBar.Horizontal"
-                        android:layout_width="match_parent"
-                        android:layout_height="3dp"
-                        android:progressDrawable="@drawable/photon_progressbar"
-                        app:shiftDuration="@integer/progress_shift_duration"
-                        app:wrapShiftDrawable="true"
-                        android:layout_gravity="bottom"
-                        android:layout_marginBottom="-1dp"
-                        android:importantForAccessibility="yes"
-                        tools:progress="50" />
-                </FrameLayout>
-
-            </android.support.design.widget.AppBarLayout>
-
-            <android.support.design.widget.FloatingActionButton
+            <org.mozilla.focus.widget.FloatingEraseButton
                 android:id="@+id/erase"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -76,13 +60,14 @@
                 android:layout_marginEnd="@dimen/floating_action_button_margin"
                 android:elevation="4dp"
                 android:src="@drawable/ic_delete"
-                app:backgroundTint="@color/colorFloatingActionButtonTint"
-                app:rippleColor="#50FFFFFF"
+                app:backgroundTint="@color/colorErase"
+                app:rippleColor="@color/colorErasePressed"
+                app:fabSize="normal"
                 app:layout_behavior="org.mozilla.focus.widget.FloatingActionButtonBehavior"
                 android:contentDescription="@string/content_description_erase" />
 
-        </org.mozilla.focus.widget.ResizableKeyboardLayout>
-    </FrameLayout>
+        </org.mozilla.focus.widget.ResizableKeyboardCoordinatorLayout>
+    </LinearLayout>
 
     <FrameLayout
         android:id="@+id/video_container"

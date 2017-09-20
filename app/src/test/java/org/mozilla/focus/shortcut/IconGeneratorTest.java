@@ -8,7 +8,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.RobolectricTestRunner;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 @RunWith(RobolectricTestRunner.class)
 public class IconGeneratorTest {
@@ -56,21 +56,5 @@ public class IconGeneratorTest {
 
         // IP
         assertEquals("1", IconGenerator.getRepresentativeCharacter("https://192.168.0.1"));
-    }
-
-    @Test
-    public void testPickColor() {
-        final int color = IconGenerator.pickColor("http://m.facebook.com");
-
-        // Color does not change
-        for (int i = 0; i < 100; i++) {
-            assertEquals(color, IconGenerator.pickColor("http://m.facebook.com"));
-        }
-
-        // Color is stable for "similar" hosts.
-        assertEquals(color, IconGenerator.pickColor("https://m.facebook.com"));
-        assertEquals(color, IconGenerator.pickColor("http://facebook.com"));
-        assertEquals(color, IconGenerator.pickColor("http://www.facebook.com"));
-        assertEquals(color, IconGenerator.pickColor("http://www.facebook.com/foo/bar/foobar?mobile=1"));
     }
 }

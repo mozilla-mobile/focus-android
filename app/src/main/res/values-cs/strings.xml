@@ -9,6 +9,7 @@
   <string name="menu_share">Sdílet…</string>
   <string name="menu_open_with_default_browser">Otevřít pomocí %1$s</string>
   <string name="menu_open_with_a_browser">Otevřít pomocí…</string>
+  <string name="menu_add_to_home_screen">Přidat na domovskou obrazovku</string>
   <string name="menu_settings">Nastavení</string>
   <string name="menu_about">O nás</string>
   <string name="menu_help">Nápověda</string>
@@ -17,6 +18,7 @@
   <string name="share_dialog_title">Sdílet přes</string>
   <string name="notification_erase_text">Vymazat historii prohlížení</string>
   <string name="notification_action_open">Otevřít</string>
+  <string name="notification_action_erase_and_open">Vymazat a otevřít</string>
   <string name="shortcut_erase_short_label">Vymazat</string>
   <string name="shortcut_erase_long_label">Vymazat historii prohlížení</string>
   <string name="text_selection_search_action">Vyhledávejte soukromě</string>
@@ -33,19 +35,25 @@
   <string name="preference_privacy_block_content">Blokovat ostatní sledující prvky</string>
   <string name="preference_privacy_block_content_summary">Může rozbít některá videa a webové stránky</string>
   <string name="preference_privacy_secure_mode">Nenápadnost</string>
-  <string name="preference_privacy_secure_mode_summary">Vypněte režim nenápadnosti pro vytváření snímků obrazovky a zobrazení stránek, které navštěvujete v aplikaci %1$s v seznamu nedávno použitých aplikacích</string>
+  <string name="preference_privacy_stealth_summary">Skrýt webové stránky při přepínání aplikací</string>
   <string name="preference_category_performance">Výkon</string>
   <string name="preference_performance_block_webfonts">Blokovat webové fonty</string>
   <string name="preference_performance_block_webfonts_summary">Některé ikony nebo obrázky se nemusí zobrazovat</string>
   <string name="preference_performance_block_images">Blokovat obrázky</string>
-  <string name="preference_default_browser">Nastavit jako výchozí prohlížeč</string>
+  <string name="preference_default_browser2">Nastavit %1$s jako výchozí prohlížeč</string>
   <string name="preference_category_mozilla">Mozilla</string>
-  <string name="preference_mozilla_telemetry">Odesílat anonymní data o používání</string>
+  <string name="preference_mozilla_telemetry2">Odesílat údaje o používání</string>
   <string name="preference_mozilla_telemetry_summary">Zjistit více</string>
+  <string name="preference_mozilla_telemetry_summary2">Mozilla sbírá jenom ty informace, které potřebuje pro další vylepšování aplikace %1$s.</string>
+  <string name="preference_privacy_notice">Zásady ochrany soukromí</string>
   <string name="preference_about">O aplikaci %1$s</string>
   <string name="content_description_clear_input">Vymazat pole</string>
   <string name="content_description_dismiss_input">Zavřít</string>
   <string name="content_description_erase">Vymazat historii prohlížení</string>
+  <string name="content_description_fab_expand">Rozbalit</string>
+  <string name="content_description_tab_counter">Počet otevřených panelů: %1$s</string>
+  <string name="content_description_open_tab">Otevřít panel</string>
+  <string name="content_description_close_tab">Zavřít panel</string>
   <string name="content_description_lock">Zabezpečené připojení</string>
   <string name="accessibility_announcement_loading">Načítání</string>
   <string name="accessibility_announcement_loading_finished">Stránka načtena</string>
@@ -91,15 +99,33 @@
   <string name="contextmenu_image_share">Sdílet obrázek</string>
   <string name="contextmenu_image_copy">Kopírovat adresu obrázku</string>
   <string name="contextmenu_image_save">Uložit obrázek</string>
+  <string name="contextmenu_open_in_new_tab">Otevřít odkaz v novém panelu</string>
   <string name="contextmenu_image_warning"><![CDATA["Uložené a sdílené obrázky "<b xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">nebudou smaz&#225;ny</b>" když smažete historii aplikace %1$s."]]></string>
-  <string name="firstrun_tracking_title">Prohlížejte internet, jako když se nikdo nedívá</string>
-  <string name="firstrun_tracking_text">Automaticky blokuje online sledování, zatímco prohlížíte. Potom můžete smazat zobrazené stránky a cookies dotykem na ikonu koše v aplikaci nebo ve vašich notifikacích.</string>
   <string name="firstrun_defaultbrowser_title">Posuňte své soukromí na vyšší úroveň</string>
-  <string name="firstrun_defaultbrowser_text">Nastavte si %1$s jako svůj výchozí prohlížeč a získejte výhody soukromého prohlížení když vás ostatní Android aplikace odkážou na web.</string>
-  <string name="firstrun_breaking_title">Rychlé řešení, když\nblokování rozbije stránku</string>
-  <string name="firstrun_breaking_text">Když se blokování sledovacích prvků stane přítěží a rozbije stránku, vypněte jej klepnutím v nabídce nástrojů.</string>
+  <string name="firstrun_defaultbrowser_text2">Anonymní prohlížení dostalo nový rozměr. Blokuje reklamy a další obsah, který vás sleduje napříč stránkami a zpomaluje načítání.</string>
+  <string name="firstrun_search_title">Vaše hledání, vaše cesta</string>
+  <string name="firstrun_search_text">Hledáte něco jiného? V nastavení si zvolte jiný vyhledávací modul jako výchozí.</string>
+  <string name="firstrun_shortcut_title">Přidejte si zkratky na vaši domovskou obrazovku</string>
+  <string name="firstrun_shortcut_text">S aplikací %1$s se můžete rychle vrátit ke svým oblíbeným stránkám. Použijte „Přidat na domovskou obrazovku“ z nabídky aplikace %1$s.</string>
+  <string name="firstrun_privacy_title">Udělejte ze soukromí zvyk</string>
+  <string name="firstrun_privacy_text">Nastavte si %1$s jako svůj výchozí prohlížeč a získejte výhody soukromého prohlížení kdykoliv otevřete odkaz z ostatních aplikací.</string>
   <string name="firstrun_close_button">OK, rozumím!</string>
   <string name="firstrun_skip_button">Přeskočit</string>
   <string name="firstrun_next_button">Další</string>
   <string name="content_blocking_disabled">-</string>
+  <string name="dialog_addtohomescreen_title">Přidat na domovskou obrazovku</string>
+  <string name="dialog_addtohomescreen_action_add">Přidat</string>
+  <string name="dialog_addtohomescreen_action_cancel">Zrušit</string>
+  <string name="dialog_addtohomescreen_tracking_protection">Zkratka se bude otevírat s vypnutou ochranou proti sledování</string>
+  <string name="dialog_opentab_title">Otevřít odkaz ve vybraném panelu</string>
+  <string name="dialog_opentab_action_open">Otevřít</string>
+  <string name="notification_browsing_session_channel_name">Relace anonymního prohlížení</string>
+  <string name="notification_browsing_session_channel_description">Oznámení aplikace %1$s vám umožní smazat historii jedním klepnutím. Nemusíte ani otevírat aplikaci nebo se dívat, co máte zrovna otevřeno.</string>
+  <string name="tabs_tray_action_erase">Vymazat historii prohlížení</string>
+  <string name="download_firefox">Stáhnout Firefox</string>
+  <string name="your_rights_content1">%1$s je otevřený software zdarma od Mozilly a jiných přispěvatelů.</string>
+  <string name="your_rights_content2"><![CDATA["%1$s vám je zpřístupněn pod podmínkami "<a xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2" href="%2$s">Mozilla Public License</a>" a jiných open source licencí."]]></string>
+  <string name="your_rights_content3"><![CDATA["Nejsou vám však podstoupena žádná práva ani licence k ochranným známkám Mozilla Foundation či dalších stran, a to zejména k logům a jménům Mozilla, Firefox nebo %1$s. Podrobnější informace o ochranných známkách jsou dostupné "<a xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2" href="%2$s">zde</a>.]]></string>
+  <string name="your_rights_content4"><![CDATA["Další zdrojové kódy pro %1$s jsou dostupné pod dalšími různými "<a xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2" href="%2$s">licencemi</a>" svobodného softwaru."]]></string>
+  <string name="your_rights_content5"><![CDATA["%1$s také používá seznamy společnosti Disconnect, Inc. poskytnuté jako samostatná a nezávislá díla pod licencí "<a xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2" href="%2$s">GNU General Public License v3</a>" a dostupné "<a xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2" href="%3$s">zde</a>.]]></string>
 </resources>

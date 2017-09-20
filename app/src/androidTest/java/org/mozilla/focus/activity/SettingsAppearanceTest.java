@@ -14,6 +14,7 @@ import android.support.test.uiautomator.UiObject;
 import android.support.test.uiautomator.UiObjectNotFoundException;
 import android.support.test.uiautomator.UiSelector;
 
+import org.junit.After;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -46,6 +47,11 @@ public class SettingsAppearanceTest {
         }
     };
 
+    @After
+    public void tearDown() throws Exception {
+        mActivityTestRule.getActivity().finishAndRemoveTask();
+    }
+
     @Test
     public void settingsScreenTest() throws InterruptedException, UiObjectNotFoundException {
 
@@ -66,7 +72,7 @@ public class SettingsAppearanceTest {
                 .resourceId("android:id/title"));
 
         /* Go to Settings */
-        TestHelper.urlBar.waitForExists(waitingTime);
+        TestHelper.inlineAutocompleteEditText.waitForExists(waitingTime);
         TestHelper.menuButton.perform(click());
         TestHelper.settingsMenuItem.click();
         SearchEngineSelection.waitForExists(waitingTime);

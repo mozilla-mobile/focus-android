@@ -18,6 +18,7 @@ import android.view.KeyEvent;
 
 import junit.framework.Assert;
 
+import org.junit.After;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -62,6 +63,10 @@ public class ImageSelectTest {
                         .addHeader("Set-Cookie", "sphere=battery; Expires=Wed, 21 Oct 2035 07:28:00 GMT;"));
                 webServer.enqueue(new MockResponse()
                         .setBody(TestHelper.readTestAsset("rabbit.jpg")));
+                webServer.enqueue(new MockResponse()
+                        .setBody(TestHelper.readTestAsset("download.jpg")));
+                webServer.enqueue(new MockResponse()
+                        .setBody(TestHelper.readTestAsset("rabbit.jpg")));
 
                 webServer.start();
             } catch (IOException e) {
@@ -81,6 +86,12 @@ public class ImageSelectTest {
             }
         }
     };
+
+    @After
+    public void tearDown() throws Exception {
+        mActivityTestRule.getActivity().finishAndRemoveTask();
+    }
+
     private UiObject titleMsg = TestHelper.mDevice.findObject(new UiSelector()
             .description("focus test page")
             .enabled(true));
@@ -117,8 +128,6 @@ public class ImageSelectTest {
         final String imagePath = webServer.url(TEST_PATH).toString() + "rabbit.jpg";
 
         // Load website with service worker
-        TestHelper.urlBar.waitForExists(waitingTime);
-        TestHelper.urlBar.click();
         TestHelper.inlineAutocompleteEditText.waitForExists(waitingTime);
         TestHelper.inlineAutocompleteEditText.clearTextField();
         TestHelper.inlineAutocompleteEditText.setText(webServer.url(TEST_PATH).toString());
@@ -150,12 +159,9 @@ public class ImageSelectTest {
         TestHelper.floatingEraseButton.perform(click());
         TestHelper.erasedMsg.waitForExists(waitingTime);
         Assert.assertTrue(TestHelper.erasedMsg.exists());
-        Assert.assertTrue(TestHelper.urlBar.exists());
-
 
         // KeyEvent.KEYCODE_PASTE) requires API 24 or above
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            TestHelper.urlBar.click();
             TestHelper.inlineAutocompleteEditText.waitForExists(waitingTime);
             TestHelper.mDevice.pressKeyCode(KeyEvent.KEYCODE_PASTE);
             Assert.assertEquals(TestHelper.inlineAutocompleteEditText.getText(), imagePath);
@@ -166,8 +172,6 @@ public class ImageSelectTest {
     public void ShareImageTest() throws UiObjectNotFoundException {
 
         // Load website with service worker
-        TestHelper.urlBar.waitForExists(waitingTime);
-        TestHelper.urlBar.click();
         TestHelper.inlineAutocompleteEditText.waitForExists(waitingTime);
         TestHelper.inlineAutocompleteEditText.clearTextField();
         TestHelper.inlineAutocompleteEditText.setText(webServer.url(TEST_PATH).toString());
@@ -200,23 +204,17 @@ public class ImageSelectTest {
     public void DownloadImageMenuTest() throws UiObjectNotFoundException {
 
         // Load website with service worker
-        TestHelper.urlBar.waitForExists(waitingTime);
-        TestHelper.urlBar.click();
         TestHelper.inlineAutocompleteEditText.waitForExists(waitingTime);
         TestHelper.inlineAutocompleteEditText.clearTextField();
-        TestHelper.inlineAutocompleteEditText.setText("http://www.google.com");
+        TestHelper.inlineAutocompleteEditText.setText(webServer.url(TEST_PATH).toString());
         TestHelper.hint.waitForExists(waitingTime);
         TestHelper.pressEnterKey();
         TestHelper.webView.waitForExists(waitingTime);
 
         // Find image and long tap it
-        UiObject webImage = TestHelper.mDevice.findObject(new UiSelector()
-                .className("android.view.View")
-                .instance(2)
-                .enabled(true));
-        webImage.waitForExists(waitingTime);
-        Assert.assertTrue(webImage.exists());
-        webImage.dragTo(webImage, 5);
+        rabbitImage.waitForExists(waitingTime);
+        Assert.assertTrue(rabbitImage.exists());
+        rabbitImage.dragTo(rabbitImage, 5);
         imageMenuTitle.waitForExists(waitingTime);
         Assert.assertTrue(imageMenuTitle.exists());
         Assert.assertTrue(shareMenu.exists());

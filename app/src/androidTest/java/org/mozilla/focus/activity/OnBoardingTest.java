@@ -14,6 +14,7 @@ import android.support.test.uiautomator.UiObjectNotFoundException;
 
 import junit.framework.Assert;
 
+import org.junit.After;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -43,6 +44,11 @@ public class OnBoardingTest {
         }
     };
 
+    @After
+    public void tearDown() throws Exception {
+        mActivityTestRule.getActivity().finishAndRemoveTask();
+    }
+
     @Test
     public void OnBoardingTest() throws InterruptedException, UiObjectNotFoundException {
 
@@ -53,11 +59,14 @@ public class OnBoardingTest {
         TestHelper.secondSlide.waitForExists(waitingTime);
         Assert.assertTrue(TestHelper.secondSlide.exists());
         TestHelper.nextBtn.click();
+        TestHelper.thirdSlide.waitForExists(waitingTime);
+        Assert.assertTrue(TestHelper.thirdSlide.exists());
+        TestHelper.nextBtn.click();
         TestHelper.lastSlide.waitForExists(waitingTime);
         Assert.assertTrue(TestHelper.lastSlide.exists());
         TestHelper.finishBtn.click();
 
-        TestHelper.urlBar.waitForExists(waitingTime);
-        Assert.assertTrue(TestHelper.urlBar.exists());
+        TestHelper.inlineAutocompleteEditText.waitForExists(waitingTime);
+        Assert.assertTrue(TestHelper.inlineAutocompleteEditText.exists());
     }
 }

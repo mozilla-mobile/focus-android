@@ -6,23 +6,11 @@
 package org.mozilla.focus.web;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.Color;
-import android.os.Bundle;
-import android.os.SystemClock;
-import android.support.annotation.Nullable;
-import android.support.v4.view.MotionEventCompat;
-import android.support.v4.view.NestedScrollingChild;
-import android.support.v4.view.NestedScrollingChildHelper;
-import android.support.v4.view.ViewCompat;
-import android.support.v7.widget.AppCompatTextView;
+import android.support.annotation.NonNull;
 import android.util.AttributeSet;
-import android.view.Gravity;
-import android.view.MotionEvent;
 import android.view.View;
 
-import org.mozilla.gecko.GeckoProfile;
-import org.mozilla.gecko.GeckoThread;
+import org.mozilla.focus.session.Session;
 import org.mozilla.gecko.GeckoView;
 import org.mozilla.gecko.GeckoViewSettings;
 
@@ -107,21 +95,6 @@ public class WebViewProvider {
             // We can't actually do this?
         }
 
-        @Override
-        public boolean isBlockingEnabled() {
-            return true;
-        }
-
-        @Override
-        public void restoreWebviewState(Bundle savedInstanceState) {
-            // TODO: restore navigation history, and reopen previously opened page
-        }
-
-        @Override
-        public void onSaveInstanceState(Bundle outState) {
-            // TODO: save anything needed for navigation history restoration.
-        }
-
         private ContentListener createContentListener() {
             return new ContentListener() {
                 @Override
@@ -192,8 +165,13 @@ public class WebViewProvider {
         }
 
         @Override
-        public Bitmap getIcon() {
-            return null;
+        public void restoreWebViewState(Session session) {
+            // TODO: restore navigation history, and reopen previously opened page
+        }
+
+        @Override
+        public void saveWebViewState(@NonNull Session session) {
+            // TODO: save anything needed for navigation history restoration.
         }
 
         @Override

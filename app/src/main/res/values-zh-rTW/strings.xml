@@ -9,6 +9,7 @@
   <string name="menu_share">分享…</string>
   <string name="menu_open_with_default_browser">使用 %1$s 開啟</string>
   <string name="menu_open_with_a_browser">使用其他程式開啟…</string>
+  <string name="menu_add_to_home_screen">新增至裝置主畫面</string>
   <string name="menu_settings">選項</string>
   <string name="menu_about">關於</string>
   <string name="menu_help">說明</string>
@@ -17,6 +18,7 @@
   <string name="share_dialog_title">透過下列程式分享</string>
   <string name="notification_erase_text">清除瀏覽紀錄</string>
   <string name="notification_action_open">開啟</string>
+  <string name="notification_action_erase_and_open">清除並開啟</string>
   <string name="shortcut_erase_short_label">清除</string>
   <string name="shortcut_erase_long_label">清除瀏覽紀錄</string>
   <string name="text_selection_search_action">隱私搜尋</string>
@@ -33,19 +35,25 @@
   <string name="preference_privacy_block_content">封鎖其他內容追蹤器</string>
   <string name="preference_privacy_block_content_summary">可能會影響網頁與影片載入</string>
   <string name="preference_privacy_secure_mode">秘密行動</string>
-  <string name="preference_privacy_secure_mode_summary">關閉秘密模式，您就可以拍攝畫面擷圖，並在「應用程式切換清單」中，看到您曾使用 %1$s 造訪過的網站。</string>
+  <string name="preference_privacy_stealth_summary">切換程式時，隱藏網頁內容</string>
   <string name="preference_category_performance">效能</string>
   <string name="preference_performance_block_webfonts">封鎖網路字型</string>
   <string name="preference_performance_block_webfonts_summary">可能會造成網頁當中的圖示或圖片消失</string>
   <string name="preference_performance_block_images">封鎖圖片</string>
-  <string name="preference_default_browser">設為預設瀏覽器</string>
+  <string name="preference_default_browser2">將 %1$s 設為預設瀏覽器</string>
   <string name="preference_category_mozilla">Mozilla</string>
-  <string name="preference_mozilla_telemetry">傳送匿名的使用統計資料</string>
+  <string name="preference_mozilla_telemetry2">傳送使用資料</string>
   <string name="preference_mozilla_telemetry_summary">了解更多</string>
+  <string name="preference_mozilla_telemetry_summary2">Mozilla 致力於只收集用來為眾人改善 %1$s 所需的必要資料。</string>
+  <string name="preference_privacy_notice">隱私權公告</string>
   <string name="preference_about">關於 %1$s</string>
   <string name="content_description_clear_input">清除輸入內容</string>
   <string name="content_description_dismiss_input">結束輸入</string>
   <string name="content_description_erase">清除瀏覽紀錄</string>
+  <string name="content_description_fab_expand">展開</string>
+  <string name="content_description_tab_counter">開啟分頁數: %1$s</string>
+  <string name="content_description_open_tab">開啟分頁</string>
+  <string name="content_description_close_tab">關閉分頁</string>
   <string name="content_description_lock">安全連線</string>
   <string name="accessibility_announcement_loading">載入中</string>
   <string name="accessibility_announcement_loading_finished">網站已載入</string>
@@ -91,15 +99,33 @@
   <string name="contextmenu_image_share">分享圖片</string>
   <string name="contextmenu_image_copy">複製圖片網址</string>
   <string name="contextmenu_image_save">儲存圖片</string>
+  <string name="contextmenu_open_in_new_tab">用新分頁開啟鏈結</string>
   <string name="contextmenu_image_warning"><![CDATA[清除 %1$s 瀏覽紀錄時，已儲存並分享的圖片將<b xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">&#19981;&#26371;&#34987;&#21034;&#38500;</b>。]]></string>
-  <string name="firstrun_tracking_title">上網時，彷彿沒有人看著你。</string>
-  <string name="firstrun_tracking_text">上網時自動封鎖網路追蹤器。然後只要點擊程式或通知列中的垃圾桶圖示，即可移除造訪過的網站記錄和 Cookie。</string>
   <string name="firstrun_defaultbrowser_title">加強您的隱私</string>
-  <string name="firstrun_defaultbrowser_text">將 %1$s 設為您的預設瀏覽器，讓您在其他 Android 程式開啟網頁時，也能受隱私瀏覽功能的保護。</string>
-  <string name="firstrun_breaking_title">快速修正\n封鎖時的問題</string>
-  <string name="firstrun_breaking_text">若封鎖線上追蹤器，造成某些網站無法正常使用，您可以點擊工具選單暫時關閉封鎖功能。</string>
+  <string name="firstrun_defaultbrowser_text2">隱私瀏覽功能變得更強大了。現在可封鎖廣告，以及其他可在不同網站間追蹤您的上網紀錄，又拖慢網頁載入的追蹤器。</string>
+  <string name="firstrun_search_title">用你的方式搜尋</string>
+  <string name="firstrun_search_text">想找點不一樣的東西嗎？可在設定畫面中選擇不同的預設搜尋引擎。</string>
+  <string name="firstrun_shortcut_title">在主畫面加入捷徑</string>
+  <string name="firstrun_shortcut_text">只要選擇 %1$s 選單中的「新增至裝置主畫面」即可快速用 %1$s 回到您最愛的網站。</string>
+  <string name="firstrun_privacy_title">讓隱私成為一種習慣。</string>
+  <string name="firstrun_privacy_text">將 %1$s 設為您的預設瀏覽器，從其他程式開啟網頁時即可直接進入隱私瀏覽模式從中受益。</string>
   <string name="firstrun_close_button">好，知道了！</string>
   <string name="firstrun_skip_button">略過</string>
   <string name="firstrun_next_button">下一步</string>
   <string name="content_blocking_disabled">-</string>
+  <string name="dialog_addtohomescreen_title">新增至裝置主畫面</string>
+  <string name="dialog_addtohomescreen_action_add">新增</string>
+  <string name="dialog_addtohomescreen_action_cancel">取消</string>
+  <string name="dialog_addtohomescreen_tracking_protection">使用此捷徑開啟時，將關閉追蹤保護功能</string>
+  <string name="dialog_opentab_title">指定用來開啟鏈結的分頁</string>
+  <string name="dialog_opentab_action_open">開啟</string>
+  <string name="notification_browsing_session_channel_name">隱私瀏覽階段</string>
+  <string name="notification_browsing_session_channel_description">不需要開啟程式或確認瀏覽器中有哪些資料，只要輕鬆一點，就能清除 %1$s 瀏覽階段的通知項目。</string>
+  <string name="tabs_tray_action_erase">抹除瀏覽紀錄</string>
+  <string name="download_firefox">下載 Firefox</string>
+  <string name="your_rights_content1">%1$s 是由 Mozilla 及貢獻者所打造，自由且開放原始碼的軟體。</string>
+  <string name="your_rights_content2"><![CDATA["%1$s 依照 "<a xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2" href="%2$s">Mozilla Public License</a>" 以及其他開放原始碼授權條款提供給您。"]]></string>
+  <string name="your_rights_content3"><![CDATA["您並未被授權使用 Mozilla 基金會或任何相關部門的商標，包含但不限於 Mozilla、Firefox、%1$s 的商標。您可以在 "<a xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2" href="%2$s">&#36889;&#35041;</a>找到更多資訊。]]></string>
+  <string name="your_rights_content4"><![CDATA[%1$s 其他的原始碼則使用其他自由與開放原始碼的<a xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2" href="%2$s">&#25480;&#27402;&#26781;&#27454;</a>提供。]]></string>
+  <string name="your_rights_content5"><![CDATA["%1$s 還使用由 Disconnect, Inc. 提供的封鎖清單，該清單是一份依照 "<a xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2" href="%2$s">GNU General Public License v3</a>" 提供的獨立作品，可在"<a xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2" href="%3$s">&#27492;&#34389;</a>取得。]]></string>
 </resources>

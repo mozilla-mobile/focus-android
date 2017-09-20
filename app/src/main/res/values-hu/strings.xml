@@ -9,14 +9,16 @@
   <string name="menu_share">Megosztás…</string>
   <string name="menu_open_with_default_browser">Megnyitás ezzel: %1$s</string>
   <string name="menu_open_with_a_browser">Megnyitás mással…</string>
+  <string name="menu_add_to_home_screen">Kezdőképernyőhöz adás</string>
   <string name="menu_settings">Beállítások</string>
   <string name="menu_about">Névjegy</string>
   <string name="menu_help">Súgó</string>
   <string name="menu_rights">Az Ön jogai</string>
-  <string name="menu_trackers_blocked_title">Blokkolt nyomkövetők</string>
+  <string name="menu_trackers_blocked_title">Blokkolt követők</string>
   <string name="share_dialog_title">Megosztás ezzel</string>
   <string name="notification_erase_text">Előzmények törlése</string>
   <string name="notification_action_open">Megnyitás</string>
+  <string name="notification_action_erase_and_open">Törlés és megnyitás</string>
   <string name="shortcut_erase_short_label">Törlés</string>
   <string name="shortcut_erase_long_label">Böngészési előzmények törlése</string>
   <string name="text_selection_search_action">Privát keresés</string>
@@ -27,25 +29,31 @@
   <string name="preference_language_systemdefault">Rendszer alapbeállítása</string>
   <string name="preference_dialog_title_search_engine">Alapértelmezett kereső</string>
   <string name="preference_category_privacy">Adatvédelem</string>
-  <string name="preference_privacy_block_ads">Reklámkövetők blokkolása</string>
-  <string name="preference_privacy_block_analytics">Elemző követők blokkolása</string>
+  <string name="preference_privacy_block_ads">Hirdetéskövetők blokkolása</string>
+  <string name="preference_privacy_block_analytics">Analitikai követők blokkolása</string>
   <string name="preference_privacy_block_social">Közösségi oldalak követőinek blokkolása</string>
   <string name="preference_privacy_block_content">Más tartalomkövetők blokkolása</string>
   <string name="preference_privacy_block_content_summary">Néhány videó és weblap eltörhet</string>
   <string name="preference_privacy_secure_mode">Rejtőzködés</string>
-  <string name="preference_privacy_secure_mode_summary">Kapcsolja ki a rejtőzködés módot, hogy képernyőképeket készítsen, és lássa a %1$sban megtekintett oldalakat az Előző alkalmazások listájában</string>
+  <string name="preference_privacy_stealth_summary">Weboldalak elrejtése alkalmazásváltáskor</string>
   <string name="preference_category_performance">Teljesítmény</string>
   <string name="preference_performance_block_webfonts">Webes betűkészletek blokkolása</string>
   <string name="preference_performance_block_webfonts_summary">Hiányzó ikonokat és képeket eredményezhet</string>
   <string name="preference_performance_block_images">Képek blokkolása</string>
-  <string name="preference_default_browser">Alapértelmezett böngészővé tétel</string>
+  <string name="preference_default_browser2">A %1$s legyen az alapértelmezett böngésző</string>
   <string name="preference_category_mozilla">Mozilla</string>
-  <string name="preference_mozilla_telemetry">Névtelen használati adatok küldése</string>
+  <string name="preference_mozilla_telemetry2">Használati adatok elküldése</string>
   <string name="preference_mozilla_telemetry_summary">Tudjon meg többet</string>
+  <string name="preference_mozilla_telemetry_summary2">A Mozilla arra törekszik, hogy csak azt gyűjtse, ami a %1$s fejlesztéséhez és támogatásához szükséges.</string>
+  <string name="preference_privacy_notice">Adatvédelmi nyilatkozat</string>
   <string name="preference_about">A %1$s névjegye</string>
   <string name="content_description_clear_input">Bemenet törlése</string>
   <string name="content_description_dismiss_input">Elutasítás</string>
   <string name="content_description_erase">Böngészési előzmények törlése</string>
+  <string name="content_description_fab_expand">Kibontás</string>
+  <string name="content_description_tab_counter">Nyitott lapok: %1$s</string>
+  <string name="content_description_open_tab">Lap megnyitása</string>
+  <string name="content_description_close_tab">Lap bezárása</string>
   <string name="content_description_lock">Biztonságos kapcsolat</string>
   <string name="accessibility_announcement_loading">Betöltés</string>
   <string name="accessibility_announcement_loading_finished">Weboldal betöltve</string>
@@ -91,15 +99,33 @@
   <string name="contextmenu_image_share">Kép megosztása</string>
   <string name="contextmenu_image_copy">Kép címének másolása</string>
   <string name="contextmenu_image_save">Kép mentése</string>
+  <string name="contextmenu_open_in_new_tab">Hivatkozás megnyitása új lapon</string>
   <string name="contextmenu_image_warning"><![CDATA["A mentett és megosztott képek "<b xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">nem ker&#252;lnek t&#246;rl&#233;sre</b>, ha törli a %1$s előzményeit.]]></string>
-  <string name="firstrun_tracking_title">Böngésszen úgy, mintha senki sem figyelné</string>
-  <string name="firstrun_tracking_text">Automatikusan blokkolja az online követést böngészés közben. Aztán eltávolítja a felkeresett oldalakat és a sütiket, egyetlen érintéssel az appban vagy az értesítésekben lévő kuka ikonon.</string>
   <string name="firstrun_defaultbrowser_title">Tuningolja fel az adatvédelmét</string>
-  <string name="firstrun_defaultbrowser_text">Állítsa be a %1$st alapértelmezett böngészőként, és kapja meg a privát böngészés előnyeit, amikor a webre vált a többi Androidos appból.</string>
-  <string name="firstrun_breaking_title">Gyorsjavítás, ha a\nblokkolás hibát okoz</string>
-  <string name="firstrun_breaking_text">Ha az online követők blokkolása az oldal szétesését okozza, akkor kapcsolja ki a blokkolást egy érintéssel az eszközök menüben.</string>
+  <string name="firstrun_defaultbrowser_text2">Emelje a privát a böngészést a következő szintre. Blokkolja a hirdetéseket, és más tartalmakat, amelyek követhetik az oldalak között, és lelassíthatják a betöltési sebességet.</string>
+  <string name="firstrun_search_title">Az Ön keresése, az Ön útja</string>
+  <string name="firstrun_search_text">Valami mást keres? Válasszon másik alapértelmezett keresőmotort a Beállításokban.</string>
+  <string name="firstrun_shortcut_title">Adjon ikonokat a kezdőképernyőre</string>
+  <string name="firstrun_shortcut_text">Térjen vissza gyorsan a kedven oldalaihoz a %1$sban. Csak válassza a „Hozzáadás a kezdőképernyőre” lehetőséget a %1$s menüből.</string>
+  <string name="firstrun_privacy_title">Váljon szokásává az adatvédelem</string>
+  <string name="firstrun_privacy_text">Állítsa be a %1$st alapértelmezett böngészőként, és kapja meg a privát böngészés előnyeit, amikor weboldalakat nyit meg a többi appból.</string>
   <string name="firstrun_close_button">Rendben, értem!</string>
   <string name="firstrun_skip_button">Kihagyás</string>
   <string name="firstrun_next_button">Következő</string>
   <string name="content_blocking_disabled">–</string>
+  <string name="dialog_addtohomescreen_title">Kezdőképernyőhöz adás</string>
+  <string name="dialog_addtohomescreen_action_add">Hozzáadás</string>
+  <string name="dialog_addtohomescreen_action_cancel">Mégse</string>
+  <string name="dialog_addtohomescreen_tracking_protection">Az ikon követés elleni védelem nélkül fogja megnyitni az alkalmazást</string>
+  <string name="dialog_opentab_title">Hivatkozás megnyitása a kiválasztott lapon</string>
+  <string name="dialog_opentab_action_open">Megnyitás</string>
+  <string name="notification_browsing_session_channel_name">Privát böngészés</string>
+  <string name="notification_browsing_session_channel_description">Az értesítésekkel egy érintéssel törölheti a %1$s munkamenetét. Nem kell megnyitnia az alkalmazást, sem megnéznie, hogy mi fut benne.</string>
+  <string name="tabs_tray_action_erase">Böngészési előzmények törlése</string>
+  <string name="download_firefox">Firefox letöltése</string>
+  <string name="your_rights_content1">A %1$s szabad és nyílt forráskódú szoftver, amelyet a Mozilla és más közreműködők készítenek.</string>
+  <string name="your_rights_content2"><![CDATA["A %1$s a "<a xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2" href="%2$s">Mozilla Public License</a>, és más nyílt forráskódú licencek feltételei szerint érhető el.]]></string>
+  <string name="your_rights_content3"><![CDATA["Nem kap semmiféle jogot vagy licencet a Mozilla Foundation vagy bármely más fél védjegyeihez, köztük a Mozilla, Firefox vagy %1$s nevekhez vagy logókhoz. További információkat "<a xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2" href="%2$s">itt</a>" találhat."]]></string>
+  <string name="your_rights_content4"><![CDATA["További %1$s forráskód érhető el különféle szabad szoftver vagy nyílt forráskódú "<a xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2" href="%2$s">licencek</a>" alatt."]]></string>
+  <string name="your_rights_content5"><![CDATA["A %1$s a Disconnect, Inc. által biztosított blokkolási listákat használ, különálló munkaként, "<a xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2" href="%2$s">GNU General Public Licence v3</a>" alatt, ez "<a xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2" href="%3$s">itt</a>" érhető el."]]></string>
 </resources>

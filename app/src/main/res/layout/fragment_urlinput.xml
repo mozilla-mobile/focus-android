@@ -4,19 +4,47 @@
    - file, You can obtain one at http://mozilla.org/MPL/2.0/. -->
 
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/background"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:clipChildren="false"
-    android:clipToPadding="false">
+    android:layout_height="match_parent">
+
+    <org.mozilla.focus.widget.ResizableKeyboardLinearLayout
+        android:id="@+id/brand_background"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:layout_marginTop="81dp"
+        android:orientation="vertical"
+        app:animate="true">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:contentDescription="@string/app_name"
+            android:paddingBottom="16dp"
+            android:src="@drawable/wordmark"
+            android:focusable="false" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:lineSpacingExtra="7sp"
+            android:text="@string/teaser"
+            android:textColor="#eeeeee"
+            android:textSize="14sp"
+            android:focusable="false" />
+
+    </org.mozilla.focus.widget.ResizableKeyboardLinearLayout>
 
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="81dp"
         android:orientation="horizontal"
         android:elevation="4dp"
-        android:clipChildren="false"
-        android:clipToPadding="false">
+        android:clipChildren="false">
 
         <View
             android:id="@+id/toolbar_background"
@@ -24,12 +52,13 @@
             android:layout_height="match_parent"
             android:background="@drawable/background_inactive" />
 
-        <org.mozilla.focus.widget.HintFrameLayout
+        <FrameLayout
             android:id="@+id/url_input_container"
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:layout_gravity="bottom"
-            android:layout_margin="8dp">
+            android:layout_margin="8dp"
+            android:clipChildren="false">
 
             <View
                 android:id="@+id/url_input_background"
@@ -40,8 +69,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="horizontal"
-                android:transitionName="urlbar">
+                android:orientation="horizontal">
 
                 <org.mozilla.focus.widget.InlineAutocompleteEditText
                     android:id="@+id/url_edit"
@@ -61,8 +89,8 @@
                     android:requiresFadingEdge="horizontal"
                     android:selectAllOnFocus="true"
                     android:textColor="#ffffff"
-                    android:textColorHighlight="@color/colorAutocompleteHighlight"
-                    android:textColorHint="#40ffffff"
+                    android:textColorHighlight="@color/colorAccent"
+                    android:textColorHint="@color/colorTextInactive"
                     android:textSize="15sp" />
 
                 <ImageButton
@@ -81,9 +109,25 @@
                     android:background="?android:attr/selectableItemBackgroundBorderless"
                     android:contentDescription="@string/content_description_clear_input" />
 
+                <ImageButton
+                    android:id="@+id/menu"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:src="@drawable/ic_menu"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:paddingTop="8dp"
+                    android:paddingBottom="8dp"
+                    android:paddingEnd="8dp"
+                    android:paddingStart="8dp"
+                    android:layout_gravity="end"
+                    android:visibility="gone"
+                    android:background="?android:attr/selectableItemBackgroundBorderless"
+                    android:contentDescription="@string/content_description_menu" />
+
             </LinearLayout>
 
-        </org.mozilla.focus.widget.HintFrameLayout>
+        </FrameLayout>
 
     </FrameLayout>
 
@@ -91,7 +135,7 @@
         android:id="@+id/dismiss"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/colorUrlInputBackground"
+        android:background="@color/colorOverlay"
         android:contentDescription="@string/content_description_dismiss_input" />
 
     <FrameLayout

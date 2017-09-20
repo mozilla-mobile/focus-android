@@ -14,6 +14,7 @@ import android.support.test.uiautomator.UiObject;
 import android.support.test.uiautomator.UiObjectNotFoundException;
 import android.support.test.uiautomator.UiSelector;
 
+import org.junit.After;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -46,6 +47,11 @@ public class ShareDialogTest {
         }
     };
 
+    @After
+    public void tearDown() throws Exception {
+        mActivityTestRule.getActivity().finishAndRemoveTask();
+    }
+
     @Test
     public void shareTest() throws InterruptedException, UiObjectNotFoundException {
 
@@ -54,8 +60,6 @@ public class ShareDialogTest {
                 .enabled(true));
 
         /* Go to a webpage */
-        TestHelper.urlBar.waitForExists(waitingTime);
-        TestHelper.urlBar.click();
         TestHelper.inlineAutocompleteEditText.waitForExists(waitingTime);
         TestHelper.inlineAutocompleteEditText.clearTextField();
         TestHelper.inlineAutocompleteEditText.setText("mozilla");

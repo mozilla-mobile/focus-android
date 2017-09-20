@@ -7,7 +7,6 @@ package org.mozilla.focus.utils;
 
 import android.content.Context;
 import android.content.pm.PackageManager;
-import android.os.Build;
 
 import org.mozilla.focus.locale.Locales;
 
@@ -17,7 +16,6 @@ import java.util.Locale;
 
 public class SupportUtils {
     public static final String HELP_URL = "https://support.mozilla.org/kb/what-firefox-focus-android";
-    public static final String BLOCKING_HELP_URL = "";
     public static final String DEFAULT_BROWSER_URL = "https://support.mozilla.org/kb/set-firefox-focus-default-browser-android";
 
     public static String getSumoURLForTopic(final Context context, final String topic) {

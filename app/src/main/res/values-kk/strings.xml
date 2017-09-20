@@ -9,6 +9,7 @@
   <string name="menu_share">Бөлісу…</string>
   <string name="menu_open_with_default_browser">%1$s көмегімен ашу</string>
   <string name="menu_open_with_a_browser">Көмегімен ашу…</string>
+  <string name="menu_add_to_home_screen">Үй экранына қосу</string>
   <string name="menu_settings">Баптаулар</string>
   <string name="menu_about">Осы туралы</string>
   <string name="menu_help">Көмек</string>
@@ -17,6 +18,7 @@
   <string name="share_dialog_title">Арқылы бөлісу</string>
   <string name="notification_erase_text">Шолу тарихын өшіру</string>
   <string name="notification_action_open">Ашу</string>
+  <string name="notification_action_erase_and_open">Өшіру және ашу</string>
   <string name="shortcut_erase_short_label">Өшіру</string>
   <string name="shortcut_erase_long_label">Шолу тарихын өшіру</string>
   <string name="text_selection_search_action">Жеке шолыңыз</string>
@@ -33,19 +35,25 @@
   <string name="preference_privacy_block_content">Басқа құрама трекерлерін блоктау</string>
   <string name="preference_privacy_block_content_summary">Кейбір видео және веб парақтарының жұмысына кері әсерін тигізуі мүмкін</string>
   <string name="preference_privacy_secure_mode">Жасырын</string>
-  <string name="preference_privacy_secure_mode_summary">Скриншоттарды түсіру және %1$s көмегімен шолған сайттарды жуырдағы қолданбалар тізімінен көру үшін жасырын режимін сөндіріңіз</string>
+  <string name="preference_privacy_stealth_summary">Қолданбаларды ауыстыру кезінде веб парақтарды жасыру</string>
   <string name="preference_category_performance">Өнімділік</string>
   <string name="preference_performance_block_webfonts">Веб қаріптерін блоктау</string>
   <string name="preference_performance_block_webfonts_summary">Жоқ болып тұрған таңбашалар немесе суреттерге әкеп соғуы мүмкін</string>
   <string name="preference_performance_block_images">Суреттерді блоктау</string>
-  <string name="preference_default_browser">Негізгі браузер қылу</string>
+  <string name="preference_default_browser2">%1$s-ты негізгі браузер қылу</string>
   <string name="preference_category_mozilla">Mozilla</string>
-  <string name="preference_mozilla_telemetry">Анонимды қолдану деректерін жіберіп отыру</string>
+  <string name="preference_mozilla_telemetry2">Қолдану деректерін жіберу</string>
   <string name="preference_mozilla_telemetry_summary">Көбірек білу</string>
+  <string name="preference_mozilla_telemetry_summary2">Mozilla тек %1$s әркім үшін ұсыну және жақсарту мақсатында керек деректерді жинауға тырысады.</string>
+  <string name="preference_privacy_notice">Жекелік ескертуі</string>
   <string name="preference_about">%1$s туралы</string>
   <string name="content_description_clear_input">Енгізуді тазарту</string>
   <string name="content_description_dismiss_input">Тайдыру</string>
   <string name="content_description_erase">Шолу тарихын өшіру</string>
+  <string name="content_description_fab_expand">Жазық қылу</string>
+  <string name="content_description_tab_counter">Ашық беттер: %1$s</string>
+  <string name="content_description_open_tab">Бетті ашу</string>
+  <string name="content_description_close_tab">Бетті жабу</string>
   <string name="content_description_lock">Қауіпсіз байланыс</string>
   <string name="accessibility_announcement_loading">Жүктелуде</string>
   <string name="accessibility_announcement_loading_finished">Вебсайт жүктелген</string>
@@ -91,15 +99,33 @@
   <string name="contextmenu_image_share">Суретпен бөлісу</string>
   <string name="contextmenu_image_copy">Сурет адресін көшіріп алу</string>
   <string name="contextmenu_image_save">Суретті сақтау</string>
+  <string name="contextmenu_open_in_new_tab">Сілтемені жаңа бетте ашу</string>
   <string name="contextmenu_image_warning"><![CDATA["%1$s тарихы өшірілген кезде сақталған және бөліскен суреттер "<b xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">&#1257;&#1096;&#1110;&#1088;&#1110;&#1083;&#1084;&#1077;&#1081;&#1076;&#1110;</b>.]]></string>
-  <string name="firstrun_tracking_title">Бақылаудан қорықпай-ақ интернетті шолыңыз</string>
-  <string name="firstrun_tracking_text">Шолу кезінде онлайн трекерлерді автоблоктаңыз. Одан кейін, қолданба не хабарламалардағы қоқыс шелегі таңбашасына шертіп, қаралған беттер және cookies өшіріңіз.</string>
   <string name="firstrun_defaultbrowser_title">Жекелігіңізді күшейтіңіз</string>
-  <string name="firstrun_defaultbrowser_text">%1$s негізгі браузер ретінде орнатып, басқа Android қолданбаларынан интернетке сілтеу кезінде жекелік шолудың артықшылықтарын алыңыз.</string>
-  <string name="firstrun_breaking_title">Блоктау = сындыру\nкезіндегі жылдам жөндеу</string>
-  <string name="firstrun_breaking_text">Онлайн трекерлерді блоктау нәтижесінде сайт сынған болса, саймандар мәзіріне шерту арқылы блоктауды сөндіріңіз.</string>
+  <string name="firstrun_defaultbrowser_text2">Жекелік шолудың келесі деңгейіне өтіңіз. Сайттар арасында сізді бақылайтын және парақтардың жүктелу уақытын арттыратын жарнама және басқа құраманы блоктаңыз.</string>
+  <string name="firstrun_search_title">Сіздің іздеулеріңіз, сіздің жолыңызбен</string>
+  <string name="firstrun_search_text">Басқа бірнәрсе іздедіңіз бе? Баптаулардан басқа негізгі іздеу жүйесін таңдаңыз.</string>
+  <string name="firstrun_shortcut_title">Үй экранына жарлықтарды қосыңыз</string>
+  <string name="firstrun_shortcut_text">%1$s ішінде таңдамалы сайттарға жылдам оралыңыз. Тек %1$s мәзірінен \"Үй экранына қосу\" таңдаңыз.</string>
+  <string name="firstrun_privacy_title">Жекелікті әдет қылыңыз</string>
+  <string name="firstrun_privacy_text">%1$s негізгі браузер ретінде орнатып, басқа қолданбалардан вебпарақтарын ашу кезінде жекелік шолудың артықшылықтарын алыңыз.</string>
   <string name="firstrun_close_button">Жақсы, түсіндім!</string>
   <string name="firstrun_skip_button">Аттап кету</string>
   <string name="firstrun_next_button">Келесі</string>
   <string name="content_blocking_disabled">-</string>
+  <string name="dialog_addtohomescreen_title">Үй экранына қосу</string>
+  <string name="dialog_addtohomescreen_action_add">Қосу</string>
+  <string name="dialog_addtohomescreen_action_cancel">Бас тарту</string>
+  <string name="dialog_addtohomescreen_tracking_protection">Жарлық Баықылаудан қорғанысы сөндірілген түрде ашылады</string>
+  <string name="dialog_opentab_title">Сілтемені таңдалған бетте ашу</string>
+  <string name="dialog_opentab_action_open">Ашу</string>
+  <string name="notification_browsing_session_channel_name">Жекелік шолу сессиясы</string>
+  <string name="notification_browsing_session_channel_description">Хабарламалар сізге %1$s сессиясын бір шертумен өшіруді мүмкін етеді. Сізге браузерді ашуды немесе браузерде не орындалғанын көру керек емес.</string>
+  <string name="tabs_tray_action_erase">Шолу тарихын өшіру</string>
+  <string name="download_firefox">Firefox-ты жүктеп алу</string>
+  <string name="your_rights_content1">%1$s - Mozilla және басқа үлес қосушылары жасаған еркін және бастапқы кодтары ашық бағдарламалық қамтама.</string>
+  <string name="your_rights_content2"><![CDATA["%1$s сізге "<a xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2" href="%2$s">Mozilla &#1087;&#1091;&#1073;&#1083;&#1080;&#1082;&#1072;&#1083;&#1099;&#1179; &#1083;&#1080;&#1094;&#1077;&#1085;&#1079;&#1080;&#1103;&#1089;&#1099;</a>" және басқа кодтары ашық лицензиялар аясында қолжетерлік етілген."]]></string>
+  <string name="your_rights_content3"><![CDATA["Сізге Mozilla Foundation-ның немесе басқа да жақтардың ешбір тіркелген сауда белгілеріне, соның ішінде Mozilla, Firefox немесе %1$s аттары немесе логотиптеріне ешбір құқықтар немесе лицензиялар берілмейді. Қосымша ақпаратты "<a xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2" href="%2$s">here</a>" жерінен табуға болады."]]></string>
+  <string name="your_rights_content4"><![CDATA["%1$s үшін қосымша бастапқы кодтары әр түрлі басқа тегін және бастапқы кодтары ашық "<a xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2" href="%2$s">&#1083;&#1080;&#1094;&#1077;&#1085;&#1079;&#1080;&#1103;&#1083;&#1072;&#1088;</a>" аясында қолжетерлік."]]></string>
+  <string name="your_rights_content5"><![CDATA["Сонымен қатар, %1$s Disconnect, Inc. ұсынған блоктізімдерін қолданады, олар "<a xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2" href="%2$s">GNU General Public License v3</a>" аясында, "<a xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2" href="%3$s">&#1086;&#1089;&#1099;&#1085;&#1076;&#1072;</a>" бөлек және тәуелсіз жұмыстар ретінде қолжетерлік."]]></string>
 </resources>

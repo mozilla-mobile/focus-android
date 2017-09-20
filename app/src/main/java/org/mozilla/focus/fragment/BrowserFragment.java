@@ -1,5 +1,4 @@
-/* -*- Mode: Java; c-basic-offset: 4; tab-width: 4; indent-tabs-mode: nil; -*-
- * This Source Code Form is subject to the terms of the Mozilla Public
+/* This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
@@ -9,12 +8,12 @@ import android.Manifest;
 import android.app.Activity;
 import android.app.DownloadManager;
 import android.app.PendingIntent;
+import android.arch.lifecycle.Observer;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.TransitionDrawable;
@@ -28,13 +27,13 @@ import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.webkit.CookieManager;
-import android.webkit.URLUtil;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -44,27 +43,34 @@ import android.widget.Toast;
 import org.mozilla.focus.R;
 import org.mozilla.focus.activity.InfoActivity;
 import org.mozilla.focus.activity.InstallFirefoxActivity;
+import org.mozilla.focus.animation.TransitionDrawableGroup;
+import org.mozilla.focus.architecture.NonNullObserver;
 import org.mozilla.focus.broadcastreceiver.DownloadBroadcastReceiver;
+import org.mozilla.focus.customtabs.CustomTabConfig;
 import org.mozilla.focus.locale.LocaleAwareAppCompatActivity;
 import org.mozilla.focus.menu.BrowserMenu;
 import org.mozilla.focus.menu.WebContextMenu;
-import org.mozilla.focus.notification.BrowsingNotificationService;
 import org.mozilla.focus.open.OpenWithFragment;
-import org.mozilla.focus.shortcut.HomeScreen;
+import org.mozilla.focus.session.NullSession;
+import org.mozilla.focus.session.Session;
+import org.mozilla.focus.session.SessionCallbackProxy;
+import org.mozilla.focus.session.SessionManager;
+import org.mozilla.focus.session.Source;
+import org.mozilla.focus.session.ui.SessionsSheetFragment;
 import org.mozilla.focus.telemetry.TelemetryWrapper;
 import org.mozilla.focus.utils.Browsers;
 import org.mozilla.focus.utils.ColorUtils;
+import org.mozilla.focus.utils.DownloadUtils;
 import org.mozilla.focus.utils.DrawableUtils;
-import org.mozilla.focus.utils.IntentUtils;
 import org.mozilla.focus.utils.UrlUtils;
-import org.mozilla.focus.utils.ViewUtils;
-import org.mozilla.focus.web.BrowsingSession;
-import org.mozilla.focus.web.CustomTabConfig;
 import org.mozilla.focus.web.Download;
 import org.mozilla.focus.web.IWebView;
 import org.mozilla.focus.widget.AnimatedProgressBar;
+import org.mozilla.focus.widget.FloatingEraseButton;
+import org.mozilla.focus.widget.FloatingSessionsButton;
 
 import java.lang.ref.WeakReference;
+import java.util.List;
 
 /**
  * Fragment for displaying the browser UI.
@@ -74,12 +80,13 @@ public class BrowserFragment extends WebFragment implements View.OnClickListener
 
     private static int REQUEST_CODE_STORAGE_PERMISSION = 101;
     private static final int ANIMATION_DURATION = 300;
-    private static final String ARGUMENT_URL = "url";
+
+    private static final String ARGUMENT_SESSION_UUID = "sessionUUID";
     private static final String RESTORE_KEY_DOWNLOAD = "download";
 
-    public static BrowserFragment create(String url) {
-        Bundle arguments = new Bundle();
-        arguments.putString(ARGUMENT_URL, url);
+    public static BrowserFragment createForSession(Session session) {
+        final Bundle arguments = new Bundle();
+        arguments.putString(ARGUMENT_SESSION_UUID, session.getUUID());
 
         BrowserFragment fragment = new BrowserFragment();
         fragment.setArguments(arguments);
@@ -88,13 +95,14 @@ public class BrowserFragment extends WebFragment implements View.OnClickListener
     }
 
     private Download pendingDownload;
-    private View backgroundView;
-    private TransitionDrawable backgroundTransition;
+    private TransitionDrawableGroup backgroundTransitionGroup;
     private TextView urlView;
     private AnimatedProgressBar progressView;
     private FrameLayout blockView;
     private ImageView lockView;
     private ImageButton menuView;
+    private View statusBar;
+    private View urlBar;
     private WeakReference<BrowserMenu> menuWeakReference = new WeakReference<>(null);
 
     /**
@@ -114,21 +122,54 @@ public class BrowserFragment extends WebFragment implements View.OnClickListener
 
     private IWebView.FullscreenCallback fullscreenCallback;
 
-    private boolean isLoading = false;
-
     private DownloadManager manager;
 
     private DownloadBroadcastReceiver downloadBroadcastReceiver;
 
-    // Set an initial WeakReference so we never have to handle loadStateListenerWeakReference being null
-    // (i.e. so we can always just .get()).
-    private WeakReference<LoadStateListener> loadStateListenerWeakReference = new WeakReference<>(null);
+    private SessionManager sessionManager;
+    private Session session;
+
+    public BrowserFragment() {
+        sessionManager = SessionManager.getInstance();
+    }
 
     @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
 
-        BrowsingNotificationService.start(context);
+        final String sessionUUID = getArguments().getString(ARGUMENT_SESSION_UUID);
+        if (sessionUUID == null) {
+            throw new IllegalAccessError("No session exists");
+        }
+
+        session = sessionManager.hasSessionWithUUID(sessionUUID)
+                ? sessionManager.getSessionByUUID(sessionUUID)
+                : new NullSession();
+
+        session.getBlockedTrackers().observe(this, new Observer<Integer>() {
+            @Override
+            public void onChanged(@Nullable Integer blockedTrackers) {
+                if (menuWeakReference == null) {
+                    return;
+                }
+
+                final BrowserMenu menu = menuWeakReference.get();
+
+                if (menu != null) {
+                    //noinspection ConstantConditions - Not null
+                    menu.updateTrackers(blockedTrackers);
+                }
+            }
+        });
+    }
+
+    public Session getSession() {
+        return session;
+    }
+
+    @Override
+    public String getInitialUrl() {
+        return session.getUrl().getValue();
     }
 
     @Override
@@ -145,15 +186,6 @@ public class BrowserFragment extends WebFragment implements View.OnClickListener
     }
 
     @Override
-    public String getInitialUrl() {
-        return getArguments().getString(ARGUMENT_URL);
-    }
-
-    private void updateURL(final String url) {
-        urlView.setText(UrlUtils.stripUserInfo(url));
-    }
-
-    @Override
     public View inflateLayout(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         if (savedInstanceState != null && savedInstanceState.containsKey(RESTORE_KEY_DOWNLOAD)) {
             // If this activity was destroyed before we could start a download (e.g. because we were waiting for a permission)
@@ -166,11 +198,47 @@ public class BrowserFragment extends WebFragment implements View.OnClickListener
         videoContainer = (ViewGroup) view.findViewById(R.id.video_container);
         browserContainer = view.findViewById(R.id.browser_container);
 
-        urlView = (TextView) view.findViewById(R.id.display_url);
-        updateURL(getInitialUrl());
+        urlBar = view.findViewById(R.id.urlbar);
+        statusBar = view.findViewById(R.id.status_bar_background);
 
-        backgroundView = view.findViewById(R.id.background);
-        backgroundTransition = (TransitionDrawable) backgroundView.getBackground();
+        urlView = (TextView) view.findViewById(R.id.display_url);
+
+        progressView = (AnimatedProgressBar) view.findViewById(R.id.progress);
+
+        session.getUrl().observe(this, new Observer<String>() {
+            @Override
+            public void onChanged(@Nullable String url) {
+                urlView.setText(UrlUtils.stripUserInfo(url));
+            }
+        });
+
+        setBlockingEnabled(session.isBlockingEnabled());
+
+        session.getLoading().observe(this, new NonNullObserver<Boolean>() {
+            @Override
+            public void onValueChanged(@NonNull Boolean loading) {
+                if (loading) {
+                    backgroundTransitionGroup.resetTransition();
+
+                    progressView.setProgress(5);
+                    progressView.setVisibility(View.VISIBLE);
+                } else {
+                    backgroundTransitionGroup.startTransition(ANIMATION_DURATION);
+
+                    progressView.setProgress(progressView.getMax());
+                    progressView.setVisibility(View.GONE);
+                }
+
+                updateBlockingBadging(loading || session.isBlockingEnabled());
+
+                updateToolbarButtonStates(loading);
+
+                final BrowserMenu menu = menuWeakReference.get();
+                if (menu != null) {
+                    menu.updateLoading(loading);
+                }
+            }
+        });
 
         if ((refreshButton = view.findViewById(R.id.refresh)) != null) {
             refreshButton.setOnClickListener(this);
@@ -188,16 +256,30 @@ public class BrowserFragment extends WebFragment implements View.OnClickListener
             backButton.setOnClickListener(this);
         }
 
+        final ImageView blockIcon = (ImageView) view.findViewById(R.id.block_image);
+        blockIcon.setImageResource(R.drawable.ic_tracking_protection_disabled);
+
         blockView = (FrameLayout) view.findViewById(R.id.block);
 
         lockView = (ImageView) view.findViewById(R.id.lock);
+        session.getSecure().observe(this, new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean secure) {
+                lockView.setVisibility(secure ? View.VISIBLE : View.GONE);
+            }
+        });
 
-        progressView = (AnimatedProgressBar) view.findViewById(R.id.progress);
+        session.getProgress().observe(this, new Observer<Integer>() {
+            @Override
+            public void onChanged(Integer progress) {
+                progressView.setProgress(progress);
+            }
+        });
 
         menuView = (ImageButton) view.findViewById(R.id.menu);
         menuView.setOnClickListener(this);
 
-        if (BrowsingSession.getInstance().isCustomTab()) {
+        if (session.isCustomTab()) {
             initialiseCustomTabUi(view);
         } else {
             initialiseNormalBrowserUi(view);
@@ -207,14 +289,25 @@ public class BrowserFragment extends WebFragment implements View.OnClickListener
     }
 
     private void initialiseNormalBrowserUi(final @NonNull View view) {
-        final View erase = view.findViewById(R.id.erase);
-        erase.setOnClickListener(this);
+        final FloatingEraseButton eraseButton = view.findViewById(R.id.erase);
+        eraseButton.setOnClickListener(this);
 
         urlView.setOnClickListener(this);
+
+        final FloatingSessionsButton tabsButton = view.findViewById(R.id.tabs);
+        tabsButton.setOnClickListener(this);
+
+        sessionManager.getSessions().observe(this, new NonNullObserver<List<Session>>() {
+            @Override
+            protected void onValueChanged(@NonNull List<Session> sessions) {
+                tabsButton.updateSessionsCount(sessions.size());
+                eraseButton.updateSessionsCount(sessions.size());
+            }
+        });
     }
 
     private void initialiseCustomTabUi(final @NonNull View view) {
-        final CustomTabConfig customTabConfig = BrowsingSession.getInstance().getCustomTabConfig();
+        final CustomTabConfig customTabConfig = session.getCustomTabConfig();
 
         // Unfortunately there's no simpler way to have the FAB only in normal-browser mode.
         // - ViewStub: requires splitting attributes for the FAB between the ViewStub, and actual FAB layout file.
@@ -222,15 +315,17 @@ public class BrowserFragment extends WebFragment implements View.OnClickListener
         // - View.GONE: doesn't work because the layout-behaviour makes the FAB visible again when scrolling.
         // - Adding at runtime: works, but then we need to use a separate layout file (and you need
         //   to set some attributes programatically, same as ViewStub).
-        final View erase = view.findViewById(R.id.erase);
+        final FloatingEraseButton erase = view.findViewById(R.id.erase);
         final ViewGroup eraseContainer = (ViewGroup) erase.getParent();
         eraseContainer.removeView(erase);
 
+        final FloatingSessionsButton sessions = view.findViewById(R.id.tabs);
+        eraseContainer.removeView(sessions);
+
         final int textColor;
 
-        final View toolbar = view.findViewById(R.id.urlbar);
         if (customTabConfig.toolbarColor != null) {
-            toolbar.setBackgroundColor(customTabConfig.toolbarColor);
+            urlBar.setBackgroundColor(customTabConfig.toolbarColor);
 
             textColor = ColorUtils.getReadableTextColor(customTabConfig.toolbarColor);
             urlView.setTextColor(textColor);
@@ -253,7 +348,7 @@ public class BrowserFragment extends WebFragment implements View.OnClickListener
         }
 
         if (customTabConfig.disableUrlbarHiding) {
-            AppBarLayout.LayoutParams params = (AppBarLayout.LayoutParams) toolbar.getLayoutParams();
+            AppBarLayout.LayoutParams params = (AppBarLayout.LayoutParams) urlBar.getLayoutParams();
             params.setScrollFlags(0);
         }
 
@@ -301,89 +396,32 @@ public class BrowserFragment extends WebFragment implements View.OnClickListener
         }
     }
 
-    public interface LoadStateListener {
-        void isLoadingChanged(boolean isLoading);
-    }
-
-    /**
-     * Set a (singular) LoadStateListener. Only one listener is supported at any given time. Setting
-     * a new listener means any previously set listeners will be dropped. This is only intended
-     * to be used by NavigationItemViewHolder. If you want to use this method for any other
-     * parts of the codebase, please extend it to handle a list of listeners. (We would also need
-     * to automatically clean up expired listeners from that list, probably when adding to that list.)
-     *
-     * @param listener The listener to notify of load state changes. Only a weak reference will be kept,
-     *                 no more calls will be sent once the listener is garbage collected.
-     */
-    public void setIsLoadingListener(final LoadStateListener listener) {
-        loadStateListenerWeakReference = new WeakReference<>(listener);
-    }
-
-    private void updateIsLoading(final boolean isLoading) {
-        this.isLoading = isLoading;
-        final LoadStateListener currentListener = loadStateListenerWeakReference.get();
-        if (currentListener != null) {
-            currentListener.isLoadingChanged(isLoading);
-        }
-    }
-
     @Override
     public IWebView.Callback createCallback() {
-        return new IWebView.Callback() {
+        return new SessionCallbackProxy(session, new IWebView.Callback() {
             @Override
-            public void onPageStarted(final String url) {
-                updateIsLoading(true);
-
-                lockView.setVisibility(View.GONE);
-
-                // Hide badging while loading
-                updateBlockingBadging(true);
-
-                progressView.announceForAccessibility(getString(R.string.accessibility_announcement_loading));
-
-                backgroundTransition.resetTransition();
-
-                progressView.setProgress(5);
-                progressView.setVisibility(View.VISIBLE);
-
-                updateToolbarButtonStates();
-            }
+            public void onPageStarted(final String url) {}
 
             @Override
-            public void onPageFinished(boolean isSecure) {
-                updateIsLoading(false);
-
-                backgroundTransition.startTransition(ANIMATION_DURATION);
-
-                progressView.announceForAccessibility(getString(R.string.accessibility_announcement_loading_finished));
-
-                progressView.setVisibility(View.GONE);
-
-                if (isSecure) {
-                    lockView.setVisibility(View.VISIBLE);
-                }
-
-                updateBlockingBadging(isBlockingEnabled());
-
-                updateToolbarButtonStates();
-            }
+            public void onPageFinished(boolean isSecure) {}
 
             @Override
-            public void onURLChanged(final String url) {
-                updateURL(url);
-            }
+            public void onURLChanged(final String url) {}
 
             @Override
-            public void onProgress(int progress) {
-                progressView.setProgress(progress);
-            }
+            public void onRequest(boolean isTriggeredByUserGesture) {}
 
             @Override
-            public boolean handleExternalUrl(final String url) {
-                final IWebView webView = getWebView();
+            public void onProgress(int progress) {}
 
-                return webView != null && IntentUtils.handleExternalUri(getContext(), webView, url);
-            }
+            @Override
+            public void countBlockedTracker() {}
+
+            @Override
+            public void resetBlockedTrackers() {}
+
+            @Override
+            public void onBlockingStateChanged(boolean isBlockingEnabled) {}
 
             @Override
             public void onLongPress(final IWebView.HitTarget hitTarget) {
@@ -450,7 +488,7 @@ public class BrowserFragment extends WebFragment implements View.OnClickListener
                     requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_CODE_STORAGE_PERMISSION);
                 }
             }
-        };
+        });
     }
 
     /**
@@ -526,7 +564,40 @@ public class BrowserFragment extends WebFragment implements View.OnClickListener
 
         final DialogFragment downloadDialogFragment = DownloadDialogFragment.newInstance(download);
         downloadDialogFragment.setTargetFragment(BrowserFragment.this, 300);
-        downloadDialogFragment.show(fragmentManager, DownloadDialogFragment.FRAGMENT_TAG);
+
+        try {
+            downloadDialogFragment.show(fragmentManager, DownloadDialogFragment.FRAGMENT_TAG);
+        } catch (IllegalStateException e) {
+            // It can happen that at this point in time the activity is already in the background
+            // and onSaveInstanceState() has already been called. Fragment transactions are not
+            // allowed after that anymore. It's probably safe to guess that the user might not
+            // be interested in the download at this point. So we could just *not* show the dialog.
+            // Unfortunately we can't call commitAllowingStateLoss() because committing the
+            // transaction is happening inside the DialogFragment code. Therefore we just swallow
+            // the exception here. Gulp!
+        }
+    }
+
+    void showAddToHomescreenDialog(String url, String title) {
+        final FragmentManager fragmentManager = getFragmentManager();
+
+        if (fragmentManager.findFragmentByTag(AddToHomescreenDialogFragment.FRAGMENT_TAG) != null) {
+            // We are already displaying a homescreen dialog fragment (Probably a restored fragment).
+            // No need to show another one.
+            return;
+        }
+
+        final AddToHomescreenDialogFragment addToHomescreenDialogFragment = AddToHomescreenDialogFragment.newInstance(url, title, session.isBlockingEnabled());
+        addToHomescreenDialogFragment.setTargetFragment(BrowserFragment.this, 300);
+
+        try {
+            addToHomescreenDialogFragment.show(fragmentManager, AddToHomescreenDialogFragment.FRAGMENT_TAG);
+        } catch (IllegalStateException e) {
+            // It can happen that at this point in time the activity is already in the background
+            // and onSaveInstanceState() has already been called. Fragment transactions are not
+            // allowed after that anymore. It's probably safe to guess that the user might not
+            // be interested in adding to homescreen now.
+        }
     }
 
     @Override
@@ -573,8 +644,7 @@ public class BrowserFragment extends WebFragment implements View.OnClickListener
         }
 
         final String cookie = CookieManager.getInstance().getCookie(download.getUrl());
-        final String fileName = URLUtil.guessFileName(
-                download.getUrl(), download.getContentDisposition(), download.getMimeType());
+        final String fileName = DownloadUtils.guessFileName(download);
 
         final DownloadManager.Request request = new DownloadManager.Request(Uri.parse(download.getUrl()))
                 .addRequestHeader("User-Agent", download.getUserAgent())
@@ -590,41 +660,33 @@ public class BrowserFragment extends WebFragment implements View.OnClickListener
         downloadBroadcastReceiver.addQueuedDownload(downloadReference);
     }
 
-    private boolean isStartedFromExternalApp() {
-        final Activity activity = getActivity();
-        if (activity == null) {
-            return false;
-        }
-
-        // No SafeIntent needed here because intent.getAction() is safe (SafeIntent simply calls intent.getAction()
-        // without any wrapping):
-        final Intent intent = activity.getIntent();
-        return intent != null && Intent.ACTION_VIEW.equals(intent.getAction());
-    }
-
     public boolean onBackPressed() {
         if (canGoBack()) {
             // Go back in web history
             goBack();
         } else {
-            if (isStartedFromExternalApp()) {
-                // We have been started from a VIEW intent. Go back to the previous app immediately
-                // and erase the current browsing session.
+            if (session.getSource() == Source.VIEW || session.getSource() == Source.CUSTOM_TAB) {
+                TelemetryWrapper.eraseBackToAppEvent();
+
+                // This session has been started from a VIEW intent. Go back to the previous app
+                // immediately and erase the current browsing session.
                 erase();
 
-                // We remove the whole task because otherwise the old session might still be
-                // partially visible in the app switcher.
-                getActivity().finishAndRemoveTask();
+                // If there are no other sessions then we remove the whole task because otherwise
+                // the old session might still be partially visible in the app switcher.
+                if (!SessionManager.getInstance().hasSession()) {
+                    getActivity().finishAndRemoveTask();
+                } else {
+                    getActivity().finish();
+                }
 
                 // We can't show a snackbar outside of the app. So let's show a toast instead.
                 Toast.makeText(getContext(), R.string.feedback_erase, Toast.LENGTH_SHORT).show();
-
-                TelemetryWrapper.eraseBackToAppEvent();
             } else {
                 // Just go back to the home screen.
-                eraseAndShowHomeScreen();
-
                 TelemetryWrapper.eraseBackToHomeEvent();
+
+                erase();
             }
         }
 
@@ -637,42 +699,22 @@ public class BrowserFragment extends WebFragment implements View.OnClickListener
             webView.cleanup();
         }
 
-        BrowsingNotificationService.stop(getContext());
-    }
-
-    public void eraseAndShowHomeScreen() {
-        erase();
-
-        getActivity().getSupportFragmentManager()
-                .beginTransaction()
-                .setCustomAnimations(0, R.anim.erase_animation)
-                .replace(R.id.container, HomeFragment.create(), HomeFragment.FRAGMENT_TAG)
-                .commit();
-
-        ViewUtils.showBrandedSnackbar(getActivity().findViewById(android.R.id.content),
-                R.string.feedback_erase,
-                getResources().getInteger(R.integer.erase_snackbar_delay));
+        SessionManager.getInstance().removeCurrentSession();
     }
 
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.menu:
-                final CustomTabConfig customTabConfig;
-                if (BrowsingSession.getInstance().isCustomTab()) {
-                    customTabConfig = BrowsingSession.getInstance().getCustomTabConfig();
-                } else {
-                    customTabConfig = null;
-                }
-
-                BrowserMenu menu = new BrowserMenu(getActivity(), this, customTabConfig);
+                BrowserMenu menu = new BrowserMenu(getActivity(), this, session.getCustomTabConfig());
                 menu.show(menuView);
 
                 menuWeakReference = new WeakReference<>(menu);
                 break;
 
             case R.id.display_url:
-                final Fragment urlFragment = UrlInputFragment.createWithBrowserScreenAnimation(getUrl(), urlView);
+                final Fragment urlFragment = UrlInputFragment
+                        .createWithSession(session, urlView);
 
                 getActivity().getSupportFragmentManager()
                         .beginTransaction()
@@ -681,11 +723,20 @@ public class BrowserFragment extends WebFragment implements View.OnClickListener
                 break;
 
             case R.id.erase: {
-                eraseAndShowHomeScreen();
-
                 TelemetryWrapper.eraseEvent();
+
+                erase();
                 break;
             }
+
+            case R.id.tabs:
+                getActivity().getSupportFragmentManager()
+                        .beginTransaction()
+                        .add(R.id.container, new SessionsSheetFragment(), SessionsSheetFragment.FRAGMENT_TAG)
+                        .commit();
+
+                TelemetryWrapper.openTabsTrayEvent();
+                break;
 
             case R.id.back: {
                 goBack();
@@ -742,30 +793,26 @@ public class BrowserFragment extends WebFragment implements View.OnClickListener
                 intent.setPackage(defaultBrowser.packageName);
                 startActivity(intent);
 
-                TelemetryWrapper.openDefaultAppEvent();
-                break;
-            }
-
-            case R.id.open_firefox: {
-                final Browsers browsers = new Browsers(getContext(), getUrl());
-
-                if (browsers.hasFirefoxBrandedBrowserInstalled()) {
-                    final Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(getUrl()));
-                    intent.setPackage(browsers.getFirefoxBrandedBrowser().packageName);
-                    startActivity(intent);
+                if (browsers.isFirefoxDefaultBrowser()) {
+                    TelemetryWrapper.openFirefoxEvent();
                 } else {
-                    InstallFirefoxActivity.open(getContext());
+                    TelemetryWrapper.openDefaultAppEvent();
                 }
-
-                TelemetryWrapper.openFirefoxEvent();
                 break;
             }
 
             case R.id.open_select_browser: {
                 final Browsers browsers = new Browsers(getContext(), getUrl());
 
+                final ActivityInfo[] apps = browsers.getInstalledBrowsers();
+                final ActivityInfo store = browsers.hasFirefoxBrandedBrowserInstalled()
+                        ? null
+                        : InstallFirefoxActivity.resolveAppStore(getContext());
+
                 final OpenWithFragment fragment = OpenWithFragment.newInstance(
-                        browsers.getInstalledBrowsers(), getUrl());
+                        apps,
+                        getUrl(),
+                        store);
                 fragment.show(getFragmentManager(), OpenWithFragment.FRAGMENT_TAG);
 
                 TelemetryWrapper.openSelectionEvent();
@@ -793,14 +840,12 @@ public class BrowserFragment extends WebFragment implements View.OnClickListener
             case R.id.add_to_homescreen:
                 final IWebView webView = getWebView();
                 if (webView == null) {
-                    return;
+                    break;
                 }
 
-                final Bitmap icon = webView.getIcon();
                 final String url = webView.getUrl();
                 final String title = webView.getTitle();
-
-                HomeScreen.installShortCut(getContext(), icon, url, title);
+                showAddToHomescreenDialog(url, title);
                 break;
 
             default:
@@ -808,7 +853,7 @@ public class BrowserFragment extends WebFragment implements View.OnClickListener
         }
     }
 
-    private void updateToolbarButtonStates() {
+    private void updateToolbarButtonStates(boolean isLoading) {
         if (forwardButton == null || backButton == null || refreshButton == null || stopButton == null) {
             return;
         }
@@ -844,10 +889,6 @@ public class BrowserFragment extends WebFragment implements View.OnClickListener
         return webView != null && webView.canGoForward();
     }
 
-    public boolean isLoading() {
-        return isLoading;
-    }
-
     public boolean canGoBack() {
         final IWebView webView = getWebView();
         return webView != null && webView.canGoBack();
@@ -862,7 +903,7 @@ public class BrowserFragment extends WebFragment implements View.OnClickListener
 
     public void loadUrl(final String url) {
         final IWebView webView = getWebView();
-        if (webView != null) {
+        if (webView != null && !TextUtils.isEmpty(url)) {
             webView.loadUrl(url);
         }
     }
@@ -879,13 +920,23 @@ public class BrowserFragment extends WebFragment implements View.OnClickListener
         if (webView != null) {
             webView.setBlockingEnabled(enabled);
         }
-        backgroundView.setBackgroundResource(enabled ? R.drawable.animated_background : R.drawable.animated_background_disabled);
-        backgroundTransition = (TransitionDrawable) backgroundView.getBackground();
-    }
 
-    public boolean isBlockingEnabled() {
-        final IWebView webView = getWebView();
-        return webView == null || webView.isBlockingEnabled();
+        statusBar.setBackgroundResource(enabled ? R.drawable.animated_background : R.drawable.animated_background_disabled);
+
+        if (!session.isCustomTab()) {
+            // Only update the toolbar background if this is not a custom tab. Custom tabs set their
+            // own color and we do not want to override this here.
+            urlBar.setBackgroundResource(enabled ? R.drawable.animated_background : R.drawable.animated_background_disabled);
+
+            backgroundTransitionGroup = new TransitionDrawableGroup(
+                    (TransitionDrawable) urlBar.getBackground(),
+                    (TransitionDrawable) statusBar.getBackground()
+            );
+        } else {
+            backgroundTransitionGroup = new TransitionDrawableGroup(
+                    (TransitionDrawable) statusBar.getBackground()
+            );
+        }
     }
 
     // In the future, if more badging icons are needed, this should be abstracted

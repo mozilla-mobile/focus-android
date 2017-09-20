@@ -9,14 +9,16 @@
   <string name="menu_share">Deli …</string>
   <string name="menu_open_with_default_browser">Za odpiranje uporabi %1$s</string>
   <string name="menu_open_with_a_browser">Za odpiranje uporabi ...</string>
+  <string name="menu_add_to_home_screen">Dodaj na domač zaslon</string>
   <string name="menu_settings">Nastavitve</string>
   <string name="menu_about">Predstavitev</string>
   <string name="menu_help">Pomoč</string>
   <string name="menu_rights">Vaše pravice</string>
-  <string name="menu_trackers_blocked_title">Sledilci zavrnjeni</string>
+  <string name="menu_trackers_blocked_title">Zavrnjeni sledilci</string>
   <string name="share_dialog_title">Deli preko</string>
   <string name="notification_erase_text">Počisti zgodovino brskanja</string>
   <string name="notification_action_open">Odpri</string>
+  <string name="notification_action_erase_and_open">Izbriši in odpri</string>
   <string name="shortcut_erase_short_label">Izbriši</string>
   <string name="shortcut_erase_long_label">Počisti zgodovino brskanja</string>
   <string name="text_selection_search_action">Iščite zasebno</string>
@@ -33,19 +35,25 @@
   <string name="preference_privacy_block_content">Zavračaj druge vsebinske sledilce</string>
   <string name="preference_privacy_block_content_summary">Lahko pokvari nekatere videoposnetke in strani</string>
   <string name="preference_privacy_secure_mode">Skrivni način</string>
-  <string name="preference_privacy_secure_mode_summary">Izklopite skrivni način za zajemanje zaslona in prikaz strani, obiskanih v %1$su, na seznamu nedavnih aplikacij</string>
+  <string name="preference_privacy_stealth_summary">Skrij strani pri preklapljanju med aplikacijami</string>
   <string name="preference_category_performance">Učinkovitost</string>
   <string name="preference_performance_block_webfonts">Zavračaj spletne pisave</string>
   <string name="preference_performance_block_webfonts_summary">Lahko povzroči izginotje ikon ali slik</string>
   <string name="preference_performance_block_images">Zavračaj slike</string>
-  <string name="preference_default_browser">Nastavi kot privzet brskalnik</string>
+  <string name="preference_default_browser2">Nastavi %1$s kot privzeti brskalnik</string>
   <string name="preference_category_mozilla">Mozilla</string>
-  <string name="preference_mozilla_telemetry">Pošiljaj anonimne podatke o uporabi</string>
+  <string name="preference_mozilla_telemetry2">Pošiljaj podatke o uporabi</string>
   <string name="preference_mozilla_telemetry_summary">Več o tem</string>
+  <string name="preference_mozilla_telemetry_summary2">Mozilla se trudi, da zbira samo podatke, ki jih potrebuje za razvoj in izboljševanje %1$sa.</string>
+  <string name="preference_privacy_notice">Obvestilo o zasebnosti</string>
   <string name="preference_about">O %1$su</string>
   <string name="content_description_clear_input">Počisti vnos</string>
   <string name="content_description_dismiss_input">Opusti</string>
   <string name="content_description_erase">Počisti zgodovino brskanja</string>
+  <string name="content_description_fab_expand">Razširi</string>
+  <string name="content_description_tab_counter">Odprtih zavihkov: %1$s</string>
+  <string name="content_description_open_tab">Odpri zavihek</string>
+  <string name="content_description_close_tab">Zapri zavihek</string>
   <string name="content_description_lock">Varna povezava</string>
   <string name="accessibility_announcement_loading">Nalaganje</string>
   <string name="accessibility_announcement_loading_finished">Spletna stran naložena</string>
@@ -91,15 +99,33 @@
   <string name="contextmenu_image_share">Deli sliko</string>
   <string name="contextmenu_image_copy">Kopiraj naslov slike</string>
   <string name="contextmenu_image_save">Shrani sliko</string>
+  <string name="contextmenu_open_in_new_tab">Odpri povezavo v novem zavihku</string>
   <string name="contextmenu_image_warning"><![CDATA["Ob izbrisu zgodovine %1$sa shranjene in deljene slike "<b xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">ne bodo izbrisane</b>.]]></string>
-  <string name="firstrun_tracking_title">Brskajte, kot da vas nihče ne gleda</string>
-  <string name="firstrun_tracking_text">Samodejno zavračajte spletne sledilce, medtem ko brskate. Nato odstranite zgodovino strani in piškotke z dotikom ikone koša v aplikaciji ali med obvestili.</string>
   <string name="firstrun_defaultbrowser_title">Okrepite svojo zasebnost</string>
-  <string name="firstrun_defaultbrowser_text">Nastavite %1$s kot privzet brskalnik in uživajte prednosti zasebnega brskanja, ko odprete povezave v drugih aplikacijah Androida.</string>
-  <string name="firstrun_breaking_title">Hitra rešitev, kadar\nzavračanje kaj pokvari</string>
-  <string name="firstrun_breaking_text">Kadar zavračanje spletnih sledilcev pokvari prikaz spletne strani, izklopite zavračanje v meniju z orodji.</string>
+  <string name="firstrun_defaultbrowser_text2">Zasebno brskanje na višjem nivoju. Zavračajte oglase in drugo vsebino, ki vam lahko sledi prek strani, in pohitrite svoje brskanje.</string>
+  <string name="firstrun_search_title">Vaše iskanje, na vaš način</string>
+  <string name="firstrun_search_text">Iščete nekaj drugačnega? V nastavitvah izberite drug privzeti iskalnik.</string>
+  <string name="firstrun_shortcut_title">Dodajte bližnjice na domač zaslon</string>
+  <string name="firstrun_shortcut_text">Hitro se vrnite na svoje priljubljene strani v %1$su. Preprosto izberite \"Dodaj na domač zaslon\" v %1$sovem meniju.</string>
+  <string name="firstrun_privacy_title">Naj zasebnost postane navada</string>
+  <string name="firstrun_privacy_text">Nastavite %1$s kot privzet brskalnik in uživajte prednosti zasebnega brskanja, ko odprete spletne strani v drugih aplikacijah.</string>
   <string name="firstrun_close_button">V redu, razumem!</string>
   <string name="firstrun_skip_button">Preskoči</string>
   <string name="firstrun_next_button">Naprej</string>
   <string name="content_blocking_disabled">-</string>
+  <string name="dialog_addtohomescreen_title">Dodaj na domač zaslon</string>
+  <string name="dialog_addtohomescreen_action_add">Dodaj</string>
+  <string name="dialog_addtohomescreen_action_cancel">Prekliči</string>
+  <string name="dialog_addtohomescreen_tracking_protection">Bližnjica se bo odprla z onemogočeno zaščito pred sledenjem</string>
+  <string name="dialog_opentab_title">Odpri povezavo v izbranem zavihku</string>
+  <string name="dialog_opentab_action_open">Odpri</string>
+  <string name="notification_browsing_session_channel_name">Seja zasebnega brskanja</string>
+  <string name="notification_browsing_session_channel_description">Obvestila vam omogočajo izbrisati %1$sovo sejo z enim dotikom. Aplikacije vam ni potrebno niti odpreti niti videti, kaj je v brskalniku odprto.</string>
+  <string name="tabs_tray_action_erase">Počisti zgodovino brskanja</string>
+  <string name="download_firefox">Prenesite Firefox</string>
+  <string name="your_rights_content1">%1$s je brezplačna in odprtokodna programska oprema, ki jo razvija Mozilla in ostali sodelavci.</string>
+  <string name="your_rights_content2"><![CDATA["%1$s vam je na voljo pod pogoji "<a xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2" href="%2$s">Mozilla Public License</a>" in drugih odprtokodnih licenc."]]></string>
+  <string name="your_rights_content3"><![CDATA["Nikakršne pravice niti licence nimate za uporabo blagovnih znamk Fundacije Mozilla ali kateregakoli od izdelkov, vključno z imeni in logotipi Mozille, Firefoxa ali %1$sa. Dodatne informacije lahko najdete "<a xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2" href="%2$s">tukaj</a>.]]></string>
+  <string name="your_rights_content4"><![CDATA["Dodatna izvorna koda za %1$s je na voljo pod raznimi drugimi prostimi in odprtokodnimi "<a xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2" href="%2$s">licencami</a>.]]></string>
+  <string name="your_rights_content5"><![CDATA["%1$s uporablja tudi sezname za zavračanje podjetja Disconnect Inc. kot ločena in neodvisna dela, ki so na voljo pod licenco "<a xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2" href="%2$s">GNU General Public License v3</a>" "<a xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2" href="%3$s">tukaj</a>.]]></string>
 </resources>

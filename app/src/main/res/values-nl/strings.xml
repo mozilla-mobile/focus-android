@@ -9,6 +9,7 @@
   <string name="menu_share">Delen…</string>
   <string name="menu_open_with_default_browser">Openen met %1$s</string>
   <string name="menu_open_with_a_browser">Openen met…</string>
+  <string name="menu_add_to_home_screen">Toevoegen aan startscherm</string>
   <string name="menu_settings">Instellingen</string>
   <string name="menu_about">Over</string>
   <string name="menu_help">Help</string>
@@ -17,6 +18,7 @@
   <string name="share_dialog_title">Delen via</string>
   <string name="notification_erase_text">Navigatiegeschiedenis wissen</string>
   <string name="notification_action_open">Openen</string>
+  <string name="notification_action_erase_and_open">Wissen en openen</string>
   <string name="shortcut_erase_short_label">Wissen</string>
   <string name="shortcut_erase_long_label">Navigatiegeschiedenis wissen</string>
   <string name="text_selection_search_action">Privé zoeken</string>
@@ -33,19 +35,25 @@
   <string name="preference_privacy_block_content">Andere inhoudstrackers blokkeren</string>
   <string name="preference_privacy_block_content_summary">Kan sommige video’s en webpagina’s verstoren</string>
   <string name="preference_privacy_secure_mode">Stealth</string>
-  <string name="preference_privacy_secure_mode_summary">Zet stealthmodus uit om schermafbeeldingen te maken en websites te zien die u met %1$s in uw lijst Recente apps hebt bezocht</string>
+  <string name="preference_privacy_stealth_summary">Webpagina’s verbergen bij wisselen van apps</string>
   <string name="preference_category_performance">Prestaties</string>
   <string name="preference_performance_block_webfonts">Weblettertypen blokkeren</string>
   <string name="preference_performance_block_webfonts_summary">Kan tot ontbrekende pictogrammen of afbeeldingen leiden</string>
   <string name="preference_performance_block_images">Afbeeldingen blokkeren</string>
-  <string name="preference_default_browser">Standaardbrowser maken</string>
+  <string name="preference_default_browser2">%1$s standaardbrowser maken</string>
   <string name="preference_category_mozilla">Mozilla</string>
-  <string name="preference_mozilla_telemetry">Anonieme gebruiksgegevens verzenden</string>
+  <string name="preference_mozilla_telemetry2">Gebruiksgegevens verzenden</string>
   <string name="preference_mozilla_telemetry_summary">Meer info</string>
+  <string name="preference_mozilla_telemetry_summary2">Mozilla streeft ernaar alleen te verzamelen wat nodig is om %1$s voor iedereen aan te bieden en te verbeteren.</string>
+  <string name="preference_privacy_notice">Privacyverklaring</string>
   <string name="preference_about">Over %1$s</string>
   <string name="content_description_clear_input">Invoer wissen</string>
   <string name="content_description_dismiss_input">Verwijderen</string>
   <string name="content_description_erase">Navigatiegeschiedenis wissen</string>
+  <string name="content_description_fab_expand">Uitvouwen</string>
+  <string name="content_description_tab_counter">Open tabbladen: %1$s</string>
+  <string name="content_description_open_tab">Tabblad openen</string>
+  <string name="content_description_close_tab">Tabblad sluiten</string>
   <string name="content_description_lock">Beveiligde verbinding</string>
   <string name="accessibility_announcement_loading">Laden</string>
   <string name="accessibility_announcement_loading_finished">Website geladen</string>
@@ -91,15 +99,33 @@
   <string name="contextmenu_image_share">Afbeelding delen</string>
   <string name="contextmenu_image_copy">Afbeeldingsadres kopiëren</string>
   <string name="contextmenu_image_save">Afbeelding opslaan</string>
+  <string name="contextmenu_open_in_new_tab">Koppeling openen in nieuw tabblad</string>
   <string name="contextmenu_image_warning"><![CDATA["Opgeslagen en gedeelde afbeeldingen "<b xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">worden niet verwijderd</b>" als u geschiedenis van %1$s wist."]]></string>
-  <string name="firstrun_tracking_title">Surf alsof niemand meekijkt</string>
-  <string name="firstrun_tracking_text">Blokkeer automatisch onlinetrackers terwijl u surft. Verwijder daarna bezochte pagina’s en cookies met één tik naar het prullenbakpictogram in de app of in uw meldingen.</string>
   <string name="firstrun_defaultbrowser_title">Vergroot uw privacy</string>
-  <string name="firstrun_defaultbrowser_text">Stel %1$s in als uw standaardbrowser en geniet van de voordelen van privénavigatie wanneer u vanuit andere Android-apps naar het web verwijst.</string>
-  <string name="firstrun_breaking_title">Een snelle oplossing als\nblokkeren verstoring geeft</string>
-  <string name="firstrun_breaking_text">Gezien het nadeel van het blokkeren van onlinetrackers waarbij een website defect kan lijken, kunt u blokkering met één tik in het hulpmiddelenmenu uitzetten.</string>
+  <string name="firstrun_defaultbrowser_text2">Breng privénavigatie naar een hoger niveau. Blokkeer advertenties en andere inhoud die u op websites kunnen volgen en laadtijden van pagina’s verlengen.</string>
+  <string name="firstrun_search_title">Zoeken op uw manier</string>
+  <string name="firstrun_search_text">Op zoek naar iets anders? Kies een andere standaardzoekmachine in Instellingen.</string>
+  <string name="firstrun_shortcut_title">Voeg koppelingen toe aan uw startscherm</string>
+  <string name="firstrun_shortcut_text">Keer snel terug naar uw favoriete websites in %1$s. Selecteer gewoon ‘Toevoegen aan startscherm’ vanuit het %1$s-menu.</string>
+  <string name="firstrun_privacy_title">Maak privacy een gewoonte</string>
+  <string name="firstrun_privacy_text">Stel %1$s in als uw standaardbrowser en ervaar de voordelen van privénavigatie als u webpagina’s opent vanuit andere apps.</string>
   <string name="firstrun_close_button">OK, begrepen!</string>
   <string name="firstrun_skip_button">Overslaan</string>
   <string name="firstrun_next_button">Volgende</string>
   <string name="content_blocking_disabled">-</string>
+  <string name="dialog_addtohomescreen_title">Toevoegen aan startscherm</string>
+  <string name="dialog_addtohomescreen_action_add">Toevoegen</string>
+  <string name="dialog_addtohomescreen_action_cancel">Annuleren</string>
+  <string name="dialog_addtohomescreen_tracking_protection">Snelkoppeling opent met Bescherming tegen volgen uitgeschakeld</string>
+  <string name="dialog_opentab_title">Koppeling openen in geselecteerde tabblad</string>
+  <string name="dialog_opentab_action_open">Openen</string>
+  <string name="notification_browsing_session_channel_name">Privénavigatiesessie</string>
+  <string name="notification_browsing_session_channel_description">Met notificaties kunt u via een tik uw %1$s-sessie wissen. U hoeft de app niet te openen of te zien wat er in uw browser actief is.</string>
+  <string name="tabs_tray_action_erase">Navigatiegeschiedenis wissen</string>
+  <string name="download_firefox">Firefox downloaden</string>
+  <string name="your_rights_content1">%1$s is vrije en opensourcesoftware, gemaakt door Mozilla en andere medewerkers.</string>
+  <string name="your_rights_content2"><![CDATA["%1$s wordt beschikbaar gesteld onder de voorwaarden van de "<a xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2" href="%2$s">Mozilla Public License</a>" en andere opensourcelicenties."]]></string>
+  <string name="your_rights_content3"><![CDATA["Er worden u geen rechten of licenties verleend op de handelsmerken van de Mozilla Foundation of enige andere partij, met inbegrip van de namen of logo’s van Mozilla, Firefox of %1$s. Aanvullende informatie is "<a xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2" href="%2$s">hier</a>" te vinden."]]></string>
+  <string name="your_rights_content4"><![CDATA[Aanvullende broncode voor %1$s is beschikbaar onder diverse andere vrije en opensource-<a xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2" href="%2$s">licenties</a>.]]></string>
+  <string name="your_rights_content5"><![CDATA["%1$s gebruikt ook blokkeerlijsten die door Disconnect, Inc. beschikbaar worden gesteld als afzonderlijke en onafhankelijke werken onder de "<a xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2" href="%2$s">GNU General Public License v3</a>", en die "<a xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2" href="%3$s">hier</a>" beschikbaar zijn."]]></string>
 </resources>

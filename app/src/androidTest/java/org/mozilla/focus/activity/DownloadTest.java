@@ -14,6 +14,7 @@ import android.support.test.uiautomator.UiObject;
 import android.support.test.uiautomator.UiObjectNotFoundException;
 import android.support.test.uiautomator.UiSelector;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Rule;
 import org.junit.Test;
@@ -80,6 +81,12 @@ public class DownloadTest {
             }
         }
     };
+
+    @After
+    public void tearDown() throws Exception {
+        mActivityTestRule.getActivity().finishAndRemoveTask();
+    }
+
     private UiObject titleMsg = TestHelper.mDevice.findObject(new UiSelector()
             .description("focus test page")
             .enabled(true));
@@ -110,8 +117,6 @@ public class DownloadTest {
         final String imagePath = webServer.url(TEST_PATH).toString() + "rabbit.jpg";
 
         // Load website with service worker
-        TestHelper.urlBar.waitForExists(waitingTime);
-        TestHelper.urlBar.click();
         TestHelper.inlineAutocompleteEditText.waitForExists(waitingTime);
         TestHelper.inlineAutocompleteEditText.clearTextField();
         TestHelper.inlineAutocompleteEditText.setText(webServer.url(TEST_PATH).toString());
@@ -129,7 +134,7 @@ public class DownloadTest {
         Assert.assertTrue(downloadTitle.isEnabled());
         Assert.assertTrue(downloadCancelBtn.isEnabled());
         Assert.assertTrue(downloadBtn.isEnabled());
-        Assert.assertEquals(downloadFileName.getText(),"download.jpg");
+        Assert.assertEquals(downloadFileName.getText(), "download.jpg");
         Assert.assertEquals(downloadWarning.getText(),
                 "Downloaded files will not be deleted when you erase Firefox Focus history.");
         downloadBtn.click();

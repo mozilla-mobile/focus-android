@@ -5,9 +5,13 @@
 
 package org.mozilla.focus.fragment;
 
+import android.content.Context;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,7 +19,11 @@ import android.webkit.WebView;
 
 import org.mozilla.focus.R;
 import org.mozilla.focus.locale.LocaleAwareFragment;
+import org.mozilla.focus.locale.LocaleManager;
+import org.mozilla.focus.session.Session;
 import org.mozilla.focus.web.IWebView;
+
+import java.util.Locale;
 
 /**
  * Base implementation for fragments that use an IWebView instance. Based on Android's WebViewFragment.
@@ -33,6 +41,8 @@ public abstract class WebFragment extends LocaleAwareFragment {
 
     public abstract IWebView.Callback createCallback();
 
+    public abstract Session getSession();
+
     /**
      * Get the initial URL to load after the view has been created.
      */
@@ -45,20 +55,26 @@ public abstract class WebFragment extends LocaleAwareFragment {
     public abstract void onCreateViewCalled();
 
     @Override
-    public final View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View view = inflateLayout(inflater, container, savedInstanceState);
 
-        webView = (IWebView) view.findViewById(R.id.webview);
+        webView = view.findViewById(R.id.webview);
         isWebViewAvailable = true;
         webView.setCallback(createCallback());
 
-        if (savedInstanceState == null) {
+        final Session session = getSession();
+
+        if (session != null) {
+            webView.setBlockingEnabled(session.isBlockingEnabled());
+        }
+
+        if (session == null || !session.hasWebViewState()) {
             final String url = getInitialUrl();
-            if (url != null) {
+            if (!TextUtils.isEmpty(url)) {
                 webView.loadUrl(url);
             }
         } else {
-            webView.restoreWebviewState(savedInstanceState);
+            webView.restoreWebViewState(session);
         }
 
         onCreateViewCalled();
@@ -67,6 +83,16 @@ public abstract class WebFragment extends LocaleAwareFragment {
 
     @Override
     public void applyLocale() {
+        Context context = getContext();
+        final LocaleManager localeManager = LocaleManager.getInstance();
+        if (!localeManager.isMirroringSystemLocale(context)) {
+            final Locale currentLocale = localeManager.getCurrentLocale(context);
+            Locale.setDefault(currentLocale);
+            final Resources resources = context.getResources();
+            final Configuration config = resources.getConfiguration();
+            config.setLocale(currentLocale);
+            context.getResources().updateConfiguration(config, null);
+        }
         // We create and destroy a new WebView here to force the internal state of WebView to know
         // about the new language. See issue #666.
         final WebView unneeded = new WebView(getContext());
@@ -75,6 +101,11 @@ public abstract class WebFragment extends LocaleAwareFragment {
 
     @Override
     public void onPause() {
+        final Session session = getSession();
+        if (session != null) {
+            webView.saveWebViewState(session);
+        }
+
         webView.onPause();
 
         super.onPause();
@@ -85,13 +116,6 @@ public abstract class WebFragment extends LocaleAwareFragment {
         webView.onResume();
 
         super.onResume();
-    }
-
-    @Override
-    public void onSaveInstanceState(Bundle outState) {
-        webView.onSaveInstanceState(outState);
-
-        super.onSaveInstanceState(outState);
     }
 
     @Override

@@ -1,7 +1,7 @@
-/* -*- Mode: Java; c-basic-offset: 4; tab-width: 4; indent-tabs-mode: nil; -*-
- * This Source Code Form is subject to the terms of the Mozilla Public
+/* This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
+
 package org.mozilla.focus.fragment;
 
 import android.os.Bundle;
@@ -13,7 +13,7 @@ import android.view.ViewGroup;
 import android.widget.ProgressBar;
 
 import org.mozilla.focus.R;
-import org.mozilla.focus.utils.IntentUtils;
+import org.mozilla.focus.session.Session;
 import org.mozilla.focus.web.Download;
 import org.mozilla.focus.web.IWebView;
 
@@ -35,10 +35,9 @@ public class InfoFragment extends WebFragment {
 
     @NonNull
     @Override
-    public View inflateLayout(LayoutInflater inflater, @Nullable ViewGroup container,
-                              @Nullable Bundle savedInstanceState) {
+    public View inflateLayout(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_info, container, false);
-        progressView = (ProgressBar) view.findViewById(R.id.progress);
+        progressView = view.findViewById(R.id.progress);
         webView = view.findViewById(R.id.webview);
 
         final String url = getInitialUrl();
@@ -49,6 +48,8 @@ public class InfoFragment extends WebFragment {
             // external pages, because they are both light-coloured, and significantly slower loading.
             webView.setVisibility(View.INVISIBLE);
         }
+
+        applyLocale();
 
         return view;
     }
@@ -83,16 +84,7 @@ public class InfoFragment extends WebFragment {
             }
 
             @Override
-            public boolean handleExternalUrl(final String url) {
-                final IWebView webView = getWebView();
-
-                return webView != null && IntentUtils.handleExternalUri(getContext(), webView, url);
-            }
-
-
-            @Override
-            public void onDownloadStart(Download download) {
-            }
+            public void onDownloadStart(Download download) {}
 
             @Override
             public void onLongPress(IWebView.HitTarget hitTarget) {}
@@ -101,11 +93,28 @@ public class InfoFragment extends WebFragment {
             public void onURLChanged(String url) {}
 
             @Override
+            public void onRequest(boolean isTriggeredByUserGesture) {}
+
+            @Override
             public void onEnterFullScreen(@NonNull IWebView.FullscreenCallback callback, @Nullable View view) {}
 
             @Override
             public void onExitFullScreen() {}
+
+            @Override
+            public void countBlockedTracker() {}
+
+            @Override
+            public void resetBlockedTrackers() {}
+
+            @Override
+            public void onBlockingStateChanged(boolean isBlockingEnabled) {}
         };
+    }
+
+    @Override
+    public Session getSession() {
+        return null;
     }
 
     @Nullable

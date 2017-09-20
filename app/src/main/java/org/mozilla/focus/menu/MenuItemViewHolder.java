@@ -9,7 +9,6 @@ import android.view.View;
 import android.widget.TextView;
 
 import org.mozilla.focus.R;
-import org.mozilla.focus.fragment.BrowserFragment;
 
 /* package-private */ class MenuItemViewHolder extends BrowserMenuViewHolder {
     /* package-private */ static final int LAYOUT_ID = R.layout.menu_item;
@@ -25,6 +24,14 @@ import org.mozilla.focus.fragment.BrowserFragment;
     /* package-private */ void bind(BrowserMenuAdapter.MenuItem menuItem) {
         menuItemView.setId(menuItem.id);
         menuItemView.setText(menuItem.label);
-        menuItemView.setOnClickListener(this);
+
+        final boolean isLoading = browserFragment.getSession().getLoading().getValue();
+
+        if (menuItem.id == R.id.add_to_homescreen && isLoading) {
+            menuItemView.setTextColor(browserFragment.getResources().getColor(R.color.colorTextInactive));
+            menuItemView.setClickable(false);
+        } else {
+            menuItemView.setOnClickListener(this);
+        }
     }
 }

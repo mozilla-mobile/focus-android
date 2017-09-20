@@ -4,28 +4,30 @@
   <string name="action_ok">OK</string>
   <string name="urlbar_hint">検索語またはアドレスを入力</string>
   <string name="teaser">プライベートブラウジングを自動的に。\nブラウズ、消去の繰り返し。</string>
-  <string name="feedback_erase">ページの表示履歴が消去されました。</string>
+  <string name="feedback_erase">閲覧履歴が消去されました。</string>
   <string name="search_hint">%1$s を検索</string>
   <string name="menu_share">共有...</string>
   <string name="menu_open_with_default_browser">%1$s で開く</string>
   <string name="menu_open_with_a_browser">他のアプリで開く...</string>
+  <string name="menu_add_to_home_screen">ホーム画面に追加</string>
   <string name="menu_settings">設定</string>
   <string name="menu_about">製品情報</string>
   <string name="menu_help">ヘルプ</string>
   <string name="menu_rights">あなたの権利</string>
   <string name="menu_trackers_blocked_title">追跡者がブロックされました</string>
-  <string name="share_dialog_title">共有</string>
+  <string name="share_dialog_title">共有方法を選択</string>
   <string name="notification_erase_text">閲覧履歴を消去</string>
   <string name="notification_action_open">開く</string>
+  <string name="notification_action_erase_and_open">消去して開く</string>
   <string name="shortcut_erase_short_label">消去</string>
   <string name="shortcut_erase_long_label">閲覧履歴を消去</string>
   <string name="text_selection_search_action">プライベートに検索</string>
-  <string name="about_content"><![CDATA[<p xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">%1$s &#12391;&#12399;&#12354;&#12394;&#12383;&#12364;&#12377;&#12409;&#12390;&#12434;&#12467;&#12531;&#12488;&#12525;&#12540;&#12523;&#12391;&#12365;&#12414;&#12377;&#12290;</p>\n<p xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">"&#27425;&#12398;&#12424;&#12358;&#12395;&#12503;&#12521;&#12452;&#12505;&#12540;&#12488;&#12502;&#12521;&#12454;&#12470;&#12540;&#12392;&#12375;&#12390;&#20351;&#12360;&#12414;&#12377;&#12290;\n  "<ul>"\n    "<li>&#12450;&#12503;&#12522;&#20869;&#12391;&#30452;&#25509;&#12469;&#12452;&#12488;&#12434;&#26908;&#32034;&#12289;&#38322;&#35239;&#12290;</li>"\n    "<li>&#36861;&#36321;&#32773;&#12434;&#12502;&#12525;&#12483;&#12463; (&#12354;&#12427;&#12356;&#12399;&#35373;&#23450;&#12434;&#26356;&#26032;&#12375;&#12390;&#35377;&#21487;)</li>"\n    "<li>Cookie&#12289;&#26908;&#32034;&#23653;&#27508;&#12289;&#38322;&#35239;&#23653;&#27508;&#12434;&#28040;&#21435;</li>"\n  "</ul>\n</p>\n<p xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">%1$s &#12399; Mozilla &#12364;&#38283;&#30330;&#12375;&#12390;&#12356;&#12414;&#12377;&#12290;&#31169;&#36948;&#12398;&#12511;&#12483;&#12471;&#12519;&#12531;&#12399;&#20581;&#20840;&#12391;&#38283;&#12363;&#12428;&#12383;&#12452;&#12531;&#12479;&#12540;&#12493;&#12483;&#12488;&#12434;&#30330;&#23637;&#12373;&#12379;&#12427;&#12371;&#12392;&#12391;&#12377;&#12290;<br/>\n<a href="%2$s">&#35443;&#12375;&#12367;&#12399;&#12371;&#12385;&#12425;</a></p>]]></string>
+  <string name="about_content"><![CDATA[<p xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">%1$s &#12391;&#12399;&#12354;&#12394;&#12383;&#12364;&#12377;&#12409;&#12390;&#12434;&#12467;&#12531;&#12488;&#12525;&#12540;&#12523;&#12391;&#12365;&#12414;&#12377;&#12290;</p>\n<p xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">"&#27425;&#12398;&#12424;&#12358;&#12395;&#12503;&#12521;&#12452;&#12505;&#12540;&#12488;&#12502;&#12521;&#12454;&#12470;&#12540;&#12392;&#12375;&#12390;&#20351;&#12360;&#12414;&#12377;&#12290;\n  "<ul>"\n    "<li>&#12450;&#12503;&#12522;&#20869;&#12391;&#30452;&#25509;&#12469;&#12452;&#12488;&#12434;&#26908;&#32034;&#12289;&#38322;&#35239;&#12290;</li>"\n    "<li>&#36861;&#36321;&#32773;&#12434;&#12502;&#12525;&#12483;&#12463; (&#12354;&#12427;&#12356;&#12399;&#35373;&#23450;&#12434;&#26356;&#26032;&#12375;&#12390;&#35377;&#21487;)</li>"\n    "<li>Cookie&#12289;&#26908;&#32034;&#23653;&#27508;&#12289;&#38322;&#35239;&#23653;&#27508;&#12434;&#28040;&#21435;</li>"\n  "</ul>\n</p>\n<p xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">%1$s &#12399; Mozilla &#12364;&#38283;&#30330;&#12375;&#12390;&#12356;&#12414;&#12377;&#12290;&#31169;&#12383;&#12385;&#12398;&#12511;&#12483;&#12471;&#12519;&#12531;&#12399;&#20581;&#20840;&#12391;&#38283;&#12363;&#12428;&#12383;&#12452;&#12531;&#12479;&#12540;&#12493;&#12483;&#12488;&#12434;&#30330;&#23637;&#12373;&#12379;&#12427;&#12371;&#12392;&#12391;&#12377;&#12290;<br/>\n<a href="%2$s">&#35443;&#12375;&#12367;&#12399;&#12371;&#12385;&#12425;</a></p>]]></string>
   <string name="preference_category_search">検索</string>
   <string name="preference_search_engine_default">既定</string>
   <string name="preference_language">言語</string>
   <string name="preference_language_systemdefault">システム標準</string>
-  <string name="preference_dialog_title_search_engine">既定の検索</string>
+  <string name="preference_dialog_title_search_engine">既定の検索エンジン</string>
   <string name="preference_category_privacy">プライバシー</string>
   <string name="preference_privacy_block_ads">追跡広告をブロック</string>
   <string name="preference_privacy_block_analytics">アクセス解析をブロック</string>
@@ -33,19 +35,25 @@
   <string name="preference_privacy_block_content">他の追跡コンテンツをブロック</string>
   <string name="preference_privacy_block_content_summary">動画やウェブページが正常に表示されない場合があります</string>
   <string name="preference_privacy_secure_mode">ステルス</string>
-  <string name="preference_privacy_secure_mode_summary">スクリーンショットの撮影や %1$s を使って訪れたサイトを最近使ったアプリ一覧に表示するには、ステルスモードを無効化してください</string>
+  <string name="preference_privacy_stealth_summary">アプリ切り替え時にウェブページを隠す</string>
   <string name="preference_category_performance">パフォーマンス</string>
   <string name="preference_performance_block_webfonts">ウェブフォントをブロック</string>
   <string name="preference_performance_block_webfonts_summary">アイコンや画像が正常に表示されない場合があります</string>
   <string name="preference_performance_block_images">画像をブロック</string>
-  <string name="preference_default_browser">既定のブラウザーにする</string>
+  <string name="preference_default_browser2">%1$s を既定のブラウザーに設定</string>
   <string name="preference_category_mozilla">Mozilla</string>
-  <string name="preference_mozilla_telemetry">利用データを匿名で送信する</string>
+  <string name="preference_mozilla_telemetry2">使用状況データを送信</string>
   <string name="preference_mozilla_telemetry_summary">詳細情報</string>
+  <string name="preference_mozilla_telemetry_summary2">Mozilla は %1$s を皆さんに提供し改善するために必要な情報だけを収集するよう努めています。</string>
+  <string name="preference_privacy_notice">プライバシー通知</string>
   <string name="preference_about">%1$s について</string>
   <string name="content_description_clear_input">入力内容を消去</string>
   <string name="content_description_dismiss_input">閉じる</string>
   <string name="content_description_erase">閲覧履歴を消去</string>
+  <string name="content_description_fab_expand">開く</string>
+  <string name="content_description_tab_counter">開かれているタブの数: %1$s</string>
+  <string name="content_description_open_tab">タブを開く</string>
+  <string name="content_description_close_tab">タブを閉じる</string>
   <string name="content_description_lock">安全な接続</string>
   <string name="accessibility_announcement_loading">読み込み中</string>
   <string name="accessibility_announcement_loading_finished">ウェブサイト読み込み完了</string>
@@ -91,15 +99,33 @@
   <string name="contextmenu_image_share">画像を共有</string>
   <string name="contextmenu_image_copy">画像アドレスをコピー</string>
   <string name="contextmenu_image_save">画像を保存</string>
+  <string name="contextmenu_open_in_new_tab">リンクを新しいタブで開く</string>
   <string name="contextmenu_image_warning"><![CDATA["保存、共有された画像は %1$s の履歴を消去しても "<b xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">&#21066;&#38500;&#12373;&#12428;&#12414;&#12379;&#12435;</b>。]]></string>
-  <string name="firstrun_tracking_title">誰にも監視されないブラウジング</string>
-  <string name="firstrun_tracking_text">ブラウジング中のオンライン追跡を自動的にブロック。後から、アプリ内あるいは通知内のゴミ箱アイコンをタップするだけで、訪れたページや Cookie を削除できます。</string>
   <string name="firstrun_defaultbrowser_title">プライバシーを強化</string>
-  <string name="firstrun_defaultbrowser_text">%1$s を既定のブラウザーに設定して、他の Android アプリからウェブへのリンクを辿ったときに、プライベートブラウジングの恩恵を受けましょう。</string>
-  <string name="firstrun_breaking_title">「ブロック = 破壊」を\n素早く修正</string>
-  <string name="firstrun_breaking_text">オンライン追跡のブロックによってサイトが正常に動作していないと思われる場合には、ツールメニューをタップしてブロックを無効化できます。</string>
-  <string name="firstrun_close_button">了解しました</string>
+  <string name="firstrun_defaultbrowser_text2">プライベートブラウジングを次のレベルへと進めましょう。サイトを越えてあなたを追跡したり、ページの読み込みを遅くしたりする可能性のある広告その他のコンテンツを自動的にブロック。</string>
+  <string name="firstrun_search_title">好きな方法で検索</string>
+  <string name="firstrun_search_text">何か違ったものを探していますか？ 設定で別の検索エンジンを既定として選んでみましょう。</string>
+  <string name="firstrun_shortcut_title">ホーム画面にショートカットを追加</string>
+  <string name="firstrun_shortcut_text">%1$s でもお気に入りのサイトへ素早く戻れます。%1$s のメニューから「ホーム画面に追加」を選択するだけ。</string>
+  <string name="firstrun_privacy_title">プライバシーを習慣に</string>
+  <string name="firstrun_privacy_text">%1$s を既定のブラウザーに設定して、他のアプリからウェブページを開いたときに、プライベートブラウジングの恩恵を受けましょう。</string>
+  <string name="firstrun_close_button">了解</string>
   <string name="firstrun_skip_button">スキップ</string>
   <string name="firstrun_next_button">次へ</string>
   <string name="content_blocking_disabled">-</string>
+  <string name="dialog_addtohomescreen_title">ホーム画面に追加</string>
+  <string name="dialog_addtohomescreen_action_add">追加</string>
+  <string name="dialog_addtohomescreen_action_cancel">キャンセル</string>
+  <string name="dialog_addtohomescreen_tracking_protection">ショートカットはトラッキング保護が無効の状態で開かれます</string>
+  <string name="dialog_opentab_title">リンクを選択したタブで開く</string>
+  <string name="dialog_opentab_action_open">開く</string>
+  <string name="notification_browsing_session_channel_name">プライベートブラウジングセッション</string>
+  <string name="notification_browsing_session_channel_description">%1$s のセッションは通知をワンタップするだけで消去できます。アプリを開いたり、ブラウザー内でどのページが表示されているか確認したりする必要はありません。</string>
+  <string name="tabs_tray_action_erase">閲覧履歴を消去</string>
+  <string name="download_firefox">Firefox をダウンロード</string>
+  <string name="your_rights_content1">%1$s は Mozilla や他の貢献者によって開発されているフリーでオープンソースのソフトウェアです。</string>
+  <string name="your_rights_content2"><![CDATA["%1$s は "<a xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2" href="%2$s">Mozilla Public License</a>" やその他オープンソースライセンスの条件に基づいて使用可能となっています。"]]></string>
+  <string name="your_rights_content3"><![CDATA["Mozilla、Firefox、%1$s の名称やロゴを含む、Mozilla Foundation や第三者の商標に関するいかなる権利やライセンスもあなたには与えられていません。詳しい情報は "<a xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2" href="%2$s">&#12371;&#12385;&#12425;</a>" をご覧ください。"]]></string>
+  <string name="your_rights_content4"><![CDATA["%1$s の追加ソースコードは様々な他のフリーでオープンソースの "<a xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2" href="%2$s">&#12521;&#12452;&#12475;&#12531;&#12473;</a>" に基いて公開されています。"]]></string>
+  <string name="your_rights_content5"><![CDATA["%1$s は Disconnect, Inc. によって提供されているブロックリストも "<a xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2" href="%2$s">GNU General Public License v3</a>" の下で単独のリソースとして使用しており、それらは "<a xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2" href="%3$s">&#12371;&#12385;&#12425;</a>" から入手可能です。"]]></string>
 </resources>

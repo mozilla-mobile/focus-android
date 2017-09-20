@@ -12,13 +12,13 @@ import android.text.Html;
 import android.text.Spanned;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.webkit.URLUtil;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import org.mozilla.focus.R;
 import org.mozilla.focus.telemetry.TelemetryWrapper;
+import org.mozilla.focus.utils.DownloadUtils;
 import org.mozilla.focus.web.Download;
 
 /**
@@ -31,8 +31,7 @@ public class DownloadDialogFragment extends DialogFragment {
         DownloadDialogFragment frag = new DownloadDialogFragment();
         final Bundle args = new Bundle();
 
-        String fileName = URLUtil.guessFileName(
-                download.getUrl(), download.getContentDisposition(), download.getMimeType());
+        String fileName = DownloadUtils.guessFileName(download);
 
         args.putString("fileName", fileName);
         args.putParcelable("download", download);
@@ -78,7 +77,7 @@ public class DownloadDialogFragment extends DialogFragment {
                     @Override
                     public void onClick(View v) {
                         sendDownloadDialogButtonClicked(pendingDownload, shouldDownload);
-                        TelemetryWrapper.downloadDialogDownloadEvent();
+                        TelemetryWrapper.downloadDialogDownloadEvent(shouldDownload);
                         dismiss();
                     }
                 });

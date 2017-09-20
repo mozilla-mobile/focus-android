@@ -67,6 +67,14 @@ public class SearchEngine {
         return paramSubstitution(template, Uri.encode(searchTerm));
     }
 
+    public String getBaseSearchUrl() {
+        if (!resultsUris.isEmpty()) {
+            return resultsUris.get(0).toString();
+        } else {
+            return null;
+        }
+    }
+
     /**
      * Formats template string with proper parameters. Modeled after
      * ParamSubstitution in nsSearchService.js

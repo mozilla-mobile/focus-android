@@ -9,6 +9,7 @@
   <string name="menu_share">Teilen …</string>
   <string name="menu_open_with_default_browser">Öffnen mit %1$s</string>
   <string name="menu_open_with_a_browser">Öffnen mit …</string>
+  <string name="menu_add_to_home_screen">Zum Startbildschirm hinzufügen</string>
   <string name="menu_settings">Einstellungen</string>
   <string name="menu_about">Über</string>
   <string name="menu_help">Hilfe</string>
@@ -17,6 +18,7 @@
   <string name="share_dialog_title">Teilen über</string>
   <string name="notification_erase_text">Browser-Chronik löschen</string>
   <string name="notification_action_open">Öffnen</string>
+  <string name="notification_action_erase_and_open">Löschen und öffnen</string>
   <string name="shortcut_erase_short_label">Löschen</string>
   <string name="shortcut_erase_long_label">Browser-Chronik löschen</string>
   <string name="text_selection_search_action">Privat Suchen</string>
@@ -33,19 +35,25 @@
   <string name="preference_privacy_block_content">Andere Inhaltsverfolgung blockieren</string>
   <string name="preference_privacy_block_content_summary">Kann einige Videos und Webseiten stören</string>
   <string name="preference_privacy_secure_mode">Tarnung</string>
-  <string name="preference_privacy_secure_mode_summary">Deaktivieren Sie den Tarnmodus, um Bildschirmfotos zuzulassen und mit %1$s besuchte Websites in der Liste Ihrer zuletzt verwendeten Apps anzuzeigen.</string>
+  <string name="preference_privacy_stealth_summary">Webseiten beim Wechseln von Apps verstecken</string>
   <string name="preference_category_performance">Leistung</string>
   <string name="preference_performance_block_webfonts">Web-Schriftarten blockieren</string>
   <string name="preference_performance_block_webfonts_summary">Kann zu fehlenden Symbolen oder Grafiken führen</string>
   <string name="preference_performance_block_images">Grafiken blockieren</string>
-  <string name="preference_default_browser">Als Standardbrowser verwenden</string>
+  <string name="preference_default_browser2">%1$s als Standardbrowser festlegen</string>
   <string name="preference_category_mozilla">Mozilla</string>
-  <string name="preference_mozilla_telemetry">Anonyme Nutzungsdaten senden</string>
+  <string name="preference_mozilla_telemetry2">Nutzungsdaten senden</string>
   <string name="preference_mozilla_telemetry_summary">Mehr erfahren</string>
+  <string name="preference_mozilla_telemetry_summary2">Mozilla ist bestrebt, nur die Informationen zu sammeln, mit denen wir %1$s anbieten und für alle Nutzer verbessern können.</string>
+  <string name="preference_privacy_notice">Datenschutzhinweis</string>
   <string name="preference_about">Über %1$s</string>
   <string name="content_description_clear_input">Eingabefeld leeren</string>
   <string name="content_description_dismiss_input">Schließen</string>
   <string name="content_description_erase">Browser-Chronik löschen</string>
+  <string name="content_description_fab_expand">Ausklappen</string>
+  <string name="content_description_tab_counter">Offene Tabs: %1$s</string>
+  <string name="content_description_open_tab">Tab öffnen</string>
+  <string name="content_description_close_tab">Tab schließen</string>
   <string name="content_description_lock">Sichere Verbindung</string>
   <string name="accessibility_announcement_loading">Wird geladen…</string>
   <string name="accessibility_announcement_loading_finished">Website geladen</string>
@@ -91,15 +99,33 @@
   <string name="contextmenu_image_share">Grafik teilen</string>
   <string name="contextmenu_image_copy">Grafikadresse kopieren</string>
   <string name="contextmenu_image_save">Grafik speichern</string>
+  <string name="contextmenu_open_in_new_tab">Link in neuem Tab öffnen</string>
   <string name="contextmenu_image_warning"><![CDATA["Gespeicherte und geteilte Grafiken "<b xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">werden nicht gel&#246;scht</b>, wenn Sie die Chronik von %1$s löschen.]]></string>
-  <string name="firstrun_tracking_title">Surfen Sie, als würde niemand zusehen</string>
-  <string name="firstrun_tracking_text">Blockieren Sie während des Surfens automatisch Online-Verfolger. Entfernen Sie dann mit einem Tippen auf das Müll-Symbol in der App oder Ihren Benachrichtigungen besuchte Seiten und Cookies.</string>
   <string name="firstrun_defaultbrowser_title">Stärken Sie Ihre Privatsphäre</string>
-  <string name="firstrun_defaultbrowser_text">Verwenden Sie %1$s als Standardbrowser und nutzen Sie die Vorteile des privaten Surfens, wenn Sie von anderen Android-Apps das Internet nutzen.</string>
-  <string name="firstrun_breaking_title">Eine schnelle Korrektur wenn\nBlockieren Störungen verursacht</string>
-  <string name="firstrun_breaking_text">Wenn das Blockieren von Online-Verfolgern eine Website stört, deaktivieren Sie es durch ein Tippen im Werkzeugmenü.</string>
+  <string name="firstrun_defaultbrowser_text2">Privates Surfen auf einer höheren Stufe. Blockieren Sie Werbung und andere Inhalte, die Sie über Websites hinweg verfolgen können und Seitenladezeiten verlängern.</string>
+  <string name="firstrun_search_title">Ihre Suche, wie Sie möchten</string>
+  <string name="firstrun_search_text">Suchen Sie etwas anderes? Wählen Sie in den Einstellungen eine andere Standardsuchmaschine.</string>
+  <string name="firstrun_shortcut_title">Fügen Sie Verknüpfungen auf Ihrem Startbildschirm hinzu</string>
+  <string name="firstrun_shortcut_text">Kehren Sie schnell zu Ihren Lieblings-Websites in %1$s zurück. Wählen Sie einfach im %1$s-Menü „Zum Startbildschirm hinzufügen“.</string>
+  <string name="firstrun_privacy_title">Machen Sie Privatsphäre zur Gewohnheit</string>
+  <string name="firstrun_privacy_text">Verwenden Sie %1$s als Standardbrowser und nutzen Sie die Vorteile des privaten Surfens, wenn Sie aus anderen Apps Webseiten öffnen.</string>
   <string name="firstrun_close_button">Ok, verstanden!</string>
   <string name="firstrun_skip_button">Überspringen</string>
   <string name="firstrun_next_button">Weiter</string>
   <string name="content_blocking_disabled">–</string>
+  <string name="dialog_addtohomescreen_title">Zum Startbildschirm hinzufügen</string>
+  <string name="dialog_addtohomescreen_action_add">Hinzufügen</string>
+  <string name="dialog_addtohomescreen_action_cancel">Abbrechen</string>
+  <string name="dialog_addtohomescreen_tracking_protection">Verknüpfung wird mit deaktiviertem Schutz vor Aktivitätenverfolgung geöffnet</string>
+  <string name="dialog_opentab_title">Link in gewähltem Tab öffnen</string>
+  <string name="dialog_opentab_action_open">Öffnen</string>
+  <string name="notification_browsing_session_channel_name">Private Surf-Sitzung</string>
+  <string name="notification_browsing_session_channel_description">Mit Benachrichtigungen können Sie Ihre %1$s-Sitzung mit einem Tippen löschen. Sie müssen weder die App öffnen, noch sehen, was in Ihrem Browser läuft.</string>
+  <string name="tabs_tray_action_erase">Browser-Chronik löschen</string>
+  <string name="download_firefox">Firefox herunterladen</string>
+  <string name="your_rights_content1">%1$s ist freie und quelloffene Software, die von Mozilla und anderen Mitwirkenden entwickelt wird.</string>
+  <string name="your_rights_content2"><![CDATA["%1$s steht unter der "<a xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2" href="%2$s">Mozilla Public License</a>" und anderen Open-Source-Lizenzen."]]></string>
+  <string name="your_rights_content3"><![CDATA["Ihnen werden keine Rechte oder Lizenzen an den Markenrechten der Mozilla Foundation oder einer anderen Partei eingeräumt, dazu zählen die Namen und Logos von Mozilla, Firefox oder %1$s. Weitere Informationen finden Sie "<a xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2" href="%2$s">hier</a>.]]></string>
+  <string name="your_rights_content4"><![CDATA[Sonstiger Quelltext für %1$s steht unter diversen anderen freien und Open-Source-<a xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2" href="%2$s">Lizenzen</a>.]]></string>
+  <string name="your_rights_content5"><![CDATA["%1$s nutzt auch von Disconnect, Inc. angebotene Blockierlisten als separate und unabhängige Werke unter der "<a xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2" href="%2$s">GNU General Public License3</a>", die "<a xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2" href="%3$s">hier</a>" verfügbar sind."]]></string>
 </resources>

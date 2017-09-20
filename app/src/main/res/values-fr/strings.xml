@@ -9,6 +9,7 @@
   <string name="menu_share">Partager…</string>
   <string name="menu_open_with_default_browser">Ouvrir avec %1$s</string>
   <string name="menu_open_with_a_browser">Ouvrir avec…</string>
+  <string name="menu_add_to_home_screen">Ajouter à l’écran d’accueil</string>
   <string name="menu_settings">Paramètres</string>
   <string name="menu_about">À propos</string>
   <string name="menu_help">Aide</string>
@@ -17,6 +18,7 @@
   <string name="share_dialog_title">Partager avec</string>
   <string name="notification_erase_text">Effacer l’historique de navigation</string>
   <string name="notification_action_open">Ouvrir</string>
+  <string name="notification_action_erase_and_open">Effacer et ouvrir</string>
   <string name="shortcut_erase_short_label">Effacer</string>
   <string name="shortcut_erase_long_label">Effacer l’historique de navigation</string>
   <string name="text_selection_search_action">Faire une recherche privée</string>
@@ -33,19 +35,25 @@
   <string name="preference_privacy_block_content">Bloquer les autres traqueurs de contenu</string>
   <string name="preference_privacy_block_content_summary">Peut empêcher certaines vidéos et pages web de s’afficher correctement</string>
   <string name="preference_privacy_secure_mode">Mode furtif</string>
-  <string name="preference_privacy_secure_mode_summary">Désactivez le mode furtif pour effectuer des captures d’écran et afficher les sites récemment visités avec %1$s dans l’écran Applications récentes.</string>
+  <string name="preference_privacy_stealth_summary">Masquer les pages web lorsque vous changez d’application</string>
   <string name="preference_category_performance">Performances</string>
   <string name="preference_performance_block_webfonts">Bloquer les polices web</string>
   <string name="preference_performance_block_webfonts_summary">Peut empêcher certaines icônes ou images de s’afficher</string>
   <string name="preference_performance_block_images">Bloquer les images</string>
-  <string name="preference_default_browser">Définir comme navigateur par défaut</string>
+  <string name="preference_default_browser2">Définir %1$s comme navigateur par défaut</string>
   <string name="preference_category_mozilla">Mozilla</string>
-  <string name="preference_mozilla_telemetry">Envoyer des statistiques d’utilisation anonymes</string>
+  <string name="preference_mozilla_telemetry2">Envoyer des données d’utilisation</string>
   <string name="preference_mozilla_telemetry_summary">En savoir plus</string>
+  <string name="preference_mozilla_telemetry_summary2">Mozilla veille à collecter uniquement les données nécessaires afin d’offrir et d’améliorer %1$s pour tout le monde.</string>
+  <string name="preference_privacy_notice">Politique de confidentialité</string>
   <string name="preference_about">À propos de %1$s</string>
   <string name="content_description_clear_input">Effacer le texte saisi</string>
   <string name="content_description_dismiss_input">Fermer</string>
   <string name="content_description_erase">Effacer l’historique de navigation</string>
+  <string name="content_description_fab_expand">Développer</string>
+  <string name="content_description_tab_counter">Onglets ouverts : %1$s</string>
+  <string name="content_description_open_tab">Ouvrir un onglet</string>
+  <string name="content_description_close_tab">Fermer l’onglet</string>
   <string name="content_description_lock">Connexion sécurisée</string>
   <string name="accessibility_announcement_loading">Chargement…</string>
   <string name="accessibility_announcement_loading_finished">Site web chargé</string>
@@ -91,15 +99,33 @@
   <string name="contextmenu_image_share">Partager l’image</string>
   <string name="contextmenu_image_copy">Copier l’adresse de l’image</string>
   <string name="contextmenu_image_save">Enregistrer l’image</string>
+  <string name="contextmenu_open_in_new_tab">Ouvrir le lien dans un nouvel onglet</string>
   <string name="contextmenu_image_warning"><![CDATA["Les images partagées ou enregistrées "<b xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">ne seront pas supprim&#233;es</b>" lorsque vous effacez l’historique de %1$s."]]></string>
-  <string name="firstrun_tracking_title">Naviguez comme si personne ne vous regardait</string>
-  <string name="firstrun_tracking_text">Bloquez automatiquement les traqueurs lorsque vous naviguez. Supprimez ensuite les pages visitées et les cookies en appuyant sur l’icône de corbeille dans l’application ou depuis les notifications.</string>
   <string name="firstrun_defaultbrowser_title">Renforcez votre vie privée</string>
-  <string name="firstrun_defaultbrowser_text">Définissez %1$s en tant que navigateur par défaut et bénéficiez des avantages de la navigation privée lorsque vous ouvrez des liens depuis d’autres applications Android.</string>
-  <string name="firstrun_breaking_title">Une solution rapide lorsque\nle blocage « casse » une page</string>
-  <string name="firstrun_breaking_text">Si une page ne vous semble pas fonctionner correctement lorsque le blocage de traqueurs est activé, désactivez le blocage d’un simple appui depuis le menu outils.</string>
+  <string name="firstrun_defaultbrowser_text2">La navigation privée passe au niveau supérieur. Dites adieu aux publicités et autres traqueurs qui vous espionnent et ralentissent le chargement des pages web.</string>
+  <string name="firstrun_search_title">Recherchez à votre manière</string>
+  <string name="firstrun_search_text">Vous recherchez quelque chose de différent ? Choisissez un autre moteur de recherche par défaut dans les paramètres.</string>
+  <string name="firstrun_shortcut_title">Ajoutez des raccourcis sur votre écran d’accueil</string>
+  <string name="firstrun_shortcut_text">Retournez voir vos sites préférés dans %1$s rapidement. Sélectionnez simplement « Ajouter à l’écran d’accueil » depuis le menu de %1$s.</string>
+  <string name="firstrun_privacy_title">Reprenez votre vie privée en main</string>
+  <string name="firstrun_privacy_text">Définissez %1$s en tant que navigateur par défaut et bénéficiez d’une navigation privée dès que vous ouvrez les pages web à partir d’autres applications.</string>
   <string name="firstrun_close_button">OK</string>
   <string name="firstrun_skip_button">Ignorer</string>
   <string name="firstrun_next_button">Suivant</string>
   <string name="content_blocking_disabled">-</string>
+  <string name="dialog_addtohomescreen_title">Ajouter à l’écran d’accueil</string>
+  <string name="dialog_addtohomescreen_action_add">Ajouter</string>
+  <string name="dialog_addtohomescreen_action_cancel">Annuler</string>
+  <string name="dialog_addtohomescreen_tracking_protection">Ce raccourci s’ouvrira avec la protection contre le pistage désactivée</string>
+  <string name="dialog_opentab_title">Ouvrir le lien dans l’onglet sélectionné</string>
+  <string name="dialog_opentab_action_open">Ouvrir</string>
+  <string name="notification_browsing_session_channel_name">Session de navigation privée</string>
+  <string name="notification_browsing_session_channel_description">Vous pouvez effacer votre session %1$s d’un simple appui depuis les notifications. Vous n’avez pas besoin d’ouvrir l’application ni d’afficher ce qui s’exécute dans votre navigateur.</string>
+  <string name="tabs_tray_action_erase">Effacer l’historique de navigation</string>
+  <string name="download_firefox">Télécharger Firefox</string>
+  <string name="your_rights_content1">%1$s est un logiciel libre et ouvert réalisé par Mozilla avec l’aide d’autres contributeurs.</string>
+  <string name="your_rights_content2"><![CDATA["%1$s est distribué suivant les modalités de la "<a xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2" href="%2$s">Mozilla Public License</a>" et d’autres licences open source."]]></string>
+  <string name="your_rights_content3"><![CDATA["Il ne vous est cédé aucun droit ou licence sur les marques déposées de la Fondation Mozilla ou de tiers, y compris sur les noms et logos de Mozilla, Firefox ou %1$s. Des informations complémentaires peuvent être consultées "<a xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2" href="%2$s">ici</a>.]]></string>
+  <string name="your_rights_content4"><![CDATA["Le code source complémentaire pour %1$s est disponible sous différentes "<a xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2" href="%2$s">licences</a>" libres et open source."]]></string>
+  <string name="your_rights_content5"><![CDATA["%1$s utilise aussi des listes de blocage fournies par Disconnect Inc, en tant que créations sous la licence "<a xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2" href="%2$s">GNU General Public License v3</a>" et qui sont disponibles "<a xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2" href="%3$s">ici</a>.]]></string>
 </resources>

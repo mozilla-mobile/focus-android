@@ -12,6 +12,7 @@ import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 import android.support.test.uiautomator.UiObjectNotFoundException;
 
+import org.junit.After;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -42,23 +43,22 @@ public class URLCompletionTest {
         }
     };
 
+    @After
+    public void tearDown() throws Exception {
+        mActivityTestRule.getActivity().finishAndRemoveTask();
+    }
+
     @Test
     public void CompletionTest() throws InterruptedException, UiObjectNotFoundException {
-
-        /* Open website */
-        TestHelper.urlBar.waitForExists(waitingTime);
-        TestHelper.urlBar.click();
-
         /* type a partial url, and check it autocompletes*/
         TestHelper.inlineAutocompleteEditText.waitForExists(waitingTime);
-        TestHelper.inlineAutocompleteEditText.clearTextField();
         TestHelper.inlineAutocompleteEditText.setText("mozilla");
         TestHelper.hint.waitForExists(waitingTime);
         assertTrue (TestHelper.inlineAutocompleteEditText.getText().equals("mozilla.org"));
 
         /* press x to delete the both autocomplete and suggestion */
         TestHelper.cleartextField.click();
-        assertTrue (TestHelper.inlineAutocompleteEditText.getText().equals(""));
+        assertTrue (TestHelper.inlineAutocompleteEditText.getText().equals("Search or enter address"));
         assertFalse (TestHelper.hint.exists());
 
         /* type a full url, and check it does not autocomplete */

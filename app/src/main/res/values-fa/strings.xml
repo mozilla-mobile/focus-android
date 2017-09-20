@@ -9,6 +9,7 @@
   <string name="menu_share">اشتراک‌گذاری…</string>
   <string name="menu_open_with_default_browser">باز کردن با %1$s</string>
   <string name="menu_open_with_a_browser">باز کردن با…</string>
+  <string name="menu_add_to_home_screen">افزودن به صفحه‌ی خانه</string>
   <string name="menu_settings">تنظیمات</string>
   <string name="menu_about">درباره</string>
   <string name="menu_help">راهنما</string>
@@ -17,6 +18,7 @@
   <string name="share_dialog_title">اشتراک‌گذاری از طریق</string>
   <string name="notification_erase_text">پاک کردن تاریخچهٔ مرورگر</string>
   <string name="notification_action_open">باز کردن</string>
+  <string name="notification_action_erase_and_open">حذف و باز کن</string>
   <string name="shortcut_erase_short_label">پاک کردن</string>
   <string name="shortcut_erase_long_label">پاک کردن تاریخچهٔ مرورگر</string>
   <string name="text_selection_search_action">جست‌وجو ناشناس</string>
@@ -33,19 +35,25 @@
   <string name="preference_privacy_block_content">مسدود کردن سایر ردیاب‌های محتوا</string>
   <string name="preference_privacy_block_content_summary">ممکن است بعضی از ویدئوها یا صفحات وب را دچار مشکل کند</string>
   <string name="preference_privacy_secure_mode">حالت پنهان</string>
-  <string name="preference_privacy_secure_mode_summary">برای گرفتن تصویر از صفحه و دیدن سایت‌ها در فهرست برنامه‌های اخیرتان که با استفاده از %1$s بازدید کرده‌اید، «حالت پنهان» را خاموش کنید</string>
+  <string name="preference_privacy_stealth_summary">هنگام تعویض برنامه‌ها صفحه‌های وب را مخفی کن</string>
   <string name="preference_category_performance">کارایی</string>
   <string name="preference_performance_block_webfonts">مسدود کردن قلم‌های وب</string>
   <string name="preference_performance_block_webfonts_summary">ممکن است باعث بارگیری نشدن برخی از شمایل‌ها و تصاویر بشود</string>
   <string name="preference_performance_block_images">مسدود کردن تصاویر</string>
-  <string name="preference_default_browser">تبدیل به مرورگر پیش‌فرض</string>
+  <string name="preference_default_browser2">تبدیل %1$s به مرورگر پیش‌فرض</string>
   <string name="preference_category_mozilla">موزیلا</string>
-  <string name="preference_mozilla_telemetry">ارسال داده‌های ناشناس مربوط به شیوه استفاده</string>
+  <string name="preference_mozilla_telemetry2">ارسال اطلاعات استفاده</string>
   <string name="preference_mozilla_telemetry_summary">اطلاعات بیشتر</string>
+  <string name="preference_mozilla_telemetry_summary2">موزیلا تلاش می‌کند تنها اطلاعاتی که برای بهینه‌سازی %1$s برای همه به آنها نیاز دارد را جمع‌آوری کند.</string>
+  <string name="preference_privacy_notice">نکات حریم‌خصوصی</string>
   <string name="preference_about">درباره %1$s</string>
   <string name="content_description_clear_input">پاک کردن وروردی</string>
   <string name="content_description_dismiss_input">رد کردن</string>
   <string name="content_description_erase">حذف تاریخچه مرور</string>
+  <string name="content_description_fab_expand">بازکردن</string>
+  <string name="content_description_tab_counter">زبانه‌های باز: %1$s</string>
+  <string name="content_description_open_tab">باز کردن زبانه‌</string>
+  <string name="content_description_close_tab">بستن زبانه</string>
   <string name="content_description_lock">اتصال امن</string>
   <string name="accessibility_announcement_loading">در حال بارگیری</string>
   <string name="accessibility_announcement_loading_finished">وب‌سایت بارگیری شد</string>
@@ -91,15 +99,33 @@
   <string name="contextmenu_image_share">اشتراک‌گذاری تصویر</string>
   <string name="contextmenu_image_copy">رونوشت از آدرس تصویر</string>
   <string name="contextmenu_image_save">ذخیره تصویر</string>
+  <string name="contextmenu_open_in_new_tab">بازکردن پیوند در زبانه جدید</string>
   <string name="contextmenu_image_warning"><![CDATA["وقتی شما تاریخ‌جه %1$s را پاک می‌کنید، تصاویر ذخیره یا هم‌رسان شده "<b xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">&#1662;&#1575;&#1705; &#1606;&#1582;&#1608;&#1575;&#1607;&#1606;&#1583; &#1588;&#1583;</b>.]]></string>
-  <string name="firstrun_tracking_title">بدون دغدغه نگاه‌ها مرور کنید</string>
-  <string name="firstrun_tracking_text">هنگام مرور به صورت خودکار ردیاب‌های آنلاین را مسدود کنید. سپس صفحه‌های بازدید شده و کوکی‌ها را با لمس آیکن سطل زباله در برنامه یا در اعلان‌هایتان، حذف کنید.</string>
   <string name="firstrun_defaultbrowser_title">قدرت حریم‌شخصی خود را افزایش دهید</string>
-  <string name="firstrun_defaultbrowser_text">%1$s را به‌عنوان مرورگر پیش‌فرض خود تنظیم کنید و از مزایای مرور خصوصی وقتی از اپ‌های دیگر اندروید به وب متصل می‌شوید بهره‌مند شوید.</string>
-  <string name="firstrun_breaking_title">یک اصلاح سریع هنگامی که\nمسدود کردن = خراب شدن</string>
-  <string name="firstrun_breaking_text">هنگامی که مسدود کردن ردیاب‌های آنلاین باعث خراب شدن یک سایت می‌شود، با لمس «منو ابزار» مسدود کردنِ ردیاب‌ها را متوقف کنید.</string>
+  <string name="firstrun_defaultbrowser_text2">مرور خصوصی را به سطحی بالاتر ببرید. تبلیغات و دیگر محتواهایی را مسدود کنید که می‌توانند شما را در سراسر سایت‌ها ردیابی و زمان‌های بارگذاری صفحه را خراب کنند.</string>
+  <string name="firstrun_search_title">جستجوی شما، به روش شما</string>
+  <string name="firstrun_search_text">به دنبال چیز متفاوتی هستید؟ موتور جستجوی پیش‌فرض دیگری را در تنظیمات انتخاب کنید.</string>
+  <string name="firstrun_shortcut_title">میان‌برها را به صفحه خانگی خود اضافه کنید</string>
+  <string name="firstrun_shortcut_text">در %1$s به سرعت به سایت‌های محبوب خود برگردید. فقط «افزودن به صفحه خانگی» را از منوی %1$s انتخاب کنید.</string>
+  <string name="firstrun_privacy_title">حفظ حریم خصوصی را به یک عادت تبدیل کنید</string>
+  <string name="firstrun_privacy_text">%1$s را به عنوان مرورگر پیش‌فرض خود انتخاب کنید و وقتی از اپ‌های دیگر صفحه‌های وب را باز می‌کنید از مزایای مرور خصوصی بهره‌مند شوید.</string>
   <string name="firstrun_close_button">باشه، گرفتم!</string>
   <string name="firstrun_skip_button">رد کردن</string>
   <string name="firstrun_next_button">بعدی</string>
   <string name="content_blocking_disabled">-</string>
+  <string name="dialog_addtohomescreen_title">افزودن به صفحه‌ی خانه</string>
+  <string name="dialog_addtohomescreen_action_add">افزودن</string>
+  <string name="dialog_addtohomescreen_action_cancel">انصراف</string>
+  <string name="dialog_addtohomescreen_tracking_protection">میان‌بر بدون محافظت در برابر ردگیری باز خواهد شد</string>
+  <string name="dialog_opentab_title">بازکردن پیوند در زبانه انتخاب شده</string>
+  <string name="dialog_opentab_action_open">باز کردن</string>
+  <string name="notification_browsing_session_channel_name">نشستِ مرور ناشناس</string>
+  <string name="notification_browsing_session_channel_description">اعلان‌ها امکان پاک کردن اطلاعات نشستِ %1$s را با یک ضربه به شما می‌دهند. لازم نیست که برنامه را باز کنید یا ببینید که چه چیزی در مرورگر در حال اجراست.</string>
+  <string name="tabs_tray_action_erase">پاک کردن تاریخچهٔ مرور</string>
+  <string name="download_firefox">دریافت فایرفاکس</string>
+  <string name="your_rights_content1">%1$s نرم‌افزاری آزاد و متن‌باز است که توسط موزیلا و سایر مشارکت کنندگان ساخته شده است.</string>
+  <string name="your_rights_content2"><![CDATA["%1$s اکنون تحت شرایط "<a xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2" href="%2$s">" &#1711;&#1608;&#1575;&#1607;&#1740;&#1606;&#1575;&#1605;&#1607; &#1593;&#1605;&#1608;&#1605;&#1740; &#1605;&#1608;&#1586;&#1740;&#1604;&#1575;"</a>" و گواهینامه‌‌ی دیگر متن باز در دسترس است."]]></string>
+  <string name="your_rights_content3"><![CDATA["به شما هیچ گونه گواهی یا اجازه مبتنی بر علائم تجاری از بنیاد موزیلا یا هرگونه شخص ثالثی اعطا نشده است. شامل موزیلا، یا فایرفاکس یا %1$s نام یا نشانی. اطلاعات بیشتر در "<a xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2" href="%2$s">&#1575;&#1740;&#1606;&#1580;&#1575;</a>.]]></string>
+  <string name="your_rights_content4"><![CDATA["متن کد بیشتری برای %1$s تحت تعداد از "<a xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2" href="%2$s">" &#1711;&#1608;&#1575;&#1607;&#1740;&#1606;&#1575;&#1605;&#1607;&#8204;&#1607;&#1575;&#1740; "</a>" آزاد و متن باز در دسترس است."]]></string>
+  <string name="your_rights_content5"><![CDATA["%1$s همچنین از فهرست های مسدودی استفاده میکند که توسط Disconnect فراهم شده است. یک کار جدا و مستقل تحت "<a xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2" href="%2$s">GNU &#1711;&#1608;&#1575;&#1607;&#1740;&#1606;&#1575;&#1605;&#1607; &#1593;&#1605;&#1608;&#1605;&#1740; GNU &#1606;&#1587;&#1582;&#1607;3</a>"،‌ و "<a xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2" href="%3$s">&#1575;&#1740;&#1606;&#1580;&#1575;</a>" در دسترس است."]]></string>
 </resources>

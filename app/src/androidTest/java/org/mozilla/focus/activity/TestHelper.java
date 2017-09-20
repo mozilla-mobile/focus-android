@@ -5,6 +5,8 @@
 
 package org.mozilla.focus.activity;
 
+import android.os.RemoteException;
+import android.support.annotation.NonNull;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.espresso.ViewInteraction;
 import android.support.test.uiautomator.UiDevice;
@@ -24,6 +26,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 
+import okhttp3.mockwebserver.MockResponse;
 import okio.Buffer;
 import okio.Okio;
 
@@ -36,19 +39,22 @@ import static org.hamcrest.Matchers.allOf;
 // This test visits each page and checks whether some essential elements are being displayed
 public final class TestHelper {
 
-    static UiDevice mDevice =  UiDevice.getInstance(InstrumentationRegistry.getInstrumentation());;
+    static UiDevice mDevice =  UiDevice.getInstance(InstrumentationRegistry.getInstrumentation());
     static final long waitingTime = DateUtils.SECOND_IN_MILLIS * 4;
 
     /********* First View Locators ***********/
+
     static UiObject firstSlide = mDevice.findObject(new UiSelector()
-            .text("Browse like no one’s watching")
-            .enabled(true));
-    static UiObject secondSlide = mDevice.findObject(new UiSelector()
             .text("Power up your privacy")
             .enabled(true));
+    static UiObject secondSlide = mDevice.findObject(new UiSelector()
+            .text("Your search, your way")
+            .enabled(true));
+    static UiObject thirdSlide = mDevice.findObject(new UiSelector()
+            .text("Add shortcuts to your home screen")
+            .enabled(true));
     static UiObject lastSlide = mDevice.findObject(new UiSelector()
-            .text("A quick fix when\n" +
-                    "blocking = breaking")
+            .text("Make privacy a habit")
             .enabled(true));
     static UiObject nextBtn = mDevice.findObject(new UiSelector()
             .resourceId("org.mozilla.focus.debug:id/next")
@@ -56,11 +62,11 @@ public final class TestHelper {
     static UiObject finishBtn = mDevice.findObject(new UiSelector()
             .resourceId("org.mozilla.focus.debug:id/finish")
             .enabled(true));
+    static UiObject initialView = mDevice.findObject(new UiSelector()
+            .resourceId("org.mozilla.focus.debug:id/brand_background")
+            .enabled(true));
 
     /********* Main View Locators ***********/
-    static UiObject urlBar = mDevice.findObject(new UiSelector()
-            .resourceId("org.mozilla.focus.debug:id/fake_urlbar")
-            .clickable(true));
     static ViewInteraction menuButton = onView(
             allOf(withId(R.id.menu),
                     isDisplayed()));
@@ -107,13 +113,36 @@ public final class TestHelper {
             .text("Erase browsing history")
             .resourceId("android:id/text")
             .enabled(true));
+    static UiObject notificationExpandSwitch = TestHelper.mDevice.findObject(new UiSelector()
+            .resourceId("android:id/expand_button")
+            .packageName("org.mozilla.focus.debug")
+            .enabled(true));
     static UiObject notificationOpenItem = TestHelper.mDevice.findObject(new UiSelector()
             .resourceId("android:id/action0")
-            .descriptionContains("Open")
+            .description("Open")
+            .enabled(true));
+    static UiObject notificationEraseOpenItem = TestHelper.mDevice.findObject(new UiSelector()
+            .resourceId("android:id/action0")
+            .description("Erase and Open")
             .enabled(true));
     static UiObject FocusInRecentApps = TestHelper.mDevice.findObject(new UiSelector()
             .text("Focus (Dev)")
             .resourceId("com.android.systemui:id/title")
+            .enabled(true));
+    static UiObject blockOffIcon = TestHelper.mDevice.findObject(new UiSelector()
+            .resourceId("org.mozilla.focus.debug:id/block")
+            .enabled(true));
+    static UiObject AddtoHSmenuItem = TestHelper.mDevice.findObject(new UiSelector()
+            .resourceId("org.mozilla.focus.debug:id/add_to_homescreen")
+            .enabled(true));
+    static UiObject AddtoHSCancelBtn = TestHelper.mDevice.findObject(new UiSelector()
+            .resourceId("org.mozilla.focus.debug:id/addtohomescreen_dialog_cancel")
+            .enabled(true));
+    static UiObject AddtoHSOKBtn = TestHelper.mDevice.findObject(new UiSelector()
+            .resourceId("org.mozilla.focus.debug:id/addtohomescreen_dialog_add")
+            .enabled(true));
+    static UiObject shortcutTitle = TestHelper.mDevice.findObject(new UiSelector()
+            .resourceId("org.mozilla.focus.debug:id/edit_title")
             .enabled(true));
 
     /********* Main View Menu Item Locators ***********/
@@ -138,6 +167,11 @@ public final class TestHelper {
     static UiObject menulist = mDevice.findObject(new UiSelector()
             .resourceId("org.mozilla.focus.debug:id/list")
             .enabled(true));
+    static String getMenuItemText(UiObject item) throws UiObjectNotFoundException {
+        String text = item.getChild(new UiSelector().index(0))
+                .getChild(new UiSelector().index(0)).getText();
+        return text;
+    }
 
     /********** Share Menu Dialog ********************/
     static UiObject shareMenuHeader = TestHelper.mDevice.findObject(new UiSelector()
@@ -178,6 +212,9 @@ public final class TestHelper {
     static void pressHomeKey() {
         mDevice.pressHome();
     }
+    static void pressRecentAppsKey() throws RemoteException {
+        mDevice.pressRecentApps();
+    }
     static void openNotification() {
         mDevice.openNotification();
     }
@@ -208,6 +245,11 @@ public final class TestHelper {
                 dHeight,
                 20
         );
+    }
+
+    public static MockResponse createMockResponseFromAsset(@NonNull String fileName) throws IOException {
+        return new MockResponse()
+                .setBody(TestHelper.readTestAsset(fileName));
     }
 
     static Buffer readTestAsset(String filename) throws IOException {

@@ -15,6 +15,7 @@ import android.support.test.uiautomator.UiSelector;
 
 import junit.framework.Assert;
 
+import org.junit.After;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -77,6 +78,11 @@ public class LocalSessionStorageTest {
         }
     };
 
+    @After
+    public void tearDown() throws Exception {
+        mActivityTestRule.getActivity().finishAndRemoveTask();
+    }
+
     /**
      * Make sure that session storage values are kept and written but removed at the end of a session.
      */
@@ -118,7 +124,7 @@ public class LocalSessionStorageTest {
         TestHelper.floatingEraseButton.perform(click());
         TestHelper.erasedMsg.waitForExists(waitingTime);
         Assert.assertTrue(TestHelper.erasedMsg.exists());
-        Assert.assertTrue(TestHelper.urlBar.exists());
+        Assert.assertTrue(TestHelper.inlineAutocompleteEditText.exists());
 
         // Now go to the website again and make sure that both values are not in the session/locale store
 
@@ -143,8 +149,6 @@ public class LocalSessionStorageTest {
 
     private void goToUrlFromHomeScreen(String url) throws Exception {
         // Load website with service worker
-        TestHelper.urlBar.waitForExists(waitingTime);
-        TestHelper.urlBar.click();
         TestHelper.inlineAutocompleteEditText.waitForExists(waitingTime);
         TestHelper.inlineAutocompleteEditText.clearTextField();
         TestHelper.inlineAutocompleteEditText.setText(webServer.url(url).toString());

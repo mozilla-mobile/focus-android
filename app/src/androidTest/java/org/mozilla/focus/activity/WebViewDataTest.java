@@ -16,6 +16,7 @@ import android.support.test.uiautomator.UiSelector;
 
 import junit.framework.Assert;
 
+import org.junit.After;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -132,14 +133,14 @@ public class WebViewDataTest {
         }
     };
 
-
+    @After
+    public void tearDown() throws Exception {
+        mActivityTestRule.getActivity().finishAndRemoveTask();
+    }
 
     @Test
     public void DeleteWebViewDataTest() throws InterruptedException, UiObjectNotFoundException, IOException {
-
         // Load website with service worker
-        TestHelper.urlBar.waitForExists(waitingTime);
-        TestHelper.urlBar.click();
         TestHelper.inlineAutocompleteEditText.waitForExists(waitingTime);
         TestHelper.inlineAutocompleteEditText.clearTextField();
         TestHelper.inlineAutocompleteEditText.setText(webServer.url(TEST_PATH).toString());
@@ -172,7 +173,7 @@ public class WebViewDataTest {
         TestHelper.floatingEraseButton.perform(click());
         TestHelper.erasedMsg.waitForExists(waitingTime);
         Assert.assertTrue(TestHelper.erasedMsg.exists());
-        Assert.assertTrue(TestHelper.urlBar.exists());
+        Assert.assertTrue(TestHelper.inlineAutocompleteEditText.exists());
         TestHelper.waitForIdle();
 
         // Make sure all resources have been loaded from the web server

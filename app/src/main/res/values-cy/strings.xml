@@ -9,6 +9,7 @@
   <string name="menu_share">Rhannu…</string>
   <string name="menu_open_with_default_browser">Agor gyda %1$s</string>
   <string name="menu_open_with_a_browser">Agor gyda…</string>
+  <string name="menu_add_to_home_screen">Ychwanegu i\'r sgrin Cartref</string>
   <string name="menu_settings">Gosodiadau</string>
   <string name="menu_about">Ynghylch</string>
   <string name="menu_help">Cymorth</string>
@@ -17,6 +18,7 @@
   <string name="share_dialog_title">Rhannu drwy</string>
   <string name="notification_erase_text">Dileu\'r hanes pori</string>
   <string name="notification_action_open">Agor</string>
+  <string name="notification_action_erase_and_open">Dileu ac Agor</string>
   <string name="shortcut_erase_short_label">Dileu</string>
   <string name="shortcut_erase_long_label">Dileu\'r hanes pori</string>
   <string name="text_selection_search_action">Chwilio\'n Breifat</string>
@@ -33,19 +35,25 @@
   <string name="preference_privacy_block_content">Rhwystro tracwyr cynnwys eraill</string>
   <string name="preference_privacy_block_content_summary">Gall dorri rhai fideos a thudalennau Gwe</string>
   <string name="preference_privacy_secure_mode">Dirgel</string>
-  <string name="preference_privacy_secure_mode_summary">Diffoddwch y modd dirgel er mwyn cymryd lluniau sgrin a gweld gwefannau rydych yn ymweld â nhw gan ddefnyddio %1$s yn eich rhestr Apiau Diweddar</string>
+  <string name="preference_privacy_stealth_summary">Cuddio tudalennau gwe wrth agor apiau</string>
   <string name="preference_category_performance">Perfformiad</string>
   <string name="preference_performance_block_webfonts">Rhwystro ffontiau Gwe</string>
   <string name="preference_performance_block_webfonts_summary">Gall olygu colli eiconau neu ddelweddau</string>
   <string name="preference_performance_block_images">Rhwystro delweddau</string>
-  <string name="preference_default_browser">Gwneud yn borwr rhagosodedig</string>
+  <string name="preference_default_browser2">Gwneud %1$s yn borwr rhagosodedig</string>
   <string name="preference_category_mozilla">Mozilla</string>
-  <string name="preference_mozilla_telemetry">Anfon defnydd data dienw</string>
+  <string name="preference_mozilla_telemetry2">Anfon data defnydd</string>
   <string name="preference_mozilla_telemetry_summary">Dysgu rhagor</string>
+  <string name="preference_mozilla_telemetry_summary2">Mae Mozilla\'n ceisio casglu dim ond yr hyn sydd ei angen arnom i ddarparu a gwella %1$s ar gyfer pawb.</string>
+  <string name="preference_privacy_notice">Hysbysiad Preifatrwydd</string>
   <string name="preference_about">Ynghylch %1$s</string>
   <string name="content_description_clear_input">Clirio\'r mewnbwn</string>
   <string name="content_description_dismiss_input">Cau</string>
   <string name="content_description_erase">Dileu\'r hanes pori</string>
+  <string name="content_description_fab_expand">Ehangu</string>
+  <string name="content_description_tab_counter">Tabiau agored: %1$s</string>
+  <string name="content_description_open_tab">Agor tab</string>
+  <string name="content_description_close_tab">Cau tab</string>
   <string name="content_description_lock">Cysylltiadau diogel</string>
   <string name="accessibility_announcement_loading">Llwytho</string>
   <string name="accessibility_announcement_loading_finished">Gwefan wedi ei lwytho</string>
@@ -91,15 +99,33 @@
   <string name="contextmenu_image_share">Rhannu delwedd</string>
   <string name="contextmenu_image_copy">Copïo cyfeiriad delwedd</string>
   <string name="contextmenu_image_save">Cadw delwedd</string>
+  <string name="contextmenu_open_in_new_tab">Agor dolen mewn tab newydd</string>
   <string name="contextmenu_image_warning"><![CDATA["Ni fydd delweddau sydd wedi eu cadw a\'u rhannu "<b xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">yn cael eu dileu</b>" pan fyddwch yn dileu hanes %1$s."]]></string>
-  <string name="firstrun_tracking_title">Pori fel petai neb yn eich gwylio</string>
-  <string name="firstrun_tracking_text">Rhwystrwch dracio ar-lein yn awtomatig wrth i chi bori. Yna tynnwch dudalennau ymwelwyd â nhw a\'u cwcis gyda chyffyrddiad o\'r eicon sbwriel yn yr ap neu eich hysbysiadau.</string>
   <string name="firstrun_defaultbrowser_title">Cryfhewch eich preifatrwydd</string>
-  <string name="firstrun_defaultbrowser_text">Gosodwch %1$s fel eich porwr rhagosodedig a derbyn buddiannau pori preifat wrth gysylltu â\'r We o apiau Android eraill.</string>
-  <string name="firstrun_breaking_title">Cywiro cyflym\nrhwystro = torri</string>
-  <string name="firstrun_breaking_text">Os fydd rhwystro tracwyr ar-lein yn achosi i wefan dorri, diffoddwch y rhwystro gyda chyffyrddiad i\'r ddewislen offer.</string>
+  <string name="firstrun_defaultbrowser_text2">Cymrwch bori preifat i\'r lefel nesaf. Rhwystrwch hysbysebion a chynnwys arall sy\'n gallu\'ch tracio ar draws wefannau ac arafu amserau llwytho tudalennau.</string>
+  <string name="firstrun_search_title">Chwilio, cynhwysfawr</string>
+  <string name="firstrun_search_text">Chwilio am rywbeth gwahanol? Dewiswch beiriant chwilio arall yn y Gosodiadau.</string>
+  <string name="firstrun_shortcut_title">Ychwanegu llwybrau byr i\'ch sgrin cartref</string>
+  <string name="firstrun_shortcut_text">Ewch i\'ch hoff wefannau yn %1$s yn gyflym. Dewiswch \"Ychwanegu i\'r Sgrin Cartref\" o ddewislen %1$s.</string>
+  <string name="firstrun_privacy_title">Arfer preifatrwydd</string>
+  <string name="firstrun_privacy_text">Gosodwch %1$s fel eich porwr ragosodedig a derbyn buddiannau pori preifat wrth agor tudalennau gwe mewn apiau eraill.</string>
   <string name="firstrun_close_button">Iawn!</string>
   <string name="firstrun_skip_button">Hepgor</string>
   <string name="firstrun_next_button">Nesaf</string>
   <string name="content_blocking_disabled">-</string>
+  <string name="dialog_addtohomescreen_title">Ychwanegu i\'r sgrin Cartref</string>
+  <string name="dialog_addtohomescreen_action_add">Ychwanegu</string>
+  <string name="dialog_addtohomescreen_action_cancel">Diddymu</string>
+  <string name="dialog_addtohomescreen_tracking_protection">Bydd y Llwybr Byr yn agor gyda Diogelwch rhag Tracio wedi ei analluogi</string>
+  <string name="dialog_opentab_title">Agor dolen mewn tab penodol</string>
+  <string name="dialog_opentab_action_open">Agor</string>
+  <string name="notification_browsing_session_channel_name">Sesiwn pori preifat</string>
+  <string name="notification_browsing_session_channel_description">Mae hysbysiadau\'n caniatáu i chi ddileu eich sesiwn %1$s gyda thap. Does dim angen agor yr ap na gweld beth sy\'n rhedeg yn eich porwr.</string>
+  <string name="tabs_tray_action_erase">Dileu hanes pori</string>
+  <string name="download_firefox">Llwytho Firefox i Lawr</string>
+  <string name="your_rights_content1">Mae %1$s yn feddalwedd cod agored a rhydd gan Mozilla a chyfranwyr eraill.</string>
+  <string name="your_rights_content2"><![CDATA["Mae %1$s ar gael i chi o dan delerau "<a xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2" href="%2$s">Trwydded Cyhoeddus Mozilla</a>" a thrwyddedau cod agored eraill."]]></string>
+  <string name="your_rights_content3"><![CDATA["Nid oes gennych unrhyw hawliau na thrwyddedau i nodau masnach y Mozilla Foudation nag o unrhyw barti, gan gynnwys enwau na logos Mozilla, Firefox na %1$s. Mae manylion pellach i\'w cael "<a xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2" href="%2$s">yma</a>.]]></string>
+  <string name="your_rights_content4"><![CDATA["Mae cod ffynhonnell ychwanegol ar gyfer %1$s ar gael o dan "<a xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2" href="%2$s">drwyddedau</a>" cod agored a rhydd eraill."]]></string>
+  <string name="your_rights_content5"><![CDATA["Mae %1$s hefyd yn defnyddio rhestrau rhwystro sy\'n cael eu darparu gan Disconnect, Inc. fel gwaith annibynnol ac ar wahân o dan "<a xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2" href="%2$s">GNU General Public License v3</a>", ac ar gael "<a xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2" href="%3$s">yma</a>.]]></string>
 </resources>

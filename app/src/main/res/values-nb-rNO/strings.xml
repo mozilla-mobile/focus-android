@@ -9,6 +9,7 @@
   <string name="menu_share">Del …</string>
   <string name="menu_open_with_default_browser">Åpne med %1$s</string>
   <string name="menu_open_with_a_browser">Åpne med …</string>
+  <string name="menu_add_to_home_screen">Legg til på startskjermen</string>
   <string name="menu_settings">Innstillinger</string>
   <string name="menu_about">Om</string>
   <string name="menu_help">Hjelp</string>
@@ -17,6 +18,7 @@
   <string name="share_dialog_title">Del via</string>
   <string name="notification_erase_text">Slett nettleserhistorikk</string>
   <string name="notification_action_open">Åpne</string>
+  <string name="notification_action_erase_and_open">Slett og åpne</string>
   <string name="shortcut_erase_short_label">Slett</string>
   <string name="shortcut_erase_long_label">Slett nettleserhistorikk</string>
   <string name="text_selection_search_action">Søk privat</string>
@@ -33,19 +35,25 @@
   <string name="preference_privacy_block_content">Blokker andre innholdssporere</string>
   <string name="preference_privacy_block_content_summary">Kan ødelegge noen videoer og nettsider</string>
   <string name="preference_privacy_secure_mode">Usynlig</string>
-  <string name="preference_privacy_secure_mode_summary">Slå av usynlig modus for å ta skjermbilder og se nettsteder du har besøkt ved hjelp av %1$s i siste apper-listen</string>
+  <string name="preference_privacy_stealth_summary">Skjul nettsider når du bytter appar</string>
   <string name="preference_category_performance">Ytelse</string>
   <string name="preference_performance_block_webfonts">Blokker nettfonter</string>
   <string name="preference_performance_block_webfonts_summary">Kan resultere i at ikon eller bilder mangler</string>
   <string name="preference_performance_block_images">Blokker bilder</string>
-  <string name="preference_default_browser">Velg som standard nettleser</string>
+  <string name="preference_default_browser2">Bruk %1$s som standard nettleser</string>
   <string name="preference_category_mozilla">Mozilla</string>
-  <string name="preference_mozilla_telemetry">Send anonyme brukerdata</string>
+  <string name="preference_mozilla_telemetry2">Send bruksdata</string>
   <string name="preference_mozilla_telemetry_summary">Les mer</string>
+  <string name="preference_mozilla_telemetry_summary2">Mozilla strever etter å bare samle inn det vi trenger for å tilby og forbedre %1$s for alle.</string>
+  <string name="preference_privacy_notice">Personvernbestemmelser</string>
   <string name="preference_about">Om %1$s</string>
   <string name="content_description_clear_input">Tøm skrivefeltet</string>
   <string name="content_description_dismiss_input">Lukk</string>
   <string name="content_description_erase">Slett nettleserhistorikk</string>
+  <string name="content_description_fab_expand">Fold ut</string>
+  <string name="content_description_tab_counter">Åpn faner: %1$s</string>
+  <string name="content_description_open_tab">Åpne fane</string>
+  <string name="content_description_close_tab">Lukk fane</string>
   <string name="content_description_lock">Sikker tilkobling</string>
   <string name="accessibility_announcement_loading">Laster</string>
   <string name="accessibility_announcement_loading_finished">Nettside lastet</string>
@@ -91,15 +99,33 @@
   <string name="contextmenu_image_share">Del bilde</string>
   <string name="contextmenu_image_copy">Kopier bildeadresse</string>
   <string name="contextmenu_image_save">Lagre bilde</string>
+  <string name="contextmenu_open_in_new_tab">Åpne lenke i ny fane</string>
   <string name="contextmenu_image_warning"><![CDATA["Lagrede og delte bilder "<b xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">vil ikke bli fjernet</b>" når du sletter %1$s-historikken."]]></string>
-  <string name="firstrun_tracking_title">Surf uten å føle deg overvåket</string>
-  <string name="firstrun_tracking_text">Blokker automatisk sporing når du surfer. Deretter fjerner du besøkte sider og infokapsler med et trykk på søppelikonet i appen eller i varslene dine.</string>
   <string name="firstrun_defaultbrowser_title">Styrk personvernet ditt</string>
-  <string name="firstrun_defaultbrowser_text">Velg %1$s som standardnettleser, og få fordelene med privat nettlesing når du linker til nettet fra andre Android-apper.</string>
-  <string name="firstrun_breaking_title">En rask løsning når\nblokkering = ødelegging</string>
-  <string name="firstrun_breaking_text">Når ulempen med å blokkere sporere på nettet er et nettsted som virker ødelagt, slår du av med et trykk på verktøylinjen.</string>
+  <string name="firstrun_defaultbrowser_text2">Ta privat nettlesing til neste nivå. Blokker annonser og annet innhold som kan spore deg på tvers av nettsteder og som kan gjøre nedlasting av nettsider tregere.</string>
+  <string name="firstrun_search_title">Ditt søk på din måte</string>
+  <string name="firstrun_search_text">Søker du etter noe annet? Velg en annen standard søkemotor i innstillinger.</string>
+  <string name="firstrun_shortcut_title">Legg til snarveier på startskjermen</string>
+  <string name="firstrun_shortcut_text">Gå raskt tilbake til favorittnettstedene dine i %1$s. Velg «Legg til på startskjermen» fra %1$s-menyen.</string>
+  <string name="firstrun_privacy_title">Gjør personvern til en vane</string>
+  <string name="firstrun_privacy_text">Velg %1$s som standardnettleser, og få fordelene med privat nettlesing når du åpner nettsider fra andre apper.</string>
   <string name="firstrun_close_button">OK, jeg forstår det!</string>
   <string name="firstrun_skip_button">Hopp over</string>
   <string name="firstrun_next_button">Neste</string>
   <string name="content_blocking_disabled">-</string>
+  <string name="dialog_addtohomescreen_title">Legg til på startskjermen</string>
+  <string name="dialog_addtohomescreen_action_add">Legg til</string>
+  <string name="dialog_addtohomescreen_action_cancel">Avbryt</string>
+  <string name="dialog_addtohomescreen_tracking_protection">Snarveien vil bli åpnet med sporingsbeskyttelsen avslått</string>
+  <string name="dialog_opentab_title">Åpne lenke i valgt fane</string>
+  <string name="dialog_opentab_action_open">Åpne</string>
+  <string name="notification_browsing_session_channel_name">Privat nettlesingsøkt</string>
+  <string name="notification_browsing_session_channel_description">Med varsel kan du slette økten din i %1$s med ett klikk. Du trenger ikke å åpne appen, eller å se hva som kjører i nettleseren din.</string>
+  <string name="tabs_tray_action_erase">Slett nettleserhistorikk</string>
+  <string name="download_firefox">Last ned Firefox</string>
+  <string name="your_rights_content1">%1$s er fri og åpen kildekode-programvare laget av Mozilla og andre bidragsytere.</string>
+  <string name="your_rights_content2"><![CDATA["%1$s er gjort tilgjengelig for deg under vilkårene i "<a xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2" href="%2$s">Mozilla Public License</a>" og andre lisenser for åpen kildekode."]]></string>
+  <string name="your_rights_content3"><![CDATA["Du får ikke noen rettigheter eller lisenser til varemerkene til Mozilla Foundation eller noen part, inkludert Mozilla, Firefox eller %1$s navn eller logoer. Ytterligere informasjon kan bli funnet "<a xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2" href="%2$s">her</a>.]]></string>
+  <string name="your_rights_content4"><![CDATA["Ytterligere kildekode for %1$s er tilgjengelig under ulike andre frie og åpne kildekode "<a xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2" href="%2$s">lisenser</a>.]]></string>
+  <string name="your_rights_content5"><![CDATA["%1$s bruker også blokklister fra Disconnect, Inc. som separate og uavhengige verk under "<a xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2" href="%2$s">GNU General Public License v3</a>", og er tilgjengelig "<a xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2" href="%3$s">her</a>.]]></string>
 </resources>

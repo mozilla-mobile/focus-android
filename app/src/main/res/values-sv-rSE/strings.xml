@@ -9,6 +9,7 @@
   <string name="menu_share">Dela…</string>
   <string name="menu_open_with_default_browser">Öppna med %1$s</string>
   <string name="menu_open_with_a_browser">Öppna med…</string>
+  <string name="menu_add_to_home_screen">Lägg till på startskärmen</string>
   <string name="menu_settings">Inställningar</string>
   <string name="menu_about">Om</string>
   <string name="menu_help">Hjälp</string>
@@ -17,10 +18,11 @@
   <string name="share_dialog_title">Dela via</string>
   <string name="notification_erase_text">Radera webbhistorik</string>
   <string name="notification_action_open">Öppna</string>
+  <string name="notification_action_erase_and_open">Radera och öppna</string>
   <string name="shortcut_erase_short_label">Radera</string>
   <string name="shortcut_erase_long_label">Radera webbhistorik</string>
   <string name="text_selection_search_action">Sök privat</string>
-  <string name="about_content"><![CDATA[<p xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">%1$s ger dig full kontroll.</p>\n<p xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">"Anv&#228;nd den som en privat webbl&#228;sare:\n  "<ul>"\n    "<li>S&#246;k och surfa direkt i appen</li>"\n    "<li>Blockera trackers (eller uppdatera inst&#228;llningar att till&#229;ta trackers)</li>"\n    "<li>Radera f&#246;r att ta bort kakor samt s&#246;k- och webbhistorik</li>"\n  "</ul>\n</p>\n<p xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">%1$s is produced by Mozilla. Our mission is to foster a healthy, open Internet.<br/>\n<a href="%2$s">Learn more</a></p>]]></string>
+  <string name="about_content"><![CDATA[<p xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">%1$s ger dig full kontroll.</p>\n<p xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">"Anv&#228;nd den som en privat webbl&#228;sare:\n  "<ul>"\n    "<li>S&#246;k och surfa direkt i appen</li>"\n    "<li>Blockera trackers (eller uppdatera inst&#228;llningar att till&#229;ta trackers)</li>"\n    "<li>Radera f&#246;r att ta bort kakor samt s&#246;k- och webbhistorik</li>"\n  "</ul>\n</p>\n<p xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">%1$s &#228;r utvecklad av Mozilla. V&#229;rt uppdrag &#228;r att fr&#228;mja ett h&#228;lsosamt, &#246;ppet Internet.<br/>\n<a href="%2$s">L&#228;s mer</a></p>]]></string>
   <string name="preference_category_search">Sök</string>
   <string name="preference_search_engine_default">Standard</string>
   <string name="preference_language">Språk</string>
@@ -33,19 +35,25 @@
   <string name="preference_privacy_block_content">Blockera andra innehållstrackers</string>
   <string name="preference_privacy_block_content_summary">Kan få vissa videor och webbsidor att sluta fungera</string>
   <string name="preference_privacy_secure_mode">Dolt läge</string>
-  <string name="preference_privacy_secure_mode_summary">Stäng av dolt läge för att ta skärmdumpar och se webbplatser du har besökt med hjälp av %1$s i listan över senaste appar</string>
+  <string name="preference_privacy_stealth_summary">Dölj webbsidor när du byter appar</string>
   <string name="preference_category_performance">Prestanda</string>
   <string name="preference_performance_block_webfonts">Blockera webbtypsnitt</string>
   <string name="preference_performance_block_webfonts_summary">Kan resultera i att ikoner eller bilder saknas</string>
   <string name="preference_performance_block_images">Blockera bilder</string>
-  <string name="preference_default_browser">Gör till standardwebbläsare</string>
+  <string name="preference_default_browser2">Gör %1$s till standardwebbläsare</string>
   <string name="preference_category_mozilla">Mozilla</string>
-  <string name="preference_mozilla_telemetry">Skicka anonym användardata</string>
+  <string name="preference_mozilla_telemetry2">Skicka användningsdata</string>
   <string name="preference_mozilla_telemetry_summary">Läs mer</string>
+  <string name="preference_mozilla_telemetry_summary2">Mozilla strävar efter att endast samla in det vi behöver för att tillhandahålla och förbättra %1$s för alla.</string>
+  <string name="preference_privacy_notice">Sekretesspolicy</string>
   <string name="preference_about">Om %1$s</string>
   <string name="content_description_clear_input">Rensa inmatning</string>
   <string name="content_description_dismiss_input">Ignorera</string>
   <string name="content_description_erase">Radera webbhistorik</string>
+  <string name="content_description_fab_expand">Expandera</string>
+  <string name="content_description_tab_counter">Flikar öppna: %1$s</string>
+  <string name="content_description_open_tab">Öppna flik</string>
+  <string name="content_description_close_tab">Stäng flik</string>
   <string name="content_description_lock">Säker anslutning</string>
   <string name="accessibility_announcement_loading">Laddar</string>
   <string name="accessibility_announcement_loading_finished">Webbplats laddad</string>
@@ -91,15 +99,33 @@
   <string name="contextmenu_image_share">Dela bild</string>
   <string name="contextmenu_image_copy">Kopiera bildadress</string>
   <string name="contextmenu_image_save">Spara bild</string>
+  <string name="contextmenu_open_in_new_tab">Öppna länk i ny flik</string>
   <string name="contextmenu_image_warning"><![CDATA["Sparade och delade bilder "<b xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">kommer inte att raderas</b>" när du raderar %1$s historik."]]></string>
-  <string name="firstrun_tracking_title">Surfa utan att känna dig övervakad</string>
-  <string name="firstrun_tracking_text">Blockera automatiskt spårning online medan du surfar. Ta sedan bort besökta sidor och kakor med ett tryck på papperskorgen i appen eller i dina aviseringar.</string>
   <string name="firstrun_defaultbrowser_title">Stärk din integritet</string>
-  <string name="firstrun_defaultbrowser_text">Ange %1$s som standardwebbläsare och dra nytta av privat surfning när du länkar till webben från andra Android-appar.</string>
-  <string name="firstrun_breaking_title">En snabb lösning när \nblockering = avbrott</string>
-  <string name="firstrun_breaking_text">Nackdelen med att blockera online-trackers är att en webbplats kan verka trasig, stäng av blockering med ett tryck på verktygsmenyn.</string>
+  <string name="firstrun_defaultbrowser_text2">Ta privat surfning till nästa nivå. Blockera annonser och annat innehåll som kan spåra dig på webbplatser och slöa ner laddningen av webbsidor.</string>
+  <string name="firstrun_search_title">Sök som du vill</string>
+  <string name="firstrun_search_text">Letar du efter något annat? Välj en annan standardsökmotor i Inställningar.</string>
+  <string name="firstrun_shortcut_title">Lägg till genvägar till startskärmen</string>
+  <string name="firstrun_shortcut_text">Återgå till dina favoritwebbplatser i %1$s snabbt. Välj \"Lägg till på startskärmen\" från menyn %1$s.</string>
+  <string name="firstrun_privacy_title">Låt integritet bli en vana</string>
+  <string name="firstrun_privacy_text">Ange %1$s som standardwebbläsare och dra nytta av fördelarna med privat surfning när du öppnar webbsidor från andra appar.</string>
   <string name="firstrun_close_button">OK, jag förstår!</string>
   <string name="firstrun_skip_button">Hoppa över</string>
   <string name="firstrun_next_button">Nästa</string>
   <string name="content_blocking_disabled">-</string>
+  <string name="dialog_addtohomescreen_title">Lägg till på startskärmen</string>
+  <string name="dialog_addtohomescreen_action_add">Lägg till</string>
+  <string name="dialog_addtohomescreen_action_cancel">Avbryt</string>
+  <string name="dialog_addtohomescreen_tracking_protection">Genväg öppnas med spårningsskydd inaktiverat</string>
+  <string name="dialog_opentab_title">Öppna länk i vald flik</string>
+  <string name="dialog_opentab_action_open">Öppna</string>
+  <string name="notification_browsing_session_channel_name">Privat surfsession</string>
+  <string name="notification_browsing_session_channel_description">Med aviseringar kan du radera din session i %1$s med ett klick. Du behöver inte öppna appen eller se vad som körs i din webbläsare.</string>
+  <string name="tabs_tray_action_erase">Radera webbhistorik</string>
+  <string name="download_firefox">Hämta Firefox</string>
+  <string name="your_rights_content1">%1$s är gratis och öppen källkodsprogramvara utvecklad av Mozilla och andra bidragsgivare.</string>
+  <string name="your_rights_content2"><![CDATA["%1$s är tillgänglig för dig enligt villkoren i "<a xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2" href="%2$s">Mozilla Public License</a>" och andra open source-licenser."]]></string>
+  <string name="your_rights_content3"><![CDATA["Du är inte beviljad några rättigheter eller licenser till varumärken som tillhör Mozilla Foundation eller någon part, däribland Mozilla, Firefox eller %1$s namn eller logotyper. Ytterligare information kan hittas "<a xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2" href="%2$s">h&#228;r</a>.]]></string>
+  <string name="your_rights_content4"><![CDATA[Ytterligare källkod för %1$s finns tillgänglig under flera andra gratis och open source-<a xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2" href="%2$s">licenser</a>.]]></string>
+  <string name="your_rights_content5"><![CDATA["%1$s använder också blocklistor som tillhandahålls av Disconnect, Inc. som separata och oberoende verk under "<a xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2" href="%2$s">GNU General Public License v3</a>" och tillgänglig "<a xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2" href="%3$s">h&#228;r</a>.]]></string>
 </resources>

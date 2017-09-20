@@ -17,6 +17,7 @@ import android.support.test.uiautomator.UiObjectNotFoundException;
 import android.support.test.uiautomator.UiScrollable;
 import android.support.test.uiautomator.UiSelector;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Rule;
 import org.junit.Test;
@@ -53,6 +54,11 @@ public class SwitchLocaleTest {
     };
 
     public SwitchLocaleTest() throws UiObjectNotFoundException {
+    }
+
+    @After
+    public void tearDown() throws Exception {
+        mActivityTestRule.getActivity().finishAndRemoveTask();
     }
 
     @SuppressWarnings("deprecation")
@@ -103,7 +109,7 @@ public class SwitchLocaleTest {
                 .text("Français"));
 
         /* Go to Settings */
-        TestHelper.urlBar.waitForExists(waitingTime);
+        TestHelper.inlineAutocompleteEditText.waitForExists(waitingTime);
         TestHelper.menuButton.perform(click());
         TestHelper.settingsMenuItem.click();
         LanguageSelection.waitForExists(waitingTime);
@@ -123,6 +129,20 @@ public class SwitchLocaleTest {
         Assert.assertTrue(frenchHeading.exists());
         Assert.assertTrue(frenchMenuItem.exists());
 
+        /* Exit to main and see the UI is in French as well */
+        TestHelper.pressBackKey();
+        UiObject frenchTitle = TestHelper.mDevice.findObject(new UiSelector()
+                .className("android.widget.TextView")
+                .text("Navigation privée automatique.\nNaviguez. Effacez. Recommencez."));
+        frenchTitle.waitForExists(waitingTime);
+        Assert.assertTrue(frenchTitle.exists());
+        TestHelper.menuButton.perform(click());
+        Assert.assertEquals(TestHelper.getMenuItemText(TestHelper.settingsMenuItem), "Paramètres");
+        Assert.assertEquals(TestHelper.getMenuItemText(TestHelper.AboutItem), "À propos");
+        Assert.assertEquals(TestHelper.getMenuItemText(TestHelper.HelpItem), "Aide");
+        Assert.assertEquals(TestHelper.getMenuItemText(TestHelper.RightsItem), "Droits de l’utilisateur");
+        TestHelper.settingsMenuItem.click();
+
         /* re-enter settings, change it back to system locale, verify the locale is changed */
         LanguageSelection.click();
         Assert.assertTrue(frenchLocaleinEn.isChecked());
@@ -132,6 +152,17 @@ public class SwitchLocaleTest {
         LanguageSelection.waitForExists(waitingTime);
         Assert.assertTrue(englishHeading.exists());
         Assert.assertTrue(englishMenuItem.exists());
+        TestHelper.pressBackKey();
+        UiObject englishTitle = TestHelper.mDevice.findObject(new UiSelector()
+                .className("android.widget.TextView")
+                .text("Automatic private browsing.\nBrowse. Erase. Repeat."));
+        englishTitle.waitForExists(waitingTime);
+        Assert.assertTrue(englishTitle.exists());
+        TestHelper.menuButton.perform(click());
+        Assert.assertEquals(TestHelper.getMenuItemText(TestHelper.settingsMenuItem), "Settings");
+        Assert.assertEquals(TestHelper.getMenuItemText(TestHelper.AboutItem), "About");
+        Assert.assertEquals(TestHelper.getMenuItemText(TestHelper.HelpItem), "Help");
+        Assert.assertEquals(TestHelper.getMenuItemText(TestHelper.RightsItem), "Your Rights");
     }
 
     @Test
@@ -149,7 +180,7 @@ public class SwitchLocaleTest {
 
         /* Go to Settings */
         changeLocale("fr");
-        TestHelper.urlBar.waitForExists(waitingTime);
+        TestHelper.inlineAutocompleteEditText.waitForExists(waitingTime);
         TestHelper.menuButton.perform(click());
         TestHelper.settingsMenuItem.click();
         LanguageSelection.waitForExists(waitingTime);

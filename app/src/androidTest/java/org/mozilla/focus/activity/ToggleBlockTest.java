@@ -8,30 +8,38 @@ package org.mozilla.focus.activity;
 import android.content.Context;
 import android.preference.PreferenceManager;
 import android.support.test.InstrumentationRegistry;
+import android.support.test.espresso.IdlingRegistry;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 import android.support.test.uiautomator.UiObjectNotFoundException;
 
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mozilla.focus.R;
+import org.mozilla.focus.activity.helpers.SessionLoadedIdlingResource;
 
-import java.util.Objects;
-
+import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
-import static junit.framework.Assert.assertTrue;
-import static org.mozilla.focus.activity.TestHelper.waitingTime;
+import static android.support.test.espresso.action.ViewActions.pressImeActionButton;
+import static android.support.test.espresso.action.ViewActions.typeText;
+import static android.support.test.espresso.assertion.ViewAssertions.matches;
+import static android.support.test.espresso.matcher.ViewMatchers.hasFocus;
+import static android.support.test.espresso.matcher.ViewMatchers.isChecked;
+import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
+import static android.support.test.espresso.matcher.ViewMatchers.withId;
+import static android.support.test.espresso.matcher.ViewMatchers.withText;
+import static org.hamcrest.Matchers.not;
 import static org.mozilla.focus.fragment.FirstrunFragment.FIRSTRUN_PREF;
 
 // This test toggles blocking within the browser view
 // mozilla.org site has one google analytics tracker - tests will see whether this gets blocked properly
 @RunWith(AndroidJUnit4.class)
 public class ToggleBlockTest {
-
     @Rule
-    public ActivityTestRule<MainActivity> mActivityTestRule
-            = new ActivityTestRule<MainActivity>(MainActivity.class) {
-
+    public ActivityTestRule<MainActivity> mActivityTestRule = new ActivityTestRule<MainActivity>(MainActivity.class) {
         @Override
         protected void beforeActivityLaunched() {
             super.beforeActivityLaunched();
@@ -47,83 +55,56 @@ public class ToggleBlockTest {
         }
     };
 
-    @Test
-    public void SimpleToggleTest() throws UiObjectNotFoundException {
+    private SessionLoadedIdlingResource loadingIdlingResource;
 
-        // Open mozilla webpage
-        TestHelper.urlBar.waitForExists(waitingTime);
-        TestHelper.urlBar.click();
-        TestHelper.inlineAutocompleteEditText.waitForExists(waitingTime);
-        TestHelper.inlineAutocompleteEditText.clearTextField();
-        TestHelper.inlineAutocompleteEditText.setText("mozilla");
-        TestHelper.hint.waitForExists(waitingTime);
-        TestHelper.pressEnterKey();
-        TestHelper.webView.waitForExists(waitingTime);
+    @Before
+    public void setUp() {
+        loadingIdlingResource = new SessionLoadedIdlingResource();
+        IdlingRegistry.getInstance().register(loadingIdlingResource);
+    }
 
-        // Check that it blocked 1 tracker
-        TestHelper.menuButton.perform(click());
-        TestHelper.blockCounterItem.waitForExists(waitingTime);
-        assertTrue(Objects.equals(TestHelper.blockCounterItem.getText(), "1"));
+    @After
+    public void tearDown() throws Exception {
+        mActivityTestRule.getActivity().finishAndRemoveTask();
 
-        // disable blocking, check the site is reloaded
-        assertTrue(TestHelper.blockToggleSwitch.isChecked());
-        TestHelper.blockToggleSwitch.click();
-        TestHelper.webView.waitForExists(waitingTime);
-
-        // check that it blocked 0 tracker
-        TestHelper.menuButton.perform(click());
-        TestHelper.blockCounterItem.waitForExists(waitingTime);
-        assertTrue(Objects.equals(TestHelper.blockCounterItem.getText(), "-"));
-        assertTrue(!TestHelper.blockToggleSwitch.isChecked());
-        TestHelper.blockToggleSwitch.click();
-        TestHelper.webView.waitForExists(waitingTime);
+        IdlingRegistry.getInstance().unregister(loadingIdlingResource);
     }
 
     @Test
-    public void PreDisableTrackerTest() throws UiObjectNotFoundException {
+    public void SimpleToggleTest() throws UiObjectNotFoundException {
+        // Load mozilla.org
+        onView(withId(R.id.url_edit))
+                .check(matches(isDisplayed()))
+                .check(matches(hasFocus()))
+                .perform(typeText("mozilla"), pressImeActionButton());
 
-        // Go to settings, disable 'Block Analytic Trackers'
-        TestHelper.urlBar.waitForExists(waitingTime);
-        TestHelper.menuButton.perform(click());
-        TestHelper.settingsMenuItem.click();
-        TestHelper.settingsList.waitForExists(waitingTime);
-        assertTrue(TestHelper.toggleAnalyticBlock.isChecked());
-        TestHelper.toggleAnalyticBlock.click();
-        assertTrue(!TestHelper.toggleAnalyticBlock.isChecked());
-        TestHelper.navigateUp.click();
-        TestHelper.urlBar.waitForExists(waitingTime);
+        // The blocking badge is not disabled
+        onView(withId(R.id.block))
+                .check(matches(not(isDisplayed())));
 
-        // Go to mozilla.org
-        TestHelper.urlBar.click();
-        TestHelper.inlineAutocompleteEditText.waitForExists(waitingTime);
-        TestHelper.inlineAutocompleteEditText.clearTextField();
-        TestHelper.inlineAutocompleteEditText.setText("mozilla");
-        TestHelper.hint.waitForExists(waitingTime);
-        TestHelper.pressEnterKey();
-        TestHelper.webView.waitForExists(waitingTime);
+        // Open the menu
+        onView(withId(R.id.menu))
+                .perform(click());
 
-        // Check it does not block any trackers even with switch on
-        TestHelper.menuButton.perform(click());
-        TestHelper.blockCounterItem.waitForExists(waitingTime);
-        assertTrue(TestHelper.blockToggleSwitch.isChecked());
-        assertTrue(Objects.equals(TestHelper.blockCounterItem.getText(), "0"));
+        // Check that the tracker count is 1.
+        onView(withId(R.id.trackers_count))
+                .check(matches(withText("1")));
 
-        // Go to settings, enable blocking of analytic trackers
-        TestHelper.browserViewSettingsMenuItem.click();
-        TestHelper.settingsList.waitForExists(waitingTime);
-        assertTrue(!TestHelper.toggleAnalyticBlock.isChecked());
-        TestHelper.toggleAnalyticBlock.click();
-        assertTrue(TestHelper.toggleAnalyticBlock.isChecked());
+        // Disable blocking
+        onView(withId(R.id.blocking_switch))
+                .check(matches(isChecked()))
+                .perform(click());
 
-        // Exit setting, refresh page- verify 1 tracker is blocked
-        TestHelper.navigateUp.click();
-        TestHelper.webView.waitForExists(waitingTime);
-        TestHelper.menuButton.perform(click());
-        TestHelper.refreshBtn.click();
-        TestHelper.webView.waitForExists(waitingTime);
-        TestHelper.menuButton.perform(click());
-        TestHelper.blockCounterItem.waitForExists(waitingTime);
-        assertTrue(TestHelper.blockToggleSwitch.isChecked());
-        assertTrue(Objects.equals(TestHelper.blockCounterItem.getText(), "1"));
+        // Now the blocking badge is visible
+        onView(withId(R.id.block))
+                .check(matches(isDisplayed()));
+
+        // Open the menu again. Now the switch is disabled and the tracker count should be disabled.
+        onView(withId(R.id.menu))
+                .perform(click());
+        onView(withId(R.id.blocking_switch))
+                .check(matches(not(isChecked())));
+        onView(withId(R.id.trackers_count))
+                .check(matches(withText("-")));
     }
 }
