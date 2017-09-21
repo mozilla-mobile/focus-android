@@ -28,7 +28,6 @@ import java.io.IOException;
 import okhttp3.mockwebserver.MockResponse;
 import okhttp3.mockwebserver.MockWebServer;
 
-import static android.support.test.espresso.action.ViewActions.click;
 import static org.junit.Assert.assertTrue;
 import static org.mozilla.focus.activity.TestHelper.waitingTime;
 import static org.mozilla.focus.fragment.FirstrunFragment.FIRSTRUN_PREF;
@@ -156,7 +155,7 @@ public class ImageSelectTest {
         }
 
         // Erase browsing session
-        TestHelper.floatingEraseButton.perform(click());
+        TestHelper.floatingEraseButton.click();
         TestHelper.erasedMsg.waitForExists(waitingTime);
         Assert.assertTrue(TestHelper.erasedMsg.exists());
 
@@ -196,7 +195,7 @@ public class ImageSelectTest {
         Assert.assertTrue(TestHelper.shareMenuHeader.exists());
         Assert.assertTrue(TestHelper.shareAppList.exists());
         TestHelper.pressBackKey();
-        TestHelper.floatingEraseButton.perform(click());
+        TestHelper.floatingEraseButton.click();
         TestHelper.erasedMsg.waitForExists(waitingTime);
     }
 
@@ -230,7 +229,7 @@ public class ImageSelectTest {
         savedNotification.waitForExists(waitingTime);
         Assert.assertTrue(savedNotification.exists());
         TestHelper.pressBackKey();
-        TestHelper.floatingEraseButton.perform(click());
+        TestHelper.floatingEraseButton.click();
         TestHelper.erasedMsg.waitForExists(waitingTime);
     }
 }

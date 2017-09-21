@@ -270,9 +270,10 @@ public class ScreenGrabTest {
         device.pressBack();
     }
 
-    private void takeScreenshotOfEraseSnackbar(UiDevice device) {
+    private void takeScreenshotOfEraseSnackbar(UiDevice device) throws UiObjectNotFoundException {
         TestHelper.webView.waitForExists(waitingTime);
-        TestHelper.floatingEraseButton.perform(click());
+        TestHelper.floatingEraseButton.waitForExists(waitingTime);
+        TestHelper.floatingEraseButton.click();
         device.wait(Until.findObject(By.res("org.mozilla.focus.debug","snackbar_text")), waitingTime);
         Screengrab.screenshot("YourBrowingHistoryHasBeenErased");
     }

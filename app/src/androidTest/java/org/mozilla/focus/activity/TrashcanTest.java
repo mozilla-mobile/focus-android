@@ -68,10 +68,10 @@ public class TrashcanTest {
         TestHelper.inlineAutocompleteEditText.setText("mozilla");
         TestHelper.hint.waitForExists(waitingTime);
         TestHelper.pressEnterKey();
-        TestHelper.webView.waitForExists(waitingTime);
+        TestHelper.floatingEraseButton.waitForExists(waitingTime);
 
         // Press erase button, and check for message and return to the main page
-        TestHelper.floatingEraseButton.perform(click());
+        TestHelper.floatingEraseButton.click();
         TestHelper.erasedMsg.waitForExists(waitingTime);
         assertTrue(TestHelper.erasedMsg.exists());
         assertTrue(TestHelper.inlineAutocompleteEditText.exists());
