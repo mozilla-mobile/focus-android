@@ -18,8 +18,8 @@ tasks:
           - pull_request.synchronize
           - pull_request.reopened
     payload:
-      maxRunTime: 3600
-      deadline: "{{ '2 hours' | $fromNow }}"
+      maxRunTime: 54000
+      deadline: "{{ '1 day' | $fromNow }}"
       image: 'mozillamobile/focus-android'
       command:
         - /bin/bash
@@ -29,13 +29,12 @@ tasks:
           git fetch {{ event.head.repo.url }} {{ event.head.repo.branch }}
           && git config advice.detachedHead false
           && git checkout {{event.head.sha}}
-          && export ADJUST_TOKEN_FOCUS='..no..value..'
-          && ./gradlew clean assemble test lint pmd checkstyle findbugs
+          && /opt/focus-android/tools/taskcluster/take-screenshots.sh
       artifacts:
         'public':
           type: 'directory'
-          path: '/opt/focus-android/app/build/reports'
-          expires: "{{ '1 week' | $fromNow }}"
+          path: '/opt/focus-android/fastlane/metadata/android'
+          expires: "{{ '1 month' | $fromNow }}"
     metadata:
       name: Focus for Android - Build - Pull Request
       description: Building Focus for Android (via Gradle) - triggered by a pull request.
