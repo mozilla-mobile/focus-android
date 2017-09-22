@@ -25,7 +25,6 @@ import java.io.IOException;
 import okhttp3.mockwebserver.MockResponse;
 import okhttp3.mockwebserver.MockWebServer;
 
-import static android.support.test.espresso.action.ViewActions.click;
 import static org.junit.Assert.assertTrue;
 import static org.mozilla.focus.activity.TestHelper.waitingTime;
 import static org.mozilla.focus.fragment.FirstrunFragment.FIRSTRUN_PREF;
@@ -120,8 +119,7 @@ public class LocalSessionStorageTest {
         }
 
         // Let's press the "erase" button and end the session
-
-        TestHelper.floatingEraseButton.perform(click());
+        TestHelper.floatingEraseButton.click();
         TestHelper.erasedMsg.waitForExists(waitingTime);
         Assert.assertTrue(TestHelper.erasedMsg.exists());
         Assert.assertTrue(TestHelper.inlineAutocompleteEditText.exists());

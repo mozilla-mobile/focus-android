@@ -96,8 +96,9 @@ public final class TestHelper {
     static UiObject tryAgainBtn = mDevice.findObject(new UiSelector()
             .description("Try Again")
             .clickable(true));
-    public static ViewInteraction floatingEraseButton = onView(
-            allOf(withId(R.id.erase), isDisplayed()));
+    public static UiObject floatingEraseButton = mDevice.findObject(new UiSelector()
+            .resourceId("org.mozilla.focus.debug:id/erase")
+            .clickable(true));
     static UiObject notFoundMsg = mDevice.findObject(new UiSelector()
             .description("The address wasn’t understood")
             .enabled(true));

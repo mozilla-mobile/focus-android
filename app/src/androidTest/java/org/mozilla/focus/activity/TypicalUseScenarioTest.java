@@ -82,7 +82,7 @@ public class TypicalUseScenarioTest {
         assertTrue (TestHelper.browserURLbar.getText().contains("focus"));
 
         // Let's delete my history
-        TestHelper.floatingEraseButton.perform(click());
+        TestHelper.floatingEraseButton.click();
         TestHelper.erasedMsg.waitForExists(waitingTime);
         assertTrue(TestHelper.erasedMsg.exists());
 
@@ -102,7 +102,7 @@ public class TypicalUseScenarioTest {
         //assertTrue (TestHelper.lockIcon.isEnabled());
 
         // Let's delete my history again
-        TestHelper.floatingEraseButton.perform(click());
+        TestHelper.floatingEraseButton.click();
         TestHelper.erasedMsg.waitForExists(waitingTime);
         assertTrue(TestHelper.erasedMsg.exists());
 

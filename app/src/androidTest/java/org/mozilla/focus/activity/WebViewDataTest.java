@@ -33,7 +33,6 @@ import okhttp3.mockwebserver.MockResponse;
 import okhttp3.mockwebserver.MockWebServer;
 import okhttp3.mockwebserver.RecordedRequest;
 
-import static android.support.test.espresso.action.ViewActions.click;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.mozilla.focus.activity.TestHelper.waitingTime;
@@ -170,7 +169,7 @@ public class WebViewDataTest {
         assertTrue("Service worker installed", serviceWorkerMsg.exists());
 
         // Erase browsing session
-        TestHelper.floatingEraseButton.perform(click());
+        TestHelper.floatingEraseButton.click();
         TestHelper.erasedMsg.waitForExists(waitingTime);
         Assert.assertTrue(TestHelper.erasedMsg.exists());
         Assert.assertTrue(TestHelper.inlineAutocompleteEditText.exists());
