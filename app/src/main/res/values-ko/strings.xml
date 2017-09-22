@@ -33,12 +33,17 @@
   <string name="preference_privacy_block_content">기타 콘텐츠 추적기 차단</string>
   <string name="preference_privacy_block_content_summary">동영상이나 웹 페이지가 제대로 표시되지 않을 수 있음</string>
   <string name="preference_privacy_secure_mode">스텔스</string>
+  <string name="preference_privacy_stealth_summary">앱 전환 시 웹페이지 화면을 숨김</string>
   <string name="preference_category_performance">성능</string>
   <string name="preference_performance_block_webfonts">웹 폰트 차단</string>
   <string name="preference_performance_block_webfonts_summary">아이콘 또는 이미지가 누락될 수 있음</string>
   <string name="preference_performance_block_images">이미지 차단</string>
+  <string name="preference_default_browser2">%1$s를 기본 브라우저로 설정</string>
   <string name="preference_category_mozilla">Mozilla</string>
+  <string name="preference_mozilla_telemetry2">사용정보 전송</string>
   <string name="preference_mozilla_telemetry_summary">상세정보</string>
+  <string name="preference_mozilla_telemetry_summary2">Mozilla는 %1$s에서 여러분에게 제공하는 기능의 개선을 위해 필요한 정보만을 수집합니다.</string>
+  <string name="preference_privacy_notice">개인정보 보호 알림</string>
   <string name="preference_about">%1$s에 대한 정보</string>
   <string name="content_description_clear_input">입력 값 초기화</string>
   <string name="content_description_dismiss_input">취소</string>
