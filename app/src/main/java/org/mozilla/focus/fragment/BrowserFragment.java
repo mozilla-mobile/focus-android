@@ -83,6 +83,7 @@ public class BrowserFragment extends WebFragment implements View.OnClickListener
 
     private static final String ARGUMENT_SESSION_UUID = "sessionUUID";
     private static final String RESTORE_KEY_DOWNLOAD = "download";
+    private View fullscreenView;
 
     public static BrowserFragment createForSession(Session session) {
         final Bundle arguments = new Bundle();
@@ -101,6 +102,7 @@ public class BrowserFragment extends WebFragment implements View.OnClickListener
     private FrameLayout blockView;
     private ImageView lockView;
     private ImageButton menuView;
+    private View appBar;
     private View statusBar;
     private View urlBar;
     private WeakReference<BrowserMenu> menuWeakReference = new WeakReference<>(null);
@@ -198,6 +200,7 @@ public class BrowserFragment extends WebFragment implements View.OnClickListener
         videoContainer = (ViewGroup) view.findViewById(R.id.video_container);
         browserContainer = view.findViewById(R.id.browser_container);
 
+        appBar = view.findViewById(R.id.appbar);
         urlBar = view.findViewById(R.id.urlbar);
         statusBar = view.findViewById(R.id.status_bar_background);
 
@@ -432,7 +435,12 @@ public class BrowserFragment extends WebFragment implements View.OnClickListener
             public void onEnterFullScreen(@NonNull final IWebView.FullscreenCallback callback, @Nullable View view) {
                 fullscreenCallback = callback;
 
+                // Switch to immersive mode: Hide system bars other UI controls
+                switchToImmersiveMode();
+
                 if (view != null) {
+                    fullscreenView = view;
+
                     // Hide browser UI and web content
                     browserContainer.setVisibility(View.INVISIBLE);
 
@@ -441,20 +449,25 @@ public class BrowserFragment extends WebFragment implements View.OnClickListener
                             ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
                     videoContainer.addView(view, params);
                     videoContainer.setVisibility(View.VISIBLE);
-
-                    // Switch to immersive mode: Hide system bars other UI controls
-                    switchToImmersiveMode();
+                } else {
+                    statusBar.setVisibility(View.GONE);
+                    appBar.setVisibility(View.GONE);
                 }
             }
 
             @Override
             public void onExitFullScreen() {
-                // Remove custom video views and hide container
-                videoContainer.removeAllViews();
-                videoContainer.setVisibility(View.GONE);
+                if (fullscreenView != null) {
+                    // Remove custom video views and hide container
+                    videoContainer.removeAllViews();
+                    videoContainer.setVisibility(View.GONE);
 
-                // Show browser UI and web content again
-                browserContainer.setVisibility(View.VISIBLE);
+                    // Show browser UI and web content again
+                    browserContainer.setVisibility(View.VISIBLE);
+                } else {
+                    statusBar.setVisibility(View.VISIBLE);
+                    appBar.setVisibility(View.VISIBLE);
+                }
 
                 exitImmersiveMode();
 
@@ -661,7 +674,9 @@ public class BrowserFragment extends WebFragment implements View.OnClickListener
     }
 
     public boolean onBackPressed() {
-        if (canGoBack()) {
+        if (fullscreenCallback != null) {
+            getWebView().exitFullscreen();
+        } else if (canGoBack()) {
             // Go back in web history
             goBack();
         } else {

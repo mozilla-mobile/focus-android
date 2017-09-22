@@ -167,6 +167,9 @@ public class SystemWebView extends NestedWebView implements IWebView, SharedPref
     }
 
     @Override
+    public void exitFullscreen() {}
+
+    @Override
     public void destroy() {
         super.destroy();
 
