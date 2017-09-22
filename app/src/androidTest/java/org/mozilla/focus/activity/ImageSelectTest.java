@@ -134,6 +134,7 @@ public class ImageSelectTest {
         TestHelper.hint.waitForExists(waitingTime);
         TestHelper.pressEnterKey();
         TestHelper.webView.waitForExists(waitingTime);
+        titleMsg.waitForExists(waitingTime);
 
         // Assert website is loaded
         assertTrue("Website title loaded", titleMsg.exists());
