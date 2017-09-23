@@ -12,10 +12,10 @@ android {
     buildToolsVersion "26.0.1"
     defaultConfig {
         applicationId "org.mozilla"
-        minSdkVersion 21
+        minSdkVersion 23
         targetSdkVersion 26
         versionCode 11 // This versionCode is "frozen" for local builds. For "release" builds we
-                       // override this with a generated versionCode at build time.
+        // override this with a generated versionCode at build time.
         versionName "2.1"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
@@ -158,29 +158,18 @@ dependencies {
     compile "com.android.support:cardview-v7:$support_libraries_version"
     compile "com.android.support:recyclerview-v7:$support_libraries_version"
 
-    compile "android.arch.lifecycle:runtime:1.0.0-alpha9"
-    compile "android.arch.lifecycle:extensions:1.0.0-alpha9"
-    annotationProcessor "android.arch.lifecycle:compiler:1.0.0-alpha9"
 
-    compile ("com.google.code.findbugs:annotations:3.0.1") {
+    compile("com.google.code.findbugs:annotations:3.0.1") {
         // We really only need the SuppressFBWarnings annotation, everything else can be ignored.
         // Without this we get weird failures due to dependencies.
         transitive = false
     }
 
-    compile 'org.mozilla.telemetry:telemetry:1.1.1'
-    compile 'com.journeyapps:zxing-android-embedded:3.4.0'
-
-    focusCompile 'com.adjust.sdk:adjust-android:4.11.4'
-    focusCompile 'com.google.android.gms:play-services-analytics:10.2.6' // Required by Adjust
+    // Required by Adjust
 
     geckoCompile(name: 'geckoview-latest', ext: 'aar')
 
-    testCompile 'junit:junit:4.12'
-    testCompile "org.robolectric:robolectric:3.4.2"
-    testCompile 'org.mockito:mockito-core:2.7.22'
 
-    androidTestCompile 'com.android.support.test.uiautomator:uiautomator-v18:2.1.3'
 
     androidTestCompile "com.android.support.test.espresso:espresso-core:$espresso_version", {
         exclude group: 'com.android.support', module: 'support-annotations'
@@ -190,7 +179,19 @@ dependencies {
         exclude group: 'com.android.support', module: 'support-annotations'
     }
 
+    compile 'android.arch.lifecycle:runtime:1.0.0-alpha9'
+    compile 'android.arch.lifecycle:extensions:1.0.0-alpha9'
+    compile 'org.mozilla.telemetry:telemetry:1.1.1'
+    compile 'com.journeyapps:zxing-android-embedded:3.4.0'
+    compile 'com.android.support.constraint:constraint-layout:1.0.2'
+    testCompile 'junit:junit:4.12'
+    testCompile 'org.robolectric:robolectric:3.4.2'
+    testCompile 'org.mockito:mockito-core:2.7.22'
+    androidTestCompile 'com.android.support.test.uiautomator:uiautomator-v18:2.1.3'
     androidTestCompile 'com.squareup.okhttp3:mockwebserver:3.7.0'
+    annotationProcessor 'android.arch.lifecycle:compiler:1.0.0-alpha9'
+    focusCompile 'com.adjust.sdk:adjust-android:4.11.4'
+    focusCompile 'com.google.android.gms:play-services-analytics:10.2.6'
 }
 
 // -------------------------------------------------------------------------------------------------
@@ -214,7 +215,7 @@ android.applicationVariants.all { variant ->
 
 def blockListOutputDir = 'src/webview/res/raw'
 
-task buildBlocklists(type:Copy) {
+task buildBlocklists(type: Copy) {
     from('../shavar-prod-lists') {
         include '*.json'
     }
@@ -266,7 +267,7 @@ android.applicationVariants.all { variant ->
 // L10N: Initialize Strings
 // -------------------------------------------------------------------------------------------------
 
-task stringsSetup(type:Exec) {
+task stringsSetup(type: Exec) {
     group = 'Localization'
     description = 'Setup L10N repository for importing and exporting strings.'
 
@@ -279,7 +280,7 @@ task stringsSetup(type:Exec) {
 // L10N: Export Strings
 // -------------------------------------------------------------------------------------------------
 
-task stringsExport(type:Exec) {
+task stringsExport(type: Exec) {
     group = 'Localization'
     description = 'Export strings to L10N repository.'
 
@@ -312,7 +313,7 @@ task stringsImport {
 // L10N: Create commits
 // -------------------------------------------------------------------------------------------------
 
-task stringsCommit(type:Exec) {
+task stringsCommit(type: Exec) {
     group = 'Localization'
     description = 'Create commits for exported strings.'
 
@@ -325,7 +326,7 @@ task stringsCommit(type:Exec) {
 // L10N: Clean and update
 // -------------------------------------------------------------------------------------------------
 
-task stringsCleanUpdate()  {
+task stringsCleanUpdate() {
     group = 'Localization'
     description = 'Fetch L10N changes and remove all local modifications.'
 
@@ -361,13 +362,13 @@ def getEnabledLocales() {
     def langs = potentialLanguageDirs.findAll {
         // Only select locales where strings.xml exists
         // Some locales might only contain e.g. sumo URLS in urls.xml, and should be skipped (see es vs es-ES/es-MX/etc)
-        return  file(new File(it, "strings.xml")).exists()
-    } .collect {
+        return file(new File(it, "strings.xml")).exists()
+    }.collect {
         // And reduce down to actual values-* names
         return it.name
-    } .collect {
+    }.collect {
         return it.substring("values-".length())
-    } .collect {
+    }.collect {
         if (it.length() > 3 && it.contains("-r")) {
             // Android resource dirs add an "r" prefix to the region - we need to strip that for java usage
             // Add 1 to have the index of the r, without the dash
@@ -377,7 +378,7 @@ def getEnabledLocales() {
         } else {
             return it
         }
-    } .collect {
+    }.collect {
         return '"' + it + '"'
     }
 
@@ -440,8 +441,8 @@ def getTranslatedLocales() {
     def langs = potentialLanguageDirs.collect {
         // Reduce from list of files to actual names
         return it.name
-    } .collect {
-        switch(it) {
+    }.collect {
+        switch (it) {
             case "id":
                 return "in"
             case "he":
@@ -449,7 +450,7 @@ def getTranslatedLocales() {
             default:
                 return it;
         }
-    } .collect {
+    }.collect {
         return '"' + it + '"'
     }
 
