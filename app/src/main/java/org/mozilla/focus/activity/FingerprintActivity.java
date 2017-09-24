@@ -3,6 +3,7 @@ package org.mozilla.focus.activity;
 import android.Manifest;
 import android.annotation.TargetApi;
 import android.app.KeyguardManager;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.hardware.fingerprint.FingerprintManager;
 import android.os.Build;
@@ -51,6 +52,7 @@ public class FingerprintActivity extends AppCompatActivity {
         if(!fingerprintManager.isHardwareDetected()){
 
             textView.setText("Your Device Does Not Have A FingerPrint Sensor");
+            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
 
         }else {
 
