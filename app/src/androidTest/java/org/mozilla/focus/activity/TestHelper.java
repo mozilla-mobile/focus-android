@@ -88,7 +88,7 @@ public final class TestHelper {
             .resourceId("org.mozilla.focus.debug:id/search_hint")
             .clickable(true));
     public static UiObject webView = mDevice.findObject(new UiSelector()
-            .className("android.webkit.Webview")
+            .className("android.webkit.WebView")
             .enabled(true));
     static UiObject progressBar = mDevice.findObject(new UiSelector()
             .resourceId("org.mozilla.focus.debug:id/progress")
@@ -118,7 +118,7 @@ public final class TestHelper {
             .text("Erase browsing history")
             .resourceId("android:id/text")
             .enabled(true));
-    static UiObject notificationExpandSwitch = TestHelper.mDevice.findObject(new UiSelector()
+    public static UiObject notificationExpandSwitch = TestHelper.mDevice.findObject(new UiSelector()
             .resourceId("android:id/expand_button")
             .packageName("org.mozilla.focus.debug")
             .enabled(true));

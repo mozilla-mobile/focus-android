@@ -188,6 +188,7 @@ public class SwitchContextTest {
 
         // Assert website is loaded
         TestHelper.webView.waitForExists(waitingTime);
+        titleMsg.waitForExists(waitingTime);
         Assert.assertTrue("Website title loaded", titleMsg.exists());
         junit.framework.Assert.assertTrue(rabbitImage.exists());
 
