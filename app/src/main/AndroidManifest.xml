@@ -118,7 +118,8 @@
             android:name="android.webkit.WebView.MetricsOptOut"
             android:value="true" />
 
-        <activity android:name=".activity.FingerprintActivity">
+        <activity android:name=".activity.FingerprintActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
