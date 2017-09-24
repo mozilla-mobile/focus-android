@@ -190,6 +190,14 @@ public class SessionManager {
         addSession(session);
     }
 
+    private void createSession(Context context, Source source, SafeIntent intent, String url, boolean blockingEnabled) {
+        final Session session = CustomTabConfig.isCustomTabIntent(intent)
+                ? new Session(url, CustomTabConfig.parseCustomTabIntent(context, intent))
+                : new Session(source, url);
+        session.setBlockingEnabled(blockingEnabled);
+        addSession(session);
+    }
+
     private void addSession(Session session) {
         currentSessionUUID = session.getUUID();
 
