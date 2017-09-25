@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!-- This Source Code Form is subject to the terms of the Mozilla Public
+<?xml version="1.0" encoding="utf-8"?><!-- This Source Code Form is subject to the terms of the Mozilla Public
    - License, v. 2.0. If a copy of the MPL was not distributed with this
    - file, You can obtain one at http://mozilla.org/MPL/2.0/. -->
 <resources>
@@ -152,6 +151,11 @@
     <!-- Content description (not visible, for screen readers etc.): Clear text in URL bar -->
     <string name="content_description_clear_input">Clear input</string>
 
+
+    <string name="content_description_microphone">Microphone</string>
+
+    <string name="content_description_qrCodeReader">QR Code Reader</string>
+
     <!-- Content description (not visible, for screen readers etc.): Clicking on the website overlay
      while in typing mode will dismiss and go back to the browser. This text will be read when the
      overlay if focused. See https://github.com/mozilla-mobile/focus-android/issues/50 -->
@@ -244,7 +248,7 @@
     <string name="download_dialog_action_cancel">Cancel</string>
 
     <!-- Option in download dialogue to start a download -->
-     <string name="download_dialog_action_download">Download</string>
+    <string name="download_dialog_action_download">Download</string>
 
     <!-- The page html title (i.e. the <title> tag content) -->
     <string name="errorpage_title">Problem loading page</string>
@@ -425,4 +429,10 @@ be temporary, and you can try again later.</li>
     %2$s will be replaced with a URL linking to the GPL
     %3$s will be replaced with a URL linking to the tracking protection wiki page (e.g. https://wiki.mozilla.org/Security/Tracking_protection#Lists) -->
     <string name="your_rights_content5"><![CDATA[%1$s also uses blocklists provided by Disconnect, Inc. as separate and independent works under the <a href="%2$s">GNU General Public License v3</a>, and available <a href="%3$s">here</a>.]]></string>
+
+
+    <string name="title_main_screen">Authentication With Fingerprint</string>
+    <string name="title_fingerprint">One-touch Sign In</string>
+    <string name="desc_fingerprint">Place your fingertip on the scanner to verify your identity</string>
+
 </resources>
