@@ -36,6 +36,13 @@ public class SessionViewHolder extends RecyclerView.ViewHolder implements View.O
 
         textView = (TextView) itemView;
         textView.setOnClickListener(this);
+        textView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                SessionManager.getInstance().removeCurrentSession();
+                return true;
+            }
+        });
     }
 
     /* package */ void bind(Session session) {
