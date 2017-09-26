@@ -296,6 +296,13 @@ public class BrowserFragment extends WebFragment implements View.OnClickListener
 
         final FloatingSessionsButton tabsButton = view.findViewById(R.id.tabs);
         tabsButton.setOnClickListener(this);
+        tabsButton.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                SessionManager.getInstance().removeAllSessions();
+                return true;
+            }
+        });
 
         sessionManager.getSessions().observe(this, new NonNullObserver<List<Session>>() {
             @Override
