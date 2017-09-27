@@ -55,16 +55,5 @@ public class ScannerActivity extends AppCompatActivity implements ZXingScannerVi
         intent.setData(Uri.parse(text));
         startActivity(intent);
 
-        // Note:
-        // * Wait 2 seconds to resume the preview.
-        // * On older devices continuously stopping and resuming camera preview can result in freezing the app.
-        // * I don't know why this is the case but I don't have the time to figure out.
-//        Handler handler = new Handler();
-//        handler.postDelayed(new Runnable() {
-//            @Override
-//            public void run() {
-//                mScannerView.resumeCameraPreview(ScannerActivity.this);
-//            }
-//        }, 2000);
     }
 }
