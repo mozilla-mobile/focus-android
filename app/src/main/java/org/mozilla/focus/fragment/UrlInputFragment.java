@@ -121,6 +121,8 @@ public class UrlInputFragment extends LocaleAwareFragment implements View.OnClic
 
     private Session session;
 
+    View qrCodeButton;
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -169,6 +171,23 @@ public class UrlInputFragment extends LocaleAwareFragment implements View.OnClic
                 return true;
             }
         });
+
+        qrCodeButton = view.findViewById(R.id.qrCodeButton);
+
+
+        qrCodeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+
+
+                Intent scanIntent = new Intent(getContext(), ZxingActivity.class);
+                startActivity(scanIntent);
+
+
+            }
+        });
+
 
         keyboardLinearLayout = view.findViewById(R.id.brand_background);
 

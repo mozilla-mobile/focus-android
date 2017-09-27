@@ -95,6 +95,21 @@
                     android:textCursorDrawable="@drawable/cursor" />
 
                 <ImageButton
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:id="@+id/qrCodeButton"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:paddingTop="8dp"
+                    android:paddingBottom="8dp"
+                    android:paddingEnd="8dp"
+                    android:paddingStart="8dp"
+                    android:layout_gravity="end"
+                    android:src="@drawable/ic_qrcode_scan"
+                    android:background="?android:attr/selectableItemBackgroundBorderless"
+                    android:contentDescription="@string/content_description_qrCodeReader"/>
+
+                <ImageButton
                     android:id="@+id/clear"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
