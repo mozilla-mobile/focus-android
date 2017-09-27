@@ -22,6 +22,10 @@ android {
         multiDexEnabled true
     }
 
+    aaptOptions {
+        cruncherEnabled = false
+    }
+
     dexOptions {
         preDexLibraries true
     }
@@ -150,6 +154,7 @@ dependencies {
     compile "com.android.support:design:$support_libraries_version"
     compile "com.android.support:cardview-v7:$support_libraries_version"
     compile "com.android.support:recyclerview-v7:$support_libraries_version"
+    compile 'me.dm7.barcodescanner:zxing:1.9.8'
 
     compile "android.arch.lifecycle:runtime:1.0.0-alpha9"
     compile "android.arch.lifecycle:extensions:1.0.0-alpha9"

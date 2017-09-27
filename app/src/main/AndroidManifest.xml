@@ -9,6 +9,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="com.android.launcher.permission.INSTALL_SHORTCUT" />
+    <uses-permission android:name="android.permission.CAMERA" />
 
     <application
         android:allowBackup="false"
@@ -105,6 +106,16 @@
 
         <meta-data android:name="android.webkit.WebView.MetricsOptOut"
                    android:value="true" />
+
+        <activity android:name=".fragment.ZxingActivity"
+            android:theme="@style/AppTheme">
+        </activity>
+
+
+        <activity android:name=".fragment.ScannerActivity"
+            android:label="Zxing Scanner">
+        </activity>
+
     </application>
 
 </manifest>

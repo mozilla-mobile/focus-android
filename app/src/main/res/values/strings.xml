@@ -420,6 +420,9 @@ be temporary, and you can try again later.</li>
     %2$s will be replaced with a URL linking to the list of licenses used by the dependencies.-->
     <string name="your_rights_content4"><![CDATA[Additional source code for %1$s is available under various other free and open source <a href="%2$s">licenses</a>.]]></string>
 
+
+    <string name="content_description_qrCodeReader">QR Code Reader</string>
+
     <!-- Text shown in the "Your rights" screen.
     %1$s will be replaced with the name of the app (e.g. Firefox Focus)
     %2$s will be replaced with a URL linking to the GPL
