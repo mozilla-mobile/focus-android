@@ -137,7 +137,7 @@ public class SessionManager {
             }
         }
 
-        throw new IllegalAccessError("There's no active session with UUID " + uuid);
+        return null;
     }
 
     public int getNumberOfSessions() {
