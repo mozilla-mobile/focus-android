@@ -2,7 +2,7 @@
  * This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
-package org.mozilla.focus.menu;
+package org.mozilla.focus.menu.context;
 
 import android.app.Dialog;
 import android.content.ClipData;
@@ -29,6 +29,9 @@ import org.mozilla.focus.utils.UrlUtils;
 import org.mozilla.focus.web.Download;
 import org.mozilla.focus.web.IWebView;
 
+/**
+ * The context menu shown when long pressing a URL or an image inside the WebView.
+ */
 public class WebContextMenu {
 
     private static View createTitleView(final @NonNull Context context, final @NonNull String title) {
