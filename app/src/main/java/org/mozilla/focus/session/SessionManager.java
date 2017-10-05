@@ -71,29 +71,33 @@ public class SessionManager {
         final String action = intent.getAction();
 
         if (Intent.ACTION_VIEW.equals(action)) {
-            final Source source;
+            final String dataString = intent.getDataString();
+            if (TextUtils.isEmpty(dataString)) {
+                return; // If there's no URL in the Intent then we can't create a session.
+            }
+
             if (intent.hasExtra(HomeScreen.ADD_TO_HOMESCREEN_TAG)) {
-                source = Source.HOME_SCREEN;
-                boolean blockingEnabled = intent.getBooleanExtra(HomeScreen.BLOCKING_ENABLED, true);
-                createSession(context, source, intent, intent.getDataString(), blockingEnabled);
+                final boolean blockingEnabled = intent.getBooleanExtra(HomeScreen.BLOCKING_ENABLED, true);
+                createSession(context, Source.HOME_SCREEN, intent, intent.getDataString(), blockingEnabled);
             } else {
-                source = Source.VIEW;
-                createSession(context, source, intent, intent.getDataString());
+                createSession(context, Source.VIEW, intent, intent.getDataString());
             }
         } else if (Intent.ACTION_SEND.equals(action)) {
             final String dataString = intent.getStringExtra(Intent.EXTRA_TEXT);
-            if (!TextUtils.isEmpty(dataString)) {
-                final boolean isSearch = !UrlUtils.isUrl(dataString);
+            if (TextUtils.isEmpty(dataString)) {
+                return;
+            }
 
-                final String url = isSearch
-                        ? UrlUtils.createSearchUrl(context, dataString)
-                        : dataString;
+            final boolean isSearch = !UrlUtils.isUrl(dataString);
 
-                if (isSearch) {
-                    createSearchSession(Source.SHARE, url, dataString);
-                } else {
-                    createSession(Source.SHARE, url);
-                }
+            final String url = isSearch
+                    ? UrlUtils.createSearchUrl(context, dataString)
+                    : dataString;
+
+            if (isSearch) {
+                createSearchSession(Source.SHARE, url, dataString);
+            } else {
+                createSession(Source.SHARE, url);
             }
         }
     }
