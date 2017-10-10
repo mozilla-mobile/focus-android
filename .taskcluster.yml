@@ -17,8 +17,11 @@ tasks:
           - pull_request.edited
           - pull_request.synchronize
           - pull_request.reopened
+    scopes:
+      - "queue:create-task:aws-provisioner-v1/github-worker"
+      - "queue:scheduler-id:taskcluster-github"
     payload:
-      maxRunTime: 3600
+      maxRunTime: 1800
       deadline: "{{ '2 hours' | $fromNow }}"
       image: 'mozillamobile/focus-android'
       command:
@@ -29,50 +32,18 @@ tasks:
           git fetch {{ event.head.repo.url }} {{ event.head.repo.branch }}
           && git config advice.detachedHead false
           && git checkout {{event.head.sha}}
-          && export ADJUST_TOKEN_FOCUS='..no..value..'
-          && ./gradlew clean assemble test lint pmd checkstyle findbugs
+          && pip install taskcluster
+          && python /opt/focus-android/tools/taskcluster/schedule-screenshots.py
       artifacts:
         'public':
           type: 'directory'
           path: '/opt/focus-android/app/build/reports'
           expires: "{{ '1 week' | $fromNow }}"
+      features: {
+        "taskclusterProxy": true
+      }
     metadata:
-      name: Focus for Android - Build - Pull Request
-      description: Building Focus for Android (via Gradle) - triggered by a pull request.
-      owner: '{{ event.head.user.email }}'
-      source: '{{ event.head.repo.url }}'
-###############################################################################
-# Task: Master builds
-###############################################################################
-  - provisionerId: '{{ taskcluster.docker.provisionerId }}'
-    workerType: '{{ taskcluster.docker.workerType }}'
-    extra:
-      github:
-        events:
-          - push
-        branches:
-          - master
-    payload:
-      maxRunTime: 3600
-      deadline: "{{ '2 hours' | $fromNow }}"
-      image: 'mozillamobile/focus-android'
-      command:
-        - /bin/bash
-        - '--login'
-        - '-c'
-        - >-
-          git fetch origin
-          && git config advice.detachedHead false
-          && git checkout {{event.head.sha}}
-          && export ADJUST_TOKEN_FOCUS='..no..value..'
-          && ./gradlew clean assemble test lint pmd checkstyle findbugs
-      artifacts:
-        'public':
-          type: 'directory'
-          path: '/opt/focus-android/app/build/reports'
-          expires: "{{ '1 week' | $fromNow }}"
-    metadata:
-      name: Focus for Android - Build - Master
-      description: Building Focus for Android (via Gradle) - Master
+      name: Focus for Android - Screenshots decision task
+      description: Task for scheduling sub tasks that create screenshots in different locales
       owner: '{{ event.head.user.email }}'
       source: '{{ event.head.repo.url }}'
