@@ -5,7 +5,7 @@
   <string name="urlbar_hint">ค้นหาหรือป้อนที่อยู่</string>
   <string name="teaser">การท่องเว็บแบบส่วนตัวอัตโนมัติ\nท่องเว็บ ล้าง ทำซ้ำ</string>
   <string name="feedback_erase">ล้างประวัติการท่องเว็บของคุณแล้ว</string>
-  <string name="search_hint">ค้นหาสำหรับ %1$s</string>
+  <string name="search_hint">ค้นหา %1$s</string>
   <string name="menu_share">แบ่งปัน…</string>
   <string name="menu_open_with_default_browser">เปิดด้วย %1$s</string>
   <string name="menu_open_with_a_browser">เปิดด้วย…</string>

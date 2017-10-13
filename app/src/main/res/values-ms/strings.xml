@@ -63,7 +63,7 @@
   <string name="content_description_reload">Muat semula laman web</string>
   <string name="content_description_back">Navigasi undur</string>
   <string name="content_description_stop">Hentikan memuat laman web</string>
-  <string name="content_description_customtab_exit">Kembalikan aplikasi terdahulu</string>
+  <string name="content_description_customtab_exit">Kembali ke aplikasi dahulu</string>
   <string name="content_description_blocking_switch">Sekat penjejak</string>
   <string name="context_menu_paste_go">Tampal &amp; Lancarkan</string>
   <string name="your_rights">Hak Anda</string>
