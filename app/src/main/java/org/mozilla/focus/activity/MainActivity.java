@@ -62,6 +62,12 @@ public class MainActivity extends LocaleAwareAppCompatActivity {
 
         final SafeIntent intent = new SafeIntent(getIntent());
 
+        final String action = intent.getAction();
+
+        if (ACTION_ERASE.equals(action)) {
+            processEraseAction(intent);
+        }
+
         sessionManager.handleIntent(this, intent, savedInstanceState);
 
         sessionManager.getSessions().observe(this,  new NonNullObserver<List<Session>>() {
