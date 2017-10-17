@@ -29,8 +29,10 @@ tasks:
           git fetch {{ event.head.repo.url }} {{ event.head.repo.branch }}
           && git config advice.detachedHead false
           && git checkout {{event.head.sha}}
-          && export ADJUST_TOKEN_FOCUS='..no..value..'
-          && ./gradlew clean assemble test lint pmd checkstyle findbugs
+          && pip install taskcluster
+          && python tools/taskcluster/get-adjust-token.py
+#          && export ADJUST_TOKEN_FOCUS='..no..value..'
+#          && ./gradlew clean assemble test lint pmd checkstyle findbugs
       artifacts:
         'public':
           type: 'directory'
