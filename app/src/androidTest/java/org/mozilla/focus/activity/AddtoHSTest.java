@@ -243,8 +243,7 @@ public class AddtoHSTest {
         TestHelper.inlineAutocompleteEditText.setText("helloworld");
         TestHelper.hint.waitForExists(waitingTime);
         TestHelper.pressEnterKey();
-        TestHelper.progressBar.waitForExists(webPageLoadwaitingTime);
-        Assert.assertTrue(TestHelper.progressBar.waitUntilGone(webPageLoadwaitingTime));
+        TestHelper.progressBar.waitUntilGone(webPageLoadwaitingTime);
 
         openAddtoHSDialog();
 

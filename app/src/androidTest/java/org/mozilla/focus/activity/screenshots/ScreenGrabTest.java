@@ -3,7 +3,6 @@ package org.mozilla.focus.activity.screenshots;
 import android.app.Instrumentation;
 import android.content.Context;
 import android.content.res.Resources;
-import android.os.Build;
 import android.preference.PreferenceManager;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.espresso.web.webdriver.Locator;
@@ -55,7 +54,6 @@ import static android.support.test.espresso.web.sugar.Web.onWebView;
 import static android.support.test.espresso.web.webdriver.DriverAtoms.findElement;
 import static android.support.test.espresso.web.webdriver.DriverAtoms.getText;
 import static android.support.test.espresso.web.webdriver.DriverAtoms.webClick;
-import static android.support.test.espresso.web.webdriver.DriverAtoms.webScrollIntoView;
 import static android.view.KeyEvent.KEYCODE_ENTER;
 import static junit.framework.Assert.assertTrue;
 import static org.hamcrest.Matchers.allOf;
@@ -177,7 +175,7 @@ public class ScreenGrabTest {
         takeScreenshotOfErrorPages(context, device);
     }
 
-    private void takeScreenshotsOfFirstrun(Context context, UiDevice device) throws UiObjectNotFoundException {
+    private void takeScreenshotsOfFirstrun(Context context, UiDevice device) throws UiObjectNotFoundException, InterruptedException {
         /* Wait for app to load, and take the First View screenshot */
 
         assertTrue(device.findObject(new UiSelector()
@@ -211,6 +209,13 @@ public class ScreenGrabTest {
 
         Screengrab.screenshot("Onboarding_last_View");
         TestHelper.finishBtn.click();
+
+        // some sims in BB do not show keyboards.
+        // wait for a bit to show up, if it does, close it now
+        Thread.sleep(3000);
+        if (TestHelper.checkKeyboardPresenceInMainView()) {
+            device.pressBack(); // Close keyboard
+        }
     }
 
     private void takeScreenshotOfHomeScreen() {
@@ -219,20 +224,25 @@ public class ScreenGrabTest {
         Screengrab.screenshot("Home_View");
     }
 
-    private void takeScreenshotOfMenu(UiDevice device) throws UiObjectNotFoundException {
+    private void takeScreenshotOfMenu(UiDevice device) throws UiObjectNotFoundException, InterruptedException {
         TestHelper.menuButton.perform(click());
+        TestHelper.menulist.waitForExists(waitingTime);
 
         onView(withText(R.string.menu_whats_new))
                 .check(matches(isDisplayed()));
 
         Screengrab.screenshot("MainViewMenu");
-
-        device.pressBack(); // Close keyboard
-        device.pressBack(); // Close men
+        device.pressBack(); // Close menu
+        TestHelper.menulist.waitUntilGone(waitingTime);
     }
 
     private void takeScreenshotOfAboutPage(Context context, UiDevice device) throws UiObjectNotFoundException {
         final String aboutLabel = context.getString(R.string.preference_about, context.getString(R.string.app_name));
+
+        assertTrue(device.findObject(new UiSelector()
+                                .text(aboutLabel)
+                                .enabled(true)
+                        ).waitForExists(waitingTime));
 
         onData(withTitleText(aboutLabel))
                 .check(matches(isDisplayed()))
@@ -255,6 +265,11 @@ public class ScreenGrabTest {
     private void takeScreenshotOfYourRightsPage(Context context, UiDevice device) throws UiObjectNotFoundException {
         final String yourRightsLabel = context.getString(R.string.menu_rights);
 
+        assertTrue(device.findObject(new UiSelector()
+                                .text(yourRightsLabel)
+                                .enabled(true)
+                        ).waitForExists(waitingTime));
+
         onData(withTitleText(yourRightsLabel))
                 .check(matches(isDisplayed()))
                 .perform(click());
@@ -270,11 +285,18 @@ public class ScreenGrabTest {
         Screengrab.screenshot("YourRights_Page");
 
         device.pressBack(); // Leave "Your rights" page
+        assertTrue(TestHelper.settingsHeading.waitForExists(waitingTime));
         device.pressBack(); // Leave settings
     }
 
     private void takeScreenshotOfUrlBarAndBrowserView(UiDevice device) throws UiObjectNotFoundException {
         /* Location Bar View */
+
+        // For some reason, menulist still appeared in failed tests. try to close again.
+        if (TestHelper.menulist.exists()) {
+            TestHelper.mDevice.pressBack();
+        }
+
         assertTrue(TestHelper.inlineAutocompleteEditText.waitForExists(waitingTime));
         Screengrab.screenshot("LocationBarEmptyState");
 
@@ -296,6 +318,7 @@ public class ScreenGrabTest {
                 .resourceId("org.mozilla.focus.debug:id/webview")
                 .enabled(true))
                 .waitForExists(waitingTime);
+        TestHelper.progressBar.waitUntilGone(waitingTime);
 
         onWebView()
                 .withElement(findElement(Locator.ID, "header"))
@@ -451,6 +474,7 @@ public class ScreenGrabTest {
         TestHelper.pressEnterKey();
 
         assertTrue(TestHelper.webView.waitForExists(waitingTime));
+        TestHelper.progressBar.waitUntilGone(waitingTime);
 
         onWebView()
                 .withTimeout(loadingWaitingTime, TimeUnit.MILLISECONDS)
@@ -472,6 +496,7 @@ public class ScreenGrabTest {
         assertTrue(eraseHistoryBtn.waitForExists(waitingTime));
         Screengrab.screenshot("Multi_Tab_Menu");
         TestHelper.pressBackKey();
+        eraseHistoryBtn.waitUntilGone(waitingTime);
         device.openNotification();
 
         final UiObject notificationErase = device.findObject(new UiSelector()
@@ -479,7 +504,7 @@ public class ScreenGrabTest {
                 .resourceId("android:id/text")
                 .enabled(true));
 
-        assertTrue(notificationErase.waitForExists(waitingTime));
+        assertTrue(TestHelper.notificationBarDeleteItem.waitForExists(waitingTime));
         notificationErase.click();
     }
 
@@ -500,8 +525,7 @@ public class ScreenGrabTest {
         assertTrue(cancelBtn.waitForExists(waitingTime));
         Screengrab.screenshot("Redirect_Outside");
         cancelBtn.click();
-
-        assertTrue(TestHelper.inlineAutocompleteEditText.waitForExists(waitingTime));
+        TestHelper.inlineAutocompleteEditText.waitForExists(waitingTime);
         device.pressBack();
     }
 
@@ -515,21 +539,12 @@ public class ScreenGrabTest {
             assertTrue(TestHelper.webView.waitForExists(waitingTime));
             assertTrue(TestHelper.progressBar.waitUntilGone(waitingTime));
 
-            // Android O has an issue with using Locator.ID
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                UiObject tryAgainBtn = device.findObject(new UiSelector()
-                        .descriptionContains(context.getString(R.string.errorpage_refresh))
-                        .clickable(true));
-                assertTrue(tryAgainBtn.waitForExists(waitingTime));
-            } else {
-                onWebView()
-                        .withElement(findElement(Locator.ID, "errorTitle"))
-                        .perform(webClick());
+            // espresso method had intermittent faults, below method seems to work consistently.
+            UiObject tryAgainBtn = device.findObject(new UiSelector()
+                    .descriptionContains(context.getString(R.string.errorpage_refresh))
+                    .clickable(true));
+            assertTrue(tryAgainBtn.waitForExists(waitingTime));
 
-                onWebView()
-                        .withElement(findElement(Locator.ID, "errorTryAgain"))
-                        .perform(webScrollIntoView());
-            }
             Screengrab.screenshot(error.name());
             browserURLbar.click();
         }

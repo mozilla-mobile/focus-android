@@ -23,15 +23,13 @@ import org.mozilla.focus.activity.helpers.SessionLoadedIdlingResource;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
-import static android.support.test.espresso.action.ViewActions.pressImeActionButton;
-import static android.support.test.espresso.action.ViewActions.typeText;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
-import static android.support.test.espresso.matcher.ViewMatchers.hasFocus;
 import static android.support.test.espresso.matcher.ViewMatchers.isChecked;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.Matchers.not;
+import static org.mozilla.focus.activity.TestHelper.waitingTime;
 import static org.mozilla.focus.fragment.FirstrunFragment.FIRSTRUN_PREF;
 
 // This test toggles blocking within the browser view
@@ -73,10 +71,22 @@ public class ToggleBlockTest {
     @Test
     public void SimpleToggleTest() throws UiObjectNotFoundException {
         // Load mozilla.org
-        onView(withId(R.id.url_edit))
-                .check(matches(isDisplayed()))
-                .check(matches(hasFocus()))
-                .perform(typeText("mozilla"), pressImeActionButton());
+        //
+        //onView(withId(R.id.url_edit))
+        //        .check(matches(isDisplayed()))
+        //        .check(matches(hasFocus()))
+        //        .perform(typeText("mozilla"), pressImeActionButton());
+        // Above types "mmozilla"
+        TestHelper.inlineAutocompleteEditText.waitForExists(waitingTime);
+        TestHelper.inlineAutocompleteEditText.clearTextField();
+        TestHelper.inlineAutocompleteEditText.setText("mozilla");
+        TestHelper.hint.waitForExists(waitingTime);
+        TestHelper.pressEnterKey();
+        TestHelper.webView.waitForExists(waitingTime);
+
+        // additional check if loading is delayed. if site loads fast and progBar is gone,
+        // below will not wait and return false
+        TestHelper.progressBar.waitUntilGone(waitingTime);
 
         // The blocking badge is not disabled
         onView(withId(R.id.block))
@@ -94,6 +104,7 @@ public class ToggleBlockTest {
         onView(withId(R.id.blocking_switch))
                 .check(matches(isChecked()))
                 .perform(click());
+        TestHelper.progressBar.waitUntilGone(waitingTime);
 
         // Now the blocking badge is visible
         onView(withId(R.id.block))
