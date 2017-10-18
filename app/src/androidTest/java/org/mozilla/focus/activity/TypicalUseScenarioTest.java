@@ -78,6 +78,7 @@ public class TypicalUseScenarioTest {
         assertTrue(TestHelper.hint.getText().equals("Search for mozilla focus"));
         TestHelper.hint.click();
         assertTrue(TestHelper.webView.waitForExists(waitingTime));
+        TestHelper.progressBar.waitUntilGone(waitingTime);
         assertTrue (TestHelper.browserURLbar.getText().contains("mozilla"));
         assertTrue (TestHelper.browserURLbar.getText().contains("focus"));
 

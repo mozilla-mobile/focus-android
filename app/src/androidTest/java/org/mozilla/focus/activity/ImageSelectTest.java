@@ -179,6 +179,7 @@ public class ImageSelectTest {
         TestHelper.hint.waitForExists(waitingTime);
         TestHelper.pressEnterKey();
         assertTrue(TestHelper.webView.waitForExists(waitingTime));
+        TestHelper.progressBar.waitUntilGone(waitingTime);
 
         // Assert website is loaded
         assertTrue("Website title loaded", titleMsg.exists());
@@ -225,7 +226,7 @@ public class ImageSelectTest {
 
         TestHelper.mDevice.openNotification();
         TestHelper.savedNotification.waitForExists(waitingTime);
-        TestHelper.savedNotification.swipeRight(600);
+        TestHelper.savedNotification.swipeRight(50);
         TestHelper.pressBackKey();
         TestHelper.floatingEraseButton.perform(click());
         TestHelper.erasedMsg.waitForExists(waitingTime);

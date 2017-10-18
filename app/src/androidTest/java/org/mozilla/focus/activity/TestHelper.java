@@ -5,6 +5,7 @@
 
 package org.mozilla.focus.activity;
 
+import android.graphics.Rect;
 import android.os.RemoteException;
 import android.support.annotation.NonNull;
 import android.support.test.InstrumentationRegistry;
@@ -179,7 +180,7 @@ public final class TestHelper {
             .resourceId("org.mozilla.focus.debug:id/trackers_count"));
     static UiObject blockToggleSwitch = mDevice.findObject(new UiSelector()
             .resourceId("org.mozilla.focus.debug:id/blocking_switch"));
-    static UiObject menulist = mDevice.findObject(new UiSelector()
+    public static UiObject menulist = mDevice.findObject(new UiSelector()
             .resourceId("org.mozilla.focus.debug:id/list")
             .enabled(true));
     static String getMenuItemText(UiObject item) throws UiObjectNotFoundException {
@@ -232,6 +233,14 @@ public final class TestHelper {
     }
     static void openNotification() {
         mDevice.openNotification();
+    }
+
+    static void clearAllNotification() throws UiObjectNotFoundException {
+        UiObject clearButton = mDevice.findObject(new UiSelector()
+                .resourceId("com.android.systemui:id/dismiss_text")
+                .enabled(true));
+        clearButton.click();
+        clearButton.waitUntilGone(waitingTime);
     }
 
     static void swipeUpScreen () {
@@ -311,5 +320,26 @@ public final class TestHelper {
 
         assertTrue(webView.waitForExists(waitingTime));
         Assert.assertTrue("Website title loaded", titleMsg.waitForExists(waitingTime));
+    }
+
+    // Checks whether keyboard is visible by looking at the coord of the logo w.r.t. container
+    public static boolean checkKeyboardPresenceInMainView() throws UiObjectNotFoundException {
+        UiObject container = TestHelper.mDevice.findObject(new UiSelector()
+                .resourceId("org.mozilla.focus.debug:id/container")
+                .enabled(true));
+        UiObject mainLabel = TestHelper.mDevice.findObject(new UiSelector()
+                .description("Firefox Focus")
+                .enabled(true));
+        container.waitForExists(waitingTime);
+        mainLabel.waitForExists(waitingTime);
+
+        Rect containerBound = container.getBounds();
+        Rect labelBound = mainLabel.getBounds();
+
+
+        if (labelBound.bottom > containerBound.bottom / 2) {
+            return false;
+        }
+        return true;
     }
 }

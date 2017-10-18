@@ -69,7 +69,7 @@ public class TrashcanTest {
         TestHelper.hint.waitForExists(waitingTime);
         TestHelper.pressEnterKey();
         assertTrue(TestHelper.webView.waitForExists(waitingTime));
-
+        TestHelper.progressBar.waitUntilGone(waitingTime);
         // Press erase button, and check for message and return to the main page
         TestHelper.floatingEraseButton.perform(click());
         TestHelper.erasedMsg.waitForExists(waitingTime);
@@ -86,9 +86,10 @@ public class TrashcanTest {
         TestHelper.hint.waitForExists(waitingTime);
         TestHelper.pressEnterKey();
         assertTrue(TestHelper.webView.waitForExists(waitingTime));
+
         TestHelper.menuButton.perform(click());
         TestHelper.blockCounterItem.waitForExists(waitingTime);
-
+        TestHelper.progressBar.waitUntilGone(waitingTime);
         // Pull down system bar and select delete browsing history
         TestHelper.openNotification();
         TestHelper.notificationBarDeleteItem.waitForExists(waitingTime);
