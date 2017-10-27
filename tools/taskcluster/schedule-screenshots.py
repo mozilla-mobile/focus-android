@@ -19,7 +19,7 @@ from locales import SCREENSHOT_LOCALES
 TASK_ID = os.environ.get('TASK_ID')
 
 # The number of locales that we will generate screenshots for per taskcluster task.
-LOCALES_PER_TASK = 5
+LOCALES_PER_TASK = 1
 
 def generate_screenshot_task(locales):
 	"""Generate a new task that takes screenshots for the given set of locales"""
@@ -52,11 +52,8 @@ def generate_screenshot_task(locales):
 	        "command": [
 	            "/bin/bash",
 	            "--login",
-	            "-c",
-	            """ git fetch origin
-	            && git config advice.detachedHead false
-	            && git checkout origin/master
-	            && /opt/focus-android/tools/taskcluster/take-screenshots.sh %s""" % parameters
+	            "-cx",
+	            "git remote add pocmo https://github.com/pocmo/focus-android.git && git fetch pocmo && git checkout pocmo/taskcluster-testing && /opt/focus-android/tools/taskcluster/take-screenshots.sh %s" % parameters
 	        ],
 	        "artifacts": {
 				"public": {

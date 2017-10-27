@@ -90,13 +90,21 @@ public class NotificationScreenshots extends ScreenshotTest {
         device.openNotification();
 
         try {
-            if (!openAction.waitForExists(waitingTime)) {
+            if (!openAction.waitForExists(waitingTime * 2)) {
                 // The notification is not expanded. Let's expand it now.
-                device.findObject(new UiSelector()
-                        .text(getString(R.string.app_name)))
-                        .swipeDown(5);
+                final UiObject notification = device.findObject(new UiSelector()
+                        .text(getString(R.string.app_name)));
 
-                assertTrue(openAction.waitForExists(waitingTime));
+                notification.waitForExists(waitingTime * 2);
+                notification.swipeDown(50);
+
+                final boolean openActionExists = openAction.waitForExists(waitingTime * 2);
+
+                if (!openActionExists) {
+                    Screengrab.screenshot("FAIL_NO_NOTIFICATION");
+                }
+
+                assertTrue(openActionExists);
             }
 
             Screengrab.screenshot("DeleteHistory_NotificationBar");
