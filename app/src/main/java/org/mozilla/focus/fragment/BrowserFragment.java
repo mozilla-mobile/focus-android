@@ -27,6 +27,7 @@ import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -104,6 +105,8 @@ public class BrowserFragment extends WebFragment implements View.OnClickListener
     private ImageButton menuView;
     private View statusBar;
     private View urlBar;
+    private SwipeRefreshLayout swipeRefreshLayout;
+
     private WeakReference<BrowserMenu> menuWeakReference = new WeakReference<>(null);
 
     /**
@@ -286,6 +289,16 @@ public class BrowserFragment extends WebFragment implements View.OnClickListener
             initialiseNormalBrowserUi(view);
         }
 
+        swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipeContainer);
+        swipeRefreshLayout.setOnRefreshListener(
+                new SwipeRefreshLayout.OnRefreshListener() {
+                    @Override
+                    public void onRefresh() {
+                        getWebView().reload();
+                    }
+                }
+        );
+
         return view;
     }
 
@@ -404,7 +417,9 @@ public class BrowserFragment extends WebFragment implements View.OnClickListener
             public void onPageStarted(final String url) {}
 
             @Override
-            public void onPageFinished(boolean isSecure) {}
+            public void onPageFinished(boolean isSecure) {
+                swipeRefreshLayout.setRefreshing(false);
+            }
 
             @Override
             public void onURLChanged(final String url) {}
