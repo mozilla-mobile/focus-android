@@ -1,5 +1,4 @@
-/* -*- Mode: Java; c-basic-offset: 4; tab-width: 4; indent-tabs-mode: nil; -*-
- * This Source Code Form is subject to the terms of the Mozilla Public
+/* This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
@@ -23,18 +22,35 @@ import org.mozilla.focus.activity.SettingsActivity;
 import org.mozilla.focus.locale.LocaleManager;
 import org.mozilla.focus.locale.Locales;
 import org.mozilla.focus.telemetry.TelemetryWrapper;
+import org.mozilla.focus.utils.AppConstants;
 import org.mozilla.focus.widget.DefaultBrowserPreference;
 
 import java.util.Locale;
 
 public class SettingsFragment extends PreferenceFragment implements SharedPreferences.OnSharedPreferenceChangeListener {
-    public static final String FRAGMENT_RESID_INTENT_EXTRA = "extra_frament_resid";
+    public static final String PREFERENCES_RESID_INTENT_EXTRA = "extra_preferences_resid";
     public static final String TITLE_RESID_INTENT_EXTRA = "extra_title_resid";
+
+    public static final int EXTRA_VALUE_NONE = -1;
 
     private boolean localeUpdated;
 
-    public interface TitleUpdater {
-        void updateTitle(int stringResId);
+    public interface ActionBarUpdater {
+        void updateTitle(int titleResId);
+        void updateIcon(int iconResId);
+    }
+
+    public static SettingsFragment newInstance(Bundle intentArgs, int prefsResId, int titleResId) {
+        SettingsFragment f = new SettingsFragment();
+        f.setArguments(makeArgumentBundle(intentArgs, prefsResId, titleResId));
+        return f;
+    }
+
+    protected static Bundle makeArgumentBundle(Bundle intentArgs, int prefsResId, int titleResId) {
+        final Bundle args = intentArgs != null ? intentArgs : new Bundle();
+        args.putInt(PREFERENCES_RESID_INTENT_EXTRA, prefsResId);
+        args.putInt(TITLE_RESID_INTENT_EXTRA, titleResId);
+        return args;
     }
 
     @Override
@@ -42,13 +58,10 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
         super.onCreate(savedInstanceState);
 
         final Bundle args = getArguments();
-        final int prefResId = args != null ? args.getInt(FRAGMENT_RESID_INTENT_EXTRA) : R.xml.settings;
-        final int titleResId = args != null ? args.getInt(TITLE_RESID_INTENT_EXTRA) : R.string.menu_settings;
+        int prefResId = R.xml.settings;
 
-       // We've checked that this cast is legal in onAttach.
-        final TitleUpdater titleUpdater = (TitleUpdater) getActivity();
-        if (titleUpdater != null) {
-            titleUpdater.updateTitle(titleResId);
+        if (args != null) {
+            prefResId = args.getInt(PREFERENCES_RESID_INTENT_EXTRA, R.xml.settings);
         }
 
         addPreferencesFromResource(prefResId);
@@ -57,10 +70,11 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if (!(context instanceof TitleUpdater)) {
-            throw new IllegalArgumentException("Parent activity must implement TitleUpdater");
+        if (!(getActivity() instanceof ActionBarUpdater)) {
+            throw new IllegalArgumentException("Parent activity must implement ActionBarUpdater");
         }
     }
+
     @Override
     public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen, Preference preference) {
         final Resources resources = getResources();
@@ -81,13 +95,36 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
             final Intent intent = InfoActivity.getPrivacyNoticeIntent(getActivity());
             startActivity(intent);
         } else if (preference.getKey().equals(resources.getString(R.string.pref_key_search_engine))) {
-            final Intent intent = new Intent(getActivity(), SettingsActivity.class);
-            intent.putExtra(FRAGMENT_RESID_INTENT_EXTRA, R.xml.search_engine_settings);
-            intent.putExtra(TITLE_RESID_INTENT_EXTRA, R.string.preference_search_installed_search_engines);
-            startActivity(intent);
+            showSettingsFragment( AppConstants.FLAG_MANUAL_SEARCH_ENGINE ? R.xml.search_engine_settings_featureflag_manual : R.xml.search_engine_settings,
+                    R.string.preference_search_installed_search_engines);
+        } else if (preference.getKey().equals(resources.getString(R.string.pref_key_manual_add_search_engine))) {
+            showSettingsFragment(ManualAddSearchEngineSettingsFragment.FRAGMENT_CLASS_TYPE,
+                    R.xml.manual_add_search_engine,
+                    R.string.tutorial_search_title);
         }
 
         return super.onPreferenceTreeClick(preferenceScreen, preference);
+    }
+
+    private void showSettingsFragment(int prefsResId, int titleResId) {
+        showSettingsFragment(EXTRA_VALUE_NONE, prefsResId, titleResId);
+    }
+
+    private void showSettingsFragment(int fragmentClassType, int prefsResId, int titleResId) {
+        final SettingsFragment fragment;
+        switch (fragmentClassType) {
+            case ManualAddSearchEngineSettingsFragment.FRAGMENT_CLASS_TYPE:
+                fragment = ManualAddSearchEngineSettingsFragment.newInstance(null, prefsResId, titleResId);
+                break;
+
+            default:
+                fragment = SettingsFragment.newInstance(null, prefsResId, titleResId);
+        }
+
+        getFragmentManager().beginTransaction()
+                .replace(R.id.container, fragment)
+                .addToBackStack(null)
+                .commit();
     }
 
     @Override
@@ -100,6 +137,11 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
         if (preference != null) {
             preference.update();
         }
+
+        // Update title and icons when returning to fragments.
+        final ActionBarUpdater updater = (ActionBarUpdater) getActivity();
+        updater.updateTitle(getArguments().getInt(TITLE_RESID_INTENT_EXTRA));
+        updater.updateIcon(R.drawable.ic_back);
     }
 
     @Override

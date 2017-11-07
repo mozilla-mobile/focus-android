@@ -9,13 +9,13 @@ import android.preference.PreferenceFragment;
 import android.support.annotation.Nullable;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
+import android.view.MenuItem;
 
 import org.mozilla.focus.R;
 import org.mozilla.focus.locale.LocaleAwareAppCompatActivity;
 import org.mozilla.focus.settings.SettingsFragment;
 
-public class SettingsActivity extends LocaleAwareAppCompatActivity implements SettingsFragment.TitleUpdater {
+public class SettingsActivity extends LocaleAwareAppCompatActivity implements SettingsFragment.ActionBarUpdater {
     public static final int ACTIVITY_RESULT_LOCALE_CHANGED = 1;
 
     @Override
@@ -32,15 +32,7 @@ public class SettingsActivity extends LocaleAwareAppCompatActivity implements Se
 
         actionBar.setDisplayHomeAsUpEnabled(true);
 
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
-
-        final PreferenceFragment fragment = new SettingsFragment();
-        fragment.setArguments(getIntent().getExtras());
+        final PreferenceFragment fragment = SettingsFragment.newInstance(getIntent().getExtras(), R.xml.settings, R.string.menu_settings);
 
         getFragmentManager().beginTransaction()
                 .replace(R.id.container, fragment)
@@ -53,6 +45,16 @@ public class SettingsActivity extends LocaleAwareAppCompatActivity implements Se
     }
 
     @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
     public void applyLocale() {
         setTitle(R.string.menu_settings);
     }
@@ -60,5 +62,10 @@ public class SettingsActivity extends LocaleAwareAppCompatActivity implements Se
     @Override
     public void updateTitle(int titleResId) {
         setTitle(titleResId);
+    }
+
+    @Override
+    public void updateIcon(int iconResId) {
+        getSupportActionBar().setHomeAsUpIndicator(iconResId);
     }
 }
