@@ -23,9 +23,10 @@ public class SessionCallbackProxy implements IWebView.Callback {
     }
 
     @Override
-    public void onPageStarted(String url) {
+    public void onPageStarted(String url, boolean isErrorPage) {
         session.setLoading(true);
         session.setSecure(false);
+        session.setIsErrorPage(isErrorPage);
 
         // We are always setting the progress to 5% when a new page starts loading. Otherwise it might
         // look like the browser is doing nothing (on a slow network) until we receive a progress

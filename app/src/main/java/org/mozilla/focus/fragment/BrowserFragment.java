@@ -299,6 +299,13 @@ public class BrowserFragment extends WebFragment implements View.OnClickListener
             initialiseNormalBrowserUi(view);
         }
 
+        session.getIsErrorPage().observe(this, new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean isErrorPage) {
+                swipeRefresh.setEnabled(!isErrorPage);
+            }
+        });
+
         return view;
     }
 
@@ -414,7 +421,7 @@ public class BrowserFragment extends WebFragment implements View.OnClickListener
     public IWebView.Callback createCallback() {
         return new SessionCallbackProxy(session, new IWebView.Callback() {
             @Override
-            public void onPageStarted(final String url) {}
+            public void onPageStarted(final String url, final boolean isErrorPage) {}
 
             @Override
             public void onPageFinished(boolean isSecure) {}

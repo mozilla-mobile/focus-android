@@ -61,7 +61,7 @@ public class InfoFragment extends WebFragment {
     public IWebView.Callback createCallback() {
         return new IWebView.Callback() {
             @Override
-            public void onPageStarted(final String url) {
+            public void onPageStarted(final String url, final boolean isErrorPage) {
                 progressView.announceForAccessibility(getString(R.string.accessibility_announcement_loading));
 
                 progressView.setVisibility(View.VISIBLE);

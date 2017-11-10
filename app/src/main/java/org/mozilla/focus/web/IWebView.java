@@ -36,7 +36,7 @@ public interface IWebView {
     }
 
     interface Callback {
-        void onPageStarted(String url);
+        void onPageStarted(String url, boolean isErrorPage);
 
         void onPageFinished(boolean isSecure);
         void onProgress(int progress);
