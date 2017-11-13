@@ -164,7 +164,7 @@ public class SystemWebView extends NestedWebView implements IWebView, SharedPref
         // first time using loadUrl().
         if (!client.shouldOverrideUrlLoading(this, url)) {
             Map<String, String> additionalHeaders = new HashMap<>();
-            additionalHeaders.put("X-Requested-With","");
+            additionalHeaders.put("X-Requested-With", "");
             super.loadUrl(url, additionalHeaders);
         }
 
