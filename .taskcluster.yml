@@ -23,8 +23,11 @@ tasks:
           - pull_request.edited
           - pull_request.synchronize
           - pull_request.reopened
+    scopes:
+      - "queue:create-task:aws-provisioner-v1/github-worker"
+      - "queue:scheduler-id:taskcluster-github"
     payload:
-      maxRunTime: 3600
+      maxRunTime: 1800
       deadline: "{{ '2 hours' | $fromNow }}"
       image: 'mozillamobile/focus-android'
       command:
@@ -35,16 +38,13 @@ tasks:
           git fetch {{ event.head.repo.url }} {{ event.head.repo.branch }}
           && git config advice.detachedHead false
           && git checkout {{event.head.sha}}
-          && echo "--" > .adjust_token
-          && ./gradlew clean assemble test lint pmd checkstyle findbugs
-      artifacts:
-        'public':
-          type: 'directory'
-          path: '/opt/focus-android/app/build/reports'
-          expires: "{{ '1 week' | $fromNow }}"
+          && python /opt/focus-android/tools/taskcluster/schedule-screenshots.py
+      features: {
+        "taskclusterProxy": true
+      }
     metadata:
-      name: Focus for Android - Build - Pull Request
-      description: Building Focus for Android (via Gradle) - triggered by a pull request.
+      name: Focus for Android - Screenshots decision task
+      description: Task for scheduling sub tasks that create screenshots in different locales
       owner: '{{ event.head.user.email }}'
       source: '{{ event.head.repo.url }}'
 ###############################################################################

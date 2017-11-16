@@ -4,6 +4,7 @@
 
 package org.mozilla.focus.activity.screenshots;
 
+import android.support.test.espresso.IdlingRegistry;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 import android.support.test.uiautomator.UiObject;
@@ -19,6 +20,7 @@ import org.mozilla.focus.R;
 import org.mozilla.focus.activity.MainActivity;
 import org.mozilla.focus.activity.TestHelper;
 import org.mozilla.focus.activity.helpers.MainActivityFirstrunTestRule;
+import org.mozilla.focus.activity.helpers.SessionLoadedIdlingResource;
 
 import java.io.IOException;
 
@@ -71,6 +73,21 @@ public class NotificationScreenshots extends ScreenshotTest {
         }
     }
 
+    private SessionLoadedIdlingResource loadingIdlingResource;
+
+    @Before
+    public void setUp() {
+        loadingIdlingResource = new SessionLoadedIdlingResource();
+        IdlingRegistry.getInstance().register(loadingIdlingResource);
+    }
+
+    @After
+    public void tearDown() throws Exception {
+        IdlingRegistry.getInstance().unregister(loadingIdlingResource);
+
+        mActivityTestRule.getActivity().finishAndRemoveTask();
+    }
+
     @Test
     public void takeScreenshotOfNotification() throws Exception {
         onView(withId(R.id.url_edit))
@@ -87,16 +104,33 @@ public class NotificationScreenshots extends ScreenshotTest {
                 .resourceId("android:id/action0")
                 .enabled(true));
 
+        TestHelper.webView.waitForExists(waitingTime);
+        TestHelper.progressBar.waitUntilGone(waitingTime);
+
+        Screengrab.screenshot("000_BEFORE");
+
         device.openNotification();
 
         try {
-            if (!openAction.waitForExists(waitingTime)) {
+            if (!openAction.waitForExists(waitingTime * 2)) {
                 // The notification is not expanded. Let's expand it now.
-                device.findObject(new UiSelector()
-                        .text(getString(R.string.app_name)))
-                        .swipeDown(5);
+                final UiObject notification = device.findObject(new UiSelector()
+                        .text(getString(R.string.app_name)));
 
-                assertTrue(openAction.waitForExists(waitingTime));
+                if (!notification.waitForExists(waitingTime * 2)) {
+                    Screengrab.screenshot("000_NO_NOTIFICATION");
+                }
+
+
+                notification.swipeDown(50);
+
+                final boolean openActionExists = openAction.waitForExists(waitingTime * 2);
+
+                if (!openActionExists) {
+                    Screengrab.screenshot("000_NO_ACTION");
+                }
+
+                assertTrue(openActionExists);
             }
 
             Screengrab.screenshot("DeleteHistory_NotificationBar");
