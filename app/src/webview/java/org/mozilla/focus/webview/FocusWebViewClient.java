@@ -151,8 +151,11 @@ import org.mozilla.focus.web.IWebView;
             // Since the final onPageFinished isn't guaranteed (and we know we're showing an error
             // page already), we don't need to send the onPageStarted() callback a second time anyway.
             errorReceived = false;
+            if (callback != null) {
+                callback.onPageStarted(url, true);
+            }
         } else if (callback != null) {
-            callback.onPageStarted(url);
+            callback.onPageStarted(url, false);
         }
 
         super.onPageStarted(view, url, favicon);

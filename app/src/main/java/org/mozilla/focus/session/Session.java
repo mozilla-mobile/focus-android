@@ -23,6 +23,7 @@ public class Session {
     private final NonNullMutableLiveData<String> url;
     private final NonNullMutableLiveData<Integer> progress;
     private final NonNullMutableLiveData<Boolean> secure;
+    private final NonNullMutableLiveData<Boolean> isErrorPage;
     private final NonNullMutableLiveData<Boolean> loading;
     private final NonNullMutableLiveData<Integer> trackersBlocked;
     private CustomTabConfig customTabConfig;
@@ -39,6 +40,7 @@ public class Session {
         this.url = new NonNullMutableLiveData<>(url);
         this.progress = new NonNullMutableLiveData<>(0);
         this.secure = new NonNullMutableLiveData<>(false);
+        this.isErrorPage = new NonNullMutableLiveData<>(false);
         this.loading = new NonNullMutableLiveData<>(false);
         this.trackersBlocked = new NonNullMutableLiveData<>(0);
 
@@ -82,6 +84,14 @@ public class Session {
 
     public NonNullLiveData<Boolean> getSecure() {
         return secure;
+    }
+
+    /* package */ void setIsErrorPage(boolean isErrorPage) {
+        this.isErrorPage.setValue(isErrorPage);
+    }
+
+    public NonNullLiveData<Boolean> getIsErrorPage() {
+        return isErrorPage;
     }
 
     /* package */ void setLoading(boolean loading) {
