@@ -230,6 +230,15 @@ public class SessionManager {
         removeSession(currentSessionUUID);
     }
 
+    /**
+     * Remove the session by its UUID.
+     */
+    public void removeSessionByUUID(@NonNull int position) {
+        final Session session = this.sessions.getValue().get(position);
+        final String deleteId = session.getUUID();
+        removeSession(deleteId);
+    }
+
     @VisibleForTesting void removeSession(String uuid) {
         final List<Session> sessions = new ArrayList<>();
 
