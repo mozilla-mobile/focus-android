@@ -62,7 +62,7 @@ public class LocalizedContent {
         final String aboutContent = resources.getString(R.string.about_content, appName, learnMoreURL);
         substitutionMap.put("%about-content%", aboutContent);
 
-        final String wordmark = HtmlLoader.loadPngAsDataURI(context, R.drawable.workdmark_clover);
+        final String wordmark = HtmlLoader.loadPngAsDataURI(context, R.drawable.wordmark_clover);
         substitutionMap.put("%wordmark%", wordmark);
 
         putLayoutDirectionIntoMap(webView, substitutionMap);
