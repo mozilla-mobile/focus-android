@@ -7,7 +7,6 @@ package org.mozilla.focus.session
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.support.annotation.VisibleForTesting
 import android.text.TextUtils
 import org.mozilla.focus.architecture.NonNullLiveData
 import org.mozilla.focus.architecture.NonNullMutableLiveData
@@ -42,19 +41,7 @@ class SessionManager private constructor() {
 
     val positionOfCurrentSession: Int
         get() {
-            if (currentSessionUUID == null) {
-                return -1
-            }
-
-            for (i in 0 until this.sessions.value.size) {
-                val session = this.sessions.value[i]
-
-                if (session.uuid == currentSessionUUID) {
-                    return i
-                }
-            }
-
-            return -1
+            return getPositionByUUID(currentSessionUUID)
         }
 
     init {
@@ -110,17 +97,12 @@ class SessionManager private constructor() {
                 return
             }
 
-            val isSearch = !UrlUtils.isUrl(dataString)
-
-            val url = if (isSearch)
-                UrlUtils.createSearchUrl(context, dataString)
-            else
-                dataString
-
-            if (isSearch) {
-                createSearchSession(Source.SHARE, url, dataString)
+            if (UrlUtils.isUrl(dataString)) {
+                createSession(Source.SHARE, dataString)
             } else {
-                createSession(Source.SHARE, url)
+                // dataString contains a search string
+                val url = UrlUtils.createSearchUrl(context, dataString)
+                createSearchSession(Source.SHARE, url, dataString)
             }
         }
     }
@@ -137,23 +119,16 @@ class SessionManager private constructor() {
     }
 
     fun hasSessionWithUUID(uuid: String): Boolean {
-        for (session in sessions.value) {
-            if (uuid == session.uuid) {
-                return true
-            }
-        }
-
-        return false
+        return sessions.value.any { session -> session.uuid == uuid }
     }
 
     fun getSessionByUUID(uuid: String): Session {
-        for (session in sessions.value) {
-            if (uuid == session.uuid) {
-                return session
-            }
-        }
+        return sessions.value.find { session -> session.uuid == uuid }
+                ?: throw IllegalAccessError("There's no active session with UUID " + uuid)
+    }
 
-        throw IllegalAccessError("There's no active session with UUID " + uuid)
+    private fun getPositionByUUID(uuid: String?): Int {
+        return sessions.value.indexOfFirst { session -> session.uuid == uuid }
     }
 
     fun getSessions(): NonNullLiveData<List<Session>> {
@@ -221,33 +196,25 @@ class SessionManager private constructor() {
      * Remove the current (selected) session.
      */
     fun removeCurrentSession() {
-        removeSession(currentSessionUUID)
+        removeSessionByUUID(currentSessionUUID)
     }
 
-    fun removeSession(uuid: String?) {
-        val sessions = ArrayList<Session>()
+    fun removeSessionByUUID(uuid: String?) {
+        removeSessionByPosition(getPositionByUUID(uuid))
+    }
 
-        var removedFromPosition = -1
-
-        for (i in 0 until this.sessions.value.size) {
-            val currentSession = this.sessions.value[i]
-
-            if (currentSession.uuid == uuid) {
-                removedFromPosition = i
-                continue
-            }
-
-            sessions.add(currentSession)
-        }
-
-        if (removedFromPosition == -1) {
+    fun removeSessionByPosition(position: Int) {
+        if (position < 0) {
             return
         }
+
+        val sessions = this.sessions.value.toMutableList()
+        sessions.removeAt(position)
 
         if (sessions.isEmpty()) {
             currentSessionUUID = null
         } else {
-            val currentSession = sessions[Math.min(removedFromPosition, sessions.size - 1)]
+            val currentSession = sessions[Math.min(position, sessions.size - 1)]
             currentSessionUUID = currentSession.uuid
         }
 
