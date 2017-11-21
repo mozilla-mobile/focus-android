@@ -36,7 +36,7 @@ class SessionViewHolder internal constructor(private val fragment: SessionsSheet
 
         updateUrl(session)
 
-        val isCurrentSession = SessionManager.getInstance().isCurrentSession(session)
+        val isCurrentSession = SessionManager.instance.isCurrentSession(session)
         val actionColor = ContextCompat.getColor(textView.context, R.color.colorAction)
         val darkColor = ContextCompat.getColor(textView.context, R.color.colorSession)
 
@@ -69,7 +69,7 @@ class SessionViewHolder internal constructor(private val fragment: SessionsSheet
     private fun selectSession(session: Session) {
         fragment.animateAndDismiss().addListener(object : AnimatorListenerAdapter() {
             override fun onAnimationEnd(animation: Animator) {
-                SessionManager.getInstance().selectSession(session)
+                SessionManager.instance.selectSession(session)
 
                 TelemetryWrapper.switchTabInTabsTrayEvent()
             }

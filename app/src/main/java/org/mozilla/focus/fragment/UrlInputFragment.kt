@@ -115,7 +115,7 @@ class UrlInputFragment : LocaleAwareFragment(), View.OnClickListener, InlineAuto
 
         // Get session from session manager if there's a session UUID in the fragment's arguments
         arguments?.getString(ARGUMENT_SESSION_UUID)?.let {
-            session = SessionManager.getInstance().getSessionByUUID(it)
+            session = SessionManager.instance.getSessionByUUID(it)
         }
 
         context?.let {
@@ -230,7 +230,7 @@ class UrlInputFragment : LocaleAwareFragment(), View.OnClickListener, InlineAuto
 
                 WhatsNew.userViewedWhatsNew(it)
 
-                SessionManager.getInstance()
+                SessionManager.instance
                         .createSession(Source.MENU, SupportUtils.getWhatsNewUrl(context))
             }
 
@@ -469,9 +469,9 @@ class UrlInputFragment : LocaleAwareFragment(), View.OnClickListener, InlineAuto
                     .commit()
         } else {
             if (!TextUtils.isEmpty(searchTerms)) {
-                SessionManager.getInstance().createSearchSession(Source.USER_ENTERED, url, searchTerms)
+                SessionManager.instance.createSearchSession(Source.USER_ENTERED, url, searchTerms)
             } else {
-                SessionManager.getInstance().createSession(Source.USER_ENTERED, url)
+                SessionManager.instance.createSession(Source.USER_ENTERED, url)
             }
         }
     }
