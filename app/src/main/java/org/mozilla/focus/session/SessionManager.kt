@@ -224,7 +224,7 @@ class SessionManager private constructor() {
         removeSession(currentSessionUUID)
     }
 
-    @VisibleForTesting internal fun removeSession(uuid: String?) {
+    fun removeSession(uuid: String?) {
         val sessions = ArrayList<Session>()
 
         var removedFromPosition = -1

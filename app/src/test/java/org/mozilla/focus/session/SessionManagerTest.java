@@ -36,12 +36,12 @@ public class SessionManagerTest {
     @Before
     public void setUp() {
         // Always start tests with a clean session manager
-        SessionManager.getInstance().removeAllSessions();
+        SessionManager.Companion.getInstance().removeAllSessions();
     }
 
     @Test
     public void testInitialState() {
-        final SessionManager sessionManager = SessionManager.getInstance();
+        final SessionManager sessionManager = SessionManager.Companion.getInstance();
 
         assertNotNull(sessionManager.getSessions().getValue());
         assertEquals(0, sessionManager.getSessions().getValue().size());
@@ -50,7 +50,7 @@ public class SessionManagerTest {
 
     @Test
     public void testViewIntent() {
-        final SessionManager sessionManager = SessionManager.getInstance();
+        final SessionManager sessionManager = SessionManager.Companion.getInstance();
 
         final SafeIntent intent = new SafeIntent(new Intent(Intent.ACTION_VIEW, Uri.parse(TEST_URL)));
         sessionManager.handleIntent(RuntimeEnvironment.application, intent, null);
@@ -72,7 +72,7 @@ public class SessionManagerTest {
      */
     @Test
     public void testViewIntentWithNullURL() {
-        final SessionManager sessionManager = SessionManager.getInstance();
+        final SessionManager sessionManager = SessionManager.Companion.getInstance();
         assertFalse(sessionManager.hasSession());
 
         final SafeIntent intent = new SafeIntent(new Intent(Intent.ACTION_VIEW, null));
@@ -84,7 +84,7 @@ public class SessionManagerTest {
 
     @Test
     public void testCustomTabIntent() {
-        final SessionManager sessionManager = SessionManager.getInstance();
+        final SessionManager sessionManager = SessionManager.Companion.getInstance();
 
         final SafeIntent intent = new SafeIntent(new CustomTabsIntent.Builder()
                 .setToolbarColor(Color.GREEN)
@@ -114,7 +114,7 @@ public class SessionManagerTest {
 
     @Test
     public void testViewIntentFromHistoryIsIgnored() {
-        final SessionManager sessionManager = SessionManager.getInstance();
+        final SessionManager sessionManager = SessionManager.Companion.getInstance();
 
         final Intent unsafeIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(TEST_URL));
         unsafeIntent.addFlags(Intent.FLAG_ACTIVITY_LAUNCHED_FROM_HISTORY);
@@ -131,7 +131,7 @@ public class SessionManagerTest {
 
     @Test
     public void testNoSessionIsCreatedIfWeAreRestoring() {
-        final SessionManager sessionManager = SessionManager.getInstance();
+        final SessionManager sessionManager = SessionManager.Companion.getInstance();
 
         final Bundle instanceState = new Bundle();
 
@@ -147,7 +147,7 @@ public class SessionManagerTest {
 
     @Test
     public void testShareIntentViaNewIntent() {
-        final SessionManager sessionManager = SessionManager.getInstance();
+        final SessionManager sessionManager = SessionManager.Companion.getInstance();
 
         final Intent unsafeIntent = new Intent(Intent.ACTION_SEND);
         unsafeIntent.putExtra(Intent.EXTRA_TEXT, TEST_URL);
@@ -168,7 +168,7 @@ public class SessionManagerTest {
     }
 
     public void testShareIntentWithTextViaNewIntent() {
-        final SessionManager sessionManager = SessionManager.getInstance();
+        final SessionManager sessionManager = SessionManager.Companion.getInstance();
 
         final Intent unsafeIntent = new Intent(Intent.ACTION_SEND);
         unsafeIntent.putExtra(Intent.EXTRA_TEXT, "Hello World Focus");
@@ -191,13 +191,13 @@ public class SessionManagerTest {
 
     @Test(expected = IllegalAccessError.class)
     public void getCurrentSessionThrowsExceptionIfThereIsNoSession() {
-        final SessionManager sessionManager = SessionManager.getInstance();
+        final SessionManager sessionManager = SessionManager.Companion.getInstance();
         sessionManager.getCurrentSession();
     }
 
     @Test
     public void testHasSessionWithUUID() {
-        final SessionManager sessionManager = SessionManager.getInstance();
+        final SessionManager sessionManager = SessionManager.Companion.getInstance();
         assertFalse(sessionManager.hasSessionWithUUID(UUID.randomUUID().toString()));
 
         sessionManager.createSession(Source.USER_ENTERED, TEST_URL);
@@ -212,13 +212,13 @@ public class SessionManagerTest {
 
     @Test(expected = IllegalAccessError.class)
     public void getSessionByUUIDThrowsExceptionIfSessionDoesNotExist() {
-        final SessionManager sessionManager = SessionManager.getInstance();
+        final SessionManager sessionManager = SessionManager.Companion.getInstance();
         sessionManager.getSessionByUUID(UUID.randomUUID().toString());
     }
 
     @Test
     public void testRemovingSessions() {
-        final SessionManager sessionManager = SessionManager.getInstance();
+        final SessionManager sessionManager = SessionManager.Companion.getInstance();
 
         sessionManager.createSession(Source.USER_ENTERED, TEST_URL);
         sessionManager.createSession(Source.VIEW, TEST_URL_2);
@@ -259,7 +259,7 @@ public class SessionManagerTest {
 
     @Test
     public void testRemovingAllSessions() {
-        final SessionManager sessionManager = SessionManager.getInstance();
+        final SessionManager sessionManager = SessionManager.Companion.getInstance();
 
         sessionManager.createSession(Source.USER_ENTERED, TEST_URL);
         sessionManager.createSession(Source.VIEW, TEST_URL_2);
@@ -276,7 +276,7 @@ public class SessionManagerTest {
 
     @Test
     public void testHasSessionWithUUIDWithUnknownUUID() {
-        final SessionManager sessionManager = SessionManager.getInstance();
+        final SessionManager sessionManager = SessionManager.Companion.getInstance();
         sessionManager.createSession(Source.USER_ENTERED, TEST_URL);
 
         assertFalse(sessionManager.hasSessionWithUUID(UUID.randomUUID().toString()));
@@ -284,7 +284,7 @@ public class SessionManagerTest {
 
     @Test
     public void testRemovingUnknownSessionHasNoEffect() {
-        final SessionManager sessionManager = SessionManager.getInstance();
+        final SessionManager sessionManager = SessionManager.Companion.getInstance();
         sessionManager.removeSession(UUID.randomUUID().toString());
 
         assertFalse(sessionManager.hasSession());
