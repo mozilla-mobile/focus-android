@@ -227,19 +227,22 @@ public class SessionManager {
      * Remove the current (selected) session.
      */
     public void removeCurrentSession() {
-        removeSession(currentSessionUUID);
+        removeSessionByUUID(currentSessionUUID);
     }
 
     /**
-     * Remove the session by its UUID.
+     * Remove a session by its position.
      */
-    public void removeSessionByUUID(@NonNull int position) {
+    public void removeSessionByPosition(@NonNull int position) {
         final Session session = this.sessions.getValue().get(position);
         final String deleteId = session.getUUID();
-        removeSession(deleteId);
+        removeSessionByUUID(deleteId);
     }
 
-    @VisibleForTesting void removeSession(String uuid) {
+    /**
+     * Remove a session by its UUID.
+     */
+    @VisibleForTesting void removeSessionByUUID(String uuid) {
         final List<Session> sessions = new ArrayList<>();
 
         int removedFromPosition = -1;

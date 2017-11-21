@@ -32,7 +32,6 @@ import org.mozilla.focus.telemetry.TelemetryWrapper;
 import org.mozilla.focus.utils.OneShotOnPreDrawListener;
 
 public class SessionsSheetFragment extends LocaleAwareFragment implements View.OnClickListener {
-    private static final String TAG = "SessionsSheetFragment";
     public static final String FRAGMENT_TAG = "tab_sheet";
 
     private static final int ANIMATION_DURATION = 200;
@@ -129,7 +128,7 @@ public class SessionsSheetFragment extends LocaleAwareFragment implements View.O
         public void onSwiped(final RecyclerView.ViewHolder viewHolder, int direction) {
             if (direction == ItemTouchHelper.LEFT) {
                 final int deleteIndex = viewHolder.getAdapterPosition();
-                SessionManager.getInstance().removeSessionByUUID(deleteIndex);
+                SessionManager.getInstance().removeSessionByPosition(deleteIndex);
             }
         }
     };
