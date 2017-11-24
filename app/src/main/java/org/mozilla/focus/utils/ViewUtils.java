@@ -115,7 +115,7 @@ public class ViewUtils {
     /**
      * Create a snackbar with Focus branding (See #193).
      */
-    public static void showBrandedSnackbar(View view, @StringRes int resId, int delayMillis) {
+    public static Snackbar makeBrandedSnackbar(View view, @StringRes int resId) {
         final Context context = view.getContext();
         final Snackbar snackbar = Snackbar.make(view, resId, Snackbar.LENGTH_LONG);
 
@@ -127,12 +127,7 @@ public class ViewUtils {
         snackbarTextView.setGravity(Gravity.CENTER);
         snackbarTextView.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
 
-        view.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                snackbar.show();
-            }
-        }, delayMillis);
+        return snackbar;
     }
 
     public static boolean isRTL(View view) {
