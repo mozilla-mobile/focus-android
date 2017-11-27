@@ -15,6 +15,7 @@ import org.mozilla.focus.utils.Settings
 import org.mozilla.focus.widget.InlineAutocompleteEditText
 import java.io.IOException
 import java.util.*
+import kotlin.collections.LinkedHashSet
 
 class UrlAutoCompleteFilter : InlineAutocompleteEditText.OnFilterListener {
     companion object {
@@ -23,8 +24,8 @@ class UrlAutoCompleteFilter : InlineAutocompleteEditText.OnFilterListener {
 
     private var settings : Settings? = null
 
-    private val customDomains = LinkedHashSet<String>()
-    private val preInstalledDomains = LinkedHashSet<String>()
+    private var customDomains : List<String> = emptyList()
+    private var preInstalledDomains : List<String> = emptyList()
 
     override fun onFilter(rawSearchText: String, view: InlineAutocompleteEditText?) {
         if (view == null) {
@@ -53,7 +54,7 @@ class UrlAutoCompleteFilter : InlineAutocompleteEditText.OnFilterListener {
         }
     }
 
-    private fun tryToAutocomplete(searchText: String, domains: Set<String>): String? {
+    private fun tryToAutocomplete(searchText: String, domains: List<String>): String? {
         domains.forEach {
             val wwwDomain = "www." + it
             if (wwwDomain.startsWith(searchText)) {
@@ -68,25 +69,25 @@ class UrlAutoCompleteFilter : InlineAutocompleteEditText.OnFilterListener {
         return null
     }
 
-    internal fun onDomainsLoaded(domains: Set<String>, customDomains: Set<String>) {
-        this.preInstalledDomains.addAll(domains)
-        this.customDomains.addAll(customDomains)
+    internal fun onDomainsLoaded(domains: List<String>, customDomains: List<String>) {
+        this.preInstalledDomains = domains
+        this.customDomains = customDomains
     }
 
-    fun initialize(context: Context, loadDomainsFromDisk: Boolean = true) {
+    fun load(context: Context, loadDomainsFromDisk: Boolean = true) {
         settings = Settings.getInstance(context)
 
         if (loadDomainsFromDisk) {
             launch(UI) {
                 val domains = async(CommonPool) { loadDomains(context) }
-                val customDomains = async(CommonPool) { CustomAutoComplete.loadCustomAutoCompleteDomains(context) }
+                val customDomains = async(CommonPool) { CustomAutocomplete.loadCustomAutoCompleteDomains(context) }
 
                 onDomainsLoaded(domains.await(), customDomains.await())
             }
         }
     }
 
-    private suspend fun loadDomains(context: Context): Set<String> {
+    private suspend fun loadDomains(context: Context): List<String> {
         val domains = LinkedHashSet<String>()
         val availableLists = getAvailableDomainLists(context)
 
@@ -99,11 +100,11 @@ class UrlAutoCompleteFilter : InlineAutocompleteEditText.OnFilterListener {
         // And then add domains from the global list
         loadDomainsForLanguage(context, domains, "global")
 
-        return domains
+        return domains.toList()
     }
 
     private fun getAvailableDomainLists(context: Context): Set<String> {
-        val availableDomains = HashSet<String>()
+        val availableDomains = LinkedHashSet<String>()
 
         val assetManager = context.assets
 
