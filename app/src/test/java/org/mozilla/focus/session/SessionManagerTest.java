@@ -285,7 +285,7 @@ public class SessionManagerTest {
     @Test
     public void testRemovingUnknownSessionHasNoEffect() {
         final SessionManager sessionManager = SessionManager.getInstance();
-        sessionManager.removeSession(UUID.randomUUID().toString());
+        sessionManager.removeSessionByUUID(UUID.randomUUID().toString());
 
         assertFalse(sessionManager.hasSession());
         assertEquals(0, sessionManager.getSessions().getValue().size());
