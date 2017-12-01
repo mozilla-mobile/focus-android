@@ -47,14 +47,26 @@ import static org.mozilla.focus.fragment.FirstrunFragment.FIRSTRUN_PREF;
  */
 @RunWith(AndroidJUnit4.class)
 public class WebViewDataTest {
-    private static final List<String> WHITELIST = Arrays.asList(
+    private static final List<String> WHITELIST_DATA_DIR_CONTENTS = Arrays.asList(
             "cache", // We assert that this folder is empty
             "code_cache",
             "shared_prefs",
             "app_dxmaker_cache",
             "telemetry",
             "databases",
-            "app_webview"
+            "app_webview",
+
+            // Android Studio will inject these files if you:
+            // - Build with Android Studio 3.0+
+            // - Have opened the "Android Profiler" tab at least once since the AS process started
+            // - Run on an API 26+ device (or maybe when explicitly enabling advanced debugging on older devices)
+            //
+            // This should only affect local builds and we don't want to risk breaking the profiler so
+            // we whitelist them. Additional details around when these files are added can be found in:
+            //   https://github.com/mozilla-mobile/focus-android/issues/1842#issuecomment-348038392
+            "libperfa_x86.so",
+            "perfa.jar",
+            "perfd"
     );
 
     // We expect those folders to exist but they should be empty.
@@ -202,7 +214,8 @@ public class WebViewDataTest {
                 continue;
             }
 
-            assertTrue("Check '" + name + "' is in whitelist", WHITELIST.contains(name));
+            assertTrue("Expected file '" + name + "' to be in the app's data dir whitelist",
+                    WHITELIST_DATA_DIR_CONTENTS.contains(name));
         }
 
         assertNoTraces(dataDir);
