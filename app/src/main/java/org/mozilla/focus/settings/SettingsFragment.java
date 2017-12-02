@@ -118,21 +118,37 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
     }
 
     @Override
+    public void onPrepareOptionsMenu(Menu menu) {
+        switch (settingsScreen) {
+            case SEARCH_ENGINES:
+                if (SearchEngineManager.hasAllDefaultSearchEngines(getSearchEngineSharedPreferences())) {
+                    menu.findItem(R.id.menu_restore_default_engines).setEnabled(false);
+                }
+                break;
+            default:
+                return;
+        }
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menu_remove_search_engines:
                 showSettingsFragment(SettingsScreen.REMOVE_ENGINES);
+                TelemetryWrapper.menuRemoveEnginesEvent();
                 return true;
             case R.id.menu_delete_items:
                 final Preference pref = getPreferenceScreen()
                         .findPreference(getResources().getString(
                                 R.string.pref_key_multiselect_search_engine_list));
                 final Set<String> enginesToRemove = ((MultiselectSearchEngineListPreference) pref).getCheckedEngineIds();
+                TelemetryWrapper.removeSearchEnginesEvent(enginesToRemove.size());
                 SearchEngineManager.removeSearchEngines(enginesToRemove, getSearchEngineSharedPreferences());
                 getFragmentManager().popBackStack();
                 return true;
             case R.id.menu_restore_default_engines:
                 SearchEngineManager.restoreDefaultSearchEngines(getSearchEngineSharedPreferences());
+                TelemetryWrapper.menuRestoreEnginesEvent();
                 refetchSearchEngines();
                 return true;
             default:
@@ -161,8 +177,10 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
             startActivity(intent);
         } else if (preference.getKey().equals(resources.getString(R.string.pref_key_search_engine))) {
             showSettingsFragment(SettingsScreen.SEARCH_ENGINES);
+            TelemetryWrapper.openSearchSettingsEvent();
         } else if (preference.getKey().equals(resources.getString(R.string.pref_key_manual_add_search_engine))) {
             showSettingsFragment(SettingsScreen.ADD_SEARCH);
+            TelemetryWrapper.menuAddSearchEngineEvent();
         } else if (preference.getKey().equals(resources.getString(R.string.pref_key_screen_autocomplete))) {
             getFragmentManager().beginTransaction()
                     .replace(R.id.container, new AutocompleteSettingsFragment())
@@ -195,7 +213,11 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
         // Update title and icons when returning to fragments.
         final ActionBarUpdater updater = (ActionBarUpdater) getActivity();
         updater.updateTitle(settingsScreen.titleResId);
-        updater.updateIcon(R.drawable.ic_back);
+        if (settingsScreen == SettingsScreen.REMOVE_ENGINES) {
+            updater.updateIcon(R.drawable.ic_close);
+        } else {
+            updater.updateIcon(R.drawable.ic_back);
+        }
         if (settingsScreen == SettingsScreen.SEARCH_ENGINES || settingsScreen == SettingsScreen.REMOVE_ENGINES) {
             refetchSearchEngines();
         }

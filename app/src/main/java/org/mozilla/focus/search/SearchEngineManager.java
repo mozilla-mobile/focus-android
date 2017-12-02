@@ -63,6 +63,9 @@ public class SearchEngineManager extends BroadcastReceiver {
     private static final String PREF_KEY_CUSTOM_SEARCH_VERSION = "pref_custom_search_version";
     private static final int CUSTOM_SEARCH_VERSION = 1;
 
+    public static final String ENGINE_TYPE_CUSTOM = "custom";
+    public static final String ENGINE_TYPE_BUNDLED = "bundled";
+
     private static SearchEngineManager instance = new SearchEngineManager();
 
     private List<SearchEngine> searchEngines;
@@ -80,7 +83,8 @@ public class SearchEngineManager extends BroadcastReceiver {
     private SearchEngineManager() {}
 
     public static boolean addSearchEngine(SharedPreferences sharedPreferences, Context context, String engineName, String searchQuery) {
-        final Bitmap iconBitmap = IconGenerator.generateCharacterIcon(context, engineName.charAt(0));
+        // This is not for a homescreen shortcut so we don't want an adaptive launcher icon.
+        final Bitmap iconBitmap = IconGenerator.generateLauncherIconPreOreo(context, engineName.charAt(0));
         final String searchEngineXml = buildSearchEngineXML(engineName, searchQuery, iconBitmap);
         if (searchEngineXml == null) {
             return false;
@@ -231,20 +235,29 @@ public class SearchEngineManager extends BroadcastReceiver {
     }
 
     private List<SearchEngine> loadCustomSearchEngines(Context context) {
-        final List<SearchEngine> searchEngines = new LinkedList<>();
+        final List<SearchEngine> customEngines = new LinkedList<>();
         final SharedPreferences prefs = context.getSharedPreferences(PREF_FILE_SEARCH_ENGINES, Context.MODE_PRIVATE);
         final Set<String> engines = prefs.getStringSet(PREF_KEY_CUSTOM_SEARCH_ENGINES, Collections.<String>emptySet());
         try {
             for (String engine : engines) {
                 final InputStream engineInputStream = new ByteArrayInputStream(prefs.getString(engine, "").getBytes(StandardCharsets.UTF_8));
-                searchEngines.add(SearchEngineParser.load(engine, engineInputStream));
+                customEngines.add(SearchEngineParser.load(engine, engineInputStream));
             }
         } catch (IOException e) {
             Log.e(LOG_TAG, "IOException while loading custom search engines", e);
         } catch (XmlPullParserException e) {
             Log.e(LOG_TAG, "Couldn't load custom search engines", e);
         }
-        return searchEngines;
+        return customEngines;
+    }
+
+    public boolean isCustomSearchEngine(String engineId, Context context) {
+        for (SearchEngine e : loadCustomSearchEngines(context)) {
+            if (e.getIdentifier().equals(engineId)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     private JSONArray loadSearchEngineListForLocale(Context context) throws IOException {
@@ -335,6 +348,10 @@ public class SearchEngineManager extends BroadcastReceiver {
         enginesEditor.putStringSet(PREF_KEY_HIDDEN_DEFAULT_ENGINES, engineIdsToRemove);
 
         enginesEditor.apply();
+    }
+
+    public static boolean hasAllDefaultSearchEngines(SharedPreferences sharedPreferences) {
+        return !sharedPreferences.contains(PREF_KEY_HIDDEN_DEFAULT_ENGINES);
     }
 
     public static synchronized void restoreDefaultSearchEngines(SharedPreferences sharedPreferences) {
