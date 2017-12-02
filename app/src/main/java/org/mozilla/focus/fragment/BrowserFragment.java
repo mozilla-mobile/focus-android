@@ -235,18 +235,16 @@ public class BrowserFragment extends WebFragment implements View.OnClickListener
             @Override
             public void onValueChanged(@NonNull Boolean loading) {
                 if (loading) {
-                    backgroundTransitionGroup.resetTransition();
-
+                     backgroundTransitionGroup.resetTransition();
                     progressView.setProgress(5);
                     progressView.setVisibility(View.VISIBLE);
+
                 } else {
-                    if (progressView.getVisibility() == View.VISIBLE) {
-                        // We start a transition only if a page was just loading before
-                        // allowing to avoid issue #1179
-                        backgroundTransitionGroup.startTransition(ANIMATION_DURATION);
-                        progressView.setProgress(progressView.getMax());
-                        progressView.setVisibility(View.GONE);
-                    }
+                        if(progressView.getVisibility() == View.VISIBLE) {
+                            backgroundTransitionGroup.startTransition(ANIMATION_DURATION);
+                            progressView.setProgress(progressView.getMax());
+                            progressView.setVisibility(View.GONE);
+                        }
                     swipeRefresh.setRefreshing(false);
                 }
 
@@ -293,6 +291,7 @@ public class BrowserFragment extends WebFragment implements View.OnClickListener
         session.getProgress().observe(this, new Observer<Integer>() {
             @Override
             public void onChanged(Integer progress) {
+                Log.d("KTN", "Progress: " + progress); //TODO: remove (checking progress value)
                 progressView.setProgress(progress);
             }
         });
@@ -344,7 +343,6 @@ public class BrowserFragment extends WebFragment implements View.OnClickListener
         eraseContainer.removeView(sessions);
 
         final int textColor;
-
         if (customTabConfig.toolbarColor != null) {
             urlBar.setBackgroundColor(customTabConfig.toolbarColor);
 
@@ -424,7 +422,8 @@ public class BrowserFragment extends WebFragment implements View.OnClickListener
             public void onPageStarted(final String url) {}
 
             @Override
-            public void onPageFinished(boolean isSecure) {}
+            public void onPageFinished(boolean isSecure) {
+            }
 
             @Override
             public void onURLChanged(final String url) {}
