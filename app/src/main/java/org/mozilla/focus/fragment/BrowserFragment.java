@@ -240,11 +240,13 @@ public class BrowserFragment extends WebFragment implements View.OnClickListener
                     progressView.setVisibility(View.VISIBLE);
 
                 } else {
-                        if(progressView.getVisibility() == View.VISIBLE) {
-                            backgroundTransitionGroup.startTransition(ANIMATION_DURATION);
-                            progressView.setProgress(progressView.getMax());
-                            progressView.setVisibility(View.GONE);
-                        }
+                    if(progressView.getVisibility() == View.VISIBLE) {
+                        // We start a transition only if a page was just loading before
+                        // allowing to avoid issue #1179
+                        backgroundTransitionGroup.startTransition(ANIMATION_DURATION);
+                        progressView.setProgress(progressView.getMax());
+                        progressView.setVisibility(View.GONE);
+                    }
                     swipeRefresh.setRefreshing(false);
                 }
 
@@ -291,7 +293,6 @@ public class BrowserFragment extends WebFragment implements View.OnClickListener
         session.getProgress().observe(this, new Observer<Integer>() {
             @Override
             public void onChanged(Integer progress) {
-                Log.d("KTN", "Progress: " + progress); //TODO: remove (checking progress value)
                 progressView.setProgress(progress);
             }
         });
