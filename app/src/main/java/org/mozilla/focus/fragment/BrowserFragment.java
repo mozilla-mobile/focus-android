@@ -238,9 +238,8 @@ public class BrowserFragment extends WebFragment implements View.OnClickListener
                      backgroundTransitionGroup.resetTransition();
                     progressView.setProgress(5);
                     progressView.setVisibility(View.VISIBLE);
-
                 } else {
-                    if(progressView.getVisibility() == View.VISIBLE) {
+                    if (progressView.getVisibility() == View.VISIBLE) {
                         // We start a transition only if a page was just loading before
                         // allowing to avoid issue #1179
                         backgroundTransitionGroup.startTransition(ANIMATION_DURATION);
@@ -423,8 +422,7 @@ public class BrowserFragment extends WebFragment implements View.OnClickListener
             public void onPageStarted(final String url) {}
 
             @Override
-            public void onPageFinished(boolean isSecure) {
-            }
+            public void onPageFinished(boolean isSecure) {}
 
             @Override
             public void onURLChanged(final String url) {}
