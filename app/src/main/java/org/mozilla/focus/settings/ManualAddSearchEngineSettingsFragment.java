@@ -54,17 +54,17 @@ public class ManualAddSearchEngineSettingsFragment extends SettingsFragment {
                 final SharedPreferences sharedPreferences = getSearchEngineSharedPreferences();
                 boolean isSuccess = false;
                 if (TextUtils.isEmpty(engineName)) {
-                    Snackbar.make(rootView, R.string.search_add_error_empty_name, Snackbar.LENGTH_SHORT).show();
+                    showSnackbar(R.string.search_add_error_empty_name);
                 } else if (TextUtils.isEmpty(searchQuery)) {
-                    Snackbar.make(rootView, R.string.search_add_error_empty_search, Snackbar.LENGTH_SHORT).show();
+                    showSnackbar(R.string.search_add_error_empty_search);
                 } else if (!UrlUtils.isValidSearchQueryUrl(searchQuery)) {
-                    Snackbar.make(rootView, R.string.search_add_error_format, Snackbar.LENGTH_SHORT).show();
+                    showSnackbar(R.string.search_add_error_format);
                 } else if (isDuplicateSearchEngine(engineName, searchQuery, sharedPreferences)) {
-                    Snackbar.make(rootView, R.string.search_add_error_duplicate, Snackbar.LENGTH_SHORT).show();
+                    showSnackbar(R.string.search_add_error_duplicate);
                 } else {
                     SearchEngineManager.addSearchEngine(sharedPreferences, getActivity(), engineName, searchQuery);
                     isSuccess = true;
-                    Snackbar.make(rootView, R.string.search_add_confirmation, Snackbar.LENGTH_SHORT).show();
+                    showSnackbar(R.string.search_add_confirmation);
                     getFragmentManager().popBackStack();
                 }
                 TelemetryWrapper.saveCustomSearchEngineEvent(isSuccess);
@@ -72,6 +72,10 @@ public class ManualAddSearchEngineSettingsFragment extends SettingsFragment {
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    private void showSnackbar(@StringRes final int errStrRes) {
+        Snackbar.make(getView(), errStrRes, Snackbar.LENGTH_SHORT).show();
     }
 
     private static boolean isDuplicateSearchEngine(final String engineName, final String searchString,
