@@ -7,6 +7,7 @@ package org.mozilla.focus.settings;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.annotation.StringRes;
 import android.support.design.widget.Snackbar;
 import android.text.TextUtils;
 import android.view.Menu;
@@ -56,8 +57,10 @@ public class ManualAddSearchEngineSettingsFragment extends SettingsFragment {
                     Snackbar.make(rootView, R.string.search_add_error_empty_name, Snackbar.LENGTH_SHORT).show();
                 } else if (TextUtils.isEmpty(searchQuery)) {
                     Snackbar.make(rootView, R.string.search_add_error_empty_search, Snackbar.LENGTH_SHORT).show();
-                } else if (!validateSearchFields(engineName, searchQuery, sharedPreferences)) {
+                } else if (!UrlUtils.isValidSearchQueryUrl(searchQuery)) {
                     Snackbar.make(rootView, R.string.search_add_error_format, Snackbar.LENGTH_SHORT).show();
+                } else if (isDuplicateSearchEngine(engineName, searchQuery, sharedPreferences)) {
+                    Snackbar.make(rootView, R.string.search_add_error_duplicate, Snackbar.LENGTH_SHORT).show();
                 } else {
                     SearchEngineManager.addSearchEngine(sharedPreferences, getActivity(), engineName, searchQuery);
                     isSuccess = true;
@@ -71,12 +74,9 @@ public class ManualAddSearchEngineSettingsFragment extends SettingsFragment {
         }
     }
 
-    private static boolean validateSearchFields(String engineName, String searchString, SharedPreferences sharedPreferences) {
-        if (sharedPreferences.getStringSet(SearchEngineManager.PREF_KEY_CUSTOM_SEARCH_ENGINES,
-                Collections.<String>emptySet()).contains(engineName)) {
-            return false;
-        }
-
-        return UrlUtils.isValidSearchQueryUrl(searchString);
+    private static boolean isDuplicateSearchEngine(final String engineName, final String searchString,
+            final SharedPreferences sharedPreferences) {
+        return sharedPreferences.getStringSet(SearchEngineManager.PREF_KEY_CUSTOM_SEARCH_ENGINES,
+                Collections.<String>emptySet()).contains(engineName);
     }
 }

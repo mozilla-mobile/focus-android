@@ -272,6 +272,7 @@
     <string name="search_add_error_empty_search">Enter search string</string>
 
     <string name="search_add_error_format">Check that search string matches Example format</string>
+    <string name="search_add_error_duplicate">PLACEHOLDER: A search engine with this name already exists</string>
 
     <!-- Content description (not visible, for screen readers etc.): Clear text in URL bar -->
     <string name="content_description_clear_input">Clear input</string>
