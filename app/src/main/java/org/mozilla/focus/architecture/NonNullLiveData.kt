@@ -5,6 +5,7 @@
 package org.mozilla.focus.architecture
 
 import android.arch.lifecycle.LiveData
+import android.support.annotation.NonNull
 
 /**
  * A LiveData implementation with an initial value and that does not allow null values.
@@ -18,6 +19,7 @@ open class NonNullLiveData<T>(initialValue: T) : LiveData<T>() {
      * Returns the current (non-null) value. Note that calling this method on a background thread
      * does not guarantee that the latest value set will be received.
      */
+    @NonNull
     override fun getValue(): T = super.getValue() ?: throw IllegalStateException("Value is null")
 
     /**
