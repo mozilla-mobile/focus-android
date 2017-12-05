@@ -17,6 +17,7 @@ import android.widget.EditText;
 
 import org.mozilla.focus.R;
 import org.mozilla.focus.search.SearchEngineManager;
+import org.mozilla.focus.telemetry.TelemetryWrapper;
 import org.mozilla.focus.utils.UrlUtils;
 
 import java.util.Collections;
@@ -50,13 +51,20 @@ public class ManualAddSearchEngineSettingsFragment extends SettingsFragment {
                 final String searchQuery = ((EditText) rootView.findViewById(R.id.edit_search_string)).getText().toString();
 
                 final SharedPreferences sharedPreferences = getSearchEngineSharedPreferences();
-                if (!validateSearchFields(engineName, searchQuery, sharedPreferences)) {
-                    Snackbar.make(rootView, R.string.search_add_error, Snackbar.LENGTH_SHORT).show();
+                boolean isSuccess = false;
+                if (TextUtils.isEmpty(engineName)) {
+                    Snackbar.make(rootView, R.string.search_add_error_empty_name, Snackbar.LENGTH_SHORT).show();
+                } else if (TextUtils.isEmpty(searchQuery)) {
+                    Snackbar.make(rootView, R.string.search_add_error_empty_search, Snackbar.LENGTH_SHORT).show();
+                } else if (!validateSearchFields(engineName, searchQuery, sharedPreferences)) {
+                    Snackbar.make(rootView, R.string.search_add_error_format, Snackbar.LENGTH_SHORT).show();
                 } else {
                     SearchEngineManager.addSearchEngine(sharedPreferences, getActivity(), engineName, searchQuery);
+                    isSuccess = true;
                     Snackbar.make(rootView, R.string.search_add_confirmation, Snackbar.LENGTH_SHORT).show();
                     getFragmentManager().popBackStack();
                 }
+                TelemetryWrapper.saveCustomSearchEngineEvent(isSuccess);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -64,10 +72,6 @@ public class ManualAddSearchEngineSettingsFragment extends SettingsFragment {
     }
 
     private static boolean validateSearchFields(String engineName, String searchString, SharedPreferences sharedPreferences) {
-        if (TextUtils.isEmpty(engineName)) {
-            return false;
-        }
-
         if (sharedPreferences.getStringSet(SearchEngineManager.PREF_KEY_CUSTOM_SEARCH_ENGINES,
                 Collections.<String>emptySet()).contains(engineName)) {
             return false;

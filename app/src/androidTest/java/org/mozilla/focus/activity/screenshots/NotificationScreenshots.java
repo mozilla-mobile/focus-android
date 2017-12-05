@@ -73,7 +73,7 @@ public class NotificationScreenshots extends ScreenshotTest {
 
     @Test
     public void takeScreenshotOfNotification() throws Exception {
-        onView(withId(R.id.url_edit))
+        onView(withId(R.id.urlView))
                 .check(matches(isDisplayed()))
                 .check(matches(hasFocus()))
                 .perform(click(), replaceText(webServer.url("/").toString()), pressImeActionButton());
@@ -94,7 +94,7 @@ public class NotificationScreenshots extends ScreenshotTest {
                 // The notification is not expanded. Let's expand it now.
                 device.findObject(new UiSelector()
                         .text(getString(R.string.app_name)))
-                        .swipeDown(5);
+                        .swipeDown(20);
 
                 assertTrue(openAction.waitForExists(waitingTime));
             }

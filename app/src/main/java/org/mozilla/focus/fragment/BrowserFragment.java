@@ -64,6 +64,7 @@ import org.mozilla.focus.utils.Browsers;
 import org.mozilla.focus.utils.ColorUtils;
 import org.mozilla.focus.utils.DownloadUtils;
 import org.mozilla.focus.utils.DrawableUtils;
+import org.mozilla.focus.utils.Features;
 import org.mozilla.focus.utils.UrlUtils;
 import org.mozilla.focus.web.Download;
 import org.mozilla.focus.web.IWebView;
@@ -210,11 +211,14 @@ public class BrowserFragment extends WebFragment implements View.OnClickListener
 
         swipeRefresh = (SwipeRefreshLayout) view.findViewById(R.id.swipe_refresh);
         swipeRefresh.setColorSchemeResources(R.color.colorAccent);
+        swipeRefresh.setEnabled(Features.SWIPE_TO_REFERSH);
 
         swipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
                 reload();
+
+                TelemetryWrapper.swipeReloadEvent();
             }
         });
 
@@ -293,7 +297,7 @@ public class BrowserFragment extends WebFragment implements View.OnClickListener
             }
         });
 
-        menuView = (ImageButton) view.findViewById(R.id.menu);
+        menuView = (ImageButton) view.findViewById(R.id.menuView);
         menuView.setOnClickListener(this);
 
         if (session.isCustomTab()) {
@@ -747,7 +751,7 @@ public class BrowserFragment extends WebFragment implements View.OnClickListener
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.menu:
+            case R.id.menuView:
                 BrowserMenu menu = new BrowserMenu(getActivity(), this, session.getCustomTabConfig());
                 menu.show(menuView);
 
@@ -795,6 +799,8 @@ public class BrowserFragment extends WebFragment implements View.OnClickListener
 
             case R.id.refresh: {
                 reload();
+
+                TelemetryWrapper.menuReloadEvent();
                 break;
             }
 
