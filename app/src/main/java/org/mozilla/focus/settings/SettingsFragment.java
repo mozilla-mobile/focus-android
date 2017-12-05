@@ -37,6 +37,8 @@ import java.util.Set;
 
 public class SettingsFragment extends PreferenceFragment implements SharedPreferences.OnSharedPreferenceChangeListener {
     public static final String SETTINGS_SCREEN_NAME = "settingsScreenName";
+    public static final int ALPHA_ENABLED = 255;
+    public static final int ALPHA_DISABLED = 130;
 
     private boolean localeUpdated;
     private SettingsScreen settingsScreen;
@@ -104,13 +106,27 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
     }
 
     @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+    public void onCreateOptionsMenu(final Menu menu, MenuInflater inflater) {
         switch (settingsScreen) {
             case SEARCH_ENGINES:
                 inflater.inflate(R.menu.menu_search_engines, menu);
                 break;
             case REMOVE_ENGINES:
                 inflater.inflate(R.menu.menu_remove_search_engines, menu);
+
+                // We disable the trash icon when no engine is checked, enable it otherwise
+                getView().post(new Runnable() {
+                    @Override
+                    public void run() {
+                        MenuItem menuDeleteItem = menu.findItem(R.id.menu_delete_items);
+                        menuDeleteItem.getIcon().mutate().setAlpha(SettingsFragment.ALPHA_DISABLED);
+                        final MultiselectSearchEngineListPreference pref = (MultiselectSearchEngineListPreference) getPreferenceScreen()
+                                .findPreference(getResources()
+                                        .getString(R.string.pref_key_multiselect_search_engine_list));
+
+                        pref.bindEngineCheckboxesToMenuItem(menuDeleteItem, SettingsFragment.ALPHA_ENABLED, SettingsFragment.ALPHA_DISABLED);
+                    }
+                });
                 break;
             default:
                 return;

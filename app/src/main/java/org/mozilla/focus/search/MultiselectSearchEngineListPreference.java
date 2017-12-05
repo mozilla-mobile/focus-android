@@ -6,11 +6,13 @@ package org.mozilla.focus.search;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.view.MenuItem;
 import android.widget.CompoundButton;
 
 import org.mozilla.focus.R;
 
 import java.util.HashSet;
+
 import java.util.Set;
 
 public class MultiselectSearchEngineListPreference extends SearchEngineListPreference {
@@ -47,5 +49,37 @@ public class MultiselectSearchEngineListPreference extends SearchEngineListPrefe
             }
         }
         return engineIdSet;
+    }
+
+    // Whenever an engine is checked or unchecked, we adapt the MenuItem state (enable or disable) given in param
+    // Though some conditions are added just for optimisation
+    public void bindEngineCheckboxesToMenuItem(final MenuItem menuDeleteItem, final int alpha_enabled, final int alpha_disabled) {
+        for (int i = 0; i < searchEngineGroup.getChildCount(); i++) {
+            final CompoundButton engineButton = (CompoundButton) searchEngineGroup.getChildAt(i);
+            engineButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    if (isChecked || atLeastOneEngineChecked()) {
+                        if (!menuDeleteItem.isEnabled()) {
+                            menuDeleteItem.setEnabled(true).getIcon().mutate().setAlpha(alpha_enabled);
+                        }
+                    } else {
+                        if (menuDeleteItem.isEnabled()) {
+                            menuDeleteItem.setEnabled(false).getIcon().mutate().setAlpha(alpha_disabled);
+                        }
+                    }
+                }
+            });
+        }
+    }
+
+    private boolean atLeastOneEngineChecked() {
+        for (int i = 0; i < searchEngineGroup.getChildCount(); i++) {
+            final CompoundButton engineButton = (CompoundButton) searchEngineGroup.getChildAt(i);
+            if (engineButton.isChecked()) {
+               return true;
+            }
+        }
+        return false;
     }
 }
