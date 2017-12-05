@@ -13,7 +13,10 @@ import kotlinx.android.synthetic.main.browser_display_toolbar.view.*
 /**
  * The toolbar of the BrowserFragment; displaying the URL and other controls.
  */
-class DisplayToolbar(context: Context, attrs: AttributeSet) : AppBarLayout(context, attrs), AppBarLayout.OnOffsetChangedListener {
+class DisplayToolbar(
+        context: Context,
+        attrs: AttributeSet
+) : AppBarLayout(context, attrs), AppBarLayout.OnOffsetChangedListener {
     private val collapsedProgressTranslationY: Float by lazy {
         TypedValue.applyDimension(
                 TypedValue.COMPLEX_UNIT_DIP, 2f, resources.displayMetrics)
@@ -23,6 +26,7 @@ class DisplayToolbar(context: Context, attrs: AttributeSet) : AppBarLayout(conte
         addOnOffsetChangedListener(this)
     }
 
+    @Suppress("MagicNumber") // A mathematical expression - No need to add constants for 100% and 50%.
     override fun onOffsetChanged(appBarLayout: AppBarLayout, verticalOffset: Int) {
         // When scrolling the toolbar away we want to fade out the content on the toolbar
         // with an alpha animation. This will avoid that the text clashes with the status bar.

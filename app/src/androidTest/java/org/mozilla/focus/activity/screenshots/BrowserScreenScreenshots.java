@@ -94,7 +94,7 @@ public class BrowserScreenScreenshots extends ScreenshotTest {
         Screengrab.screenshot("LocationBarEmptyState");
 
         /* Autocomplete View */
-        onView(withId(R.id.url_edit))
+        onView(withId(R.id.urlView))
                 .check(matches(isDisplayed()))
                 .check(matches(hasFocus()))
                 .perform(click(), replaceText("mozilla"));
@@ -103,7 +103,7 @@ public class BrowserScreenScreenshots extends ScreenshotTest {
 
         Screengrab.screenshot("SearchFor");
 
-        onView(withId(R.id.url_edit))
+        onView(withId(R.id.urlView))
                 .check(matches(isDisplayed()))
                 .check(matches(hasFocus()))
                 .perform(click(), replaceText(webServer.url("/").toString()), pressImeActionButton());
@@ -167,7 +167,7 @@ public class BrowserScreenScreenshots extends ScreenshotTest {
 
     private void takeScreenshotOfTabsTrayAndErase() throws Exception {
         final UiObject mozillaImage = device.findObject(new UiSelector()
-                .description("download icon")
+                .resourceId("download")
                 .enabled(true));
 
         UiObject imageMenuTitle = device.findObject(new UiSelector()
@@ -184,7 +184,7 @@ public class BrowserScreenScreenshots extends ScreenshotTest {
                 .text(getString(R.string.tabs_tray_action_erase))
                 .enabled(true));
 
-        Assert.assertTrue(mozillaImage.exists());
+        Assert.assertTrue(mozillaImage.waitForExists(waitingTime));
         mozillaImage.dragTo(mozillaImage, 7);
         assertTrue(imageMenuTitle.waitForExists(waitingTime));
         Assert.assertTrue(imageMenuTitle.exists());

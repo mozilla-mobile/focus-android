@@ -23,13 +23,13 @@ import android.view.MenuItem;
 import org.mozilla.focus.R;
 import org.mozilla.focus.activity.InfoActivity;
 import org.mozilla.focus.activity.SettingsActivity;
+import org.mozilla.focus.autocomplete.AutocompleteSettingsFragment;
 import org.mozilla.focus.locale.LocaleManager;
 import org.mozilla.focus.locale.Locales;
 import org.mozilla.focus.search.MultiselectSearchEngineListPreference;
 import org.mozilla.focus.search.RadioSearchEngineListPreference;
 import org.mozilla.focus.search.SearchEngineManager;
 import org.mozilla.focus.telemetry.TelemetryWrapper;
-import org.mozilla.focus.utils.AppConstants;
 import org.mozilla.focus.widget.DefaultBrowserPreference;
 
 import java.util.Locale;
@@ -48,9 +48,7 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
 
     public enum SettingsScreen {
         MAIN(R.xml.settings, R.string.menu_settings),
-        SEARCH_ENGINES(AppConstants.FLAG_MANUAL_SEARCH_ENGINE ?
-                R.xml.search_engine_settings_featureflag_manual :
-                R.xml.search_engine_settings,
+        SEARCH_ENGINES(R.xml.search_engine_settings,
                 R.string.preference_search_installed_search_engines),
         ADD_SEARCH(R.xml.manual_add_search_engine, R.string.tutorial_search_title),
         REMOVE_ENGINES(R.xml.remove_search_engines, R.string.preference_search_remove_title);
@@ -93,8 +91,7 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
         settingsScreen = SettingsScreen.valueOf(getArguments().getString(SETTINGS_SCREEN_NAME, SettingsScreen.MAIN.name()));
         addPreferencesFromResource(settingsScreen.prefsResId);
 
-        setHasOptionsMenu((settingsScreen == SettingsScreen.SEARCH_ENGINES
-                && AppConstants.FLAG_MANUAL_SEARCH_ENGINE)
+        setHasOptionsMenu(settingsScreen == SettingsScreen.SEARCH_ENGINES
                 || settingsScreen == SettingsScreen.REMOVE_ENGINES);
     }
 
@@ -121,21 +118,37 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
     }
 
     @Override
+    public void onPrepareOptionsMenu(Menu menu) {
+        switch (settingsScreen) {
+            case SEARCH_ENGINES:
+                if (SearchEngineManager.hasAllDefaultSearchEngines(getSearchEngineSharedPreferences())) {
+                    menu.findItem(R.id.menu_restore_default_engines).setEnabled(false);
+                }
+                break;
+            default:
+                return;
+        }
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menu_remove_search_engines:
                 showSettingsFragment(SettingsScreen.REMOVE_ENGINES);
+                TelemetryWrapper.menuRemoveEnginesEvent();
                 return true;
             case R.id.menu_delete_items:
                 final Preference pref = getPreferenceScreen()
                         .findPreference(getResources().getString(
                                 R.string.pref_key_multiselect_search_engine_list));
                 final Set<String> enginesToRemove = ((MultiselectSearchEngineListPreference) pref).getCheckedEngineIds();
+                TelemetryWrapper.removeSearchEnginesEvent(enginesToRemove.size());
                 SearchEngineManager.removeSearchEngines(enginesToRemove, getSearchEngineSharedPreferences());
                 getFragmentManager().popBackStack();
                 return true;
             case R.id.menu_restore_default_engines:
                 SearchEngineManager.restoreDefaultSearchEngines(getSearchEngineSharedPreferences());
+                TelemetryWrapper.menuRestoreEnginesEvent();
                 refetchSearchEngines();
                 return true;
             default:
@@ -164,8 +177,15 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
             startActivity(intent);
         } else if (preference.getKey().equals(resources.getString(R.string.pref_key_search_engine))) {
             showSettingsFragment(SettingsScreen.SEARCH_ENGINES);
+            TelemetryWrapper.openSearchSettingsEvent();
         } else if (preference.getKey().equals(resources.getString(R.string.pref_key_manual_add_search_engine))) {
             showSettingsFragment(SettingsScreen.ADD_SEARCH);
+            TelemetryWrapper.menuAddSearchEngineEvent();
+        } else if (preference.getKey().equals(resources.getString(R.string.pref_key_screen_autocomplete))) {
+            getFragmentManager().beginTransaction()
+                    .replace(R.id.container, new AutocompleteSettingsFragment())
+                    .addToBackStack(null)
+                    .commit();
         }
 
         return super.onPreferenceTreeClick(preferenceScreen, preference);
@@ -193,7 +213,11 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
         // Update title and icons when returning to fragments.
         final ActionBarUpdater updater = (ActionBarUpdater) getActivity();
         updater.updateTitle(settingsScreen.titleResId);
-        updater.updateIcon(R.drawable.ic_back);
+        if (settingsScreen == SettingsScreen.REMOVE_ENGINES) {
+            updater.updateIcon(R.drawable.ic_close);
+        } else {
+            updater.updateIcon(R.drawable.ic_back);
+        }
         if (settingsScreen == SettingsScreen.SEARCH_ENGINES || settingsScreen == SettingsScreen.REMOVE_ENGINES) {
             refetchSearchEngines();
         }
@@ -203,7 +227,7 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
      * Refresh search engines list. Only runs if showing the "Installed search engines" screen.
      */
     private void refetchSearchEngines() {
-        if (settingsScreen == SettingsScreen.SEARCH_ENGINES && AppConstants.FLAG_MANUAL_SEARCH_ENGINE) {
+        if (settingsScreen == SettingsScreen.SEARCH_ENGINES) {
             final Preference pref = getPreferenceScreen()
                     .findPreference(getResources().getString(
                             R.string.pref_key_radio_search_engine_list));

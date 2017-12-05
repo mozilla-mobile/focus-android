@@ -13,8 +13,7 @@ cd "$(dirname "$0")"
 cd ../..
 
 # Import strings from L10N repository
-tools/l10n/import-strings.sh > import-log.txt
-cat import-log.txt
+tools/l10n/import-strings.sh | tee import-log.txt ; test ${PIPESTATUS[0]} -eq 0
 
 # Timestamp used in branch name and commit
 TIMESTAMP=`date "+%Y%m%d-%H%M%S"`
@@ -25,7 +24,7 @@ git add app/src/main/res/
 git commit -m \
 	"Import translations from L10N repository ($TIMESTAMP)" \
 	--author="MickeyMoz <sebastian@mozilla.com>" \
-	|| (echo "No new translations available" && exit 0)
+	|| { echo "No new translations available"; exit 0; }
 
 # Create a pull request for the current state of the repo
 python tools/taskcluster/create-pull-request.py $TIMESTAMP

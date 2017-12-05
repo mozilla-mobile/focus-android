@@ -66,12 +66,12 @@ public final class TestHelper {
             .resourceId("org.mozilla.focus.debug:id/finish")
             .enabled(true));
     static UiObject initialView = mDevice.findObject(new UiSelector()
-            .resourceId("org.mozilla.focus.debug:id/brand_background")
+            .resourceId("org.mozilla.focus.debug:id/backgroundView")
             .enabled(true));
 
     /********* Main View Locators ***********/
     public static ViewInteraction menuButton = onView(
-            allOf(withId(R.id.menu),
+            allOf(withId(R.id.menuView),
                     isDisplayed()));
 
     /********* Web View Locators ***********/
@@ -80,14 +80,14 @@ public final class TestHelper {
             .clickable(true));
 
     public static UiObject inlineAutocompleteEditText = mDevice.findObject(new UiSelector()
-            .resourceId("org.mozilla.focus.debug:id/url_edit")
+            .resourceId("org.mozilla.focus.debug:id/urlView")
             .focused(true)
             .enabled(true));
     static UiObject cleartextField = mDevice.findObject(new UiSelector()
-            .resourceId("org.mozilla.focus.debug:id/clear")
+            .resourceId("org.mozilla.focus.debug:id/clearView")
             .enabled(true));
     public static UiObject hint = mDevice.findObject(new UiSelector()
-            .resourceId("org.mozilla.focus.debug:id/search_hint")
+            .resourceId("org.mozilla.focus.debug:id/searchView")
             .clickable(true));
     public static UiObject webView = mDevice.findObject(new UiSelector()
             .className("android.webkit.WebView")
