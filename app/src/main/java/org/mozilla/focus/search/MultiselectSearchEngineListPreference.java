@@ -4,15 +4,16 @@
 
 package org.mozilla.focus.search;
 
+import android.app.Activity;
 import android.content.Context;
 import android.util.AttributeSet;
-import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.CompoundButton;
 
 import org.mozilla.focus.R;
 
 import java.util.HashSet;
-
 import java.util.Set;
 
 public class MultiselectSearchEngineListPreference extends SearchEngineListPreference {
@@ -23,6 +24,13 @@ public class MultiselectSearchEngineListPreference extends SearchEngineListPrefe
 
     public MultiselectSearchEngineListPreference(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
+    }
+
+    @Override
+    protected View onCreateView(ViewGroup parent) {
+        View view = super.onCreateView(parent);
+        this.bindEngineCheckboxesToMenu();
+        return view;
     }
 
     @Override
@@ -51,29 +59,20 @@ public class MultiselectSearchEngineListPreference extends SearchEngineListPrefe
         return engineIdSet;
     }
 
-    // Whenever an engine is checked or unchecked, we adapt the MenuItem state (enable or disable) given in param
-    // Though some conditions are added just for optimisation
-    public void bindEngineCheckboxesToMenuItem(final MenuItem menuDeleteItem, final int alpha_enabled, final int alpha_disabled) {
+    // Whenever an engine is checked or unchecked, we notify the menu
+    protected void bindEngineCheckboxesToMenu() {
         for (int i = 0; i < searchEngineGroup.getChildCount(); i++) {
             final CompoundButton engineButton = (CompoundButton) searchEngineGroup.getChildAt(i);
             engineButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    if (isChecked || atLeastOneEngineChecked()) {
-                        if (!menuDeleteItem.isEnabled()) {
-                            menuDeleteItem.setEnabled(true).getIcon().mutate().setAlpha(alpha_enabled);
-                        }
-                    } else {
-                        if (menuDeleteItem.isEnabled()) {
-                            menuDeleteItem.setEnabled(false).getIcon().mutate().setAlpha(alpha_disabled);
-                        }
-                    }
+                    ((Activity) getContext()).invalidateOptionsMenu();
                 }
             });
         }
     }
 
-    private boolean atLeastOneEngineChecked() {
+    public boolean atLeastOneEngineChecked() {
         for (int i = 0; i < searchEngineGroup.getChildCount(); i++) {
             final CompoundButton engineButton = (CompoundButton) searchEngineGroup.getChildAt(i);
             if (engineButton.isChecked()) {
