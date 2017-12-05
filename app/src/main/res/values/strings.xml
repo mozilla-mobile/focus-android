@@ -93,7 +93,9 @@
     <li>Erase to delete cookies as well as search and browsing history</li>
   </ul>
 </p>
-<p>%1$s is produced by Mozilla. Our mission is to foster a healthy, open Internet.<br/>
+<p>%1$s is produced by <a href="https://www.clover.com">Clover</a>,
+and powered by <a href="https://github.com/mozilla-mobile/focus-android">Firefox Focus</a>
+by <a href="https://www.mozilla.org/en-US/">Mozilla</a>.<br/>
 <a href="%2$s">Learn more</a></p>
     ]]></string>
 
