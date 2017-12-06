@@ -5,7 +5,6 @@
 <shape xmlns:android="http://schemas.android.com/apk/res/android">
     <gradient
         android:angle="315"
-        android:startColor="@color/colorGradientStart"
-        android:centerColor="@color/colorGradientCenter"
-        android:endColor="@color/colorGradientEnd" />
+        android:startColor="@color/colorGradientStartClover"
+        android:endColor="@color/colorGradientEndClover" />
 </shape>

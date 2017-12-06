@@ -4,4 +4,4 @@
    - file, You can obtain one at http://mozilla.org/MPL/2.0/. -->
 <ripple
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:color="@color/colorErasePressed" />
+    android:color="@color/colorErasePressedClover" />

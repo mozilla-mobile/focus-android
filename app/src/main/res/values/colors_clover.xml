@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <color name="colorGradientStartClover">#6ADA99</color>
+  <color name="colorGradientEndClover">#6ADA99</color>
+
+  <color name="colorEraseClover">#6ADA99</color>
+  <color name="colorErasePressedClover">#57B27D</color>
+
+  <color name="coloInactiveGradientStartClover">#344146</color>
+  <color name="colorInactiveGradientEndClover">#253338</color>
+</resources>
