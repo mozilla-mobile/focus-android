@@ -50,10 +50,6 @@ public class FirstrunPagerAdapter extends PagerAdapter {
                         context.getString(R.string.firstrun_search_text),
                         R.drawable.onboarding_img4_clover),
                 new FirstrunPage(
-                        context.getString(R.string.firstrun_shortcut_title),
-                        context.getString(R.string.firstrun_shortcut_text, appName),
-                        R.drawable.onboarding_img3_clover),
-                new FirstrunPage(
                         context.getString(R.string.firstrun_privacy_title),
                         context.getString(R.string.firstrun_privacy_text, appName),
                         R.drawable.onboarding_img2_clover)
