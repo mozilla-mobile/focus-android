@@ -6,7 +6,7 @@
     <shortcut
         android:shortcutId="erase"
         android:enabled="true"
-        android:icon="@drawable/ic_shortcut_erase"
+        android:icon="@drawable/ic_shortcut_erase_clover"
         android:shortcutShortLabel="@string/shortcut_erase_short_label"
         android:shortcutLongLabel="@string/shortcut_erase_long_label">
         <intent
