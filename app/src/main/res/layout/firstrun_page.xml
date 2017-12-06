@@ -86,7 +86,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom"
                 android:background="?android:attr/selectableItemBackground"
-                android:textColor="#ff9400FF"
+                android:textColor="@color/colorPrimaryClover"
                 android:textSize="16sp"
                 tools:text="@string/firstrun_next_button" />
 

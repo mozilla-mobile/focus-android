@@ -210,7 +210,7 @@ public class BrowserFragment extends WebFragment implements View.OnClickListener
         progressView = (AnimatedProgressBar) view.findViewById(R.id.progress);
 
         swipeRefresh = (SwipeRefreshLayout) view.findViewById(R.id.swipe_refresh);
-        swipeRefresh.setColorSchemeResources(R.color.colorAccent);
+        swipeRefresh.setColorSchemeResources(R.color.colorAccentClover);
         swipeRefresh.setEnabled(Features.SWIPE_TO_REFERSH);
 
         swipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {

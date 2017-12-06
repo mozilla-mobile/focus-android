@@ -1,11 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <color name="colorGradientStartClover">#6ADA99</color>
-  <color name="colorGradientEndClover">#6ADA99</color>
+  <color name="colorPrimaryClover">#43b02a</color>
+  <color name="colorPrimaryDarkClover">#245e17</color>
+  <color name="colorAccentClover">#43b02a</color>
 
-  <color name="colorEraseClover">#6ADA99</color>
-  <color name="colorErasePressedClover">#57B27D</color>
+  <color name="colorGradientStartClover">#43b02a</color>
+  <color name="colorGradientEndClover">#43b02a</color>
 
-  <color name="coloInactiveGradientStartClover">#344146</color>
-  <color name="colorInactiveGradientEndClover">#253338</color>
+  <color name="colorEraseClover">#43b02a</color>
+  <color name="colorErasePressedClover">#245e17</color>
+
+  <color name="coloInactiveGradientStartClover">#245e17</color>
+  <color name="colorInactiveGradientEndClover">#245e17</color>
+
+  <color name="colorProgressGradientStartClover">#43b02a</color>
+  <color name="colorProgressGradientEndClover">#43b02a</color>
 </resources>

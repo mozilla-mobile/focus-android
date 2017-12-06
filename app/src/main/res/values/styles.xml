@@ -4,9 +4,9 @@
    - file, You can obtain one at http://mozilla.org/MPL/2.0/. -->
 <resources>
     <style name="AppTheme" parent="Theme.AppCompat.NoActionBar">
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorPrimary">@color/colorPrimaryClover</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDarkClover</item>
+        <item name="colorAccent">@color/colorAccentClover</item>
 
         <item name="android:windowContentTransitions">true</item>
 
@@ -26,7 +26,7 @@
          We need this style because the accent colour for the MainActivity is purple,
          but we want different accents in the dialog. -->
     <style name="DialogStyle" parent="Theme.AppCompat.Dialog.Alert">
-        <item name="colorAccent">#FF00A4DC</item>
+        <item name="colorAccent">@color/colorAccentClover</item>
         <item name="android:windowTitleStyle">@style/DialogTitleStyle</item>
         <item name="dialogPreferredPadding">24dp</item>
     </style>
