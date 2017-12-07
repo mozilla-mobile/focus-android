@@ -19,6 +19,7 @@ import org.mozilla.focus.R;
 import org.mozilla.focus.search.SearchEngineManager;
 import org.mozilla.focus.telemetry.TelemetryWrapper;
 import org.mozilla.focus.utils.UrlUtils;
+import org.mozilla.focus.utils.ViewUtils;
 
 import java.util.Collections;
 
@@ -69,6 +70,12 @@ public class ManualAddSearchEngineSettingsFragment extends SettingsFragment {
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        ViewUtils.hideKeyboard(getActivity().getCurrentFocus());
     }
 
     private static boolean validateSearchFields(String engineName, String searchString, SharedPreferences sharedPreferences) {
