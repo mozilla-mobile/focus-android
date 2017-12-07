@@ -136,7 +136,10 @@ open class AutocompleteListFragment : Fragment() {
         val isEnabled = !isSelectionMode()
                 || (domainList.adapter as DomainListAdapter).selection().isNotEmpty()
         removeItem?.isEnabled = isEnabled
-        removeItem?.icon?.mutate()?.alpha = if (isEnabled) SettingsFragment.ALPHA_ENABLED else SettingsFragment.ALPHA_DISABLED
+        removeItem?.icon?.mutate()?.alpha = if (isEnabled)
+            SettingsFragment.ALPHA_ENABLED
+        else
+            SettingsFragment.ALPHA_DISABLED
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean = when (item?.itemId) {
@@ -251,7 +254,7 @@ open class AutocompleteListFragment : Fragment() {
                     selectedDomains.remove(domain)
                 }
 
-                fragment.activity?.let { it.invalidateOptionsMenu() }
+                fragment.activity?.invalidateOptionsMenu()
             })
 
             handleView.visibility = if (isSelectionMode) View.GONE else View.VISIBLE

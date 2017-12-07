@@ -36,6 +36,11 @@ class AutocompleteAddFragment : Fragment() {
         updater.updateIcon(R.drawable.ic_close)
     }
 
+    override fun onPause() {
+        super.onPause()
+        ViewUtils.hideKeyboard(activity.currentFocus)
+    }
+
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View =
             inflater!!.inflate(R.layout.fragment_autocomplete_add_domain, container, false)
 
