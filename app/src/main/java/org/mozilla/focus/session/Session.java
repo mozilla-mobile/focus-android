@@ -39,7 +39,7 @@ public class Session {
         this.url = new NonNullMutableLiveData<>(url);
         this.progress = new NonNullMutableLiveData<>(0);
         this.secure = new NonNullMutableLiveData<>(false);
-        this.loading = new NonNullMutableLiveData<>(false);
+        this.loading = new NonNullMutableLiveData<>(true); //setting default to true eliminates issue #1837
         this.trackersBlocked = new NonNullMutableLiveData<>(0);
 
         this.isBlockingEnabled = true;

@@ -235,8 +235,7 @@ public class BrowserFragment extends WebFragment implements View.OnClickListener
             @Override
             public void onValueChanged(@NonNull Boolean loading) {
                 if (loading) {
-                    backgroundTransitionGroup.resetTransition();
-
+                     backgroundTransitionGroup.resetTransition();
                     progressView.setProgress(5);
                     progressView.setVisibility(View.VISIBLE);
                 } else {
@@ -344,7 +343,6 @@ public class BrowserFragment extends WebFragment implements View.OnClickListener
         eraseContainer.removeView(sessions);
 
         final int textColor;
-
         if (customTabConfig.toolbarColor != null) {
             urlBar.setBackgroundColor(customTabConfig.toolbarColor);
 
