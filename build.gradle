@@ -24,6 +24,7 @@ buildscript {
 
 plugins {
     id "io.gitlab.arturbosch.detekt" version "1.0.0.RC5-6"
+    id "org.jetbrains.kotlin.kapt" version "1.2.0"
 }
 
 detekt {
