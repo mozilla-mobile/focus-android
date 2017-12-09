@@ -7,53 +7,41 @@ package org.mozilla.focus.settings;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.preference.PreferenceFragment;
 import android.support.annotation.Nullable;
-import android.support.annotation.VisibleForTesting;
-import android.support.annotation.WorkerThread;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+
 import org.mozilla.focus.R;
 import org.mozilla.focus.activity.InfoActivity;
 import org.mozilla.focus.search.ManualAddSearchEnginePreference;
 import org.mozilla.focus.search.SearchEngineManager;
 import org.mozilla.focus.telemetry.TelemetryWrapper;
 import org.mozilla.focus.utils.SupportUtils;
-import org.mozilla.focus.utils.UrlUtils;
 import org.mozilla.focus.utils.ViewUtils;
 
-import java.io.IOException;
-import java.lang.ref.WeakReference;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
-
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
-
-public class ManualAddSearchEngineSettingsFragment extends SettingsFragment {
+public class ManualAddSearchEngineSettingsFragment extends PreferenceFragment {
     private static String LOGTAG = "ManualAddSearchEngine";
 
-    // Set so the user doesn't have to wait *too* long. It's used twice: once for connecting and once for reading.
-    private static final int SEARCH_QUERY_VALIDATION_TIMEOUT_MILLIS = 4000;
+
 
     /**
      * A reference to an active async task, if applicable, used to manage the task for lifecycle changes.
      * See {@link #onPause()} for details.
      */
-    private @Nullable AsyncTask activeAsyncTask;
-    private @Nullable MenuItem menuItemForActiveAsyncTask;
+    @Nullable AsyncTask activeAsyncTask;
+    @Nullable MenuItem menuItemForActiveAsyncTask;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        addPreferencesFromResource(R.xml.manual_add_search_engine);
         setHasOptionsMenu(true);
     }
 
@@ -62,7 +50,7 @@ public class ManualAddSearchEngineSettingsFragment extends SettingsFragment {
         super.onResume();
 
         // We've checked that this cast is legal in super.onAttach.
-        ((ActionBarUpdater) getActivity()).updateIcon(R.drawable.ic_close);
+        ((SettingsFragment.ActionBarUpdater) getActivity()).updateIcon(R.drawable.ic_close);
    }
 
     @Override
@@ -135,7 +123,7 @@ public class ManualAddSearchEngineSettingsFragment extends SettingsFragment {
         }
     }
 
-    private void setUiIsValidatingAsync(final boolean isValidating, final MenuItem saveMenuItem) {
+    void setUiIsValidatingAsync(final boolean isValidating, final MenuItem saveMenuItem) {
         final ManualAddSearchEnginePreference pref =
                 (ManualAddSearchEnginePreference) findPreference(getString(R.string.pref_key_manual_add_search_engine));
         pref.setProgressViewShown(isValidating);
@@ -143,99 +131,9 @@ public class ManualAddSearchEngineSettingsFragment extends SettingsFragment {
         saveMenuItem.setEnabled(!isValidating);
     }
 
-    private static class ValidateSearchEngineAsyncTask extends AsyncTask<Void, Void, Boolean> {
-        private final WeakReference<ManualAddSearchEngineSettingsFragment> thatWeakReference;
-        private final String engineName;
-        private final String query;
-
-        private ValidateSearchEngineAsyncTask(final ManualAddSearchEngineSettingsFragment that, final String engineName,
-                final String query) {
-            this.thatWeakReference = new WeakReference<>(that);
-            this.engineName = engineName;
-            this.query = query;
-        }
-
-        @Override
-        protected Boolean doInBackground(final Void... voids) {
-            final boolean isValidSearchQuery = isValidSearchQueryURL(query);
-            TelemetryWrapper.saveCustomSearchEngineEvent(isValidSearchQuery);
-            return isValidSearchQuery;
-        }
-
-        @Override
-        protected void onPostExecute(final Boolean isValidSearchQuery) {
-            super.onPostExecute(isValidSearchQuery);
-
-            if (isCancelled()) {
-                Log.d(LOGTAG, "ValidateSearchEngineAsyncTask has been cancelled");
-                return;
-            }
-
-            final ManualAddSearchEngineSettingsFragment that = thatWeakReference.get();
-            if (that == null) {
-                Log.d(LOGTAG, "Fragment or menu item no longer exists when search query validation async task returned.");
-                return;
-            }
-
-            if (isValidSearchQuery) {
-                final SharedPreferences sharedPreferences = that.getSearchEngineSharedPreferences();
-                SearchEngineManager.addSearchEngine(sharedPreferences, that.getActivity(), engineName, query);
-                Snackbar.make(that.getView(), R.string.search_add_confirmation, Snackbar.LENGTH_SHORT).show();
-                that.getFragmentManager().popBackStack();
-            } else {
-                showServerError(that);
-            }
-
-            that.setUiIsValidatingAsync(false, that.menuItemForActiveAsyncTask);
-            that.activeAsyncTask = null;
-            that.menuItemForActiveAsyncTask = null;
-        }
-
-        private void showServerError(final ManualAddSearchEngineSettingsFragment that) {
-            final ManualAddSearchEnginePreference pref = (ManualAddSearchEnginePreference) that.findPreference(
-                    that.getString(R.string.pref_key_manual_add_search_engine));
-            pref.setSearchQueryErrorText(that.getString(R.string.error_hostLookup_title));
-        }
+    SharedPreferences getSearchEngineSharedPreferences() {
+        return getActivity().getSharedPreferences(SearchEngineManager.PREF_FILE_SEARCH_ENGINES, Context.MODE_PRIVATE);
     }
 
-    @SuppressFBWarnings("DE_MIGHT_IGNORE")
-    @WorkerThread // makes network request.
-    @VisibleForTesting static boolean isValidSearchQueryURL(final String query) {
-        // TODO: we should share the code to substitute and normalize the search string (see SearchEngine.buildSearchUrl).
-        final String encodedTestQuery = Uri.encode("test");
 
-        final String normalizedHttpsSearchURLStr = UrlUtils.normalize(query);
-        final String searchURLStr = normalizedHttpsSearchURLStr.replaceAll("%s", encodedTestQuery);
-
-        final URL searchURL;
-        try {
-            searchURL = new URL(searchURLStr);
-        } catch (final MalformedURLException e) {
-            // Don't log exception to avoid leaking URL.
-            Log.d(LOGTAG, "Malformed URL: returning invalid search query");
-            return false;
-        }
-
-        HttpURLConnection connection = null;
-        try {
-            connection = (HttpURLConnection) searchURL.openConnection();
-            connection.setConnectTimeout(SEARCH_QUERY_VALIDATION_TIMEOUT_MILLIS);
-            connection.setReadTimeout(SEARCH_QUERY_VALIDATION_TIMEOUT_MILLIS);
-
-            // A non-error HTTP response is good enough as a sanity check, some search engines redirect to https.
-            return connection.getResponseCode() < 400;
-
-        } catch (final IOException e) {
-            // Don't log exception to avoid leaking URL.
-            Log.d(LOGTAG, "Failure to get response code from server: returning invalid search query");
-            return false;
-        } finally {
-            if (connection != null) {
-                try {
-                    connection.getInputStream().close(); // HttpURLConnection.getResponseCode opens the InputStream.
-                } catch (final IOException e) { } // Whatever.
-                connection.disconnect();
-            }
-        }
-    }
 }

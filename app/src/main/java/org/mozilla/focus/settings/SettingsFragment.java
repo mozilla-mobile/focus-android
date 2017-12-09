@@ -72,9 +72,9 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
             case REMOVE_ENGINES:
                 f = new SettingsFragment();
                 break;
-            case ADD_SEARCH:
+            /*case ADD_SEARCH:
                 f = new ManualAddSearchEngineSettingsFragment();
-                break;
+                break;*/
             default:
                 throw new IllegalArgumentException("Unknown SettingsScreen type " + settingsType.name());
         }
@@ -194,7 +194,10 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
             showSettingsFragment(SettingsScreen.SEARCH_ENGINES);
             TelemetryWrapper.openSearchSettingsEvent();
         } else if (preference.getKey().equals(resources.getString(R.string.pref_key_manual_add_search_engine))) {
-            showSettingsFragment(SettingsScreen.ADD_SEARCH);
+            getFragmentManager().beginTransaction()
+                    .replace(R.id.container, new ManualAddSearchEngineSettingsFragment())
+                    .addToBackStack(null)
+                    .commit();
             TelemetryWrapper.menuAddSearchEngineEvent();
         } else if (preference.getKey().equals(resources.getString(R.string.pref_key_screen_autocomplete))) {
             getFragmentManager().beginTransaction()
