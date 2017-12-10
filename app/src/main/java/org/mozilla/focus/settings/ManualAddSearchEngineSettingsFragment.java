@@ -11,6 +11,7 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.annotation.VisibleForTesting;
 import android.support.annotation.WorkerThread;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -34,6 +35,8 @@ import java.lang.ref.WeakReference;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 public class ManualAddSearchEngineSettingsFragment extends SettingsFragment {
     private static String LOGTAG = "ManualAddSearchEngine";
@@ -195,8 +198,9 @@ public class ManualAddSearchEngineSettingsFragment extends SettingsFragment {
         }
     }
 
+    @SuppressFBWarnings("DE_MIGHT_IGNORE")
     @WorkerThread // makes network request.
-    private static boolean isValidSearchQueryURL(final String query) {
+    @VisibleForTesting static boolean isValidSearchQueryURL(final String query) {
         // TODO: we should share the code to substitute and normalize the search string (see SearchEngine.buildSearchUrl).
         final String encodedTestQuery = Uri.encode("test");
 
