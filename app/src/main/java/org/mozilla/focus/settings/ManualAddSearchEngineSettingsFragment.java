@@ -89,13 +89,13 @@ public class ManualAddSearchEngineSettingsFragment extends SettingsFragment {
             activeAsyncTask = null;
             menuItemForActiveAsyncTask = null;
         }
-        imm.hideSoftInputFromWindow(getView().getWindowToken(),0);
+        imm.hideSoftInputFromWindow(getView().getWindowToken(), 0);
     }
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.menu_search_engine_manual_add, menu);
-        imm.toggleSoftInput(InputMethodManager.SHOW_FORCED,InputMethodManager.HIDE_IMPLICIT_ONLY);
+        imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY);
     }
 
     @Override
