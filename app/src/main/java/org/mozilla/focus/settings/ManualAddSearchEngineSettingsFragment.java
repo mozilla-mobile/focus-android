@@ -20,6 +20,8 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import org.mozilla.focus.R;
 import org.mozilla.focus.activity.InfoActivity;
@@ -43,6 +45,7 @@ public class ManualAddSearchEngineSettingsFragment extends SettingsFragment {
 
     // Set so the user doesn't have to wait *too* long. It's used twice: once for connecting and once for reading.
     private static final int SEARCH_QUERY_VALIDATION_TIMEOUT_MILLIS = 4000;
+    private InputMethodManager imm;
 
     /**
      * A reference to an active async task, if applicable, used to manage the task for lifecycle changes.
@@ -54,13 +57,14 @@ public class ManualAddSearchEngineSettingsFragment extends SettingsFragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        this.imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
         setHasOptionsMenu(true);
     }
 
     @Override
     public void onResume() {
         super.onResume();
-
+        getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
         // We've checked that this cast is legal in super.onAttach.
         ((ActionBarUpdater) getActivity()).updateIcon(R.drawable.ic_close);
    }
@@ -85,11 +89,13 @@ public class ManualAddSearchEngineSettingsFragment extends SettingsFragment {
             activeAsyncTask = null;
             menuItemForActiveAsyncTask = null;
         }
+        imm.hideSoftInputFromWindow(getView().getWindowToken(),0);
     }
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.menu_search_engine_manual_add, menu);
+        imm.toggleSoftInput(InputMethodManager.SHOW_FORCED,InputMethodManager.HIDE_IMPLICIT_ONLY);
     }
 
     @Override
