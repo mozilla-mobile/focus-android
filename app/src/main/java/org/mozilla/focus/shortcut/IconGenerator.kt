@@ -9,11 +9,11 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.Canvas
 import android.graphics.Color
+import android.graphics.Rect
 import android.graphics.Paint
 import android.net.Uri
 import android.os.Build
 import android.support.v4.content.ContextCompat
-import android.util.TypedValue
 
 import org.mozilla.focus.R
 import org.mozilla.focus.utils.UrlUtils
@@ -51,7 +51,7 @@ class IconGenerator {
         fun generateLauncherIconPreOreo(context: Context, character: Char): Bitmap {
             val options = BitmapFactory.Options()
             options.inMutable = true
-            val shape = BitmapFactory.decodeResource(context.resources, R.drawable.ic_homescreen_shape, options)
+            val shape = BitmapFactory.decodeResource(context.resources, R.drawable.ic_bg_single_letter, options)
             return drawCharacterOnBitmap(context, character, shape)
         }
 
@@ -76,21 +76,25 @@ class IconGenerator {
 
         private fun drawCharacterOnBitmap(context: Context, character: Char, bitmap: Bitmap): Bitmap {
             val canvas = Canvas(bitmap)
-
             val paint = Paint()
+            val rect = Rect()
+            val text = character.toString().toUpperCase()
 
-            val textSize = TypedValue.applyDimension(
-                    TypedValue.COMPLEX_UNIT_DIP, TEXT_SIZE_DP, context.resources.displayMetrics)
+            val textSize = context
+                    .resources
+                    .getDimensionPixelSize(R.dimen.text_single_letter_in_icon_size).toFloat()
 
             paint.color = Color.WHITE
-            paint.textAlign = Paint.Align.CENTER
+            paint.textAlign = Paint.Align.LEFT
             paint.textSize = textSize
             paint.isAntiAlias = true
 
-            canvas.drawText(character.toString(),
-                    canvas.width / 2.0f,
-                    canvas.height / 2.0f - (paint.descent() + paint.ascent()) / 2.0f,
-                    paint)
+            paint.getTextBounds(text, 0, 1, rect)
+
+            // Centering of text from https://stackoverflow.com/questions/11120392/android-center-text-on-canvas
+            val x = canvas.width / 2f - rect.width() / 2f - rect.left
+            val y = canvas.height / 2f + rect.height() / 2f - rect.bottom
+            canvas.drawText(text, x, y, paint)
 
             return bitmap
         }
