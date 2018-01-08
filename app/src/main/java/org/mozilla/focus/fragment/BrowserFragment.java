@@ -812,6 +812,11 @@ public class BrowserFragment extends WebFragment implements View.OnClickListener
                 break;
             }
 
+            case R.id.open_in_firefox_focus: {
+                sessionManager.replaceSessionWithNoCustomTab(session);
+                break;
+            }
+
             case R.id.share: {
                 final String url = getUrl();
                 final Intent shareIntent = new Intent(Intent.ACTION_SEND);
