@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
+import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.v4.util.ArrayMap;
 import android.support.v4.view.ViewCompat;
@@ -122,7 +123,12 @@ public class LocalizedContent {
 
         final Map<String, String> substitutionMap = new ArrayMap<>();
         final String userAgentString = webView.getSettings().getUserAgentString();
-        final String androidVersion = android.os.Build.VERSION.RELEASE;
+
+        final String release = Build.VERSION.RELEASE;
+        final int sdkVersion = Build.VERSION.SDK_INT;
+        final String baseOS = Build.VERSION.BASE_OS;
+        final String codename = Build.VERSION.CODENAME;
+        final String androidVersion = "Android SDK: " + sdkVersion + " (" + release +") | Base OS: " + baseOS + " | Codename: " + codename;
 
         String aboutVersion = "";
         try {
