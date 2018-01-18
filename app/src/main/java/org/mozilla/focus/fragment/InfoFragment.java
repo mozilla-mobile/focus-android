@@ -12,6 +12,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 
+import com.squareup.leakcanary.RefWatcher;
+
+import org.mozilla.focus.FocusApplication;
 import org.mozilla.focus.R;
 import org.mozilla.focus.menu.context.WebContextMenu;
 import org.mozilla.focus.session.Session;
@@ -127,5 +130,14 @@ public class InfoFragment extends WebFragment {
     @Override
     public String getInitialUrl() {
         return getArguments().getString(ARGUMENT_URL);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+
+        //LeakyCanary now watches ths fragment
+        RefWatcher refWatcher = FocusApplication.getRefWatcher(getActivity());
+        refWatcher.watch(this);
     }
 }

@@ -17,6 +17,7 @@ import android.view.ViewGroup
 import android.view.ViewTreeObserver
 import android.widget.FrameLayout
 import kotlinx.android.synthetic.main.fragment_urlinput.*
+import org.mozilla.focus.FocusApplication
 import org.mozilla.focus.R
 import org.mozilla.focus.activity.InfoActivity
 import org.mozilla.focus.autocomplete.UrlAutoCompleteFilter
@@ -539,5 +540,13 @@ class UrlInputFragment :
             searchView.text = content
             searchViewContainer.visibility = View.VISIBLE
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+
+        //LeakyCanary now watches ths fragment
+        val refWatcher = FocusApplication.getRefWatcher(activity)
+        refWatcher.watch(this)
     }
 }

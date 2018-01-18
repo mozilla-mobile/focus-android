@@ -20,6 +20,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+
+import com.squareup.leakcanary.RefWatcher;
+
+import org.mozilla.focus.FocusApplication;
 import org.mozilla.focus.R;
 import org.mozilla.focus.shortcut.HomeScreen;
 import org.mozilla.focus.shortcut.IconGenerator;
@@ -112,5 +116,14 @@ public class AddToHomescreenDialogFragment extends DialogFragment {
                 window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
             }
         }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+
+        //LeakyCanary now watches ths fragment
+        RefWatcher refWatcher = FocusApplication.getRefWatcher(getActivity());
+        refWatcher.watch(this);
     }
 }

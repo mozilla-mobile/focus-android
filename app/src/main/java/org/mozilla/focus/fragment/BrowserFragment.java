@@ -42,6 +42,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.squareup.leakcanary.RefWatcher;
+
+import org.mozilla.focus.FocusApplication;
 import org.mozilla.focus.R;
 import org.mozilla.focus.activity.InfoActivity;
 import org.mozilla.focus.activity.InstallFirefoxActivity;
@@ -566,6 +569,10 @@ public class BrowserFragment extends WebFragment implements View.OnClickListener
     @Override
     public void onDestroy() {
         super.onDestroy();
+
+        //LeakyCanary now watches ths fragment
+        RefWatcher refWatcher = FocusApplication.getRefWatcher(getActivity());
+        refWatcher.watch(this);
 
         // This fragment might get destroyed before the user left immersive mode (e.g. by opening another URL from an app).
         // In this case let's leave immersive mode now when the fragment gets destroyed.

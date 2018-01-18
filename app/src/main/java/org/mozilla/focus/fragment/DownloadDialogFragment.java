@@ -16,6 +16,9 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.squareup.leakcanary.RefWatcher;
+
+import org.mozilla.focus.FocusApplication;
 import org.mozilla.focus.R;
 import org.mozilla.focus.telemetry.TelemetryWrapper;
 import org.mozilla.focus.utils.DownloadUtils;
@@ -107,4 +110,12 @@ public class DownloadDialogFragment extends DialogFragment {
         void onFinishDownloadDialog(Download download, boolean shouldDownload);
     }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+
+        //LeakyCanary now watches ths fragment
+        RefWatcher refWatcher = FocusApplication.getRefWatcher(getActivity());
+        refWatcher.watch(this);
+    }
 }
