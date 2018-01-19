@@ -6,6 +6,7 @@
 package org.mozilla.focus.telemetry
 
 import android.content.Context
+import android.net.http.SslError
 import android.os.StrictMode
 import android.preference.PreferenceManager
 import android.support.annotation.CheckResult
@@ -44,6 +45,7 @@ object TelemetryWrapper {
 
     private object Category {
         val ACTION = "action"
+        val ERROR = "error"
     }
 
     private object Method {
@@ -71,6 +73,8 @@ object TelemetryWrapper {
         val REMOVE = "remove"
         val REORDER = "reorder"
         val RESTORE = "restore"
+        val PAGE = "page"
+        val RESOURCE = "resource"
     }
 
     private object Object {
@@ -98,6 +102,7 @@ object TelemetryWrapper {
         val AUTOCOMPLETE_DOMAIN = "autocomplete_domain"
         val AUTOFILL = "autofill"
         val SEARCH_ENGINE_SETTING = "search_engine_setting"
+        val ADD_SEARCH_ENGINE_LEARN_MORE = "search_engine_learn_more"
         val CUSTOM_SEARCH_ENGINE = "custom_search_engine"
         val REMOVE_SEARCH_ENGINES = "remove_search_engines"
     }
@@ -136,6 +141,7 @@ object TelemetryWrapper {
         val AUTOCOMPLETE = "autocomplete"
         val SOURCE = "source"
         val SUCCESS = "success"
+        val ERROR_CODE = "error_code"
     }
 
     @JvmStatic
@@ -574,12 +580,29 @@ object TelemetryWrapper {
 
     @JvmStatic
     fun swipeReloadEvent() {
-        TelemetryEvent.create(Category.ACTION, Method.SWIPE, Object.BROWSER, Value.RELOAD).queue();
+        TelemetryEvent.create(Category.ACTION, Method.SWIPE, Object.BROWSER, Value.RELOAD).queue()
     }
 
     @JvmStatic
     fun menuReloadEvent() {
-        TelemetryEvent.create(Category.ACTION, Method.CLICK, Object.MENU, Value.RELOAD).queue();
+        TelemetryEvent.create(Category.ACTION, Method.CLICK, Object.MENU, Value.RELOAD).queue()
+    }
+
+    @JvmStatic
+    fun sslErrorEvent(fromPage: Boolean, error: SslError) {
+        // SSL Errors from https://developer.android.com/reference/android/net/http/SslError.html
+        val primaryErrorMessage = when (error.primaryError) {
+            SslError.SSL_DATE_INVALID -> "SSL_DATE_INVALID"
+            SslError.SSL_EXPIRED -> "SSL_EXPIRED"
+            SslError.SSL_IDMISMATCH -> "SSL_IDMISMATCH"
+            SslError.SSL_NOTYETVALID -> "SSL_NOTYETVALID"
+            SslError.SSL_UNTRUSTED -> "SSL_UNTRUSTED"
+            SslError.SSL_INVALID -> "SSL_INVALID"
+            else -> "Undefined SSL Error"
+        }
+        TelemetryEvent.create(Category.ERROR, if (fromPage) Method.PAGE else Method.RESOURCE, Object.BROWSER)
+                .extra(Extra.ERROR_CODE, primaryErrorMessage)
+                .queue()
     }
 
     fun saveAutocompleteDomainEvent() {
@@ -647,5 +670,10 @@ object TelemetryWrapper {
         TelemetryEvent.create(Category.ACTION, Method.REMOVE, Object.REMOVE_SEARCH_ENGINES)
                 .extra(Extra.SELECTED, selected.toString())
                 .queue()
+    }
+
+    @JvmStatic
+    fun addSearchEngineLearnMoreEvent() {
+        TelemetryEvent.create(Category.ACTION, Method.CLICK, Object.ADD_SEARCH_ENGINE_LEARN_MORE).queue()
     }
 }

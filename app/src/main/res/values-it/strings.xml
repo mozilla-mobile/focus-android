@@ -36,8 +36,8 @@
   <string name="preference_category_autocomplete_custom">Indirizzo personalizzato</string>
   <string name="preference_autocomplete_subitem_customlist">Indirizzi personalizzati</string>
   <string name="preference_autocomplete_action_add">+ Aggiungi indirizzo personalizzato</string>
-  <string name="preference_autocomplete_title_add">Nuovo indirizzo personalizzato</string>
-  <string name="preference_autocomplete_title_remove">Rimuovi indirizzi personalizzati</string>
+  <string name="preference_autocomplete_title_add">Nuovo indirizzo pers.</string>
+  <string name="preference_autocomplete_title_remove">Rimozione indirizzi pers.</string>
   <string name="preference_autocomplete_learn_more">Ulteriori informazioni</string>
   <string name="preference_autocomplete_custom_summary">Aggiungi e gestisci il completamento automatico degli indirizzi personalizzati.</string>
   <string name="preference_autocomplete_add_title">Indirizzo da aggiungere</string>
@@ -99,6 +99,7 @@
   <string name="accessibility_announcement_search">Aggiungi motore di ricerca</string>
   <string name="search_add_confirmation">Aggiunto nuovo motore di ricerca.</string>
   <string name="search_add_error_empty_name">Inserire il nome del motore di ricerca</string>
+  <string name="search_add_error_duplicate_name">È già presente un motore di ricerca con questo nome.</string>
   <string name="search_add_error_empty_search">Inserire la stringa di ricerca</string>
   <string name="search_add_error_format">Verifica che la stringa di ricerca corrisponda al formato di esempio</string>
   <string name="content_description_clear_input">Cancella testo</string>

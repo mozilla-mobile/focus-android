@@ -5,6 +5,7 @@ buildscript {
     ext.architecture_components_version = '1.0.0'
     ext.espresso_version = '3.0.1'
     ext.kotlin_version = '1.2.0'
+    ext.leakcanary_version = '1.5.4'
 
     repositories {
         jcenter()
@@ -23,10 +24,16 @@ buildscript {
 }
 
 plugins {
+    // The version number is duplicated in the detekt block. We are unable to use constants due to
+    // limitations of the gradle plugin. We've decided to stick with duplication for now since the
+    // other methods involve using undocumented APIs
+    // https://docs.gradle.org/current/userguide/plugins.html#plugins_dsl_limitations
     id "io.gitlab.arturbosch.detekt" version "1.0.0.RC5-6"
+    id "org.jetbrains.kotlin.kapt" version "1.2.0"
 }
 
 detekt {
+    // The version number is duplicated, please refer to plugins block for more details
     version = "1.0.0.RC5-6"
     profile("main") {
         input = "$projectDir"
@@ -44,4 +51,31 @@ allprojects {
 
 task clean(type: Delete) {
     delete rootProject.buildDir
+}
+
+
+configurations {
+    ktlint
+}
+
+// To ensure unit tests and instrumentation tests remain consistent after the introduction of leakcanary
+configurations.all { config ->
+    if (config.name.contains('UnitTest') || config.name.contains('AndroidTest')) {
+        config.resolutionStrategy.eachDependency { details ->
+            if (details.requested.group == 'com.squareup.leakcanary' && details.requested.name == 'leakcanary-android') {
+                details.useTarget(group: details.requested.group, name: 'leakcanary-android-no-op', version: details.requested.version)
+            }
+        }
+    }
+}
+
+dependencies {
+    ktlint "com.github.shyiko:ktlint:0.14.0"
+}
+
+task ktlint(type: JavaExec, group: "verification") {
+    description = "Check Kotlin code style."
+    classpath = configurations.ktlint
+    main = "com.github.shyiko.ktlint.Main"
+    args "**/*.kt"
 }

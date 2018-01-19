@@ -6,8 +6,6 @@ apply plugin: 'jacoco-android'
 apply plugin: 'pmd'
 apply plugin: 'checkstyle'
 apply plugin: 'kotlin-android-extensions'
-apply plugin: 'kotlin-kapt'
-
 apply from: "$project.rootDir/tools/gradle/versionCode.gradle"
 
 android {
@@ -139,6 +137,10 @@ kotlin {
     experimental { coroutines 'enable' }
 }
 
+tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {
+        kotlinOptions.allWarningsAsErrors = true
+}
+
 jacocoAndroidUnitTestReport {
     csv.enabled false
     html.enabled true
@@ -177,6 +179,10 @@ dependencies {
 
     geckoCompile(name: 'geckoview-latest', ext: 'aar')
 
+    // Leakcanary is only being used with debug build variant as of now, all others use a no-op version
+    debugCompile "com.squareup.leakcanary:leakcanary-android:$leakcanary_version"
+    compile "com.squareup.leakcanary:leakcanary-android-no-op:$leakcanary_version"
+
     testCompile 'junit:junit:4.12'
     testCompile "org.robolectric:robolectric:3.5.1"
     testCompile 'org.mockito:mockito-core:2.12.0'
@@ -192,6 +198,7 @@ dependencies {
     }
 
     androidTestCompile 'com.squareup.okhttp3:mockwebserver:3.7.0'
+    testCompile 'com.squareup.okhttp3:mockwebserver:3.7.0'
 
     androidTestCompile "tools.fastlane:screengrab:1.1.0", {
         exclude group: 'com.android.support', module: 'support-annotations'
