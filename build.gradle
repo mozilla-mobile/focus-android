@@ -18,6 +18,9 @@ buildscript {
         classpath 'org.ajoberstar:grgit:1.5.0'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
 
+        // Facebook's screenshot-tests-for-android plugin
+        classpath 'com.facebook.testing.screenshot:plugin:0.5.0'
+
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
     }

@@ -6,6 +6,7 @@ apply plugin: 'jacoco-android'
 apply plugin: 'pmd'
 apply plugin: 'checkstyle'
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'com.facebook.testing.screenshot'
 apply from: "$project.rootDir/tools/gradle/versionCode.gradle"
 
 android {
@@ -182,6 +183,10 @@ dependencies {
     // Leakcanary is only being used with debug build variant as of now, all others use a no-op version
     debugCompile "com.squareup.leakcanary:leakcanary-android:$leakcanary_version"
     compile "com.squareup.leakcanary:leakcanary-android-no-op:$leakcanary_version"
+
+    // screenshot-tests-for-android : Layout Hierarchy Plugin dependencies
+    compile 'com.facebook.testing.screenshot:layout-hierarchy-common:0.5.0' // Standard Android View Plugins (TextView, etc)
+    compile 'com.facebook.testing.screenshot:layout-hierarchy-litho:0.5.0' // Litho Component Plugins
 
     testCompile 'junit:junit:4.12'
     testCompile "org.robolectric:robolectric:3.5.1"
