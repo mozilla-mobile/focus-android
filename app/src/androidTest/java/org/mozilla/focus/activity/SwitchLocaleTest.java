@@ -24,14 +24,15 @@ import org.junit.BeforeClass;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mozilla.focus.helpers.TestHelper;
 
 import java.util.Locale;
 
 import static android.os.Build.VERSION.SDK_INT;
 import static android.support.test.espresso.action.ViewActions.click;
-import static org.mozilla.focus.activity.TestHelper.waitingTime;
-import static org.mozilla.focus.activity.helpers.EspressoHelper.openMenu;
-import static org.mozilla.focus.activity.helpers.EspressoHelper.openSettings;
+import static org.mozilla.focus.helpers.TestHelper.waitingTime;
+import static org.mozilla.focus.helpers.EspressoHelper.openMenu;
+import static org.mozilla.focus.helpers.EspressoHelper.openSettings;
 import static org.mozilla.focus.fragment.FirstrunFragment.FIRSTRUN_PREF;
 
 // This test checks all the headings in the Settings menu are there

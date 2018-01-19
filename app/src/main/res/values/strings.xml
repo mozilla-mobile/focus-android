@@ -270,6 +270,7 @@ by <a href="https://www.mozilla.org/en-US/">Mozilla</a>.<br/>
     <string name="search_add_confirmation">New search engine added.</string>
 
     <string name="search_add_error_empty_name">Enter search engine name</string>
+    <string name="search_add_error_duplicate_name">An installed search engine is already using that name.</string>
 
     <string name="search_add_error_empty_search">Enter search string</string>
 

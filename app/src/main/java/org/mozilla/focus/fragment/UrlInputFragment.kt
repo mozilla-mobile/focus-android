@@ -1,5 +1,4 @@
-/* -*- Mode: Java; c-basic-offset: 4; tab-width: 4; indent-tabs-mode: nil; -*-
- * This Source Code Form is subject to the terms of the Mozilla Public
+/* This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
@@ -28,13 +27,20 @@ import org.mozilla.focus.session.Session
 import org.mozilla.focus.session.SessionManager
 import org.mozilla.focus.session.Source
 import org.mozilla.focus.telemetry.TelemetryWrapper
-import org.mozilla.focus.utils.*
+import org.mozilla.focus.utils.Settings
+import org.mozilla.focus.utils.SupportUtils
+import org.mozilla.focus.utils.ThreadUtils
+import org.mozilla.focus.utils.UrlUtils
+import org.mozilla.focus.utils.ViewUtils
 import org.mozilla.focus.whatsnew.WhatsNew
 import org.mozilla.focus.widget.InlineAutocompleteEditText
 
 /**
- * Fragment for displaying he URL input controls.
+ * Fragment for displaying the URL input controls.
  */
+// Refactoring the size and function count of this fragment is non-trivial at this point.
+// Therefore we ignore those violations for now.
+@Suppress("LargeClass", "TooManyFunctions")
 class UrlInputFragment :
         LocaleAwareFragment(),
         View.OnClickListener,
@@ -54,7 +60,7 @@ class UrlInputFragment :
 
         private val ANIMATION_BROWSER_SCREEN = "browser_screen"
 
-        private val PLACEHOLDER = "5981086f-9d45-4f64-be99-7d2ffa03befb";
+        private val PLACEHOLDER = "5981086f-9d45-4f64-be99-7d2ffa03befb"
 
         private val ANIMATION_DURATION = 200
 
@@ -218,6 +224,8 @@ class UrlInputFragment :
         ViewUtils.showKeyboard(urlView)
     }
 
+    // This method triggers the complexity warning. However it's actually not that hard to understand.
+    @Suppress("ComplexMethod")
     override fun onClick(view: View) {
         when (view.id) {
             R.id.clearView -> clear()
@@ -304,6 +312,9 @@ class UrlInputFragment :
      * different depending on whether this fragment is shown as an overlay on top of other fragments
      * or if it draws its own background.
      */
+    // This method correctly triggers a complexity warning. This method is indeed very and too complex.
+    // However refactoring it is not trivial at this point so we ignore the warning for now.
+    @Suppress("ComplexMethod")
     private fun playVisibilityAnimation(reverse: Boolean) {
         if (isAnimating) {
             // We are already animating, let's ignore another request.
