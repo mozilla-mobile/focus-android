@@ -17,6 +17,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebView;
 
+import com.squareup.leakcanary.RefWatcher;
+
+import org.mozilla.focus.FocusApplication;
 import org.mozilla.focus.R;
 import org.mozilla.focus.locale.LocaleAwareFragment;
 import org.mozilla.focus.locale.LocaleManager;
@@ -127,6 +130,10 @@ public abstract class WebFragment extends LocaleAwareFragment {
         }
 
         super.onDestroy();
+
+        //LeakyCanary now watches ths fragment
+        RefWatcher refWatcher = FocusApplication.getRefWatcher(getActivity());
+        refWatcher.watch(this);
     }
 
     @Override

@@ -6,10 +6,12 @@
 package org.mozilla.focus;
 
 import android.arch.lifecycle.LiveData;
+import android.content.Context;
 import android.os.StrictMode;
 import android.preference.PreferenceManager;
 
 import com.squareup.leakcanary.LeakCanary;
+import com.squareup.leakcanary.RefWatcher;
 
 import org.mozilla.focus.locale.LocaleAwareApplication;
 import org.mozilla.focus.search.SearchEngineManager;
@@ -27,6 +29,7 @@ import java.util.List;
 
 public class FocusApplication extends LocaleAwareApplication {
     private VisibilityLifeCycleCallback visibilityLifeCycleCallback;
+    private RefWatcher refWatcher;
 
     @Override
     public void onCreate() {
@@ -51,6 +54,11 @@ public class FocusApplication extends LocaleAwareApplication {
         sessions.observeForever(new NotificationSessionObserver(this));
         sessions.observeForever(new TelemetrySessionObserver());
         sessions.observeForever(new CleanupSessionObserver(this));
+    }
+
+    public static RefWatcher getRefWatcher(Context context) {
+        FocusApplication application = (FocusApplication) context.getApplicationContext();
+        return application.refWatcher;
     }
 
     public VisibilityLifeCycleCallback getVisibilityLifeCycleCallback() {

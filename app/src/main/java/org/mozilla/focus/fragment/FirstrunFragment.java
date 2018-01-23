@@ -19,6 +19,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.squareup.leakcanary.RefWatcher;
+
+import org.mozilla.focus.FocusApplication;
 import org.mozilla.focus.R;
 import org.mozilla.focus.firstrun.FirstrunPagerAdapter;
 import org.mozilla.focus.telemetry.TelemetryWrapper;
@@ -145,5 +148,14 @@ public class FirstrunFragment extends Fragment implements View.OnClickListener {
         if (inputFragment != null) {
             inputFragment.showKeyboard();
         }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+
+        //LeakyCanary now watches ths fragment
+        RefWatcher refWatcher = FocusApplication.getRefWatcher(getActivity());
+        refWatcher.watch(this);
     }
 }
