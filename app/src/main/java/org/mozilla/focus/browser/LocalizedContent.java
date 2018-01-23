@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
+import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.v4.util.ArrayMap;
 import android.support.v4.view.ViewCompat;
@@ -26,6 +27,7 @@ public class LocalizedContent {
     // a custom scheme.
     public static final String URL_ABOUT = "focus:about";
     public static final String URL_RIGHTS = "focus:rights";
+    public static final String URL_DEBUG = "focus:debug";
 
     public static boolean handleInternalContent(String url, WebView webView) {
         if (URL_ABOUT.equals(url)) {
@@ -34,8 +36,10 @@ public class LocalizedContent {
         } else if (URL_RIGHTS.equals(url)) {
             loadRights(webView);
             return true;
+        } else if (URL_DEBUG.equals(url)) {
+            loadDebug(webView);
+            return true;
         }
-
         return false;
     }
 
@@ -108,6 +112,43 @@ public class LocalizedContent {
         final String data = HtmlLoader.loadResourceFile(context, R.raw.rights, substitutionMap);
         // We use a file:/// base URL so that we have the right origin to load file:/// css and image resources.
         webView.loadDataWithBaseURL("file:///android_asset/rights.html", data, "text/html", "UTF-8", null);
+    }
+
+    /**
+     * Load the content for focus:debug
+     */
+    private static void loadDebug(@NonNull final WebView webView) {
+        final Context context = webView.getContext();
+        final Resources resources = Locales.getLocalizedResources(context);
+
+        final Map<String, String> substitutionMap = new ArrayMap<>();
+        final String userAgentString = webView.getSettings().getUserAgentString();
+
+        final String release = Build.VERSION.RELEASE;
+        final int sdkVersion = Build.VERSION.SDK_INT;
+        final String baseOS = Build.VERSION.BASE_OS;
+        final String codename = Build.VERSION.CODENAME;
+        final String androidVersion = "Android SDK: " + sdkVersion + " (" + release +") | Base OS: " + baseOS + " | Codename: " + codename;
+
+        String aboutVersion = "";
+        try {
+            final PackageInfo packageInfo = context.getPackageManager().getPackageInfo(context.getPackageName(), 0);
+            aboutVersion = String.format("%s (Build #%s)", packageInfo.versionName, packageInfo.versionCode);
+        } catch (PackageManager.NameNotFoundException e) {
+            // Nothing to do if we can't find the package name.
+        }
+        substitutionMap.put("%about-version%", aboutVersion);
+        substitutionMap.put("%android-version%", androidVersion);
+        substitutionMap.put("%user-agent%", userAgentString);
+
+        final String wordmark = HtmlLoader.loadPngAsDataURI(context, R.drawable.wordmark);
+        substitutionMap.put("%wordmark%", wordmark);
+
+        putLayoutDirectionIntoMap(webView, substitutionMap);
+
+        final String data = HtmlLoader.loadResourceFile(context, R.raw.debug, substitutionMap);
+        // We use a file:/// base URL so that we have the right origin to load file:/// css and image resources.
+        webView.loadDataWithBaseURL("file:///android_res/raw/debug.html", data, "text/html", "UTF-8", null);
     }
 
     private static void putLayoutDirectionIntoMap(WebView webView, Map<String, String> substitutionMap) {
