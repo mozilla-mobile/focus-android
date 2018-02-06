@@ -6,6 +6,8 @@ package org.mozilla.focus.search;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.preference.Preference;
 import android.support.design.widget.TextInputLayout;
 import android.text.Editable;
@@ -15,8 +17,8 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
-
 import android.widget.ProgressBar;
+
 import org.mozilla.focus.R;
 import org.mozilla.focus.utils.UrlUtils;
 
@@ -28,12 +30,35 @@ public class ManualAddSearchEnginePreference extends Preference {
 
     private ProgressBar progressView;
 
+    private String querySearchString;
+    private String engineNameString;
+
     public ManualAddSearchEnginePreference(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
 
     public ManualAddSearchEnginePreference(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
+    }
+
+    @Override
+    protected Parcelable onSaveInstanceState() {
+        final Parcelable superState = super.onSaveInstanceState();
+
+        final PreferenceSavedState preferenceSavedState = new PreferenceSavedState(superState);
+        preferenceSavedState.engineName = engineNameEditText.getText().toString();
+        preferenceSavedState.searchQuery = searchQueryEditText.getText().toString();
+
+        return preferenceSavedState;
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Parcelable state) {
+        PreferenceSavedState preferenceSavedState = (PreferenceSavedState) state;
+        super.onRestoreInstanceState(preferenceSavedState.getSuperState());
+
+        engineNameString = preferenceSavedState.engineName;
+        querySearchString = preferenceSavedState.searchQuery;
     }
 
     @Override
@@ -44,12 +69,28 @@ public class ManualAddSearchEnginePreference extends Preference {
         searchQueryErrorLayout = view.findViewById(R.id.edit_search_string_layout);
 
         engineNameEditText = view.findViewById(R.id.edit_engine_name);
-        engineNameEditText.addTextChangedListener(buildTextWatcherForErrorLayout(engineNameErrorLayout));
         searchQueryEditText = view.findViewById(R.id.edit_search_string);
-        searchQueryEditText.addTextChangedListener(buildTextWatcherForErrorLayout(searchQueryErrorLayout));
+
+        restoreViewState();
 
         progressView = view.findViewById(R.id.progress);
+
+        engineNameEditText.addTextChangedListener(buildTextWatcherForErrorLayout(engineNameErrorLayout));
+        searchQueryEditText.addTextChangedListener(buildTextWatcherForErrorLayout(searchQueryErrorLayout));
+
         return view;
+    }
+
+    /**
+     * Restores the saved state of the UI
+     */
+    private void restoreViewState() {
+        if (!TextUtils.isEmpty(engineNameString)) {
+            engineNameEditText.setText(engineNameString);
+        }
+        if (!TextUtils.isEmpty(querySearchString)) {
+            searchQueryEditText.setText(querySearchString);
+        }
     }
 
     private boolean engineNameIsUnique(String engineName) {
@@ -101,5 +142,47 @@ public class ManualAddSearchEnginePreference extends Preference {
 
     public void setProgressViewShown(final boolean isShown) {
         progressView.setVisibility(isShown ? View.VISIBLE : View.GONE);
+    }
+
+    /**
+     * Class for saving the state of the UI - search engine name and search string
+     */
+    private static class PreferenceSavedState extends Preference.BaseSavedState {
+        private String engineName;
+        private String searchQuery;
+
+        PreferenceSavedState(Parcelable superState) {
+            super(superState);
+        }
+
+        PreferenceSavedState(Parcel source) {
+            super(source);
+            // Get the current preference's value
+            engineName = source.readString();
+            searchQuery = source.readString();
+        }
+
+        @Override
+        public void writeToParcel(Parcel dest, int flags) {
+            super.writeToParcel(dest, flags);
+            // Write the preference's value
+            dest.writeString(engineName);
+            dest.writeString(searchQuery);
+        }
+
+        // Standard creator object using an instance of this class
+        public static final Parcelable.Creator<PreferenceSavedState>
+                CREATOR =
+                new Parcelable.Creator<PreferenceSavedState>() {
+
+                    public PreferenceSavedState createFromParcel(
+                            Parcel in) {
+                        return new PreferenceSavedState(in);
+                    }
+
+                    public PreferenceSavedState[] newArray(int size) {
+                        return new PreferenceSavedState[size];
+                    }
+                };
     }
 }
