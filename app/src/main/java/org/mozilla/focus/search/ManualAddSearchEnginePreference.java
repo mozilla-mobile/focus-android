@@ -27,7 +27,6 @@ public class ManualAddSearchEnginePreference extends Preference {
     private EditText searchQueryEditText;
     private TextInputLayout engineNameErrorLayout;
     private TextInputLayout searchQueryErrorLayout;
-
     private ProgressBar progressView;
 
     private String querySearchString;
