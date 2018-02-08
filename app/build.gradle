@@ -180,9 +180,7 @@ dependencies {
     geckoCompile(name: 'geckoview-latest', ext: 'aar')
 
     // Leakcanary is only being used with debug build variant as of now, all others use a no-op version
-    betaCompile "com.squareup.leakcanary:leakcanary-android-no-op:$leakcanary_version"
-    releaseCompile "com.squareup.leakcanary:leakcanary-android-no-op:$leakcanary_version"
-    coverageCompile "com.squareup.leakcanary:leakcanary-android-no-op:$leakcanary_version"
+    compile "com.squareup.leakcanary:leakcanary-android-no-op:$leakcanary_version"
     debugCompile "com.squareup.leakcanary:leakcanary-android:$leakcanary_version"
 
     testCompile 'junit:junit:4.12'
