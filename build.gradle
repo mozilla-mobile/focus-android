@@ -58,16 +58,6 @@ configurations {
     ktlint
 }
 
-// To ensure unit tests and instrumentation tests remain consistent after the introduction of leakcanary
-configurations.all { config ->
-    if (config.name.contains('UnitTest') || config.name.contains('AndroidTest')) {
-        config.resolutionStrategy.eachDependency { details ->
-            if (details.requested.group == 'com.squareup.leakcanary' && details.requested.name == 'leakcanary-android') {
-                details.useTarget(group: details.requested.group, name: 'leakcanary-android-no-op', version: details.requested.version)
-            }
-        }
-    }
-}
 
 dependencies {
     ktlint "com.github.shyiko:ktlint:0.14.0"

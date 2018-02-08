@@ -180,8 +180,8 @@ dependencies {
     geckoCompile(name: 'geckoview-latest', ext: 'aar')
 
     // Leakcanary is only being used with debug build variant as of now, all others use a no-op version
+    releaseCompile "com.squareup.leakcanary:leakcanary-android-no-op:$leakcanary_version"
     debugCompile "com.squareup.leakcanary:leakcanary-android:$leakcanary_version"
-    compile "com.squareup.leakcanary:leakcanary-android-no-op:$leakcanary_version"
 
     testCompile 'junit:junit:4.12'
     testCompile "org.robolectric:robolectric:3.5.1"
@@ -204,6 +204,18 @@ dependencies {
         exclude group: 'com.android.support', module: 'support-annotations'
     }
 }
+
+// To ensure unit tests and instrumentation tests remain consistent after the introduction of leakcanary
+configurations.all { config ->
+    if (config.name.contains('UnitTest') || config.name.contains('AndroidTest')) {
+        config.resolutionStrategy.eachDependency { details ->
+            if (details.requested.group == 'com.squareup.leakcanary' && details.requested.name == 'leakcanary-android') {
+                details.useTarget(group: details.requested.group, name: 'leakcanary-android-no-op', version: details.requested.version)
+            }
+        }
+    }
+}
+
 
 // -------------------------------------------------------------------------------------------------
 //  Dynamically set versionCode (See tools/build/versionCode.gradle
@@ -418,3 +430,4 @@ task checkstyle(type: Checkstyle) {
 afterEvaluate {
     check.dependsOn 'findbugs', 'pmd', 'checkstyle'
 }
+
