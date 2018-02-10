@@ -119,16 +119,15 @@ public class LocalizedContent {
      */
     private static void loadDebug(@NonNull final WebView webView) {
         final Context context = webView.getContext();
-        final Resources resources = Locales.getLocalizedResources(context);
 
         final Map<String, String> substitutionMap = new ArrayMap<>();
-        final String userAgentString = webView.getSettings().getUserAgentString();
+        final String userAgentString = "User Agent: "+webView.getSettings().getUserAgentString();
 
         final String release = Build.VERSION.RELEASE;
         final int sdkVersion = Build.VERSION.SDK_INT;
         final String baseOS = Build.VERSION.BASE_OS;
         final String codename = Build.VERSION.CODENAME;
-        final String androidVersion = "Android SDK: " + sdkVersion + " (" + release +") | Base OS: " + baseOS + " | Codename: " + codename;
+        final String androidVersion = "Android SDK: "+sdkVersion+" ("+release+") | Base OS: "+baseOS+" | Codename: "+codename;
 
         String aboutVersion = "";
         try {
