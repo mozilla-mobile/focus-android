@@ -91,13 +91,13 @@ android {
         }
     }
 
-    variantFilter { variant ->
-        def flavors = variant.flavors*.name
-        // We only need a gecko debug and beta build for now.
-        if (flavors.contains("gecko") && ((variant.buildType.name != "debug" && variant.buildType.name != "beta"))) {
-            setIgnore(true)
-        }
-    }
+//    variantFilter { variant ->
+//        def flavors = variant.flavors*.name
+//        // We only need a gecko debug and beta build for now.
+//        if (flavors.contains("gecko") && ((variant.buildType.name != "debug" && variant.buildType.name != "beta"))) {
+//            setIgnore(true)
+//        }
+//    }
 
     sourceSets {
         test {
@@ -129,6 +129,10 @@ android {
         }
         klarWebviewDebug {
             res.srcDir 'src/klarDebug/res'
+        }
+        klarGeckoRelease {
+            java.srcDir 'src/klarRelease/java'
+            res.srcDir 'src/klarRelease/res'
         }
     }
 }
