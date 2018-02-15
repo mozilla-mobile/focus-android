@@ -19,6 +19,7 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import org.mozilla.focus.R;
 import org.mozilla.focus.utils.UrlUtils;
+import org.mozilla.focus.utils.ViewUtils;
 
 public class ManualAddSearchEnginePreference extends Preference {
     private EditText engineNameEditText;
@@ -49,6 +50,8 @@ public class ManualAddSearchEnginePreference extends Preference {
         searchQueryEditText.addTextChangedListener(buildTextWatcherForErrorLayout(searchQueryErrorLayout));
 
         progressView = view.findViewById(R.id.progress);
+
+        ViewUtils.showKeyboard(engineNameEditText);
         return view;
     }
 
