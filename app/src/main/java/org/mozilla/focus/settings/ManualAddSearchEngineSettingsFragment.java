@@ -39,10 +39,10 @@ import java.net.URL;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 public class ManualAddSearchEngineSettingsFragment extends SettingsFragment {
-    private static String LOGTAG = "ManualAddSearchEngine";
+    private static final String LOGTAG = "ManualAddSearchEngine";
 
     // Set so the user doesn't have to wait *too* long. It's used twice: once for connecting and once for reading.
-    private static int SEARCH_QUERY_VALIDATION_TIMEOUT_MILLIS = 4000;
+    private static final int SEARCH_QUERY_VALIDATION_TIMEOUT_MILLIS = 4000;
 
     /**
      * A reference to an active async task, if applicable, used to manage the task for lifecycle changes.
@@ -202,7 +202,7 @@ public class ManualAddSearchEngineSettingsFragment extends SettingsFragment {
     @WorkerThread // makes network request.
     @VisibleForTesting static boolean isValidSearchQueryURL(final String query) {
         // TODO: we should share the code to substitute and normalize the search string (see SearchEngine.buildSearchUrl).
-        final String encodedTestQuery = Uri.encode("test");
+        final String encodedTestQuery = Uri.encode("testSearchEngineValidation");
 
         final String normalizedHttpsSearchURLStr = UrlUtils.normalize(query);
         final String searchURLStr = normalizedHttpsSearchURLStr.replaceAll("%s", encodedTestQuery);
@@ -219,11 +219,12 @@ public class ManualAddSearchEngineSettingsFragment extends SettingsFragment {
         HttpURLConnection connection = null;
         try {
             connection = (HttpURLConnection) searchURL.openConnection();
+            connection.setInstanceFollowRedirects(true);
             connection.setConnectTimeout(SEARCH_QUERY_VALIDATION_TIMEOUT_MILLIS);
             connection.setReadTimeout(SEARCH_QUERY_VALIDATION_TIMEOUT_MILLIS);
 
-            // A non-error HTTP response is good enough as a sanity check, some search engines redirect to https.
-            return connection.getResponseCode() < 400;
+            // Now that redirects are followed, 300 is a better and stronger sanity check, checks for a non error and non redirect response
+            return connection.getResponseCode() < 300;
 
         } catch (final IOException e) {
             // Don't log exception to avoid leaking URL.
