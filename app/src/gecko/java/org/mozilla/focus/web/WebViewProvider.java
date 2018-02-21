@@ -33,7 +33,7 @@ public class WebViewProvider {
     }
 
     public static void performCleanup(final Context context) {
-        // Nothing: does Gecko need extra private mode cleanup?
+        // Gecko doesn't need private mode cleanup
     }
 
     public static void performNewBrowserSessionCleanup() {
@@ -46,6 +46,7 @@ public class WebViewProvider {
         private boolean canGoBack;
         private boolean canGoForward;
         private boolean isSecure;
+        private String title;
 
         public GeckoWebView(Context context, AttributeSet attrs, GeckoViewSettings settings) {
             super(context, attrs, settings);
@@ -53,8 +54,6 @@ public class WebViewProvider {
             setContentListener(createContentListener());
             setProgressListener(createProgressListener());
             setNavigationListener(createNavigationListener());
-
-            // TODO: set long press listener, call through to callback.onLinkLongPress()
         }
 
         @Override
@@ -87,6 +86,7 @@ public class WebViewProvider {
         public void loadUrl(final String url) {
             currentUrl = url;
             loadUri(currentUrl);
+            callback.onProgress(10);
         }
 
         @Override
@@ -96,17 +96,33 @@ public class WebViewProvider {
 
         @Override
         public void setBlockingEnabled(boolean enabled) {
-            // We can't actually do this?
+            getSettings().setBoolean(GeckoViewSettings.USE_TRACKING_PROTECTION, enabled);
         }
 
         private ContentListener createContentListener() {
             return new ContentListener() {
                 @Override
                 public void onTitleChange(GeckoView geckoView, String s) {
+                    title = s;
                 }
 
                 @Override
                 public void onFullScreen(GeckoView geckoView, boolean fullScreen) {
+                    if (fullScreen) {
+                        callback.onEnterFullScreen(new FullscreenCallback() {
+                            @Override
+                            public void fullScreenExited() {
+                                exitFullScreen();
+                            }
+                        }, null);
+                    } else {
+                        callback.onExitFullScreen();
+                    }
+                }
+
+                @Override
+                public void onContextMenu(GeckoView geckoView, int i, int i1, String linkUrl, String imageUrl) {
+                    callback.onLongPress(new HitTarget(linkUrl != null, linkUrl, imageUrl != null, imageUrl));
                 }
             };
         }
@@ -133,9 +149,8 @@ public class WebViewProvider {
                 }
 
                 @Override
-                public void onSecurityChange(GeckoView geckoView, int status) {
-                    // TODO: Split current onPageFinished() callback into two: page finished + security changed
-                    isSecure = status == ProgressListener.STATE_IS_SECURE;
+                public void onSecurityChange(GeckoView geckoView, SecurityInformation securityInformation) {
+                    isSecure = securityInformation.isSecure;
                 }
             };
         }
@@ -143,9 +158,22 @@ public class WebViewProvider {
         private NavigationListener createNavigationListener() {
             return new NavigationListener() {
                 public void onLocationChange(GeckoView view, String url) {
+                    currentUrl = url;
                     if (callback != null) {
                         callback.onURLChanged(url);
                     }
+                }
+
+                @Override
+                public boolean onLoadUri(GeckoView geckoView, String s, TargetWindow targetWindow) {
+                    // If this is trying to load in a new tab, just load it in the current one
+                    if (targetWindow == TargetWindow.NEW) {
+                        loadUri(s);
+                        return true;
+                    }
+
+                    // Otherwise allow the load to continue normally
+                    return false;
                 }
 
                 public void onCanGoBack(GeckoView view, boolean canGoBack) {
@@ -180,7 +208,12 @@ public class WebViewProvider {
 
         @Override
         public String getTitle() {
-            return "?";
+            return title;
+        }
+
+        @Override
+        public void exitFullscreen() {
+            exitFullScreen();
         }
     }
 }
