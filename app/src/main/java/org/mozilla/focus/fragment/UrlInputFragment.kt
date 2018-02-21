@@ -27,6 +27,7 @@ import org.mozilla.focus.session.Session
 import org.mozilla.focus.session.SessionManager
 import org.mozilla.focus.session.Source
 import org.mozilla.focus.telemetry.TelemetryWrapper
+import org.mozilla.focus.utils.Features
 import org.mozilla.focus.utils.Settings
 import org.mozilla.focus.utils.SupportUtils
 import org.mozilla.focus.utils.ThreadUtils
@@ -169,7 +170,7 @@ class UrlInputFragment :
         urlView.setOnCommitListener(this)
 
         session?.let {
-            urlView.setText(if (it.isSearch) it.searchTerms else it.url.value)
+            urlView.setText(if (it.isSearch && Features.SEARCH_TERMS_OR_URL) it.searchTerms else it.url.value)
             clearView.visibility = View.VISIBLE
             searchViewContainer.visibility = View.GONE
         }

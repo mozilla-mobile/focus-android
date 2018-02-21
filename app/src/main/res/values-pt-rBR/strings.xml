@@ -41,13 +41,13 @@
   <string name="preference_autocomplete_learn_more">Saiba mais</string>
   <string name="preference_autocomplete_custom_summary">Adicione e gerencie URLs de preenchimento automático personalizados.</string>
   <string name="preference_autocomplete_add_title">URL a adicionar</string>
-  <string name="preference_autocomplete_add_hint">Cole ou digite a URL</string>
+  <string name="preference_autocomplete_add_hint">Cole ou digite o URL</string>
   <string name="preference_autocomplete_add_example">Exemplo: exemplo.com</string>
   <string name="preference_autocomplete_handle_content_description">-</string>
-  <string name="preference_autocomplete_add_confirmation">Nova URL personalizada adicionada.</string>
+  <string name="preference_autocomplete_add_confirmation">Novo URL personalizado adicionado.</string>
   <string name="preference_autocomplete_menu_remove">Remover</string>
   <string name="preference_autocomplete_action_remove_content_description">Remover</string>
-  <string name="preference_autocomplete_add_error">Verifique novamente a URL digitada.</string>
+  <string name="preference_autocomplete_add_error">Verifique novamente o URL digitado.</string>
   <string name="preference_language">Idioma</string>
   <string name="preference_language_systemdefault">Padrão do sistema</string>
   <string name="preference_dialog_title_search_engine">Pesquisa padrão</string>
@@ -74,7 +74,7 @@
   <string name="preference_privacy_notice">Política de Privacidade</string>
   <string name="preference_about">Sobre o %1$s</string>
   <string name="preference_search_installed_search_engines">Mecanismos de pesquisa instalados</string>
-  <string name="preference_search_restore">Restaurar mecanismos de pesquisa padrão</string>
+  <string name="preference_search_restore">Restaurar os mecanismos de pesquisa padrões</string>
   <string name="preference_search_add2">Adicionar outro mecanismo de pesquisa</string>
   <string name="preference_search_remove_title">Remover mecanismos de pesquisa</string>
   <string name="preference_search_remove">Remover</string>
@@ -163,7 +163,7 @@
   <string name="firstrun_shortcut_title">Adicione atalhos na sua tela principal</string>
   <string name="firstrun_shortcut_text">Volte ao seus sites favoritos no %1$s rapidamente. Apenas selecione \"Adicionar à Tela principal\" pelo menu do %1$s.</string>
   <string name="firstrun_privacy_title">Faça da privacidade um hábito</string>
-  <string name="firstrun_privacy_text">Defina o %1$s como seu navegador padrão e obtenha os benefícios da navegação privativa quando abrir páginas de outros aplicativos Android.</string>
+  <string name="firstrun_privacy_text">Defina o %1$s como seu navegador padrão e obtenha os benefícios da navegação privativa quando abrir páginas de outros aplicativos.</string>
   <string name="firstrun_close_button">Ok, entendi!</string>
   <string name="firstrun_skip_button">Pular</string>
   <string name="firstrun_next_button">Próximo</string>

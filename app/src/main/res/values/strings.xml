@@ -550,6 +550,11 @@ be temporary, and you can try again later.</li>
     %2$s will be replaced with a URL linking to the GPL
     %3$s will be replaced with a URL linking to the tracking protection wiki page (e.g. https://wiki.mozilla.org/Security/Tracking_protection#Lists) -->
     <string name="your_rights_content5"><![CDATA[%1$s also uses blocklists provided by Disconnect, Inc. as separate and independent works under the <a href="%2$s">GNU General Public License v3</a>, and available <a href="%3$s">here</a>.]]></string>
+
+    <!-- Text shown in prompts for GeckoView -->
+    <string name="gv_prompt_username_hint">Username</string>
+    <string name="gv_prompt_password_hint">Password</string>
+    <string name="gv_prompt_clear">Clear</string>
     <string name="username">Username</string>
     <string name="password">Password</string>
     <string name="auth_required">Authentication required</string>
