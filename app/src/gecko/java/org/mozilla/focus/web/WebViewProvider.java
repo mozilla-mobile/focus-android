@@ -8,16 +8,22 @@ package org.mozilla.focus.web;
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.net.Uri;
+import android.os.Build;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 
 import org.mozilla.focus.R;
 import org.mozilla.focus.session.Session;
-import org.mozilla.gecko.GeckoView;
 import org.mozilla.gecko.GeckoSession;
 import org.mozilla.gecko.GeckoSessionSettings;
+import org.mozilla.gecko.GeckoView;
+
+import java.util.Locale;
 
 /**
  * WebViewProvider implementation for creating a Gecko based implementation of IWebView.
@@ -41,6 +47,7 @@ public class WebViewProvider {
     }
 
     public static class GeckoWebView extends NestedGeckoView implements IWebView, SharedPreferences.OnSharedPreferenceChangeListener {
+        private static final String LOGTAG = "GeckoWebView";
         private Callback callback;
         private String currentUrl = "about:blank";
         private boolean canGoBack;
@@ -76,12 +83,13 @@ public class WebViewProvider {
             geckoSession.setNavigationListener(createNavigationListener());
             geckoSession.setTrackingProtectionDelegate(createTrackingProtectionDelegate());
             geckoSession.setPromptDelegate(createPromptDelegate());
+            geckoSession.setPermissionDelegate(createPermissionDelegate());
             setSession(geckoSession);
         }
 
         @Override
         public void setCallback(Callback callback) {
-            this.callback =  callback;
+            this.callback = callback;
         }
 
         @Override
@@ -111,7 +119,6 @@ public class WebViewProvider {
 
         @Override
         public void onResume() {
-
         }
 
         @Override
@@ -220,7 +227,6 @@ public class WebViewProvider {
 
                 @Override
                 public void onFocusRequest(GeckoSession geckoSession) {
-
                 }
             };
         }
@@ -266,7 +272,7 @@ public class WebViewProvider {
                 }
 
                 public void onCanGoBack(GeckoSession session, boolean canGoBack) {
-                    GeckoWebView.this.canGoBack =  canGoBack;
+                    GeckoWebView.this.canGoBack = canGoBack;
                 }
 
                 public void onCanGoForward(GeckoSession session, boolean canGoForward) {
@@ -293,12 +299,112 @@ public class WebViewProvider {
         }
 
         private GeckoSession.TrackingProtectionDelegate createTrackingProtectionDelegate() {
-           return new GeckoSession.TrackingProtectionDelegate() {
+            return new GeckoSession.TrackingProtectionDelegate() {
                 @Override
                 public void onTrackerBlocked(GeckoSession geckoSession, String s, int i) {
                     if (callback != null) {
                         callback.countBlockedTracker();
                     }
+                }
+            };
+        }
+
+        private GeckoSession.PermissionDelegate createPermissionDelegate() {
+            return new GeckoSession.PermissionDelegate() {
+
+                public int androidPermissionRequestCode = 2;
+                private Callback mCallback;
+
+                public void onRequestPermissionsResult(final String[] permissions,
+                                                       final int[] grantResults) {
+                    if (mCallback == null) {
+                        return;
+                    }
+
+                    final Callback cb = mCallback;
+                    mCallback = null;
+                    for (final int result : grantResults) {
+                        if (result != PackageManager.PERMISSION_GRANTED) {
+                            // At least one permission was not granted.
+                            cb.reject();
+                            return;
+                        }
+                    }
+                    cb.grant();
+                }
+
+                @Override
+                public void requestAndroidPermissions(GeckoSession session, String[] permissions, Callback callback) {
+                    if (Build.VERSION.SDK_INT < 23) {
+                        // requestPermissions was introduced in API 23.
+                        callback.grant();
+                    } else {
+                        mCallback = callback;
+                        ((Activity) getContext()).requestPermissions(permissions, androidPermissionRequestCode);
+                    }
+                }
+
+                @Override
+                public void requestContentPermission(GeckoSession session, String uri, String type, String access, Callback callback) {
+                    final int resId;
+                    if ("geolocation".equals(type)) {
+                        resId = R.string.request_geolocation;
+                    } else if ("desktop-notification".equals(type)) {
+                        resId = R.string.request_notification;
+                    } else {
+                        Log.w(LOGTAG, "Unknown permission: " + type);
+                        callback.reject();
+                        return;
+                    }
+
+                    final String title = getContext().getString(resId, Uri.parse(uri).getAuthority());
+                    final GeckoViewPrompt prompt = (GeckoViewPrompt)
+                            geckoSession.getPromptDelegate();
+                    prompt.promptForPermission(session, title, callback);
+                }
+
+                private void normalizeMediaName(final MediaSource[] sources) {
+                    if (sources == null) {
+                        return;
+                    }
+                    for (final MediaSource source : sources) {
+                        final int mediaSource = source.source;
+                        String name = source.name;
+                        if (MediaSource.SOURCE_CAMERA == mediaSource) {
+                            if (name.toLowerCase(Locale.ENGLISH).contains("front")) {
+                                name = getContext().getString(R.string.media_front_camera);
+                            } else {
+                                name = getContext().getString(R.string.media_back_camera);
+                            }
+                        } else if (!name.isEmpty()) {
+                            continue;
+                        } else if (MediaSource.SOURCE_MICROPHONE == mediaSource) {
+                            name = getContext().getString(R.string.media_microphone);
+                        } else {
+                            name = getContext().getString(R.string.media_other);
+                        }
+                        source.name = name;
+                    }
+                }
+
+                @Override
+                public void requestMediaPermission(GeckoSession session, String uri, MediaSource[] video, MediaSource[] audio, MediaCallback callback) {
+                    final String host = Uri.parse(uri).getAuthority();
+                    final String title;
+                    if (audio == null) {
+                        title = getContext().getString(R.string.request_video, host);
+                    } else if (video == null) {
+                        title = getContext().getString(R.string.request_audio, host);
+                    } else {
+                        title = getContext().getString(R.string.request_media, host);
+                    }
+
+                    normalizeMediaName(video);
+                    normalizeMediaName(audio);
+
+                    final GeckoViewPrompt prompt = (GeckoViewPrompt)
+                            geckoSession.getPromptDelegate();
+                    prompt.promptForMedia(session, title, video, audio, callback);
                 }
             };
         }

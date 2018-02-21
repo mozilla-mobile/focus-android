@@ -91,13 +91,13 @@ android {
         }
     }
 
-//    variantFilter { variant ->
-//        def flavors = variant.flavors*.name
-//        // We only need a gecko debug and beta build for now.
-//        if (flavors.contains("gecko") && ((variant.buildType.name != "debug" && variant.buildType.name != "beta"))) {
-//            setIgnore(true)
-//        }
-//    }
+    variantFilter { variant ->
+        def flavors = variant.flavors*.name
+        // We only need Gecko+Klar and WebView+Focus variants
+        if ((flavors.contains("gecko") && flavors.contains("focus")) || (flavors.contains("webview") && flavors.contains("klar"))) {
+            setIgnore(true)
+        }
+    }
 
     sourceSets {
         test {
@@ -198,7 +198,6 @@ dependencies {
     focusCompile 'com.adjust.sdk:adjust-android:4.11.4'
     focusCompile 'com.google.android.gms:play-services-analytics:10.2.6' // Required by Adjust
 
-    // gecko_version = '60.0a1'
     geckoCompile "org.mozilla:geckoview-nightly-armeabi-v7a:+"
 
     testCompile 'junit:junit:4.12'
