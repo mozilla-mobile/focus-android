@@ -14,6 +14,7 @@ import android.util.AttributeSet;
 import android.view.View;
 
 import org.mozilla.focus.R;
+import org.mozilla.focus.permissions.IPermissionsDelegate;
 import org.mozilla.focus.session.Session;
 import org.mozilla.geckoview.GeckoView;
 import org.mozilla.geckoview.GeckoSession;
@@ -76,6 +77,7 @@ public class WebViewProvider {
             geckoSession.setNavigationListener(createNavigationListener());
             geckoSession.setTrackingProtectionDelegate(createTrackingProtectionDelegate());
             geckoSession.setPromptDelegate(createPromptDelegate());
+            geckoSession.setPermissionDelegate(new GeckoViewPermissionsDelegate(context, geckoSession));
             setSession(geckoSession);
         }
 
@@ -330,6 +332,11 @@ public class WebViewProvider {
         @Override
         public String getTitle() {
             return webViewTitle;
+        }
+
+        @Override
+        public IPermissionsDelegate getPermissionsDelegate() {
+            return (IPermissionsDelegate) geckoSession.getPermissionDelegate();
         }
 
         @Override
