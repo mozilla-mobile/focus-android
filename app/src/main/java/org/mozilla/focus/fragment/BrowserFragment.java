@@ -29,6 +29,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.text.TextUtils;
+import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -73,6 +74,7 @@ import org.mozilla.focus.widget.FloatingEraseButton;
 import org.mozilla.focus.widget.FloatingSessionsButton;
 
 import java.lang.ref.WeakReference;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 /**
@@ -687,6 +689,12 @@ public class BrowserFragment extends WebFragment implements View.OnClickListener
                 .addRequestHeader("Referer", getUrl())
                 .setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
                 .setMimeType(download.getMimeType());
+
+        String httpAuthUsername = "user";
+        String httpAuthPassword = "passwd";
+        String auth = httpAuthUsername + ":" + httpAuthPassword;
+        auth = Base64.encodeToString(auth.getBytes(StandardCharsets.UTF_8), Base64.DEFAULT);
+        request.addRequestHeader("Authorization", "Basic " + auth);
 
         try {
             request.setDestinationInExternalPublicDir(

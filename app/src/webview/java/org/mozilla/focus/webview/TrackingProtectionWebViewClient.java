@@ -4,16 +4,19 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 package org.mozilla.focus.webview;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.support.annotation.WorkerThread;
-import android.webkit.WebResourceRequest;
-import android.webkit.WebResourceResponse;
-import android.webkit.WebView;
-import android.webkit.WebViewClient;
-
+import android.view.LayoutInflater;
+import android.view.View;
+import android.webkit.*;
+import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import org.mozilla.focus.R;
 import org.mozilla.focus.web.IWebView;
 import org.mozilla.focus.webview.matcher.UrlMatcher;
@@ -45,6 +48,7 @@ public class TrackingProtectionWebViewClient extends WebViewClient {
     }
 
     private boolean blockingEnabled;
+    private Context context;
     /* package */ String currentPageURL;
     protected IWebView.Callback callback;
 
@@ -54,6 +58,7 @@ public class TrackingProtectionWebViewClient extends WebViewClient {
         triggerPreload(context);
 
         this.blockingEnabled = true;
+        this.context = context;
     }
 
     public void setCallback(IWebView.Callback callback) {
@@ -106,7 +111,7 @@ public class TrackingProtectionWebViewClient extends WebViewClient {
         if ((!request.isForMainFrame()) &&
                 currentPageURL != null &&
                 matcher.matches(resourceUri, Uri.parse(currentPageURL))) {
-                // Bandaid for issue #26: currentPageUrl can still be null, and needs to be investigated further.
+            // Bandaid for issue #26: currentPageUrl can still be null, and needs to be investigated further.
             if (callback != null) {
                 callback.countBlockedTracker();
             }
@@ -137,4 +142,23 @@ public class TrackingProtectionWebViewClient extends WebViewClient {
 
         super.onPageStarted(view, url, favicon);
     }
+
+    @Override
+    public void onReceivedHttpAuthRequest(WebView view, HttpAuthHandler handler, String host, String realm) {
+
+
+        handler.proceed("user", "passwd");
+//        AlertDialog.Builder builder = new AlertDialog.Builder(context.getApplicationContext());
+//        LayoutInflater li = LayoutInflater.from(context.getApplicationContext());
+//        View dialogView = li.inflate(R.layout.dialog_http_auth, view);
+//
+//        final EditText httpAuthUsername = dialogView.findViewById(R.id.httpAuthUsername);
+//        final EditText httpAuthPassword = dialogView.findViewById(R.id.httpAuthPassword);
+//
+//        builder.setView(dialogView);
+//
+//        final AlertDialog dialog = builder.create();
+//        dialog.show();
+    }
+
 }
