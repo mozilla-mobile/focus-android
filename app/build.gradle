@@ -92,8 +92,8 @@ android {
 
     variantFilter { variant ->
         def flavors = variant.flavors*.name
-        // We only need a gecko debug and beta build for now.
-        if (flavors.contains("gecko") && ((variant.buildType.name != "debug" && variant.buildType.name != "beta") || flavors.contains("klar"))) {
+        // We only need Gecko+Klar and WebView+Focus variants
+        if ((flavors.contains("gecko") && flavors.contains("focus")) || (flavors.contains("webview") && flavors.contains("klar"))) {
             setIgnore(true)
         }
     }
@@ -120,14 +120,35 @@ android {
         focusWebviewBeta {
             res.srcDir 'src/focusBeta/res'
         }
+        focusGeckoBeta {
+            res.srcDir 'src/focusBeta/res'
+        }
         klarWebviewBeta {
             res.srcDir 'src/klarBeta/res'
         }
         focusWebviewDebug {
             res.srcDir 'src/focusDebug/res'
         }
+        focusGeckoDebug {
+            res.srcDir 'src/focusDebug/res'
+        }
         klarWebviewDebug {
             res.srcDir 'src/klarDebug/res'
+        }
+        klarGeckoRelease {
+            java.srcDir 'src/klarRelease/java'
+            res.srcDir 'src/klarRelease/res'
+        }
+        focusGeckoRelease {
+            java.srcDir 'src/focusRelease/java'
+            manifest.srcFile 'src/focusRelease/AndroidManifest.xml'
+            res.srcDir 'src/focusRelease/res'
+        }
+        klarGeckoDebug {
+            res.srcDir 'src/klarDebug/res'
+        }
+        klarGeckoBeta {
+            res.srcDir 'src/klarBeta/res'
         }
     }
 }
@@ -147,10 +168,10 @@ jacocoAndroidUnitTestReport {
 }
 
 repositories {
-    flatDir {
-        dirs 'libs'
-    }
     mavenCentral()
+    maven {
+        url "https://index.taskcluster.net/v1/task/gecko.v2.mozilla-central.nightly.latest.mobile.android-api-16-opt/artifacts/public/android/maven"
+    }
 }
 
 dependencies {
@@ -176,7 +197,7 @@ dependencies {
     focusCompile 'com.adjust.sdk:adjust-android:4.11.4'
     focusCompile 'com.google.android.gms:play-services-analytics:10.2.6' // Required by Adjust
 
-    geckoCompile(name: 'geckoview-latest', ext: 'aar')
+    geckoCompile "org.mozilla:geckoview-nightly-armeabi-v7a:+"
 
     testCompile 'junit:junit:4.12'
     testCompile "org.robolectric:robolectric:3.5.1"
