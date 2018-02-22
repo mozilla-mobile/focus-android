@@ -166,7 +166,7 @@ public class SessionManagerTest {
 
         assertTrue(sessionManager.hasSession());
     }
-
+    @Test (expected = IllegalStateException.class)
     public void testShareIntentWithTextViaNewIntent() {
         final SessionManager sessionManager = SessionManager.getInstance();
 
