@@ -7,7 +7,7 @@
 
 _Browse like no one’s watching. The new Firefox Focus automatically blocks a wide range of online trackers — from the moment you launch it to the second you leave it. Easily erase your history, passwords and cookies, so you won’t get followed by things like unwanted ads._
 
-<a href="https://play.google.com/store/apps/details?id=org.mozilla.focus" target="_blank"><img src="https://play.google.com/intl/en_us/badges/images/generic/en-play-badge.png" alt="Get it on Google Play" height="90"/></a>
+<a href="https://play.google.com/store/apps/details?id=org.mozilla.focus" target="_blank"><img src="https://play.google.com/intl/en_us/badges/images/generic/en-play-badge.png" alt="Get it on Google Play" height="90"/></a><a href="https://www.f-droid.org/packages/org.mozilla.klar/" target="_blank"><img alt="Get it on F-Droid" src="https://fdroid.gitlab.io/artwork/badge/get-it-on.png" height="90"/></a>
 
 * [Google Play: Firefox Focus (All countries)](https://play.google.com/store/apps/details?id=org.mozilla.focus)
 * [Google Play: Firefox Klar (Germany, Austria, Switzerland)](https://play.google.com/store/apps/details?id=org.mozilla.klar)
