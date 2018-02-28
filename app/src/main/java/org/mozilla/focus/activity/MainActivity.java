@@ -267,4 +267,13 @@ public class MainActivity extends LocaleAwareAppCompatActivity {
 
         super.onBackPressed();
     }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        final FragmentManager fragmentManager = getSupportFragmentManager();
+        final BrowserFragment browserFragment = (BrowserFragment) fragmentManager.findFragmentByTag(BrowserFragment.FRAGMENT_TAG);
+        if (browserFragment != null) {
+            browserFragment.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        }
+    }
 }

@@ -9,6 +9,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.view.View;
 
+import org.mozilla.focus.permissions.IPermissionsDelegate;
 import org.mozilla.focus.session.Session;
 
 public interface IWebView {
@@ -119,4 +120,6 @@ public interface IWebView {
      * Get the title of the currently displayed website.
      */
     String getTitle();
+
+    IPermissionsDelegate getPermissionsDelegate();
 }

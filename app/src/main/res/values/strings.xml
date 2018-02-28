@@ -559,4 +559,13 @@ be temporary, and you can try again later.</li>
     <string name="gv_prompt_username_hint">Username</string>
     <string name="gv_prompt_password_hint">Password</string>
     <string name="gv_prompt_clear">Clear</string>
+    <string name="request_geolocation">Share location with "%1$s"?</string>
+    <string name="request_notification">Allow notifications for "%1$s"?</string>
+    <string name="request_video">Share video with "%1$s"</string>
+    <string name="request_audio">Share audio with "%1$s"</string>
+    <string name="request_media">Share video and audio with "%1$s"</string>
+    <string name="media_back_camera">Back camera</string>
+    <string name="media_front_camera">Front camera</string>
+    <string name="media_microphone">Microphone</string>
+    <string name="media_other">Unknown source</string>
 </resources>

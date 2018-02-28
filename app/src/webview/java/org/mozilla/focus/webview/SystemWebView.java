@@ -30,6 +30,7 @@ import android.webkit.WebView;
 import android.webkit.WebViewDatabase;
 
 import org.mozilla.focus.BuildConfig;
+import org.mozilla.focus.permissions.IPermissionsDelegate;
 import org.mozilla.focus.session.Session;
 import org.mozilla.focus.telemetry.TelemetryWrapper;
 import org.mozilla.focus.utils.AppConstants;
@@ -186,6 +187,11 @@ public class SystemWebView extends NestedWebView implements IWebView, SharedPref
 
     @Override
     public void exitFullscreen() {}
+
+    @Override
+    public IPermissionsDelegate getPermissionsDelegate() {
+        return null;
+    }
 
     @Override
     public void destroy() {
