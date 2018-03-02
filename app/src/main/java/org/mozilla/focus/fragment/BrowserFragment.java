@@ -20,6 +20,7 @@ import android.graphics.drawable.TransitionDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.SystemClock;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
@@ -239,8 +240,10 @@ public class BrowserFragment extends WebFragment implements View.OnClickListener
 
                     progressView.setProgress(5);
                     progressView.setVisibility(View.VISIBLE);
+                    TelemetryWrapper.startLoad(SystemClock.elapsedRealtime());
                 } else {
                     if (progressView.getVisibility() == View.VISIBLE) {
+                        TelemetryWrapper.endLoad(SystemClock.elapsedRealtime());
                         // We start a transition only if a page was just loading before
                         // allowing to avoid issue #1179
                         backgroundTransitionGroup.startTransition(ANIMATION_DURATION);
@@ -396,6 +399,20 @@ public class BrowserFragment extends WebFragment implements View.OnClickListener
                     TelemetryWrapper.customTabActionButtonEvent();
                 }
             });
+        } else {
+            // If the third-party app doesn't provide an action button configuration then we are
+            // going to disable a "Share" button in the toolbar instead.
+
+            final ImageButton shareButton = view.findViewById(R.id.customtab_actionbutton);
+            shareButton.setVisibility(View.VISIBLE);
+            shareButton.setImageDrawable(DrawableUtils.loadAndTintDrawable(getContext(), R.drawable.ic_share, textColor));
+            shareButton.setContentDescription(getString(R.string.menu_share));
+            shareButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    shareCurrentUrl();
+                }
+            });
         }
 
         // We need to tint some icons.. We already tinted the close button above. Let's tint our other icons too.
@@ -453,6 +470,7 @@ public class BrowserFragment extends WebFragment implements View.OnClickListener
             public void onEnterFullScreen(@NonNull final IWebView.FullscreenCallback callback, @Nullable View view) {
                 fullscreenCallback = callback;
 
+                // View is passed in as null for GeckoView fullscreen
                 if (view != null) {
                     // Hide browser UI and web content
                     browserContainer.setVisibility(View.INVISIBLE);
@@ -463,6 +481,11 @@ public class BrowserFragment extends WebFragment implements View.OnClickListener
                     videoContainer.addView(view, params);
                     videoContainer.setVisibility(View.VISIBLE);
 
+                    // Switch to immersive mode: Hide system bars other UI controls
+                    switchToImmersiveMode();
+                } else {
+                    // Hide status bar when entering fullscreen with GeckoView
+                    statusBar.setVisibility(View.GONE);
                     // Switch to immersive mode: Hide system bars other UI controls
                     switchToImmersiveMode();
                 }
@@ -476,6 +499,9 @@ public class BrowserFragment extends WebFragment implements View.OnClickListener
 
                 // Show browser UI and web content again
                 browserContainer.setVisibility(View.VISIBLE);
+
+                // Show status bar again (hidden in GeckoView versions)
+                statusBar.setVisibility(View.VISIBLE);
 
                 exitImmersiveModeIfNeeded();
 
@@ -748,6 +774,28 @@ public class BrowserFragment extends WebFragment implements View.OnClickListener
         SessionManager.getInstance().removeCurrentSession();
     }
 
+    private void shareCurrentUrl() {
+        final String url = getUrl();
+
+        final Intent shareIntent = new Intent(Intent.ACTION_SEND);
+        shareIntent.setType("text/plain");
+        shareIntent.putExtra(Intent.EXTRA_TEXT, url);
+
+        // Use title from webView if it's content matches the url
+        final IWebView webView = getWebView();
+        if (webView != null) {
+            final String contentUrl = webView.getUrl();
+            if (contentUrl != null && contentUrl.equals(url)) {
+                final String contentTitle = webView.getTitle();
+                shareIntent.putExtra(Intent.EXTRA_SUBJECT, contentTitle);
+            }
+        }
+
+        startActivity(Intent.createChooser(shareIntent, getString(R.string.share_dialog_title)));
+
+        TelemetryWrapper.shareEvent();
+    }
+
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
@@ -812,23 +860,20 @@ public class BrowserFragment extends WebFragment implements View.OnClickListener
                 break;
             }
 
-            case R.id.share: {
-                final String url = getUrl();
-                final Intent shareIntent = new Intent(Intent.ACTION_SEND);
-                shareIntent.setType("text/plain");
-                shareIntent.putExtra(Intent.EXTRA_TEXT, url);
-                // Use title from webView if it's content matches the url
-                final IWebView webView = getWebView();
-                if (webView != null) {
-                    final String contentUrl = webView.getUrl();
-                    if (contentUrl != null && contentUrl.equals(url)) {
-                        final String contentTitle = webView.getTitle();
-                        shareIntent.putExtra(Intent.EXTRA_SUBJECT, contentTitle);
-                    }
-                }
-                startActivity(Intent.createChooser(shareIntent, getString(R.string.share_dialog_title)));
+            case R.id.open_in_firefox_focus: {
+                session.stripCustomTabConfiguration();
 
-                TelemetryWrapper.shareEvent();
+                getWebView().saveWebViewState(session);
+
+                getActivity().getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.container, BrowserFragment.createForSession(session), BrowserFragment.FRAGMENT_TAG)
+                        .commit();
+                break;
+            }
+
+            case R.id.share: {
+                shareCurrentUrl();
                 break;
             }
 

@@ -12,8 +12,7 @@ import android.support.v4.view.ViewCompat;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 
-import org.mozilla.gecko.GeckoView;
-import org.mozilla.gecko.GeckoViewSettings;
+import org.mozilla.geckoview.GeckoView;
 
 public class NestedGeckoView extends GeckoView implements NestedScrollingChild {
     private int mLastY;
@@ -22,8 +21,8 @@ public class NestedGeckoView extends GeckoView implements NestedScrollingChild {
     private int mNestedOffsetY;
     private NestedScrollingChildHelper mChildHelper;
 
-    public NestedGeckoView(Context context, AttributeSet attrs, GeckoViewSettings settings) {
-        super(context, attrs, settings);
+    public NestedGeckoView(Context context, AttributeSet attrs) {
+        super(context, attrs);
 
         mChildHelper = new NestedScrollingChildHelper(this);
         setNestedScrollingEnabled(true);
@@ -31,13 +30,13 @@ public class NestedGeckoView extends GeckoView implements NestedScrollingChild {
 
     @Override
     public boolean onTouchEvent(MotionEvent ev) {
-        boolean eventHandled = false;
-
         final MotionEvent event = MotionEvent.obtain(ev);
-        final int action = event.getActionMasked();
+        final int action = ev.getActionMasked();
+
         if (action == MotionEvent.ACTION_DOWN) {
             mNestedOffsetY = 0;
         }
+
         final int eventY = (int) event.getY();
         event.offsetLocation(0, mNestedOffsetY);
 
@@ -47,36 +46,38 @@ public class NestedGeckoView extends GeckoView implements NestedScrollingChild {
 
                 if (dispatchNestedPreScroll(0, deltaY, mScrollConsumed, mScrollOffset)) {
                     deltaY -= mScrollConsumed[1];
-                    mLastY = eventY - mScrollOffset[1];
                     event.offsetLocation(0, -mScrollOffset[1]);
                     mNestedOffsetY += mScrollOffset[1];
                 }
 
-                eventHandled = super.onTouchEvent(event);
+                mLastY = eventY - mScrollOffset[1];
 
                 if (dispatchNestedScroll(0, mScrollOffset[1], 0, deltaY, mScrollOffset)) {
+                    mLastY -= mScrollOffset[1];
                     event.offsetLocation(0, mScrollOffset[1]);
                     mNestedOffsetY += mScrollOffset[1];
-                    mLastY -= mScrollOffset[1];
                 }
                 break;
 
             case MotionEvent.ACTION_DOWN:
-                eventHandled = super.onTouchEvent(event);
                 mLastY = eventY;
-
                 startNestedScroll(ViewCompat.SCROLL_AXIS_VERTICAL);
                 break;
 
             case MotionEvent.ACTION_UP:
             case MotionEvent.ACTION_CANCEL:
-                eventHandled = super.onTouchEvent(event);
                 stopNestedScroll();
                 break;
 
             default:
                 // We don't care about other touch events
         }
+
+        // Execute event handler from parent class in all cases
+        boolean eventHandled = super.onTouchEvent(event);
+
+        // Recycle previously obtained event
+        event.recycle();
 
         return eventHandled;
     }

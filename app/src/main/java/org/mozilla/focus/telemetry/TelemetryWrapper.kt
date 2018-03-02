@@ -37,6 +37,7 @@ import org.mozilla.telemetry.storage.FileTelemetryStorage
 object TelemetryWrapper {
     private const val TELEMETRY_APP_NAME_FOCUS = "Focus"
     private const val TELEMETRY_APP_NAME_KLAR = "Klar"
+    private const val TELEMETRY_APP_ENGINE_GECKOVIEW = "GeckoView"
 
     private const val MAXIMUM_CUSTOM_TAB_EXTRAS = 10
 
@@ -142,6 +143,7 @@ object TelemetryWrapper {
         val SOURCE = "source"
         val SUCCESS = "success"
         val ERROR_CODE = "error_code"
+        val AVERAGE = "average"
     }
 
     @JvmStatic
@@ -202,6 +204,9 @@ object TelemetryWrapper {
                     .setSettingsProvider(TelemetrySettingsProvider(context))
                     .setCollectionEnabled(telemetryEnabled)
                     .setUploadEnabled(telemetryEnabled)
+                    .setBuildId(TelemetryConfiguration(context).buildId +
+                    (if (AppConstants.isGeckoBuild())
+                        ("-" + TELEMETRY_APP_ENGINE_GECKOVIEW) else ""))
 
             val serializer = JSONPingSerializer()
             val storage = FileTelemetryStorage(configuration, serializer)
@@ -246,9 +251,45 @@ object TelemetryWrapper {
         TelemetryEvent.create(Category.ACTION, Method.FOREGROUND, Object.APP).queue()
     }
 
+    private var startTime: Long = 0
+    private var numLoads: Int = 0
+    private var averageTime: Double = 0.0
+    private var started: Boolean = false
+
+    @JvmStatic
+    fun startLoad(recordStartTime: Long) {
+        if (!started) {
+            startTime = recordStartTime
+            started = true
+        }
+    }
+
+    @JvmStatic
+    fun endLoad(endTime: Long) {
+        if (started) {
+            numLoads++
+            averageTime = (averageTime + (endTime - startTime)) / numLoads
+            startTime = 0
+            started = false
+        }
+    }
+
+    @JvmStatic
+    fun resetAverageLoad() {
+        started = false
+        numLoads = 0
+        startTime = 0
+    }
+
     @JvmStatic
     fun stopSession() {
         TelemetryHolder.get().recordSessionEnd()
+
+        if (numLoads > 0) {
+            TelemetryEvent.create(Category.ACTION, Method.FOREGROUND, Object.BROWSER)
+                    .extra(Extra.AVERAGE, averageTime.toString()).queue()
+            resetAverageLoad()
+        }
 
         TelemetryEvent.create(Category.ACTION, Method.BACKGROUND, Object.APP).queue()
     }

@@ -27,6 +27,7 @@ import org.mozilla.focus.session.Session
 import org.mozilla.focus.session.SessionManager
 import org.mozilla.focus.session.Source
 import org.mozilla.focus.telemetry.TelemetryWrapper
+import org.mozilla.focus.utils.Features
 import org.mozilla.focus.utils.Settings
 import org.mozilla.focus.utils.SupportUtils
 import org.mozilla.focus.utils.ThreadUtils
@@ -132,13 +133,15 @@ class UrlInputFragment :
     override fun onResume() {
         super.onResume()
 
-        urlAutoCompleteFilter.load(activity.applicationContext)
+        activity?.let {
+            urlAutoCompleteFilter.load(it.applicationContext)
+        }
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? =
             inflater.inflate(R.layout.fragment_urlinput, container, false)
 
-    override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         listOf(dismissView, clearView, searchView).forEach { it.setOnClickListener(this) }
 
         urlView.setOnFilterListener(this)
@@ -169,7 +172,7 @@ class UrlInputFragment :
         urlView.setOnCommitListener(this)
 
         session?.let {
-            urlView.setText(if (it.isSearch) it.searchTerms else it.url.value)
+            urlView.setText(if (it.isSearch && Features.SEARCH_TERMS_OR_URL) it.searchTerms else it.url.value)
             clearView.visibility = View.VISIBLE
             searchViewContainer.visibility = View.GONE
         }
@@ -207,9 +210,11 @@ class UrlInputFragment :
     override fun onStart() {
         super.onStart()
 
-        if (!Settings.getInstance(context).shouldShowFirstrun()) {
-            // Only show keyboard if we are not displaying the first run tour on top.
-            showKeyboard()
+        context?.let {
+            if (!Settings.getInstance(it).shouldShowFirstrun()) {
+                // Only show keyboard if we are not displaying the first run tour on top.
+                showKeyboard()
+            }
         }
     }
 
