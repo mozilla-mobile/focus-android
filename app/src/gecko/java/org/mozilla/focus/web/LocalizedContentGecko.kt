@@ -9,6 +9,7 @@ import android.content.pm.PackageManager
 import android.net.Uri
 import android.support.v4.util.ArrayMap
 import android.view.View
+import android.os.Build
 
 import org.mozilla.focus.R
 import org.mozilla.focus.locale.Locales
@@ -122,7 +123,6 @@ object LocalizedContentGecko {
     private fun loadDebug(geckoSession: GeckoSession, context: Context) {
 
         val substitutionMap = ArrayMap<String, String>()
-        val userAgentString = "User Agent: " +  geckoSession
 
         val release = Build.VERSION.RELEASE
         val sdkVersion = Build.VERSION.SDK_INT
