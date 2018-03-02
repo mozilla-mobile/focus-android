@@ -20,6 +20,7 @@ import android.graphics.drawable.TransitionDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.SystemClock;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
@@ -239,8 +240,10 @@ public class BrowserFragment extends WebFragment implements View.OnClickListener
 
                     progressView.setProgress(5);
                     progressView.setVisibility(View.VISIBLE);
+                    TelemetryWrapper.startLoad(SystemClock.elapsedRealtime());
                 } else {
                     if (progressView.getVisibility() == View.VISIBLE) {
+                        TelemetryWrapper.endLoad(SystemClock.elapsedRealtime());
                         // We start a transition only if a page was just loading before
                         // allowing to avoid issue #1179
                         backgroundTransitionGroup.startTransition(ANIMATION_DURATION);
@@ -453,6 +456,7 @@ public class BrowserFragment extends WebFragment implements View.OnClickListener
             public void onEnterFullScreen(@NonNull final IWebView.FullscreenCallback callback, @Nullable View view) {
                 fullscreenCallback = callback;
 
+                // View is passed in as null for GeckoView fullscreen
                 if (view != null) {
                     // Hide browser UI and web content
                     browserContainer.setVisibility(View.INVISIBLE);
@@ -463,6 +467,11 @@ public class BrowserFragment extends WebFragment implements View.OnClickListener
                     videoContainer.addView(view, params);
                     videoContainer.setVisibility(View.VISIBLE);
 
+                    // Switch to immersive mode: Hide system bars other UI controls
+                    switchToImmersiveMode();
+                } else {
+                    // Hide status bar when entering fullscreen with GeckoView
+                    statusBar.setVisibility(View.GONE);
                     // Switch to immersive mode: Hide system bars other UI controls
                     switchToImmersiveMode();
                 }
@@ -476,6 +485,9 @@ public class BrowserFragment extends WebFragment implements View.OnClickListener
 
                 // Show browser UI and web content again
                 browserContainer.setVisibility(View.VISIBLE);
+
+                // Show status bar again (hidden in GeckoView versions)
+                statusBar.setVisibility(View.VISIBLE);
 
                 exitImmersiveModeIfNeeded();
 

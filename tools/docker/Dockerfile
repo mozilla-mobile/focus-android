@@ -5,7 +5,7 @@
 # Inspired by:
 # https://hub.docker.com/r/runmymind/docker-android-sdk/~/dockerfile/
 
-FROM ubuntu:17.04
+FROM ubuntu:17.10
 
 MAINTAINER Sebastian Kaspari "skaspari@mozilla.com"
 
@@ -38,7 +38,7 @@ RUN cd /opt && rm -f android-sdk.tgz
 
 ENV ANDROID_SDK_HOME /opt/android-sdk-linux
 ENV ANDROID_HOME /opt/android-sdk-linux
-ENV PATH ${PATH}:${ANDROID_SDK_HOME}/tools:${ANDROID_SDK_HOME}/platform-tools:/opt/tools
+ENV PATH ${PATH}:${ANDROID_SDK_HOME}/tools:${ANDROID_SDK_HOME}/platform-tools:/opt/tools:${ANDROID_SDK_HOME}/build-tools/26.0.1
 
 # Platform tools
 RUN echo y | android update sdk --no-ui --all --filter platform-tools | grep 'package installed'
@@ -98,6 +98,17 @@ RUN pip install -r tools/l10n/android2po/requirements.txt
 
 # Install taskcluster python library (used by decision tasks)
 RUN pip install taskcluster
+
+# Install Google Cloud SDK for using Firebase Device Lab
+RUN curl https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/google-cloud-sdk-184.0.0-linux-x86_64.tar.gz --output /gcloud.tar.gz
+RUN tar -xvf /gcloud.tar.gz -C /
+RUN /google-cloud-sdk/install.sh --quiet
+RUN /google-cloud-sdk/bin/gcloud --quiet components update
+
+# Needed for verifying cyclic redundancy check (CRC) headers (Google Cloud SDK)
+RUN apt-get install gcc python-dev python-setuptools
+RUN easy_install -U pip
+RUN pip install -U crcmod
 
 # -- Cleanup ----------------------------------------------------------------------------
 
