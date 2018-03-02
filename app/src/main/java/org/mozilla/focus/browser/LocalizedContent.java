@@ -121,13 +121,11 @@ public class LocalizedContent {
         final Context context = webView.getContext();
 
         final Map<String, String> substitutionMap = new ArrayMap<>();
-        final String userAgentString = "User Agent: " + webView.getSettings().getUserAgentString();
 
         final String release = Build.VERSION.RELEASE;
         final int sdkVersion = Build.VERSION.SDK_INT;
-        final String baseOS = Build.VERSION.BASE_OS;
         final String codename = Build.VERSION.CODENAME;
-        final String androidVersion = "Android SDK: " + sdkVersion + " (" + release + ") | Base OS: " + baseOS + " | Codename: " + codename;
+        final String androidVersion = "Android SDK: " + sdkVersion + " (" + release + ") | Codename: " + codename;
 
         String aboutVersion = "";
         try {
@@ -138,7 +136,6 @@ public class LocalizedContent {
         }
         substitutionMap.put("%about-version%", aboutVersion);
         substitutionMap.put("%android-version%", androidVersion);
-        substitutionMap.put("%user-agent%", userAgentString);
 
         final String wordmark = HtmlLoader.loadPngAsDataURI(context, R.drawable.wordmark);
         substitutionMap.put("%wordmark%", wordmark);

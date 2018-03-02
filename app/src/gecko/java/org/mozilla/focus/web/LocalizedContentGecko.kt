@@ -24,6 +24,7 @@ object LocalizedContentGecko {
     // a custom scheme.
     val URL_ABOUT = "focus:about"
     val URL_RIGHTS = "focus:rights"
+    val URL_DEBUG = "focus:debug"
     val mplUrl = "https://www.mozilla.org/en-US/MPL/"
     val trademarkPolicyUrl = "https://www.mozilla.org/foundation/trademarks/policy/"
     val gplUrl = "gpl.html"
@@ -36,6 +37,9 @@ object LocalizedContentGecko {
             return true
         } else if (URL_RIGHTS == url) {
             loadRights(geckoSession, context)
+            return true
+        } else if (URL_DEBUG == url) {
+            loadDebug(geckoSession, context)
             return true
         }
         return false
@@ -107,6 +111,43 @@ object LocalizedContentGecko {
         val path = context.filesDir
         val file = File(path, "rights.html")
 
+        writeDataToFile(file, data)
+
+        geckoSession.loadUri(Uri.fromFile(file))
+    }
+
+    /**
+     * Load the content for focus:debug
+     */
+    private fun loadDebug(geckoSession: GeckoSession, context: Context) {
+
+        val substitutionMap = ArrayMap<String, String>()
+        val userAgentString = "User Agent: " +  geckoSession
+
+        val release = Build.VERSION.RELEASE
+        val sdkVersion = Build.VERSION.SDK_INT
+        val codename = Build.VERSION.CODENAME
+        val androidVersion = "Android SDK: $sdkVersion ($release) | Codename: $codename"
+
+        var aboutVersion = ""
+        try {
+            val packageInfo = context.packageManager.getPackageInfo(context.packageName, 0)
+            aboutVersion = String.format("%s (Build #%s)", packageInfo.versionName, packageInfo.versionCode)
+        } catch (e: PackageManager.NameNotFoundException) {
+            // Nothing to do if we can't find the package name.
+        }
+
+        substitutionMap["%about-version%"] = aboutVersion
+        substitutionMap["%android-version%"] = androidVersion
+
+        val wordmark = HtmlLoader.loadPngAsDataURI(context, R.drawable.wordmark)
+        substitutionMap["%wordmark%"] = wordmark
+
+        putLayoutDirectionIntoMap(substitutionMap, context)
+
+        val data = HtmlLoader.loadResourceFile(context, R.raw.debug, substitutionMap)
+        val path = context.filesDir
+        val file = File(path, "debug.html")
         writeDataToFile(file, data)
 
         geckoSession.loadUri(Uri.fromFile(file))
