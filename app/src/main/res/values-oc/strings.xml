@@ -8,6 +8,8 @@
   <string name="feedback_erase">Vòstre istòric de navigacion es estat escafat.</string>
   <string name="search_hint">Recercar %1$s</string>
   <string name="menu_share">Partejar…</string>
+  <string name="menu_open_with_default_browser">Dobrir amb %1$s</string>
+  <string name="menu_open_with_a_browser">Dobrir amb…</string>
   <string name="menu_add_to_home_screen">Apondre a l’ecran d’acuèlh</string>
   <string name="menu_whats_new">Novetats</string>
   <string name="menu_settings">Paramètres</string>
