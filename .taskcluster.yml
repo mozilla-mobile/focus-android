@@ -37,7 +37,7 @@ tasks:
           && git checkout {{event.head.sha}}
           && echo "--" > .adjust_token
           && python tools/l10n/check_locales.py
-          && ./gradlew clean assemble detektCheck ktlint lint pmd checkstyle findbugs test
+          && ./gradlew --no-daemon clean assemble detektCheck ktlint lint pmd checkstyle findbugs test
       artifacts:
         'public':
           type: 'directory'
@@ -124,7 +124,7 @@ tasks:
           && git checkout {{ event.version }}
           && python tools/taskcluster/get-adjust-token.py
           && python tools/l10n/filter-release-translations.py
-          && ./gradlew clean test assembleRelease
+          && ./gradlew --no-daemon clean test assembleRelease
       artifacts:
         'public':
           type: 'directory'

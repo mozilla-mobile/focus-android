@@ -135,7 +135,7 @@ public class TypicalUseScenarioTest {
         blockSocialTrackerEntry.click();
 
         //Back to the webpage
-        TestHelper.navigateUp.click();
+        TestHelper.pressBackKey();
         assertTrue(TestHelper.webView.waitForExists(waitingTime));
         assertTrue (TestHelper.browserURLbar.getText().contains("http://www.example.com"));
         assertTrue (!TestHelper.lockIcon.exists());
