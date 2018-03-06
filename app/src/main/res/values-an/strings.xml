@@ -8,6 +8,8 @@
   <string name="feedback_erase">S\'ha borrau lo suyo historial de navegación.</string>
   <string name="search_hint">Buscar %1$s</string>
   <string name="menu_share">Compartir…</string>
+  <string name="menu_open_with_default_browser">Ubrir con %1$s</string>
+  <string name="menu_open_with_a_browser">Ubrir con…</string>
   <string name="menu_add_to_home_screen">Anyader a la pantalla d\'inicio</string>
   <string name="menu_whats_new">Novedatz</string>
   <string name="menu_settings">Achustes</string>

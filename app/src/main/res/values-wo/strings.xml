@@ -8,6 +8,8 @@
   <string name="feedback_erase">Farees na jaar-jaaru sag njoow.</string>
   <string name="search_hint">Seet %1$s</string>
   <string name="menu_share">Séddoo…</string>
+  <string name="menu_open_with_default_browser">Ubbi ak %1$s</string>
+  <string name="menu_open_with_a_browser">Ubbi ak...</string>
   <string name="menu_add_to_home_screen">Yokk ci njëlbéenu sa xoolu</string>
   <string name="menu_whats_new">Lou bees</string>
   <string name="menu_settings">Jekk-jekkal</string>
