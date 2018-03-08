@@ -183,8 +183,8 @@ class UrlInputFragment :
 
         urlInputLayout.setOnApplyWindowInsetsListener { v, insets ->
             val inputHeight = resources.getDimension(R.dimen.urlinput_height)
-            v.layoutParams.height = (inputHeight + insets.systemWindowInsetTop).toInt();
-            insets;
+            v.layoutParams.height = (inputHeight + insets.systemWindowInsetTop).toInt()
+            insets
         }
 
         session?.let {
