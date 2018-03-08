@@ -11,7 +11,10 @@ import android.os.Bundle
 import android.text.SpannableString
 import android.text.TextUtils
 import android.text.style.StyleSpan
-import android.view.*
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.view.ViewTreeObserver
 import android.widget.FrameLayout
 import kotlinx.android.synthetic.main.fragment_urlinput.*
 import org.mozilla.focus.R
@@ -171,14 +174,16 @@ class UrlInputFragment :
 
         keyboardLinearLayout.setOnApplyWindowInsetsListener { v, insets ->
             if (v.layoutParams is ViewGroup.MarginLayoutParams) {
-                (v.layoutParams as ViewGroup.MarginLayoutParams).topMargin =
-                        (resources.getDimension(R.dimen.urlinput_height) + insets.systemWindowInsetTop).toInt();
+                val inputHeight = resources.getDimension(R.dimen.urlinput_height)
+                val marginParams = v.layoutParams as ViewGroup.MarginLayoutParams
+                marginParams.topMargin = (inputHeight + insets.systemWindowInsetTop).toInt()
             }
             insets
         }
 
         urlInputLayout.setOnApplyWindowInsetsListener { v, insets ->
-            v.layoutParams.height = (resources.getDimension(R.dimen.urlinput_height) + insets.systemWindowInsetTop).toInt();
+            val inputHeight = resources.getDimension(R.dimen.urlinput_height)
+            v.layoutParams.height = (inputHeight + insets.systemWindowInsetTop).toInt();
             insets;
         }
 
