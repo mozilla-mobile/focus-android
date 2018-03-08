@@ -34,6 +34,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.view.WindowInsets;
 import android.view.WindowManager;
 import android.webkit.CookieManager;
 import android.widget.FrameLayout;
@@ -205,6 +206,13 @@ public class BrowserFragment extends WebFragment implements View.OnClickListener
 
         urlBar = view.findViewById(R.id.urlbar);
         statusBar = view.findViewById(R.id.status_bar_background);
+        statusBar.setOnApplyWindowInsetsListener(new View.OnApplyWindowInsetsListener() {
+            @Override
+            public WindowInsets onApplyWindowInsets(View v, WindowInsets insets) {
+                v.getLayoutParams().height = insets.getSystemWindowInsetTop();
+                return insets;
+            }
+        });
 
         urlView = (TextView) view.findViewById(R.id.display_url);
 

@@ -11,10 +11,7 @@ import android.os.Bundle
 import android.text.SpannableString
 import android.text.TextUtils
 import android.text.style.StyleSpan
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import android.view.ViewTreeObserver
+import android.view.*
 import android.widget.FrameLayout
 import kotlinx.android.synthetic.main.fragment_urlinput.*
 import org.mozilla.focus.R
@@ -114,7 +111,8 @@ class UrlInputFragment :
     private val urlAutoCompleteFilter: UrlAutoCompleteFilter = UrlAutoCompleteFilter()
     private var displayedPopupMenu: HomeMenu? = null
 
-    @Volatile private var isAnimating: Boolean = false
+    @Volatile
+    private var isAnimating: Boolean = false
 
     private var session: Session? = null
 
@@ -170,6 +168,19 @@ class UrlInputFragment :
         }
 
         urlView.setOnCommitListener(this)
+
+        keyboardLinearLayout.setOnApplyWindowInsetsListener { v, insets ->
+            if (v.layoutParams is ViewGroup.MarginLayoutParams) {
+                (v.layoutParams as ViewGroup.MarginLayoutParams).topMargin =
+                        (resources.getDimension(R.dimen.urlinput_height) + insets.systemWindowInsetTop).toInt();
+            }
+            insets
+        }
+
+        urlInputLayout.setOnApplyWindowInsetsListener { v, insets ->
+            v.layoutParams.height = (resources.getDimension(R.dimen.urlinput_height) + insets.systemWindowInsetTop).toInt();
+            insets;
+        }
 
         session?.let {
             urlView.setText(if (it.isSearch && Features.SEARCH_TERMS_OR_URL) it.searchTerms else it.url.value)

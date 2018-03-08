@@ -18,6 +18,7 @@ import android.transition.TransitionInflater;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowInsets;
 
 import org.mozilla.focus.R;
 import org.mozilla.focus.firstrun.FirstrunPagerAdapter;
@@ -55,6 +56,14 @@ public class FirstrunFragment extends Fragment implements View.OnClickListener {
         view.findViewById(R.id.skip).setOnClickListener(this);
 
         final View background = view.findViewById(R.id.background);
+        background.setOnApplyWindowInsetsListener(new View.OnApplyWindowInsetsListener() {
+            @Override
+            public WindowInsets onApplyWindowInsets(View v, WindowInsets insets) {
+                v.setPadding(0, insets.getSystemWindowInsetTop(), 0, 0);
+                return insets;
+            }
+        });
+
         final FirstrunPagerAdapter adapter = new FirstrunPagerAdapter(container.getContext(), this);
 
         viewPager = (ViewPager) view.findViewById(R.id.pager);
