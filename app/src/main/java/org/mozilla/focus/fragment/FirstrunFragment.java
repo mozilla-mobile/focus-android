@@ -18,7 +18,6 @@ import android.transition.TransitionInflater;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowInsets;
 
 import org.mozilla.focus.R;
 import org.mozilla.focus.firstrun.FirstrunPagerAdapter;
