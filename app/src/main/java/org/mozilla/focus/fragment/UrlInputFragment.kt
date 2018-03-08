@@ -27,12 +27,7 @@ import org.mozilla.focus.session.Session
 import org.mozilla.focus.session.SessionManager
 import org.mozilla.focus.session.Source
 import org.mozilla.focus.telemetry.TelemetryWrapper
-import org.mozilla.focus.utils.Features
-import org.mozilla.focus.utils.Settings
-import org.mozilla.focus.utils.SupportUtils
-import org.mozilla.focus.utils.ThreadUtils
-import org.mozilla.focus.utils.UrlUtils
-import org.mozilla.focus.utils.ViewUtils
+import org.mozilla.focus.utils.*
 import org.mozilla.focus.whatsnew.WhatsNew
 import org.mozilla.focus.widget.InlineAutocompleteEditText
 
@@ -172,20 +167,26 @@ class UrlInputFragment :
 
         urlView.setOnCommitListener(this)
 
-        keyboardLinearLayout.setOnApplyWindowInsetsListener { v, insets ->
-            if (v.layoutParams is ViewGroup.MarginLayoutParams) {
+        StatusBarUtils.getStatusBarHeight(keyboardLinearLayout, {
+            if (keyboardLinearLayout.layoutParams is ViewGroup.MarginLayoutParams) {
                 val inputHeight = resources.getDimension(R.dimen.urlinput_height)
-                val marginParams = v.layoutParams as ViewGroup.MarginLayoutParams
-                marginParams.topMargin = (inputHeight + insets.systemWindowInsetTop).toInt()
+                val marginParams = keyboardLinearLayout.layoutParams as ViewGroup.MarginLayoutParams
+                marginParams.topMargin = (inputHeight + it).toInt()
             }
-            insets
-        }
+        })
 
-        urlInputLayout.setOnApplyWindowInsetsListener { v, insets ->
+        StatusBarUtils.getStatusBarHeight(urlInputLayout, {
             val inputHeight = resources.getDimension(R.dimen.urlinput_height)
-            v.layoutParams.height = (inputHeight + insets.systemWindowInsetTop).toInt()
-            insets
-        }
+            urlInputLayout.layoutParams.height = (inputHeight + it).toInt()
+        })
+
+        StatusBarUtils.getStatusBarHeight(searchViewContainer, {
+            val inputHeight = resources.getDimension(R.dimen.urlinput_height)
+            if (searchViewContainer.layoutParams is ViewGroup.MarginLayoutParams) {
+                val marginParams = searchViewContainer.layoutParams as ViewGroup.MarginLayoutParams
+                marginParams.topMargin = (inputHeight + it).toInt()
+            }
+        })
 
         session?.let {
             urlView.setText(if (it.isSearch && Features.SEARCH_TERMS_OR_URL) it.searchTerms else it.url.value)
