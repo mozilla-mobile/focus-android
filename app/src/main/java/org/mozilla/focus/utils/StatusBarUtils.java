@@ -8,7 +8,7 @@ import android.view.WindowInsets;
  */
 
 public class StatusBarUtils {
-    public static int STATUS_BAR_SIZE = -1;
+    private static int STATUS_BAR_SIZE = -1;
 
     public interface StatusBarHeightListener {
         void onStatusBarHeightFetched(int statusBarHeight);
