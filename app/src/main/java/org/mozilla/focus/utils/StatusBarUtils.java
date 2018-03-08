@@ -15,16 +15,17 @@ public class StatusBarUtils {
     }
 
     public static void getStatusBarHeight(View view, final StatusBarHeightListener listener) {
-        if (STATUS_BAR_SIZE > 0)
+        if (STATUS_BAR_SIZE > 0) {
             listener.onStatusBarHeightFetched(STATUS_BAR_SIZE);
-
-        view.setOnApplyWindowInsetsListener(new View.OnApplyWindowInsetsListener() {
-            @Override
-            public WindowInsets onApplyWindowInsets(View v, WindowInsets insets) {
-                STATUS_BAR_SIZE = insets.getSystemWindowInsetTop();
-                listener.onStatusBarHeightFetched(STATUS_BAR_SIZE);
-                return insets;
-            }
-        });
+        } else {
+            view.setOnApplyWindowInsetsListener(new View.OnApplyWindowInsetsListener() {
+                @Override
+                public WindowInsets onApplyWindowInsets(View v, WindowInsets insets) {
+                    STATUS_BAR_SIZE = insets.getSystemWindowInsetTop();
+                    listener.onStatusBarHeightFetched(STATUS_BAR_SIZE);
+                    return insets;
+                }
+            });
+        }
     }
 }
