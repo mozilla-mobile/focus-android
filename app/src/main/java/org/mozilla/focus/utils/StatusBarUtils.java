@@ -14,7 +14,7 @@ public class StatusBarUtils {
         void onStatusBarHeightFetched(int statusBarHeight);
     }
 
-    public static void getStatusBarHeight(View view, final StatusBarHeightListener listener) {
+    public static void getStatusBarHeight(final View view, final StatusBarHeightListener listener) {
         if (STATUS_BAR_SIZE > 0) {
             listener.onStatusBarHeightFetched(STATUS_BAR_SIZE);
         } else {
@@ -23,6 +23,7 @@ public class StatusBarUtils {
                 public WindowInsets onApplyWindowInsets(View v, WindowInsets insets) {
                     STATUS_BAR_SIZE = insets.getSystemWindowInsetTop();
                     listener.onStatusBarHeightFetched(STATUS_BAR_SIZE);
+                    view.setOnApplyWindowInsetsListener(null);
                     return insets;
                 }
             });
