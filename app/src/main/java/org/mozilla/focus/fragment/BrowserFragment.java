@@ -30,15 +30,18 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.webkit.CookieManager;
+import android.webkit.URLUtil;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -52,7 +55,9 @@ import org.mozilla.focus.customtabs.CustomTabConfig;
 import org.mozilla.focus.locale.LocaleAwareAppCompatActivity;
 import org.mozilla.focus.menu.browser.BrowserMenu;
 import org.mozilla.focus.menu.context.WebContextMenu;
+import org.mozilla.focus.observer.AverageLoadTimeObserver;
 import org.mozilla.focus.open.OpenWithFragment;
+import org.mozilla.focus.popup.PopupUtils;
 import org.mozilla.focus.session.NullSession;
 import org.mozilla.focus.session.Session;
 import org.mozilla.focus.session.SessionCallbackProxy;
@@ -65,6 +70,7 @@ import org.mozilla.focus.utils.ColorUtils;
 import org.mozilla.focus.utils.DownloadUtils;
 import org.mozilla.focus.utils.DrawableUtils;
 import org.mozilla.focus.utils.Features;
+import org.mozilla.focus.utils.StatusBarUtils;
 import org.mozilla.focus.utils.UrlUtils;
 import org.mozilla.focus.web.Download;
 import org.mozilla.focus.web.IWebView;
@@ -81,7 +87,7 @@ import java.util.List;
 public class BrowserFragment extends WebFragment implements View.OnClickListener, DownloadDialogFragment.DownloadDialogListener {
     public static final String FRAGMENT_TAG = "browser";
 
-    private static int REQUEST_CODE_STORAGE_PERMISSION = 101;
+    private static final int REQUEST_CODE_STORAGE_PERMISSION = 101;
     private static final int ANIMATION_DURATION = 300;
 
     private static final String ARGUMENT_SESSION_UUID = "sessionUUID";
@@ -106,6 +112,7 @@ public class BrowserFragment extends WebFragment implements View.OnClickListener
     private ImageButton menuView;
     private View statusBar;
     private View urlBar;
+    private FrameLayout popupTint;
     private SwipeRefreshLayout swipeRefresh;
     private WeakReference<BrowserMenu> menuWeakReference = new WeakReference<>(null);
 
@@ -204,6 +211,14 @@ public class BrowserFragment extends WebFragment implements View.OnClickListener
 
         urlBar = view.findViewById(R.id.urlbar);
         statusBar = view.findViewById(R.id.status_bar_background);
+        StatusBarUtils.getStatusBarHeight(statusBar, new StatusBarUtils.StatusBarHeightListener() {
+            @Override
+            public void onStatusBarHeightFetched(int statusBarHeight) {
+                statusBar.getLayoutParams().height = statusBarHeight;
+            }
+        });
+
+        popupTint = view.findViewById(R.id.popup_tint);
 
         urlView = (TextView) view.findViewById(R.id.display_url);
 
@@ -230,6 +245,8 @@ public class BrowserFragment extends WebFragment implements View.OnClickListener
         });
 
         setBlockingEnabled(session.isBlockingEnabled());
+
+        session.getLoading().observe(this, new AverageLoadTimeObserver(session));
 
         session.getLoading().observe(this, new NonNullObserver<Boolean>() {
             @Override
@@ -282,13 +299,28 @@ public class BrowserFragment extends WebFragment implements View.OnClickListener
 
         blockView = (FrameLayout) view.findViewById(R.id.block);
 
-        lockView = (ImageView) view.findViewById(R.id.lock);
+        lockView = view.findViewById(R.id.security_info);
         session.getSecure().observe(this, new Observer<Boolean>() {
             @Override
             public void onChanged(Boolean secure) {
-                lockView.setVisibility(secure ? View.VISIBLE : View.GONE);
+                if (!session.getLoading().getValue()) {
+                    if (secure) {
+                        lockView.setImageResource(R.drawable.ic_lock);
+                    } else {
+                        if (URLUtil.isHttpUrl(getUrl())) {
+                            // HTTP site
+                            lockView.setImageResource(R.drawable.ic_internet);
+                        } else {
+                            // Certificate is bad
+                            lockView.setImageResource(R.drawable.ic_warning);
+                        }
+                    }
+                } else {
+                    lockView.setImageResource(R.drawable.ic_internet);
+                }
             }
         });
+        lockView.setOnClickListener(this);
 
         session.getProgress().observe(this, new Observer<Integer>() {
             @Override
@@ -396,6 +428,20 @@ public class BrowserFragment extends WebFragment implements View.OnClickListener
                     TelemetryWrapper.customTabActionButtonEvent();
                 }
             });
+        } else {
+            // If the third-party app doesn't provide an action button configuration then we are
+            // going to disable a "Share" button in the toolbar instead.
+
+            final ImageButton shareButton = view.findViewById(R.id.customtab_actionbutton);
+            shareButton.setVisibility(View.VISIBLE);
+            shareButton.setImageDrawable(DrawableUtils.loadAndTintDrawable(getContext(), R.drawable.ic_share, textColor));
+            shareButton.setContentDescription(getString(R.string.menu_share));
+            shareButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    shareCurrentUrl();
+                }
+            });
         }
 
         // We need to tint some icons.. We already tinted the close button above. Let's tint our other icons too.
@@ -427,6 +473,9 @@ public class BrowserFragment extends WebFragment implements View.OnClickListener
             public void onPageFinished(boolean isSecure) {}
 
             @Override
+            public void onSecurityChanged(boolean isSecure, String host, String organization) {}
+
+            @Override
             public void onURLChanged(final String url) {}
 
             @Override
@@ -453,6 +502,7 @@ public class BrowserFragment extends WebFragment implements View.OnClickListener
             public void onEnterFullScreen(@NonNull final IWebView.FullscreenCallback callback, @Nullable View view) {
                 fullscreenCallback = callback;
 
+                // View is passed in as null for GeckoView fullscreen
                 if (view != null) {
                     // Hide browser UI and web content
                     browserContainer.setVisibility(View.INVISIBLE);
@@ -463,6 +513,11 @@ public class BrowserFragment extends WebFragment implements View.OnClickListener
                     videoContainer.addView(view, params);
                     videoContainer.setVisibility(View.VISIBLE);
 
+                    // Switch to immersive mode: Hide system bars other UI controls
+                    switchToImmersiveMode();
+                } else {
+                    // Hide status bar when entering fullscreen with GeckoView
+                    statusBar.setVisibility(View.GONE);
                     // Switch to immersive mode: Hide system bars other UI controls
                     switchToImmersiveMode();
                 }
@@ -476,6 +531,9 @@ public class BrowserFragment extends WebFragment implements View.OnClickListener
 
                 // Show browser UI and web content again
                 browserContainer.setVisibility(View.VISIBLE);
+
+                // Show status bar again (hidden in GeckoView versions)
+                statusBar.setVisibility(View.VISIBLE);
 
                 exitImmersiveModeIfNeeded();
 
@@ -748,6 +806,28 @@ public class BrowserFragment extends WebFragment implements View.OnClickListener
         SessionManager.getInstance().removeCurrentSession();
     }
 
+    private void shareCurrentUrl() {
+        final String url = getUrl();
+
+        final Intent shareIntent = new Intent(Intent.ACTION_SEND);
+        shareIntent.setType("text/plain");
+        shareIntent.putExtra(Intent.EXTRA_TEXT, url);
+
+        // Use title from webView if it's content matches the url
+        final IWebView webView = getWebView();
+        if (webView != null) {
+            final String contentUrl = webView.getUrl();
+            if (contentUrl != null && contentUrl.equals(url)) {
+                final String contentTitle = webView.getTitle();
+                shareIntent.putExtra(Intent.EXTRA_SUBJECT, contentTitle);
+            }
+        }
+
+        startActivity(Intent.createChooser(shareIntent, getString(R.string.share_dialog_title)));
+
+        TelemetryWrapper.shareEvent();
+    }
+
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
@@ -812,23 +892,23 @@ public class BrowserFragment extends WebFragment implements View.OnClickListener
                 break;
             }
 
-            case R.id.share: {
-                final String url = getUrl();
-                final Intent shareIntent = new Intent(Intent.ACTION_SEND);
-                shareIntent.setType("text/plain");
-                shareIntent.putExtra(Intent.EXTRA_TEXT, url);
-                // Use title from webView if it's content matches the url
-                final IWebView webView = getWebView();
-                if (webView != null) {
-                    final String contentUrl = webView.getUrl();
-                    if (contentUrl != null && contentUrl.equals(url)) {
-                        final String contentTitle = webView.getTitle();
-                        shareIntent.putExtra(Intent.EXTRA_SUBJECT, contentTitle);
-                    }
-                }
-                startActivity(Intent.createChooser(shareIntent, getString(R.string.share_dialog_title)));
+            case R.id.open_in_firefox_focus: {
+                session.stripCustomTabConfiguration();
 
-                TelemetryWrapper.shareEvent();
+                getWebView().saveWebViewState(session);
+
+                getActivity().getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.container, BrowserFragment.createForSession(session), BrowserFragment.FRAGMENT_TAG)
+                        .commit();
+
+                TelemetryWrapper.openFullBrowser();
+
+                break;
+            }
+
+            case R.id.share: {
+                shareCurrentUrl();
                 break;
             }
 
@@ -904,6 +984,9 @@ public class BrowserFragment extends WebFragment implements View.OnClickListener
                 final String url = webView.getUrl();
                 final String title = webView.getTitle();
                 showAddToHomescreenDialog(url, title);
+                break;
+            case R.id.security_info:
+                showSecurityPopUp();
                 break;
 
             default:
@@ -994,6 +1077,25 @@ public class BrowserFragment extends WebFragment implements View.OnClickListener
             backgroundTransitionGroup = new TransitionDrawableGroup(
                     (TransitionDrawable) statusBar.getBackground()
             );
+        }
+    }
+
+    private void showSecurityPopUp() {
+        final PopupWindow securityPopup = PopupUtils.INSTANCE.createSecurityPopup(getContext(), session);
+        if (securityPopup != null) {
+            securityPopup.setOnDismissListener(new PopupWindow.OnDismissListener() {
+                @Override
+                public void onDismiss() {
+                    popupTint.setVisibility(View.GONE);
+                }
+            });
+            securityPopup.setAnimationStyle(android.R.style.Animation_Dialog);
+            securityPopup.setTouchable(true);
+            securityPopup.setFocusable(true);
+            securityPopup.setElevation(getResources().getDimension(R.dimen.menu_elevation));
+            final int offsetY = getContext().getResources().getDimensionPixelOffset(R.dimen.doorhanger_offsetY);
+            securityPopup.showAtLocation(urlBar, Gravity.TOP | Gravity.CENTER_HORIZONTAL, 0, offsetY);
+            popupTint.setVisibility(View.VISIBLE);
         }
     }
 

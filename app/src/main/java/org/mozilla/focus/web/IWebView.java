@@ -39,6 +39,9 @@ public interface IWebView {
         void onPageStarted(String url);
 
         void onPageFinished(boolean isSecure);
+
+        void onSecurityChanged(boolean isSecure, String host, String organization);
+
         void onProgress(int progress);
 
         void onURLChanged(final String url);
@@ -112,6 +115,8 @@ public interface IWebView {
     void restoreWebViewState(Session session);
 
     void saveWebViewState(@NonNull Session session);
+
+    void exitFullscreen();
 
     /**
      * Get the title of the currently displayed website.

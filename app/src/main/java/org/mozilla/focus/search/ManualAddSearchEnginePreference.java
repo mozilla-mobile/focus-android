@@ -6,6 +6,8 @@ package org.mozilla.focus.search;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.os.Bundle;
+import android.os.Parcelable;
 import android.preference.Preference;
 import android.support.design.widget.TextInputLayout;
 import android.text.Editable;
@@ -21,12 +23,19 @@ import org.mozilla.focus.R;
 import org.mozilla.focus.utils.UrlUtils;
 
 public class ManualAddSearchEnginePreference extends Preference {
+    private static final String SUPER_STATE_KEY = "super-state";
+    private static final String SEARCH_ENGINE_NAME_KEY = "search-engine-name";
+    private static final String SEARCH_QUERY_KEY = "search-query";
+
     private EditText engineNameEditText;
     private EditText searchQueryEditText;
     private TextInputLayout engineNameErrorLayout;
     private TextInputLayout searchQueryErrorLayout;
 
     private ProgressBar progressView;
+
+    private String savedSearchEngineName;
+    private String savedSearchQuery;
 
     public ManualAddSearchEnginePreference(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -49,7 +58,36 @@ public class ManualAddSearchEnginePreference extends Preference {
         searchQueryEditText.addTextChangedListener(buildTextWatcherForErrorLayout(searchQueryErrorLayout));
 
         progressView = view.findViewById(R.id.progress);
+
+        updateState();
         return view;
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Parcelable state) {
+        Bundle bundle = (Bundle) state;
+        super.onRestoreInstanceState(bundle.getParcelable(SUPER_STATE_KEY));
+        savedSearchEngineName = bundle.getString(SEARCH_ENGINE_NAME_KEY);
+        savedSearchQuery = bundle.getString(SEARCH_QUERY_KEY);
+    }
+
+    @Override
+    protected Parcelable onSaveInstanceState() {
+        Parcelable superState = super.onSaveInstanceState();
+        Bundle bundle = new Bundle();
+        bundle.putParcelable(SUPER_STATE_KEY, superState);
+        bundle.putString(SEARCH_ENGINE_NAME_KEY, engineNameEditText.getText().toString());
+        bundle.putString(SEARCH_QUERY_KEY, searchQueryEditText.getText().toString());
+        return bundle;
+    }
+
+    private void updateState() {
+        if (engineNameEditText != null) {
+            engineNameEditText.setText(savedSearchEngineName);
+        }
+        if (searchQueryEditText != null) {
+            searchQueryEditText.setText(savedSearchQuery);
+        }
     }
 
     private boolean engineNameIsUnique(String engineName) {

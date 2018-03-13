@@ -27,11 +27,13 @@ import org.mozilla.focus.session.Session
 import org.mozilla.focus.session.SessionManager
 import org.mozilla.focus.session.Source
 import org.mozilla.focus.telemetry.TelemetryWrapper
+import org.mozilla.focus.utils.Features
 import org.mozilla.focus.utils.Settings
 import org.mozilla.focus.utils.SupportUtils
 import org.mozilla.focus.utils.ThreadUtils
 import org.mozilla.focus.utils.UrlUtils
 import org.mozilla.focus.utils.ViewUtils
+import org.mozilla.focus.utils.StatusBarUtils
 import org.mozilla.focus.whatsnew.WhatsNew
 import org.mozilla.focus.widget.InlineAutocompleteEditText
 
@@ -113,7 +115,8 @@ class UrlInputFragment :
     private val urlAutoCompleteFilter: UrlAutoCompleteFilter = UrlAutoCompleteFilter()
     private var displayedPopupMenu: HomeMenu? = null
 
-    @Volatile private var isAnimating: Boolean = false
+    @Volatile
+    private var isAnimating: Boolean = false
 
     private var session: Session? = null
 
@@ -132,13 +135,15 @@ class UrlInputFragment :
     override fun onResume() {
         super.onResume()
 
-        urlAutoCompleteFilter.load(activity.applicationContext)
+        activity?.let {
+            urlAutoCompleteFilter.load(it.applicationContext)
+        }
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? =
             inflater.inflate(R.layout.fragment_urlinput, container, false)
 
-    override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         listOf(dismissView, clearView, searchView).forEach { it.setOnClickListener(this) }
 
         urlView.setOnFilterListener(this)
@@ -168,8 +173,29 @@ class UrlInputFragment :
 
         urlView.setOnCommitListener(this)
 
+        StatusBarUtils.getStatusBarHeight(keyboardLinearLayout, {
+            if (keyboardLinearLayout.layoutParams is ViewGroup.MarginLayoutParams) {
+                val inputHeight = resources.getDimension(R.dimen.urlinput_height)
+                val marginParams = keyboardLinearLayout.layoutParams as ViewGroup.MarginLayoutParams
+                marginParams.topMargin = (inputHeight + it).toInt()
+            }
+        })
+
+        StatusBarUtils.getStatusBarHeight(urlInputLayout, {
+            val inputHeight = resources.getDimension(R.dimen.urlinput_height)
+            urlInputLayout.layoutParams.height = (inputHeight + it).toInt()
+        })
+
+        StatusBarUtils.getStatusBarHeight(searchViewContainer, {
+            val inputHeight = resources.getDimension(R.dimen.urlinput_height)
+            if (searchViewContainer.layoutParams is ViewGroup.MarginLayoutParams) {
+                val marginParams = searchViewContainer.layoutParams as ViewGroup.MarginLayoutParams
+                marginParams.topMargin = (inputHeight + it).toInt()
+            }
+        })
+
         session?.let {
-            urlView.setText(if (it.isSearch) it.searchTerms else it.url.value)
+            urlView.setText(if (it.isSearch && Features.SEARCH_TERMS_OR_URL) it.searchTerms else it.url.value)
             clearView.visibility = View.VISIBLE
             searchViewContainer.visibility = View.GONE
         }
@@ -207,9 +233,11 @@ class UrlInputFragment :
     override fun onStart() {
         super.onStart()
 
-        if (!Settings.getInstance(context).shouldShowFirstrun()) {
-            // Only show keyboard if we are not displaying the first run tour on top.
-            showKeyboard()
+        context?.let {
+            if (!Settings.getInstance(it).shouldShowFirstrun()) {
+                // Only show keyboard if we are not displaying the first run tour on top.
+                showKeyboard()
+            }
         }
     }
 

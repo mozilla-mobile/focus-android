@@ -8,8 +8,8 @@
   <string name="feedback_erase">Vaša história prehliadania bola vymazaná.</string>
   <string name="search_hint">Vyhľadať %1$s</string>
   <string name="menu_share">Zdieľať…</string>
-  <string name="menu_open_with_default_browser">Otvoriť pomocou %1$s</string>
-  <string name="menu_open_with_a_browser">Otvoriť pomocou…</string>
+  <string name="menu_open_with_default_browser2">Otvoriť v aplikácii %1$s</string>
+  <string name="menu_open_with_a_browser2">Otvoriť pomocou…</string>
   <string name="menu_add_to_home_screen">Pridať na úvodnú obrazovku</string>
   <string name="menu_whats_new">Čo je nové</string>
   <string name="menu_settings">Nastavenia</string>
@@ -17,6 +17,7 @@
   <string name="menu_help">Pomocník</string>
   <string name="menu_rights">Vaše práva</string>
   <string name="menu_trackers_blocked_title">Počet zablokovaných sledovacích prvkov</string>
+  <string name="menu_custom_tab_branding">Powered by %1$s</string>
   <string name="share_dialog_title">Zdieľať cez</string>
   <string name="notification_erase_text">Vymazať históriu prehliadania</string>
   <string name="notification_action_open">Otvoriť</string>
@@ -99,6 +100,7 @@
   <string name="accessibility_announcement_search">Pridať vyhľadávací modul</string>
   <string name="search_add_confirmation">Bol pridaný nový vyhľadávací modul.</string>
   <string name="search_add_error_empty_name">Zadajte názov vyhľadávacieho modulu</string>
+  <string name="search_add_error_duplicate_name">Tento názov už používa nainštalovaný vyhľadávací modul.</string>
   <string name="search_add_error_empty_search">Zadajte hľadaný výraz</string>
   <string name="search_add_error_format">Skontrolujte, či sa hľadaný výraz formátovo zhoduje s príkladom</string>
   <string name="content_description_clear_input">Vymazať pole</string>
@@ -182,4 +184,11 @@
   <string name="your_rights_content3"><![CDATA["Nie sú vám udelené žiadne práva či licencie súvisiace s ochrannými známkami Mozilla Foundation alebo akejkoľvek inej strany,vrátane názvov a log Mozilla, Firefox alebo %1$s. Ďalšie informácie nájdete "<a xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2" href="%2$s">tu</a>.]]></string>
   <string name="your_rights_content4"><![CDATA["Ďalšie zdrojové kódy aplikácie %1$s sú dostupné za podmienok iných slobodných a open source "<a xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2" href="%2$s">licenci&#237;</a>.]]></string>
   <string name="your_rights_content5"><![CDATA["%1$s taktiež používa zoznam blokovania, ktorý poskytuje spoločnosť Disconnect ako oddelené a nezávislé dielo za podmienok licencie "<a xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2" href="%2$s">GNU General Public License v3</a>", dostupné "<a xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2" href="%3$s">tu</a>.]]></string>
+  <string name="gv_prompt_username_hint">Používateľské meno</string>
+  <string name="gv_prompt_password_hint">Heslo</string>
+  <string name="gv_prompt_clear">Vymazať</string>
+  <string name="security_popup_secure_connection">Zabezpečené pripojenie</string>
+  <string name="security_popup_insecure_connection">Nezabezpečené pripojenie</string>
+  <string name="security_popup_security_verified">Overil ju %1$s</string>
+  <string name="site_security_icon_content_description">Zabezpečenie stránky</string>
 </resources>

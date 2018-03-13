@@ -39,7 +39,7 @@ import java.net.URL;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 public class ManualAddSearchEngineSettingsFragment extends SettingsFragment {
-    private static String LOGTAG = "ManualAddSearchEngine";
+    private static final String LOGTAG = "ManualAddSearchEngine";
 
     // Set so the user doesn't have to wait *too* long. It's used twice: once for connecting and once for reading.
     private static final int SEARCH_QUERY_VALIDATION_TIMEOUT_MILLIS = 4000;
@@ -219,11 +219,12 @@ public class ManualAddSearchEngineSettingsFragment extends SettingsFragment {
         HttpURLConnection connection = null;
         try {
             connection = (HttpURLConnection) searchURL.openConnection();
+            connection.setInstanceFollowRedirects(true);
             connection.setConnectTimeout(SEARCH_QUERY_VALIDATION_TIMEOUT_MILLIS);
             connection.setReadTimeout(SEARCH_QUERY_VALIDATION_TIMEOUT_MILLIS);
 
-            // A non-error HTTP response is good enough as a sanity check, some search engines redirect to https.
-            return connection.getResponseCode() < 400;
+            // Now that redirects are followed, 300 is a better and stronger sanity check, checks for a non error and non redirect response
+            return connection.getResponseCode() < 300;
 
         } catch (final IOException e) {
             // Don't log exception to avoid leaking URL.

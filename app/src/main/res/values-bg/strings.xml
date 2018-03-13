@@ -8,8 +8,6 @@
   <string name="feedback_erase">Историята на разглеждане е изчистена</string>
   <string name="search_hint">Търсене на %1$s</string>
   <string name="menu_share">Споделяне…</string>
-  <string name="menu_open_with_default_browser">Отваряне с %1$s</string>
-  <string name="menu_open_with_a_browser">Отваряне с…</string>
   <string name="menu_add_to_home_screen">Добавяне към екрана</string>
   <string name="menu_whats_new">Новото в това издание</string>
   <string name="menu_settings">Настройки</string>
@@ -99,6 +97,7 @@
   <string name="accessibility_announcement_search">Добавяне на търсачка</string>
   <string name="search_add_confirmation">Добавена е нова търсачка.</string>
   <string name="search_add_error_empty_name">Въведете име на търсачка</string>
+  <string name="search_add_error_duplicate_name">Инсталирана търсеща машина вече използва това име.</string>
   <string name="search_add_error_empty_search">Въведете низ за търсене</string>
   <string name="search_add_error_format">Проверете дали низът за търсене отговаря на формата в примера</string>
   <string name="content_description_clear_input">Изчистване на полето</string>

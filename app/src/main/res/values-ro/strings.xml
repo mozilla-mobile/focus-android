@@ -8,8 +8,6 @@
   <string name="feedback_erase">Istoricul de navigare a fost șters.</string>
   <string name="search_hint">Caută %1$s</string>
   <string name="menu_share">Partajează…</string>
-  <string name="menu_open_with_default_browser">Deschide cu %1$s</string>
-  <string name="menu_open_with_a_browser">Deschide cu…</string>
   <string name="menu_add_to_home_screen">Adaugă la ecranul principal</string>
   <string name="menu_whats_new">Ce este nou</string>
   <string name="menu_settings">Setări</string>
@@ -70,7 +68,7 @@
   <string name="preference_category_mozilla">Mozilla</string>
   <string name="preference_mozilla_telemetry2">Trimite date privind utilizarea</string>
   <string name="preference_mozilla_telemetry_summary">Află mai multe</string>
-  <string name="preference_mozilla_telemetry_summary2">Mozilla se străduieşte să colecteze doar ceea ce avem nevoie ca să oferim și să îmbunătățim %1$s pentru toată lumea.</string>
+  <string name="preference_mozilla_telemetry_summary2">La Mozilla noi colectăm doar strictul necesar pentru a crea și îmbunătăți %1$s pentru toată lumea.</string>
   <string name="preference_privacy_notice">Politica de confidențialitate</string>
   <string name="preference_about">Despre %1$s</string>
   <string name="preference_search_installed_search_engines">Motoare de căutare instalate</string>
@@ -99,6 +97,7 @@
   <string name="accessibility_announcement_search">Adaugă motor de căutare</string>
   <string name="search_add_confirmation">Motor nou de căutare adăugat.</string>
   <string name="search_add_error_empty_name">Introdu numele motorului de căutare</string>
+  <string name="search_add_error_duplicate_name">Un motor de căutare instalat folosește deja acest nume.</string>
   <string name="search_add_error_empty_search">Introdu șirul de căutare</string>
   <string name="search_add_error_format">Verifică dacă șirul de căutare se potrivește cu formatul exemplu</string>
   <string name="content_description_clear_input">Șterge adresa introdusă</string>
@@ -165,7 +164,7 @@
   <string name="firstrun_privacy_text">Setează %1$s ca browser implicit și beneficiază de avantajele navigării private atunci când deschizi pagini web din alte aplicații.</string>
   <string name="firstrun_close_button">Ok, am înțeles!</string>
   <string name="firstrun_skip_button">Omite</string>
-  <string name="firstrun_next_button">Următorul</string>
+  <string name="firstrun_next_button">Mai departe</string>
   <string name="content_blocking_disabled">-</string>
   <string name="dialog_addtohomescreen_title">Adaugă la ecranul principal</string>
   <string name="dialog_addtohomescreen_action_add">Adaugă</string>
@@ -182,4 +181,8 @@
   <string name="your_rights_content3"><![CDATA["Nu vi se acordă niciun drept sau licență asupra mărcilor comerciale ale Mozilla Foundation sau ale oricărei părți, inclusiv numele sau logourile Mozilla, Firefox sau %1$s. Informații suplimentare pot fi găsite "<a xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2" href="%2$s">aici</a>.]]></string>
   <string name="your_rights_content4"><![CDATA["Codul sursă suplimentar pentru %1$s este disponibil sub diferite alte "<a xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2" href="%2$s">licen&#539;e</a>" gratuite și cu sursă deschisă."]]></string>
   <string name="your_rights_content5"><![CDATA["De asemenea, %1$s folosește lista de blocări furnizată de Disconnect Inc. ca activitate separată și independentă sub "<a xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2" href="%2$s">Licen&#539;a Public&#259; General&#259; GNU v3</a>" și disponibil "<a xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2" href="%3$s">aici</a>.]]></string>
+  <string name="security_popup_secure_connection">Conexiune securizată</string>
+  <string name="security_popup_insecure_connection">Conexiune nesigură</string>
+  <string name="security_popup_security_verified">Verificat de: %1$s</string>
+  <string name="site_security_icon_content_description">Securitatea site-ului</string>
 </resources>

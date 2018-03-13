@@ -8,8 +8,8 @@
   <string name="feedback_erase">Sto\'i ña ntsinu.</string>
   <string name="search_hint">Ndukù %1$s</string>
   <string name="menu_share">Stucha…</string>
-  <string name="menu_open_with_default_browser">Kuna tsi %1$s</string>
-  <string name="menu_open_with_a_browser">Kuna tsi…</string>
+  <string name="menu_open_with_default_browser2">Kuna tsi %1$s</string>
+  <string name="menu_open_with_a_browser2">Kuna tsi…</string>
   <string name="menu_add_to_home_screen">Chika\'a nu pantalla xina</string>
   <string name="menu_whats_new">Ña tsa\'a</string>
   <string name="menu_settings">Nu samu</string>
@@ -29,12 +29,17 @@
   <string name="preference_search_engine_default">Tsa sa\'an yee</string>
   <string name="preference_state_on">Kuna</string>
   <string name="preference_state_off">Kasi</string>
+  <string name="preference_subitem_autocomplete">Chaa URL</string>
+  <string name="preference_switch_autocomplete">Chaa</string>
+  <string name="preference_category_autocomplete_preinstalled">URLs ña tsa sa\'an inka</string>
+  <string name="preference_autocomplete_preinstalled_summary">Kuachi\'in tava %1$s na skuti 450 URLs ña kuaka che\'e na nu direcciòn.</string>
   <string name="preference_category_autocomplete_custom">Tana kunu URL</string>
   <string name="preference_autocomplete_subitem_customlist">Tana kunu URLs</string>
   <string name="preference_autocomplete_action_add">+ Chaa URL</string>
   <string name="preference_autocomplete_title_add">Chaa URL</string>
   <string name="preference_autocomplete_title_remove">Stòo URLs nchau</string>
   <string name="preference_autocomplete_learn_more">Skua\'a kuakaa</string>
+  <string name="preference_autocomplete_custom_summary">Chaa a sama URLs tana kuni meu.</string>
   <string name="preference_autocomplete_add_title">Chaa URL</string>
   <string name="preference_autocomplete_add_hint">Chistiin a chaa URL</string>
   <string name="preference_autocomplete_add_example">Kua: sivi.com</string>
@@ -42,6 +47,7 @@
   <string name="preference_autocomplete_add_confirmation">Ntutsaa URL nchau.</string>
   <string name="preference_autocomplete_menu_remove">Xitaá</string>
   <string name="preference_autocomplete_action_remove_content_description">Xitaá</string>
+  <string name="preference_autocomplete_add_error">Chaa va\'a URL.</string>
   <string name="preference_language">Tu\'un</string>
   <string name="preference_language_systemdefault">Nkoi ta xi’na</string>
   <string name="preference_dialog_title_search_engine">Ntuku ta xi’na</string>
@@ -52,6 +58,7 @@
   <string name="preference_privacy_block_analytics_summary">Kuachu\'un ña tava satutuku tsi chikuau ña sau tana katavu tsi samu</string>
   <string name="preference_privacy_block_social">Kasi ña ndukuyo</string>
   <string name="preference_privacy_block_content">Kasi ña ndukuyo inka tsio</string>
+  <string name="preference_privacy_block_content_summary2">Tatu na Kuachu\'un ña ku kueva\'a nuna pàguina</string>
   <string name="preference_privacy_secure_mode">Sèè kivu</string>
   <string name="preference_privacy_stealth_summary">Chika sèè pagina ta ku ndasamu aplicaciòn</string>
   <string name="preference_category_performance">Nixi sachu\'in</string>
@@ -91,6 +98,7 @@
   <string name="accessibility_announcement_search">Chikaa tsi ña ndukuku</string>
   <string name="search_add_confirmation">Ntu tsa\'a tsi ña ndukuku.</string>
   <string name="search_add_error_empty_name">Chaa sivi ña kunu nduku</string>
+  <string name="search_add_error_duplicate_name">Tsa inka\'a iin ña nduku tsi sivi yoo.</string>
   <string name="search_add_error_empty_search">Chaa tu\'un kunu ndukuku</string>
   <string name="search_add_error_format">Ckunche\'e a vaà nchau ña ku ndukuku</string>
   <string name="content_description_clear_input">Stoo nu nikivu</string>
@@ -173,4 +181,8 @@
   <string name="your_rights_content2"><![CDATA["%1$s kuu kuachu\'uña tsi "<a xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2" href="%2$s">Licencia p&#250;blica Mozilla</a>" tsi inka licencias ña código abierto."]]></string>
   <string name="your_rights_content3"><![CDATA["Koo licencia kuachu\'na marca Fundación Mozilla ni Firefox a inkana, tsi logotipo a sivi Mozilla, Firefox a %1$s ku ndukuku tu\'un "<a xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2" href="%2$s">yo\'o</a>.]]></string>
   <string name="your_rights_content4"><![CDATA["Inka "<a xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2" href="%2$s">licencia</a>ña código abierto tsi gratuitassani inka código fuente kuachu\'un tsi %1$s.]]></string>
+  <string name="your_rights_content5"><![CDATA["%1$s kuu kuachu\'un listas ña tsasi DIsconnect, Inc. tana inka chu\'un tsi "<a xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2" href="%2$s">Licencia P&#250;blica General de GNU v3</a>", cha ku ntaneu ña "<a xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2" href="%3$s">yo\'o</a>.]]></string>
+  <string name="gv_prompt_username_hint">Sivìi</string>
+  <string name="gv_prompt_password_hint">Tu\'un seè</string>
+  <string name="gv_prompt_clear">Stòo</string>
 </resources>

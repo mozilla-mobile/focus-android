@@ -1,6 +1,5 @@
 # Firefox Focus for Android
 
-[![BuddyBuild](https://dashboard.buddybuild.com/api/statusImage?appID=584f67f6f3d6eb01000842d6&branch=master&build=latest)](https://dashboard.buddybuild.com/apps/584f67f6f3d6eb01000842d6/build/latest?branch=master)
 [![Build Status](https://travis-ci.org/mozilla-mobile/focus-android.svg?branch=master)](https://travis-ci.org/mozilla-mobile/focus-android)
 [![Task Status](https://github.taskcluster.net/v1/repository/mozilla-mobile/focus-android/master/badge.svg)](https://github.taskcluster.net/v1/repository/mozilla-mobile/focus-android/master/latest)
 [![codecov](https://codecov.io/gh/mozilla-mobile/focus-android/branch/master/graph/badge.svg)](https://codecov.io/gh/mozilla-mobile/focus-android/branch/master)
@@ -43,10 +42,10 @@ Build instructions
 2. Import the project into Android Studio or build on the command line:
 
   ```shell
-  ./gradlew clean app:assembleFocusWebviewDebug
+  ./gradlew clean app:assembleFocusWebviewUniversalDebug
   ```
 
-3. Make sure to select the right build variant in Android Studio: **focusWebviewDebug**
+3. Make sure to select the right build variant in Android Studio: **focusWebviewUniversalDebug**
 
 License
 -------

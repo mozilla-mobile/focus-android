@@ -18,10 +18,11 @@ import org.junit.After;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mozilla.focus.helpers.TestHelper;
 
 import static android.support.test.espresso.action.ViewActions.click;
 import static junit.framework.Assert.assertTrue;
-import static org.mozilla.focus.activity.TestHelper.waitingTime;
+import static org.mozilla.focus.helpers.TestHelper.waitingTime;
 import static org.mozilla.focus.fragment.FirstrunFragment.FIRSTRUN_PREF;
 
 // This test opens a webpage, and selects "Open With" menu
@@ -60,7 +61,7 @@ public class OpenwithDialogTest {
                 .enabled(true));
         UiObject openWithTitle = TestHelper.mDevice.findObject(new UiSelector()
                 .className("android.widget.TextView")
-                .text("Open with…")
+                .text("Open in…")
                 .enabled(true));
         UiObject openWithList = TestHelper.mDevice.findObject(new UiSelector()
                 .resourceId("org.mozilla.focus.debug:id/apps")

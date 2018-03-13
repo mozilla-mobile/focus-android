@@ -2,13 +2,14 @@
 <resources>
   <string name="action_cancel">Cancellar</string>
   <string name="action_ok">OK</string>
+  <string name="action_save">Salvar</string>
   <string name="urlbar_hint">Insere un adresse o face un recerca</string>
   <string name="teaser">Navigation private automatic.\nNaviga. Elimina. Repete.</string>
   <string name="feedback_erase">Tu chronologia de navigation ha essite eliminate.</string>
   <string name="search_hint">Cercar %1$s</string>
   <string name="menu_share">Compartir…</string>
-  <string name="menu_open_with_default_browser">Aperir con %1$s</string>
-  <string name="menu_open_with_a_browser">Aperir con…</string>
+  <string name="menu_open_with_default_browser2">Aperir in %1$s</string>
+  <string name="menu_open_with_a_browser2">Aperir in…</string>
   <string name="menu_add_to_home_screen">Adder al pagina initial</string>
   <string name="menu_whats_new">Novitates</string>
   <string name="menu_settings">Parametros</string>
@@ -16,6 +17,7 @@
   <string name="menu_help">Adjuta</string>
   <string name="menu_rights">Tu derectos</string>
   <string name="menu_trackers_blocked_title">Traciatores blocate</string>
+  <string name="menu_custom_tab_branding">Potentiate per %1$s</string>
   <string name="share_dialog_title">Compartir con</string>
   <string name="notification_erase_text">Eliminar le chronologia de navigation</string>
   <string name="notification_action_open">Aperir</string>
@@ -26,6 +28,27 @@
   <string name="about_content"><![CDATA[<p xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">Usante %1$s, tu es al commando.</p>\n<p xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">"Usa lo como un navigator private&#160;:\n  "<ul>"\n    "<li>Cerca e naviga directemente in le application</li>"\n    "<li>Bloca le traciatores (o actualisa le parametros pro permitter traciatores)</li>"\n    "<li>" &#8220;Eliminar&#8221; pro deler le cookies e tamben le chronologia de recercas e de navigation"</li>\n</ul>\n</p>\n<p xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">%1$s es producite per Mozilla. Nostre mission es promover un Internet san e aperite.<br/>\n<a href="%2$s">Saper plus</a></p>]]></string>
   <string name="preference_category_search">Cercar</string>
   <string name="preference_search_engine_default">Predefinite</string>
+  <string name="preference_state_on">Activar</string>
+  <string name="preference_state_off">Disactivar</string>
+  <string name="preference_subitem_autocomplete">Auto-completamento del URL</string>
+  <string name="preference_switch_autocomplete">Auto-completar</string>
+  <string name="preference_category_autocomplete_preinstalled">Lista de URL predefinite</string>
+  <string name="preference_autocomplete_preinstalled_summary">Activa %1$s sur 450 URLs popular a ser auto-completate in le barra del adresses.</string>
+  <string name="preference_category_autocomplete_custom">URL personalisate</string>
+  <string name="preference_autocomplete_subitem_customlist">URLs personalisate</string>
+  <string name="preference_autocomplete_action_add">+ Adder URL personalisate</string>
+  <string name="preference_autocomplete_title_add">Adder URL personalisate</string>
+  <string name="preference_autocomplete_title_remove">Remover URLs personalisate</string>
+  <string name="preference_autocomplete_learn_more">Apprender plus</string>
+  <string name="preference_autocomplete_custom_summary">Adde e gere le complementamento personalisate del URLs.</string>
+  <string name="preference_autocomplete_add_title">URL a adder</string>
+  <string name="preference_autocomplete_add_hint">Colla o insere le URL</string>
+  <string name="preference_autocomplete_add_example">Exemplo: example.com</string>
+  <string name="preference_autocomplete_handle_content_description">-</string>
+  <string name="preference_autocomplete_add_confirmation">Nove URL personalisate addite.</string>
+  <string name="preference_autocomplete_menu_remove">Remover</string>
+  <string name="preference_autocomplete_action_remove_content_description">Remover</string>
+  <string name="preference_autocomplete_add_error">Clicca duple le URL que tu insereva.</string>
   <string name="preference_language">Lingua</string>
   <string name="preference_language_systemdefault">Valor predefinite per le systema</string>
   <string name="preference_dialog_title_search_engine">Motor de recerca predefinite</string>
@@ -76,6 +99,10 @@
   <string name="search_add_manually_example">Exemplo: example.com/search/?q=%s</string>
   <string name="accessibility_announcement_search">Adder un motor de recerca</string>
   <string name="search_add_confirmation">Nove motor de recerca addite.</string>
+  <string name="search_add_error_empty_name">Insere le omine del fila de recerca</string>
+  <string name="search_add_error_duplicate_name">Un motor de recerca installate usa jam ille nomine.</string>
+  <string name="search_add_error_empty_search">Insere un fila de characteres pro le recerca</string>
+  <string name="search_add_error_format">Verifica que le fila de recerca concorda con le formato de exemplo</string>
   <string name="content_description_clear_input">Vacuar le texto inserite</string>
   <string name="content_description_dismiss_input">Dimitter</string>
   <string name="content_description_erase">Elimina le chronologia de navigation</string>
@@ -157,4 +184,11 @@
   <string name="your_rights_content3"><![CDATA["Il non es concedite a te ulle derectos o licentias al marcas registrate del fundation Mozilla o de ulle tertie, includente le nomines e logotypos de Mozilla, de Firefox o de %1$s. Altere informationes pote esser trovate "<a xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2" href="%2$s">hic</a>.]]></string>
   <string name="your_rights_content4"><![CDATA["Le codice fonte additional pro %1$s es disponibile sub varie altere "<a xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2" href="%2$s">licentias</a>" libere e de codice aperite."]]></string>
   <string name="your_rights_content5"><![CDATA["%1$s usa tamben listas de blocage fornite per Disconnect, Inc. como labores separate e independente sub le "<a xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2" href="%2$s">Licentia Public GNU v3</a>", e es disponibile "<a xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2" href="%3$s">hic</a>.]]></string>
+  <string name="gv_prompt_username_hint">Nomine del usator</string>
+  <string name="gv_prompt_password_hint">Contrasigno</string>
+  <string name="gv_prompt_clear">Clarar</string>
+  <string name="security_popup_secure_connection">Connexion secur</string>
+  <string name="security_popup_insecure_connection">Connexion non secur</string>
+  <string name="security_popup_security_verified">Verificate per: %1$s</string>
+  <string name="site_security_icon_content_description">Securitate del sito</string>
 </resources>

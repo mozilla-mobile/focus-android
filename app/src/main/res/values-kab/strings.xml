@@ -8,8 +8,8 @@
   <string name="feedback_erase">Amazray-inek n unadi yettwasfeḍ.</string>
   <string name="search_hint">Nadi %1$s</string>
   <string name="menu_share">Bḍu…</string>
-  <string name="menu_open_with_default_browser">Ldi s %1$s</string>
-  <string name="menu_open_with_a_browser">Ldi s…</string>
+  <string name="menu_open_with_default_browser2">Ldi di %1$s</string>
+  <string name="menu_open_with_a_browser2">Ldi deg…</string>
   <string name="menu_add_to_home_screen">Rnu γer ugdil agejdan</string>
   <string name="menu_whats_new">D acu yellan d amaynut</string>
   <string name="menu_settings">Iγewwaṛen</string>
@@ -17,6 +17,7 @@
   <string name="menu_help">Tallalt</string>
   <string name="menu_rights">Izerfan-inek</string>
   <string name="menu_trackers_blocked_title">Ineḍfaṛen ttwaḥebsen</string>
+  <string name="menu_custom_tab_branding">Ddaw leɛnaya n %1$s</string>
   <string name="share_dialog_title">Bdu s</string>
   <string name="notification_erase_text">Sfeḍ amazray n tunigin</string>
   <string name="notification_action_open">Ldi</string>
@@ -99,6 +100,7 @@
   <string name="accessibility_announcement_search">Rnu amsedday n unadi</string>
   <string name="search_add_confirmation">Amesday n unadi amaynut ittwarna.</string>
   <string name="search_add_error_empty_name">Sekcem isem n umsedday n unadi</string>
+  <string name="search_add_error_duplicate_name">Amsedday n unadi s yisem-a ittwasebded yakan.</string>
   <string name="search_add_error_empty_search">Sekcem aḍris n unadi</string>
   <string name="search_add_error_format">Senqed akken aḍris n unadi yemsaḍa akked tawsit n umedya</string>
   <string name="content_description_clear_input">Sfeḍ anekcam</string>
@@ -182,4 +184,11 @@
   <string name="your_rights_content3"><![CDATA["UR k-netmudu ara ula d azref neγ  turagt ɣef ticṛaḍ yersen n Mozilla neɣ n wis kraḍ, am Mozilla neγ Firefox neγ ismawen %1$s akked iluguten. ugar n talγut ad t-tafeḍ di "<a xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2" href="%2$s">dagi</a>.]]></string>
   <string name="your_rights_content4"><![CDATA["Tangalt taγbalut nniḍen i %1$s tella deg waṭas n tiγbula tilleliyen nniḍen  "<a xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2" href="%2$s">akked turagt nni&#7693;en</a>.]]></string>
   <string name="your_rights_content5"><![CDATA["%1$s iseqdac daγen tiggayen d tebdarin sγur Disconnect, Inc am leqdic illeli daw turagt tazirazt "<a xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2" href="%2$s">GNU v3</a>", aya "<a xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2" href="%3$s">yella dagi</a>.]]></string>
+  <string name="gv_prompt_username_hint">Isem n useqdac</string>
+  <string name="gv_prompt_password_hint">Awal uffir</string>
+  <string name="gv_prompt_clear">Sfeḍ</string>
+  <string name="security_popup_secure_connection">Tuqqna taɣelsant</string>
+  <string name="security_popup_insecure_connection">Tuqqna taraɣelsant</string>
+  <string name="security_popup_security_verified">Isenqed-it: %1$s</string>
+  <string name="site_security_icon_content_description">Taɣellist n usmel web</string>
 </resources>

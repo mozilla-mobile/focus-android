@@ -8,8 +8,8 @@
   <string name="feedback_erase">Jo sneupskiednis is wiske.</string>
   <string name="search_hint">Sykje nei %1$s</string>
   <string name="menu_share">Diele…</string>
-  <string name="menu_open_with_default_browser">Iepenje mei %1$s</string>
-  <string name="menu_open_with_a_browser">Iepenje mei…</string>
+  <string name="menu_open_with_default_browser2">Iepenje yn %1$s</string>
+  <string name="menu_open_with_a_browser2">Iepenje yn…</string>
   <string name="menu_add_to_home_screen">Tafoegje oan startskerm</string>
   <string name="menu_whats_new">Wat is nij</string>
   <string name="menu_settings">Ynstellingen</string>
@@ -17,6 +17,7 @@
   <string name="menu_help">Help</string>
   <string name="menu_rights">Jo rjochten</string>
   <string name="menu_trackers_blocked_title">Trackers blokkearre</string>
+  <string name="menu_custom_tab_branding">Mooglik makke troch %1$s</string>
   <string name="share_dialog_title">Diele fia</string>
   <string name="notification_erase_text">Navigaasjeskiednis wiskje</string>
   <string name="notification_action_open">Iepenje</string>
@@ -99,6 +100,7 @@
   <string name="accessibility_announcement_search">Sykmasine tafoegje</string>
   <string name="search_add_confirmation">Nije sykmasine tafoege.</string>
   <string name="search_add_error_empty_name">Fier namme fan sykmasine yn</string>
+  <string name="search_add_error_duplicate_name">Dizze namme wurdt al troch in ynstallearre sykmasine brûkt.</string>
   <string name="search_add_error_empty_search">Fier syksterm yn</string>
   <string name="search_add_error_format">Kontrolearje oft sykterm oan foarbyldnotaasje foldocht</string>
   <string name="content_description_clear_input">Ynfier wiskje</string>
@@ -182,4 +184,11 @@
   <string name="your_rights_content3"><![CDATA["Der wurde jo gjin rjochten of lisinsjes ferliend op de hannelsmerken fan de Mozilla Foundation of iennige oare partij, mei ynbegryp fan de nammen of logo’s fan Mozilla, Firefox of %1$s. Oanfoljende ynformaasje is "<a xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2" href="%2$s">hjir</a>" te finen."]]></string>
   <string name="your_rights_content4"><![CDATA[Oanfoljende boarnekoade foar %1$s is beskikber ûnder ferskate oare frije en iepenboarne-<a xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2" href="%2$s">lisinsjes</a>.]]></string>
   <string name="your_rights_content5"><![CDATA["%1$s brûkt ek blokkearlisten dy\'t troch Disconnect, Inc. beskikber steld wurde as ôfsûnderlike en ûnôfhinklike wurken ûnder de "<a xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2" href="%2$s">GNU General Public License v3</a>", en dy "<a xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2" href="%3$s">hjir</a>" beskikber binne."]]></string>
+  <string name="gv_prompt_username_hint">Brûkersnamme</string>
+  <string name="gv_prompt_password_hint">Wachtwurd</string>
+  <string name="gv_prompt_clear">Wiskje</string>
+  <string name="security_popup_secure_connection">Befeilige ferbining</string>
+  <string name="security_popup_insecure_connection">Net-befeilige ferbining</string>
+  <string name="security_popup_security_verified">Ferifiearre troch: %1$s</string>
+  <string name="site_security_icon_content_description">Sidefeilichheid</string>
 </resources>

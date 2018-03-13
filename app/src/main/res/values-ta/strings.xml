@@ -8,8 +8,6 @@
   <string name="feedback_erase">உங்கள் உலாவல் வரலாறு அழிக்கப்பட்டது.</string>
   <string name="search_hint">%1$s சொல்லைத் தேடு</string>
   <string name="menu_share">பகிர்…</string>
-  <string name="menu_open_with_default_browser">%1$s மூலம் திற</string>
-  <string name="menu_open_with_a_browser">செயலிகள் மூலம் திற…</string>
   <string name="menu_add_to_home_screen">முகப்பு திரைக்கு சேர்</string>
   <string name="menu_whats_new">புதிதாய் என்ன</string>
   <string name="menu_settings">அமைவுகள்</string>
@@ -99,6 +97,7 @@
   <string name="accessibility_announcement_search">தேடுபொறியைச் சேர்</string>
   <string name="search_add_confirmation">புது தேடுபொறி சேர்க்கப்பட்டது.</string>
   <string name="search_add_error_empty_name">தேடுபொறி பெயரை உள்ளிடு</string>
+  <string name="search_add_error_duplicate_name">நிறுவப்பட்ட தேடுபொறி ஏற்கனவே அப்பெயரைப் பயன்படுத்துகிறது.</string>
   <string name="search_add_error_empty_search">தேடல் தொடரை உள்ளிடு</string>
   <string name="search_add_error_format">தேடல் தொடர் எகா வடிவத்தை ஒத்திருக்கிறதா என்று பார்</string>
   <string name="content_description_clear_input">துள்ளிய உள்ளீடு</string>
