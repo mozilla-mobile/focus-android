@@ -261,11 +261,11 @@ repositories {
         //   https://tools.taskcluster.net/index/gecko.v2.mozilla-central.nightly
 
         // ARM GeckoView builds
-        url "https://index.taskcluster.net/v1/task/gecko.v2.mozilla-central.nightly.2018.03.04.latest.mobile.android-api-16-opt/artifacts/public/android/maven"
+        url "https://index.taskcluster.net/v1/task/gecko.v2.mozilla-central.nightly.2018.03.07.latest.mobile.android-api-16-opt/artifacts/public/android/maven"
     }
     maven {
         // x86 GeckoView builds
-        url "https://index.taskcluster.net/v1/task/gecko.v2.mozilla-central.nightly.2018.03.04.latest.mobile.android-x86-opt/artifacts/public/android/maven"
+        url "https://index.taskcluster.net/v1/task/gecko.v2.mozilla-central.nightly.2018.03.07.latest.mobile.android-x86-opt/artifacts/public/android/maven"
     }
 }
 
@@ -496,7 +496,7 @@ clean.doLast {
 findbugs {
     ignoreFailures = false
 
-    effort = "max"
+    effort = "min"
     // This selects what level of bugs to report: low means low priority issues will be reported
     // (in addition to medium+high), which corresponds to warning about everything.
     // TODO: boost this to low once low priority issues are fixed.
