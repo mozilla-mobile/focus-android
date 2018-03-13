@@ -4,36 +4,30 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
-from lxml import html
 from lxml import etree
 import copy
 import json
 import os
 import requests
 import shutil
-import sys
-import subprocess
 import urllib
 
-# Paths for en-US plugins included in the core Android repo.
-EN_PLUGINS_FILE_URL = "https://hg.mozilla.org/releases/mozilla-aurora/raw-file/default/mobile/locales/en-US/searchplugins/%s"
+# Path for list file
+LIST_URL = "https://hg.mozilla.org/mozilla-central/raw-file/default/mobile/locales/search/list.json"
+# Path for search plugins
+SEARCH_PLUGINS_URL = "https://hg.mozilla.org/mozilla-central/raw-file/default/mobile/locales/searchplugins/{plugin}"
 
-# Paths for plugins in the l10n repos.
-L10N_PLUGINS_FILE_URL = "https://hg.mozilla.org/releases/l10n/mozilla-aurora/%s/raw-file/default/mobile/searchplugins/%%s"
+ns = {"search": "http://www.mozilla.org/2006/browser/search/"}
 
-# TODO: Download list from Android repo once the mobile list is in the tree.
-LIST_PATH = "./list.json"
 
-ns = { "search": "http://www.mozilla.org/2006/browser/search/" }
-
-def main():
+def import_plugins():
     # Remove and recreate the SearchPlugins directory.
     if os.path.exists("SearchPlugins"):
         shutil.rmtree("SearchPlugins")
     os.makedirs("SearchPlugins")
 
-    with open(LIST_PATH) as list:
-        plugins = json.load(list)
+    r = requests.get(LIST_URL)
+    plugins = r.json()
 
     engines = {}
 
@@ -44,6 +38,8 @@ def main():
         for region in regions:
             if region == "default":
                 code = locale
+            elif region == "experimental-hidden":
+                continue
             else:
                 language = locale.split("-")[0]
                 code = ("%s-%s" % (language, region))
@@ -51,17 +47,18 @@ def main():
             print("adding %s..." % code)
 
             visibleEngines = regions[region]["visibleDefaultEngines"]
-            downloadEngines(code, L10nScraper(locale), visibleEngines)
+            downloadEngines(code, Scraper(locale), visibleEngines)
             engines[code] = visibleEngines
 
     # Import default engines from the core repo.
     print("adding defaults...")
-    defaultEngines = EnScraper().getFileList()
-    downloadEngines("default", EnScraper(), defaultEngines)
-    engines['default'] = plugins['default']['visibleDefaultEngines']
+    defaultEngines = plugins['default']['visibleDefaultEngines']
+    downloadEngines("default", Scraper(), defaultEngines)
+    engines['default'] = defaultEngines
 
     # Remove Bing.
-    if "bing" in engines['default']: engines['default'].remove('bing')
+    if "bing" in engines['default']:
+        engines['default'].remove('bing')
 
     # Make sure fallback directories contain any skipped engines.
     verifyEngines(engines)
@@ -69,13 +66,15 @@ def main():
     # Write the list of engine names for each locale.
     writeList(engines)
 
+
 def downloadEngines(locale, scraper, engines):
     directory = os.path.join("SearchPlugins", locale)
     if not os.path.exists(directory):
         os.makedirs(directory)
 
     # Remove Bing.
-    if 'bing' in engines: engines.remove('bing')
+    if 'bing' in engines:
+        engines.remove('bing')
 
     # Always include DuckDuckGo.
     if "duckduckgo" not in engines:
@@ -88,15 +87,15 @@ def downloadEngines(locale, scraper, engines):
             break
 
     for engine in engines:
-        file = engine + ".xml"
-        path = os.path.join(directory, file)
-        downloadedFile = scraper.getFile(file)
-        if downloadedFile == None:
-            print("  skipping: %s..." % file)
+        engine_file = engine + ".xml"
+        path = os.path.join(directory, engine_file)
+        downloadedFile = scraper.getFile(engine_file)
+        if downloadedFile is None:
+            print("  skipping: %s..." % engine_file)
             continue
 
-        print("  downloading: %s..." % file)
-        name, extension = os.path.splitext(file)
+        print("  downloading: %s..." % engine_file)
+        name, extension = os.path.splitext(engine_file)
 
         # Apply iOS-specific overlays for this engine if they are defined.
         if extension == ".xml":
@@ -113,6 +112,7 @@ def downloadEngines(locale, scraper, engines):
         # Otherwise, just use the downloaded file as is.
         shutil.move(downloadedFile, path)
 
+
 def verifyEngines(engines):
     print("verifying engines...")
     error = False
@@ -127,60 +127,32 @@ def verifyEngines(engines):
     if not error:
         print("  OK!")
 
+
 def overlayForEngine(engine):
     path = os.path.join("SearchOverlays", "%s.xml" % engine)
     if not os.path.exists(path):
         return None
     return Overlay(path)
 
-def writeList(engines):
-#    root = etree.Element('dict')
-#    for locale in sorted(engines.keys()):
-#        key = etree.Element('key')
-#        key.text = locale
-#        root.append(key)
-#        values = etree.Element('array')
-#        for engine in engines[locale]:
-#            value = etree.Element('string')
-#            value.text = engine
-#            values.append(value)
-#        root.append(values)
 
-#    plist = etree.tostring(root, encoding="utf-8", pretty_print=True)
+def writeList(engines):
     with open("search_configuration.json", "w") as outfile:
-        json.dump(engines, outfile)
-        #outfile.write(plist)
+        json.dump(engines, outfile, indent=2)
 
 
 class Scraper:
-    def pluginsFileURL(self): pass
+    def __init__(self, locale=None):
+        self.plugins_url = SEARCH_PLUGINS_URL
+        self.locale = locale
 
-    def getFile(self, file):
-        path = self.pluginsFileURL % file
+    def getFile(self, plugin_file):
+        path = self.plugins_url.format(plugin=plugin_file)
         handle = urllib.urlopen(path)
         if handle.code != 200:
             return None
 
         result = urllib.urlretrieve(path)
         return result[0]
-
-    def getFileList(self):
-        response = requests.get(self.pluginsFileURL % '')
-        if not response.ok:
-            raise Exception("error: could not read plugins directory")
-
-        lines = response.content.strip().split('\n')
-        lines = map(lambda line: line.split(' ')[-1], lines)
-        lines = filter(lambda f: f.endswith('.xml'), lines)
-        return map(lambda f: f[:-4], lines)
-
-class L10nScraper(Scraper):
-    def __init__(self, locale):
-        self.pluginsFileURL = L10N_PLUGINS_FILE_URL % locale
-
-class EnScraper(Scraper):
-    def __init__(self):
-        self.pluginsFileURL = EN_PLUGINS_FILE_URL
 
 
 class Overlay:
@@ -219,4 +191,4 @@ class Overlay:
 
 
 if __name__ == "__main__":
-    main()
+    import_plugins()
