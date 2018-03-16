@@ -8,6 +8,7 @@ import android.arch.lifecycle.Lifecycle;
 import android.arch.lifecycle.LifecycleOwner;
 import android.arch.lifecycle.LifecycleRegistry;
 import android.arch.lifecycle.Observer;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.customtabs.CustomTabsIntent;
@@ -16,9 +17,12 @@ import android.text.TextUtils;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mozilla.focus.customtabs.CustomTabConfig;
-import org.mozilla.focus.utils.SafeIntent;
 import org.robolectric.RobolectricTestRunner;
 import org.robolectric.RuntimeEnvironment;
+
+import java.util.UUID;
+
+import mozilla.components.utils.SafeIntent;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -132,7 +136,10 @@ public class SessionTest {
         final CustomTabsIntent.Builder builder = new CustomTabsIntent.Builder();
         builder.setToolbarColor(Color.GREEN);
 
-        final SafeIntent intent = new SafeIntent(builder.build().intent);
+        final Intent rawIntent = builder.build().intent;
+        rawIntent.putExtra(CustomTabConfig.EXTRA_CUSTOM_TAB_ID, UUID.randomUUID().toString());
+
+        final SafeIntent intent = new SafeIntent(rawIntent);
         final CustomTabConfig customTabConfig = CustomTabConfig.parseCustomTabIntent(RuntimeEnvironment.application, intent);
         final Session session = new Session(TEST_URL, customTabConfig);
 

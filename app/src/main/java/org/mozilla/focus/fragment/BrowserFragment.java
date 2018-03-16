@@ -66,9 +66,6 @@ import org.mozilla.focus.session.Source;
 import org.mozilla.focus.session.ui.SessionsSheetFragment;
 import org.mozilla.focus.telemetry.TelemetryWrapper;
 import org.mozilla.focus.utils.Browsers;
-import org.mozilla.focus.utils.ColorUtils;
-import org.mozilla.focus.utils.DownloadUtils;
-import org.mozilla.focus.utils.DrawableUtils;
 import org.mozilla.focus.utils.Features;
 import org.mozilla.focus.utils.StatusBarUtils;
 import org.mozilla.focus.utils.UrlUtils;
@@ -80,6 +77,10 @@ import org.mozilla.focus.widget.FloatingSessionsButton;
 
 import java.lang.ref.WeakReference;
 import java.util.List;
+
+import mozilla.components.utils.ColorUtils;
+import mozilla.components.utils.DownloadUtils;
+import mozilla.components.utils.DrawableUtils;
 
 /**
  * Fragment for displaying the browser UI.
@@ -108,7 +109,7 @@ public class BrowserFragment extends WebFragment implements View.OnClickListener
     private TextView urlView;
     private AnimatedProgressBar progressView;
     private FrameLayout blockView;
-    private ImageView lockView;
+    private ImageView securityView;
     private ImageButton menuView;
     private View statusBar;
     private View urlBar;
@@ -293,28 +294,28 @@ public class BrowserFragment extends WebFragment implements View.OnClickListener
 
         blockView = (FrameLayout) view.findViewById(R.id.block);
 
-        lockView = view.findViewById(R.id.security_info);
+        securityView = view.findViewById(R.id.security_info);
         session.getSecure().observe(this, new Observer<Boolean>() {
             @Override
             public void onChanged(Boolean secure) {
                 if (!session.getLoading().getValue()) {
                     if (secure) {
-                        lockView.setImageResource(R.drawable.ic_lock);
+                        securityView.setImageResource(R.drawable.ic_lock);
                     } else {
                         if (URLUtil.isHttpUrl(getUrl())) {
                             // HTTP site
-                            lockView.setImageResource(R.drawable.ic_internet);
+                            securityView.setImageResource(R.drawable.ic_internet);
                         } else {
                             // Certificate is bad
-                            lockView.setImageResource(R.drawable.ic_warning);
+                            securityView.setImageResource(R.drawable.ic_warning);
                         }
                     }
                 } else {
-                    lockView.setImageResource(R.drawable.ic_internet);
+                    securityView.setImageResource(R.drawable.ic_internet);
                 }
             }
         });
-        lockView.setOnClickListener(this);
+        securityView.setOnClickListener(this);
 
         session.getProgress().observe(this, new Observer<Integer>() {
             @Override
@@ -389,7 +390,7 @@ public class BrowserFragment extends WebFragment implements View.OnClickListener
             closeButton.setImageBitmap(customTabConfig.closeButtonIcon);
         } else {
             // Always set the icon in case it's been overridden by a previous CT invocation
-            final Drawable closeIcon = DrawableUtils.loadAndTintDrawable(getContext(), R.drawable.ic_close, textColor);
+            final Drawable closeIcon = DrawableUtils.INSTANCE.loadAndTintDrawable(getContext(), R.drawable.ic_close, textColor);
 
             closeButton.setImageDrawable(closeIcon);
         }
@@ -428,7 +429,7 @@ public class BrowserFragment extends WebFragment implements View.OnClickListener
 
             final ImageButton shareButton = view.findViewById(R.id.customtab_actionbutton);
             shareButton.setVisibility(View.VISIBLE);
-            shareButton.setImageDrawable(DrawableUtils.loadAndTintDrawable(getContext(), R.drawable.ic_share, textColor));
+            shareButton.setImageDrawable(DrawableUtils.INSTANCE.loadAndTintDrawable(getContext(), R.drawable.ic_share, textColor));
             shareButton.setContentDescription(getString(R.string.menu_share));
             shareButton.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -439,10 +440,9 @@ public class BrowserFragment extends WebFragment implements View.OnClickListener
         }
 
         // We need to tint some icons.. We already tinted the close button above. Let's tint our other icons too.
-        final Drawable lockIcon = DrawableUtils.loadAndTintDrawable(getContext(), R.drawable.ic_lock, textColor);
-        lockView.setImageDrawable(lockIcon);
+        securityView.setColorFilter(textColor);
 
-        final Drawable menuIcon = DrawableUtils.loadAndTintDrawable(getContext(), R.drawable.ic_menu, textColor);
+        final Drawable menuIcon = DrawableUtils.INSTANCE.loadAndTintDrawable(getContext(), R.drawable.ic_menu, textColor);
         menuView.setImageDrawable(menuIcon);
     }
 
@@ -738,7 +738,10 @@ public class BrowserFragment extends WebFragment implements View.OnClickListener
         }
 
         final String cookie = CookieManager.getInstance().getCookie(download.getUrl());
-        final String fileName = DownloadUtils.guessFileName(download);
+        final String fileName = DownloadUtils.guessFileName(
+                download.getContentDisposition(),
+                download.getUrl(),
+                download.getMimeType());
 
         final DownloadManager.Request request = new DownloadManager.Request(Uri.parse(download.getUrl()))
                 .addRequestHeader("User-Agent", download.getUserAgent())
