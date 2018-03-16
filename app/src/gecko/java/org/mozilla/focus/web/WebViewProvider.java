@@ -98,7 +98,7 @@ public class WebViewProvider {
 
         @Override
         public void destroy() {
-            geckoSession.closeWindow();
+            geckoSession.close();
         }
 
         @Override
@@ -191,7 +191,7 @@ public class WebViewProvider {
                 }
 
                 @Override
-                public void onContextMenu(GeckoSession session, int screenX, int screenY, String uri, String elementSrc) {
+                public void onContextMenu(GeckoSession session, int screenX, int screenY, String uri, @ElementType int elementType, String elementSrc) {
                     if (elementSrc != null && uri != null) {
                         callback.onLongPress(new HitTarget(true, uri, true, elementSrc));
                     } else if (elementSrc != null) {
@@ -266,9 +266,9 @@ public class WebViewProvider {
                 }
 
                 @Override
-                public boolean onLoadUri(GeckoSession session, String uri, GeckoSession.NavigationDelegate.TargetWindow where) {
+                public boolean onLoadRequest(GeckoSession session, String uri, @TargetWindow int target) {
                     // If this is trying to load in a new tab, just load it in the current one
-                    if (where == GeckoSession.NavigationDelegate.TargetWindow.NEW) {
+                    if (target == GeckoSession.NavigationDelegate.TARGET_WINDOW_NEW) {
                         geckoSession.loadUri(uri);
                         return true;
                     }
