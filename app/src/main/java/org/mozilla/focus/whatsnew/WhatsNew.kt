@@ -47,7 +47,8 @@ class WhatsNew {
             if (wasUpdatedRecently == null) {
                 wasUpdatedRecently = wasUpdatedRecentlyInner(context)
             }
-            return wasUpdatedRecently!!
+            return wasUpdatedRecently!! &&
+                    !context.appVersionName!!.matches(Regex(".*\\..*\\..*"))
         }
 
         private fun wasUpdatedRecentlyInner(context: Context): Boolean = when {
