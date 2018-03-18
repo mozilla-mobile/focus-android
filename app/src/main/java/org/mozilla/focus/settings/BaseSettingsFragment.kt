@@ -31,10 +31,10 @@ abstract class BaseSettingsFragment : PreferenceFragment() {
         return activity.getSharedPreferences(SearchEngineManager.PREF_FILE_SEARCH_ENGINES, Context.MODE_PRIVATE)
     }
 
-    protected fun pushFragment(fragment: Fragment) {
+    protected fun navigateToFragment(fragment: Fragment) {
         fragmentManager.beginTransaction()
-                .replace(R.id.container, fragment)
-                .addToBackStack(null)
-                .commit()
+            .replace(R.id.container, fragment)
+            .addToBackStack(null)
+            .commit()
     }
 }

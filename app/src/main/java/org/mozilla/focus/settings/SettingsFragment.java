@@ -82,10 +82,10 @@ public class SettingsFragment extends BaseSettingsFragment implements SharedPref
             final Intent intent = InfoActivity.getPrivacyNoticeIntent(getActivity());
             startActivity(intent);
         } else if (preference.getKey().equals(resources.getString(R.string.pref_key_search_engine))) {
-            pushFragment(new InstalledSearchEnginesSettingsFragment());
+            navigateToFragment(new InstalledSearchEnginesSettingsFragment());
             TelemetryWrapper.openSearchSettingsEvent();
         } else if (preference.getKey().equals(resources.getString(R.string.pref_key_screen_autocomplete))) {
-            pushFragment(new AutocompleteSettingsFragment());
+            navigateToFragment(new AutocompleteSettingsFragment());
         }
 
         return super.onPreferenceTreeClick(preferenceScreen, preference);

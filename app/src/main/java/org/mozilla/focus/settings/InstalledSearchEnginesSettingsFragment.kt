@@ -51,7 +51,7 @@ class InstalledSearchEnginesSettingsFragment : BaseSettingsFragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.menu_remove_search_engines -> {
-                pushFragment(RemoveSearchEnginesSettingsFragment())
+                navigateToFragment(RemoveSearchEnginesSettingsFragment())
                 TelemetryWrapper.menuRemoveEnginesEvent()
                 true
             }
@@ -68,7 +68,7 @@ class InstalledSearchEnginesSettingsFragment : BaseSettingsFragment() {
     override fun onPreferenceTreeClick(preferenceScreen: PreferenceScreen?, preference: Preference?): Boolean {
         return when (preference?.key) {
             resources.getString(R.string.pref_key_manual_add_search_engine) -> {
-                pushFragment(ManualAddSearchEngineSettingsFragment())
+                navigateToFragment(ManualAddSearchEngineSettingsFragment())
                 TelemetryWrapper.menuAddSearchEngineEvent()
                 return true
             }
