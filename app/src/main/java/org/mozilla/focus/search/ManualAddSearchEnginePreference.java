@@ -21,6 +21,7 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import org.mozilla.focus.R;
 import org.mozilla.focus.utils.UrlUtils;
+import org.mozilla.focus.utils.ViewUtils;
 
 public class ManualAddSearchEnginePreference extends Preference {
     private static final String SUPER_STATE_KEY = "super-state";
@@ -59,6 +60,7 @@ public class ManualAddSearchEnginePreference extends Preference {
 
         progressView = view.findViewById(R.id.progress);
 
+        ViewUtils.showKeyboard(engineNameEditText);
         updateState();
         return view;
     }
