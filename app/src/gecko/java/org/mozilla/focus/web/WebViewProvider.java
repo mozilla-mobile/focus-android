@@ -234,11 +234,9 @@ public class WebViewProvider {
 
                 @Override
                 public void onPageStop(GeckoSession session, boolean success) {
-                    if (callback != null) {
-                        if (success) {
-                            callback.onProgress(100);
-                            callback.onPageFinished(isSecure);
-                        }
+                    if (callback != null && success) {
+                        callback.onProgress(100);
+                        callback.onPageFinished(isSecure);
                     }
                 }
 

@@ -28,6 +28,7 @@ import java.util.Map;
 import java.util.Set;
 
 public class UrlMatcher implements  SharedPreferences.OnSharedPreferenceChangeListener {
+    private static final String DEFAULT = "default";
     /**
      * Map of pref to blocking category (preference key -> Blocklist category name).
      */
@@ -146,7 +147,7 @@ public class UrlMatcher implements  SharedPreferences.OnSharedPreferenceChangeLi
 
     @VisibleForTesting UrlMatcher(final String[] patterns) {
         final Map<String, String> map = new HashMap<>();
-        map.put("default", "default");
+        map.put(DEFAULT, "default");
         categoryPrefMap = Collections.unmodifiableMap(map);
 
         categories = new HashMap<>();
@@ -162,11 +163,11 @@ public class UrlMatcher implements  SharedPreferences.OnSharedPreferenceChangeLi
      */
     private void buildMatcher(String[] patterns) {
         final Trie defaultCategory;
-        if (!categories.containsKey("default")) {
+        if (!categories.containsKey(DEFAULT)) {
             defaultCategory = Trie.createRootNode();
-            categories.put("default", defaultCategory);
+            categories.put(DEFAULT, defaultCategory);
         } else {
-            defaultCategory = categories.get("default");
+            defaultCategory = categories.get(DEFAULT);
         }
 
         for (final String pattern : patterns) {

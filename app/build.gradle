@@ -566,7 +566,7 @@ task spotbugs(type: SpotBugsTask, dependsOn: "assemble", group: 'verification') 
 
 pmd {
     toolVersion = '5.5.2'
-    ignoreFailures = true
+    ignoreFailures = false
     ruleSetFiles = files("${project.rootDir}/quality/pmd-rules.xml")
     ruleSets = []
 }

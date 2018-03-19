@@ -88,12 +88,10 @@ public class AnimatedProgressBar extends ProgressBar {
             setProgressImmediately(nextProgress);
         }
 
-        if (mClosingAnimator != null) {
-            if (nextProgress != getMax()) {
-                // stop closing animation
-                mClosingAnimator.cancel();
-                mClipRegion = 0f;
-            }
+        if (mClosingAnimator != null && nextProgress != getMax()) {
+            // stop closing animation
+            mClosingAnimator.cancel();
+            mClipRegion = 0f;
         }
     }
 

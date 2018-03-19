@@ -27,7 +27,6 @@ import java.nio.charset.StandardCharsets;
     private static final String URLTYPE_SUGGEST_JSON = "application/x-suggestions+json";
     private static final String URLTYPE_SEARCH_HTML  = "text/html";
     private static final String URL_REL_MOBILE = "mobile";
-    private static final String SEARCH_TERM_VALUE = "{searchTerms}";
 
     private static final String IMAGE_URI_PREFIX = "data:image/png;base64,";
 
