@@ -8,6 +8,7 @@ apply plugin: 'jacoco-android'
 apply plugin: 'pmd'
 apply plugin: 'checkstyle'
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'com.facebook.testing.screenshot'
 apply from: "$project.rootDir/tools/gradle/versionCode.gradle"
 
 android {
@@ -335,6 +336,10 @@ dependencies {
     armCompile "org.mozilla:geckoview-nightly-armeabi-v7a:61.0a1"
     x86Compile "org.mozilla:geckoview-nightly-x86:61.0a1"
     aarch64Compile "org.mozilla:geckoview-nightly-arm64-v8a:61.0a1"
+
+    // screenshot-tests-for-android : Layout Hierarchy Plugin dependencies
+    compile 'com.facebook.testing.screenshot:layout-hierarchy-common:0.5.0' // Standard Android View Plugins (TextView, etc)
+    compile 'com.facebook.testing.screenshot:layout-hierarchy-litho:0.5.0' // Litho Component Plugins
 
     testCompile 'junit:junit:4.12'
     testCompile "org.robolectric:robolectric:3.7.1"
