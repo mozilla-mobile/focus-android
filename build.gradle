@@ -6,6 +6,7 @@ buildscript {
     ext.espresso_version = '3.0.1'
     ext.kotlin_version = '1.2.30'
     ext.spotbugs_version = '3.1.2'
+    ext.geckoview_nightly_version = '2018.03.16'
 
     repositories {
         google()
