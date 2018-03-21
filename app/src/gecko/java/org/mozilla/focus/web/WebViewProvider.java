@@ -13,12 +13,12 @@ import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.util.AttributeSet;
 import android.view.View;
+import android.webkit.WebViewClient;
 
 import org.mozilla.focus.session.Session;
 import org.mozilla.focus.utils.IntentUtils;
 import org.mozilla.focus.utils.Settings;
 import org.mozilla.focus.utils.UrlUtils;
-import org.mozilla.geckoview.GeckoView;
 import org.mozilla.geckoview.GeckoSession;
 import org.mozilla.geckoview.GeckoSessionSettings;
 
@@ -31,8 +31,7 @@ public class WebViewProvider {
     }
 
     public static View create(Context context, AttributeSet attrs) {
-        final GeckoView geckoView = new GeckoWebView(context, attrs);
-        return geckoView;
+        return new GeckoWebView(context, attrs);
     }
 
     public static void performCleanup(final Context context) {
@@ -198,9 +197,7 @@ public class WebViewProvider {
                     if (elementSrc != null && uri != null) {
                         callback.onLongPress(new HitTarget(true, uri, true, elementSrc));
                     } else if (elementSrc != null) {
-                        if (elementSrc.endsWith("jpg") || elementSrc.endsWith("gif") ||
-                                elementSrc.endsWith("tif") || elementSrc.endsWith("bmp") ||
-                                elementSrc.endsWith("png")) {
+                        if (elementType == ELEMENT_TYPE_IMAGE) {
                             callback.onLongPress(new HitTarget(false, null, true, elementSrc));
                         }
                     } else if (uri != null) {
@@ -269,26 +266,43 @@ public class WebViewProvider {
                 }
 
                 @Override
-                public boolean onLoadRequest(GeckoSession session, String uri, @TargetWindow int target) {
+                public void onLoadRequest(GeckoSession session, String uri, int target, GeckoSession.Response<Boolean> response) {
                     // If this is trying to load in a new tab, just load it in the current one
                     if (target == GeckoSession.NavigationDelegate.TARGET_WINDOW_NEW) {
                         geckoSession.loadUri(uri);
-                        return true;
+                        response.respond(true);
+                        return;
                     }
 
                     // Check if we should handle an internal link
                     if (LocalizedContentGecko.INSTANCE.handleInternalContent(uri, session, getContext())) {
-                        return true;
+                        response.respond(true);
+                        return;
                     }
 
                     // Check if we should handle an external link
                     final Uri urlToURI = Uri.parse(uri);
-                    if (!UrlUtils.isSupportedProtocol(urlToURI.getScheme()) && callback != null) {
-                        return IntentUtils.handleExternalUri(getContext(), GeckoWebView.this, uri);
+                    if (!UrlUtils.isSupportedProtocol(urlToURI.getScheme()) && callback != null && IntentUtils.handleExternalUri(getContext(), GeckoWebView.this, uri)) {
+                        response.respond(true);
+                        return;
                     }
 
-                    // Otherwise allow the load to continue normally
-                    return false;
+                    // Check if we should handle an Error Page
+                    if (uri.equals("about:certerror")) {
+                        GeckoErrorPage.INSTANCE.loadErrorPage(getContext(), geckoSession, uri,
+                                WebViewClient.ERROR_FAILED_SSL_HANDSHAKE);
+                        response.respond(true);
+                        return;
+                    }
+
+                    if (uri.equals("about:neterror")) {
+                        GeckoErrorPage.INSTANCE.loadErrorPage(getContext(), geckoSession, uri,
+                                WebViewClient.ERROR_CONNECT);
+                        response.respond(true);
+                        return;
+                    }
+
+                    response.respond(false);
                 }
 
                 @Override
