@@ -8,13 +8,16 @@ package org.mozilla.focus.web;
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.util.AttributeSet;
 import android.view.View;
 
 import org.mozilla.focus.session.Session;
+import org.mozilla.focus.utils.IntentUtils;
 import org.mozilla.focus.utils.Settings;
+import org.mozilla.focus.utils.UrlUtils;
 import org.mozilla.geckoview.GeckoView;
 import org.mozilla.geckoview.GeckoSession;
 import org.mozilla.geckoview.GeckoSessionSettings;
@@ -98,7 +101,7 @@ public class WebViewProvider {
 
         @Override
         public void destroy() {
-
+            geckoSession.close();
         }
 
         @Override
@@ -191,11 +194,15 @@ public class WebViewProvider {
                 }
 
                 @Override
-                public void onContextMenu(GeckoSession session, int screenX, int screenY, String uri, String elementSrc) {
+                public void onContextMenu(GeckoSession session, int screenX, int screenY, String uri, @ElementType int elementType, String elementSrc) {
                     if (elementSrc != null && uri != null) {
                         callback.onLongPress(new HitTarget(true, uri, true, elementSrc));
                     } else if (elementSrc != null) {
-                        callback.onLongPress(new HitTarget(false, null, true, elementSrc));
+                        if (elementSrc.endsWith("jpg") || elementSrc.endsWith("gif") ||
+                                elementSrc.endsWith("tif") || elementSrc.endsWith("bmp") ||
+                                elementSrc.endsWith("png")) {
+                            callback.onLongPress(new HitTarget(false, null, true, elementSrc));
+                        }
                     } else if (uri != null) {
                         callback.onLongPress(new HitTarget(true, uri, false, null));
                     }
@@ -238,8 +245,8 @@ public class WebViewProvider {
                 @Override
                 public void onSecurityChange(GeckoSession session,
                                              GeckoSession.ProgressDelegate.SecurityInformation securityInfo) {
-                    // TODO: Split current onPageFinished() callback into two: page finished + security changed
                     isSecure = securityInfo.isSecure;
+                    callback.onSecurityChanged(isSecure, securityInfo.host, securityInfo.issuerOrganization);
                 }
             };
         }
@@ -262,9 +269,9 @@ public class WebViewProvider {
                 }
 
                 @Override
-                public boolean onLoadUri(GeckoSession session, String uri, GeckoSession.NavigationDelegate.TargetWindow where) {
+                public boolean onLoadRequest(GeckoSession session, String uri, @TargetWindow int target) {
                     // If this is trying to load in a new tab, just load it in the current one
-                    if (where == GeckoSession.NavigationDelegate.TargetWindow.NEW) {
+                    if (target == GeckoSession.NavigationDelegate.TARGET_WINDOW_NEW) {
                         geckoSession.loadUri(uri);
                         return true;
                     }
@@ -272,6 +279,12 @@ public class WebViewProvider {
                     // Check if we should handle an internal link
                     if (LocalizedContentGecko.INSTANCE.handleInternalContent(uri, session, getContext())) {
                         return true;
+                    }
+
+                    // Check if we should handle an external link
+                    final Uri urlToURI = Uri.parse(uri);
+                    if (!UrlUtils.isSupportedProtocol(urlToURI.getScheme()) && callback != null) {
+                        return IntentUtils.handleExternalUri(getContext(), GeckoWebView.this, uri);
                     }
 
                     // Otherwise allow the load to continue normally

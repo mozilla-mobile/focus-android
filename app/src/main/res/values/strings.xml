@@ -52,6 +52,11 @@
          doesn't work correctly with blocked content. -->
     <string name="menu_trackers_blocked_title">Trackers blocked</string>
 
+    <!-- This is a small text at the bottom of the menu shown in a "custom tab" for branding purposes.
+     See https://github.com/mozilla-mobile/focus-android/issues/2106
+      %1$s will be replaced by the app name (e.g. Firefox Focus) -->
+    <string name="menu_custom_tab_branding">Powered by %1$s</string>
+
     <!-- This is the title of a dialog that shows all the share targets (apps or contacts) when
          sharing an URL. -->
     <string name="share_dialog_title">Share via</string>
@@ -555,4 +560,14 @@ be temporary, and you can try again later.</li>
     <string name="gv_prompt_username_hint">Username</string>
     <string name="gv_prompt_password_hint">Password</string>
     <string name="gv_prompt_clear">Clear</string>
+
+    <!-- Text shown in Security Information Popup -->
+    <!-- Text to denote secure or insecure connection -->
+    <string name="security_popup_secure_connection">Secure Connection</string>
+    <string name="security_popup_insecure_connection">Insecure Connection</string>
+    <!-- %1$s will be replaced with organization that granted the SSL certificate -->
+    <string name="security_popup_security_verified">Verified by: %1$s</string>
+
+    <!-- Content Description of Security Icon in toolbar -->
+    <string name="site_security_icon_content_description">Site Security</string>
 </resources>

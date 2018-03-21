@@ -15,12 +15,14 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mozilla.focus.BuildConfig;
 import org.mozilla.focus.R;
-import org.mozilla.focus.utils.SafeIntent;
 import org.robolectric.RobolectricTestRunner;
 import org.robolectric.RuntimeEnvironment;
 import org.robolectric.annotation.Config;
 
 import java.lang.reflect.Field;
+import java.util.UUID;
+
+import mozilla.components.utils.SafeIntent;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -99,6 +101,7 @@ public class CustomTabConfigTest {
         builder.addMenuItem("menuitemIGNORED", null);
 
         final CustomTabsIntent customTabsIntent = builder.build();
+        customTabsIntent.intent.putExtra(CustomTabConfig.EXTRA_CUSTOM_TAB_ID, UUID.randomUUID().toString());
 
         final CustomTabConfig config = CustomTabConfig.parseCustomTabIntent(RuntimeEnvironment.application, new SafeIntent(customTabsIntent.intent));
 
@@ -137,6 +140,8 @@ public class CustomTabConfigTest {
 
         // And we can't access any extras now because unparcelling fails:
         assertFalse(CustomTabConfig.isCustomTabIntent(new SafeIntent(customTabsIntent.intent)));
+
+        customTabsIntent.intent.putExtra(CustomTabConfig.EXTRA_CUSTOM_TAB_ID, UUID.randomUUID().toString());
 
         // Ensure we don't crash regardless
         final CustomTabConfig c = CustomTabConfig.parseCustomTabIntent(RuntimeEnvironment.application, new SafeIntent(customTabsIntent.intent));
@@ -260,5 +265,14 @@ public class CustomTabConfigTest {
         final Bitmap bitmap = CustomTabConfig.getCloseButtonIcon(RuntimeEnvironment.application, new SafeIntent(customTabsIntent.intent));
 
         assertNull(bitmap);
+    }
+
+    // Test that parser throws an exception if no ID is in the intent
+    @Test(expected = IllegalArgumentException.class)
+    public void idIsRequired() {
+        final CustomTabsIntent.Builder builder = new CustomTabsIntent.Builder();
+        final CustomTabsIntent customTabsIntent = builder.build();
+
+        CustomTabConfig.parseCustomTabIntent(RuntimeEnvironment.application, new SafeIntent(customTabsIntent.intent));
     }
 }

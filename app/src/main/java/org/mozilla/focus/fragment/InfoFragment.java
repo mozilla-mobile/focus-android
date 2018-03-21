@@ -81,6 +81,9 @@ public class InfoFragment extends WebFragment {
             }
 
             @Override
+            public void onSecurityChanged(boolean isSecure, String host, String organization) {}
+
+            @Override
             public void onProgress(int progress) {
                 progressView.setProgress(progress);
             }
@@ -90,7 +93,7 @@ public class InfoFragment extends WebFragment {
 
             @Override
             public void onLongPress(IWebView.HitTarget hitTarget) {
-                if (getArguments().get(ARGUMENT_URL).equals(SupportUtils.getSumoURLForTopic(getContext(), "add-search-engine"))) {
+                if (getArguments().get(ARGUMENT_URL).equals(SupportUtils.getSumoURLForTopic(getContext(), SupportUtils.SumoTopic.ADD_SEARCH_ENGINE))) {
                     WebContextMenu.show(getActivity(), this, hitTarget);
                 }
             }

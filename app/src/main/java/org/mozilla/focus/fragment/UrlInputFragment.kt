@@ -17,6 +17,7 @@ import android.view.ViewGroup
 import android.view.ViewTreeObserver
 import android.widget.FrameLayout
 import kotlinx.android.synthetic.main.fragment_urlinput.*
+import mozilla.components.utils.ThreadUtils
 import org.mozilla.focus.R
 import org.mozilla.focus.activity.InfoActivity
 import org.mozilla.focus.autocomplete.UrlAutoCompleteFilter
@@ -30,9 +31,9 @@ import org.mozilla.focus.telemetry.TelemetryWrapper
 import org.mozilla.focus.utils.Features
 import org.mozilla.focus.utils.Settings
 import org.mozilla.focus.utils.SupportUtils
-import org.mozilla.focus.utils.ThreadUtils
 import org.mozilla.focus.utils.UrlUtils
 import org.mozilla.focus.utils.ViewUtils
+import org.mozilla.focus.utils.StatusBarUtils
 import org.mozilla.focus.whatsnew.WhatsNew
 import org.mozilla.focus.widget.InlineAutocompleteEditText
 
@@ -114,7 +115,8 @@ class UrlInputFragment :
     private val urlAutoCompleteFilter: UrlAutoCompleteFilter = UrlAutoCompleteFilter()
     private var displayedPopupMenu: HomeMenu? = null
 
-    @Volatile private var isAnimating: Boolean = false
+    @Volatile
+    private var isAnimating: Boolean = false
 
     private var session: Session? = null
 
@@ -135,6 +137,25 @@ class UrlInputFragment :
 
         activity?.let {
             urlAutoCompleteFilter.load(it.applicationContext)
+        }
+
+        StatusBarUtils.getStatusBarHeight(keyboardLinearLayout, {
+            adjustViewToStatusBarHeight(it)
+        })
+    }
+
+    private fun adjustViewToStatusBarHeight(statusBarHeight: Int) {
+        val inputHeight = resources.getDimension(R.dimen.urlinput_height)
+        if (keyboardLinearLayout.layoutParams is ViewGroup.MarginLayoutParams) {
+            val marginParams = keyboardLinearLayout.layoutParams as ViewGroup.MarginLayoutParams
+            marginParams.topMargin = (inputHeight + statusBarHeight).toInt()
+        }
+
+        urlInputLayout.layoutParams.height = (inputHeight + statusBarHeight).toInt()
+
+        if (searchViewContainer.layoutParams is ViewGroup.MarginLayoutParams) {
+            val marginParams = searchViewContainer.layoutParams as ViewGroup.MarginLayoutParams
+            marginParams.topMargin = (inputHeight + statusBarHeight).toInt()
         }
     }
 
@@ -255,8 +276,8 @@ class UrlInputFragment :
 
                 WhatsNew.userViewedWhatsNew(it)
 
-                SessionManager.getInstance()
-                        .createSession(Source.MENU, SupportUtils.getWhatsNewUrl(context))
+                SessionManager.getInstance().createSession(Source.MENU,
+                        SupportUtils.getSumoURLForTopic(context, SupportUtils.SumoTopic.WHATS_NEW))
             }
 
             R.id.settings -> (activity as LocaleAwareAppCompatActivity).openPreferences()

@@ -17,6 +17,7 @@
   <string name="menu_help">Help</string>
   <string name="menu_rights">Jo rjochten</string>
   <string name="menu_trackers_blocked_title">Trackers blokkearre</string>
+  <string name="menu_custom_tab_branding">Mooglik makke troch %1$s</string>
   <string name="share_dialog_title">Diele fia</string>
   <string name="notification_erase_text">Navigaasjeskiednis wiskje</string>
   <string name="notification_action_open">Iepenje</string>
@@ -142,7 +143,7 @@
   <string name="error_malformedURI_title">It adres is net jildich</string>
   <string name="error_malformedURI_message"><![CDATA[<ul xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">"\n  "<li>"Webadressen wurde trochgeans skreaun as "<strong>http://www.example.com/</strong></li>"\n  "<li>"Let derop dat jo foar&#250;tgeande slashes br&#251;ke (d.y. "<strong>/</strong>).</li>\n</ul>]]></string>
   <string name="error_redirectLoop_title">De side ferwiist net op in krekte wize troch</string>
-  <string name="error_redirectLoop_message"><![CDATA[<ul xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">"\n  "<li>Dit probleem kin soms feroarsake wurde troch it &#250;tskeakeljen of wegerjen fan cookies</li>\n</ul>]]></string>
+  <string name="error_redirectLoop_message"><![CDATA[<ul xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">"\n  "<li>Dit probleem kin somtiden feroarsake wurde troch it &#250;tskeakeljen of wegerjen fan cookies</li>\n</ul>]]></string>
   <string name="error_unsupportedprotocol_title">It adres waard net begrepen</string>
   <string name="error_unsupportedprotocol_message"><![CDATA[<ul xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">"\n  "<li>Miskien moatte jo oare software ynstallearje om dit adres te iepenjen.</li>\n</ul>]]></string>
   <string name="error_sslhandshake_title">Befeilige ferbining mislearre</string>
@@ -186,4 +187,8 @@
   <string name="gv_prompt_username_hint">Brûkersnamme</string>
   <string name="gv_prompt_password_hint">Wachtwurd</string>
   <string name="gv_prompt_clear">Wiskje</string>
+  <string name="security_popup_secure_connection">Befeilige ferbining</string>
+  <string name="security_popup_insecure_connection">Net-befeilige ferbining</string>
+  <string name="security_popup_security_verified">Ferifiearre troch: %1$s</string>
+  <string name="site_security_icon_content_description">Sidefeilichheid</string>
 </resources>
