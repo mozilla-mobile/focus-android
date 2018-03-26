@@ -42,6 +42,7 @@ public class LocalizedContent {
     /**
      * Load the content for focus:about
      */
+    @SuppressWarnings("PMD.EmptyCatchBlock")
     private static void loadAbout(@NonNull final WebView webView) {
         final Context context = webView.getContext();
         final Resources resources = Locales.getLocalizedResources(context);

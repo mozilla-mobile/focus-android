@@ -144,7 +144,7 @@ public class WebViewProvider {
             // I don't know if any devices don't include AppleWebKit, but given the diversity of Android
             // devices we should have a fallback: we search for the end of the platform String, and
             // treat the next token as the start:
-            start = existingUAString.indexOf(")") + 2;
+            start = existingUAString.indexOf(')') + 2;
 
             // If this was located at the very end, then there's nothing we can do, so let's just
             // return focus:

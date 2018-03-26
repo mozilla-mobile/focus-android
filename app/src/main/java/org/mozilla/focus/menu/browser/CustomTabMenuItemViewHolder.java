@@ -29,6 +29,7 @@ import org.mozilla.focus.telemetry.TelemetryWrapper;
         this.menu = menu;
     }
 
+    @SuppressWarnings("PMD.EmptyCatchBlock")
     @Override
     public void onClick(View view) {
         // Usually this is done in BrowserMenuViewHolder.onClick(), but that also tries to submit

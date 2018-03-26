@@ -355,6 +355,7 @@ public class BrowserFragment extends WebFragment implements View.OnClickListener
         });
     }
 
+    @SuppressWarnings("PMD.EmptyCatchBlock")
     private void initialiseCustomTabUi(final @NonNull View view) {
         final CustomTabConfig customTabConfig = session.getCustomTabConfig();
 
@@ -641,6 +642,7 @@ public class BrowserFragment extends WebFragment implements View.OnClickListener
         // another fragment).
     }
 
+    @SuppressWarnings("PMD.EmptyCatchBlock")
     void showDownloadPromptDialog(Download download) {
         final FragmentManager fragmentManager = getFragmentManager();
 
@@ -666,6 +668,7 @@ public class BrowserFragment extends WebFragment implements View.OnClickListener
         }
     }
 
+    @SuppressWarnings("PMD.EmptyCatchBlock")
     void showAddToHomescreenDialog(String url, String title) {
         final FragmentManager fragmentManager = getFragmentManager();
 

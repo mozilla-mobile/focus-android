@@ -39,6 +39,7 @@ public class VisibilityLifeCycleCallback implements Application.ActivityLifecycl
         this.context = context;
     }
 
+    @SuppressWarnings("PMD.UnusedPrivateMethod")
     private void finishAndRemoveTaskIfInBackground() {
         if (activitiesInStartedState == 0) {
             final ActivityManager activityManager = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);

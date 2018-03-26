@@ -17,6 +17,7 @@ public class LocaleAwareApplication extends Application {
      * We need to do locale work here, because we need to intercept
      * each hit to onConfigurationChanged.
      */
+    @SuppressWarnings("PMD.EmptyCatchBlock")
     @Override
     public void onConfigurationChanged(Configuration config) {
         // Do nothing if we're in the background. It'll simply cause a loop

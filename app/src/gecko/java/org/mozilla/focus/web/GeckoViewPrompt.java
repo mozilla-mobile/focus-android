@@ -560,6 +560,7 @@ final class GeckoViewPrompt implements GeckoSession.PromptDelegate {
         dialog.show();
     }
 
+    @SuppressWarnings("PMD.EmptyCatchBlock")
     private static Date parseDate(final SimpleDateFormat formatter,
                                   final String value,
                                   final boolean defaultToNow) {
@@ -594,6 +595,7 @@ final class GeckoViewPrompt implements GeckoSession.PromptDelegate {
         }
     }
 
+    @SuppressWarnings("PMD.EmptyCatchBlock")
     @Override
     public void onDateTimePrompt(final GeckoSession session, final String title,
                                   final int type, final String value, final String min,

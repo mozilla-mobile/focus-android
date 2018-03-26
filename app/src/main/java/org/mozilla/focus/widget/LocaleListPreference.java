@@ -220,32 +220,29 @@ public class LocaleListPreference extends ListPreference {
          */
         public boolean isUsable(CharacterValidator validator) {
             // Oh, for Java 7 switch statements.
-            if (this.tag.equals("bn-IN")) {
+            if (this.tag.equals("bn-IN") && !this.nativeName.startsWith("বাংলা")) {
                 // Bengali sometimes has an English label if the Bengali script
                 // is missing. This prevents us from simply checking character
                 // rendering for bn-IN; we'll get a false positive for "B", not "ব".
                 //
                 // This doesn't seem to affect other Bengali-script locales
                 // (below), which always have a label in native script.
-                if (!this.nativeName.startsWith("বাংলা")) {
-                    // We're on an Android version that doesn't even have
-                    // characters to say বাংলা. Definite failure.
-                    return false;
-                }
+                // We're on an Android version that doesn't even have
+                // characters to say বাংলা. Definite failure.
+                return false;
             }
 
             // These locales use a script that is often unavailable
             // on common Android devices. Make sure we can show them.
             // See documentation for CharacterValidator.
             // Note that bn-IN is checked here even if it passed above.
-            if (this.tag.equals("or") ||
+            if ((this.tag.equals("or") ||
                     this.tag.equals("my") ||
                     this.tag.equals("pa-IN") ||
                     this.tag.equals("gu-IN") ||
-                    this.tag.equals("bn-IN")) {
-                if (validator.characterIsMissingInFont(this.nativeName.substring(0, 1))) {
-                    return false;
-                }
+                    this.tag.equals("bn-IN")) &&
+                    validator.characterIsMissingInFont(this.nativeName.substring(0, 1))) {
+                return false;
             }
 
             return true;

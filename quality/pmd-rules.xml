@@ -1,38 +1,180 @@
 <?xml version="1.0"?>
-<ruleset name="Custom ruleset"
-         xmlns="http://pmd.sf.net/ruleset/1.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:noNamespaceSchemaLocation="http://pmd.sf.net/ruleset_xml_schema.xsd"
-         xsi:schemaLocation="http://pmd.sf.net/ruleset/1.0.0 http://pmd.sf.net/ruleset_xml_schema.xsd">
+<ruleset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="Custom ruleset"
+    xmlns="http://pmd.sf.net/ruleset/1.0.0"
+    xsi:noNamespaceSchemaLocation="http://pmd.sf.net/ruleset_xml_schema.xsd"
+    xsi:schemaLocation="http://pmd.sf.net/ruleset/1.0.0 http://pmd.sf.net/ruleset_xml_schema.xsd">
 
     <description>Focus Android Ruleset</description>
 
-    <rule ref="rulesets/java/basic.xml"/>
-    <rule ref="rulesets/java/braces.xml"/>
-    <rule ref="rulesets/java/clone.xml"/>
-    <rule ref="rulesets/java/codesize.xml"/>
+    <rule ref="rulesets/java/basic.xml" />
+    <rule ref="rulesets/java/braces.xml" />
+    <rule ref="rulesets/java/clone.xml" />
+    <rule ref="rulesets/java/codesize.xml" />
 
     <!-- We'll use the entire 'strings' ruleset -->
-    <rule ref="rulesets/java/strings.xml"/>
+    <rule ref="rulesets/java/strings.xml" />
 
     <!-- Here's some rules we'll specify one at a time -->
-    <rule ref="rulesets/java/unusedcode.xml/UnusedLocalVariable"/>
-    <rule ref="rulesets/java/unusedcode.xml/UnusedPrivateField"/>
-    <rule ref="rulesets/java/unusedcode.xml/UnusedPrivateMethod"/>
-    <rule ref="rulesets/java/imports.xml/DuplicateImports"/>
-    <rule ref="rulesets/java/unnecessary.xml/UnnecessaryConversionTemporary"/>
+    <rule ref="rulesets/java/unusedcode.xml/UnusedLocalVariable" />
+    <rule ref="rulesets/java/unusedcode.xml/UnusedPrivateField" />
+    <rule ref="rulesets/java/unusedcode.xml/UnusedPrivateMethod" />
+    <rule ref="rulesets/java/imports.xml/DuplicateImports" />
+    <rule ref="rulesets/java/unnecessary.xml/UnnecessaryConversionTemporary" />
 
     <!-- We want to customize this rule a bit, change the message and raise the priority  -->
-    <rule
-        message="Must handle exceptions"
-        ref="rulesets/java/empty.xml/EmptyCatchBlock">
+    <rule message="Must handle exceptions" ref="rulesets/java/empty.xml/EmptyCatchBlock">
         <priority>2</priority>
     </rule>
 
     <!-- Now we'll customize a rule's property value -->
     <rule ref="rulesets/java/codesize.xml/CyclomaticComplexity">
         <properties>
-            <property name="reportLevel" value="5"/>
+            <property name="reportLevel" value="5" />
         </properties>
     </rule>
+
+    <!-- This suppressions should be only temporary-->
+
+    <!-- Code size -->
+    <rule ref="rulesets/java/codesize.xml/CyclomaticComplexity">
+        <properties>
+            <property name="violationSuppressXPath" value="'org.*.web.GeckoViewPrompt.java'" />
+            <property name="violationSuppressXPath" value="'org.*.web.NestedGeckoView.java'" />
+            <property name="violationSuppressXPath" value="'org.*.web.WebViewProvider.java'" />
+            <property name="violationSuppressXPath" value="'org.*.activity.MainActivity.java'" />
+            <property name="violationSuppressXPath" value="'org.*.broadcastreceiver.DownloadBroadcastReceiver.java'" />
+            <property name="violationSuppressXPath" value="'org.*.customtabs.CustomTabConfig.java'" />
+            <property name="violationSuppressXPath" value="'org.*.customtabs.CustomTabsService.java'" />
+            <property name="violationSuppressXPath" value="'org.*.fragment.AddToHomescreenDialogFragment.java'" />
+            <property name="violationSuppressXPath" value="'org.*.fragment.BrowserFragment.java'" />
+            <property name="violationSuppressXPath" value="'org.*.fragment.FirstrunFragment.java'" />
+            <property name="violationSuppressXPath" value="'org.*.fragment.InfoFragment.java'" />
+            <property name="violationSuppressXPath" value="'org.*.fragment.WebFragment.java'" />
+            <property name="violationSuppressXPath" value="'org.*.locale.Locales.java'" />
+            <property name="violationSuppressXPath" value="'org.*.browser.BrowserMenuAdapter.java'" />
+            <property name="violationSuppressXPath" value="'org.*.context.WebContextMenu.java'" />
+            <property name="violationSuppressXPath" value="'org.*.search.SearchEngineManager.java'" />
+            <property name="violationSuppressXPath" value="'org.*.search.SearchEngineParser.java'" />
+            <property name="violationSuppressXPath" value="'org.*.session.SessionManager.java'" />
+            <property name="violationSuppressXPath" value="'org.*.ui.SessionsSheetFragment.java'" />
+            <property name="violationSuppressXPath" value="'org.*.settings.SettingsFragment.java'" />
+            <property name="violationSuppressXPath" value="'org.*.telemetry.TelemetrySessionObserver.java'" />
+            <property name="violationSuppressXPath" value="'org.*.telemetry.TelemetrySettingsProvider.java'" />
+            <property name="violationSuppressXPath" value="'org.*.utils.Browsers.java'" />
+            <property name="violationSuppressXPath" value="'org.*.utils.HtmlLoader.java'" />
+            <property name="violationSuppressXPath" value="'org.*.utils.IntentUtils.java'" />
+            <property name="violationSuppressXPath" value="'org.*.utils.UrlUtils.java'" />
+            <property name="violationSuppressXPath" value="'org.*.utils.ViewUtils.java'" />
+            <property name="violationSuppressXPath" value="'org.*.widget.AnimatedProgressBar.java'" />
+            <property name="violationSuppressXPath" value="'org.*.widget.FloatingActionButtonBehavior.java'" />
+            <property name="violationSuppressXPath" value="'org.*.widget.InlineAutocompleteEditText.java'" />
+            <property name="violationSuppressXPath" value="'org.*.widget.LocaleListPreference.java'" />
+            <property name="violationSuppressXPath" value="'org.*.widget.ResizableKeyboardViewDelegate.java'" />
+            <property name="violationSuppressXPath" value="'org.*.webview.FocusWebViewClient.java'" />
+            <property name="violationSuppressXPath" value="'org.*.webview.LinkHandler.java'" />
+            <property name="violationSuppressXPath" value="'org.*.webview.NestedWebView.java'" />
+            <property name="violationSuppressXPath" value="'org.*.webview.SystemWebView.java'" />
+            <property name="violationSuppressXPath" value="'org.*.webview.TrackingProtectionWebViewClient.java'" />
+            <property name="violationSuppressXPath" value="'org.*.matcher.BlocklistProcessor.java'" />
+            <property name="violationSuppressXPath" value="'org.*.matcher.EntityList.java'" />
+            <property name="violationSuppressXPath" value="'org.*.matcher.EntityListProcessor.java'" />
+            <property name="violationSuppressXPath" value="'org.*.matcher.Trie.java'" />
+            <property name="violationSuppressXPath" value="'org.*.matcher.UrlMatcher.java'" />
+        </properties>
+    </rule>
+
+    <rule ref="rulesets/java/codesize.xml/ExcessiveMethodLength">
+        <properties>
+            <property name="violationSuppressXPath" value="'org.*.web.GeckoViewPrompt.java'" />
+        </properties>
+    </rule>
+
+    <rule ref="rulesets/java/codesize.xml/ExcessiveClassLength">
+        <properties>
+            <property name="violationSuppressXPath" value="'org.*.fragment.BrowserFragment.java'" />
+        </properties>
+    </rule>
+
+    <rule ref="rulesets/java/codesize.xml/ModifiedCyclomaticComplexity">
+        <properties>
+            <property name="violationSuppressXPath" value="'org.*.customtabs.CustomTabConfig.java'" />
+            <property name="violationSuppressXPath" value="'org.*.customtabs.CustomTabsService.java'" />
+            <property name="violationSuppressXPath" value="'org.*.fragment.InfoFragment.java'" />
+            <property name="violationSuppressXPath" value="'org.*.context.WebContextMenu.java'" />
+            <property name="violationSuppressXPath" value="'org.*.matcher.UrlMatcher.java'" />
+        </properties>
+    </rule>
+
+    <rule ref="rulesets/java/codesize.xml/ExcessivePublicCount">
+        <properties>
+            <property name="violationSuppressXPath" value="'org.*.fragment.BrowserFragment.java'" />
+        </properties>
+    </rule>
+
+    <rule ref="rulesets/java/codesize.xml/NcssMethodCount">
+        <properties>
+            <property name="violationSuppressXPath" value="'org.*.fragment.BrowserFragment.java'" />
+        </properties>
+    </rule>
+
+    <rule ref="rulesets/java/codesize.xml/NPathComplexity">
+        <properties>
+            <property name="violationSuppressXPath" value="'org.*.web.GeckoViewPrompt.java'" />
+            <property name="violationSuppressXPath" value="'org.*.customtabs.CustomTabConfig.java'" />
+            <property name="violationSuppressXPath" value="'org.*.fragment.BrowserFragment.java'" />
+            <property name="violationSuppressXPath" value="'org.*.ui.SessionsSheetFragment.java'" />
+            <property name="violationSuppressXPath" value="'org.*.widget.InlineAutocompleteEditText.java'" />
+            <property name="violationSuppressXPath" value="'org.*.matcher.UrlMatcher.java'" />
+        </properties>
+    </rule>
+
+    <rule ref="rulesets/java/codesize.xml/StdCyclomaticComplexity">
+        <properties>
+            <property name="violationSuppressXPath" value="'org.*.customtabs.CustomTabConfig.java'" />
+            <property name="violationSuppressXPath" value="'org.*.customtabs.CustomTabsService.java'" />
+            <property name="violationSuppressXPath" value="'org.*.fragment.InfoFragment.java'" />
+            <property name="violationSuppressXPath" value="'org.*.context.WebContextMenu.java'" />
+            <property name="violationSuppressXPath" value="'org.*.matcher.UrlMatcher.java'" />
+        </properties>
+    </rule>
+
+    <rule ref="rulesets/java/codesize.xml/TooManyFields">
+        <properties>
+            <property name="violationSuppressXPath" value="'org.*.fragment.BrowserFragment.java'" />
+        </properties>
+    </rule>
+
+    <rule ref="rulesets/java/codesize.xml/TooManyMethods">
+        <properties>
+            <property name="violationSuppressXPath" value="'org.*.web.GeckoViewPrompt.java'" />
+            <property name="violationSuppressXPath" value="'org.*.activity.MainActivity.java'" />
+            <property name="violationSuppressXPath" value="'org.*.fragment.BrowserFragment.java'" />
+            <property name="violationSuppressXPath" value="'org.*.search.SearchEngineManager.java'" />
+            <property name="violationSuppressXPath" value="'org.*.session.SessionCallbackProxy.java'" />
+            <property name="violationSuppressXPath" value="'org.*.session.SessionManager.java'" />
+            <property name="violationSuppressXPath" value="'org.*.web.IWebView.java'" />
+            <property name="violationSuppressXPath" value="'org.*.widget.InlineAutocompleteEditText.java'" />
+            <property name="violationSuppressXPath" value="'org.*.webview.SystemWebView.java'" />
+        </properties>
+    </rule>
+
+    <!-- Strings -->
+    <rule ref="rulesets/java/strings.xml/InsufficientStringBufferDeclaration">
+        <properties>
+            <property name="violationSuppressXPath" value="'org.*.utils.HtmlLoader.java'" />
+        </properties>
+    </rule>
+
+    <rule ref="rulesets/java/strings.xml/ConsecutiveLiteralAppends">
+        <properties>
+            <property name="violationSuppressXPath" value="'org.*.web.WebViewProvider.java'" />
+        </properties>
+    </rule>
+
+    <rule ref="rulesets/java/strings.xml/ConsecutiveAppendsShouldReuse">
+        <properties>
+            <property name="violationSuppressXPath" value="'org.*.web.WebViewProvider.java'" />
+        </properties>
+    </rule>
+
 </ruleset>
