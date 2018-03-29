@@ -24,14 +24,16 @@ def generate_build_task():
 	return taskcluster.slugId(), generate_task(
 		name = "(Focus for Android) Build",
 		description = "Build Focus/Klar for Android from source code.",
-		command = 'echo "--" > .adjust_token && ./gradlew clean assemble')
+		command = ('echo "--" > .adjust_token'
+				   ' && python tools/l10n/check_translations.py'
+				   ' && ./gradlew --no-daemon clean assemble'))
 
 
 def generate_unit_test_task(buildTaskId):
 	return taskcluster.slugId(), generate_task(
 		name = "(Focus for Android) Unit tests",
 		description = "Run unit tests for Focus/Klar for Android.",
-		command = 'echo "--" > .adjust_token && ./gradlew clean test',
+		command = 'echo "--" > .adjust_token && ./gradlew --no-daemon clean test',
 		dependencies = [ buildTaskId ])
 
 
@@ -39,7 +41,7 @@ def generate_code_quality_task(buildTaskId):
 	return taskcluster.slugId(), generate_task(
 		name = "(Focus for Android) Code quality",
 		description = "Run code quality tools on Focus/Klar for Android code base.",
-		command = 'echo "--" > .adjust_token && ./gradlew clean detektCheck ktlint lint pmd checkstyle findbugs',
+		command = 'echo "--" > .adjust_token && ./gradlew --no-daemon clean detektCheck ktlint lint pmd checkstyle spotbugs',
 		dependencies = [ buildTaskId ])
 
 
@@ -47,18 +49,30 @@ def generate_ui_test_task(dependencies):
 	return taskcluster.slugId(), generate_task(
 		name = "(Focus for Android) UI tests",
 		description = "Run UI tests for Focus/Klar for Android.",
-		command = 'echo "--" > .adjust_token && ./gradlew clean',
-		dependencies = dependencies)
+		command = ('echo "--" > .adjust_token'
+			' && ./gradlew --no-daemon clean assembleFocusWebviewUniversalDebug assembleFocusWebviewUniversalDebugAndroidTest'
+			' && tools/taskcluster/execute-firebase-test.sh'),
+		dependencies = dependencies,
+		scopes = [ 'secrets:get:project/focus/firebase' ],
+		artifacts = {
+			"public": {
+				"type": "directory",
+				"path": "/opt/focus-android/test_artifacts",
+				"expires": taskcluster.stringDate(taskcluster.fromNow('1 week'))
+			}
+		})
 
 
-def generate_release_task(uiTestTaskId):
+def generate_release_task(dependencies):
 	return taskcluster.slugId(), generate_task(
 		name = "(Focus for Android) Preview release",
 		description = "Build preview versions for testing Focus/Klar for Android.",
 		command = ('echo "--" > .adjust_token'
-			       ' && ./gradlew clean assembleBeta'
-			       ' && python tools/taskcluster/sign-preview-builds.py'),
-		dependencies = [ uiTestTaskId ],
+			       ' && ./gradlew --no-daemon clean assembleBeta'
+			       ' && python tools/taskcluster/sign-preview-builds.py'
+			       ' && touch /opt/focus-android/builds/`date +"%Y-%m-%d-%H-%M"`'
+			       ' && touch /opt/focus-android/builds/' + COMMIT),
+		dependencies = dependencies,
 		scopes = [
 			"secrets:get:project/focus/preview-key-store",
 			"queue:route:index.project.focus.android.preview-builds"],
@@ -67,14 +81,14 @@ def generate_release_task(uiTestTaskId):
 			"public": {
 				"type": "directory",
 				"path": "/opt/focus-android/builds",
-				"expires": taskcluster.stringDate(taskcluster.fromNow('1 week'))
+				"expires": taskcluster.stringDate(taskcluster.fromNow('1 month'))
 			}
 		})
 
 
 def generate_task(name, description, command, dependencies = [], artifacts = {}, scopes = [], routes = []):
 	created = datetime.datetime.now()
-	expires = taskcluster.fromNow('1 week')
+	expires = taskcluster.fromNow('1 month')
 	deadline = taskcluster.fromNow('1 day')
 
 	return {
@@ -139,6 +153,6 @@ if __name__ == "__main__":
 	uiTestTaskId, uiTestTask = generate_ui_test_task([unitTestTaskId, codeQualityTaskId])
 	schedule_task(queue, uiTestTaskId, uiTestTask)
 
-	releaseTaskId, releaseTask = generate_release_task(uiTestTaskId)
+	releaseTaskId, releaseTask = generate_release_task([unitTestTaskId, codeQualityTaskId])
 	schedule_task(queue, releaseTaskId, releaseTask)
 

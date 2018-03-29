@@ -68,20 +68,29 @@ public class BrowserMenuAdapter extends RecyclerView.Adapter<BrowserMenuViewHold
             items.add(new MenuItem(R.id.share, resources.getString(R.string.menu_share)));
         }
 
-        if (browsers.hasThirdPartyDefaultBrowser(context)) {
-            items.add(new MenuItem(R.id.open_default, resources.getString(
-                    R.string.menu_open_with_default_browser, browsers.getDefaultBrowser().loadLabel(
-                            context.getPackageManager()))));
-        }
+        items.add(new MenuItem(R.id.add_to_homescreen, resources.getString(R.string.menu_add_to_home_screen)));
 
         if (browsers.hasMultipleThirdPartyBrowsers(context)) {
             items.add(new MenuItem(R.id.open_select_browser, resources.getString(
-                    R.string.menu_open_with_a_browser)));
+                    R.string.menu_open_with_a_browser2)));
         }
 
-        items.add(new MenuItem(R.id.add_to_homescreen, resources.getString(R.string.menu_add_to_home_screen)));
+        if (customTabConfig != null) {
+            // "Open in Firefox Focus" to switch from a custom tab to the full-featured browser
+            items.add(new MenuItem(R.id.open_in_firefox_focus, resources.getString(R.string.menu_open_with_default_browser2,
+                    resources.getString(R.string.app_name))));
+        }
 
-        items.add(new MenuItem(R.id.settings, resources.getString(R.string.menu_settings)));
+        if (browsers.hasThirdPartyDefaultBrowser(context)) {
+            items.add(new MenuItem(R.id.open_default, resources.getString(
+                    R.string.menu_open_with_default_browser2, browsers.getDefaultBrowser().loadLabel(
+                            context.getPackageManager()))));
+        }
+
+        if (customTabConfig == null) {
+            // There’s no need for Settings in a custom tab. The user can go to the browser app itself in order to do this.
+            items.add(new MenuItem(R.id.settings, resources.getString(R.string.menu_settings)));
+        }
 
         if (customTabConfig != null) {
             addCustomTabMenuItems(items, customTabConfig);

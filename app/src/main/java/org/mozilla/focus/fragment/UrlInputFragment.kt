@@ -17,8 +17,8 @@ import android.view.ViewGroup
 import android.view.ViewTreeObserver
 import android.widget.FrameLayout
 import kotlinx.android.synthetic.main.fragment_urlinput.*
+import mozilla.components.utils.ThreadUtils
 import org.mozilla.focus.R
-import org.mozilla.focus.activity.InfoActivity
 import org.mozilla.focus.autocomplete.UrlAutoCompleteFilter
 import org.mozilla.focus.locale.LocaleAwareAppCompatActivity
 import org.mozilla.focus.locale.LocaleAwareFragment
@@ -30,9 +30,9 @@ import org.mozilla.focus.telemetry.TelemetryWrapper
 import org.mozilla.focus.utils.Features
 import org.mozilla.focus.utils.Settings
 import org.mozilla.focus.utils.SupportUtils
-import org.mozilla.focus.utils.ThreadUtils
 import org.mozilla.focus.utils.UrlUtils
 import org.mozilla.focus.utils.ViewUtils
+import org.mozilla.focus.utils.StatusBarUtils
 import org.mozilla.focus.whatsnew.WhatsNew
 import org.mozilla.focus.widget.InlineAutocompleteEditText
 
@@ -114,7 +114,8 @@ class UrlInputFragment :
     private val urlAutoCompleteFilter: UrlAutoCompleteFilter = UrlAutoCompleteFilter()
     private var displayedPopupMenu: HomeMenu? = null
 
-    @Volatile private var isAnimating: Boolean = false
+    @Volatile
+    private var isAnimating: Boolean = false
 
     private var session: Session? = null
 
@@ -133,13 +134,34 @@ class UrlInputFragment :
     override fun onResume() {
         super.onResume()
 
-        urlAutoCompleteFilter.load(activity.applicationContext)
+        activity?.let {
+            urlAutoCompleteFilter.load(it.applicationContext)
+        }
+
+        StatusBarUtils.getStatusBarHeight(keyboardLinearLayout, {
+            adjustViewToStatusBarHeight(it)
+        })
+    }
+
+    private fun adjustViewToStatusBarHeight(statusBarHeight: Int) {
+        val inputHeight = resources.getDimension(R.dimen.urlinput_height)
+        if (keyboardLinearLayout.layoutParams is ViewGroup.MarginLayoutParams) {
+            val marginParams = keyboardLinearLayout.layoutParams as ViewGroup.MarginLayoutParams
+            marginParams.topMargin = (inputHeight + statusBarHeight).toInt()
+        }
+
+        urlInputLayout.layoutParams.height = (inputHeight + statusBarHeight).toInt()
+
+        if (searchViewContainer.layoutParams is ViewGroup.MarginLayoutParams) {
+            val marginParams = searchViewContainer.layoutParams as ViewGroup.MarginLayoutParams
+            marginParams.topMargin = (inputHeight + statusBarHeight).toInt()
+        }
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? =
             inflater.inflate(R.layout.fragment_urlinput, container, false)
 
-    override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         listOf(dismissView, clearView, searchView).forEach { it.setOnClickListener(this) }
 
         urlView.setOnFilterListener(this)
@@ -208,9 +230,11 @@ class UrlInputFragment :
     override fun onStart() {
         super.onStart()
 
-        if (!Settings.getInstance(context).shouldShowFirstrun()) {
-            // Only show keyboard if we are not displaying the first run tour on top.
-            showKeyboard()
+        context?.let {
+            if (!Settings.getInstance(it).shouldShowFirstrun()) {
+                // Only show keyboard if we are not displaying the first run tour on top.
+                showKeyboard()
+            }
         }
     }
 
@@ -251,15 +275,14 @@ class UrlInputFragment :
 
                 WhatsNew.userViewedWhatsNew(it)
 
-                SessionManager.getInstance()
-                        .createSession(Source.MENU, SupportUtils.getWhatsNewUrl(context))
+                SessionManager.getInstance().createSession(Source.MENU,
+                        SupportUtils.getSumoURLForTopic(context, SupportUtils.SumoTopic.WHATS_NEW))
             }
 
             R.id.settings -> (activity as LocaleAwareAppCompatActivity).openPreferences()
 
             R.id.help -> {
-                val helpIntent = InfoActivity.getHelpIntent(activity)
-                startActivity(helpIntent)
+                SessionManager.getInstance().createSession(Source.MENU, SupportUtils.HELP_URL)
             }
 
             else -> throw IllegalStateException("Unhandled view in onClick()")
@@ -411,16 +434,16 @@ class UrlInputFragment :
                 .alpha((if (reverse) 0 else 1).toFloat())
                 .setListener(object : AnimatorListenerAdapter() {
                     override fun onAnimationStart(animation: Animator) {
-                        toolbarBackgroundView.visibility = View.VISIBLE
+                        toolbarBackgroundView?.visibility = View.VISIBLE
                     }
 
                     override fun onAnimationEnd(animation: Animator) {
                         if (reverse) {
-                            toolbarBackgroundView.visibility = View.GONE
+                            toolbarBackgroundView?.visibility = View.GONE
 
                             if (!isOverlay) {
-                                dismissView.visibility = View.GONE
-                                menuView.visibility = View.VISIBLE
+                                dismissView?.visibility = View.GONE
+                                menuView?.visibility = View.VISIBLE
                             }
                         }
                     }

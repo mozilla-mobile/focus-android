@@ -8,16 +8,19 @@ package org.mozilla.focus.web;
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.util.AttributeSet;
 import android.view.View;
 
-import org.mozilla.focus.R;
 import org.mozilla.focus.session.Session;
-import org.mozilla.gecko.GeckoView;
-import org.mozilla.gecko.GeckoSession;
-import org.mozilla.gecko.GeckoSessionSettings;
+import org.mozilla.focus.utils.IntentUtils;
+import org.mozilla.focus.utils.Settings;
+import org.mozilla.focus.utils.UrlUtils;
+import org.mozilla.geckoview.GeckoView;
+import org.mozilla.geckoview.GeckoSession;
+import org.mozilla.geckoview.GeckoSessionSettings;
 
 /**
  * WebViewProvider implementation for creating a Gecko based implementation of IWebView.
@@ -48,10 +51,6 @@ public class WebViewProvider {
         private boolean isSecure;
         private GeckoSession geckoSession;
         private String webViewTitle;
-        private boolean socialTrackersBlocked;
-        private boolean adTrackersBlocked;
-        private boolean analyticTrackersBlocked;
-        private boolean contentTrackersBlocked;
 
         public GeckoWebView(Context context, AttributeSet attrs) {
             super(context, attrs);
@@ -62,18 +61,14 @@ public class WebViewProvider {
 
             geckoSession = new GeckoSession(settings);
 
-            final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
-            context.getSharedPreferences(context.getResources().getString(R.string.pref_key_privacy_block_social), Context.MODE_PRIVATE);
-            socialTrackersBlocked = prefs.getBoolean(context.getResources().getString(R.string.pref_key_privacy_block_social), true);
-            analyticTrackersBlocked = prefs.getBoolean(context.getResources().getString(R.string.pref_key_privacy_block_analytics), true);
-            adTrackersBlocked = prefs.getBoolean(context.getResources().getString(R.string.pref_key_privacy_block_ads), true);
-            contentTrackersBlocked = prefs.getBoolean(context.getResources().getString(R.string.pref_key_privacy_block_other), false);
-            updateBlocking();
-            prefs.registerOnSharedPreferenceChangeListener(this);
+            PreferenceManager.getDefaultSharedPreferences(context)
+                    .registerOnSharedPreferenceChangeListener(this);
 
-            geckoSession.setContentListener(createContentListener());
-            geckoSession.setProgressListener(createProgressListener());
-            geckoSession.setNavigationListener(createNavigationListener());
+            updateBlocking();
+
+            geckoSession.setContentDelegate(createContentDelegate());
+            geckoSession.setProgressDelegate(createProgressDelegate());
+            geckoSession.setNavigationDelegate(createNavigationDelegate());
             geckoSession.setTrackingProtectionDelegate(createTrackingProtectionDelegate());
             geckoSession.setPromptDelegate(createPromptDelegate());
             setSession(geckoSession);
@@ -106,7 +101,7 @@ public class WebViewProvider {
 
         @Override
         public void destroy() {
-
+            geckoSession.close();
         }
 
         @Override
@@ -153,32 +148,23 @@ public class WebViewProvider {
 
         @Override
         public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String prefName) {
-            if (!prefName.isEmpty() && sharedPreferences != null) {
-                if (prefName.equals(getContext().getResources().getString(R.string.pref_key_privacy_block_social))) {
-                    socialTrackersBlocked = sharedPreferences.getBoolean(prefName, true);
-                } else if (prefName.equals(getContext().getResources().getString(R.string.pref_key_privacy_block_ads))) {
-                    adTrackersBlocked = sharedPreferences.getBoolean(prefName, true);
-                } else if (prefName.equals(getContext().getResources().getString(R.string.pref_key_privacy_block_analytics))) {
-                    analyticTrackersBlocked = sharedPreferences.getBoolean(prefName, true);
-                } else if (prefName.equals(getContext().getResources().getString(R.string.pref_key_privacy_block_other))) {
-                    contentTrackersBlocked = sharedPreferences.getBoolean(prefName, false);
-                }
-            }
             updateBlocking();
         }
 
         private void updateBlocking() {
+            final Settings settings = Settings.getInstance(getContext());
+
             int categories = 0;
-            if (socialTrackersBlocked) {
+            if (settings.shouldBlockSocialTrackers()) {
                 categories += GeckoSession.TrackingProtectionDelegate.CATEGORY_SOCIAL;
             }
-            if (adTrackersBlocked) {
+            if (settings.shouldBlockAdTrackers()) {
                 categories += GeckoSession.TrackingProtectionDelegate.CATEGORY_AD;
             }
-            if (analyticTrackersBlocked) {
+            if (settings.shouldBlockAnalyticTrackers()) {
                 categories += GeckoSession.TrackingProtectionDelegate.CATEGORY_ANALYTIC;
             }
-            if (contentTrackersBlocked) {
+            if (settings.shouldBlockOtherTrackers()) {
                 categories += GeckoSession.TrackingProtectionDelegate.CATEGORY_CONTENT;
             }
             if (geckoSession != null) {
@@ -186,8 +172,8 @@ public class WebViewProvider {
             }
         }
 
-        private GeckoSession.ContentListener createContentListener() {
-            return new GeckoSession.ContentListener() {
+        private GeckoSession.ContentDelegate createContentDelegate() {
+            return new GeckoSession.ContentDelegate() {
                 @Override
                 public void onTitleChange(GeckoSession session, String title) {
                     webViewTitle = title;
@@ -208,11 +194,15 @@ public class WebViewProvider {
                 }
 
                 @Override
-                public void onContextMenu(GeckoSession session, int screenX, int screenY, String uri, String elementSrc) {
+                public void onContextMenu(GeckoSession session, int screenX, int screenY, String uri, @ElementType int elementType, String elementSrc) {
                     if (elementSrc != null && uri != null) {
                         callback.onLongPress(new HitTarget(true, uri, true, elementSrc));
                     } else if (elementSrc != null) {
-                        callback.onLongPress(new HitTarget(false, null, true, elementSrc));
+                        if (elementSrc.endsWith("jpg") || elementSrc.endsWith("gif") ||
+                                elementSrc.endsWith("tif") || elementSrc.endsWith("bmp") ||
+                                elementSrc.endsWith("png")) {
+                            callback.onLongPress(new HitTarget(false, null, true, elementSrc));
+                        }
                     } else if (uri != null) {
                         callback.onLongPress(new HitTarget(true, uri, false, null));
                     }
@@ -222,11 +212,16 @@ public class WebViewProvider {
                 public void onFocusRequest(GeckoSession geckoSession) {
 
                 }
+
+                @Override
+                public void onCloseRequest(GeckoSession geckoSession) {
+                    // TODO: #2150
+                }
             };
         }
 
-        private GeckoSession.ProgressListener createProgressListener() {
-            return new GeckoSession.ProgressListener() {
+        private GeckoSession.ProgressDelegate createProgressDelegate() {
+            return new GeckoSession.ProgressDelegate() {
                 @Override
                 public void onPageStart(GeckoSession session, String url) {
                     if (callback != null) {
@@ -249,15 +244,15 @@ public class WebViewProvider {
 
                 @Override
                 public void onSecurityChange(GeckoSession session,
-                                             GeckoSession.ProgressListener.SecurityInformation securityInfo) {
-                    // TODO: Split current onPageFinished() callback into two: page finished + security changed
+                                             GeckoSession.ProgressDelegate.SecurityInformation securityInfo) {
                     isSecure = securityInfo.isSecure;
+                    callback.onSecurityChanged(isSecure, securityInfo.host, securityInfo.issuerOrganization);
                 }
             };
         }
 
-        private GeckoSession.NavigationListener createNavigationListener() {
-            return new GeckoSession.NavigationListener() {
+        private GeckoSession.NavigationDelegate createNavigationDelegate() {
+            return new GeckoSession.NavigationDelegate() {
                 public void onLocationChange(GeckoSession session, String url) {
                     currentUrl = url;
                     if (callback != null) {
@@ -274,9 +269,9 @@ public class WebViewProvider {
                 }
 
                 @Override
-                public boolean onLoadUri(GeckoSession session, String uri, GeckoSession.NavigationListener.TargetWindow where) {
+                public boolean onLoadRequest(GeckoSession session, String uri, @TargetWindow int target) {
                     // If this is trying to load in a new tab, just load it in the current one
-                    if (where == GeckoSession.NavigationListener.TargetWindow.NEW) {
+                    if (target == GeckoSession.NavigationDelegate.TARGET_WINDOW_NEW) {
                         geckoSession.loadUri(uri);
                         return true;
                     }
@@ -286,8 +281,19 @@ public class WebViewProvider {
                         return true;
                     }
 
+                    // Check if we should handle an external link
+                    final Uri urlToURI = Uri.parse(uri);
+                    if (!UrlUtils.isSupportedProtocol(urlToURI.getScheme()) && callback != null) {
+                        return IntentUtils.handleExternalUri(getContext(), GeckoWebView.this, uri);
+                    }
+
                     // Otherwise allow the load to continue normally
                     return false;
+                }
+
+                @Override
+                public void onNewSession(GeckoSession geckoSession, String s, GeckoSession.Response<GeckoSession> response) {
+                    // TODO: #2151
                 }
             };
         }
@@ -335,6 +341,12 @@ public class WebViewProvider {
         @Override
         public void exitFullscreen() {
             geckoSession.exitFullScreen();
+        }
+
+        @Override
+        public void onDetachedFromWindow() {
+            PreferenceManager.getDefaultSharedPreferences(getContext()).unregisterOnSharedPreferenceChangeListener(this);
+            super.onDetachedFromWindow();
         }
     }
 }

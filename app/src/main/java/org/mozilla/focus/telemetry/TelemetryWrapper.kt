@@ -131,6 +131,7 @@ object TelemetryWrapper {
         val WHATS_NEW = "whats_new"
         val RESUME = "resume"
         val RELOAD = "refresh"
+        val FULL_BROWSER = "full_browser"
     }
 
     private object Extra {
@@ -195,6 +196,7 @@ object TelemetryWrapper {
                             resources.getString(R.string.pref_key_privacy_block_analytics),
                             resources.getString(R.string.pref_key_privacy_block_social),
                             resources.getString(R.string.pref_key_privacy_block_other),
+                            resources.getString(R.string.pref_key_performance_block_javascript),
                             resources.getString(R.string.pref_key_performance_block_webfonts),
                             resources.getString(R.string.pref_key_locale),
                             resources.getString(R.string.pref_key_secure),
@@ -251,34 +253,19 @@ object TelemetryWrapper {
         TelemetryEvent.create(Category.ACTION, Method.FOREGROUND, Object.APP).queue()
     }
 
-    private var startTime: Long = 0
     private var numLoads: Int = 0
     private var averageTime: Double = 0.0
-    private var started: Boolean = false
 
     @JvmStatic
-    fun startLoad(recordStartTime: Long) {
-        if (!started) {
-            startTime = recordStartTime
-            started = true
-        }
+    fun addLoadToAverage(newLoadTime: Long) {
+        numLoads++
+        averageTime += (newLoadTime - averageTime) / numLoads
     }
 
     @JvmStatic
-    fun endLoad(endTime: Long) {
-        if (started) {
-            numLoads++
-            averageTime = (averageTime + (endTime - startTime)) / numLoads
-            startTime = 0
-            started = false
-        }
-    }
-
-    @JvmStatic
-    fun resetAverageLoad() {
-        started = false
+    private fun resetAverageLoad() {
         numLoads = 0
-        startTime = 0
+        averageTime = 0.0
     }
 
     @JvmStatic
@@ -538,6 +525,14 @@ object TelemetryWrapper {
     @JvmStatic
     fun openDefaultAppEvent() {
         TelemetryEvent.create(Category.ACTION, Method.OPEN, Object.MENU, Value.DEFAULT).queue()
+    }
+
+    /**
+     * Switching from a custom tab to the full-featured browser (regular tab).
+     */
+    @JvmStatic
+    fun openFullBrowser() {
+        TelemetryEvent.create(Category.ACTION, Method.OPEN, Object.MENU, Value.FULL_BROWSER).queue()
     }
 
     @JvmStatic

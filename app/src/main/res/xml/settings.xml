@@ -74,6 +74,13 @@
             android:summary="@string/preference_performance_block_webfonts_summary"
             android:defaultValue="false" />
 
+        <SwitchPreference
+            android:layout="@layout/focus_preference"
+            android:title="@string/preference_performance_block_javascript"
+            android:key="@string/pref_key_performance_block_javascript"
+            android:summary="@string/preference_performance_block_javascript_summary"
+            android:defaultValue="false" />
+
         <!-- // Not shipping in v1 (#188)
         <SwitchPreference
             android:title="@string/preference_performance_block_images"
@@ -101,24 +108,28 @@
              We keep a plain "About" as the title here in xml as a fallback, but AboutPreference
              will use the substitution regardless of what is set here. -->
         <org.mozilla.focus.widget.AboutPreference
+            android:icon="@drawable/ic_tab_new"
+            android:key="@string/pref_key_about"
             android:layout="@layout/focus_preference"
-            android:title="@string/menu_about"
-            android:key="@string/pref_key_about" />
+            android:title="@string/menu_about" />
 
         <Preference
+            android:icon="@drawable/ic_tab_new"
+            android:key="@string/pref_key_help"
             android:layout="@layout/focus_preference"
-            android:title="@string/menu_help"
-            android:key="@string/pref_key_help" />
+            android:title="@string/menu_help" />
 
         <Preference
+            android:icon="@drawable/ic_tab_new"
+            android:key="@string/pref_key_rights"
             android:layout="@layout/focus_preference"
-            android:title="@string/menu_rights"
-            android:key="@string/pref_key_rights" />
+            android:title="@string/menu_rights" />
 
         <Preference
+            android:icon="@drawable/ic_tab_new"
+            android:key="@string/pref_key_privacy_notice"
             android:layout="@layout/focus_preference"
-            android:title="@string/preference_privacy_notice"
-            android:key="@string/pref_key_privacy_notice"/>
+            android:title="@string/preference_privacy_notice" />
 
     </PreferenceCategory>
 

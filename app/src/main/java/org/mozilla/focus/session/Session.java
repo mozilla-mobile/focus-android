@@ -4,6 +4,8 @@
 
 package org.mozilla.focus.session;
 
+import android.arch.lifecycle.LiveData;
+import android.arch.lifecycle.MutableLiveData;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
@@ -18,11 +20,13 @@ import java.util.UUID;
  * Keeping track of state / data of a single browsing session (tab).
  */
 public class Session {
-    private final Source source;
+    private Source source;
     private final String uuid;
     private final NonNullMutableLiveData<String> url;
     private final NonNullMutableLiveData<Integer> progress;
     private final NonNullMutableLiveData<Boolean> secure;
+    private final MutableLiveData<String> securityVerifier;
+    private final MutableLiveData<String> securityOrigin;
     private final NonNullMutableLiveData<Boolean> loading;
     private final NonNullMutableLiveData<Integer> trackersBlocked;
     private CustomTabConfig customTabConfig;
@@ -42,6 +46,9 @@ public class Session {
         this.loading = new NonNullMutableLiveData<>(false);
         this.trackersBlocked = new NonNullMutableLiveData<>(0);
 
+        this.securityOrigin = new MutableLiveData<>();
+        this.securityVerifier = new MutableLiveData<>();
+
         this.isBlockingEnabled = true;
         this.isRecorded = false;
     }
@@ -50,6 +57,10 @@ public class Session {
         this(Source.CUSTOM_TAB, url);
 
         this.customTabConfig = customTabConfig;
+    }
+
+    /* package */ void clearSource() {
+        source = Source.NONE;
     }
 
     public Source getSource() {
@@ -82,6 +93,22 @@ public class Session {
 
     public NonNullLiveData<Boolean> getSecure() {
         return secure;
+    }
+
+    /* package */ void setSecurityVerifier(String verifier) {
+        this.securityVerifier.setValue(verifier);
+    }
+
+    /* package */ void setSecurityOrigin(String origin) {
+        this.securityOrigin.setValue(origin);
+    }
+
+    public LiveData<String> getSecurityVerifier() {
+        return securityVerifier;
+    }
+
+    public LiveData<String> getSecurityOrigin() {
+        return securityOrigin;
     }
 
     /* package */ void setLoading(boolean loading) {
@@ -162,5 +189,12 @@ public class Session {
 
     public void setBlockingEnabled(boolean blockingEnabled) {
         this.isBlockingEnabled = blockingEnabled;
+    }
+
+    /**
+     * Remove the custom tab configuration. This will transform this session into a regular session.
+     */
+    /* package */ void stripCustomTabConfiguration() {
+        customTabConfig = null;
     }
 }

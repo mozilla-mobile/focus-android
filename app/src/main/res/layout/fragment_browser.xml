@@ -16,7 +16,7 @@
         <View
             android:id="@+id/status_bar_background"
             android:layout_width="match_parent"
-            android:layout_height="25dp"
+            android:layout_height="0dp"
             android:background="@drawable/animated_background" />
 
         <org.mozilla.focus.widget.ResizableKeyboardCoordinatorLayout
@@ -70,12 +70,21 @@
                 android:src="@drawable/ic_delete"
                 app:backgroundTint="@color/colorErase"
                 app:rippleColor="@color/colorErasePressed"
+                android:visibility="gone"
                 app:fabSize="normal"
                 app:layout_behavior="org.mozilla.focus.widget.FloatingActionButtonBehavior"
                 android:contentDescription="@string/content_description_erase" />
 
         </org.mozilla.focus.widget.ResizableKeyboardCoordinatorLayout>
     </LinearLayout>
+
+    <FrameLayout
+        android:id="@+id/popup_tint"
+        android:visibility="gone"
+        android:background="@android:color/black"
+        android:alpha=".5"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
 
     <FrameLayout
         android:id="@+id/video_container"

@@ -8,8 +8,6 @@
   <string name="feedback_erase">మీ విహారణ చరిత్ర తుడిచివెయ్యబడింది.</string>
   <string name="search_hint">%1$s కొరకు వెతకండి</string>
   <string name="menu_share">పంచుకోండి…</string>
-  <string name="menu_open_with_default_browser">%1$s తో తెరవండి</string>
-  <string name="menu_open_with_a_browser">దీనితో తెరువు…</string>
   <string name="menu_add_to_home_screen">ముంగిలి తెరకు చేర్చు</string>
   <string name="menu_whats_new">కొత్తది ఏమిటి</string>
   <string name="menu_settings">అమరికలు</string>
@@ -38,6 +36,7 @@
   <string name="preference_autocomplete_handle_content_description">-</string>
   <string name="preference_autocomplete_menu_remove">తీసివేయి</string>
   <string name="preference_autocomplete_action_remove_content_description">తీసివేయి</string>
+  <string name="preference_autocomplete_add_error">మీరు ఇచ్చిన చిరునామాను మరోసారి సరిచూడండి.</string>
   <string name="preference_language">భాష</string>
   <string name="preference_language_systemdefault">వ్యవస్థ అప్రమేయం</string>
   <string name="preference_dialog_title_search_engine">అప్రమేయ శోధని</string>
@@ -62,6 +61,7 @@
   <string name="action_option_add_search_engine">శోధన యంత్రాన్ని చేర్చు</string>
   <string name="tutorial_search_finish">మొదలుపెట్టు</string>
   <string name="search_add_manually_name">ప్రదర్శించడానికి పేరు</string>
+  <string name="search_add_manually_name_hint">సెర్చింజను పేరు</string>
   <string name="search_add_manually_save">భద్రపరచు</string>
   <string name="accessibility_announcement_search">శోధన యంత్రాన్ని చేర్చు</string>
   <string name="content_description_clear_input">ఇన్‌పుట్‌ను తుడిచివేయి</string>

@@ -25,13 +25,14 @@ import org.mozilla.focus.session.Session;
 import org.mozilla.focus.session.SessionManager;
 import org.mozilla.focus.session.ui.SessionsSheetFragment;
 import org.mozilla.focus.telemetry.TelemetryWrapper;
-import org.mozilla.focus.utils.SafeIntent;
 import org.mozilla.focus.utils.Settings;
 import org.mozilla.focus.utils.ViewUtils;
 import org.mozilla.focus.web.IWebView;
 import org.mozilla.focus.web.WebViewProvider;
 
 import java.util.List;
+
+import mozilla.components.utils.SafeIntent;
 
 public class MainActivity extends LocaleAwareAppCompatActivity {
     public static final String ACTION_ERASE = "erase";
@@ -68,7 +69,16 @@ public class MainActivity extends LocaleAwareAppCompatActivity {
 
         sessionManager.handleIntent(this, intent, savedInstanceState);
 
-        sessionManager.getSessions().observe(this,  new NonNullObserver<List<Session>>() {
+        registerSessionObserver();
+
+        WebViewProvider.preload(this);
+    }
+
+    private void registerSessionObserver() {
+        (isCustomTabMode()
+                ? sessionManager.getCustomTabSessions()
+                : sessionManager.getSessions()
+        ).observe(this,  new NonNullObserver<List<Session>>() {
             private boolean wasSessionsEmpty = false;
 
             @Override
@@ -95,8 +105,10 @@ public class MainActivity extends LocaleAwareAppCompatActivity {
                 }
             }
         });
+    }
 
-        WebViewProvider.preload(this);
+    protected boolean isCustomTabMode() {
+        return false;
     }
 
     @Override
@@ -208,8 +220,12 @@ public class MainActivity extends LocaleAwareAppCompatActivity {
                 .commit();
     }
 
-    private void showBrowserScreenForCurrentSession() {
-        final Session currentSession = sessionManager.getCurrentSession();
+    protected Session getCurrentSessionForActivity() {
+        return sessionManager.getCurrentSession();
+    }
+
+    protected void showBrowserScreenForCurrentSession() {
+        final Session currentSession = getCurrentSessionForActivity();
         final FragmentManager fragmentManager = getSupportFragmentManager();
 
         final BrowserFragment fragment = (BrowserFragment) fragmentManager.findFragmentByTag(BrowserFragment.FRAGMENT_TAG);
@@ -220,8 +236,7 @@ public class MainActivity extends LocaleAwareAppCompatActivity {
 
         fragmentManager
                 .beginTransaction()
-                .replace(R.id.container,
-                        BrowserFragment.createForSession(currentSession), BrowserFragment.FRAGMENT_TAG)
+                .replace(R.id.container, BrowserFragment.createForSession(currentSession), BrowserFragment.FRAGMENT_TAG)
                 .commit();
     }
 
