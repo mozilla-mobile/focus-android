@@ -23,6 +23,7 @@ import org.mozilla.focus.webview.matcher.UrlMatcher;
 
 public class TrackingProtectionWebViewClient extends WebViewClient {
     private static volatile UrlMatcher MATCHER;
+    private HttpAuthenticationDialog httpAuthenticationDialog;
 
     public static void triggerPreload(final Context context) {
         // Only trigger loading if MATCHER is null. (If it's null, MATCHER could already be loading,
@@ -144,13 +145,14 @@ public class TrackingProtectionWebViewClient extends WebViewClient {
     }
 
     @Override
-    public void onReceivedHttpAuthRequest(WebView view, HttpAuthHandler handler, String host, String realm) {
+    public void onReceivedHttpAuthRequest(WebView view, final HttpAuthHandler handler, String host, String realm) {
 
 
-        handler.proceed("user", "passwd");
+//        handler.proceed("user", "passwd");
+
 //        AlertDialog.Builder builder = new AlertDialog.Builder(context.getApplicationContext());
 //        LayoutInflater li = LayoutInflater.from(context.getApplicationContext());
-//        View dialogView = li.inflate(R.layout.dialog_http_auth, view);
+//        View dialogView = li.inflate(R.layout.dialog_http_auth, null, false);
 //
 //        final EditText httpAuthUsername = dialogView.findViewById(R.id.httpAuthUsername);
 //        final EditText httpAuthPassword = dialogView.findViewById(R.id.httpAuthPassword);
@@ -159,6 +161,25 @@ public class TrackingProtectionWebViewClient extends WebViewClient {
 //
 //        final AlertDialog dialog = builder.create();
 //        dialog.show();
+
+        httpAuthenticationDialog = new HttpAuthenticationDialog(context, host, realm);
+        httpAuthenticationDialog.setOkListener(new HttpAuthenticationDialog.OkListener() {
+            @Override
+            public void onOk(String host, String realm, String username, String password) {
+                handler.proceed(username, password);
+            }
+        });
+        httpAuthenticationDialog.setCancelListener(new HttpAuthenticationDialog.CancelListener() {
+            @Override
+            public void onCancel() {
+                handler.cancel();
+                httpAuthenticationDialog = null;
+            }
+        });
+
+        httpAuthenticationDialog.show();
     }
+
+
 
 }
