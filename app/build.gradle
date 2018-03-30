@@ -312,24 +312,24 @@ repositories {
 }
 
 dependencies {
-    compile "com.android.support:appcompat-v7:$support_libraries_version"
-    compile "com.android.support:customtabs:$support_libraries_version"
-    compile "com.android.support:design:$support_libraries_version"
-    compile "com.android.support:cardview-v7:$support_libraries_version"
-    compile "com.android.support:recyclerview-v7:$support_libraries_version"
+    implementation "com.android.support:appcompat-v7:$support_libraries_version"
+    implementation "com.android.support:customtabs:$support_libraries_version"
+    implementation "com.android.support:design:$support_libraries_version"
+    implementation "com.android.support:cardview-v7:$support_libraries_version"
+    implementation "com.android.support:recyclerview-v7:$support_libraries_version"
 
-    compile "android.arch.lifecycle:extensions:$architecture_components_version"
+    implementation "android.arch.lifecycle:extensions:$architecture_components_version"
 
     compileOnly 'net.jcip:jcip-annotations:1.0'
     compileOnly "com.github.spotbugs:spotbugs-annotations:$spotbugs_version"
 
-    compile 'org.mozilla.telemetry:telemetry:1.1.1'
-    compile 'org.mozilla.components:ktx:0.1'
-    compile 'org.mozilla.components:utils:0.2.2'
-    compile 'org.mozilla.photon:colors:0.1'
+    implementation 'org.mozilla.telemetry:telemetry:1.1.1'
+    implementation 'org.mozilla.components:ktx:0.1'
+    implementation 'org.mozilla.components:utils:0.2.2'
+    implementation 'org.mozilla.photon:colors:0.1'
 
-    compile "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
-    compile "org.jetbrains.kotlinx:kotlinx-coroutines-android:0.19.3"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:0.19.3"
 
     focusCompile 'com.adjust.sdk:adjust-android:4.11.4'
     focusCompile 'com.google.android.gms:play-services-analytics:10.2.6' // Required by Adjust
