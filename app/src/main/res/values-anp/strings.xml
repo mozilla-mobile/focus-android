@@ -31,8 +31,7 @@
   <string name="preference_subitem_autocomplete">URL अपना सँ पूर्ण</string>
   <string name="preference_switch_autocomplete">अपना सँ पूर्ण</string>
   <string name="preference_category_autocomplete_preinstalled">मूलभूत URL सूची</string>
-  <string name="preference_category_autocomplete_custom">पसंदीदा URL</string>
-  <string name="preference_autocomplete_subitem_customlist">पसंदीदा URLs</string>
+    <string name="preference_autocomplete_subitem_customlist">पसंदीदा URLs</string>
   <string name="preference_autocomplete_action_add">+ अपन पसंदीदा URL जोड़होऽ</string>
   <string name="preference_autocomplete_title_add">पसंदीदा URL जोड़होऽ</string>
   <string name="preference_autocomplete_title_remove">पसंदीदा URLs हटाभोऽ</string>
@@ -40,15 +39,13 @@
   <string name="preference_autocomplete_add_title">जोड़ए लेली URL</string>
   <string name="preference_autocomplete_add_hint">URL पेस्ट करहोऽ या भरहोऽ</string>
   <string name="preference_autocomplete_add_example">उदाहरण: example.com</string>
-  <string name="preference_autocomplete_handle_content_description">-</string>
-  <string name="preference_autocomplete_add_confirmation">नया उपभोक्ता पसंदीदा URL जोड़लोऽ गेलैऽ.</string>
+    <string name="preference_autocomplete_add_confirmation">नया उपभोक्ता पसंदीदा URL जोड़लोऽ गेलैऽ.</string>
   <string name="preference_autocomplete_menu_remove">हटाभोऽ</string>
   <string name="preference_autocomplete_action_remove_content_description">हटाभोऽ</string>
   <string name="preference_autocomplete_add_error">जे URL भरने छहोऽ ओकराऽ फिनु सँ जाँच करहोऽ.</string>
   <string name="preference_language">भाषा</string>
   <string name="preference_language_systemdefault">सिस्टम मूलभूत</string>
-  <string name="preference_dialog_title_search_engine">मूलभूत खोज</string>
-  <string name="preference_category_privacy">गोपनीयता</string>
+    <string name="preference_category_privacy">गोपनीयता</string>
   <string name="preference_privacy_block_ads">विज्ञापन ट्रैकर्स के ब्लॉक करहोऽ</string>
   <string name="preference_privacy_block_analytics">विश्लेषणट्रैकर्स ब्लौककरऽ</string>
   <string name="preference_privacy_block_social">सामाजिक ट्रैकर्स ब्लौक करऽ</string>
@@ -56,8 +53,7 @@
   <string name="preference_privacy_secure_mode">"गोपनीयता "</string>
   <string name="preference_category_performance">प्रदर्शन</string>
   <string name="preference_performance_block_webfonts">वेब फ्रंटौं कऽ ब्लौक करऽ</string>
-  <string name="preference_performance_block_images">चित्रों कऽ ब्लौक करऽ</string>
-  <string name="preference_default_browser2">%1$s कऽ मूलभूत ब्रोजर बनाबऽ</string>
+    <string name="preference_default_browser2">%1$s कऽ मूलभूत ब्रोजर बनाबऽ</string>
   <string name="preference_category_mozilla">मोज़िल्ला</string>
   <string name="preference_mozilla_telemetry2">डाटा उपयोगभेल भेजऽ</string>
   <string name="preference_mozilla_telemetry_summary">अधिक जानऽ</string>
