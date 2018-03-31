@@ -32,14 +32,18 @@ import java.io.InputStream;
 import java.io.StringWriter;
 import java.io.Writer;
 import java.nio.charset.StandardCharsets;
+import java.text.Collator;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Set;
+import java.util.TreeSet;
 
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -80,7 +84,8 @@ public class SearchEngineManager extends BroadcastReceiver {
         return instance;
     }
 
-    private SearchEngineManager() {}
+    private SearchEngineManager() {
+    }
 
     public static boolean addSearchEngine(SharedPreferences sharedPreferences, Context context, String engineName, String searchQuery) {
         // This is not for a homescreen shortcut so we don't want an adaptive launcher icon.
@@ -94,8 +99,14 @@ public class SearchEngineManager extends BroadcastReceiver {
         newEngines.addAll(existingEngines);
         newEngines.add(engineName);
 
+        //        Sorting using tree set.
+        Collection<String> newEnginesSorted = new TreeSet<String>(Collator.getInstance());
+        newEnginesSorted.addAll(newEngines);
+        //      converting the Collection<String> into Set using HashSet.
+        Set<String> newEngines_sorted = new HashSet<String>(newEnginesSorted);
+
         sharedPreferences.edit().putInt(PREF_KEY_CUSTOM_SEARCH_VERSION, CUSTOM_SEARCH_VERSION)
-                .putStringSet(PREF_KEY_CUSTOM_SEARCH_ENGINES, newEngines)
+                .putStringSet(PREF_KEY_CUSTOM_SEARCH_ENGINES, newEngines_sorted)
                 .putString(engineName, searchEngineXml)
                 .apply();
 
@@ -200,8 +211,8 @@ public class SearchEngineManager extends BroadcastReceiver {
             final List<String> languageEngines = Arrays.asList(assetManager.list(languagePath));
             final List<String> defaultEngines = Arrays.asList(assetManager.list(defaultPath));
 
-           final SharedPreferences sharedPreferences = context.getSharedPreferences(
-                   SearchEngineManager.PREF_FILE_SEARCH_ENGINES, Context.MODE_PRIVATE);
+            final SharedPreferences sharedPreferences = context.getSharedPreferences(
+                    SearchEngineManager.PREF_FILE_SEARCH_ENGINES, Context.MODE_PRIVATE);
             final Set<String> hiddenEngines = sharedPreferences.getStringSet(PREF_KEY_HIDDEN_DEFAULT_ENGINES, Collections.<String>emptySet());
 
             for (int i = 0; i < engineNames.length(); i++) {
