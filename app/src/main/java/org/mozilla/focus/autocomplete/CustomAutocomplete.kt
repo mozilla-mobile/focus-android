@@ -8,6 +8,8 @@ import android.app.Activity
 import android.content.Context
 import android.content.SharedPreferences
 import android.widget.Toast
+import kotlinx.coroutines.experimental.android.UI
+import kotlinx.coroutines.experimental.async
 
 object CustomAutocomplete {
     private const val PREFERENCE_NAME = "custom_autocomplete"
@@ -32,10 +34,8 @@ object CustomAutocomplete {
         if(!domains.contains(domain))
             domains.add(domain)
         else {
-            object : Runnable {
-                override fun run() {
-                    Toast.makeText(context, "Domain Already exists", Toast.LENGTH_SHORT).show()
-                }
+            async(UI){
+                Toast.makeText(context, "Domain Already exists", Toast.LENGTH_SHORT).show()
             }
         }
         saveDomains(context, domains)
