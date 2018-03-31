@@ -4,8 +4,10 @@
 
 package org.mozilla.focus.autocomplete
 
+import android.app.Activity
 import android.content.Context
 import android.content.SharedPreferences
+import android.widget.Toast
 
 object CustomAutocomplete {
     private const val PREFERENCE_NAME = "custom_autocomplete"
@@ -27,8 +29,15 @@ object CustomAutocomplete {
     suspend fun addDomain(context: Context, domain: String) {
         val domains = mutableListOf<String>()
         domains.addAll(loadCustomAutoCompleteDomains(context))
-        domains.add(domain)
-
+        if(!domains.contains(domain))
+            domains.add(domain)
+        else {
+            object : Runnable {
+                override fun run() {
+                    Toast.makeText(context, "Domain Already exists", Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
         saveDomains(context, domains)
     }
 
