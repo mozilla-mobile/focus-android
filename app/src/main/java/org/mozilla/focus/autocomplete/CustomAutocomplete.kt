@@ -8,7 +8,6 @@ import android.app.Activity
 import android.content.Context
 import android.content.SharedPreferences
 import android.widget.Toast
-import kotlinx.coroutines.experimental.android.UI
 import kotlinx.coroutines.experimental.async
 
 object CustomAutocomplete {
