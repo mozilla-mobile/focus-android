@@ -8,6 +8,8 @@
   <string name="feedback_erase">તમારો બ્રાઉઝિંગ ઇતિહાસ કાઢી નાખવામાં આવ્યો છે.</string>
   <string name="search_hint">%1$s ની શોધ માં</string>
   <string name="menu_share">વહેંચો…</string>
+  <string name="menu_open_with_default_browser2">%1$s માં ખોલો</string>
+  <string name="menu_open_with_a_browser2">માં ખોલો…</string>
   <string name="menu_add_to_home_screen">મુખ્ય સ્ક્રીન પર ઉમેરો</string>
   <string name="menu_whats_new">નવું શું છે</string>
   <string name="menu_settings">સેટિંગ્સ</string>
@@ -15,6 +17,7 @@
   <string name="menu_help">મદદ</string>
   <string name="menu_rights">તમારા અધિકારો</string>
   <string name="menu_trackers_blocked_title">ટ્રેકર્સ અવરોધિત</string>
+  <string name="menu_custom_tab_branding">%1$s દ્વારા સંચાલિત</string>
   <string name="share_dialog_title">આની મારફતે વહેંચો</string>
   <string name="notification_erase_text">બ્રાઉઝિંગ ઇતિહાસને કાઢી નાખો</string>
   <string name="notification_action_open">ખોલો</string>
@@ -30,7 +33,7 @@
   <string name="preference_subitem_autocomplete">URL સ્વતઃપૂર્ણ</string>
   <string name="preference_switch_autocomplete">સ્વત: પૂર્ણ</string>
   <string name="preference_category_autocomplete_preinstalled">મૂળભૂત URL સૂચિ</string>
-    <string name="preference_autocomplete_subitem_customlist">પોતાનું URLs</string>
+  <string name="preference_autocomplete_subitem_customlist">પોતાનું URLs</string>
   <string name="preference_autocomplete_action_add">+ પોતાનું URL ઉમેરો</string>
   <string name="preference_autocomplete_title_add">પોતાનું URL ઉમેરો</string>
   <string name="preference_autocomplete_title_remove">પોતાના URLs દૂર કરો</string>
@@ -53,8 +56,10 @@
   <string name="preference_category_mozilla">Mozilla</string>
   <string name="preference_mozilla_telemetry2">ઉપયોગ ડેટા મોકલો</string>
   <string name="preference_mozilla_telemetry_summary">વધુ શીખો</string>
+  <string name="preference_privacy_notice">ખાનગી સૂચના</string>
   <string name="preference_about">%1$s વિશે</string>
   <string name="preference_search_installed_search_engines">ઇન્સ્ટોલ કરેલા સર્ચ એન્જિનો</string>
+  <string name="preference_search_restore">મૂળભૂત શોધ એંજીન તરીકે પુનઃસંગ્રહો</string>
   <string name="preference_search_add2">+ અન્ય શોધ એન્જિન ઉમેરો</string>
   <string name="preference_search_remove_title">શોધ એંજીન્સ દૂર કરો</string>
   <string name="preference_search_remove">દૂર કરો</string>
@@ -78,10 +83,46 @@
   <string name="content_description_blocking_switch">ટ્રેકર્સને અવરોધિત કરો</string>
   <string name="your_rights">તમારા અધિકારો</string>
   <string name="external_app_prompt_title">અન્ય એપ્લિકેશનમાં લિંક ખોલો</string>
+  <string name="external_app_prompt_no_app_title">એક એપ્લિકેશન શોધો જે લિંક ખોલી શકે છે</string>
+  <string name="external_multiple_apps_matched_exit">ખાનગી બ્રાઉઝિંગ બહાર નીકળીએ?</string>
   <string name="download_snackbar_open">ખોલો</string>
   <string name="download_dialog_title">ફાઈલ ડાઉનલોડ</string>
   <string name="download_dialog_action_cancel">રદ કરો</string>
   <string name="download_dialog_action_download">ડાઉનલોડ</string>
   <string name="errorpage_title">પૃષ્ઠ લોડ કરવામાં સમસ્યા</string>
   <string name="errorpage_refresh">ફરી પ્રયત્ન કરો</string>
+  <string name="error_connectionfailure_title">જોડાવામાં અસમર્થ</string>
+  <string name="error_timeout_title">જોડાણ સમયસમાપ્તિ</string>
+  <string name="error_hostLookup_title">સર્વર મળ્યું નહિં</string>
+  <string name="error_malformedURI_title">સરનામું માન્ય નથી</string>
+  <string name="error_redirectLoop_title">પૃષ્ઠ યોગ્ય રીતે પુનઃનિર્દેશિત નથી</string>
+  <string name="error_redirectLoop_message"><![CDATA[<ul xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">"\n   "<li>&#2693;&#2734;&#2753;&#2709; &#2741;&#2750;&#2736; &#2709;&#2753;&#2709;&#2752;&#2707; &#2744;&#2765;&#2741;&#2752;&#2709;&#2750;&#2736;&#2741;&#2750;&#2728;&#2753;&#2690; &#2728;&#2751;&#2743;&#2765;&#2709;&#2765;&#2736;&#2751;&#2735; &#2709;&#2736;&#2741;&#2750;&#2725;&#2752; &#2709;&#2759; &#2736;&#2726; &#2709;&#2736;&#2741;&#2750;&#2725;&#2752; &#2694; &#2744;&#2734;&#2744;&#2765;&#2735;&#2750; &#2744;&#2736;&#2765;&#2716;&#2750;&#2735; &#2715;&#2759;.</li>\n</ul>]]></string>
+  <string name="error_unsupportedprotocol_title">સરનામું સમજાયું ન હતું</string>
+  <string name="error_unsupportedprotocol_message"><![CDATA[<ul xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">"\n   "<li>&#2724;&#2734;&#2750;&#2736;&#2759; &#2694; &#2744;&#2736;&#2728;&#2750;&#2734;&#2750;&#2690;&#2728;&#2759; &#2710;&#2763;&#2738;&#2741;&#2750; &#2734;&#2750;&#2719;&#2759; &#2732;&#2752;&#2716;&#2750; &#2744;&#2763;&#2731;&#2765;&#2719;&#2741;&#2759;&#2736;&#2728;&#2759; &#2744;&#2765;&#2725;&#2750;&#2730;&#2751;&#2724; &#2709;&#2736;&#2741;&#2750;&#2728;&#2752; &#2716;&#2736;&#2754;&#2736; &#2730;&#2721;&#2752; &#2742;&#2709;&#2759; &#2715;&#2759;.</li>\n</ul>]]></string>
+  <string name="error_sslhandshake_title">સુરક્ષિત જોડાણ નિષ્ફળ</string>
+  <string name="error_generic_title">ઊફ્ફ</string>
+  <string name="contextmenu_link_share">લિંક વહેંચો</string>
+  <string name="contextmenu_link_copy">લિંક સરનામાની નકલ કરો</string>
+  <string name="contextmenu_image_share">છબી વહેંચો</string>
+  <string name="contextmenu_image_copy">છબી સરનામાંની નકલ કરો</string>
+  <string name="contextmenu_image_save">છબી સાચવો</string>
+  <string name="contextmenu_open_in_new_tab">નવી ટેબમાં લિંક ખોલો</string>
+  <string name="firstrun_defaultbrowser_title">તમારી ગોપનીયતા વધારો</string>
+  <string name="firstrun_search_title">તમારી શોધ, તમારી રીત</string>
+  <string name="firstrun_privacy_title">ગોપનીયતા એક આદત બનાવો</string>
+  <string name="firstrun_close_button">OK, સમજાઇ ગયું!</string>
+  <string name="firstrun_skip_button">છોડો</string>
+  <string name="firstrun_next_button">આગળ</string>
+  <string name="content_blocking_disabled">-</string>
+  <string name="dialog_addtohomescreen_action_add">ઉમેરો</string>
+  <string name="dialog_addtohomescreen_action_cancel">રદ કરો</string>
+  <string name="notification_browsing_session_channel_name">ખાનગી બ્રાઉઝિંગ સત્ર</string>
+  <string name="tabs_tray_action_erase">બ્રાઉઝિંગ ઇતિહાસને કાઢી નાખો</string>
+  <string name="download_firefox">Firefox ડાઉનલોડ કરો</string>
+  <string name="gv_prompt_username_hint">વપરાશકર્તા નામ</string>
+  <string name="gv_prompt_password_hint">પાસવર્ડ</string>
+  <string name="gv_prompt_clear">સાફ કરો</string>
+  <string name="security_popup_secure_connection">સુરક્ષિત જોડાણ</string>
+  <string name="security_popup_insecure_connection">અસુરક્ષિત જોડાણ</string>
+  <string name="site_security_icon_content_description">સાઇટ સુરક્ષા</string>
 </resources>

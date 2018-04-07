@@ -20,14 +20,14 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mozilla.focus.helpers.TestHelper;
 
+import static android.support.test.espresso.action.ViewActions.click;
 import static junit.framework.Assert.assertTrue;
 import static org.mozilla.focus.fragment.FirstrunFragment.FIRSTRUN_PREF;
-import static org.mozilla.focus.helpers.EspressoHelper.openSettings;
 import static org.mozilla.focus.helpers.TestHelper.waitingTime;
 
-// This test checks all the headings in the Settings menu are there
+// This test opens share menu
 @RunWith(AndroidJUnit4.class)
-public class SettingsAppearanceTest {
+public class ShareDialogTest {
 
     @Rule
     public ActivityTestRule<MainActivity> mActivityTestRule
@@ -54,37 +54,29 @@ public class SettingsAppearanceTest {
     }
 
     @Test
-    public void settingsScreenTest() throws InterruptedException, UiObjectNotFoundException {
+    public void shareTest() throws InterruptedException, UiObjectNotFoundException {
 
-        UiObject SearchEngineSelection = TestHelper.settingsList.getChild(new UiSelector()
-                .className("android.widget.LinearLayout")
-                .instance(0));
-        UiObject searchHeading = TestHelper.mDevice.findObject(new UiSelector()
-                .text("Search")
-                .resourceId("android:id/title"));
-        UiObject privacyHeading = TestHelper.mDevice.findObject(new UiSelector()
-                .text("Privacy")
-                .resourceId("android:id/title"));
-        UiObject perfHeading = TestHelper.mDevice.findObject(new UiSelector()
-                .text("Performance")
-                .resourceId("android:id/title"));
-        UiObject mozHeading = TestHelper.mDevice.findObject(new UiSelector()
-                .text("Mozilla")
-                .resourceId("android:id/title"));
+        UiObject shareBtn = TestHelper.mDevice.findObject(new UiSelector()
+                .resourceId(TestHelper.getAppName() + ":id/share")
+                .enabled(true));
 
-        /* Go to Settings */
+        /* Go to a webpage */
         TestHelper.inlineAutocompleteEditText.waitForExists(waitingTime);
+        TestHelper.inlineAutocompleteEditText.clearTextField();
+        TestHelper.inlineAutocompleteEditText.setText("mozilla");
+        TestHelper.hint.waitForExists(waitingTime);
+        TestHelper.pressEnterKey();
+        assertTrue(TestHelper.webView.waitForExists(waitingTime));
 
-        openSettings();
-        SearchEngineSelection.waitForExists(waitingTime);
+        /* Select share */
+        TestHelper.menuButton.perform(click());
+        shareBtn.waitForExists(waitingTime);
+        shareBtn.click();
 
-        /* Check the first element and other headings are present */
-        assertTrue(SearchEngineSelection.isEnabled());
-        assertTrue(searchHeading.exists());
-        assertTrue(privacyHeading.exists());
-        TestHelper.swipeUpScreen();
-        assertTrue(perfHeading.exists());
-        mozHeading.waitForExists(waitingTime);
-        assertTrue(mozHeading.exists());
+        // For simulators, where apps are not installed, it'll take to message app
+        TestHelper.shareMenuHeader.waitForExists(waitingTime);
+        assertTrue(TestHelper.shareMenuHeader.exists());
+        assertTrue(TestHelper.shareAppList.exists());
+        TestHelper.pressBackKey();
     }
 }
