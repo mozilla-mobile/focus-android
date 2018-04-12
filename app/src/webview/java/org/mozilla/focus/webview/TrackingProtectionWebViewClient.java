@@ -4,19 +4,12 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 package org.mozilla.focus.webview;
 
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.support.annotation.WorkerThread;
-import android.view.LayoutInflater;
-import android.view.View;
 import android.webkit.*;
-import android.widget.EditText;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 import org.mozilla.focus.R;
 import org.mozilla.focus.web.IWebView;
 import org.mozilla.focus.webview.matcher.UrlMatcher;
@@ -146,21 +139,6 @@ public class TrackingProtectionWebViewClient extends WebViewClient {
 
     @Override
     public void onReceivedHttpAuthRequest(WebView view, final HttpAuthHandler handler, String host, String realm) {
-
-
-//        handler.proceed("user", "passwd");
-
-//        AlertDialog.Builder builder = new AlertDialog.Builder(context.getApplicationContext());
-//        LayoutInflater li = LayoutInflater.from(context.getApplicationContext());
-//        View dialogView = li.inflate(R.layout.dialog_http_auth, null, false);
-//
-//        final EditText httpAuthUsername = dialogView.findViewById(R.id.httpAuthUsername);
-//        final EditText httpAuthPassword = dialogView.findViewById(R.id.httpAuthPassword);
-//
-//        builder.setView(dialogView);
-//
-//        final AlertDialog dialog = builder.create();
-//        dialog.show();
 
         httpAuthenticationDialog = new HttpAuthenticationDialog(context, host, realm);
         httpAuthenticationDialog.setOkListener(new HttpAuthenticationDialog.OkListener() {

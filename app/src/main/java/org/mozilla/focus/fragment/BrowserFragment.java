@@ -752,11 +752,6 @@ public class BrowserFragment extends WebFragment implements View.OnClickListener
                 .setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
                 .setMimeType(download.getMimeType());
 
-        String httpAuthUsername = "user";
-        String httpAuthPassword = "passwd";
-        String auth = httpAuthUsername + ":" + httpAuthPassword;
-        auth = Base64.encodeToString(auth.getBytes(StandardCharsets.UTF_8), Base64.DEFAULT);
-        request.addRequestHeader("Authorization", "Basic " + auth);
 
         try {
             request.setDestinationInExternalPublicDir(
