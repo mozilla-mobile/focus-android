@@ -26,8 +26,7 @@
   <string name="preference_search_engine_default">ຄ່າພື້ນຖານ</string>
   <string name="preference_language">ພາສາ</string>
   <string name="preference_language_systemdefault">ຄ່າພື້ນຖານຂອງລະບົບ</string>
-  <string name="preference_dialog_title_search_engine">ການຊອກຫາພື້ນຖານ</string>
-  <string name="preference_category_privacy">ຄວາມເປັນສ່ວນຕົວ</string>
+    <string name="preference_category_privacy">ຄວາມເປັນສ່ວນຕົວ</string>
   <string name="preference_privacy_block_ads">ບັອກຕົວຕິດຕາມຂອງການໂຄສະນາ</string>
   <string name="preference_privacy_block_ads_summary">ມີໂຄສະນາບາງໂຕສາມາດຕິດຕາມການເຂົ້າໄປເວັບຕ່າງໆ ເຖິງແມ່ນວ່າທ່ານຈະບໍ່ໄດ້ຄິກໃສ່ໂຄສະນານັ້ນເລີຍ</string>
   <string name="preference_privacy_block_analytics">ບັອກຕົວຕິດຕາມຂອງການວິເຄາະ</string>
@@ -41,8 +40,7 @@
   <string name="preference_category_performance">ປະສິດທິພາບ</string>
   <string name="preference_performance_block_webfonts">ບັອກຕົວອັກສອນເວັບ</string>
   <string name="preference_performance_block_webfonts_summary">ອາດຈະສົ່ງຜົນເຮັດໃຫ້ໄອຄອນ ຫລື ຮູບພາບຂາດຫາຍໄປ</string>
-  <string name="preference_performance_block_images">ບັອກຮູບພາບ</string>
-  <string name="preference_default_browser2">ຕັ້ງ %1$s ໃຫ້ເປັນບຣາວເຊີຫລັກ</string>
+    <string name="preference_default_browser2">ຕັ້ງ %1$s ໃຫ້ເປັນບຣາວເຊີຫລັກ</string>
   <string name="preference_category_mozilla">Mozilla</string>
   <string name="preference_mozilla_telemetry2">ສົ່ງຂໍ້ມູນການນຳໃຊ້</string>
   <string name="preference_mozilla_telemetry_summary">ຮຽນຮູ້ເພີ່ມເຕີມ</string>
@@ -54,26 +52,17 @@
   <string name="preference_search_add2">+ ເພີ່ມລະບົບການຊອກຫາຕົວອື່ນ</string>
   <string name="preference_search_remove_title">ລຶບເຄື່ອງມືການຄົ້ນຫາ</string>
   <string name="preference_search_remove">ລຶບ</string>
-  <string name="tutorial_search_manually_add">ເພີ່ມເອງ</string>
-  <string name="tutorial_search_title">ເພີ່ມເຄື່ອງມືການຄົ້ນຫາ</string>
-  <string name="action_option_add_search_engine">ເພີ່ມເຄື່ອງມືການຄົ້ນຫາ</string>
-  <string name="tutorial_search_step3_alternative">3. ແຕະ %1$s</string>
-  <string name="tutorial_search_finish">ເລີ່ມຕົ້ນໃຊ້ງານ</string>
-  <string name="search_add_manually_name">ຊື່ທີຈະສະແດງ</string>
-  <string name="search_add_manually_name_hint">ຊື່ເຄື່ອງມືການຄົ້ນຫາ</string>
+    <string name="action_option_add_search_engine">ເພີ່ມເຄື່ອງມືການຄົ້ນຫາ</string>
+    <string name="search_add_manually_name_hint">ຊື່ເຄື່ອງມືການຄົ້ນຫາ</string>
   <string name="search_add_manually_string">ຊອກຫາສະຕຣິງທີ່ຈະໃຊ້</string>
   <string name="search_add_manually_save">ບັນທຶກ</string>
   <string name="search_add_manually_example">ຕົວຢ່າງ: example.com/search/?q=%s</string>
-  <string name="accessibility_announcement_search">ເພີ່ມເຄື່ອງມືການຄົ້ນຫາ</string>
-  <string name="search_add_confirmation">ໄດ້ເພີ້ມເຄືອງມີການຄົ້ນຫາຕົວໃຫມ່ແລ້ວ</string>
+    <string name="search_add_confirmation">ໄດ້ເພີ້ມເຄືອງມີການຄົ້ນຫາຕົວໃຫມ່ແລ້ວ</string>
   <string name="content_description_clear_input">ລົບລ້າງຂໍ້ມູນທີ່ປ້ອນເຂົ້າ</string>
   <string name="content_description_dismiss_input">ຍົກເລີກ</string>
   <string name="content_description_erase">ລຶບປະຫວັດການທ່ອງເວັບ</string>
-  <string name="content_description_fab_expand">ຂະຫຍາຍ</string>
-  <string name="content_description_tab_counter">ແທັບທີ່ເປີດ: %1$s</string>
-  <string name="content_description_open_tab">ເປີດແທັບ</string>
-  <string name="content_description_close_tab">ປິດແທັບ</string>
-  <string name="content_description_lock">ການເຊື່ອມຕໍ່ທີ່ປອດໄພ</string>
+    <string name="content_description_tab_counter">ແທັບທີ່ເປີດ: %1$s</string>
+    <string name="content_description_lock">ການເຊື່ອມຕໍ່ທີ່ປອດໄພ</string>
   <string name="accessibility_announcement_loading">ກຳລັງໂຫລດ</string>
   <string name="accessibility_announcement_loading_finished">ໂຫລດເວັບໄຊທ໌ນີ້ແລ້ວ</string>
   <string name="content_description_menu">ຕົວເລືອກເພີ່ມເຕີມ</string>
@@ -83,8 +72,7 @@
   <string name="content_description_stop">ຢຸດການໂຫລດເວັບໄຊທ໌</string>
   <string name="content_description_customtab_exit">ກັບໄປຫາແອັບກ່ອນຫນ້ານີ້</string>
   <string name="content_description_blocking_switch">ບັອກຕົວຕິດຕາມ</string>
-  <string name="context_menu_paste_go">ວາງ &amp; ໄປ</string>
-  <string name="your_rights">ສິດທິຂອງທ່ານ</string>
+    <string name="your_rights">ສິດທິຂອງທ່ານ</string>
   <string name="external_app_prompt_title">ເປີດລີ້ງນີ້ໃນແອັບອື່ນ</string>
   <string name="external_app_prompt">ທ່ານສາມາດອອກຈາກ %1$s ເພື່ອເປີດລີ້ງນີ້ໃນ %2$s.</string>
   <string name="external_app_prompt_no_app_title">ຊອກຫາແອັບທີ່ສາມາດເປີດລີ້ງນີ້</string>
@@ -127,11 +115,8 @@
   <string name="firstrun_skip_button">ຂ້າມໄປ</string>
   <string name="firstrun_next_button">ຕໍ່ໄປ</string>
   <string name="content_blocking_disabled">-</string>
-  <string name="dialog_addtohomescreen_title">ເພີ່ມເຂົ້າໄປຫນ້າຈໍຫລັກ</string>
-  <string name="dialog_addtohomescreen_action_add">ເພີ່ມ</string>
+    <string name="dialog_addtohomescreen_action_add">ເພີ່ມ</string>
   <string name="dialog_addtohomescreen_action_cancel">ຍົກເລີກ</string>
-  <string name="dialog_opentab_title">ເປີດລີ້ງໃນແທັບທີ່ໄດ້ເລືອກເອົາໄວ້</string>
-  <string name="dialog_opentab_action_open">ເປີດ</string>
-  <string name="tabs_tray_action_erase">ລຶບປະຫວັດການທ່ອງເວັບ</string>
+    <string name="tabs_tray_action_erase">ລຶບປະຫວັດການທ່ອງເວັບ</string>
   <string name="download_firefox">ດາວໂຫລດ Firefox</string>
 </resources>
