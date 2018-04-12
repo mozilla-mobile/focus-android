@@ -29,23 +29,14 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.text.TextUtils;
-import android.util.Base64;
 import android.util.Log;
-import android.view.Gravity;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.view.Window;
-import android.view.WindowManager;
+import android.view.*;
 import android.webkit.CookieManager;
 import android.webkit.URLUtil;
-import android.widget.FrameLayout;
-import android.widget.ImageButton;
-import android.widget.ImageView;
-import android.widget.PopupWindow;
-import android.widget.TextView;
-import android.widget.Toast;
-
+import android.widget.*;
+import mozilla.components.utils.ColorUtils;
+import mozilla.components.utils.DownloadUtils;
+import mozilla.components.utils.DrawableUtils;
 import org.mozilla.focus.R;
 import org.mozilla.focus.activity.InstallFirefoxActivity;
 import org.mozilla.focus.activity.MainActivity;
@@ -59,18 +50,10 @@ import org.mozilla.focus.menu.context.WebContextMenu;
 import org.mozilla.focus.observer.AverageLoadTimeObserver;
 import org.mozilla.focus.open.OpenWithFragment;
 import org.mozilla.focus.popup.PopupUtils;
-import org.mozilla.focus.session.NullSession;
-import org.mozilla.focus.session.Session;
-import org.mozilla.focus.session.SessionCallbackProxy;
-import org.mozilla.focus.session.SessionManager;
-import org.mozilla.focus.session.Source;
+import org.mozilla.focus.session.*;
 import org.mozilla.focus.session.ui.SessionsSheetFragment;
 import org.mozilla.focus.telemetry.TelemetryWrapper;
-import org.mozilla.focus.utils.Browsers;
-import org.mozilla.focus.utils.Features;
-import org.mozilla.focus.utils.StatusBarUtils;
-import org.mozilla.focus.utils.SupportUtils;
-import org.mozilla.focus.utils.UrlUtils;
+import org.mozilla.focus.utils.*;
 import org.mozilla.focus.web.Download;
 import org.mozilla.focus.web.IWebView;
 import org.mozilla.focus.widget.AnimatedProgressBar;
@@ -78,12 +61,7 @@ import org.mozilla.focus.widget.FloatingEraseButton;
 import org.mozilla.focus.widget.FloatingSessionsButton;
 
 import java.lang.ref.WeakReference;
-import java.nio.charset.StandardCharsets;
 import java.util.List;
-
-import mozilla.components.utils.ColorUtils;
-import mozilla.components.utils.DownloadUtils;
-import mozilla.components.utils.DrawableUtils;
 
 /**
  * Fragment for displaying the browser UI.

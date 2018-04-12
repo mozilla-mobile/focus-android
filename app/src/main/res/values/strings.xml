@@ -583,5 +583,4 @@ be temporary, and you can try again later.</li>
     <string name="username">Username</string>
     <string name="password">Password</string>
     <string name="auth_required">Authentication required</string>
-    <string name="sign_in_to">Sign in to:</string>
 </resources>
