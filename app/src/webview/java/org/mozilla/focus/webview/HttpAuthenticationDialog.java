@@ -85,12 +85,16 @@ public class HttpAuthenticationDialog {
                 })
                 .setNegativeButton(R.string.action_cancel, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int whichButton) {
-                        if (mCancelListener != null) mCancelListener.onCancel();
+                        if (mCancelListener != null) {
+                            mCancelListener.onCancel();
+                        }
                     }
                 })
                 .setOnCancelListener(new DialogInterface.OnCancelListener() {
                     public void onCancel(DialogInterface dialog) {
-                        if (mCancelListener != null) mCancelListener.onCancel();
+                        if (mCancelListener != null) {
+                            mCancelListener.onCancel();
+                        }
                     }
                 })
                 .create();
