@@ -35,6 +35,7 @@
   <string name="preference_category_autocomplete_preinstalled">Standard nettadresseliste</string>
   <string name="preference_autocomplete_preinstalled_summary">Aktiver at %1$s autofullfører over 450 populære nettadresser i adressefeltet.</string>
   <string name="preference_category_autocomplete_custom">Tilpasset nettadresse</string>
+  <string name="preference_category_autocomplete_custom_urls">Egendefinerte nettadresser</string>
   <string name="preference_autocomplete_subitem_customlist">Tilpassede nettadresser</string>
   <string name="preference_autocomplete_action_add">+ Legg til egendefinert nettadresse</string>
   <string name="preference_autocomplete_title_add">Legg til egendefinert nettadresse</string>
@@ -67,6 +68,8 @@
   <string name="preference_performance_block_webfonts">Blokker nettfonter</string>
   <string name="preference_performance_block_webfonts_summary">Kan resultere i at ikon eller bilder mangler</string>
   <string name="preference_performance_block_images">Blokker bilder</string>
+  <string name="preference_performance_block_javascript">Blokker JavaScript</string>
+  <string name="preference_performance_block_javascript_summary">Sider kan lastes raskere, men kan også oppføre seg uventet</string>
   <string name="preference_default_browser2">Bruk %1$s som standard nettleser</string>
   <string name="preference_category_mozilla">Mozilla</string>
   <string name="preference_mozilla_telemetry2">Send bruksdata</string>

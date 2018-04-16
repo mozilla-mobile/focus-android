@@ -35,6 +35,7 @@
   <string name="preference_category_autocomplete_preinstalled">Стандарт URL исемлеге</string>
   <string name="preference_autocomplete_preinstalled_summary">450\'дән артык мәшһүр сайт адреслары өчен %1$s\'та автотөгәлләүне кабызу.</string>
   <string name="preference_category_autocomplete_custom">Үзгә URL</string>
+  <string name="preference_category_autocomplete_custom_urls">Үзгә URL\'лар</string>
   <string name="preference_autocomplete_subitem_customlist">Үзгә URL\'лар</string>
   <string name="preference_autocomplete_action_add">+ Үзгә URL өстәү</string>
   <string name="preference_autocomplete_title_add">Үзгә URL өстәү</string>
@@ -67,6 +68,8 @@
   <string name="preference_performance_block_webfonts">Веб-шрифтларны блоклау</string>
   <string name="preference_performance_block_webfonts_summary">Билге һәм рәсемнәрнең күренмәвенә сәбәп була ала</string>
   <string name="preference_performance_block_images">Рәсемнәрне блоклау</string>
+  <string name="preference_performance_block_javascript">JavaScript\'ны блоклау</string>
+  <string name="preference_performance_block_javascript_summary">Сәхифәләр тизрәк йөкләнеләчәк, әмма аларның тәртибе көтелмәгәнчә булырга да мөмкин</string>
   <string name="preference_default_browser2">%1$s\'ны төп гизгеч итү</string>
   <string name="preference_category_mozilla">Mozilla</string>
   <string name="preference_mozilla_telemetry2">Куллану мәгълүматларын җибәрү</string>

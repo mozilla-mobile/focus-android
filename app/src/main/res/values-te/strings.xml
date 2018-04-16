@@ -129,4 +129,10 @@
   <string name="dialog_opentab_action_open">తెరువు</string>
   <string name="tabs_tray_action_erase">విహరణ చరిత్రను తుడిచివేయి</string>
   <string name="download_firefox">Firefoxను దింపుకోండి</string>
+  <string name="gv_prompt_username_hint">వాడుకరి పేరు</string>
+  <string name="gv_prompt_password_hint">సంకేతపదం</string>
+  <string name="gv_prompt_clear">తుడిచివేయి</string>
+  <string name="security_popup_secure_connection">సురక్షిత అనుసంధానం</string>
+  <string name="security_popup_insecure_connection">అరక్షిత అనుసంధానం</string>
+  <string name="site_security_icon_content_description">సైటు భద్రత</string>
 </resources>

@@ -34,6 +34,7 @@
   <string name="preference_switch_autocomplete">অটোকমপ্লিট</string>
   <string name="preference_category_autocomplete_preinstalled">ডিফল্ট URL লিস্ট</string>
   <string name="preference_category_autocomplete_custom">কাস্টোম URL</string>
+  <string name="preference_category_autocomplete_custom_urls">কাস্টোম URLs</string>
   <string name="preference_autocomplete_subitem_customlist">কাস্টোম URLs</string>
   <string name="preference_autocomplete_action_add">+ কাস্টোম URL যোগ করুন</string>
   <string name="preference_autocomplete_title_add">কাস্টোম URL যোগ করুন</string>
@@ -66,6 +67,7 @@
   <string name="preference_performance_block_webfonts">ওয়েব ফন্ট ব্লক করুন</string>
   <string name="preference_performance_block_webfonts_summary">ছবি অথবা আইকন দৃশ্যমান নাও হতে পারে</string>
   <string name="preference_performance_block_images">ইমেজ ব্লক করুন</string>
+  <string name="preference_performance_block_javascript">JavaScript ব্লক কর</string>
   <string name="preference_default_browser2">%1$s কে ডিফল্ট ব্রাউজার করুন</string>
   <string name="preference_category_mozilla">Mozilla</string>
   <string name="preference_mozilla_telemetry2">ব্যবহারের তথ্য পাঠাও</string>

@@ -21,7 +21,7 @@
   <string name="share_dialog_title">Tikomonïx b\'ey</string>
   <string name="notification_erase_text">Tiyuj runatab\'al okem pa k\'amaya\'l</string>
   <string name="notification_action_open">Tijaq</string>
-  <string name="notification_action_erase_and_open">Tiyu chuqa\' Tijaq</string>
+  <string name="notification_action_erase_and_open">Tiyuj chuqa\' Tijaq</string>
   <string name="shortcut_erase_short_label">Tiyuj</string>
   <string name="shortcut_erase_long_label">Tiyuj runatab\'al okem pa k\'amaya\'l</string>
   <string name="text_selection_search_action">Tikanöx chi ichinem</string>
@@ -35,6 +35,7 @@
   <string name="preference_category_autocomplete_preinstalled">K\'o wi URL Cholb\'äl</string>
   <string name="preference_autocomplete_preinstalled_summary">Titzij richin nik\'ul %1$s ruyonil nunojisaj naqaj chi re 450 ajowan taq URLs pa kikajtz\'ik ochochib\'äl.</string>
   <string name="preference_category_autocomplete_custom">Ichinan URL</string>
+  <string name="preference_category_autocomplete_custom_urls">Ichinan URLs</string>
   <string name="preference_autocomplete_subitem_customlist">Ichinan URLs</string>
   <string name="preference_autocomplete_action_add">+ Titz\'aqatisäx ichinan URL</string>
   <string name="preference_autocomplete_title_add">Titz\'aqatisäx ichinan URL</string>
@@ -67,6 +68,8 @@
   <string name="preference_performance_block_webfonts">Tiq\'at ruxe\'el Ajk\'amaya\'l</string>
   <string name="preference_performance_block_webfonts_summary">Tikirel nib\'anatäj pa kiwachaj chuqa\' taq wachib\'äl</string>
   <string name="preference_performance_block_images">Keq\'at taq wachib\'äl</string>
+  <string name="preference_performance_block_javascript">Tiq\'at JavaScript</string>
+  <string name="preference_performance_block_javascript_summary">Ri taq ruxaq yetikïr yesamäj aninäq, po chuqa\' yetikïr yesamäj rik\'in man etaman ta rub\'anikil</string>
   <string name="preference_default_browser2">Ticha\' %1$s richin okik\'amaya\'l k\'o wi</string>
   <string name="preference_category_mozilla">Mozilla</string>
   <string name="preference_mozilla_telemetry2">Ketaq taq tzij richin ye\'okisäx</string>

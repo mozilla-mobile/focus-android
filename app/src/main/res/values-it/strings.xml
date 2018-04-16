@@ -35,6 +35,7 @@
   <string name="preference_category_autocomplete_preinstalled">Elenco indirizzi predefinito</string>
   <string name="preference_autocomplete_preinstalled_summary">Attiva per completare automaticamente oltre 450 domini nella barra degli indirizzi di %1$s.</string>
   <string name="preference_category_autocomplete_custom">Indirizzi personalizzati</string>
+  <string name="preference_category_autocomplete_custom_urls">Indirizzi URL personalizzati</string>
   <string name="preference_autocomplete_subitem_customlist">Indirizzi personalizzati</string>
   <string name="preference_autocomplete_action_add">+ Aggiungi indirizzo personalizzato</string>
   <string name="preference_autocomplete_title_add">Nuovo indirizzo pers.</string>
@@ -67,6 +68,8 @@
   <string name="preference_performance_block_webfonts">Blocca web font</string>
   <string name="preference_performance_block_webfonts_summary">Alcune immagini e icone potrebbero non essere visualizzate</string>
   <string name="preference_performance_block_images">Blocca immagini</string>
+  <string name="preference_performance_block_javascript">Blocca JavaScript</string>
+  <string name="preference_performance_block_javascript_summary">Il caricamento delle pagine può velocizzarsi, ma potrebbero anche verificarsi errori imprevisti</string>
   <string name="preference_default_browser2">Imposta %1$s come browser predefinito</string>
   <string name="preference_category_mozilla">Mozilla</string>
   <string name="preference_mozilla_telemetry2">Invia dati sull’uso</string>
