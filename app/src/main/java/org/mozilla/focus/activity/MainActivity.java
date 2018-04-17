@@ -209,7 +209,7 @@ public class MainActivity extends LocaleAwareAppCompatActivity {
         }
 
         transaction
-                .replace(R.id.container, UrlInputFragment.createWithoutSession(), UrlInputFragment.FRAGMENT_TAG)
+                .replace(R.id.container, UrlInputFragment.createWithoutSession(shouldAnimate), UrlInputFragment.FRAGMENT_TAG)
                 .commit();
     }
 

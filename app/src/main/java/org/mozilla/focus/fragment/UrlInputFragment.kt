@@ -15,6 +15,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.ViewTreeObserver
+import android.view.animation.AccelerateDecelerateInterpolator
 import android.widget.FrameLayout
 import kotlinx.android.synthetic.main.fragment_urlinput.*
 import mozilla.components.domains.DomainAutoCompleteProvider
@@ -55,8 +56,8 @@ class UrlInputFragment :
         private val ARGUMENT_Y = "y"
         private val ARGUMENT_WIDTH = "width"
         private val ARGUMENT_HEIGHT = "height"
-
         private val ARGUMENT_SESSION_UUID = "sesssion_uuid"
+        private val ARGUMENT_SHOULD_ANIMATE = "should_animate"
 
         private val ANIMATION_BROWSER_SCREEN = "browser_screen"
 
@@ -64,9 +65,13 @@ class UrlInputFragment :
 
         private val ANIMATION_DURATION = 200
 
+        private val WORD_MARK_ANIMATION_DURATION = 1000
+        private var shouldAnimateWordMark = false
+
         @JvmStatic
-        fun createWithoutSession(): UrlInputFragment {
+        fun createWithoutSession(shouldAnimate: Boolean): UrlInputFragment {
             val arguments = Bundle()
+            arguments.putBoolean(ARGUMENT_SHOULD_ANIMATE, shouldAnimate)
 
             val fragment = UrlInputFragment()
             fragment.arguments = arguments
@@ -165,6 +170,7 @@ class UrlInputFragment :
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         listOf(dismissView, clearView, searchView).forEach { it.setOnClickListener(this) }
+        shouldAnimateWordMark = arguments!!.getBoolean(ARGUMENT_SHOULD_ANIMATE)
 
         urlView.setOnFilterListener(::onFilter)
         urlView.imeOptions = urlView.imeOptions or ViewUtils.IME_FLAG_NO_PERSONALIZED_LEARNING
@@ -306,9 +312,7 @@ class UrlInputFragment :
     }
 
     private fun animateFirstDraw() {
-        if (ANIMATION_BROWSER_SCREEN == arguments?.getString(ARGUMENT_ANIMATION)) {
-            playVisibilityAnimation(false)
-        }
+        playVisibilityAnimation(ANIMATION_BROWSER_SCREEN != arguments?.getString(ARGUMENT_ANIMATION))
     }
 
     private fun animateAndDismiss() {
@@ -450,6 +454,17 @@ class UrlInputFragment :
                         }
                     }
                 })
+
+        if (!isOverlay && shouldAnimateWordMark) {
+            keyboardLinearLayout.alpha = 0f
+            keyboardLinearLayout.animate()
+                    .setInterpolator(AccelerateDecelerateInterpolator())
+                    .alpha(0f)
+                    .alphaBy(1f)
+                    .setDuration(WORD_MARK_ANIMATION_DURATION.toLong())
+                    .start()
+            shouldAnimateWordMark = false
+        }
     }
 
     private fun dismiss() {
