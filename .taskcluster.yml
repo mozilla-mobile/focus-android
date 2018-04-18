@@ -43,6 +43,8 @@ tasks:
           type: 'directory'
           path: '/opt/focus-android/app/build/reports'
           expires: "{{ '1 week' | $fromNow }}"
+      features:
+        chainOfTrust: true
     metadata:
       name: Focus for Android - Build - Pull Request
       description: Building Focus for Android (via Gradle) - triggered by a pull request.
