@@ -171,7 +171,7 @@ class UrlInputFragment :
 
         urlInputContainerView.viewTreeObserver.addOnPreDrawListener(object : ViewTreeObserver.OnPreDrawListener {
             override fun onPreDraw(): Boolean {
-                urlInputContainerView.viewTreeObserver.removeOnPreDrawListener(this)
+                urlInputContainerView?.viewTreeObserver?.removeOnPreDrawListener(this)
 
                 animateFirstDraw()
 
@@ -180,23 +180,24 @@ class UrlInputFragment :
         })
 
         if (isOverlay) {
-            keyboardLinearLayout.visibility = View.GONE
+            keyboardLinearLayout?.visibility = View.GONE
         } else {
-            backgroundView.setBackgroundResource(R.drawable.background_gradient)
+            backgroundView?.setBackgroundResource(R.drawable.background_gradient)
 
-            dismissView.visibility = View.GONE
-            toolbarBackgroundView.visibility = View.GONE
+            dismissView?.visibility = View.GONE
+            toolbarBackgroundView?.visibility = View.GONE
 
-            menuView.visibility = View.VISIBLE
-            menuView.setOnClickListener(this)
+            menuView?.visibility = View.VISIBLE
+            menuView?.setOnClickListener(this)
         }
 
-        urlView.setOnCommitListener(::onCommit)
+        urlView?.setOnCommitListener(::onCommit)
 
         session?.let {
-            urlView.setText(if (it.isSearch && Features.SEARCH_TERMS_OR_URL) it.searchTerms else it.url.value)
-            clearView.visibility = View.VISIBLE
-            searchViewContainer.visibility = View.GONE
+            urlView?.setText(if (it.isSearch && Features.SEARCH_TERMS_OR_URL) it.searchTerms else
+                it.url.value)
+            clearView?.visibility = View.VISIBLE
+            searchViewContainer?.visibility = View.GONE
         }
     }
 
@@ -244,7 +245,7 @@ class UrlInputFragment :
         super.onStop()
 
         // Reset the keyboard layout to avoid a jarring animation when the view is started again. (#1135)
-        keyboardLinearLayout.reset()
+        keyboardLinearLayout?.reset()
     }
 
     fun showKeyboard() {
@@ -292,8 +293,8 @@ class UrlInputFragment :
     }
 
     private fun clear() {
-        urlView.setText("")
-        urlView.requestFocus()
+        urlView?.setText("")
+        urlView?.requestFocus()
     }
 
     override fun onDetach() {
@@ -323,7 +324,7 @@ class UrlInputFragment :
         // but we don't want to restart animations and/or trigger hiding again (which could potentially
         // cause crashes since we don't know what state we're in). Ignoring further clicks is the simplest
         // solution, since dismissView is about to disappear anyway.
-        dismissView.isClickable = false
+        dismissView?.isClickable = false
 
         if (ANIMATION_BROWSER_SCREEN == arguments?.getString(ARGUMENT_ANIMATION)) {
             playVisibilityAnimation(true)
@@ -368,14 +369,14 @@ class UrlInputFragment :
             1f
 
         if (!reverse) {
-            urlInputBackgroundView.pivotX = 0f
-            urlInputBackgroundView.pivotY = 0f
-            urlInputBackgroundView.scaleX = widthScale
-            urlInputBackgroundView.scaleY = heightScale
-            urlInputBackgroundView.translationX = -xyOffset
-            urlInputBackgroundView.translationY = -xyOffset
+            urlInputBackgroundView?.pivotX = 0f
+            urlInputBackgroundView?.pivotY = 0f
+            urlInputBackgroundView?.scaleX = widthScale
+            urlInputBackgroundView?.scaleY = heightScale
+            urlInputBackgroundView?.translationX = -xyOffset
+            urlInputBackgroundView?.translationY = -xyOffset
 
-            clearView.alpha = 0f
+            clearView?.alpha = 0f
         }
 
         // Let the URL input use the full width/height and then shrink to the actual size
@@ -389,7 +390,7 @@ class UrlInputFragment :
                 .setListener(object : AnimatorListenerAdapter() {
                     override fun onAnimationStart(animation: Animator) {
                         if (reverse) {
-                            clearView.alpha = 0f
+                            clearView?.alpha = 0f
                         }
                     }
 
@@ -426,8 +427,8 @@ class UrlInputFragment :
         }
 
         if (!reverse) {
-            toolbarBackgroundView.alpha = 0f
-            clearView.alpha = 0f
+            toolbarBackgroundView?.alpha = 0f
+            clearView?.alpha = 0f
         }
 
         // The darker background appears with an alpha animation
@@ -465,7 +466,7 @@ class UrlInputFragment :
     }
 
     private fun onCommit() {
-        val input = urlView.text.toString()
+        val input = urlView?.text.toString()
 
         if (!input.trim { it <= ' ' }.isEmpty()) {
             ViewUtils.hideKeyboard(urlView)
@@ -489,7 +490,7 @@ class UrlInputFragment :
     }
 
     private fun onSearch() {
-        val searchTerms = urlView.originalText
+        val searchTerms = urlView?.originalText
         val searchUrl = UrlUtils.createSearchUrl(context, searchTerms)
 
         openUrl(searchUrl, searchTerms)
@@ -542,19 +543,19 @@ class UrlInputFragment :
         }
 
         if (searchText.trim { it <= ' ' }.isEmpty()) {
-            clearView.visibility = View.GONE
-            searchViewContainer.visibility = View.GONE
+            clearView?.visibility = View.GONE
+            searchViewContainer?.visibility = View.GONE
 
             if (!isOverlay) {
                 playVisibilityAnimation(true)
             }
         } else {
-            clearView.visibility = View.VISIBLE
-            menuView.visibility = View.GONE
+            clearView?.visibility = View.VISIBLE
+            menuView?.visibility = View.GONE
 
             if (!isOverlay && dismissView.visibility != View.VISIBLE) {
                 playVisibilityAnimation(false)
-                dismissView.visibility = View.VISIBLE
+                dismissView?.visibility = View.VISIBLE
             }
 
             // LTR languages sometimes have grammar where the search terms are displayed to the left
@@ -566,8 +567,8 @@ class UrlInputFragment :
             val content = SpannableString(hint.replace(PLACEHOLDER, searchText))
             content.setSpan(StyleSpan(Typeface.BOLD), start, start + searchText.length, 0)
 
-            searchView.text = content
-            searchViewContainer.visibility = View.VISIBLE
+            searchView?.text = content
+            searchViewContainer?.visibility = View.VISIBLE
         }
     }
 }
