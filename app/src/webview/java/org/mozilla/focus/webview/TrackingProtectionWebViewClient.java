@@ -45,7 +45,6 @@ public class TrackingProtectionWebViewClient extends WebViewClient {
     }
 
     private boolean blockingEnabled;
-    private Context context;
     /* package */ String currentPageURL;
     protected IWebView.Callback callback;
 
@@ -55,7 +54,6 @@ public class TrackingProtectionWebViewClient extends WebViewClient {
         triggerPreload(context);
 
         this.blockingEnabled = true;
-        this.context = context;
     }
 
     public void setCallback(IWebView.Callback callback) {
@@ -146,7 +144,4 @@ public class TrackingProtectionWebViewClient extends WebViewClient {
             callback.onHttpAuthRequest(handler, host, realm);
         }
     }
-
-
-
 }
