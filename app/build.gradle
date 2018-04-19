@@ -29,6 +29,10 @@ android {
         preDexLibraries true
     }
 
+    lintOptions {
+        lintConfig file("lint.xml")
+    }
+
     // We have a three dimensional build configuration:
     // BUILD TYPE (debug, beta, release) X PRODUCT FLAVOR (focus, klar) X ENGINE FLAVOR (webview, gecko)
 
@@ -310,15 +314,21 @@ repositories {
         //   https://tools.taskcluster.net/index/gecko.v2.mozilla-central.nightly
 
         // ARM GeckoView builds
-        url "https://index.taskcluster.net/v1/task/gecko.v2.mozilla-central.nightly.${geckoview_nightly_version}.latest.mobile.android-api-16-opt/artifacts/public/android/maven"
+        url "https://index.taskcluster.net/v1/task/gecko.v2.mozilla-central.nightly" +
+                ".${geckoview_nightly_date}.revision.${geckoview_revision}.mobile" +
+                ".android-api-16-opt/artifacts/public/android/maven"
     }
     maven {
         // x86 GeckoView builds
-        url "https://index.taskcluster.net/v1/task/gecko.v2.mozilla-central.nightly.${geckoview_nightly_version}.latest.mobile.android-x86-opt/artifacts/public/android/maven"
+        url "https://index.taskcluster.net/v1/task/gecko.v2.mozilla-central.nightly" +
+                ".${geckoview_nightly_date}.revision.${geckoview_revision}.mobile" +
+                ".android-x86-opt/artifacts/public/android/maven"
     }
     maven {
         // aarch64 builds
-        url "https://index.taskcluster.net/v1/task/gecko.v2.mozilla-central.nightly.${geckoview_nightly_version}.latest.mobile.android-aarch64-opt/artifacts/public/android/maven"
+        url "https://index.taskcluster.net/v1/task/gecko.v2.mozilla-central.nightly" +
+                ".${geckoview_nightly_date}.revision.${geckoview_revision}.mobile" +
+                ".android-aarch64-opt/artifacts/public/android/maven"
     }
 }
 
@@ -328,6 +338,7 @@ dependencies {
     implementation "com.android.support:design:$support_libraries_version"
     implementation "com.android.support:cardview-v7:$support_libraries_version"
     implementation "com.android.support:recyclerview-v7:$support_libraries_version"
+    implementation 'io.sentry:sentry-android:1.7.3'
 
     implementation "android.arch.lifecycle:extensions:$architecture_components_version"
 
@@ -350,9 +361,9 @@ dependencies {
     // What I actually want to define here is geckoArmCompile and geckoX86Compile. But gradle doesn't
     // allow me to define dependencies for such a flavor combination. However as we are not building
     // WebView + (ARM / x86) flavor combinations this should be good enough for now.
-    armImplementation "org.mozilla:geckoview-nightly-armeabi-v7a:61.0a1"
-    x86Implementation "org.mozilla:geckoview-nightly-x86:61.0a1"
-    aarch64Implementation "org.mozilla:geckoview-nightly-arm64-v8a:61.0a1"
+    armImplementation "org.mozilla:geckoview-nightly-armeabi-v7a:${geckoview_nightly_version}"
+    x86Implementation "org.mozilla:geckoview-nightly-x86:${geckoview_nightly_version}"
+    aarch64Implementation "org.mozilla:geckoview-nightly-arm64-v8a:${geckoview_nightly_version}"
 
     testImplementation 'junit:junit:4.12'
     testImplementation "org.robolectric:robolectric:3.7.1"
@@ -466,6 +477,22 @@ android.applicationVariants.all { variant ->
     } else {
         buildConfigField 'String', 'ADJUST_TOKEN', 'null'
         println("--")
+    }
+}
+
+// -------------------------------------------------------------------------------------------------
+// Sentry: Read token from locale file if it exists (Only release builds)
+// -------------------------------------------------------------------------------------------------
+
+android.applicationVariants.all {
+    print("Sentry token: ")
+    try {
+        def token = new File("${rootDir}/.sentry_token").text.trim()
+        buildConfigField 'String', 'SENTRY_TOKEN', '"' + token + '"'
+        println "(Added from .sentry_token file)"
+    } catch (java.io.FileNotFoundException e) {
+        buildConfigField 'String', 'SENTRY_TOKEN', 'null'
+        println("X_X")
     }
 }
 

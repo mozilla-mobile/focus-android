@@ -9,30 +9,38 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.net.Uri;
+import android.os.Environment;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 
+import org.mozilla.focus.browser.LocalizedContent;
 import org.mozilla.focus.session.Session;
+import org.mozilla.focus.utils.AppConstants;
 import org.mozilla.focus.utils.IntentUtils;
 import org.mozilla.focus.utils.Settings;
 import org.mozilla.focus.utils.UrlUtils;
-import org.mozilla.geckoview.GeckoView;
+import org.mozilla.geckoview.GeckoRuntime;
+import org.mozilla.geckoview.GeckoRuntimeSettings;
 import org.mozilla.geckoview.GeckoSession;
 import org.mozilla.geckoview.GeckoSessionSettings;
+
+import kotlin.text.Charsets;
 
 /**
  * WebViewProvider implementation for creating a Gecko based implementation of IWebView.
  */
 public class WebViewProvider {
+    private static volatile GeckoRuntime geckoRuntime;
+
     public static void preload(final Context context) {
-        GeckoSession.preload(context);
+        createGeckoRuntimeIfNeeded(context);
     }
 
     public static View create(Context context, AttributeSet attrs) {
-        final GeckoView geckoView = new GeckoWebView(context, attrs);
-        return geckoView;
+        return new GeckoWebView(context, attrs);
     }
 
     public static void performCleanup(final Context context) {
@@ -43,7 +51,17 @@ public class WebViewProvider {
         // Nothing: a WebKit work-around.
     }
 
+    private static void createGeckoRuntimeIfNeeded(Context context) {
+        if (geckoRuntime == null) {
+            final GeckoRuntimeSettings.Builder runtimeSettingsBuilder =
+                    new GeckoRuntimeSettings.Builder();
+            runtimeSettingsBuilder.useContentProcessHint(true);
+            geckoRuntime = GeckoRuntime.create(context.getApplicationContext(), runtimeSettingsBuilder.build());
+        }
+    }
+
     public static class GeckoWebView extends NestedGeckoView implements IWebView, SharedPreferences.OnSharedPreferenceChangeListener {
+        private static final String TAG = "GeckoWebView";
         private Callback callback;
         private String currentUrl = "about:blank";
         private boolean canGoBack;
@@ -64,6 +82,7 @@ public class WebViewProvider {
             PreferenceManager.getDefaultSharedPreferences(context)
                     .registerOnSharedPreferenceChangeListener(this);
 
+            applyAppSettings();
             updateBlocking();
 
             geckoSession.setContentDelegate(createContentDelegate());
@@ -71,7 +90,7 @@ public class WebViewProvider {
             geckoSession.setNavigationDelegate(createNavigationDelegate());
             geckoSession.setTrackingProtectionDelegate(createTrackingProtectionDelegate());
             geckoSession.setPromptDelegate(createPromptDelegate());
-            setSession(geckoSession);
+            setSession(geckoSession, geckoRuntime);
         }
 
         @Override
@@ -136,9 +155,12 @@ public class WebViewProvider {
         public void setBlockingEnabled(boolean enabled) {
             if (enabled) {
                 updateBlocking();
+                applyAppSettings();
             } else {
                 if (geckoSession != null) {
                     geckoSession.disableTrackingProtection();
+                    geckoRuntime.getSettings().setJavaScriptEnabled(true);
+                    geckoRuntime.getSettings().setWebFontsEnabled(true);
                 }
             }
             if (callback != null) {
@@ -149,6 +171,12 @@ public class WebViewProvider {
         @Override
         public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String prefName) {
             updateBlocking();
+            applyAppSettings();
+        }
+
+        private void applyAppSettings() {
+            geckoRuntime.getSettings().setJavaScriptEnabled(!Settings.getInstance(getContext()).shouldBlockJavaScript());
+            geckoRuntime.getSettings().setWebFontsEnabled(!Settings.getInstance(getContext()).shouldBlockWebFonts());
         }
 
         private void updateBlocking() {
@@ -195,16 +223,36 @@ public class WebViewProvider {
 
                 @Override
                 public void onContextMenu(GeckoSession session, int screenX, int screenY, String uri, @ElementType int elementType, String elementSrc) {
-                    if (elementSrc != null && uri != null) {
+                    if (elementSrc != null && uri != null && elementType == ELEMENT_TYPE_IMAGE) {
                         callback.onLongPress(new HitTarget(true, uri, true, elementSrc));
-                    } else if (elementSrc != null) {
-                        if (elementSrc.endsWith("jpg") || elementSrc.endsWith("gif") ||
-                                elementSrc.endsWith("tif") || elementSrc.endsWith("bmp") ||
-                                elementSrc.endsWith("png")) {
-                            callback.onLongPress(new HitTarget(false, null, true, elementSrc));
-                        }
+                    } else if (elementSrc != null && elementType == ELEMENT_TYPE_IMAGE) {
+                        callback.onLongPress(new HitTarget(false, null, true, elementSrc));
                     } else if (uri != null) {
                         callback.onLongPress(new HitTarget(true, uri, false, null));
+                    }
+                }
+
+                @Override
+                public void onExternalResponse(GeckoSession session, GeckoSession.WebResponseInfo response) {
+                    if (!AppConstants.supportsDownloadingFiles()) {
+                        return;
+                    }
+
+                    final String scheme = Uri.parse(response.uri).getScheme();
+                    if (scheme == null || (!scheme.equals("http") && !scheme.equals("https"))) {
+                        // We are ignoring everything that is not http or https. This is a limitation of
+                        // Android's download manager. There's no reason to show a download dialog for
+                        // something we can't download anyways.
+                        Log.w(TAG, "Ignoring download from non http(s) URL: " + response.uri);
+                        return;
+                    }
+
+                    if (callback != null) {
+                        // TODO: get user agent from GeckoView #2470
+                        final Download download = new Download(response.uri, "Mozilla/5.0 (Android 8.1.0; Mobile; rv:60.0) Gecko/60.0 Firefox/60.0",
+                                response.filename, response.contentType, response.contentLength,
+                                Environment.DIRECTORY_DOWNLOADS);
+                        callback.onDownloadStart(download);
                     }
                 }
 
@@ -269,26 +317,32 @@ public class WebViewProvider {
                 }
 
                 @Override
-                public boolean onLoadRequest(GeckoSession session, String uri, @TargetWindow int target) {
+                public void onLoadRequest(GeckoSession session, String uri, int target, GeckoSession.Response<Boolean> response) {
                     // If this is trying to load in a new tab, just load it in the current one
                     if (target == GeckoSession.NavigationDelegate.TARGET_WINDOW_NEW) {
                         geckoSession.loadUri(uri);
-                        return true;
+                        response.respond(true);
                     }
 
                     // Check if we should handle an internal link
-                    if (LocalizedContentGecko.INSTANCE.handleInternalContent(uri, session, getContext())) {
-                        return true;
+                    if (LocalizedContent.handleInternalContent(uri, GeckoWebView.this, getContext())) {
+                        response.respond(true);
                     }
 
                     // Check if we should handle an external link
                     final Uri urlToURI = Uri.parse(uri);
-                    if (!UrlUtils.isSupportedProtocol(urlToURI.getScheme()) && callback != null) {
-                        return IntentUtils.handleExternalUri(getContext(), GeckoWebView.this, uri);
+                    if (!UrlUtils.isSupportedProtocol(urlToURI.getScheme()) && callback != null &&
+                            IntentUtils.handleExternalUri(getContext(), GeckoWebView.this, uri)) {
+                        response.respond(true);
+                    }
+
+                    if (uri.equals("about:neterror") || uri.equals("about:certerror")) {
+                        // TODO: Error Page handling with Components ErrorPages #2471
+                        response.respond(true);
                     }
 
                     // Otherwise allow the load to continue normally
-                    return false;
+                    response.respond(false);
                 }
 
                 @Override
@@ -341,6 +395,11 @@ public class WebViewProvider {
         @Override
         public void exitFullscreen() {
             geckoSession.exitFullScreen();
+        }
+
+        @Override
+        public void loadData(String baseURL, String data, String mimeType, String encoding, String historyURL) {
+            geckoSession.loadData(data.getBytes(Charsets.UTF_8), mimeType, baseURL);
         }
 
         @Override

@@ -35,9 +35,11 @@
   <string name="preference_category_autocomplete_preinstalled">Standard-Adressliste</string>
   <string name="preference_autocomplete_preinstalled_summary">Aktivieren, damit %1$s über 450 beliebte Adressen in der Adressleiste automatisch vervollständigt.</string>
   <string name="preference_category_autocomplete_custom">Benutzerdefinierte Adresse</string>
+  <string name="preference_category_autocomplete_custom_urls">Benutzerdefinierte Adressen</string>
   <string name="preference_autocomplete_subitem_customlist">Benutzerdefinierte Adressen</string>
   <string name="preference_autocomplete_action_add">+ Benutzerdefinierte Adresse hinzufügen</string>
   <string name="preference_autocomplete_title_add">Benutzerdefinierte Adresse hinzufügen</string>
+  <string name="custom_autocomplete_quick_add">Benutzerdefinierte Adresse hinzufügen</string>
   <string name="preference_autocomplete_title_remove">Benutzerdefinierte Adressen entfernen</string>
   <string name="preference_autocomplete_learn_more">Weitere Informationen</string>
   <string name="preference_autocomplete_custom_summary">Benutzerdefinierte Adressen für Autovervollständigung hinzufügen und verwalten.</string>
@@ -61,12 +63,18 @@
   <string name="preference_privacy_block_social_summary">Auf Websites eingebettet, um Ihre Besuche zu verfolgen und Funktionen wie Links zum Teilen anzuzeigen</string>
   <string name="preference_privacy_block_content">Andere Inhaltsverfolgung blockieren</string>
   <string name="preference_privacy_block_content_summary2">Dies kann dazu führen, dass manche Seiten sich ungewöhnlich verhalten</string>
+  <string name="preference_privacy_category_cookies">Cookies blockieren</string>
+  <string name="preference_privacy_should_block_cookies_no_option">Nein</string>
+  <string name="preference_privacy_should_block_cookies_third_party_only_option">Nur Cookies von Drittanbietern blockieren</string>
+  <string name="preference_privacy_should_block_cookies_yes_option">Ja</string>
   <string name="preference_privacy_secure_mode">Tarnung</string>
   <string name="preference_privacy_stealth_summary">Webseiten beim Wechseln von Apps verstecken</string>
   <string name="preference_category_performance">Leistung</string>
   <string name="preference_performance_block_webfonts">Web-Schriftarten blockieren</string>
   <string name="preference_performance_block_webfonts_summary">Kann zu fehlenden Symbolen oder Grafiken führen</string>
   <string name="preference_performance_block_images">Grafiken blockieren</string>
+  <string name="preference_performance_block_javascript">JavaScript blockieren</string>
+  <string name="preference_performance_block_javascript_summary">Seiten laden schneller, verhalten sich aber möglicherweise unerwartet</string>
   <string name="preference_default_browser2">%1$s als Standardbrowser festlegen</string>
   <string name="preference_category_mozilla">Mozilla</string>
   <string name="preference_mozilla_telemetry2">Nutzungsdaten senden</string>
@@ -191,4 +199,5 @@
   <string name="security_popup_insecure_connection">Nicht gesicherte Verbindung</string>
   <string name="security_popup_security_verified">Verifiziert von: %1$s</string>
   <string name="site_security_icon_content_description">Website-Sicherheit</string>
+  <string name="preference_autocomplete_duplicate_url_error">Adresse existiert bereits</string>
 </resources>

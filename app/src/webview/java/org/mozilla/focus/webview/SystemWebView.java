@@ -206,6 +206,11 @@ public class SystemWebView extends NestedWebView implements IWebView, SharedPref
     public void exitFullscreen() {}
 
     @Override
+    public void loadData(String baseURL, String data, String mimeType, String encoding, String historyURL) {
+        loadDataWithBaseURL(baseURL, data, mimeType, encoding, historyURL);
+    }
+
+    @Override
     public void destroy() {
         super.destroy();
 
