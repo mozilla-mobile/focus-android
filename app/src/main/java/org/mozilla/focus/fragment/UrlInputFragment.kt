@@ -8,6 +8,7 @@ import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
 import android.graphics.Typeface
 import android.os.Bundle
+import android.text.InputType
 import android.text.SpannableString
 import android.text.TextUtils
 import android.text.style.StyleSpan
@@ -168,6 +169,7 @@ class UrlInputFragment :
 
         urlView.setOnFilterListener(::onFilter)
         urlView.imeOptions = urlView.imeOptions or ViewUtils.IME_FLAG_NO_PERSONALIZED_LEARNING
+        urlView.inputType = InputType.TYPE_TEXT_VARIATION_PASSWORD
 
         urlInputContainerView.viewTreeObserver.addOnPreDrawListener(object : ViewTreeObserver.OnPreDrawListener {
             override fun onPreDraw(): Boolean {
