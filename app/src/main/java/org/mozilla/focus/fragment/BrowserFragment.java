@@ -45,9 +45,6 @@ import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
-import mozilla.components.utils.ColorUtils;
-import mozilla.components.utils.DownloadUtils;
-import mozilla.components.utils.DrawableUtils;
 import org.mozilla.focus.R;
 import org.mozilla.focus.activity.InstallFirefoxActivity;
 import org.mozilla.focus.activity.MainActivity;
@@ -82,6 +79,10 @@ import org.mozilla.focus.widget.FloatingSessionsButton;
 
 import java.lang.ref.WeakReference;
 import java.util.List;
+
+import mozilla.components.utils.ColorUtils;
+import mozilla.components.utils.DownloadUtils;
+import mozilla.components.utils.DrawableUtils;
 
 /**
  * Fragment for displaying the browser UI.
