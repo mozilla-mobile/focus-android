@@ -37,6 +37,7 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.webkit.CookieManager;
+import android.webkit.HttpAuthHandler;
 import android.webkit.URLUtil;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
@@ -74,6 +75,7 @@ import org.mozilla.focus.utils.SupportUtils;
 import org.mozilla.focus.utils.UrlUtils;
 import org.mozilla.focus.web.Download;
 import org.mozilla.focus.web.IWebView;
+import org.mozilla.focus.webview.HttpAuthenticationDialogBuilder;
 import org.mozilla.focus.widget.AnimatedProgressBar;
 import org.mozilla.focus.widget.FloatingEraseButton;
 import org.mozilla.focus.widget.FloatingSessionsButton;
@@ -486,6 +488,27 @@ public class BrowserFragment extends WebFragment implements View.OnClickListener
             public void onBlockingStateChanged(boolean isBlockingEnabled) {}
 
             @Override
+            public void onHttpAuthRequest(final HttpAuthHandler handler, String host, String realm) {
+                HttpAuthenticationDialogBuilder builder = new HttpAuthenticationDialogBuilder.Builder(getActivity(), host, realm)
+                                .setOkListener(new HttpAuthenticationDialogBuilder.OkListener() {
+                                    @Override
+                                    public void onOk(String host, String realm, String username, String password) {
+                                        handler.proceed(username, password);
+                                    }
+                                })
+                                .setCancelListener(new HttpAuthenticationDialogBuilder.CancelListener() {
+                                    @Override
+                                    public void onCancel() {
+                                        handler.cancel();
+                                    }
+                                })
+                                .build();
+
+                builder.createDialog();
+                builder.show();
+            }
+
+            @Override
             public void onLongPress(final IWebView.HitTarget hitTarget) {
                 WebContextMenu.show(getActivity(), this, hitTarget);
             }
@@ -747,7 +770,6 @@ public class BrowserFragment extends WebFragment implements View.OnClickListener
                 .addRequestHeader("Referer", getUrl())
                 .setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
                 .setMimeType(download.getMimeType());
-
 
         try {
             request.setDestinationInExternalPublicDir(

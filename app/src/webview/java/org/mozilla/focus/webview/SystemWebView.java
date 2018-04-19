@@ -55,7 +55,7 @@ public class SystemWebView extends NestedWebView implements IWebView, SharedPref
     public SystemWebView(Context context, AttributeSet attrs) {
         super(context, attrs);
 
-        client = new FocusWebViewClient(context);
+        client = new FocusWebViewClient(getContext().getApplicationContext());
 
         setWebViewClient(client);
         setWebChromeClient(createWebChromeClient());

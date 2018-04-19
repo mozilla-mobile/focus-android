@@ -10,6 +10,7 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.HttpAuthHandler;
 import android.widget.ProgressBar;
 
 import org.mozilla.focus.R;
@@ -118,6 +119,9 @@ public class InfoFragment extends WebFragment {
 
             @Override
             public void onBlockingStateChanged(boolean isBlockingEnabled) {}
+
+            @Override
+            public void onHttpAuthRequest(HttpAuthHandler handler, String host, String realm) {}
         };
     }
 

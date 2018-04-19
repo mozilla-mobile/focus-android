@@ -20,7 +20,6 @@ import org.mozilla.focus.webview.matcher.UrlMatcher;
 
 public class TrackingProtectionWebViewClient extends WebViewClient {
     private static volatile UrlMatcher MATCHER;
-    private HttpAuthenticationDialog httpAuthenticationDialog;
 
     public static void triggerPreload(final Context context) {
         // Only trigger loading if MATCHER is null. (If it's null, MATCHER could already be loading,
@@ -109,7 +108,7 @@ public class TrackingProtectionWebViewClient extends WebViewClient {
         if ((!request.isForMainFrame()) &&
                 currentPageURL != null &&
                 matcher.matches(resourceUri, Uri.parse(currentPageURL))) {
-            // Bandaid for issue #26: currentPageUrl can still be null, and needs to be investigated further.
+                // Bandaid for issue #26: currentPageUrl can still be null, and needs to be investigated further.
             if (callback != null) {
                 callback.countBlockedTracker();
             }
@@ -143,23 +142,9 @@ public class TrackingProtectionWebViewClient extends WebViewClient {
 
     @Override
     public void onReceivedHttpAuthRequest(WebView view, final HttpAuthHandler handler, String host, String realm) {
-
-        httpAuthenticationDialog = new HttpAuthenticationDialog(context, host, realm);
-        httpAuthenticationDialog.setOkListener(new HttpAuthenticationDialog.OkListener() {
-            @Override
-            public void onOk(String host, String realm, String username, String password) {
-                handler.proceed(username, password);
-            }
-        });
-        httpAuthenticationDialog.setCancelListener(new HttpAuthenticationDialog.CancelListener() {
-            @Override
-            public void onCancel() {
-                handler.cancel();
-                httpAuthenticationDialog = null;
-            }
-        });
-
-        httpAuthenticationDialog.show();
+        if (callback != null) {
+            callback.onHttpAuthRequest(handler, host, realm);
+        }
     }
 
 
