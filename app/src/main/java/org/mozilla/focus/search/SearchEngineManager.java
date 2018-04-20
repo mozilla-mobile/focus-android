@@ -52,7 +52,7 @@ import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
-import mozilla.components.ktx.android.content.res.AssetManagerKt;
+import mozilla.components.support.ktx.android.content.res.AssetManagerKt;
 
 public class SearchEngineManager extends BroadcastReceiver {
     private static final String LOG_TAG = SearchEngineManager.class.getSimpleName();
