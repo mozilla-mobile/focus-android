@@ -7,11 +7,15 @@ package org.mozilla.focus.settings;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.preference.ListPreference;
 import android.preference.Preference;
+import android.preference.PreferenceManager;
 import android.preference.PreferenceScreen;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
+import android.widget.ListView;
+
 import org.mozilla.focus.R;
 import org.mozilla.focus.activity.SettingsActivity;
 import org.mozilla.focus.autocomplete.AutocompleteSettingsFragment;
