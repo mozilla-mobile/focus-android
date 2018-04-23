@@ -116,7 +116,6 @@ public class SettingsFragment extends BaseSettingsFragment implements SharedPref
             if (mListView != null) {
                 mListView.setVerticalScrollBarEnabled(false);
             }
-            
             // Half a second delay for better animation
             new CountDownTimer(500, 1000) {
                 public void onTick(long millisUntilFinished) {}
