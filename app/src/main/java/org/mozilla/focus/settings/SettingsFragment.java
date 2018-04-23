@@ -113,9 +113,8 @@ public class SettingsFragment extends BaseSettingsFragment implements SharedPref
             // Scroll to selected item in ListView.
             final ListView mListView = getActivity().findViewById(android.R.id.list);
             mListView.smoothScrollToPosition(0);
-            if (mListView != null) {
-                mListView.setVerticalScrollBarEnabled(false);
-            }
+            mListView.setVerticalScrollBarEnabled(false);
+        
             // Half a second delay for better animation
             new CountDownTimer(500, 1000) {
                 public void onTick(long millisUntilFinished) {}
