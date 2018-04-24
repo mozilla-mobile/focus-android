@@ -23,6 +23,9 @@ tasks:
           - pull_request.edited
           - pull_request.synchronize
           - pull_request.reopened
+    scopes:
+      - "queue:create-task:aws-provisioner-v1/github-worker"
+      - "queue:scheduler-id:taskcluster-github"
     payload:
       maxRunTime: 3600
       deadline: "{{ '2 hours' | $fromNow }}"
@@ -35,9 +38,9 @@ tasks:
           git fetch {{ event.head.repo.url }} {{ event.head.repo.branch }}
           && git config advice.detachedHead false
           && git checkout {{event.head.sha}}
-          && echo "--" > .adjust_token
-          && python tools/l10n/check_locales.py
-          && ./gradlew --no-daemon clean assemble assembleFocusWebviewUniversalDebugAndroidTest detektCheck ktlint lint pmd checkstyle spotbugs test
+          && python tools/taskcluster/test-release.py
+      features:
+        taskclusterProxy: true
       artifacts:
         'public':
           type: 'directory'
