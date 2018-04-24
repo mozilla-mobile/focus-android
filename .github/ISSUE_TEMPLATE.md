@@ -1,6 +1,6 @@
 <!-- This template is for features
 
-### Why
+### Why/User Benefit/User Problem
 
 ### What / Requirements
 
@@ -10,21 +10,15 @@
 
 <!-- This template is for bugs / issues
 
+### Steps to reproduce
+
 ### Expected behavior
 
 ### Actual behavior
 
-### Steps to reproduce
-
 ### Device information
 
-* Android version: ?
-* Android device: ?
-* Focus/Klar version: ?
-* User agent: ?
+* Fire TV device: ?
+* Firefox version: ?
 
 -->
-
------
-
-### Description
