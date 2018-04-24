@@ -15,7 +15,7 @@ tasks:
 # - Run code quality tools (spotbugs, lint, checkstyle etc.)
 ###############################################################################
   - provisionerId: '{{ taskcluster.docker.provisionerId }}'
-    workerType: '{{ taskcluster.docker.workerType }}'
+    workerType: 'gecko-focus'
     extra:
       github:
         events:
