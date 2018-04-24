@@ -15,14 +15,24 @@ tasks:
 # - Run code quality tools (spotbugs, lint, checkstyle etc.)
 ###############################################################################
   - provisionerId: '{{ taskcluster.docker.provisionerId }}'
-    workerType: '{{ taskcluster.docker.workerType }}'
+    workerType: 'gecko-focus'
     extra:
       github:
+        env: true
         events:
           - pull_request.opened
           - pull_request.edited
           - pull_request.synchronize
           - pull_request.reopened
+    scopes:
+      - "queue:create-task:aws-provisioner-v1/github-worker"
+      - "queue:scheduler-id:taskcluster-github"
+      - "project:mobile:focus:releng:signing:cert:release-signing"
+      - "project:mobile:focus:releng:signing:format:focus-jar"
+      - "project:mobile:focus:googleplay:product:focus"
+      - "queue:create-task:lowest:aws-provisioner-v1/gecko-focus"
+      - "queue:create-task:lowest:scriptworker-prov-v1/mobile-signing-v1"
+      - "queue:create-task:lowest:scriptworker-prov-v1/mobile-pushapk-v1"
     payload:
       maxRunTime: 3600
       deadline: "{{ '2 hours' | $fromNow }}"
@@ -35,17 +45,18 @@ tasks:
           git fetch {{ event.head.repo.url }} {{ event.head.repo.branch }}
           && git config advice.detachedHead false
           && git checkout {{event.head.sha}}
-          && echo "--" > .adjust_token
-          && python tools/l10n/check_locales.py
-          && ./gradlew --no-daemon clean assemble assembleFocusWebviewUniversalDebugAndroidTest detektCheck ktlint lint pmd checkstyle spotbugs test
+          && python tools/taskcluster/release.py
+      features:
+        taskclusterProxy: true
+        chainOfTrust: true
       artifacts:
-        'public':
-          type: 'directory'
-          path: '/opt/focus-android/app/build/reports'
+        'public/task-graph.json':
+          type: 'file'
+          path: '/opt/focus-android/task-graph.json'
           expires: "{{ '1 week' | $fromNow }}"
     metadata:
-      name: Focus for Android - Build - Pull Request
-      description: Building Focus for Android (via Gradle) - triggered by a pull request.
+      name: (Focus for Android) Decision task
+      description: Scheduling tasks for releasing Focus/Klar
       owner: '{{ event.head.user.email }}'
       source: '{{ event.head.repo.url }}'
 ###############################################################################
@@ -87,6 +98,8 @@ tasks:
           git fetch origin
           && git config advice.detachedHead false
           && git checkout {{event.head.sha}}
+          # && python tools/taskcluster/get-adjust-token.py
+          && python tools/l10n/filter-release-translations.py
           && python tools/taskcluster/schedule-master-build.py
       features:
         taskclusterProxy: true
