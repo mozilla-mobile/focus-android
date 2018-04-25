@@ -15,7 +15,7 @@ tasks:
 # - Run code quality tools (spotbugs, lint, checkstyle etc.)
 ###############################################################################
   - provisionerId: '{{ taskcluster.docker.provisionerId }}'
-    workerType: '{{ taskcluster.docker.workerType }}'
+    workerType: 'gecko-focus'
     extra:
       github:
         events:
@@ -37,12 +37,15 @@ tasks:
           && git checkout {{event.head.sha}}
           && echo "--" > .adjust_token
           && python tools/l10n/check_locales.py
-          && ./gradlew --no-daemon clean assemble assembleFocusWebviewUniversalDebugAndroidTest detektCheck ktlint lint pmd checkstyle spotbugs test
+          && mkdir -p /opt/focus-android/app/build/reports/
+          && echo '{}' > /opt/focus-android/app/build/reports/task-graph.json
       artifacts:
         'public':
           type: 'directory'
           path: '/opt/focus-android/app/build/reports'
           expires: "{{ '1 week' | $fromNow }}"
+      features:
+        chainOfTrust: true
     metadata:
       name: Focus for Android - Build - Pull Request
       description: Building Focus for Android (via Gradle) - triggered by a pull request.
