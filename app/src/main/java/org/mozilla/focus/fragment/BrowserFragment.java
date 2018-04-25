@@ -15,6 +15,7 @@ import android.content.IntentFilter;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.TransitionDrawable;
 import android.net.Uri;
@@ -81,9 +82,9 @@ import org.mozilla.focus.widget.FloatingSessionsButton;
 import java.lang.ref.WeakReference;
 import java.util.List;
 
-import mozilla.components.utils.ColorUtils;
-import mozilla.components.utils.DownloadUtils;
-import mozilla.components.utils.DrawableUtils;
+import mozilla.components.support.utils.ColorUtils;
+import mozilla.components.support.utils.DownloadUtils;
+import mozilla.components.support.utils.DrawableUtils;
 
 /**
  * Fragment for displaying the browser UI.
@@ -866,13 +867,15 @@ public class BrowserFragment extends WebFragment implements View.OnClickListener
                 break;
 
             case R.id.display_url:
-                final Fragment urlFragment = UrlInputFragment
-                        .createWithSession(session, urlView);
+                if (SessionManager.getInstance().hasSessionWithUUID(session.getUUID())) {
+                    final Fragment urlFragment = UrlInputFragment
+                            .createWithSession(session, urlView);
 
-                getActivity().getSupportFragmentManager()
-                        .beginTransaction()
-                        .add(R.id.container, urlFragment, UrlInputFragment.FRAGMENT_TAG)
-                        .commit();
+                    getActivity().getSupportFragmentManager()
+                            .beginTransaction()
+                            .add(R.id.container, urlFragment, UrlInputFragment.FRAGMENT_TAG)
+                            .commit();
+                }
                 break;
 
             case R.id.erase: {
@@ -1128,6 +1131,7 @@ public class BrowserFragment extends WebFragment implements View.OnClickListener
                     popupTint.setVisibility(View.GONE);
                 }
             });
+            securityPopup.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
             securityPopup.setAnimationStyle(android.R.style.Animation_Dialog);
             securityPopup.setTouchable(true);
             securityPopup.setFocusable(true);
