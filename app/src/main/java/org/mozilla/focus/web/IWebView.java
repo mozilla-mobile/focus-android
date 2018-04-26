@@ -77,11 +77,17 @@ public interface IWebView {
 
         void onBlockingStateChanged(boolean isBlockingEnabled);
 
-        void onHttpAuthRequest(HttpAuthHandler handler, String host, String realm);
+        void onHttpAuthRequest(@NonNull HttpAuthCallback callback, String host, String realm);
     }
 
     interface FullscreenCallback {
         void fullScreenExited();
+    }
+
+    interface HttpAuthCallback {
+        void proceed(String username, String password);
+
+        void cancel();
     }
 
     /**

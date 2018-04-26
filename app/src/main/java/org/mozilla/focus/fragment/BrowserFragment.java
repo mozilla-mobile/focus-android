@@ -38,7 +38,6 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.webkit.CookieManager;
-import android.webkit.HttpAuthHandler;
 import android.webkit.URLUtil;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
@@ -491,18 +490,18 @@ public class BrowserFragment extends WebFragment implements View.OnClickListener
             public void onBlockingStateChanged(boolean isBlockingEnabled) {}
 
             @Override
-            public void onHttpAuthRequest(final HttpAuthHandler handler, String host, String realm) {
+            public void onHttpAuthRequest(@NonNull final IWebView.HttpAuthCallback callback, String host, String realm) {
                 HttpAuthenticationDialogBuilder builder = new HttpAuthenticationDialogBuilder.Builder(getActivity(), host, realm)
                                 .setOkListener(new HttpAuthenticationDialogBuilder.OkListener() {
                                     @Override
                                     public void onOk(String host, String realm, String username, String password) {
-                                        handler.proceed(username, password);
+                                        callback.proceed(username, password);
                                     }
                                 })
                                 .setCancelListener(new HttpAuthenticationDialogBuilder.CancelListener() {
                                     @Override
                                     public void onCancel() {
-                                        handler.cancel();
+                                        callback.cancel();
                                     }
                                 })
                                 .build();

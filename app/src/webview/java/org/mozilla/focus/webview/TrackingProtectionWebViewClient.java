@@ -140,8 +140,20 @@ public class TrackingProtectionWebViewClient extends WebViewClient {
 
     @Override
     public void onReceivedHttpAuthRequest(WebView view, final HttpAuthHandler handler, String host, String realm) {
+        final IWebView.HttpAuthCallback httpAuthCallback = new IWebView.HttpAuthCallback() {
+            @Override
+            public void proceed(String username, String password) {
+                handler.proceed(username, password);
+            }
+
+            @Override
+            public void cancel() {
+                handler.cancel();
+            }
+        };
+
         if (callback != null) {
-            callback.onHttpAuthRequest(handler, host, realm);
+            callback.onHttpAuthRequest(httpAuthCallback, host, realm);
         }
     }
 }
