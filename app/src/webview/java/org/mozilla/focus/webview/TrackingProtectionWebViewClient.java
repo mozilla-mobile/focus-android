@@ -14,6 +14,7 @@ import android.webkit.WebResourceRequest;
 import android.webkit.WebResourceResponse;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+
 import org.mozilla.focus.R;
 import org.mozilla.focus.web.IWebView;
 import org.mozilla.focus.webview.matcher.UrlMatcher;
