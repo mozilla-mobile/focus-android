@@ -7,11 +7,15 @@ package org.mozilla.focus.settings;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.preference.ListPreference;
 import android.preference.Preference;
+import android.preference.PreferenceManager;
 import android.preference.PreferenceScreen;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
+import android.widget.ListView;
+
 import org.mozilla.focus.R;
 import org.mozilla.focus.activity.SettingsActivity;
 import org.mozilla.focus.autocomplete.AutocompleteSettingsFragment;
@@ -90,6 +94,40 @@ public class SettingsFragment extends BaseSettingsFragment implements SharedPref
             TelemetryWrapper.openSearchSettingsEvent();
         } else if (preference.getKey().equals(resources.getString(R.string.pref_key_screen_autocomplete))) {
             navigateToFragment(new AutocompleteSettingsFragment());
+        } else if (preference.getKey().equals(resources.getString(R.string.pref_key_reset_default_browser))) {
+            // Reset browser settings to default
+            PreferenceManager.getDefaultSharedPreferences(getActivity().getApplicationContext())
+                    .edit()
+                    .clear()
+                    .apply();
+
+            // Reset locale to default - US
+            final LocaleManager localeManager = LocaleManager.getInstance();
+            localeManager.setSelectedLocale(getActivity(), String.valueOf(Locale.US));
+            localeManager.updateConfiguration(getActivity(), Locale.US);
+
+            // Update the language selection (in dialog)
+            final ListPreference languagePreference = (ListPreference) findPreference(getString(R.string.pref_key_locale));
+            languagePreference.setValue(String.valueOf(Locale.US));
+
+            // Scroll to selected item in ListView.
+            final ListView mListView = getActivity().findViewById(android.R.id.list);
+            mListView.smoothScrollToPosition(0);
+            mListView.setVerticalScrollBarEnabled(false);
+            // Half a second delay for better animation
+            new CountDownTimer(500, 1000) {
+                public void onTick(long millisUntilFinished) {}
+                public void onFinish() {
+                    // Manually notify SettingsActivity of browser settings reset
+                    if (mListView != null) {
+                        mListView.setVerticalScrollBarEnabled(true);
+                    }
+
+                    if (getActivity() != null) {
+                        addPreferencesFromResource(R.xml.settings);
+                    }
+                }
+            }.start();
         }
 
         return super.onPreferenceTreeClick(preferenceScreen, preference);
