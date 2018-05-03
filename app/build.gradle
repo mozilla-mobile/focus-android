@@ -640,3 +640,29 @@ task checkstyle(type: Checkstyle) {
 afterEvaluate {
     check.dependsOn 'spotbugs', 'pmd', 'checkstyle'
 }
+
+buildscript {
+    repositories {
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
+    }
+    dependencies {
+        classpath "net.ltgt.gradle:gradle-errorprone-plugin:0.0.13"
+    }
+}
+
+apply plugin: "net.ltgt.errorprone"
+
+tasks.withType(JavaCompile) {
+    options.compilerArgs += [
+        '-Xep:JdkObsolete:OFF',
+        '-Xep:JUnit4TestNotRun:OFF',
+        '-Xep:MissingOverride:OFF',
+        '-Xep:UnsynchronizedOverridesSynchronized:OFF',
+    ]
+}
+
+configurations.errorprone {
+    resolutionStrategy.force 'com.google.errorprone:error_prone_core:2.3.1'
+}
