@@ -56,4 +56,6 @@
     <dimen name="doorhanger_icon_size">60dp</dimen>
     <dimen name="doorhanger_rounded_corner_radius">4dp</dimen>
     <dimen name="doorhanger_small_icon">16dp</dimen>
+
+    <dimen name="text_single_letter_in_icon_size">13dp</dimen>
 </resources>
