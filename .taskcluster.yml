@@ -121,9 +121,11 @@ tasks:
       - "project:mobile:focus:releng:signing:format:focus-jar"
       - "project:mobile:focus:releng:googleplay:product:focus"
       - "secrets:get:project/focus/tokens"
+      - "queue:route:index.project.mobile.focus.release.latest"
     payload:
       maxRunTime: 3600
       deadline: "{{ '2 hours' | $fromNow }}"
+      expires: "{{ '1 year' | $fromNow }}"
       image: 'mozillamobile/focus-android'
       command:
         - /bin/bash
@@ -133,7 +135,13 @@ tasks:
           git fetch origin --tags
           && git config advice.detachedHead false
           && git checkout {{ event.version }}
-          && python tools/taskcluster/release.py --track alpha --commit --tag {{ event.version }}
+          && python tools/taskcluster/release.py \
+            --tag {{ event.version }} \
+            --track alpha \
+            --commit \
+            --output /opt/focus-android/app/build/outputs/apk \
+            --apk focusWebviewUniversal/release/app-focus-webview-universal-release-unsigned.apk \
+            --apk klarWebviewUniversal/release/app-klar-webview-universal-release-unsigned.apk
       features:
         taskclusterProxy: true
         chainOfTrust: true
@@ -141,7 +149,15 @@ tasks:
         'public/task-graph.json':
           type: 'file'
           path: '/opt/focus-android/task-graph.json'
-          expires: "{{ '1 week' | $fromNow }}"
+          expires: "{{ '1 year' | $fromNow }}"
+        'public/actions.json':
+          type: 'file'
+          path: '/opt/focus-android/actions.json'
+          expires: "{{ '1 year' | $fromNow }}"
+        'public/parameters.yml':
+          type: 'file'
+          path: '/opt/focus-android/parameters.yml'
+          expires: "{{ '1 year' | $fromNow }}"
     metadata:
       name: (Focus for Android) Decision task ({{ event.version }})
       description: Scheduling tasks for releasing Focus/Klar
