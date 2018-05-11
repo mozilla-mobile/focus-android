@@ -102,6 +102,37 @@
 <a href="%2$s">Learn more</a></p>
     ]]></string>
 
+    <!-- Header for the Privacy and Security settings menu -->
+    <string name="preference_privacy_and_security_header">Privacy &amp; Security</string>
+
+    <!-- Preference summary for settings related to privacy and security -->
+    <string name="preference_privacy_and_security_summary">Tracking, cookies, data choices</string>
+
+    <!-- Preference category for settings related to search -->
+    <string name="preference_search_summary">Set default, autocomplete</string>
+
+    <!-- Preference category for settings related to Mozilla -->
+    <!-- %1$s will be replaced by the app name (e.g. Firefox Focus) -->
+    <string name="preference_mozilla_summary">About %1$s, help, feedback</string>
+
+    <!-- Preference description of the Privacy and Security Menu -->
+    <string name="preference_privacy_and_security_description">Enable these options to remove ads, make web pages load faster, extend battery life, and save data</string>
+
+    <!-- Preference category for ad blocking and tracking protection settings -->
+    <string name="preference_category_tracking_protection">Tracking Protection</string>
+
+    <!-- Preference category for settings related to controlling web content -->
+    <string name="preference_category_web_content">Web Content</string>
+
+    <!-- Preference category: stealth settings for while switching apps -->
+    <string name="preference_category_switching_apps">Switching Apps</string>
+
+    <!-- Preference category for General Settings -->
+    <string name="preference_category_general">General</string>
+
+    <!-- Preference category for settings about sending usage data -->
+    <string name="preference_category_data_collection_use">Data Collection &amp; Use</string>
+
     <string name="preference_category_search">Search</string>
 
     <!-- This label is shown below the name of the default search engine in settings -->
@@ -140,6 +171,12 @@
     <!-- Label for the button to quick add custom autocomplete URLs. -->
     <string name="custom_autocomplete_quick_add">Add custom URL</string>
 
+    <!-- Preference category for settings about cookies and site data -->
+    <string name="preference_category_cookies">Cookies and Site Data</string>
+
+    <!-- Preference category for settings about data choices -->
+    <string name="preference_category_data_choices">Data Choices</string>
+
     <!-- Title of the screen for removing custom autocomplete URLs. -->
     <string name="preference_autocomplete_title_remove">Remove custom URLs</string>
 
@@ -156,6 +193,9 @@
     <string name="preference_autocomplete_add_hint">Paste or enter URL</string>
 
     <!-- Example how a custom domain autocomplete URL be added (e.g. without http://) -->
+    <string name="preference_autocomplete_add_example2">Example: mozilla.org</string>
+
+    <!-- To be removed once the new hint has been translated -->
     <string name="preference_autocomplete_add_example">Example: example.com</string>
 
     <!-- Confirmation "snackbar" shown after a new custom autocomplete URL has been added. -->
