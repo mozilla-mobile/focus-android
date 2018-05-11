@@ -90,9 +90,6 @@ public class SettingsFragment extends BaseSettingsFragment implements SharedPref
             TelemetryWrapper.openSearchSettingsEvent();
         } else if (preference.getKey().equals(resources.getString(R.string.pref_key_screen_autocomplete))) {
             navigateToFragment(new AutocompleteSettingsFragment());
-        } else if (preference.getKey().equals(resources.getString(R.string
-                .pref_key_privacy_security_screen))) {
-            navigateToFragment(new PrivacySecuritySettingsFragment());
         }
 
         return super.onPreferenceTreeClick(preferenceScreen, preference);
