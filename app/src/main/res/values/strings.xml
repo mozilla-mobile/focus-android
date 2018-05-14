@@ -118,9 +118,6 @@
     <!-- %1$s will be replaced by the app name (e.g. Firefox Focus) -->
     <string name="preference_mozilla_summary">About %1$s, help, feedback</string>
 
-    <!-- Preference description of the Privacy and Security Menu -->
-    <string name="preference_privacy_and_security_description">Enable these options to remove ads, make web pages load faster, extend battery life, and save data</string>
-
     <!-- Preference category for ad blocking and tracking protection settings -->
     <string name="preference_category_tracking_protection">Tracking Protection</string>
 
@@ -129,12 +126,6 @@
 
     <!-- Preference category: stealth settings for while switching apps -->
     <string name="preference_category_switching_apps">Switching Apps</string>
-
-    <!-- Preference category for General Settings -->
-    <string name="preference_category_general">General</string>
-
-    <!-- Preference category for settings about sending usage data -->
-    <string name="preference_category_data_collection_use">Data Collection &amp; Use</string>
 
     <string name="preference_category_search">Search</string>
 
@@ -218,7 +209,6 @@
          is using the system default language. -->
     <string name="preference_language_systemdefault">System default</string>
 
-    <string name="preference_category_privacy">Privacy</string>
     <string name="preference_privacy_block_ads">Block ad trackers</string>
     <string name="preference_privacy_block_ads_summary">Some ads track site visits, even if you don’t click the ads</string>
     <string name="preference_privacy_block_analytics">Block analytic trackers</string>
@@ -250,7 +240,6 @@
      to other displays. However we try to keep this description short and brief to avoid confusion. -->
     <string name="preference_privacy_stealth_summary">Hide webpages when switching apps</string>
 
-    <string name="preference_category_performance">Performance</string>
     <string name="preference_performance_block_webfonts">Block Web fonts</string>
     <!-- This text is shown below the setting for disabling web fonts. Some websites use icons/images from a font and those do not show up if fonts are blocked.-->
     <string name="preference_performance_block_webfonts_summary">May result in missing icons or images</string>
