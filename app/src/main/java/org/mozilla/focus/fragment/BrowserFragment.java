@@ -51,6 +51,7 @@ import org.mozilla.focus.activity.InstallFirefoxActivity;
 import org.mozilla.focus.activity.MainActivity;
 import org.mozilla.focus.animation.TransitionDrawableGroup;
 import org.mozilla.focus.architecture.NonNullObserver;
+import org.mozilla.focus.autocomplete.AutocompleteQuickAddPopup;
 import org.mozilla.focus.broadcastreceiver.DownloadBroadcastReceiver;
 import org.mozilla.focus.customtabs.CustomTabConfig;
 import org.mozilla.focus.locale.LocaleAwareAppCompatActivity;
@@ -71,6 +72,7 @@ import org.mozilla.focus.utils.Features;
 import org.mozilla.focus.utils.StatusBarUtils;
 import org.mozilla.focus.utils.SupportUtils;
 import org.mozilla.focus.utils.UrlUtils;
+import org.mozilla.focus.utils.ViewUtils;
 import org.mozilla.focus.web.Download;
 import org.mozilla.focus.web.IWebView;
 import org.mozilla.focus.web.HttpAuthenticationDialogBuilder;
@@ -80,7 +82,10 @@ import org.mozilla.focus.widget.FloatingSessionsButton;
 
 import java.lang.ref.WeakReference;
 import java.util.List;
+import java.util.Objects;
 
+import kotlin.Unit;
+import kotlin.jvm.functions.Function0;
 import mozilla.components.support.utils.ColorUtils;
 import mozilla.components.support.utils.DownloadUtils;
 import mozilla.components.support.utils.DrawableUtils;
@@ -88,7 +93,9 @@ import mozilla.components.support.utils.DrawableUtils;
 /**
  * Fragment for displaying the browser UI.
  */
-public class BrowserFragment extends WebFragment implements View.OnClickListener, DownloadDialogFragment.DownloadDialogListener {
+@SuppressWarnings({"PMD.ExcessiveClassLength", "PMD.CyclomaticComplexity", "PMD.TooManyMethods",
+        "PMD.ModifiedCyclomaticComplexity", "PMD.TooManyFields", "PMD.StdCyclomaticComplexity" })
+public class BrowserFragment extends WebFragment implements View.OnClickListener, DownloadDialogFragment.DownloadDialogListener, View.OnLongClickListener {
     public static final String FRAGMENT_TAG = "browser";
 
     private static final int REQUEST_CODE_STORAGE_PERMISSION = 101;
@@ -119,6 +126,7 @@ public class BrowserFragment extends WebFragment implements View.OnClickListener
     private FrameLayout popupTint;
     private SwipeRefreshLayout swipeRefresh;
     private WeakReference<BrowserMenu> menuWeakReference = new WeakReference<>(null);
+    private WeakReference<AutocompleteQuickAddPopup> autocompletePopupWeakReference = new WeakReference<>(null);
 
     /**
      * Container for custom video views shown in fullscreen mode.
@@ -219,6 +227,7 @@ public class BrowserFragment extends WebFragment implements View.OnClickListener
         popupTint = view.findViewById(R.id.popup_tint);
 
         urlView = (TextView) view.findViewById(R.id.display_url);
+        urlView.setOnLongClickListener(this);
 
         progressView = (AnimatedProgressBar) view.findViewById(R.id.progress);
 
@@ -1022,8 +1031,14 @@ public class BrowserFragment extends WebFragment implements View.OnClickListener
                 final String title = webView.getTitle();
                 showAddToHomescreenDialog(url, title);
                 break;
+
             case R.id.security_info:
                 showSecurityPopUp();
+                break;
+
+            case R.id.report_site_issue:
+                SessionManager.getInstance().createSession(Source.MENU, SupportUtils.REPORT_SITE_ISSUE_URL.concat(getUrl()));
+                TelemetryWrapper.reportSiteIssueEvent();
                 break;
 
             default:
@@ -1144,5 +1159,43 @@ public class BrowserFragment extends WebFragment implements View.OnClickListener
     // In the future, if more badging icons are needed, this should be abstracted
     public void updateBlockingBadging(boolean enabled) {
         blockView.setVisibility(enabled ? View.GONE : View.VISIBLE);
+    }
+
+    private void dismissAutocompletePopup() {
+        autocompletePopupWeakReference.get().dismiss();
+        autocompletePopupWeakReference.clear();
+    }
+
+    public boolean onLongClick(View view) {
+        // Detect long clicks on display_url
+        if (view.getId() == R.id.display_url) {
+            Context context = getActivity();
+            if (context == null) {
+                return false;
+            }
+
+            AutocompleteQuickAddPopup autocompletePopup = new AutocompleteQuickAddPopup(context, urlView.getText().toString());
+
+            // Show the Snackbar and dismiss the popup when a new URL is added.
+            autocompletePopup.setOnUrlAdded(new Function0<Unit>() {
+                @Override
+                public Unit invoke() {
+                    getActivity().runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            ViewUtils.showBrandedSnackbar(Objects.requireNonNull(getView()), R.string.preference_autocomplete_add_confirmation, 0);
+                            dismissAutocompletePopup();
+                        }
+                    });
+
+                    return Unit.INSTANCE;
+                }
+            });
+
+            autocompletePopup.show(urlView);
+            autocompletePopupWeakReference = new WeakReference<>(autocompletePopup);
+        }
+
+        return false;
     }
 }

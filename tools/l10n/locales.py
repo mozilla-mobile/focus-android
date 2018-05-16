@@ -22,6 +22,7 @@
 RELEASE_LOCALES = [
 	"am",
 	"an",
+	"anp",
 	"ar",
 	"ast",
 	"az",
@@ -63,6 +64,7 @@ RELEASE_LOCALES = [
 	"kab",
 	"kk",
 	"ko",
+	"kw",
 	"lo",
 	"meh",
 	"mix",
@@ -87,13 +89,15 @@ RELEASE_LOCALES = [
 	"th",
 	"tr",
 	"trs",
+	"tsz",
 	"tt",
 	"uk",
 	"ur",
 	"vi",
+	"wo",
+	"zam",
 	"zh-CN",
-	"zh-TW",
-	"zam"
+	"zh-TW"
 ]
 
 # This is the list of locales that we want to take automated screenshots of
@@ -101,9 +105,8 @@ RELEASE_LOCALES = [
 # of other locales so that translators of not yet completed locales can
 # verify their work in progress.
 ADDITIONAL_SCREENSHOT_LOCALES = [
-	"anp",
-	"lt",
-	"wo"
+	"ixl",
+	"lt"
 ]
 
 # Those are locales that we take automated screenshots of.
