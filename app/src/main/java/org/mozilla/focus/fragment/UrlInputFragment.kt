@@ -31,11 +31,13 @@ import org.mozilla.focus.session.Source
 import org.mozilla.focus.telemetry.TelemetryWrapper
 import org.mozilla.focus.utils.Features
 import org.mozilla.focus.utils.Settings
+import org.mozilla.focus.utils.StatusBarUtils
 import org.mozilla.focus.utils.SupportUtils
 import org.mozilla.focus.utils.UrlUtils
 import org.mozilla.focus.utils.ViewUtils
-import org.mozilla.focus.utils.StatusBarUtils
 import org.mozilla.focus.whatsnew.WhatsNew
+
+class FocusCrashException : Exception()
 
 /**
  * Fragment for displaying the URL input controls.
@@ -479,9 +481,13 @@ class UrlInputFragment :
     }
 
     private fun onCommit() {
-        val input = urlView?.text.toString()
+        val input = urlView.autocompleteResult.formattedText.let {
+            if (it.isEmpty()) urlView?.text.toString() else it
+        }
 
         if (!input.trim { it <= ' ' }.isEmpty()) {
+            if (input == "focus:crash") { throw FocusCrashException() }
+
             ViewUtils.hideKeyboard(urlView)
 
             val isUrl = UrlUtils.isUrl(input)
@@ -551,9 +557,8 @@ class UrlInputFragment :
         }
 
         view?.let {
-            autoCompleteProvider.autocomplete(searchText, { result, _, source, size ->
-                view.onAutocomplete(AutocompleteResult(result, source, size))
-            })
+            val result = autoCompleteProvider.autocomplete(searchText)
+            view.onAutocomplete(AutocompleteResult(result.text, result.source, result.size, { result.url }))
         }
 
         if (searchText.trim { it <= ' ' }.isEmpty()) {

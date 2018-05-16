@@ -19,7 +19,6 @@ import kotlinx.coroutines.experimental.android.UI
 import kotlinx.coroutines.experimental.launch
 import mozilla.components.browser.domains.CustomDomains
 import org.mozilla.focus.R
-import org.mozilla.focus.ext.removePrefixesIgnoreCase
 import org.mozilla.focus.settings.BaseSettingsFragment
 import org.mozilla.focus.telemetry.TelemetryWrapper
 import org.mozilla.focus.utils.ViewUtils
@@ -48,6 +47,11 @@ class AutocompleteAddFragment : Fragment() {
         ViewUtils.showKeyboard(domainView)
     }
 
+    override fun onPause() {
+        super.onPause()
+        ViewUtils.hideKeyboard(activity.currentFocus)
+    }
+
     override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
         inflater?.inflate(R.menu.menu_autocomplete_add, menu)
     }
@@ -58,7 +62,6 @@ class AutocompleteAddFragment : Fragment() {
             val domain = domainView.text.toString()
                     .trim()
                     .toLowerCase()
-                    .removePrefixesIgnoreCase("http://", "https://", "www.")
 
             launch(CommonPool) {
                 val domains = CustomDomains.load(activity)

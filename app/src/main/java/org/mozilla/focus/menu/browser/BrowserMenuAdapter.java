@@ -17,6 +17,7 @@ import android.view.ViewGroup;
 import org.mozilla.focus.R;
 import org.mozilla.focus.customtabs.CustomTabConfig;
 import org.mozilla.focus.fragment.BrowserFragment;
+import org.mozilla.focus.utils.AppConstants;
 import org.mozilla.focus.utils.Browsers;
 import org.mozilla.focus.utils.HardwareUtils;
 
@@ -90,6 +91,11 @@ public class BrowserMenuAdapter extends RecyclerView.Adapter<BrowserMenuViewHold
         if (customTabConfig == null) {
             // There’s no need for Settings in a custom tab. The user can go to the browser app itself in order to do this.
             items.add(new MenuItem(R.id.settings, resources.getString(R.string.menu_settings)));
+        }
+
+        if (AppConstants.isGeckoBuild()) {
+            // "Report Site Issue" is available for builds using GeckoView only
+            items.add(new MenuItem(R.id.report_site_issue, resources.getString(R.string.menu_report_site_issue)));
         }
 
         if (customTabConfig != null) {

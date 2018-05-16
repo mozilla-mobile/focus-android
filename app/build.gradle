@@ -19,7 +19,7 @@ android {
         targetSdkVersion 27
         versionCode 11 // This versionCode is "frozen" for local builds. For "release" builds we
                        // override this with a generated versionCode at build time.
-        versionName "5.0"
+        versionName "5.2"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
         multiDexEnabled true
@@ -34,19 +34,13 @@ android {
     }
 
     // We have a three dimensional build configuration:
-    // BUILD TYPE (debug, beta, release) X PRODUCT FLAVOR (focus, klar) X ENGINE FLAVOR (webview, gecko)
+    // BUILD TYPE (debug, release) X PRODUCT FLAVOR (focus, klar) X ENGINE FLAVOR (webview, gecko)
 
     buildTypes {
         release {
             minifyEnabled true
             shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-        }
-        beta {
-            minifyEnabled true
-            shrinkResources true
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            applicationIdSuffix ".beta"
         }
         debug {
             applicationIdSuffix ".debug"
@@ -95,8 +89,6 @@ android {
 
         gecko {
             dimension "engine"
-
-            applicationIdSuffix ".gecko"
         }
 
         x86 {
@@ -120,11 +112,6 @@ android {
         def flavors = variant.flavors*.name
         if (flavors.contains("gecko") && flavors.contains("focus")) {
             // We only need Klar builds with gecko for now
-            setIgnore(true)
-        }
-
-        if (variant.buildType.name == "release" && flavors.contains("gecko")) {
-            // Do not build release versions including Gecko until we actually want to release something.
             setIgnore(true)
         }
 
@@ -164,16 +151,6 @@ android {
         klarWebviewUniversalRelease {
             java.srcDir 'src/klarRelease/java'
             res.srcDir 'src/klarRelease/res'
-        }
-
-        // Beta
-
-        focusWebviewUniversalBeta {
-            res.srcDir 'src/focusBeta/res'
-        }
-
-        klarWebviewUniversalBeta {
-            res.srcDir 'src/klarBeta/res'
         }
 
         // Debug
@@ -229,32 +206,6 @@ android {
             java.srcDir 'src/focusRelease/java'
             manifest.srcFile 'src/focusRelease/AndroidManifest.xml'
             res.srcDir 'src/focusRelease/res'
-        }
-
-        // Beta
-
-        focusGeckoArmBeta {
-            res.srcDir 'src/focusBeta/res'
-        }
-
-        focusGeckoX86Beta {
-            res.srcDir 'src/focusBeta/res'
-        }
-
-        focusGeckoAarch64Beta {
-            res.srcDir 'src/focusBeta/res'
-        }
-
-        klarGeckoArmBeta {
-            res.srcDir 'src/klarBeta/res'
-        }
-
-        klarGeckoX86Beta {
-            res.srcDir 'src/klarBeta/res'
-        }
-
-        klarGeckoAarch64Beta {
-            res.srcDir 'src/klarBeta/res'
         }
 
         // Debug
@@ -386,7 +337,7 @@ dependencies {
     androidTestImplementation "tools.fastlane:screengrab:1.1.0", {
         exclude group: 'com.android.support', module: 'support-annotations'
     }
-    androidTestCompile 'com.android.support.test.espresso:espresso-contrib:2.2.2', {
+    androidTestImplementation 'com.android.support.test.espresso:espresso-contrib:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
         exclude group: 'com.android.support', module: 'support-v4'
         exclude group: 'com.android.support', module: 'design'
@@ -399,9 +350,8 @@ dependencies {
 
 android.applicationVariants.all { variant ->
     def buildType = variant.buildType.name
-    def isBetaOrRelease = buildType == "release" || buildType == "beta"
 
-    if (isBetaOrRelease) {
+    if (buildType == "release") {
         def versionCode = generatedVersionCode
 
         // The Google Play Store does not allow multiple APKs for the same app that all have the
