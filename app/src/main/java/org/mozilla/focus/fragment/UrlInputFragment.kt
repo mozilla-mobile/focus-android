@@ -246,6 +246,9 @@ class UrlInputFragment :
             if (!Settings.getInstance(it).shouldShowFirstrun()) {
                 // Only show keyboard if we are not displaying the first run tour on top.
                 showKeyboard()
+            } else {
+                // If we are showing first run tour, make sure accessibility is turned off.
+                view?.rootView?.importantForAccessibility = View.IMPORTANT_FOR_ACCESSIBILITY_NO_HIDE_DESCENDANTS
             }
         }
     }
