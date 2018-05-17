@@ -219,7 +219,7 @@ public class MainActivity extends LocaleAwareAppCompatActivity {
     private void showFirstrun() {
         getSupportFragmentManager()
                 .beginTransaction()
-                .add(R.id.container, FirstrunFragment.create(), FirstrunFragment.FRAGMENT_TAG)
+                .replace(R.id.container, FirstrunFragment.create(), FirstrunFragment.FRAGMENT_TAG)
                 .commit();
     }
 
