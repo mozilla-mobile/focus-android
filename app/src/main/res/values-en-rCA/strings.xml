@@ -1,0 +1,12 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+  <string name="action_cancel">Cancel</string>
+  <string name="action_ok">OK</string>
+  <string name="action_save">Save</string>
+  <string name="urlbar_hint">Search or enter address</string>
+  <string name="teaser">Automatic private browsing.\nBrowse. Erase. Repeat.</string>
+  <string name="feedback_erase">Your browsing history has been erased.</string>
+  <string name="search_hint">Search for %1$s</string>
+  <string name="menu_share">Share…</string>
+  <string name="menu_open_with_default_browser2">Open in %1$s</string>
+</resources>
