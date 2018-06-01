@@ -26,14 +26,11 @@ import org.mozilla.focus.utils.IntentUtils;
 import org.mozilla.focus.utils.Settings;
 import org.mozilla.focus.utils.UrlUtils;
 import org.mozilla.gecko.util.GeckoBundle;
-import org.mozilla.gecko.util.ThreadUtils;
 import org.mozilla.geckoview.GeckoResponse;
 import org.mozilla.geckoview.GeckoRuntime;
 import org.mozilla.geckoview.GeckoRuntimeSettings;
 import org.mozilla.geckoview.GeckoSession;
 import org.mozilla.geckoview.GeckoSessionSettings;
-
-import java.util.concurrent.CountDownLatch;
 
 import kotlin.text.Charsets;
 
@@ -104,7 +101,7 @@ public class WebViewProvider {
 
         @Override
         public void setCallback(Callback callback) {
-            this.callback =  callback;
+            this.callback = callback;
         }
 
         @Override
@@ -134,7 +131,9 @@ public class WebViewProvider {
 
         @Override
         public void onResume() {
-
+            if (TelemetryWrapper.dayPassedSinceLastUpload(getContext())) {
+                sendTelemetrySnapshots();
+            }
         }
 
         @Override
@@ -356,7 +355,7 @@ public class WebViewProvider {
                 }
 
                 public void onCanGoBack(GeckoSession session, boolean canGoBack) {
-                    GeckoWebView.this.canGoBack =  canGoBack;
+                    GeckoWebView.this.canGoBack = canGoBack;
                 }
 
                 public void onCanGoForward(GeckoSession session, boolean canGoForward) {
@@ -404,7 +403,7 @@ public class WebViewProvider {
         }
 
         private GeckoSession.TrackingProtectionDelegate createTrackingProtectionDelegate() {
-           return new GeckoSession.TrackingProtectionDelegate() {
+            return new GeckoSession.TrackingProtectionDelegate() {
                 @Override
                 public void onTrackerBlocked(GeckoSession geckoSession, String s, int i) {
                     if (callback != null) {
@@ -453,29 +452,22 @@ public class WebViewProvider {
             geckoSession.loadData(data.getBytes(Charsets.UTF_8), mimeType, baseURL);
         }
 
-        @Override
-        public void uploadData(final CountDownLatch latch) {
-            ThreadUtils.postToBackgroundThread(new Runnable() {
+        private void sendTelemetrySnapshots() {
+            final GeckoResponse<GeckoBundle> response = new GeckoResponse<GeckoBundle>() {
                 @Override
-                public void run() {
-                    final GeckoResponse<GeckoBundle> response = new GeckoResponse<GeckoBundle>() {
-                        @Override
-                        public void respond(GeckoBundle value) {
-                            if (value != null) {
-                                try {
-                                    final JSONObject jsonData = value.toJSONObject();
-                                    TelemetryWrapper.addMobileMetricsPing(jsonData);
-                                } catch (JSONException e) {
-                                    e.printStackTrace();
-                                }
-                            }
-                            latch.countDown();
+                public void respond(GeckoBundle value) {
+                    if (value != null) {
+                        try {
+                            final JSONObject jsonData = value.toJSONObject();
+                            TelemetryWrapper.addMobileMetricsPing(jsonData);
+                        } catch (JSONException e) {
+                            Log.e("getSnapshots failed", e.getMessage());
                         }
-                    };
-
-                    geckoRuntime.getTelemetry().getSnapshots(true, response);
+                    }
                 }
-            });
+            };
+
+            geckoRuntime.getTelemetry().getSnapshots(true, response);
         }
 
         @Override

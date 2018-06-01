@@ -42,7 +42,6 @@ import org.mozilla.focus.web.WebViewProvider;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.CountDownLatch;
 
 import mozilla.components.support.utils.ThreadUtils;
 
@@ -222,11 +221,6 @@ public class SystemWebView extends NestedWebView implements IWebView, SharedPref
     @Override
     public void loadData(String baseURL, String data, String mimeType, String encoding, String historyURL) {
         loadDataWithBaseURL(baseURL, data, mimeType, encoding, historyURL);
-    }
-
-    @Override
-    public void uploadData(CountDownLatch latch) {
-        // Do nothing, for GeckoView
     }
 
     @Override
