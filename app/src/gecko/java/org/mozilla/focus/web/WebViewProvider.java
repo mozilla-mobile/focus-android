@@ -57,6 +57,7 @@ public class WebViewProvider {
             final GeckoRuntimeSettings.Builder runtimeSettingsBuilder =
                     new GeckoRuntimeSettings.Builder();
             runtimeSettingsBuilder.useContentProcessHint(true);
+            runtimeSettingsBuilder.javaCrashReportingEnabled(true);
             geckoRuntime = GeckoRuntime.create(context.getApplicationContext(), runtimeSettingsBuilder.build());
         }
     }
@@ -158,12 +159,12 @@ public class WebViewProvider {
 
         @Override
         public void setBlockingEnabled(boolean enabled) {
+            geckoSession.getSettings().setBoolean(GeckoSessionSettings.USE_TRACKING_PROTECTION, enabled);
             if (enabled) {
                 updateBlocking();
                 applyAppSettings();
             } else {
                 if (geckoSession != null) {
-                    geckoSession.disableTrackingProtection();
                     geckoRuntime.getSettings().setJavaScriptEnabled(true);
                     geckoRuntime.getSettings().setWebFontsEnabled(true);
                 }
@@ -190,6 +191,15 @@ public class WebViewProvider {
         private void applyAppSettings() {
             geckoRuntime.getSettings().setJavaScriptEnabled(!Settings.getInstance(getContext()).shouldBlockJavaScript());
             geckoRuntime.getSettings().setWebFontsEnabled(!Settings.getInstance(getContext()).shouldBlockWebFonts());
+            final int cookiesValue;
+            if (Settings.getInstance(getContext()).shouldBlockCookies() && Settings.getInstance(getContext()).shouldBlockThirdPartyCookies()) {
+                cookiesValue = GeckoRuntimeSettings.COOKIE_ACCEPT_NONE;
+            } else if (Settings.getInstance(getContext()).shouldBlockThirdPartyCookies()) {
+                cookiesValue = GeckoRuntimeSettings.COOKIE_ACCEPT_FIRST_PARTY;
+            } else {
+                cookiesValue = GeckoRuntimeSettings.COOKIE_ACCEPT_ALL;
+            }
+            geckoRuntime.getSettings().setCookieBehavior(cookiesValue);
         }
 
         private void updateBlocking() {
@@ -208,9 +218,8 @@ public class WebViewProvider {
             if (settings.shouldBlockOtherTrackers()) {
                 categories += GeckoSession.TrackingProtectionDelegate.CATEGORY_CONTENT;
             }
-            if (geckoSession != null) {
-                geckoSession.enableTrackingProtection(categories);
-            }
+
+            geckoRuntime.getSettings().setTrackingProtectionCategories(categories);
         }
 
         private GeckoSession.ContentDelegate createContentDelegate() {
