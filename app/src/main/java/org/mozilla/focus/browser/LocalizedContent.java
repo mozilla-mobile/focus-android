@@ -12,6 +12,7 @@ import android.support.annotation.NonNull;
 import android.support.v4.util.ArrayMap;
 import android.view.View;
 
+import org.mozilla.focus.BuildConfig;
 import org.mozilla.focus.R;
 import org.mozilla.focus.locale.Locales;
 import org.mozilla.focus.utils.AppConstants;
@@ -51,7 +52,9 @@ public class LocalizedContent {
 
         String aboutVersion = "";
         try {
-            final String engineIndicator = AppConstants.isGeckoBuild() ? " \uD83E\uDD8E" : "";
+            final String engineIndicator = AppConstants.isGeckoBuild() ?
+                    " \uD83E\uDD8E " + BuildConfig.GECKOVIEW_VERSION
+                    : "";
             final PackageInfo packageInfo = context.getPackageManager().getPackageInfo(context.getPackageName(), 0);
             aboutVersion = String.format("%s (Build #%s)", packageInfo.versionName, packageInfo.versionCode + engineIndicator);
         } catch (PackageManager.NameNotFoundException e) {
