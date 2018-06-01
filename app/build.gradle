@@ -308,7 +308,7 @@ dependencies {
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:0.22.5"
 
     focusImplementation 'com.adjust.sdk:adjust-android:4.11.4'
-    focusImplementation 'com.google.android.gms:play-services-analytics:15.0.2' // Required by Adjust
+    focusImplementation 'com.google.android.gms:play-services-analytics:10.2.6' // Required by Adjust
 
     // What I actually want to define here is geckoArmCompile and geckoX86Compile. But gradle doesn't
     // allow me to define dependencies for such a flavor combination. However as we are not building
