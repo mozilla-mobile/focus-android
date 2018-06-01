@@ -284,14 +284,14 @@ repositories {
 }
 
 dependencies {
-    implementation "com.android.support:appcompat-v7:27.1.1"
-    implementation "com.android.support:customtabs:27.1.1"
-    implementation "com.android.support:design:27.1.1"
-    implementation "com.android.support:cardview-v7:27.1.1"
-    implementation "com.android.support:recyclerview-v7:27.1.1"
+    implementation "com.android.support:appcompat-v7:$support_libraries_version"
+    implementation "com.android.support:customtabs:$support_libraries_version"
+    implementation "com.android.support:design:$support_libraries_version"
+    implementation "com.android.support:cardview-v7:$support_libraries_version"
+    implementation "com.android.support:recyclerview-v7:$support_libraries_version"
     implementation 'io.sentry:sentry-android:1.7.3'
 
-    implementation "android.arch.lifecycle:extensions:1.1.1"
+    implementation "android.arch.lifecycle:extensions:$architecture_components_version"
 
     compileOnly 'net.jcip:jcip-annotations:1.0'
     compileOnly "com.github.spotbugs:spotbugs-annotations:$spotbugs_version"
@@ -331,8 +331,8 @@ dependencies {
         exclude group: 'com.android.support', module: 'support-annotations'
     }
 
-    androidTestImplementation 'com.squareup.okhttp3:mockwebserver:3.7.0'
-    testImplementation 'com.squareup.okhttp3:mockwebserver:3.7.0'
+    androidTestImplementation 'com.squareup.okhttp3:mockwebserver:3.8.1'
+    testImplementation 'com.squareup.okhttp3:mockwebserver:3.8.1'
 
     androidTestImplementation "tools.fastlane:screengrab:1.1.0", {
         exclude group: 'com.android.support', module: 'support-annotations'
