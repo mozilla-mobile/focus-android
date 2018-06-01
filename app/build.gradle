@@ -296,13 +296,13 @@ dependencies {
     compileOnly 'net.jcip:jcip-annotations:1.0'
     compileOnly "com.github.spotbugs:spotbugs-annotations:$spotbugs_version"
 
-    implementation 'org.mozilla.telemetry:telemetry:1.1.1'
-    implementation "org.mozilla.components:ktx:0.5.1"
-    implementation "org.mozilla.components:utils:0.5.1"
-    implementation "org.mozilla.components:domains:0.5.1"
-    implementation "org.mozilla.components:autocomplete:0.5.1"
+    implementation "org.mozilla.components:telemetry:$mozilla_components_version"
+    implementation "org.mozilla.components:ktx:$mozilla_components_version"
+    implementation "org.mozilla.components:utils:$mozilla_components_version"
+    implementation "org.mozilla.components:domains:$mozilla_components_version"
+    implementation "org.mozilla.components:autocomplete:$mozilla_components_version"
     implementation "org.mozilla.components:search:$mozilla_components_version"
-    implementation "org.mozilla.photon:colors:0.5.1"
+    implementation "org.mozilla.photon:colors:$mozilla_components_version"
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:0.22.5"
