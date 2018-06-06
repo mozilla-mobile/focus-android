@@ -15,10 +15,11 @@ import android.view.View
 import android.view.ViewGroup
 import kotlinx.android.synthetic.main.fragment_autocomplete_add_domain.*
 import kotlinx.coroutines.experimental.CommonPool
+import kotlinx.coroutines.experimental.android.UI
 import kotlinx.coroutines.experimental.launch
+import mozilla.components.browser.domains.CustomDomains
 import org.mozilla.focus.R
-import org.mozilla.focus.ext.removePrefixesIgnoreCase
-import org.mozilla.focus.settings.SettingsFragment
+import org.mozilla.focus.settings.BaseSettingsFragment
 import org.mozilla.focus.telemetry.TelemetryWrapper
 import org.mozilla.focus.utils.ViewUtils
 
@@ -28,14 +29,13 @@ import org.mozilla.focus.utils.ViewUtils
 class AutocompleteAddFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         setHasOptionsMenu(true)
     }
 
     override fun onResume() {
         super.onResume()
 
-        val updater = activity as SettingsFragment.ActionBarUpdater
+        val updater = activity as BaseSettingsFragment.ActionBarUpdater
         updater.updateTitle(R.string.preference_autocomplete_title_add)
         updater.updateIcon(R.drawable.ic_close)
     }
@@ -45,6 +45,11 @@ class AutocompleteAddFragment : Fragment() {
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         ViewUtils.showKeyboard(domainView)
+    }
+
+    override fun onPause() {
+        super.onPause()
+        ViewUtils.hideKeyboard(activity.currentFocus)
     }
 
     override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
@@ -57,12 +62,22 @@ class AutocompleteAddFragment : Fragment() {
             val domain = domainView.text.toString()
                     .trim()
                     .toLowerCase()
-                    .removePrefixesIgnoreCase("http://", "https://", "www.")
 
-            if (domain.isEmpty()) {
-                domainView.error = getString(R.string.preference_autocomplete_add_error)
-            } else {
-                saveDomainAndClose(activity.applicationContext, domain)
+            launch(CommonPool) {
+                val domains = CustomDomains.load(activity)
+                val error = when {
+                    domain.isEmpty() -> getString(R.string.preference_autocomplete_add_error)
+                    domains.contains(domain) -> getString(R.string.preference_autocomplete_duplicate_url_error)
+                    else -> null
+                }
+
+                launch(UI) {
+                    if (error != null) {
+                        domainView.error = error
+                    } else {
+                        saveDomainAndClose(activity.applicationContext, domain)
+                    }
+                }
             }
 
             return true
@@ -73,7 +88,7 @@ class AutocompleteAddFragment : Fragment() {
 
     private fun saveDomainAndClose(context: Context, domain: String) {
         launch(CommonPool) {
-            CustomAutocomplete.addDomain(context, domain)
+            CustomDomains.add(context, domain)
 
             TelemetryWrapper.saveAutocompleteDomainEvent()
         }

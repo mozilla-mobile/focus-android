@@ -34,7 +34,6 @@ import org.mozilla.focus.session.Session;
 import org.mozilla.focus.telemetry.TelemetryWrapper;
 import org.mozilla.focus.utils.AppConstants;
 import org.mozilla.focus.utils.FileUtils;
-import org.mozilla.focus.utils.ThreadUtils;
 import org.mozilla.focus.utils.UrlUtils;
 import org.mozilla.focus.utils.ViewUtils;
 import org.mozilla.focus.web.Download;
@@ -44,11 +43,13 @@ import org.mozilla.focus.web.WebViewProvider;
 import java.util.HashMap;
 import java.util.Map;
 
+import mozilla.components.support.utils.ThreadUtils;
+
 public class SystemWebView extends NestedWebView implements IWebView, SharedPreferences.OnSharedPreferenceChangeListener {
     private static final String TAG = "WebkitView";
 
     private Callback callback;
-    private FocusWebViewClient client;
+    private final FocusWebViewClient client;
     private final LinkHandler linkHandler;
 
     public SystemWebView(Context context, AttributeSet attrs) {
@@ -106,7 +107,19 @@ public class SystemWebView extends NestedWebView implements IWebView, SharedPref
 
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-        WebViewProvider.applyAppSettings(getContext(), getSettings());
+        WebViewProvider.applyAppSettings(getContext(), getSettings(), this);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        pauseTimers();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        resumeTimers();
     }
 
     @Override
@@ -157,9 +170,27 @@ public class SystemWebView extends NestedWebView implements IWebView, SharedPref
     @Override
     public void setBlockingEnabled(boolean enabled) {
         client.setBlockingEnabled(enabled);
+        if (enabled) {
+            WebViewProvider.applyAppSettings(getContext(), getSettings(), this);
+        } else {
+            WebViewProvider.disableBlocking(getSettings(), this);
+        }
 
         if (callback != null) {
             callback.onBlockingStateChanged(enabled);
+        }
+    }
+
+    @Override
+    public void setRequestDesktop(boolean shouldRequestDesktop) {
+        if (shouldRequestDesktop) {
+            WebViewProvider.requestDesktopSite(getSettings());
+        } else {
+            WebViewProvider.requestMobileSite(getContext(), getSettings());
+        }
+
+        if (callback != null) {
+            callback.onRequestDesktopStateChanged(shouldRequestDesktop);
         }
     }
 
@@ -186,6 +217,11 @@ public class SystemWebView extends NestedWebView implements IWebView, SharedPref
 
     @Override
     public void exitFullscreen() {}
+
+    @Override
+    public void loadData(String baseURL, String data, String mimeType, String encoding, String historyURL) {
+        loadDataWithBaseURL(baseURL, data, mimeType, encoding, historyURL);
+    }
 
     @Override
     public void destroy() {
@@ -225,7 +261,7 @@ public class SystemWebView extends NestedWebView implements IWebView, SharedPref
     }
 
     public static void deleteContentFromKnownLocations(final Context context) {
-        ThreadUtils.postToBackgroundThread(new Runnable() {
+        ThreadUtils.INSTANCE.postToBackgroundThread(new Runnable() {
             @Override
             public void run() {
                 // We call all methods on WebView to delete data. But some traces still remain

@@ -4,7 +4,12 @@ buildscript {
     ext.architecture_components_version = '1.1.0'
     ext.support_libraries_version = '27.0.2'
     ext.espresso_version = '3.0.1'
-    ext.kotlin_version = '1.2.21'
+    ext.kotlin_version = '1.2.30'
+    ext.geckoview_nightly_date = '2018.06.05'
+    ext.geckoview_revision = 'a358755643e92f8fc55a23e3ab1fbf88695b8bf3'
+    ext.geckoview_nightly_version = '62.0.20180605100109'
+    ext.spotbugs_version = '3.1.2'
+    ext.mozilla_components_version = '0.5.1'
 
     repositories {
         google()
@@ -17,6 +22,7 @@ buildscript {
 
         classpath 'org.ajoberstar:grgit:1.5.0'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+        classpath "gradle.plugin.com.github.spotbugs:spotbugs-gradle-plugin:1.6.1"
 
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
@@ -29,7 +35,7 @@ plugins {
     // other methods involve using undocumented APIs
     // https://docs.gradle.org/current/userguide/plugins.html#plugins_dsl_limitations
     id "io.gitlab.arturbosch.detekt" version "1.0.0.RC6-3"
-    id "org.jetbrains.kotlin.kapt" version "1.2.0"
+    id "org.jetbrains.kotlin.kapt" version "1.2.30"
 }
 
 detekt {
@@ -60,7 +66,7 @@ configurations {
 }
 
 dependencies {
-    ktlint "com.github.shyiko:ktlint:0.14.0"
+    ktlint "com.github.shyiko:ktlint:0.21.0"
 }
 
 task ktlint(type: JavaExec, group: "verification") {

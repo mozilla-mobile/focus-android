@@ -17,6 +17,7 @@ import android.view.ViewGroup;
 import org.mozilla.focus.R;
 import org.mozilla.focus.customtabs.CustomTabConfig;
 import org.mozilla.focus.fragment.BrowserFragment;
+import org.mozilla.focus.utils.AppConstants;
 import org.mozilla.focus.utils.Browsers;
 import org.mozilla.focus.utils.HardwareUtils;
 
@@ -44,6 +45,7 @@ public class BrowserMenuAdapter extends RecyclerView.Adapter<BrowserMenuViewHold
     private final Context context;
     private final BrowserMenu menu;
     private final BrowserFragment fragment;
+    private boolean hasCustomTabConfig;
 
     private List<MenuItem> items;
     private WeakReference<NavigationItemViewHolder> navigationItemViewHolderReference;
@@ -63,6 +65,10 @@ public class BrowserMenuAdapter extends RecyclerView.Adapter<BrowserMenuViewHold
         final Browsers browsers = new Browsers(context, url);
 
         this.items = new ArrayList<>();
+
+        if (customTabConfig != null) {
+            hasCustomTabConfig = true;
+        }
 
         if (customTabConfig == null || customTabConfig.showShareMenuItem) {
             items.add(new MenuItem(R.id.share, resources.getString(R.string.menu_share)));
@@ -90,6 +96,11 @@ public class BrowserMenuAdapter extends RecyclerView.Adapter<BrowserMenuViewHold
         if (customTabConfig == null) {
             // There’s no need for Settings in a custom tab. The user can go to the browser app itself in order to do this.
             items.add(new MenuItem(R.id.settings, resources.getString(R.string.menu_settings)));
+        }
+
+        if (AppConstants.isGeckoBuild()) {
+            // "Report Site Issue" is available for builds using GeckoView only
+            items.add(new MenuItem(R.id.report_site_issue, resources.getString(R.string.menu_report_site_issue)));
         }
 
         if (customTabConfig != null) {
@@ -145,6 +156,10 @@ public class BrowserMenuAdapter extends RecyclerView.Adapter<BrowserMenuViewHold
                     inflater.inflate(R.layout.menu_blocking_switch, parent, false), fragment);
             blockingItemViewHolderReference = new WeakReference<>(blockingItemViewHolder);
             return blockingItemViewHolder;
+        } else if (viewType == RequestDesktopCheckItemViewHolder.LAYOUT_ID) {
+            final RequestDesktopCheckItemViewHolder checkItemViewHolder = new RequestDesktopCheckItemViewHolder(
+                    inflater.inflate(R.layout.request_desktop_check_menu_item, parent, false), fragment);
+            return checkItemViewHolder;
         } else if (viewType == CustomTabMenuItemViewHolder.LAYOUT_ID) {
             return new CustomTabMenuItemViewHolder(inflater.inflate(R.layout.custom_tab_menu_item, parent, false));
         }
@@ -159,13 +174,21 @@ public class BrowserMenuAdapter extends RecyclerView.Adapter<BrowserMenuViewHold
 
         int actualPosition = translateToMenuPosition(position);
 
-        if (actualPosition >= 0 && position != getBlockingSwitchPosition()) {
+        if (actualPosition >= 0 && position != getBlockingSwitchPosition() && position !=
+                getRequestDesktopCheckPosition()) {
             ((MenuItemViewHolder) holder).bind(items.get(actualPosition));
         }
     }
 
     private int translateToMenuPosition(int position) {
-        return shouldShowButtonToolbar() ? position - 2 : position - 1;
+        int offset = 1;
+        if (shouldShowButtonToolbar()) {
+            offset++;
+        }
+        if (position > getRequestDesktopCheckPosition()) {
+            offset++;
+        }
+        return position - offset;
     }
 
     @Override
@@ -174,6 +197,8 @@ public class BrowserMenuAdapter extends RecyclerView.Adapter<BrowserMenuViewHold
             return NavigationItemViewHolder.LAYOUT_ID;
         } else if (position == getBlockingSwitchPosition()) {
             return BlockingItemViewHolder.LAYOUT_ID;
+        } else if (position == getRequestDesktopCheckPosition()) {
+            return RequestDesktopCheckItemViewHolder.LAYOUT_ID;
         } else {
             final int actualPosition = translateToMenuPosition(position);
             final MenuItem menuItem = items.get(actualPosition);
@@ -190,6 +215,10 @@ public class BrowserMenuAdapter extends RecyclerView.Adapter<BrowserMenuViewHold
         return shouldShowButtonToolbar() ? 1 : 0;
     }
 
+    private int getRequestDesktopCheckPosition() {
+        return hasCustomTabConfig ? 4 : getItemCount() - 2;
+    }
+
     @Override
     public int getItemCount() {
         int itemCount = items.size();
@@ -199,6 +228,9 @@ public class BrowserMenuAdapter extends RecyclerView.Adapter<BrowserMenuViewHold
         }
 
         // For the blocking switch
+        itemCount++;
+
+        // For the Request Desktop Check
         itemCount++;
 
         return itemCount;

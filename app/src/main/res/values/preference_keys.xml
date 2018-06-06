@@ -11,6 +11,8 @@
     <string name="pref_key_privacy_block_other" translatable="false"><xliff:g id="preference_key">pref_privacy_block_other</xliff:g></string>
 
     <string name="pref_key_performance_block_webfonts" translatable="false"><xliff:g id="preference_key">pref_performance_block_webfonts</xliff:g></string>
+    <string name="pref_key_performance_block_javascript" translatable="false"><xliff:g id="preference_key">pref_performance_block_javascript</xliff:g></string>
+    <string name="pref_key_performance_enable_cookies" translatable="false"><xliff:g id="preference_key">pref_performance_enable_cookies</xliff:g></string>
     <string name="pref_key_performance_block_images" translatable="false"><xliff:g id="preference_key">pref_performance_block_images</xliff:g></string>
 
     <string name="pref_key_default_browser" translatable="false"><xliff:g id="preference_key">pref_default_browser</xliff:g></string>
@@ -30,4 +32,8 @@
     <string name="pref_key_autocomplete_preinstalled" translatable="false"><xliff:g id="preference_key">pref_autocomplete_preinstalled</xliff:g></string>
     <string name="pref_key_autocomplete_custom" translatable="false"><xliff:g id="preference_key">pref_autocomplete_custom</xliff:g></string>
     <string name="pref_key_screen_custom_domains" translatable="false"><xliff:g id="preference_key">pref_screen_custom_domains</xliff:g></string>
+
+    <string name="pref_key_privacy_security_screen" translatable="false"><xliff:g id="preference_key">pref_screen_privacy_security</xliff:g></string>
+    <string name="pref_key_mozilla_screen" translatable="false"><xliff:g id="preference_key">pref_screen_mozilla</xliff:g></string>
+    <string name="pref_key_search_screen" translatable="false"><xliff:g id="preference_key">pref_screen_search</xliff:g></string>
 </resources>

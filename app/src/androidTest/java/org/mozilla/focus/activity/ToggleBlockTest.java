@@ -20,6 +20,8 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mozilla.focus.R;
 import org.mozilla.focus.helpers.SessionLoadedIdlingResource;
+import org.mozilla.focus.helpers.TestHelper;
+import org.mozilla.focus.utils.AppConstants;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
@@ -86,14 +88,20 @@ public class ToggleBlockTest {
         onView(withId(R.id.menuView))
                 .perform(click());
 
-        // Check that the tracker count is 1.
-        onView(withId(R.id.trackers_count))
-                .check(matches(withText("1")));
+        if (AppConstants.isGeckoBuild()) {
+            // Check that the tracker count is 0, since Geckoview sends DNT header
+            onView(withId(R.id.trackers_count))
+                    .check(matches(withText("0")));
+        } else {
+            onView(withId(R.id.trackers_count))
+                    .check(matches(withText("1")));
+        }
 
         // Disable blocking
         onView(withId(R.id.blocking_switch))
                 .check(matches(isChecked()))
                 .perform(click());
+        TestHelper.waitForWebContent();
 
         // Now the blocking badge is visible
         onView(withId(R.id.block))

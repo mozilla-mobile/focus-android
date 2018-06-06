@@ -8,10 +8,10 @@ import android.content.Context
 import android.content.SharedPreferences
 import android.content.res.Resources
 import android.preference.PreferenceManager
+import mozilla.components.browser.search.SearchEngine
 
 import org.mozilla.focus.R
 import org.mozilla.focus.fragment.FirstrunFragment
-import org.mozilla.focus.search.SearchEngine
 
 /**
  * A simple wrapper for SharedPreferences that makes reading preference a little bit easier.
@@ -34,8 +34,8 @@ class Settings private constructor(context: Context) {
     private val preferences: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
     private val resources: Resources = context.resources
 
-    val defaultSearchEngineName: String?
-        get() = preferences.getString(getPreferenceKey(R.string.pref_key_search_engine), null)
+    val defaultSearchEngineName: String
+        get() = preferences.getString(getPreferenceKey(R.string.pref_key_search_engine), "")
 
     fun shouldBlockImages(): Boolean =
             // Not shipping in v1 (#188)
@@ -43,6 +43,33 @@ class Settings private constructor(context: Context) {
                     resources.getString(R.string.pref_key_performance_block_images),
                     false); */
             false
+
+    fun shouldBlockWebFonts(): Boolean =
+        preferences.getBoolean(
+            getPreferenceKey(R.string.pref_key_performance_block_webfonts),
+            false)
+
+    fun shouldBlockJavaScript(): Boolean =
+            preferences.getBoolean(
+                getPreferenceKey(R.string.pref_key_performance_block_javascript),
+                false)
+
+    fun shouldBlockCookiesValue(): String =
+            preferences.getString(getPreferenceKey(R.string
+                    .pref_key_performance_enable_cookies),
+                    resources.getString(R.string.preference_privacy_should_block_cookies_no_option))
+
+    fun shouldBlockCookies(): Boolean =
+            shouldBlockCookiesValue().equals(resources.getString(
+                    R.string.preference_privacy_should_block_cookies_yes_option))
+
+    fun shouldBlockThirdPartyCookies(): Boolean =
+            shouldBlockCookiesValue().equals(
+                    resources.getString(
+                            R.string.preference_privacy_should_block_cookies_third_party_only_option)) ||
+                    shouldBlockCookiesValue().equals(
+                            resources.getString(
+                                    R.string.preference_privacy_should_block_cookies_yes_option))
 
     fun shouldShowFirstrun(): Boolean =
             !preferences.getBoolean(FirstrunFragment.FIRSTRUN_PREF, false)

@@ -3,6 +3,9 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
+// We haven't migrated from TelemetryEventPingBuilder to MobileEventPingBuilder yet.
+@file:Suppress("DEPRECATION")
+
 package org.mozilla.focus.telemetry
 
 import android.content.Context
@@ -10,12 +13,15 @@ import android.net.http.SslError
 import android.os.StrictMode
 import android.preference.PreferenceManager
 import android.support.annotation.CheckResult
+import kotlinx.coroutines.experimental.runBlocking
 import org.mozilla.focus.BuildConfig
 import org.mozilla.focus.R
-import org.mozilla.focus.search.SearchEngineManager
 import org.mozilla.focus.session.SessionManager
 import org.mozilla.focus.utils.AppConstants
-import org.mozilla.focus.widget.InlineAutocompleteEditText.AutocompleteResult
+import mozilla.components.ui.autocomplete.InlineAutocompleteEditText.AutocompleteResult
+import org.mozilla.focus.Components
+import org.mozilla.focus.search.CustomSearchEngineStore
+import org.mozilla.focus.utils.Settings
 import org.mozilla.telemetry.Telemetry
 import org.mozilla.telemetry.TelemetryHolder
 import org.mozilla.telemetry.config.TelemetryConfiguration
@@ -89,6 +95,7 @@ object TelemetryWrapper {
         val NOTIFICATION_ACTION = "notification_action"
         val SHORTCUT = "shortcut"
         val BLOCKING_SWITCH = "blocking_switch"
+        val DESKTOP_REQUEST_CHECK = "desktop_request_check"
         val BROWSER = "browser"
         val BROWSER_CONTEXTMENU = "browser_contextmenu"
         val CUSTOM_TAB_CLOSE_BUTTON = "custom_tab_close_but"
@@ -118,6 +125,7 @@ object TelemetryWrapper {
         val ERASE_TO_APP = "erase_app"
         val IMAGE = "image"
         val LINK = "link"
+        val IMAGE_WITH_LINK = "image+link"
         val CUSTOM_TAB = "custom_tab"
         val SKIP = "skip"
         val FINISH = "finish"
@@ -131,6 +139,8 @@ object TelemetryWrapper {
         val WHATS_NEW = "whats_new"
         val RESUME = "resume"
         val RELOAD = "refresh"
+        val FULL_BROWSER = "full_browser"
+        val REPORT_ISSUE = "report_issue"
     }
 
     private object Extra {
@@ -144,6 +154,16 @@ object TelemetryWrapper {
         val SUCCESS = "success"
         val ERROR_CODE = "error_code"
         val AVERAGE = "average"
+    }
+
+    enum class BrowserContextMenuValue {
+        Link, Image, ImageWithLink;
+
+        override fun toString(): String = when (this) {
+            Link -> Value.LINK
+            Image -> Value.IMAGE
+            ImageWithLink -> Value.IMAGE_WITH_LINK
+        }
     }
 
     @JvmStatic
@@ -195,6 +215,8 @@ object TelemetryWrapper {
                             resources.getString(R.string.pref_key_privacy_block_analytics),
                             resources.getString(R.string.pref_key_privacy_block_social),
                             resources.getString(R.string.pref_key_privacy_block_other),
+                            resources.getString(R.string.pref_key_performance_block_javascript),
+                            resources.getString(R.string.pref_key_performance_enable_cookies),
                             resources.getString(R.string.pref_key_performance_block_webfonts),
                             resources.getString(R.string.pref_key_locale),
                             resources.getString(R.string.pref_key_secure),
@@ -224,9 +246,9 @@ object TelemetryWrapper {
 
     private fun createDefaultSearchProvider(context: Context): DefaultSearchMeasurement.DefaultSearchEngineProvider {
         return DefaultSearchMeasurement.DefaultSearchEngineProvider {
-            SearchEngineManager.getInstance()
-                    .getDefaultSearchEngine(context)
-                    .identifier
+            runBlocking {
+                getDefaultSearchEngineIdentifierForTelemetry(context)
+            }
         }
     }
 
@@ -378,10 +400,9 @@ object TelemetryWrapper {
 
         TelemetryEvent.create(Category.ACTION, Method.TYPE_QUERY, Object.SEARCH_BAR).queue()
 
-        val searchEngine = SearchEngineManager.getInstance().getDefaultSearchEngine(
-                telemetry.configuration.context)
+        val searchEngine = getDefaultSearchEngineIdentifierForTelemetry(telemetry.configuration.context)
 
-        telemetry.recordSearch(SearchesMeasurement.LOCATION_ACTIONBAR, searchEngine.identifier)
+        telemetry.recordSearch(SearchesMeasurement.LOCATION_ACTIONBAR, searchEngine)
     }
 
     @JvmStatic
@@ -390,10 +411,23 @@ object TelemetryWrapper {
 
         TelemetryEvent.create(Category.ACTION, Method.TYPE_SELECT_QUERY, Object.SEARCH_BAR).queue()
 
-        val searchEngine = SearchEngineManager.getInstance().getDefaultSearchEngine(
-                telemetry.configuration.context)
+        val searchEngineIdentifier = getDefaultSearchEngineIdentifierForTelemetry(telemetry.configuration.context)
 
-        telemetry.recordSearch(SearchesMeasurement.LOCATION_SUGGESTION, searchEngine.identifier)
+        telemetry.recordSearch(SearchesMeasurement.LOCATION_SUGGESTION, searchEngineIdentifier)
+    }
+
+    private fun getDefaultSearchEngineIdentifierForTelemetry(context: Context): String {
+        val searchEngine = Components.searchEngineManager.getDefaultSearchEngine(
+                context,
+                Settings.getInstance(context).defaultSearchEngineName
+        ).identifier
+
+        return if (CustomSearchEngineStore.isCustomSearchEngine(searchEngine, context)) {
+            // Don't collect possibly sensitive info for custom search engines, send "custom" instead
+            CustomSearchEngineStore.ENGINE_TYPE_CUSTOM
+        } else {
+            searchEngine
+        }
     }
 
     @JvmStatic
@@ -516,13 +550,21 @@ object TelemetryWrapper {
     }
 
     @JvmStatic
-    fun cancelWebContextMenuEvent() {
-        TelemetryEvent.create(Category.ACTION, Method.CANCEL, Object.BROWSER_CONTEXTMENU).queue()
+    fun cancelWebContextMenuEvent(value: BrowserContextMenuValue) {
+        TelemetryEvent.create(Category.ACTION, Method.CANCEL, Object.BROWSER_CONTEXTMENU, value.toString()).queue()
     }
 
     @JvmStatic
     fun openDefaultAppEvent() {
         TelemetryEvent.create(Category.ACTION, Method.OPEN, Object.MENU, Value.DEFAULT).queue()
+    }
+
+    /**
+     * Switching from a custom tab to the full-featured browser (regular tab).
+     */
+    @JvmStatic
+    fun openFullBrowser() {
+        TelemetryEvent.create(Category.ACTION, Method.OPEN, Object.MENU, Value.FULL_BROWSER).queue()
     }
 
     @JvmStatic
@@ -557,6 +599,16 @@ object TelemetryWrapper {
                 Method.CLICK,
                 Object.BLOCKING_SWITCH,
                 isBlockingEnabled.toString()
+        ).queue()
+    }
+
+    @JvmStatic
+    fun desktopRequestCheckEvent(shouldRequestDesktop: Boolean) {
+        TelemetryEvent.create(
+            Category.ACTION,
+            Method.CLICK,
+            Object.DESKTOP_REQUEST_CHECK,
+            shouldRequestDesktop.toString()
         ).queue()
     }
 
@@ -701,5 +753,10 @@ object TelemetryWrapper {
     @JvmStatic
     fun addSearchEngineLearnMoreEvent() {
         TelemetryEvent.create(Category.ACTION, Method.CLICK, Object.ADD_SEARCH_ENGINE_LEARN_MORE).queue()
+    }
+
+    @JvmStatic
+    fun reportSiteIssueEvent() {
+        TelemetryEvent.create(Category.ACTION, Method.CLICK, Object.MENU, Value.REPORT_ISSUE).queue()
     }
 }

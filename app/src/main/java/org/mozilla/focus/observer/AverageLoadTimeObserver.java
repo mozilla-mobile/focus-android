@@ -10,7 +10,6 @@ import android.util.Log;
 
 import org.mozilla.focus.architecture.NonNullObserver;
 import org.mozilla.focus.session.Session;
-import org.mozilla.focus.session.SessionManager;
 import org.mozilla.focus.telemetry.TelemetryWrapper;
 
 public class AverageLoadTimeObserver extends NonNullObserver<Boolean> {
@@ -19,7 +18,7 @@ public class AverageLoadTimeObserver extends NonNullObserver<Boolean> {
     private long startLoadTime = 0;
     private boolean loadStarted = false;
 
-    private Session session;
+    private final Session session;
 
     public AverageLoadTimeObserver(@NonNull Session session) {
         this.session = session;
@@ -33,6 +32,7 @@ public class AverageLoadTimeObserver extends NonNullObserver<Boolean> {
                 Log.i(LOG_TAG, "zerdatime " + startLoadTime +
                         " - page load start");
                 loadStarted = true;
+
             }
         } else {
             if (loadStarted) {

@@ -27,11 +27,14 @@ import kotlinx.coroutines.experimental.CommonPool
 import kotlinx.coroutines.experimental.android.UI
 import kotlinx.coroutines.experimental.async
 import kotlinx.coroutines.experimental.launch
+import mozilla.components.browser.domains.CustomDomains
 import org.mozilla.focus.R
-import org.mozilla.focus.settings.SettingsFragment
+import org.mozilla.focus.settings.BaseSettingsFragment
 import org.mozilla.focus.telemetry.TelemetryWrapper
 import java.util.Collections
+import org.mozilla.focus.utils.ViewUtils
 
+typealias DomainFormatter = (String) -> String
 /**
  * Fragment showing settings UI listing all custom autocomplete domains entered by the user.
  */
@@ -42,9 +45,10 @@ open class AutocompleteListFragment : Fragment() {
     val itemTouchHelper: ItemTouchHelper = ItemTouchHelper(
             object : SimpleCallback(ItemTouchHelper.UP or ItemTouchHelper.DOWN, 0) {
                 override fun onMove(
-                        recyclerView: RecyclerView?,
-                        viewHolder: RecyclerView.ViewHolder?,
-                        target: RecyclerView.ViewHolder?): Boolean {
+                    recyclerView: RecyclerView?,
+                    viewHolder: RecyclerView.ViewHolder?,
+                    target: RecyclerView.ViewHolder?
+                ): Boolean {
                     if (recyclerView == null || viewHolder == null || target == null) {
                         return false
                     }
@@ -84,9 +88,10 @@ open class AutocompleteListFragment : Fragment() {
                 }
 
                 override fun canDropOver(
-                        recyclerView: RecyclerView?,
-                        current: RecyclerView.ViewHolder?,
-                        target: RecyclerView.ViewHolder?): Boolean {
+                    recyclerView: RecyclerView?,
+                    current: RecyclerView.ViewHolder?,
+                    target: RecyclerView.ViewHolder?
+                ): Boolean {
                     if (target is AddActionViewHolder) {
                         return false
                     }
@@ -122,9 +127,10 @@ open class AutocompleteListFragment : Fragment() {
     override fun onResume() {
         super.onResume()
 
-        val updater = activity as SettingsFragment.ActionBarUpdater
-        updater.updateTitle(R.string.preference_autocomplete_subitem_customlist)
-        updater.updateIcon(R.drawable.ic_back)
+        (activity as BaseSettingsFragment.ActionBarUpdater).apply {
+            updateTitle(R.string.preference_autocomplete_subitem_customlist)
+            updateIcon(R.drawable.ic_back)
+        }
 
         (domainList.adapter as DomainListAdapter).refresh(activity) {
             activity?.invalidateOptionsMenu()
@@ -138,12 +144,11 @@ open class AutocompleteListFragment : Fragment() {
     override fun onPrepareOptionsMenu(menu: Menu?) {
         val removeItem = menu?.findItem(R.id.remove)
 
-        removeItem?.isVisible = isSelectionMode() || domainList.adapter.itemCount > 1
-        val isEnabled = !isSelectionMode()
-                || (domainList.adapter as DomainListAdapter).selection().isNotEmpty()
-        removeItem?.isEnabled = isEnabled
-        removeItem?.icon?.mutate()?.alpha =
-                if (isEnabled) SettingsFragment.ALPHA_ENABLED else SettingsFragment.ALPHA_DISABLED
+        removeItem?.let {
+            it.isVisible = isSelectionMode() || domainList.adapter.itemCount > 1
+            val isEnabled = !isSelectionMode() || (domainList.adapter as DomainListAdapter).selection().isNotEmpty()
+            ViewUtils.setMenuItemEnabled(it, isEnabled)
+        }
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean = when (item?.itemId) {
@@ -167,7 +172,7 @@ open class AutocompleteListFragment : Fragment() {
 
         fun refresh(context: Context, body: (() -> Unit)? = null) {
             launch(UI) {
-                val updatedDomains = async { CustomAutocomplete.loadCustomAutoCompleteDomains(context) }.await()
+                val updatedDomains = async { CustomDomains.load(context) }.await()
 
                 domains.clear()
                 domains.addAll(updatedDomains)
@@ -192,7 +197,8 @@ open class AutocompleteListFragment : Fragment() {
                                     LayoutInflater.from(parent!!.context).inflate(viewType, parent, false))
                     DomainViewHolder.LAYOUT_ID ->
                             DomainViewHolder(
-                                    LayoutInflater.from(parent!!.context).inflate(viewType, parent, false))
+                                    LayoutInflater.from(parent!!.context).inflate(viewType, parent, false),
+                                    { AutocompleteDomainFormatter.format(it) })
                     else -> throw IllegalArgumentException("Unknown view type: $viewType")
                 }
 
@@ -222,7 +228,7 @@ open class AutocompleteListFragment : Fragment() {
             notifyItemMoved(from, to)
 
             launch(CommonPool) {
-                CustomAutocomplete.saveDomains(activity.applicationContext, domains)
+                CustomDomains.save(activity.applicationContext, domains)
 
                 TelemetryWrapper.reorderAutocompleteDomainEvent(from, to)
             }
@@ -232,7 +238,10 @@ open class AutocompleteListFragment : Fragment() {
     /**
      * ViewHolder implementation for a domain item in the list.
      */
-    private class DomainViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    private class DomainViewHolder(
+        itemView: View,
+        val domainFormatter: DomainFormatter? = null
+    ) : RecyclerView.ViewHolder(itemView) {
         val domainView: TextView = itemView.findViewById(R.id.domainView)
         val checkBoxView: CheckBox = itemView.findViewById(R.id.checkbox)
         val handleView: View = itemView.findViewById(R.id.handleView)
@@ -242,12 +251,13 @@ open class AutocompleteListFragment : Fragment() {
         }
 
         fun bind(
-                domain: String,
-                isSelectionMode: Boolean,
-                selectedDomains: MutableList<String>,
-                itemTouchHelper: ItemTouchHelper,
-                fragment: AutocompleteListFragment) {
-            domainView.text = domain
+            domain: String,
+            isSelectionMode: Boolean,
+            selectedDomains: MutableList<String>,
+            itemTouchHelper: ItemTouchHelper,
+            fragment: AutocompleteListFragment
+        ) {
+            domainView.text = domainFormatter?.invoke(domain) ?: domain
 
             checkBoxView.visibility = if (isSelectionMode) View.VISIBLE else View.GONE
             checkBoxView.isChecked = selectedDomains.contains(domain)
@@ -289,8 +299,8 @@ open class AutocompleteListFragment : Fragment() {
      * ViewHolder implementation for a "Add custom domain" item at the bottom of the list.
      */
     private class AddActionViewHolder(
-            val fragment: AutocompleteListFragment,
-            itemView: View
+        val fragment: AutocompleteListFragment,
+        itemView: View
     ) : RecyclerView.ViewHolder(itemView) {
         init {
             itemView.setOnClickListener {

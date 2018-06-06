@@ -22,6 +22,7 @@ import android.view.ViewGroup;
 import org.mozilla.focus.R;
 import org.mozilla.focus.firstrun.FirstrunPagerAdapter;
 import org.mozilla.focus.telemetry.TelemetryWrapper;
+import org.mozilla.focus.utils.StatusBarUtils;
 
 public class FirstrunFragment extends Fragment implements View.OnClickListener {
     public static final String FRAGMENT_TAG = "firstrun";
@@ -33,6 +34,8 @@ public class FirstrunFragment extends Fragment implements View.OnClickListener {
     }
 
     private ViewPager viewPager;
+
+    private View background;
 
     @Override
     public void onAttach(Context context) {
@@ -54,7 +57,8 @@ public class FirstrunFragment extends Fragment implements View.OnClickListener {
 
         view.findViewById(R.id.skip).setOnClickListener(this);
 
-        final View background = view.findViewById(R.id.background);
+        background = view.findViewById(R.id.background);
+
         final FirstrunPagerAdapter adapter = new FirstrunPagerAdapter(container.getContext(), this);
 
         viewPager = (ViewPager) view.findViewById(R.id.pager);
@@ -103,6 +107,12 @@ public class FirstrunFragment extends Fragment implements View.OnClickListener {
         final TabLayout tabLayout = (TabLayout) view.findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager, true);
 
+        final FragmentManager fragmentManager = getFragmentManager();
+        final UrlInputFragment urlInputFragment = (UrlInputFragment) fragmentManager.findFragmentByTag(UrlInputFragment.FRAGMENT_TAG);
+        if (urlInputFragment != null) {
+            fragmentManager.beginTransaction().detach(urlInputFragment).commit();
+        }
+
         return view;
     }
 
@@ -143,7 +153,19 @@ public class FirstrunFragment extends Fragment implements View.OnClickListener {
 
         final UrlInputFragment inputFragment = (UrlInputFragment) fragmentManager.findFragmentByTag(UrlInputFragment.FRAGMENT_TAG);
         if (inputFragment != null) {
+            fragmentManager.beginTransaction().attach(inputFragment).commit();
             inputFragment.showKeyboard();
         }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        StatusBarUtils.getStatusBarHeight(background, new StatusBarUtils.StatusBarHeightListener() {
+            @Override
+            public void onStatusBarHeightFetched(int statusBarHeight) {
+                background.setPadding(0, statusBarHeight, 0, 0);
+            }
+        });
     }
 }

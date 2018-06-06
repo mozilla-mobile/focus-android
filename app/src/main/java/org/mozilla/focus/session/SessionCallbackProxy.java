@@ -42,6 +42,13 @@ public class SessionCallbackProxy implements IWebView.Callback {
     }
 
     @Override
+    public void onSecurityChanged(boolean isSecure, String host, String organization) {
+        session.setSecure(isSecure);
+        session.setSecurityOrigin(host);
+        session.setSecurityVerifier(organization);
+    }
+
+    @Override
     public void onProgress(int progress) {
         // We do not want the progress to go backwards - so we always set it to at least the minimum.
         progress = Math.max(MINIMUM_PROGRESS, progress);
@@ -81,6 +88,16 @@ public class SessionCallbackProxy implements IWebView.Callback {
     @Override
     public void onBlockingStateChanged(boolean isBlockingEnabled) {
         session.setBlockingEnabled(isBlockingEnabled);
+    }
+
+    @Override
+    public void onHttpAuthRequest(@NonNull IWebView.HttpAuthCallback callback, String host, String realm) {
+        delegate.onHttpAuthRequest(callback, host, realm);
+    }
+
+    @Override
+    public void onRequestDesktopStateChanged(boolean shouldRequestDesktop) {
+        session.setRequestDesktopSite(shouldRequestDesktop);
     }
 
     @Override

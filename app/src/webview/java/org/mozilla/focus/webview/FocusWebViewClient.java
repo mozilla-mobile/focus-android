@@ -194,7 +194,11 @@ import org.mozilla.focus.web.IWebView;
         }
 
         if (callback != null) {
-            callback.onPageFinished(certificate != null);
+            // The page is secure when the url is a localized content or when the certificate isn't null
+            final boolean isSecure = certificate != null || UrlUtils.isLocalizedContent(view.getUrl());
+
+            callback.onPageFinished(isSecure);
+            callback.onSecurityChanged(isSecure, null, (certificate != null) ? certificate.getIssuedBy().getOName() : null);
             // The URL which is supplied in onPageFinished() could be fake (see #301), but webview's
             // URL is always correct _except_ for error pages
             final String viewURL = view.getUrl();
@@ -217,7 +221,7 @@ import org.mozilla.focus.web.IWebView;
     @Override
     public boolean shouldOverrideUrlLoading(WebView view, String url) {
         // If this is an internal URL like focus:about then we load the content ourselves here.
-        if (LocalizedContent.handleInternalContent(url, view)) {
+        if (LocalizedContent.handleInternalContent(url, (IWebView) view, view.getContext())) {
             return true;
         }
 
@@ -254,6 +258,9 @@ import org.mozilla.focus.web.IWebView;
     public void onReceivedSslError(WebView view, SslErrorHandler handler, SslError error) {
         handler.cancel();
 
+        if (callback != null) {
+            callback.onSecurityChanged(error.getCertificate() != null, null, (error.getCertificate() != null) ? error.getCertificate().getIssuedBy().getOName() : null);
+        }
         // WebView can try to load the favicon for a bad page when you set a new URL. If we then
         // loadErrorPage() again, WebView tries to load the favicon again. We end up in onReceivedSSlError()
         // again, and we get an infinite loop of reloads (we also erroneously show the favicon URL

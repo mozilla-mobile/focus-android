@@ -12,8 +12,9 @@ import kotlinx.android.synthetic.main.fragment_autocomplete_customdomains.*
 import kotlinx.coroutines.experimental.android.UI
 import kotlinx.coroutines.experimental.async
 import kotlinx.coroutines.experimental.launch
+import mozilla.components.browser.domains.CustomDomains
 import org.mozilla.focus.R
-import org.mozilla.focus.settings.SettingsFragment
+import org.mozilla.focus.settings.BaseSettingsFragment
 import org.mozilla.focus.telemetry.TelemetryWrapper
 
 class AutocompleteRemoveFragment : AutocompleteListFragment() {
@@ -34,7 +35,7 @@ class AutocompleteRemoveFragment : AutocompleteListFragment() {
         if (domains.isNotEmpty()) {
             launch(UI) {
                 async {
-                    CustomAutocomplete.removeDomains(context, domains)
+                    CustomDomains.remove(context, domains)
 
                     TelemetryWrapper.removeAutocompleteDomainsEvent(domains.size)
                 }.await()
@@ -49,7 +50,7 @@ class AutocompleteRemoveFragment : AutocompleteListFragment() {
     override fun onResume() {
         super.onResume()
 
-        val updater = activity as SettingsFragment.ActionBarUpdater
+        val updater = activity as BaseSettingsFragment.ActionBarUpdater
         updater.updateTitle(R.string.preference_autocomplete_title_remove)
         updater.updateIcon(R.drawable.ic_back)
     }

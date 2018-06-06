@@ -6,7 +6,6 @@
 package org.mozilla.focus.activity;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Build;
 import android.preference.PreferenceManager;
 import android.support.test.InstrumentationRegistry;
@@ -21,24 +20,22 @@ import org.junit.Assert;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mozilla.focus.helpers.TestHelper;
+import org.mozilla.focus.utils.AppConstants;
 
 import java.io.IOException;
 
 import okhttp3.mockwebserver.MockResponse;
 import okhttp3.mockwebserver.MockWebServer;
-import org.mozilla.focus.helpers.TestHelper;
 
 import static android.support.test.espresso.action.ViewActions.click;
-import static junit.framework.Assert.assertTrue;
+import static org.mozilla.focus.fragment.FirstrunFragment.FIRSTRUN_PREF;
 import static org.mozilla.focus.helpers.TestHelper.waitingTime;
 import static org.mozilla.focus.helpers.TestHelper.webPageLoadwaitingTime;
-import static org.mozilla.focus.fragment.FirstrunFragment.FIRSTRUN_PREF;
 
 @RunWith(AndroidJUnit4.class)
 public class AddtoHSTest {
     private static final String TEST_PATH = "/";
-
-    private Context appContext;
     private MockWebServer webServer;
 
     @Rule
@@ -46,8 +43,7 @@ public class AddtoHSTest {
         @Override
         protected void beforeActivityLaunched() {
             super.beforeActivityLaunched();
-
-            appContext = InstrumentationRegistry.getInstrumentation()
+            final Context appContext = InstrumentationRegistry.getInstrumentation()
                     .getTargetContext()
                     .getApplicationContext();
 
@@ -89,30 +85,12 @@ public class AddtoHSTest {
     }
 
     private UiObject titleMsg = TestHelper.mDevice.findObject(new UiSelector()
-            .description("focus test page")
-            .enabled(true));
+                        .description("focus test page")
+                        .enabled(true));
     UiObject welcomeBtn = TestHelper.mDevice.findObject(new UiSelector()
             .resourceId("com.android.launcher3:id/cling_dismiss_longpress_info")
             .text("GOT IT")
             .enabled(true));
-
-    void removeWelcomeOverlay() throws UiObjectNotFoundException {
-        final String FOCUS_DEBUG_APP = "org.mozilla.focus.debug";
-
-        // Note: in case of some older simulators, the Welcome overlay covers
-        // where the shortcut icons should be!
-        TestHelper.pressHomeKey();
-        if (welcomeBtn.exists()) {
-            welcomeBtn.click();
-        }
-        // Re-Launch the app
-        Context context = InstrumentationRegistry.getInstrumentation()
-                .getTargetContext()
-                .getApplicationContext();
-        final Intent intent = context.getPackageManager()
-                .getLaunchIntentForPackage(FOCUS_DEBUG_APP);
-        context.startActivity(intent);
-    }
 
     private void handleShortcutLayoutDialog() throws UiObjectNotFoundException {
         TestHelper.AddautoBtn.waitForExists(waitingTime);
@@ -139,8 +117,6 @@ public class AddtoHSTest {
                 .description("For Testing Purpose")
                 .enabled(true));
 
-        removeWelcomeOverlay();
-
         // Open website, and click 'Add to homescreen'
         TestHelper.inlineAutocompleteEditText.waitForExists(waitingTime);
         TestHelper.inlineAutocompleteEditText.clearTextField();
@@ -149,7 +125,9 @@ public class AddtoHSTest {
         TestHelper.pressEnterKey();
         TestHelper.progressBar.waitForExists(webPageLoadwaitingTime);
         Assert.assertTrue(TestHelper.progressBar.waitUntilGone(webPageLoadwaitingTime));
-        Assert.assertTrue("Website title loaded", titleMsg.exists());
+        if (!AppConstants.isGeckoBuild()) {
+            Assert.assertTrue("Website title loaded", titleMsg.exists());
+        }
 
         openAddtoHSDialog();
         // Add to Home screen dialog is now shown
@@ -171,6 +149,9 @@ public class AddtoHSTest {
         }
 
         //App is sent to background, in launcher now
+        if (welcomeBtn.exists()) {
+            welcomeBtn.click();
+        }
         shortcutIcon.waitForExists(waitingTime);
         Assert.assertTrue(shortcutIcon.isEnabled());
         shortcutIcon.click();
@@ -187,8 +168,6 @@ public class AddtoHSTest {
                 .description("localhost")
                 .enabled(true));
 
-        removeWelcomeOverlay();
-
         // Open website, and click 'Add to homescreen'
         TestHelper.inlineAutocompleteEditText.waitForExists(waitingTime);
         TestHelper.inlineAutocompleteEditText.clearTextField();
@@ -197,7 +176,9 @@ public class AddtoHSTest {
         TestHelper.pressEnterKey();
         TestHelper.progressBar.waitForExists(webPageLoadwaitingTime);
         Assert.assertTrue(TestHelper.progressBar.waitUntilGone(webPageLoadwaitingTime));
-        Assert.assertTrue("Website title loaded", titleMsg.exists());
+        if (!AppConstants.isGeckoBuild()) {
+            Assert.assertTrue("Website title loaded", titleMsg.exists());
+        }
 
         openAddtoHSDialog();
 
@@ -218,7 +199,9 @@ public class AddtoHSTest {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             handleShortcutLayoutDialog();
         }
-
+        if (welcomeBtn.exists()) {
+            welcomeBtn.click();
+        }
         //App is sent to background, in launcher now
         shortcutIcon.waitForExists(waitingTime);
         Assert.assertTrue(shortcutIcon.isEnabled());
@@ -236,15 +219,13 @@ public class AddtoHSTest {
                 .descriptionContains("helloworld")
                 .enabled(true));
 
-        removeWelcomeOverlay();
-
         // Open website, and click 'Add to homescreen'
         TestHelper.inlineAutocompleteEditText.waitForExists(waitingTime);
         TestHelper.inlineAutocompleteEditText.clearTextField();
         TestHelper.inlineAutocompleteEditText.setText("helloworld");
         TestHelper.hint.waitForExists(waitingTime);
         TestHelper.pressEnterKey();
-        assertTrue(TestHelper.webView.waitForExists(waitingTime));
+        TestHelper.waitForWebContent();
         // In certain cases, where progressBar disappears immediately, below will return false
         // since it busy waits, it will unblock when the bar isn't visible, regardless of the
         // return value
@@ -261,12 +242,15 @@ public class AddtoHSTest {
             handleShortcutLayoutDialog();
         }
 
+        if (welcomeBtn.exists()) {
+            welcomeBtn.click();
+        }
         //App is sent to background, in launcher now
         shortcutIcon.waitForExists(waitingTime);
         Assert.assertTrue(shortcutIcon.isEnabled());
         shortcutIcon.click();
         TestHelper.waitForIdle();
-        assertTrue(TestHelper.webView.waitForExists(waitingTime));
+        TestHelper.waitForWebContent();
 
         //Tap URL bar and check the search term is still shown
         TestHelper.browserURLbar.waitForExists(waitingTime);
