@@ -16,9 +16,9 @@
     <color name="colorProgressGradientStart">#FF9400FF</color>
     <color name="colorProgressGradientEnd">#FFFF1AD9</color>
 
-    <color name="coloInactiveGradientStart">#ff453440</color>
-    <color name="colorInactiveGradientCenter">#ff433446</color>
-    <color name="colorInactiveGradientEnd">#ff3b3445</color>
+    <color name="colorInactiveGradientStart">#3e1e48</color>
+    <color name="colorInactiveGradientCenter">#331e4b</color>
+    <color name="colorInactiveGradientEnd">#331e4b</color>
 
     <color name="colorErase">@color/photonMagenta70</color>
     <color name="colorErasePressed">@color/photonMagenta80</color>
@@ -45,6 +45,7 @@
     <color name="snackbarActionText">@color/photonBlue50</color>
 
     <color name="searchHintTextColor">#ffffffff</color>
+    <color name="searchHintBackgroundColor">@color/photonInk80</color>
 
     <color name="onboarding_indicator_default">#7FFFFFFF</color>
     <color name="onboarding_indicator_selected">#FFFFFFFF</color>
