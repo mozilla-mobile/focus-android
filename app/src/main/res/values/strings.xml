@@ -49,10 +49,10 @@
     <string name="menu_rights">Your Rights</string>
 
     <!-- Menu item: This is the label for a menu entry that shows how many trackers have been blocked
-         for the currently loaded website. The number of blocked trackers is shown below this label.
-         Next to this label is a switch that allows the user to temporarily enable / disable the
-         blocking of trackers for the current browsing session - for example if the current website
-         doesn't work correctly with blocked content. -->
+         for the currently loaded website. The number of blocked trackers is shown to the left of
+         this label. Next to this label is a switch that allows the user to temporarily
+         enable / disable the blocking of trackers for the current browsing session -
+         for example if the current website doesn't work correctly with blocked content. -->
     <string name="menu_trackers_blocked_title">Trackers blocked</string>
 
     <!-- This is a small text at the bottom of the menu shown in a "custom tab" for branding purposes.
@@ -356,6 +356,10 @@
 
     <!-- Content description (not visible, for screen readers etc.): Custom Tab exit button - closes the custom tab and returns to the previous app. -->
     <string name="content_description_customtab_exit">Return to previous app</string>
+
+    <!-- Content description (not visible, for screen readers etc.): This is the description for the ImageView in the menu that displays
+         the number of trackers blocked for the current session -->
+    <string name="content_description_trackers_blocked">Number of trackers blocked</string>
 
     <!-- Content description (not visible, for screen readers etc.): This is the description for the switch in the menu that temporarily disables/enables
          content blocking for the current session -->

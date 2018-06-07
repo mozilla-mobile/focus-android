@@ -69,4 +69,5 @@
 
     <color name="browser_menu_bg">@color/photonInk80</color>
     <color name="browser_menu_blocking_switch_bg">#1Af9f9fa</color>
+    <color name="browser_menu_trackers_blocked_label">@android:color/white</color>
 </resources>
