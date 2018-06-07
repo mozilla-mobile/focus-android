@@ -24,6 +24,12 @@ import org.mozilla.focus.R;
     /* package-private */ void bind(BrowserMenuAdapter.MenuItem menuItem) {
         menuItemView.setId(menuItem.id);
         menuItemView.setText(menuItem.label);
+        menuItemView.setCompoundDrawablesRelativeWithIntrinsicBounds(
+                menuItem.drawableResId,
+                0,
+                0,
+                0
+        );
 
         final boolean isLoading = browserFragment.getSession().getLoading().getValue();
 

@@ -29,15 +29,18 @@ public class BrowserMenuAdapter extends RecyclerView.Adapter<BrowserMenuViewHold
     static class MenuItem {
         public final int id;
         public final String label;
-        public final @Nullable PendingIntent pendingIntent;
+        public final int drawableResId;
+        public final @Nullable
+        PendingIntent pendingIntent;
 
-        public MenuItem(int id, String label) {
-            this(id, label, null);
+        public MenuItem(int id, String label, int drawableResId) {
+            this(id, label, drawableResId, null);
         }
 
-        public MenuItem(int id, String label, @Nullable PendingIntent pendingIntent) {
+        public MenuItem(int id, String label, int drawableResId, @Nullable PendingIntent pendingIntent) {
             this.id = id;
             this.label = label;
+            this.drawableResId = drawableResId;
             this.pendingIntent = pendingIntent;
         }
     }
@@ -71,36 +74,36 @@ public class BrowserMenuAdapter extends RecyclerView.Adapter<BrowserMenuViewHold
         }
 
         if (customTabConfig == null || customTabConfig.showShareMenuItem) {
-            items.add(new MenuItem(R.id.share, resources.getString(R.string.menu_share)));
+            items.add(new MenuItem(R.id.share, resources.getString(R.string.menu_share), R.drawable.ic_share_menu_item));
         }
 
-        items.add(new MenuItem(R.id.add_to_homescreen, resources.getString(R.string.menu_add_to_home_screen)));
+        items.add(new MenuItem(R.id.add_to_homescreen, resources.getString(R.string.menu_add_to_home_screen), R.drawable.ic_add_to_home_menu_item));
 
         if (browsers.hasMultipleThirdPartyBrowsers(context)) {
             items.add(new MenuItem(R.id.open_select_browser, resources.getString(
-                    R.string.menu_open_with_a_browser2)));
+                    R.string.menu_open_with_a_browser2), R.drawable.ic_open_in_menu_item));
         }
 
         if (customTabConfig != null) {
             // "Open in Firefox Focus" to switch from a custom tab to the full-featured browser
             items.add(new MenuItem(R.id.open_in_firefox_focus, resources.getString(R.string.menu_open_with_default_browser2,
-                    resources.getString(R.string.app_name))));
+                    resources.getString(R.string.app_name)), 0));
         }
 
         if (browsers.hasThirdPartyDefaultBrowser(context)) {
             items.add(new MenuItem(R.id.open_default, resources.getString(
                     R.string.menu_open_with_default_browser2, browsers.getDefaultBrowser().loadLabel(
-                            context.getPackageManager()))));
+                            context.getPackageManager())), 0));
         }
 
         if (customTabConfig == null) {
             // There’s no need for Settings in a custom tab. The user can go to the browser app itself in order to do this.
-            items.add(new MenuItem(R.id.settings, resources.getString(R.string.menu_settings)));
+            items.add(new MenuItem(R.id.settings, resources.getString(R.string.menu_settings), R.drawable.ic_settings_menu_item));
         }
 
         if (AppConstants.isGeckoBuild()) {
             // "Report Site Issue" is available for builds using GeckoView only
-            items.add(new MenuItem(R.id.report_site_issue, resources.getString(R.string.menu_report_site_issue)));
+            items.add(new MenuItem(R.id.report_site_issue, resources.getString(R.string.menu_report_site_issue), 0));
         }
 
         if (customTabConfig != null) {
@@ -113,7 +116,7 @@ public class BrowserMenuAdapter extends RecyclerView.Adapter<BrowserMenuViewHold
             final String name = inputItem.name;
             final PendingIntent pendingIntent = inputItem.pendingIntent;
 
-            final MenuItem item = new MenuItem(R.id.custom_tab_menu_item, name, pendingIntent);
+            final MenuItem item = new MenuItem(R.id.custom_tab_menu_item, name, 0, pendingIntent);
             items.add(item);
         }
     }
