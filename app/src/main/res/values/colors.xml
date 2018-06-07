@@ -66,4 +66,7 @@
 
     <color name="doorhanger_link">#FF2AA1FE</color>
     <color name="placeholder_active_grey">#222222</color>
+
+    <color name="browser_menu_bg">@color/photonInk80</color>
+    <color name="browser_menu_blocking_switch_bg">#1Af9f9fa</color>
 </resources>
