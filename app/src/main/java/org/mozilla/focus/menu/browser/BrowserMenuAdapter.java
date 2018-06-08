@@ -98,7 +98,7 @@ public class BrowserMenuAdapter extends RecyclerView.Adapter<BrowserMenuViewHold
 
         if (customTabConfig == null) {
             // There’s no need for Settings in a custom tab. The user can go to the browser app itself in order to do this.
-            items.add(new MenuItem(R.id.settings, resources.getString(R.string.menu_settings), 0));
+            items.add(new MenuItem(R.id.settings, resources.getString(R.string.menu_settings), R.drawable.ic_settings_menu_item));
         }
 
         if (AppConstants.isGeckoBuild()) {
