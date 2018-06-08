@@ -77,11 +77,11 @@ public class BrowserMenuAdapter extends RecyclerView.Adapter<BrowserMenuViewHold
             items.add(new MenuItem(R.id.share, resources.getString(R.string.menu_share), R.drawable.ic_share_menu_item));
         }
 
-        items.add(new MenuItem(R.id.add_to_homescreen, resources.getString(R.string.menu_add_to_home_screen), R.drawable.ic_add_to_home_menu));
+        items.add(new MenuItem(R.id.add_to_homescreen, resources.getString(R.string.menu_add_to_home_screen), R.drawable.ic_add_to_home_menu_item));
 
         if (browsers.hasMultipleThirdPartyBrowsers(context)) {
             items.add(new MenuItem(R.id.open_select_browser, resources.getString(
-                    R.string.menu_open_with_a_browser2), 0));
+                    R.string.menu_open_with_a_browser2), R.drawable.ic_open_in_menu_item));
         }
 
         if (customTabConfig != null) {
