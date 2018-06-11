@@ -9,9 +9,9 @@
 
     <color name="colorAccentSettings">@color/photonBlue50</color>
 
-    <color name="colorGradientStart">#ffa01142</color>
-    <color name="colorGradientCenter">#ff90116D</color>
-    <color name="colorGradientEnd">#ff5c1166</color>
+    <color name="colorGradientStart">#a90742</color>
+    <color name="colorGradientCenter">#970772</color>
+    <color name="colorGradientEnd">#57076a</color>
 
     <color name="colorProgressGradientStart">#FF9400FF</color>
     <color name="colorProgressGradientEnd">#FFFF1AD9</color>
