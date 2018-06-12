@@ -91,6 +91,7 @@ import java.util.Objects;
 
 import kotlin.Unit;
 import kotlin.jvm.functions.Function0;
+import mozilla.components.browser.domains.CustomDomains;
 import mozilla.components.support.utils.ColorUtils;
 import mozilla.components.support.utils.DownloadUtils;
 import mozilla.components.support.utils.DrawableUtils;
@@ -1291,26 +1292,28 @@ public class BrowserFragment extends WebFragment implements View.OnClickListener
                 }
             }
 
-            AutocompleteQuickAddPopup autocompletePopup = new AutocompleteQuickAddPopup(context, urlView.getText().toString());
+            if (!CustomDomains.INSTANCE.load(context).contains(getUrl())) {
+                AutocompleteQuickAddPopup autocompletePopup = new AutocompleteQuickAddPopup(context, urlView.getText().toString());
 
-            // Show the Snackbar and dismiss the popup when a new URL is added.
-            autocompletePopup.setOnUrlAdded(new Function0<Unit>() {
-                @Override
-                public Unit invoke() {
-                    getActivity().runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            ViewUtils.showBrandedSnackbar(Objects.requireNonNull(getView()), R.string.preference_autocomplete_add_confirmation, 0);
-                            dismissAutocompletePopup();
-                        }
-                    });
+                // Show the Snackbar and dismiss the popup when a new URL is added.
+                autocompletePopup.setOnUrlAdded(new Function0<Unit>() {
+                    @Override
+                    public Unit invoke() {
+                        getActivity().runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                ViewUtils.showBrandedSnackbar(Objects.requireNonNull(getView()), R.string.preference_autocomplete_add_confirmation, 0);
+                                dismissAutocompletePopup();
+                            }
+                        });
 
-                    return Unit.INSTANCE;
-                }
-            });
+                        return Unit.INSTANCE;
+                    }
+                });
 
-            autocompletePopup.show(urlView);
-            autocompletePopupWeakReference = new WeakReference<>(autocompletePopup);
+                autocompletePopup.show(urlView);
+                autocompletePopupWeakReference = new WeakReference<>(autocompletePopup);
+            }
         }
 
         return false;
