@@ -130,6 +130,14 @@ public interface IWebView {
 
     void exitFullscreen();
 
+    void findAllAsync(String find);
+
+    void findNext(boolean forward);
+
+    void clearMatches();
+
+    void setFindListener(IFindListener findListener);
+
     void loadData(String baseURL, String data, String mimeType, String encoding, String historyURL);
 
     /**

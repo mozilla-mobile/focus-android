@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- This Source Code Form is subject to the terms of the Mozilla Public
+   - License, v. 2.0. If a copy of the MPL was not distributed with this
+   - file, You can obtain one at http://mozilla.org/MPL/2.0/. -->
+
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/constraintLayout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/photonGrey80"
+    android:orientation="horizontal"
+    android:clickable="true"
+    android:focusable="true">
+
+    <EditText
+        android:id="@+id/queryText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:background="@android:color/transparent"
+        android:ems="10"
+        android:hint="@string/find_in_page_input"
+        android:lines="1"
+        android:maxLines="1"
+        android:inputType="textNoSuggestions"
+        android:paddingBottom="17dp"
+        android:paddingTop="17dp"
+        android:textCursorDrawable="@drawable/cursor"
+        app:layout_constraintEnd_toStartOf="@id/resultText"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/resultText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/queryText"
+        app:layout_constraintEnd_toStartOf="@id/previousResult"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageButton
+        android:id="@+id/previousResult"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/nextResult"
+        app:layout_constraintStart_toEndOf="@+id/resultText"
+        app:layout_constraintTop_toTopOf="parent"
+        android:background="?android:attr/selectableItemBackgroundBorderless"
+        android:contentDescription="@string/accessibility_previous_result"
+        android:src="@drawable/ic_arrowhead_up" />
+
+    <ImageButton
+        android:id="@+id/nextResult"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/close_find_in_page"
+        app:layout_constraintStart_toEndOf="@+id/previousResult"
+        app:layout_constraintTop_toTopOf="parent"
+        android:background="?android:attr/selectableItemBackgroundBorderless"
+        android:contentDescription="@string/accessibility_next_result"
+        android:src="@drawable/ic_arrowhead_down" />
+
+    <ImageButton
+        android:id="@+id/close_find_in_page"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginEnd="12dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/nextResult"
+        app:layout_constraintTop_toTopOf="parent"
+        android:background="?android:attr/selectableItemBackgroundBorderless"
+        android:contentDescription="@string/accessibility_dismiss_find_in_page"
+        android:src="@drawable/ic_close" />
+
+</android.support.constraint.ConstraintLayout>

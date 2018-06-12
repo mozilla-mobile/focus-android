@@ -31,7 +31,9 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -56,6 +58,7 @@ import org.mozilla.focus.architecture.NonNullObserver;
 import org.mozilla.focus.autocomplete.AutocompleteQuickAddPopup;
 import org.mozilla.focus.broadcastreceiver.DownloadBroadcastReceiver;
 import org.mozilla.focus.customtabs.CustomTabConfig;
+import org.mozilla.focus.findinpage.FindInPageCoordinator;
 import org.mozilla.focus.locale.LocaleAwareAppCompatActivity;
 import org.mozilla.focus.menu.browser.BrowserMenu;
 import org.mozilla.focus.menu.context.WebContextMenu;
@@ -145,6 +148,11 @@ public class BrowserFragment extends WebFragment implements View.OnClickListener
     private View refreshButton;
     private View stopButton;
 
+    private View findInPageView;
+    private int findInPageViewHeight;
+    private TextView findInPageQuery;
+    private TextView findInPageResultTextView;
+
     private IWebView.FullscreenCallback fullscreenCallback;
 
     private DownloadManager manager;
@@ -153,6 +161,7 @@ public class BrowserFragment extends WebFragment implements View.OnClickListener
 
     private final SessionManager sessionManager;
     private Session session;
+    private final FindInPageCoordinator findInPageCoordinator = new FindInPageCoordinator();
 
     public BrowserFragment() {
         sessionManager = SessionManager.getInstance();
@@ -184,6 +193,13 @@ public class BrowserFragment extends WebFragment implements View.OnClickListener
                     //noinspection ConstantConditions - Not null
                     menu.updateTrackers(blockedTrackers);
                 }
+            }
+        });
+
+        findInPageCoordinator.getMatches().observe(this, new Observer<kotlin.Pair<Integer, Integer>>() {
+            @Override
+            public void onChanged(@Nullable kotlin.Pair<Integer, Integer> matches) {
+                updateFindInPageResult(matches.getFirst(), matches.getSecond());
             }
         });
     }
@@ -253,6 +269,40 @@ public class BrowserFragment extends WebFragment implements View.OnClickListener
             }
         });
 
+        findInPageView = view.findViewById(R.id.find_in_page);
+
+        findInPageQuery = view.findViewById(R.id.queryText);
+        findInPageResultTextView = view.findViewById(R.id.resultText);
+
+        findInPageQuery.addTextChangedListener(
+                new TextWatcher() {
+                    @Override
+                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+                    @Override
+                    public void afterTextChanged(Editable s) {}
+
+                    @Override
+                    public void onTextChanged(CharSequence s, int start, int before, int count) {
+                        final IWebView webView = getWebView();
+                        if (webView == null) {
+                            return;
+                        }
+
+                        webView.findAllAsync(s.toString());
+                    }
+                }
+        );
+
+        final ImageButton findInPagePrevious = view.findViewById(R.id.previousResult);
+        findInPagePrevious.setOnClickListener(this);
+
+        final ImageButton findInPageNext = view.findViewById(R.id.nextResult);
+        findInPageNext.setOnClickListener(this);
+
+        final ImageButton closeFindInPage = view.findViewById(R.id.close_find_in_page);
+        closeFindInPage.setOnClickListener(this);
+
         setBlockingEnabled(session.isBlockingEnabled());
         setShouldRequestDesktop(session.shouldRequestDesktopSite());
 
@@ -284,6 +334,8 @@ public class BrowserFragment extends WebFragment implements View.OnClickListener
                 if (menu != null) {
                     menu.updateLoading(loading);
                 }
+
+                hideFindInPage();
             }
         });
 
@@ -346,6 +398,11 @@ public class BrowserFragment extends WebFragment implements View.OnClickListener
         } else {
             initialiseNormalBrowserUi(view);
         }
+
+        // Pre-calculate the height of the find in page UI so that we can accurately add padding
+        // to the WebView when we present it.
+        findInPageView.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED);
+        findInPageViewHeight = findInPageView.getMeasuredHeight();
 
         return view;
     }
@@ -736,6 +793,11 @@ public class BrowserFragment extends WebFragment implements View.OnClickListener
     public void onCreateViewCalled() {
         manager = (DownloadManager) getContext().getSystemService(Context.DOWNLOAD_SERVICE);
         downloadBroadcastReceiver = new DownloadBroadcastReceiver(browserContainer, manager);
+
+        final IWebView webView = getWebView();
+        if (webView != null) {
+            webView.setFindListener(findInPageCoordinator);
+        }
     }
 
     @Override
@@ -807,7 +869,9 @@ public class BrowserFragment extends WebFragment implements View.OnClickListener
     }
 
     public boolean onBackPressed() {
-        if (canGoBack()) {
+        if (findInPageView.getVisibility() == View.VISIBLE) {
+            hideFindInPage();
+        } else if (canGoBack()) {
             // Go back in web history
             goBack();
         } else {
@@ -937,7 +1001,6 @@ public class BrowserFragment extends WebFragment implements View.OnClickListener
             }
 
             case R.id.open_in_firefox_focus: {
-
                 sessionManager.moveCustomTabToRegularSessions(session);
 
                 final IWebView webView = getWebView();
@@ -1027,7 +1090,7 @@ public class BrowserFragment extends WebFragment implements View.OnClickListener
                         SupportUtils.getSumoURLForTopic(getContext(), SupportUtils.SumoTopic.TRACKERS));
                 break;
 
-            case R.id.add_to_homescreen:
+            case R.id.add_to_homescreen: {
                 final IWebView webView = getWebView();
                 if (webView == null) {
                     break;
@@ -1037,6 +1100,7 @@ public class BrowserFragment extends WebFragment implements View.OnClickListener
                 final String title = webView.getTitle();
                 showAddToHomescreenDialog(url, title);
                 break;
+            }
 
             case R.id.security_info:
                 showSecurityPopUp();
@@ -1046,6 +1110,37 @@ public class BrowserFragment extends WebFragment implements View.OnClickListener
                 SessionManager.getInstance().createSession(Source.MENU, SupportUtils.REPORT_SITE_ISSUE_URL.concat(getUrl()));
                 TelemetryWrapper.reportSiteIssueEvent();
                 break;
+
+            case R.id.find_in_page:
+                showFindInPage();
+                TelemetryWrapper.findInPageMenuEvent();
+                break;
+
+            case R.id.nextResult: {
+                final IWebView webView = getWebView();
+                if (webView == null) {
+                    break;
+                }
+
+                webView.findNext(true);
+                break;
+            }
+
+            case R.id.previousResult: {
+                final IWebView webView = getWebView();
+                if (webView == null) {
+                    break;
+                }
+
+                webView.findNext(false);
+                break;
+            }
+
+            case R.id.close_find_in_page: {
+                hideFindInPage();
+
+                break;
+            }
 
             default:
                 throw new IllegalArgumentException("Unhandled menu item in BrowserFragment");
@@ -1219,5 +1314,48 @@ public class BrowserFragment extends WebFragment implements View.OnClickListener
         }
 
         return false;
+    }
+
+    private void showFindInPage() {
+        findInPageView.setVisibility(View.VISIBLE);
+        findInPageQuery.requestFocus();
+
+        swipeRefresh.setPadding(0, 0, 0, findInPageViewHeight);
+    }
+
+    private void hideFindInPage() {
+        final IWebView webView = getWebView();
+        if (webView == null) {
+            return;
+        }
+
+        webView.clearMatches();
+        findInPageCoordinator.reset();
+        findInPageView.setVisibility(View.GONE);
+        findInPageQuery.setText("");
+        findInPageQuery.clearFocus();
+        swipeRefresh.setPadding(0, 0, 0, 0);
+        ViewUtils.hideKeyboard(findInPageQuery);
+    }
+
+    private void updateFindInPageResult(Integer activeMatchOrdinal, Integer numberOfMatches) {
+        final Context context = getContext();
+        if (context == null) {
+            return;
+        }
+
+        if (numberOfMatches > 0) {
+            // We don't want the presentation of the activeMatchOrdinal to be zero indexed. So let's
+            // increment it by one.
+            activeMatchOrdinal++;
+            final String visibleString = String.format(context.getString(R.string.find_in_page_result), activeMatchOrdinal, numberOfMatches);
+            final String accessibleString = String.format(context.getString(R.string.find_in_page_result), activeMatchOrdinal, numberOfMatches);
+
+            findInPageResultTextView.setText(visibleString);
+            findInPageResultTextView.setContentDescription(accessibleString);
+        } else {
+            findInPageResultTextView.setText("");
+            findInPageResultTextView.setContentDescription("");
+        }
     }
 }

@@ -141,6 +141,9 @@ object TelemetryWrapper {
         val RELOAD = "refresh"
         val FULL_BROWSER = "full_browser"
         val REPORT_ISSUE = "report_issue"
+        val SETTINGS = "settings"
+        val QUICK_ADD = "quick_add"
+        val FIND_IN_PAGE = "find_in_page"
     }
 
     private object Extra {
@@ -640,6 +643,11 @@ object TelemetryWrapper {
     }
 
     @JvmStatic
+    fun findInPageMenuEvent() {
+        TelemetryEvent.create(Category.ACTION, Method.OPEN, Object.MENU, Value.FIND_IN_PAGE).queue()
+    }
+
+    @JvmStatic
     fun closeTabsTrayEvent() {
         TelemetryEvent.create(Category.ACTION, Method.HIDE, Object.TABS_TRAY).queue()
     }
@@ -683,8 +691,19 @@ object TelemetryWrapper {
                 .queue()
     }
 
-    fun saveAutocompleteDomainEvent() {
-        TelemetryEvent.create(Category.ACTION, Method.SAVE, Object.AUTOCOMPLETE_DOMAIN).queue()
+    enum class AutoCompleteEventSource {
+        SETTINGS, QUICK_ADD
+    }
+
+    fun saveAutocompleteDomainEvent(eventSource: AutoCompleteEventSource) {
+        val source = when (eventSource) {
+            AutoCompleteEventSource.SETTINGS -> Value.SETTINGS
+            AutoCompleteEventSource.QUICK_ADD -> Value.QUICK_ADD
+        }
+
+        TelemetryEvent.create(Category.ACTION, Method.SAVE, Object.AUTOCOMPLETE_DOMAIN)
+                .extra(Extra.SOURCE, source)
+                .queue()
     }
 
     fun removeAutocompleteDomainsEvent(count: Int) {
