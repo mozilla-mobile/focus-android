@@ -1,8 +1,8 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 
 buildscript {
-    ext.architecture_components_version = '1.1.0'
-    ext.support_libraries_version = '27.0.2'
+    ext.architecture_components_version = '1.1.1'
+    ext.support_libraries_version = '27.1.1'
     ext.espresso_version = '3.0.1'
     ext.kotlin_version = '1.2.30'
     ext.geckoview_nightly_date = '2018.06.13'
