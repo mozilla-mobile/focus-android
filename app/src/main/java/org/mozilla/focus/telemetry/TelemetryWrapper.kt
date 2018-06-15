@@ -14,13 +14,14 @@ import android.os.StrictMode
 import android.preference.PreferenceManager
 import android.support.annotation.CheckResult
 import kotlinx.coroutines.experimental.runBlocking
+import mozilla.components.ui.autocomplete.InlineAutocompleteEditText.AutocompleteResult
+import org.json.JSONObject
 import org.mozilla.focus.BuildConfig
+import org.mozilla.focus.Components
 import org.mozilla.focus.R
+import org.mozilla.focus.search.CustomSearchEngineStore
 import org.mozilla.focus.session.SessionManager
 import org.mozilla.focus.utils.AppConstants
-import mozilla.components.ui.autocomplete.InlineAutocompleteEditText.AutocompleteResult
-import org.mozilla.focus.Components
-import org.mozilla.focus.search.CustomSearchEngineStore
 import org.mozilla.focus.utils.Settings
 import org.mozilla.telemetry.Telemetry
 import org.mozilla.telemetry.TelemetryHolder
@@ -31,9 +32,13 @@ import org.mozilla.telemetry.measurement.SearchesMeasurement
 import org.mozilla.telemetry.net.HttpURLConnectionTelemetryClient
 import org.mozilla.telemetry.ping.TelemetryCorePingBuilder
 import org.mozilla.telemetry.ping.TelemetryEventPingBuilder
+import org.mozilla.telemetry.ping.TelemetryMobileMetricsPingBuilder
 import org.mozilla.telemetry.schedule.jobscheduler.JobSchedulerTelemetryScheduler
 import org.mozilla.telemetry.serialize.JSONPingSerializer
 import org.mozilla.telemetry.storage.FileTelemetryStorage
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
 @Suppress(
         // Yes, this a large class with a lot of functions. But it's very simple and still easy to read.
@@ -44,6 +49,9 @@ object TelemetryWrapper {
     private const val TELEMETRY_APP_NAME_FOCUS = "Focus"
     private const val TELEMETRY_APP_NAME_KLAR = "Klar"
     private const val TELEMETRY_APP_ENGINE_GECKOVIEW = "GeckoView"
+    private const val LAST_MOBILE_METRICS_PINGS = "LAST_MOBILE_METRICS_PINGS"
+
+    private val dateFormat = SimpleDateFormat("yyyyMMdd", Locale.US)
 
     private const val MAXIMUM_CUSTOM_TAB_EXTRAS = 10
 
@@ -289,6 +297,19 @@ object TelemetryWrapper {
     private fun resetAverageLoad() {
         numLoads = 0
         averageTime = 0.0
+    }
+
+    @JvmStatic
+    fun addMobileMetricsPing(mobileMetrics: JSONObject) {
+        val telemetry = TelemetryHolder.get()
+        telemetry.addPingBuilder(TelemetryMobileMetricsPingBuilder(mobileMetrics,
+                telemetry.configuration))
+        telemetry.queuePing(TelemetryMobileMetricsPingBuilder.TYPE)
+        // Record new edited date
+        PreferenceManager.getDefaultSharedPreferences(telemetry.configuration.context)
+                .edit()
+                .putLong(LAST_MOBILE_METRICS_PINGS, (dateFormat.format(Date()).toLong()))
+                .apply()
     }
 
     @JvmStatic
@@ -777,5 +798,14 @@ object TelemetryWrapper {
     @JvmStatic
     fun reportSiteIssueEvent() {
         TelemetryEvent.create(Category.ACTION, Method.CLICK, Object.MENU, Value.REPORT_ISSUE).queue()
+    }
+
+    @JvmStatic
+    fun dayPassedSinceLastUpload(context: Context): Boolean {
+        val dateOfLastPing = PreferenceManager
+                .getDefaultSharedPreferences(context).getLong(LAST_MOBILE_METRICS_PINGS, 0)
+        // Make sure a minimum of 1 day has passed since we collected data
+        val currentDateLong = dateFormat.format(Date()).toLong()
+        return currentDateLong > dateOfLastPing
     }
 }
