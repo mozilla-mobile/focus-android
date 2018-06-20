@@ -243,6 +243,9 @@ public class WebViewProvider {
                 @Override
                 public void onTitleChange(GeckoSession session, String title) {
                     webViewTitle = title;
+                    if (callback != null) {
+                        callback.onTitleChanged(title);
+                    }
                 }
 
                 @Override

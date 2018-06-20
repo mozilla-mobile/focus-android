@@ -37,7 +37,7 @@ class SessionViewHolder internal constructor(
     fun bind(session: Session) {
         this.sessionReference = WeakReference(session)
 
-        updateUrl(session)
+        updateTitle(session)
 
         val isCurrentSession = SessionManager.getInstance().isCurrentSession(session)
         val actionColor = ContextCompat.getColor(textView.context, R.color.colorAction)
@@ -60,8 +60,8 @@ class SessionViewHolder internal constructor(
         textView.setCompoundDrawablesWithIntrinsicBounds(wrapDrawable, null, null, null)
     }
 
-    private fun updateUrl(session: Session) {
-        textView.text = session.url.value.beautifyUrl()
+    private fun updateTitle(session: Session) {
+        textView.text = session.pageTitle.value ?: session.url.value.beautifyUrl()
     }
 
     override fun onClick(view: View) {
