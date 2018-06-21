@@ -9,6 +9,7 @@ import android.os.StrictMode
 import android.preference.PreferenceManager
 import kotlinx.coroutines.experimental.CommonPool
 import kotlinx.coroutines.experimental.launch
+import org.mozilla.focus.distribution.BrandAndDeviceDeviceIdentifier
 import org.mozilla.focus.locale.LocaleAwareApplication
 import org.mozilla.focus.session.NotificationSessionObserver
 import org.mozilla.focus.session.SessionManager
@@ -27,6 +28,8 @@ class FocusApplication : LocaleAwareApplication() {
         super.onCreate()
 
         PreferenceManager.setDefaultValues(this, R.xml.settings, false)
+
+        BrandAndDeviceDeviceIdentifier().identify()?.onApplicationLaunch(this)
 
         enableStrictMode()
 
