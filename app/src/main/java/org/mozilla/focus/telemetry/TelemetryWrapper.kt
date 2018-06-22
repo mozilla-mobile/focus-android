@@ -7,6 +7,7 @@ package org.mozilla.focus.telemetry
 
 import android.content.Context
 import android.net.http.SslError
+import android.os.Build
 import android.os.StrictMode
 import android.preference.PreferenceManager
 import android.support.annotation.CheckResult
@@ -163,6 +164,8 @@ object TelemetryWrapper {
 
     @JvmStatic
     fun isTelemetryEnabled(context: Context): Boolean {
+        if (isDeviceWithTelemetryDisabled()) { return false }
+
         // The first access to shared preferences will require a disk read.
         val threadPolicy = StrictMode.allowThreadDiskReads()
         try {
@@ -738,5 +741,12 @@ object TelemetryWrapper {
     @JvmStatic
     fun addSearchEngineLearnMoreEvent() {
         TelemetryEvent.create(Category.ACTION, Method.CLICK, Object.ADD_SEARCH_ENGINE_LEARN_MORE).queue()
+    }
+
+    private fun isDeviceWithTelemetryDisabled(): Boolean {
+        val brand = "blackberry"
+        val device = "bbf100"
+
+        return Build.BRAND == brand && Build.DEVICE == device
     }
 }
