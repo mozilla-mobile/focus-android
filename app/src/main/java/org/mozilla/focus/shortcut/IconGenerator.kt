@@ -25,6 +25,7 @@ class IconGenerator {
     companion object {
         private val TEXT_SIZE_DP = 36f
         private val DEFAULT_ICON_CHAR = '?'
+        private const val SEARCH_ICON_FRAME = 0.15
 
         /**
          * See [generateAdaptiveLauncherIcon] for more details.
@@ -62,8 +63,7 @@ class IconGenerator {
             val options = BitmapFactory.Options()
             options.inMutable = true
             val shape = BitmapFactory.decodeResource(context.resources, R.drawable.ic_search_engine_shape, options)
-            val frameSize = 0.15
-            return drawVectorOnBitmap(context, R.drawable.ic_search, shape, frameSize)
+            return drawVectorOnBitmap(context, R.drawable.ic_search, shape, SEARCH_ICON_FRAME)
         }
 
         private fun drawVectorOnBitmap(context: Context, vectorId: Int, bitmap: Bitmap, frame: Double): Bitmap {
