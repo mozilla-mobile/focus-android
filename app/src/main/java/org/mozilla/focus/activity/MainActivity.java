@@ -54,8 +54,6 @@ public class MainActivity extends LocaleAwareAppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        SentryWrapper.INSTANCE.init(this);
-
         if (Settings.getInstance(this).shouldUseSecureMode()) {
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_SECURE);
         }
