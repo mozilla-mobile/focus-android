@@ -7,7 +7,7 @@ android:
   components:
     - tools
     - platform-tools
-    - build-tools-27.0.3
+    - build-tools-27.1.1
     - android-27
     - extra-google-google_play_services
     - extra-google-m2repository
@@ -37,4 +37,3 @@ cache:
     - $HOME/.gradle/caches/
     - $HOME/.gradle/wrapper/
     - $HOME/.android/build-cache
-
