@@ -24,7 +24,6 @@ import org.mozilla.focus.locale.LocaleAwareAppCompatActivity;
 import org.mozilla.focus.session.Session;
 import org.mozilla.focus.session.SessionManager;
 import org.mozilla.focus.session.ui.SessionsSheetFragment;
-import org.mozilla.focus.telemetry.SentryWrapper;
 import org.mozilla.focus.telemetry.TelemetryWrapper;
 import org.mozilla.focus.utils.Settings;
 import org.mozilla.focus.utils.ViewUtils;
