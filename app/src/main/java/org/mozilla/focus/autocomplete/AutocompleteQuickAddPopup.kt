@@ -15,9 +15,10 @@ import android.widget.PopupWindow
 import kotlinx.coroutines.experimental.launch
 import mozilla.components.browser.domains.CustomDomains
 import org.mozilla.focus.R
+import org.mozilla.focus.telemetry.TelemetryWrapper
 
 class AutocompleteQuickAddPopup(context: Context, url: String) : PopupWindow() {
-    var onUrlAdded: (() -> Unit)? = null
+    var onUrlAdded: ((Boolean) -> Unit)? = null
 
     init {
         val view = LayoutInflater.from(context).inflate(R.layout.autocomplete_quick_add_popup, null)
@@ -26,9 +27,18 @@ class AutocompleteQuickAddPopup(context: Context, url: String) : PopupWindow() {
         setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
         val button = view.findViewById<Button>(R.id.quick_add_autocomplete_button)
+
+        var duplicateURL = false
         button.setOnClickListener {
-            val job = launch { CustomDomains.add(context, url) }
-            job.invokeOnCompletion { onUrlAdded?.invoke() }
+            val job = launch {
+                duplicateURL = CustomDomains.load(context).contains(url)
+
+                if (duplicateURL) return@launch
+                CustomDomains.add(context, url)
+
+                TelemetryWrapper.saveAutocompleteDomainEvent(TelemetryWrapper.AutoCompleteEventSource.QUICK_ADD)
+            }
+            job.invokeOnCompletion { onUrlAdded?.invoke(!duplicateURL) }
         }
 
         isFocusable = true
