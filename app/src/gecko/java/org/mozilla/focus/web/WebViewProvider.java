@@ -9,6 +9,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.net.Uri;
+import android.os.Bundle;
 import android.os.Environment;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
@@ -21,18 +22,21 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.mozilla.focus.browser.LocalizedContent;
 import org.mozilla.focus.session.Session;
+import org.mozilla.focus.telemetry.SentryWrapper;
 import org.mozilla.focus.telemetry.TelemetryWrapper;
 import org.mozilla.focus.utils.AppConstants;
 import org.mozilla.focus.utils.IntentUtils;
 import org.mozilla.focus.utils.Settings;
 import org.mozilla.focus.utils.UrlUtils;
 import org.mozilla.gecko.util.GeckoBundle;
+import org.mozilla.gecko.util.ThreadUtils;
 import org.mozilla.geckoview.GeckoResponse;
 import org.mozilla.geckoview.GeckoRuntime;
 import org.mozilla.geckoview.GeckoRuntimeSettings;
 import org.mozilla.geckoview.GeckoSession;
 import org.mozilla.geckoview.GeckoSessionSettings;
 
+import java.util.concurrent.CountDownLatch;
 import kotlin.text.Charsets;
 
 /**
@@ -62,8 +66,9 @@ public class WebViewProvider {
             final GeckoRuntimeSettings.Builder runtimeSettingsBuilder =
                     new GeckoRuntimeSettings.Builder();
             runtimeSettingsBuilder.useContentProcessHint(true);
-            runtimeSettingsBuilder.javaCrashReportingEnabled(true);
             runtimeSettingsBuilder.nativeCrashReportingEnabled(true);
+            // TODO: #2824 remove remote debugging before release
+            runtimeSettingsBuilder.remoteDebuggingEnabled(true);
             geckoRuntime = GeckoRuntime.create(context.getApplicationContext(), runtimeSettingsBuilder.build());
         }
     }
@@ -302,6 +307,7 @@ public class WebViewProvider {
                 @Override
                 public void onCrash(GeckoSession session) {
                     Log.i(TAG, "Crashed, opening new session");
+                    SentryWrapper.INSTANCE.captureGeckoCrash();
                     geckoSession.close();
                     geckoSession = createGeckoSession();
                     setGeckoSession();
@@ -467,12 +473,46 @@ public class WebViewProvider {
 
         @Override
         public void restoreWebViewState(Session session) {
-            // TODO: restore navigation history, and reopen previously opened page
+            final Bundle stateData = session.getWebViewState();
+            final String desiredURL = session.getUrl().getValue();
+            final GeckoSession.SessionState sessionState = stateData.getParcelable("state");
+            if (sessionState != null) {
+                geckoSession.restoreState(sessionState);
+            } else {
+                loadUrl(desiredURL);
+            }
         }
 
         @Override
-        public void saveWebViewState(@NonNull Session session) {
-            // TODO: save anything needed for navigation history restoration.
+        public void saveWebViewState(@NonNull final Session session) {
+            final CountDownLatch latch = new CountDownLatch(1);
+            saveStateInBackground(latch, session);
+            try {
+                latch.await();
+            } catch (InterruptedException e) {
+                // State was not saved
+            }
+        }
+
+        private void saveStateInBackground(final CountDownLatch latch, final Session session) {
+            ThreadUtils.postToBackgroundThread(new Runnable() {
+                @Override
+                public void run() {
+                    final GeckoResponse<GeckoSession.SessionState> response = new GeckoResponse<GeckoSession.SessionState>() {
+                        @Override
+                        public void respond(GeckoSession.SessionState value) {
+                            if (value != null) {
+                                final Bundle bundle = new Bundle();
+                                bundle.putParcelable("state", value);
+                                session.saveWebViewState(bundle);
+                            }
+                            latch.countDown();
+                        }
+                    };
+
+                    geckoSession.saveState(response);
+                }
+            });
         }
 
         @Override
