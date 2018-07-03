@@ -6,6 +6,7 @@ package org.mozilla.focus.session.ui
 
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
+import android.support.v4.content.ContextCompat
 import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.widget.TextView
@@ -38,16 +39,10 @@ class SessionViewHolder internal constructor(
 
         val isCurrentSession = SessionManager.getInstance().isCurrentSession(session)
 
-        updateTextBackgroundColor(isCurrentSession)
-    }
-
-    private fun updateTextBackgroundColor(isCurrentSession: Boolean) {
-        val drawable = if (isCurrentSession) {
-            R.drawable.background_list_item_current_session
-        } else {
-            R.drawable.background_list_item_session
+        val color = ContextCompat.getColor(textView.context, R.color.session_active)
+        if (isCurrentSession) {
+            this.textView.setBackgroundColor(color)
         }
-        textView.setBackgroundResource(drawable)
     }
 
     private fun updateTitle(session: Session) {

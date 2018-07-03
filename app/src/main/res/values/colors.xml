@@ -78,4 +78,7 @@
 
     <color name="contextMenuTitleTextColor">#99F9F9FA</color>
     <color name="contextMenuSeparatorBackground">#1AF9F9FA</color>
+
+    <color name="session_active">#353852</color>
+    <color name="session_inactive">@color/photonInk80</color>
 </resources>
