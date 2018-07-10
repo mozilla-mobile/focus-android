@@ -8,7 +8,9 @@ import android.Manifest;
 import android.app.Activity;
 import android.app.DownloadManager;
 import android.app.PendingIntent;
+import android.arch.lifecycle.LifecycleObserver;
 import android.arch.lifecycle.Observer;
+import android.arch.lifecycle.ProcessLifecycleOwner;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
@@ -21,10 +23,12 @@ import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.TransitionDrawable;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.annotation.RequiresApi;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.app.DialogFragment;
@@ -59,6 +63,8 @@ import org.mozilla.focus.activity.MainActivity;
 import org.mozilla.focus.animation.TransitionDrawableGroup;
 import org.mozilla.focus.architecture.NonNullObserver;
 import org.mozilla.focus.autocomplete.AutocompleteQuickAddPopup;
+import org.mozilla.focus.biometrics.BiometricAuthenticationDialogFragment;
+import org.mozilla.focus.biometrics.BiometricAuthenticationHandler;
 import org.mozilla.focus.broadcastreceiver.DownloadBroadcastReceiver;
 import org.mozilla.focus.customtabs.CustomTabConfig;
 import org.mozilla.focus.findinpage.FindInPageCoordinator;
@@ -78,6 +84,7 @@ import org.mozilla.focus.telemetry.TelemetryWrapper;
 import org.mozilla.focus.utils.AppConstants;
 import org.mozilla.focus.utils.Browsers;
 import org.mozilla.focus.utils.Features;
+import org.mozilla.focus.utils.Settings;
 import org.mozilla.focus.utils.StatusBarUtils;
 import org.mozilla.focus.utils.SupportUtils;
 import org.mozilla.focus.utils.UrlUtils;
@@ -104,7 +111,7 @@ import mozilla.components.support.utils.DrawableUtils;
  */
 @SuppressWarnings({"PMD.ExcessiveClassLength", "PMD.CyclomaticComplexity", "PMD.TooManyMethods",
         "PMD.ModifiedCyclomaticComplexity", "PMD.TooManyFields", "PMD.StdCyclomaticComplexity" })
-public class BrowserFragment extends WebFragment implements View.OnClickListener, DownloadDialogFragment.DownloadDialogListener, View.OnLongClickListener {
+public class BrowserFragment extends WebFragment implements LifecycleObserver, View.OnClickListener, DownloadDialogFragment.DownloadDialogListener, View.OnLongClickListener, BiometricAuthenticationDialogFragment.BiometricAuthenticationListener {
     public static final String FRAGMENT_TAG = "browser";
 
     private static final int REQUEST_CODE_STORAGE_PERMISSION = 101;
@@ -170,6 +177,9 @@ public class BrowserFragment extends WebFragment implements View.OnClickListener
     private Session session;
     private final FindInPageCoordinator findInPageCoordinator = new FindInPageCoordinator();
 
+    private BiometricAuthenticationHandler biometricController = null;
+
+
     public BrowserFragment() {
         sessionManager = SessionManager.getInstance();
     }
@@ -177,6 +187,11 @@ public class BrowserFragment extends WebFragment implements View.OnClickListener
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        ProcessLifecycleOwner.get().getLifecycle().addObserver(this);
+
+        if (biometricController == null && Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            biometricController = new BiometricAuthenticationHandler(getContext());
+        }
 
         final String sessionUUID = getArguments().getString(ARGUMENT_SESSION_UUID);
         if (sessionUUID == null) {
@@ -209,6 +224,7 @@ public class BrowserFragment extends WebFragment implements View.OnClickListener
                 updateFindInPageResult(matches.getFirst(), matches.getSecond());
             }
         });
+
     }
 
     public Session getSession() {
@@ -223,12 +239,17 @@ public class BrowserFragment extends WebFragment implements View.OnClickListener
     @Override
     public void onPause() {
         super.onPause();
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && Settings.getInstance(getContext()).shouldUseBiometrics()) {
+            biometricController.stopListening();
+            getView().setAlpha(0);
+        }
+
         getContext().unregisterReceiver(downloadBroadcastReceiver);
 
         final BrowserMenu menu = menuWeakReference.get();
         if (menu != null) {
             menu.dismiss();
-
             menuWeakReference.clear();
         }
     }
@@ -582,19 +603,19 @@ public class BrowserFragment extends WebFragment implements View.OnClickListener
             @Override
             public void onHttpAuthRequest(@NonNull final IWebView.HttpAuthCallback callback, String host, String realm) {
                 HttpAuthenticationDialogBuilder builder = new HttpAuthenticationDialogBuilder.Builder(getActivity(), host, realm)
-                                .setOkListener(new HttpAuthenticationDialogBuilder.OkListener() {
-                                    @Override
-                                    public void onOk(String host, String realm, String username, String password) {
-                                        callback.proceed(username, password);
-                                    }
-                                })
-                                .setCancelListener(new HttpAuthenticationDialogBuilder.CancelListener() {
-                                    @Override
-                                    public void onCancel() {
-                                        callback.cancel();
-                                    }
-                                })
-                                .build();
+                        .setOkListener(new HttpAuthenticationDialogBuilder.OkListener() {
+                            @Override
+                            public void onOk(String host, String realm, String username, String password) {
+                                callback.proceed(username, password);
+                            }
+                        })
+                        .setCancelListener(new HttpAuthenticationDialogBuilder.CancelListener() {
+                            @Override
+                            public void onCancel() {
+                                callback.cancel();
+                            }
+                        })
+                        .build();
 
                 builder.createDialog();
                 builder.show();
@@ -810,6 +831,17 @@ public class BrowserFragment extends WebFragment implements View.OnClickListener
         }
     }
 
+    // Biometric Authentication
+    @Override
+    public void onCreateNewSession() {
+        erase();
+    }
+
+    @Override
+    public void onAuthSuccess() {
+        getView().setAlpha(1);
+    }
+
     @Override
     public void onCreateViewCalled() {
         manager = (DownloadManager) getContext().getSystemService(Context.DOWNLOAD_SERVICE);
@@ -843,6 +875,33 @@ public class BrowserFragment extends WebFragment implements View.OnClickListener
                 statusBar.getLayoutParams().height = statusBarHeight;
             }
         });
+
+        // If biometrics are enabled and we're on an appropriate SDK...
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && Settings.getInstance(getContext()).shouldUseBiometrics()) {
+            displayBiometricPromptIfNeeded();
+        } else {
+            getView().setAlpha(1);
+        }
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.M)
+    private void displayBiometricPromptIfNeeded() {
+        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+
+        // Check that we need to auth and that the fragment isn't already displayed
+        if (biometricController.getNeedsAuth()) {
+            biometricController.startAuthentication();
+
+            // Are we already displaying the biometric fragment?
+            if (fragmentManager.findFragmentByTag(BiometricAuthenticationDialogFragment.FRAGMENT_TAG) != null) {
+                return;
+            }
+
+            biometricController.getBiometricFragment().setTargetFragment(BrowserFragment.this, 300);
+            biometricController.getBiometricFragment().show(fragmentManager, BiometricAuthenticationDialogFragment.FRAGMENT_TAG);
+        } else {
+            getView().setAlpha(1);
+        }
     }
 
     /**
@@ -980,14 +1039,11 @@ public class BrowserFragment extends WebFragment implements View.OnClickListener
                             .commit();
                 }
                 break;
-
             case R.id.erase: {
                 TelemetryWrapper.eraseEvent();
-
                 erase();
                 break;
             }
-
             case R.id.tabs:
                 getActivity().getSupportFragmentManager()
                         .beginTransaction()
