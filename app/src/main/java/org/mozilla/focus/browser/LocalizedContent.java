@@ -11,6 +11,7 @@ import android.content.res.Resources;
 import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.v4.util.ArrayMap;
+import android.util.Log;
 import android.view.View;
 
 import org.mozilla.focus.BuildConfig;
@@ -73,7 +74,10 @@ public class LocalizedContent {
 
         final String data = HtmlLoader.loadResourceFile(context, R.raw.about, substitutionMap);
 
-        webView.loadData("file:///android_res/raw/about.html", data, "text/html", "UTF-8", URL_ABOUT);
+        webView.loadData(AppConstants.isGeckoBuild() ?
+                "resource://android/assets/about.html" :
+                "file:///android_asset/about.html",
+                data, "text/html", "UTF-8", URL_ABOUT);
     }
 
     /**
@@ -87,9 +91,9 @@ public class LocalizedContent {
         final String appName = context.getResources().getString(R.string.app_name);
         final String mplUrl = "https://www.mozilla.org/en-US/MPL/";
         final String trademarkPolicyUrl = "https://www.mozilla.org/foundation/trademarks/policy/";
-        final String gplUrl = "resource://android/resources/assets/gpl.html";
+        final String gplUrl = "gpl.html";
         final String trackingProtectionUrl = "https://wiki.mozilla.org/Security/Tracking_protection#Lists";
-        final String licensesUrl = "resource://android/resources/assets/licenses.html";
+        final String licensesUrl = "licenses.html";
 
         final String content1 = resources.getString(R.string.your_rights_content1, appName);
         substitutionMap.put("%your-rights-content1%", content1);
@@ -109,7 +113,10 @@ public class LocalizedContent {
         putLayoutDirectionIntoMap(substitutionMap, context);
 
         final String data = HtmlLoader.loadResourceFile(context, R.raw.rights, substitutionMap);
-        webView.loadData(AppConstants.isGeckoBuild() ? "resource://android/resources/raw/rights.html" : "file:///android_res/raw/rights.html", data, "text/html", "UTF-8", URL_RIGHTS);
+        webView.loadData(AppConstants.isGeckoBuild() ?
+                "resource://android/assets/rights.html" :
+                "file:///android_asset/rights.html",
+                data, "text/html", "UTF-8", URL_RIGHTS);
     }
 
     private static void putLayoutDirectionIntoMap(Map<String, String> substitutionMap, Context context) {
