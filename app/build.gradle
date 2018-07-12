@@ -102,24 +102,6 @@ android {
         aarch64 {
             dimension "abi"
         }
-
-        universal {
-            dimension "abi"
-        }
-    }
-
-    variantFilter { variant ->
-        def flavors = variant.flavors*.name
-
-        if (flavors.contains("webview") && !flavors.contains("universal")) {
-            // WebView builds support all ABIs
-            setIgnore(true)
-        }
-
-        if (flavors.contains("gecko") && flavors.contains("universal")) {
-            // There are only x86 and ARM builds using Gecko
-            setIgnore(true)
-        }
     }
 
     sourceSets {
@@ -138,13 +120,13 @@ android {
 
         // Release
 
-        focusWebviewUniversalRelease {
+        focusWebviewRelease {
             java.srcDir 'src/focusRelease/java'
             manifest.srcFile 'src/focusRelease/AndroidManifest.xml'
             res.srcDir 'src/focusRelease/res'
         }
 
-        klarWebviewUniversalRelease {
+        klarWebviewRelease {
             java.srcDir 'src/klarRelease/java'
             res.srcDir 'src/klarRelease/res'
         }
@@ -310,15 +292,12 @@ dependencies {
     implementation "org.mozilla.components:search:$mozilla_components_version"
     implementation "org.mozilla.photon:colors:$mozilla_components_version"
 
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:0.22.5"
 
     focusImplementation 'com.adjust.sdk:adjust-android:4.11.4'
     focusImplementation 'com.google.android.gms:play-services-analytics:10.2.6' // Required by Adjust
 
-    // What I actually want to define here is geckoArmCompile and geckoX86Compile. But gradle doesn't
-    // allow me to define dependencies for such a flavor combination. However as we are not building
-    // WebView + (ARM / x86) flavor combinations this should be good enough for now.
     armImplementation "org.mozilla:geckoview-beta-armeabi-v7a:${geckoview_version}"
     x86Implementation "org.mozilla:geckoview-beta-x86:${geckoview_version}"
     aarch64Implementation "org.mozilla:geckoview-beta-arm64-v8a:${geckoview_version}"
@@ -350,6 +329,9 @@ dependencies {
         exclude group: 'com.android.support', module: 'recyclerview-v7'
     }
     implementation 'com.android.support.constraint:constraint-layout:1.1.0'
+    implementation 'com.android.support:preference-v7:27.1.1'
+    implementation 'com.jakewharton:process-phoenix:2.0.0'
+    implementation 'com.facebook.stetho:stetho:1.5.0'
 }
 // -------------------------------------------------------------------------------------------------
 //  Dynamically set versionCode (See tools/build/versionCode.gradle
@@ -395,7 +377,7 @@ android.applicationVariants.all { variant ->
 // Generate blocklists
 // -------------------------------------------------------------------------------------------------
 
-def blockListOutputDir = 'src/webview/res/raw'
+def blockListOutputDir = 'src/main/res/raw'
 
 task buildBlocklists(type:Copy) {
     from('../shavar-prod-lists') {
@@ -415,7 +397,7 @@ clean.doLast {
 
 tasks.whenTaskAdded { task ->
     def name = task.name
-    if (name.contains("generate") && name.contains("Config") && name.contains("Webview")) {
+    if (name.contains("generate") && name.contains("Config")) {
         task.dependsOn buildBlocklists
     }
 }
@@ -480,7 +462,7 @@ def getEnabledLocales() {
     def potentialLanguageDirs = resDir.listFiles(new FilenameFilter() {
         @Override
         boolean accept(File dir, String name) {
-            return name.startsWith("values-");
+            return name.startsWith("values-")
         }
     })
 
