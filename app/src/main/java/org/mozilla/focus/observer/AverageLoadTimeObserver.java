@@ -33,12 +33,16 @@ public class AverageLoadTimeObserver extends NonNullObserver<Boolean> {
                 Log.i(LOG_TAG, "zerdatime " + startLoadTime +
                         " - page load start");
                 loadStarted = true;
-
             }
         } else {
             if (loadStarted) {
                 if (UrlUtils.isLocalizedContent(session.getUrl().getValue())) {
                     loadStarted = false;
+                    return;
+                }
+                if (session.getProgress().getValue() != 99) {
+                    // App was backgrounded so stopped loading, but let's not record this value
+                    // because the progress was not complete
                     return;
                 }
                 Log.i(LOG_TAG, "Loaded page at " + session.getUrl().getValue());

@@ -349,7 +349,7 @@ public class WebViewProvider {
                                 isSecure = true;
                             }
 
-                            callback.onProgress(100);
+                            callback.onProgress(99);
                             callback.onPageFinished(isSecure);
                         }
                     }
