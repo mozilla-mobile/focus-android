@@ -18,6 +18,7 @@ import org.mozilla.focus.telemetry.TelemetryWrapper
 import org.mozilla.focus.utils.AdjustHelper
 import org.mozilla.focus.utils.AppConstants
 import org.mozilla.focus.web.CleanupSessionObserver
+import org.mozilla.focus.web.WebViewProvider
 
 class FocusApplication : LocaleAwareApplication() {
     var visibilityLifeCycleCallback: VisibilityLifeCycleCallback? = null
@@ -27,6 +28,8 @@ class FocusApplication : LocaleAwareApplication() {
         super.onCreate()
 
         PreferenceManager.setDefaultValues(this, R.xml.settings, false)
+        WebViewProvider.readEnginePref(this)
+        WebViewProvider.writeEnginePref(this)
 
         enableStrictMode()
 
