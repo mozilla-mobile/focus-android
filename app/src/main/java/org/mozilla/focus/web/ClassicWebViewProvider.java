@@ -10,6 +10,7 @@ import android.content.Context;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.StrictMode;
+import android.support.annotation.NonNull;
 import android.support.annotation.VisibleForTesting;
 import android.text.TextUtils;
 import android.util.AttributeSet;
@@ -19,6 +20,7 @@ import android.webkit.WebSettings;
 import android.webkit.WebStorage;
 import android.webkit.WebView;
 
+import org.jetbrains.annotations.NotNull;
 import org.mozilla.focus.R;
 import org.mozilla.focus.utils.Settings;
 import org.mozilla.focus.webview.SystemWebView;
@@ -27,17 +29,17 @@ import org.mozilla.focus.webview.TrackingProtectionWebViewClient;
 /**
  * WebViewProvider for creating a WebView based IWebView implementation.
  */
-public class WebViewProvider {
+public class ClassicWebViewProvider implements IWebViewProvider {
     /**
      * Preload webview data. This allows the webview implementation to load resources and other data
      * it might need, in advance of intialising the view (at which time we are probably wanting to
      * show a website immediately).
      */
-    public static void preload(final Context context) {
+    public void preload(@NonNull final Context context) {
         TrackingProtectionWebViewClient.triggerPreload(context);
     }
 
-    public static void performCleanup(final Context context) {
+    public void performCleanup(@NonNull final Context context) {
         SystemWebView.deleteContentFromKnownLocations(context);
     }
 
@@ -48,7 +50,7 @@ public class WebViewProvider {
      *
      * This function must be called before WebView.loadUrl to avoid erasing current session data.
      */
-    public static void performNewBrowserSessionCleanup() {
+    public void performNewBrowserSessionCleanup() {
         // If the app is closed in certain ways, WebView.cleanup will not get called and we don't clear cookies.
         CookieManager.getInstance().removeAllCookies(null);
 
@@ -62,7 +64,8 @@ public class WebViewProvider {
         StrictMode.setThreadPolicy(oldPolicy);
     }
 
-    public static View create(Context context, AttributeSet attrs) {
+    @NonNull
+    public View create(@NonNull Context context, AttributeSet attrs) {
         final SystemWebView webkitView = new SystemWebView(context, attrs);
         final WebSettings settings = webkitView.getSettings();
 
@@ -142,12 +145,12 @@ public class WebViewProvider {
         CookieManager.getInstance().setAcceptCookie(true);
     }
 
-    public static void requestDesktopSite(WebSettings settings) {
+    public void requestDesktopSite(WebSettings settings) {
         settings.setUserAgentString(toggleDesktopUA(settings, true));
         settings.setUseWideViewPort(true);
     }
 
-    public static void requestMobileSite(Context context, WebSettings settings) {
+    public void requestMobileSite(Context context, WebSettings settings) {
         settings.setUserAgentString(toggleDesktopUA(settings, false));
         settings.setUseWideViewPort(false);
     }
@@ -224,5 +227,15 @@ public class WebViewProvider {
         } else {
             return existingUAString.replace("eliboM", "Mobile").replace("diordnA", "Android");
         }
+    }
+
+    @Override
+    public void applyAppSettings(@NotNull Context context, @NotNull WebSettings webSettings, @NotNull SystemWebView systemWebView) {
+
+    }
+
+    @Override
+    public void disableBlocking(@NotNull WebSettings webSettings, @NotNull SystemWebView systemWebView) {
+
     }
 }
