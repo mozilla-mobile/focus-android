@@ -6,6 +6,7 @@ package org.mozilla.focus.fragment
 
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
+import android.arch.lifecycle.ViewModelProviders
 import android.graphics.Typeface
 import android.graphics.drawable.TransitionDrawable
 import android.os.Bundle
@@ -19,9 +20,9 @@ import android.view.ViewTreeObserver
 import android.widget.FrameLayout
 import kotlinx.android.synthetic.main.fragment_urlinput.*
 import mozilla.components.browser.domains.DomainAutoCompleteProvider
+import mozilla.components.support.utils.ThreadUtils
 import mozilla.components.ui.autocomplete.InlineAutocompleteEditText
 import mozilla.components.ui.autocomplete.InlineAutocompleteEditText.AutocompleteResult
-import mozilla.components.support.utils.ThreadUtils
 import org.mozilla.focus.R
 import org.mozilla.focus.locale.LocaleAwareAppCompatActivity
 import org.mozilla.focus.locale.LocaleAwareFragment
@@ -30,12 +31,8 @@ import org.mozilla.focus.session.Session
 import org.mozilla.focus.session.SessionManager
 import org.mozilla.focus.session.Source
 import org.mozilla.focus.telemetry.TelemetryWrapper
-import org.mozilla.focus.utils.Features
-import org.mozilla.focus.utils.Settings
-import org.mozilla.focus.utils.StatusBarUtils
-import org.mozilla.focus.utils.SupportUtils
-import org.mozilla.focus.utils.UrlUtils
-import org.mozilla.focus.utils.ViewUtils
+import org.mozilla.focus.utils.*
+import org.mozilla.focus.viewmodel.MainViewModel
 import org.mozilla.focus.whatsnew.WhatsNew
 
 class FocusCrashException : Exception()
@@ -120,12 +117,15 @@ class UrlInputFragment :
     private var isAnimating: Boolean = false
 
     private var session: Session? = null
+    private var model : MainViewModel? = null
 
     private val isOverlay: Boolean
         get() = session != null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        model = ViewModelProviders.of(activity!!).get(MainViewModel::class.java)
 
         // Get session from session manager if there's a session UUID in the fragment's arguments
         arguments?.getString(ARGUMENT_SESSION_UUID)?.let {
@@ -482,6 +482,11 @@ class UrlInputFragment :
             if (input == "focus:crash") { throw FocusCrashException() }
 
             ViewUtils.hideKeyboard(urlView)
+
+            if (input == "focus:test") {
+                model?.showExperiments()
+                return
+            }
 
             val isUrl = UrlUtils.isUrl(input)
 
