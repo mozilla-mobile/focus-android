@@ -17,7 +17,6 @@ import org.mozilla.focus.activity.SettingsActivity;
 import org.mozilla.focus.locale.LocaleManager;
 import org.mozilla.focus.locale.Locales;
 import org.mozilla.focus.telemetry.TelemetryWrapper;
-import org.mozilla.focus.utils.AppConstants;
 import org.mozilla.focus.widget.DefaultBrowserPreference;
 
 import java.util.Locale;
@@ -34,10 +33,8 @@ public class SettingsFragment extends BaseSettingsFragment implements SharedPref
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         addPreferencesFromResource(R.xml.settings);
-        if (!AppConstants.isGeckoBuild()) {
-            getPreferenceScreen()
-                    .removePreference(findPreference(getString(R.string.pref_key_advanced_screen)));
-        }
+        // TODO: #2869 Enable Debugging and Expose Advanced Setting
+        getPreferenceScreen().removePreference(findPreference(getString(R.string.pref_key_advanced_screen)));
     }
 
     @Override
