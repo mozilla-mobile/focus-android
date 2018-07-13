@@ -1,3 +1,7 @@
+/* This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
+
 package org.mozilla.focus.web
 
 import android.content.Context
@@ -11,18 +15,16 @@ import org.mozilla.focus.webview.SystemWebView
 
 const val ENGINE_PREF_STRING_KEY = "engine_choice"
 
-object WebViewProvider {
+object WebViewProvider : IWebViewProvider {
     var engineName: String = Config.renderer.name
     var engine : IWebViewProvider? = null
 
     fun writeEnginePref(context: Context, newEngineName: String = engineName) {
-        requireNotNull(context)
         val prefs = PreferenceManager.getDefaultSharedPreferences(context)
         prefs.edit().putString(ENGINE_PREF_STRING_KEY, newEngineName).apply()
     }
 
     fun readEnginePref(context: Context) {
-        requireNotNull(context)
         val prefs = PreferenceManager.getDefaultSharedPreferences(context)
         engineName = prefs.getString(ENGINE_PREF_STRING_KEY, Config.renderer.name)
         useEngine(engineName)
@@ -35,49 +37,35 @@ object WebViewProvider {
         }
     }
 
-    fun preload(context: Context) {
-        requireNotNull(context)
-        requireNotNull(engine)
+    override fun preload(context: Context) {
         engine!!.preload(context)
     }
 
-    fun create(context: Context, attributeSet: AttributeSet?): View {
-        requireNotNull(context)
-        requireNotNull(engine)
+    override fun create(context: Context, attributeSet: AttributeSet?): View {
         return engine!!.create(context, attributeSet)
     }
 
-    fun performCleanup(context: Context) {
-        requireNotNull(context)
-        requireNotNull(engine)
+    override fun performCleanup(context: Context) {
         engine!!.performCleanup(context)
     }
 
-    fun performNewBrowserSessionCleanup() {
-        requireNotNull(engine)
+    override fun performNewBrowserSessionCleanup() {
         engine!!.performNewBrowserSessionCleanup()
     }
 
-    fun requestMobileSite(context: Context, webSettings: WebSettings) {
-        requireNotNull(context)
-        requireNotNull(engine)
+    override fun requestMobileSite(context: Context, webSettings: WebSettings) {
         engine!!.requestMobileSite(context, webSettings)
     }
 
-    fun requestDesktopSite(webSettings: WebSettings) {
-        requireNotNull(webSettings)
-        requireNotNull(engine)
+    override fun requestDesktopSite(webSettings: WebSettings) {
         engine!!.requestDesktopSite(webSettings)
     }
 
-    fun applyAppSettings(context: Context, webSettings: WebSettings, systemWebView: SystemWebView) {
-        requireNotNull(context)
-        requireNotNull(engine)
+    override fun applyAppSettings(context: Context, webSettings: WebSettings, systemWebView: SystemWebView) {
         engine!!.applyAppSettings(context, webSettings, systemWebView)
     }
 
-    fun disableBlocking(webSettings: WebSettings, systemWebView: SystemWebView) {
-        requireNotNull(engine)
+    override fun disableBlocking(webSettings: WebSettings, systemWebView: SystemWebView) {
         engine!!.disableBlocking(webSettings, systemWebView)
     }
 }

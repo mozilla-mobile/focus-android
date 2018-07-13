@@ -29,7 +29,6 @@ class FocusApplication : LocaleAwareApplication() {
 
         PreferenceManager.setDefaultValues(this, R.xml.settings, false)
         WebViewProvider.readEnginePref(this)
-        WebViewProvider.writeEnginePref(this)
 
         enableStrictMode()
 

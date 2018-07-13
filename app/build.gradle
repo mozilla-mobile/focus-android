@@ -302,8 +302,6 @@ dependencies {
     x86Implementation "org.mozilla:geckoview-beta-x86:${geckoview_version}"
     aarch64Implementation "org.mozilla:geckoview-beta-arm64-v8a:${geckoview_version}"
 
-    implementation 'com.jakewharton:process-phoenix:2.0.0'
-
     testImplementation 'junit:junit:4.12'
     testImplementation "org.robolectric:robolectric:3.8"
     testImplementation 'org.mockito:mockito-core:2.12.0'
