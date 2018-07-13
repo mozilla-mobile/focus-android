@@ -33,6 +33,8 @@ public class SettingsFragment extends BaseSettingsFragment implements SharedPref
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         addPreferencesFromResource(R.xml.settings);
+        // TODO: #2869 Enable Debugging and Expose Advanced Setting
+        getPreferenceScreen().removePreference(findPreference(getString(R.string.pref_key_advanced_screen)));
     }
 
     @Override
@@ -69,6 +71,9 @@ public class SettingsFragment extends BaseSettingsFragment implements SharedPref
         } else if (preference.getKey().equals(resources.getString(R.string
                 .pref_key_search_screen))) {
             navigateToFragment(new SearchSettingsFragment());
+        } else if (preference.getKey().equals(resources.getString(R.string
+                .pref_key_advanced_screen))) {
+            navigateToFragment(new AdvancedSettingsFragment());
         } else if (preference.getKey().equals(resources.getString(R.string
                 .pref_key_mozilla_screen))) {
             navigateToFragment(new MozillaSettingsFragment());
