@@ -37,6 +37,7 @@ import org.mozilla.focus.utils.FileUtils;
 import org.mozilla.focus.utils.UrlUtils;
 import org.mozilla.focus.utils.ViewUtils;
 import org.mozilla.focus.web.Download;
+import org.mozilla.focus.web.IFindListener;
 import org.mozilla.focus.web.IWebView;
 import org.mozilla.focus.web.WebViewProvider;
 
@@ -199,6 +200,11 @@ public class SystemWebView extends NestedWebView implements IWebView, SharedPref
         this.callback = callback;
         client.setCallback(callback);
         linkHandler.setCallback(callback);
+    }
+
+    @Override
+    public void setFindListener(IFindListener findListener) {
+        this.setFindListener((FindListener) findListener);
     }
 
     public void loadUrl(String url) {

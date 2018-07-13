@@ -3,6 +3,11 @@
    - License, v. 2.0. If a copy of the MPL was not distributed with this
    - file, You can obtain one at http://mozilla.org/MPL/2.0/. -->
 <resources>
+    <!-- ####################################################################################### -->
+    <!-- ## Put only strings into this file that should be translated. Move all other strings ## -->
+    <!-- ## into a separate file like strings_references.xml                                  ## -->
+    <!-- ####################################################################################### -->
+
     <!-- Label used for buttons, e.g. in dialogs -->
     <string name="action_cancel">Cancel</string>
     <!-- Label used for buttons, e.g. in dialogs -->
@@ -228,12 +233,6 @@
     <string name="preference_privacy_block_content_summary2">Enabling may cause some pages to behave unexpectedly</string>
     <string name="preference_privacy_category_cookies">Block cookies</string>
 
-    <string-array name="preference_privacy_cookies_options">
-        <item>@string/preference_privacy_should_block_cookies_yes_option</item>
-        <item>@string/preference_privacy_should_block_cookies_third_party_only_option</item>
-        <item>@string/preference_privacy_should_block_cookies_no_option</item>
-    </string-array>
-
     <!-- Three options for Cookie blocking. Yes (All cookies Blocked), Block 3rd-party cookies
     only (Only 3rd-party Cookies Blocked), No (No cookies blocked) -->
     <string name="preference_privacy_should_block_cookies_no_option">No</string>
@@ -407,11 +406,7 @@
     ]]>
     </string>
 
-    <string name="error_connect_title">@string/error_connectionfailure_title</string>
-    <string name="error_connect_message">@string/error_connectionfailure_message</string>
-
     <string name="error_timeout_title">The connection timed out</string>
-    <string name="error_timeout_message">@string/error_connectionfailure_message</string>
 
     <string name="error_hostLookup_title">Server not found</string>
     <string name="error_hostLookup_message"><![CDATA[
@@ -576,9 +571,26 @@ be temporary, and you can try again later.</li>
     <string name="site_security_icon_content_description">Site Security</string>
     <string name="preference_autocomplete_duplicate_url_error">URL already exists</string>
 
-    <!-- Find in page -->
+    <!-- Label for the Find in page button -->
     <string name="find_in_page">Find in Page</string>
 
+    <!-- Watermark/Hint for the find in page input field -->
+    <string name="find_in_page_input">Find in page</string>
+
+    <!-- String to show the number of results found in the page and the
+        position the user is at. The first argument is the position, the second argument is the total -->
+    <string name="find_in_page_result">%1$d/%2$d</string>
+    <!-- String to be read by the accessibility service presenting the number of results found in the page
+        and the position the user is at. The first argument is the position, the second argument is the total -->
+    <string name="accessibility_find_in_page_result">%1$d out of %2$d</string>
+
+    <!-- String to be read by the accessibility service when focusing the next result button -->
+    <string name="accessibility_next_result">Find next result</string>
+    <!-- String to be read by the accessibility service when focusing the previous result button -->
+    <string name="accessibility_previous_result">Find previous result</string>
+    <!-- String to be read by the accessibility service when focusing the dismiss button in the "find in page" UI -->
+    <string name="accessibility_dismiss_find_in_page">Dismiss find in page</string>
+    
     <!-- Http Authentication Popup: Title -->
     <string name="http_auth_dialog_title">Authentication required</string>
     <!-- Http Authentication Popup: Username -->
@@ -591,4 +603,13 @@ be temporary, and you can try again later.</li>
 
     <!-- Displayed after a user long presses on the URL in a custom tab to copy the URL -->
     <string name="custom_tab_copy_url_action">URL copied</string>
+
+    <!-- Description of what a user may find in the Advanced Setting category, used for debugging -->
+    <string name="preference_advanced_summary">Developer tools</string>
+
+    <!-- Title of Advanced Setting category -->
+    <string name="preference_category_advanced">Advanced</string>
+
+    <!-- Preference to enable remote debugging of the app via USB or Wi-Fi -->
+    <string name="preference_remote_debugging">Remote debugging via USB/Wi-Fi</string>
 </resources>

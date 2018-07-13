@@ -9,24 +9,34 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.net.Uri;
+import android.os.Bundle;
 import android.os.Environment;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
+import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
 
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.mozilla.focus.browser.LocalizedContent;
 import org.mozilla.focus.session.Session;
+import org.mozilla.focus.telemetry.SentryWrapper;
+import org.mozilla.focus.telemetry.TelemetryWrapper;
 import org.mozilla.focus.utils.AppConstants;
 import org.mozilla.focus.utils.IntentUtils;
 import org.mozilla.focus.utils.Settings;
 import org.mozilla.focus.utils.UrlUtils;
+import org.mozilla.gecko.util.GeckoBundle;
+import org.mozilla.gecko.util.ThreadUtils;
 import org.mozilla.geckoview.GeckoResponse;
 import org.mozilla.geckoview.GeckoRuntime;
 import org.mozilla.geckoview.GeckoRuntimeSettings;
 import org.mozilla.geckoview.GeckoSession;
 import org.mozilla.geckoview.GeckoSessionSettings;
+
+import java.util.concurrent.CountDownLatch;
 
 import kotlin.text.Charsets;
 
@@ -57,7 +67,7 @@ public class WebViewProvider {
             final GeckoRuntimeSettings.Builder runtimeSettingsBuilder =
                     new GeckoRuntimeSettings.Builder();
             runtimeSettingsBuilder.useContentProcessHint(true);
-            runtimeSettingsBuilder.javaCrashReportingEnabled(true);
+            runtimeSettingsBuilder.nativeCrashReportingEnabled(true);
             geckoRuntime = GeckoRuntime.create(context.getApplicationContext(), runtimeSettingsBuilder.build());
         }
     }
@@ -69,21 +79,22 @@ public class WebViewProvider {
         private boolean canGoBack;
         private boolean canGoForward;
         private boolean isSecure;
-        private final GeckoSession geckoSession;
+        private GeckoSession geckoSession;
         private String webViewTitle;
+        private boolean isLoadingInternalUrl = false;
+        private String internalAboutData = null;
+        private String internalRightsData = null;
 
         public GeckoWebView(Context context, AttributeSet attrs) {
             super(context, attrs);
-
-            final GeckoSessionSettings settings = new GeckoSessionSettings();
-            settings.setBoolean(GeckoSessionSettings.USE_MULTIPROCESS, true);
-            settings.setBoolean(GeckoSessionSettings.USE_PRIVATE_MODE, true);
-
-            geckoSession = new GeckoSession(settings);
-
             PreferenceManager.getDefaultSharedPreferences(context)
                     .registerOnSharedPreferenceChangeListener(this);
+            geckoSession = createGeckoSession();
+            applySettingsAndSetDelegates();
+            setSession(geckoSession, geckoRuntime);
+        }
 
+        private void applySettingsAndSetDelegates() {
             applyAppSettings();
             updateBlocking();
 
@@ -92,12 +103,19 @@ public class WebViewProvider {
             geckoSession.setNavigationDelegate(createNavigationDelegate());
             geckoSession.setTrackingProtectionDelegate(createTrackingProtectionDelegate());
             geckoSession.setPromptDelegate(createPromptDelegate());
-            setSession(geckoSession, geckoRuntime);
+        }
+
+        private GeckoSession createGeckoSession() {
+            final GeckoSessionSettings settings = new GeckoSessionSettings();
+            settings.setBoolean(GeckoSessionSettings.USE_MULTIPROCESS, true);
+            settings.setBoolean(GeckoSessionSettings.USE_PRIVATE_MODE, true);
+
+            return new GeckoSession(settings);
         }
 
         @Override
         public void setCallback(Callback callback) {
-            this.callback =  callback;
+            this.callback = callback;
         }
 
         @Override
@@ -127,7 +145,9 @@ public class WebViewProvider {
 
         @Override
         public void onResume() {
-
+            if (TelemetryWrapper.dayPassedSinceLastUpload(getContext())) {
+                sendTelemetrySnapshots();
+            }
         }
 
         @Override
@@ -191,6 +211,7 @@ public class WebViewProvider {
         private void applyAppSettings() {
             geckoRuntime.getSettings().setJavaScriptEnabled(!Settings.getInstance(getContext()).shouldBlockJavaScript());
             geckoRuntime.getSettings().setWebFontsEnabled(!Settings.getInstance(getContext()).shouldBlockWebFonts());
+            geckoRuntime.getSettings().setRemoteDebuggingEnabled(false);
             final int cookiesValue;
             if (Settings.getInstance(getContext()).shouldBlockCookies() && Settings.getInstance(getContext()).shouldBlockThirdPartyCookies()) {
                 cookiesValue = GeckoRuntimeSettings.COOKIE_ACCEPT_NONE;
@@ -284,6 +305,18 @@ public class WebViewProvider {
                 }
 
                 @Override
+                public void onCrash(GeckoSession session) {
+                    Log.i(TAG, "Crashed, opening new session");
+                    SentryWrapper.INSTANCE.captureGeckoCrash();
+                    geckoSession.close();
+                    geckoSession = createGeckoSession();
+                    applySettingsAndSetDelegates();
+                    geckoSession.open(geckoRuntime);
+                    setSession(geckoSession);
+                    geckoSession.loadUri(currentUrl);
+                }
+
+                @Override
                 public void onFocusRequest(GeckoSession geckoSession) {
 
                 }
@@ -342,6 +375,24 @@ public class WebViewProvider {
         private GeckoSession.NavigationDelegate createNavigationDelegate() {
             return new GeckoSession.NavigationDelegate() {
                 public void onLocationChange(GeckoSession session, String url) {
+                    // Save internal data: urls we should override to present focus:about, focus:rights
+                    if (isLoadingInternalUrl) {
+                        if (currentUrl.equals(LocalizedContent.URL_ABOUT)) {
+                            internalAboutData = url;
+                        } else if (currentUrl.equals(LocalizedContent.URL_RIGHTS)) {
+                            internalRightsData = url;
+                        }
+                        isLoadingInternalUrl = false;
+                        url = currentUrl;
+                    }
+
+                    // Check for internal data: urls to instead present focus:rights, focus:about
+                    if (!TextUtils.isEmpty(internalAboutData) && internalAboutData.equals(url)) {
+                        url = LocalizedContent.URL_ABOUT;
+                    } else if (!TextUtils.isEmpty(internalRightsData) && internalRightsData.equals(url)) {
+                        url = LocalizedContent.URL_RIGHTS;
+                    }
+
                     currentUrl = url;
                     if (callback != null) {
                         callback.onURLChanged(url);
@@ -349,7 +400,7 @@ public class WebViewProvider {
                 }
 
                 public void onCanGoBack(GeckoSession session, boolean canGoBack) {
-                    GeckoWebView.this.canGoBack =  canGoBack;
+                    GeckoWebView.this.canGoBack = canGoBack;
                 }
 
                 public void onCanGoForward(GeckoSession session, boolean canGoForward) {
@@ -397,7 +448,7 @@ public class WebViewProvider {
         }
 
         private GeckoSession.TrackingProtectionDelegate createTrackingProtectionDelegate() {
-           return new GeckoSession.TrackingProtectionDelegate() {
+            return new GeckoSession.TrackingProtectionDelegate() {
                 @Override
                 public void onTrackerBlocked(GeckoSession geckoSession, String s, int i) {
                     if (callback != null) {
@@ -423,12 +474,46 @@ public class WebViewProvider {
 
         @Override
         public void restoreWebViewState(Session session) {
-            // TODO: restore navigation history, and reopen previously opened page
+            final Bundle stateData = session.getWebViewState();
+            final String desiredURL = session.getUrl().getValue();
+            final GeckoSession.SessionState sessionState = stateData.getParcelable("state");
+            if (sessionState != null) {
+                geckoSession.restoreState(sessionState);
+            } else {
+                loadUrl(desiredURL);
+            }
         }
 
         @Override
-        public void saveWebViewState(@NonNull Session session) {
-            // TODO: save anything needed for navigation history restoration.
+        public void saveWebViewState(@NonNull final Session session) {
+            final CountDownLatch latch = new CountDownLatch(1);
+            saveStateInBackground(latch, session);
+            try {
+                latch.await();
+            } catch (InterruptedException e) {
+                // State was not saved
+            }
+        }
+
+        private void saveStateInBackground(final CountDownLatch latch, final Session session) {
+            ThreadUtils.postToBackgroundThread(new Runnable() {
+                @Override
+                public void run() {
+                    final GeckoResponse<GeckoSession.SessionState> response = new GeckoResponse<GeckoSession.SessionState>() {
+                        @Override
+                        public void respond(GeckoSession.SessionState value) {
+                            if (value != null) {
+                                final Bundle bundle = new Bundle();
+                                bundle.putParcelable("state", value);
+                                session.saveWebViewState(bundle);
+                            }
+                            latch.countDown();
+                        }
+                    };
+
+                    geckoSession.saveState(response);
+                }
+            });
         }
 
         @Override
@@ -442,8 +527,48 @@ public class WebViewProvider {
         }
 
         @Override
+        public void findAllAsync(String find) {
+            // TODO: #2690
+        }
+
+        @Override
+        public void findNext(boolean forward) {
+            // TODO: #2690
+        }
+
+        @Override
+        public void clearMatches() {
+            // TODO: #2690
+        }
+
+        @Override
+        public void setFindListener(IFindListener findListener) {
+            // TODO: #2690
+        }
+
+        @Override
         public void loadData(String baseURL, String data, String mimeType, String encoding, String historyURL) {
             geckoSession.loadData(data.getBytes(Charsets.UTF_8), mimeType, baseURL);
+            currentUrl = baseURL;
+            isLoadingInternalUrl = currentUrl.equals(LocalizedContent.URL_RIGHTS) || currentUrl.equals(LocalizedContent.URL_ABOUT);
+        }
+
+        private void sendTelemetrySnapshots() {
+            final GeckoResponse<GeckoBundle> response = new GeckoResponse<GeckoBundle>() {
+                @Override
+                public void respond(GeckoBundle value) {
+                    if (value != null) {
+                        try {
+                            final JSONObject jsonData = value.toJSONObject();
+                            TelemetryWrapper.addMobileMetricsPing(jsonData);
+                        } catch (JSONException e) {
+                            Log.e("getSnapshots failed", e.getMessage());
+                        }
+                    }
+                }
+            };
+
+            geckoRuntime.getTelemetry().getSnapshots(true, response);
         }
 
         @Override
