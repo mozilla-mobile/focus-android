@@ -22,6 +22,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.mozilla.focus.browser.LocalizedContent;
 import org.mozilla.focus.session.Session;
+import org.mozilla.focus.telemetry.SentryWrapper;
 import org.mozilla.focus.telemetry.TelemetryWrapper;
 import org.mozilla.focus.utils.AppConstants;
 import org.mozilla.focus.utils.IntentUtils;
@@ -89,10 +90,11 @@ public class WebViewProvider {
             PreferenceManager.getDefaultSharedPreferences(context)
                     .registerOnSharedPreferenceChangeListener(this);
             geckoSession = createGeckoSession();
-            setGeckoSession();
+            applySettingsAndSetDelegates();
+            setSession(geckoSession, geckoRuntime);
         }
 
-        private void setGeckoSession() {
+        private void applySettingsAndSetDelegates() {
             applyAppSettings();
             updateBlocking();
 
@@ -101,7 +103,6 @@ public class WebViewProvider {
             geckoSession.setNavigationDelegate(createNavigationDelegate());
             geckoSession.setTrackingProtectionDelegate(createTrackingProtectionDelegate());
             geckoSession.setPromptDelegate(createPromptDelegate());
-            setSession(geckoSession, geckoRuntime);
         }
 
         private GeckoSession createGeckoSession() {
@@ -210,6 +211,7 @@ public class WebViewProvider {
         private void applyAppSettings() {
             geckoRuntime.getSettings().setJavaScriptEnabled(!Settings.getInstance(getContext()).shouldBlockJavaScript());
             geckoRuntime.getSettings().setWebFontsEnabled(!Settings.getInstance(getContext()).shouldBlockWebFonts());
+            geckoRuntime.getSettings().setRemoteDebuggingEnabled(false);
             final int cookiesValue;
             if (Settings.getInstance(getContext()).shouldBlockCookies() && Settings.getInstance(getContext()).shouldBlockThirdPartyCookies()) {
                 cookiesValue = GeckoRuntimeSettings.COOKIE_ACCEPT_NONE;
@@ -305,10 +307,12 @@ public class WebViewProvider {
                 @Override
                 public void onCrash(GeckoSession session) {
                     Log.i(TAG, "Crashed, opening new session");
+                    SentryWrapper.INSTANCE.captureGeckoCrash();
                     geckoSession.close();
                     geckoSession = createGeckoSession();
-                    setGeckoSession();
+                    applySettingsAndSetDelegates();
                     geckoSession.open(geckoRuntime);
+                    setSession(geckoSession);
                     geckoSession.loadUri(currentUrl);
                 }
 
