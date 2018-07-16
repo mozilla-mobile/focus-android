@@ -8,7 +8,6 @@ import android.content.Context
 import android.content.SharedPreferences
 import android.content.res.Resources
 import android.preference.PreferenceManager
-import mozilla.components.browser.search.SearchEngine
 
 import org.mozilla.focus.R
 import org.mozilla.focus.fragment.FirstrunFragment
@@ -44,6 +43,11 @@ class Settings private constructor(context: Context) {
                     false); */
             false
 
+    fun shouldEnableRemoteDebugging(): Boolean =
+            preferences.getBoolean(
+                    getPreferenceKey(R.string.pref_key_remote_debugging),
+                    false)
+
     fun shouldBlockWebFonts(): Boolean =
         preferences.getBoolean(
             getPreferenceKey(R.string.pref_key_performance_block_webfonts),
@@ -77,9 +81,9 @@ class Settings private constructor(context: Context) {
     fun shouldUseSecureMode(): Boolean =
             preferences.getBoolean(getPreferenceKey(R.string.pref_key_secure), false)
 
-    fun setDefaultSearchEngine(searchEngine: SearchEngine) {
+    fun setDefaultSearchEngineByName(name: String) {
         preferences.edit()
-                .putString(getPreferenceKey(R.string.pref_key_search_engine), searchEngine.name)
+                .putString(getPreferenceKey(R.string.pref_key_search_engine), name)
                 .apply()
     }
 
