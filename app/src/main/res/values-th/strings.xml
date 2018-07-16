@@ -157,7 +157,7 @@
   <string name="contextmenu_open_in_new_tab">เปิดลิงก์ในแท็บใหม่</string>
   <string name="contextmenu_image_warning"><![CDATA[ภาพที่บันทึกไว้และแบ่งปัน<b xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">&#3592;&#3632;&#3652;&#3617;&#3656;&#3606;&#3641;&#3585;&#3621;&#3610;</b>เมื่อคุณล้างประวัติของ %1$s]]></string>
   <string name="firstrun_defaultbrowser_title">เพิ่มความเป็นส่วนตัวของคุณ</string>
-  <string name="firstrun_defaultbrowser_text2">นำการท่องเว็บแบบส่วนตัวไปสู่ระดับถัดไป ปิดกั้นโฆษณาและเนื้อหาอื่น ๆ ที่สามารถติดตามคุณระหว่างไซต์และลดเวลาในการโหลดหน้า</string>
+  <string name="firstrun_defaultbrowser_text2">นำการท่องเว็บแบบส่วนตัวไปสู่ระดับถัดไป ปิดกั้นโฆษณาและเนื้อหาอื่น ๆ ที่สามารถติดตามคุณในไซต์ต่าง ๆ และลดเวลาในการโหลดหน้า</string>
   <string name="firstrun_search_title">การค้นหาของคุณในแบบของคุณ</string>
   <string name="firstrun_search_text">กำลังค้นหาอย่างอื่น? เลือกเครื่องมือค้นหาเริ่มต้นอื่นในการตั้งค่า</string>
   <string name="firstrun_shortcut_title">เพิ่มทางลัดไปยังหน้าจอหลักของคุณ</string>
@@ -189,8 +189,15 @@
   <string name="site_security_icon_content_description">ความปลอดภัยของไซต์</string>
   <string name="preference_autocomplete_duplicate_url_error">มี URL อยู่แล้ว</string>
   <string name="find_in_page">ค้นหาในหน้า</string>
+  <string name="find_in_page_input">ค้นหาในหน้า</string>
+  <string name="find_in_page_result">%1$d/%2$d</string>
+  <string name="accessibility_find_in_page_result">%1$d จาก %2$d</string>
+  <string name="accessibility_next_result">ค้นหาผลลัพธ์ถัดไป</string>
+  <string name="accessibility_previous_result">ค้นหาผลลัพธ์ก่อนหน้า</string>
+  <string name="accessibility_dismiss_find_in_page">ยกเลิกการค้นหาในหน้า</string>
   <string name="http_auth_dialog_title">ต้องมีการรับรองความถูกต้อง</string>
   <string name="http_auth_dialog_username">ชื่อผู้ใช้</string>
   <string name="http_auth_dialog_password">รหัสผ่าน</string>
   <string name="preference_performance_request_desktop_site">ขอไซต์สำหรับเดสก์ท็อป</string>
+  <string name="custom_tab_copy_url_action">คัดลอก URL แล้ว</string>
 </resources>

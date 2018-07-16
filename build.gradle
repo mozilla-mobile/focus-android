@@ -2,14 +2,13 @@
 
 buildscript {
     ext.architecture_components_version = '1.1.0'
-    ext.support_libraries_version = '27.0.2'
+    ext.support_libraries_version = '27.1.1'
     ext.espresso_version = '3.0.1'
     ext.kotlin_version = '1.2.30'
-    ext.geckoview_nightly_date = '2018.06.05'
-    ext.geckoview_revision = 'a358755643e92f8fc55a23e3ab1fbf88695b8bf3'
-    ext.geckoview_nightly_version = '62.0.20180605100109'
+    ext.geckoview_revision = '32cde6cdb297933f18c086dfa4d6aed28a239a1a'
+    ext.geckoview_version = '62.0.20180709172241' // 62.0b7
     ext.spotbugs_version = '3.1.2'
-    ext.mozilla_components_version = '0.5.1'
+    ext.mozilla_components_version = '0.10'
 
     repositories {
         google()

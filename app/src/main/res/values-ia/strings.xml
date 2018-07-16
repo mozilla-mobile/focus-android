@@ -89,7 +89,7 @@
   <string name="preference_mozilla_telemetry2">Inviar datos de uso</string>
   <string name="preference_mozilla_telemetry_summary">Saper plus</string>
   <string name="preference_mozilla_telemetry_summary2">Mozilla se effortia a colliger solmente le informationes necessari pro fornir e meliorar %1$s pro totes.</string>
-  <string name="preference_privacy_notice">Advertentia de confidentialitate</string>
+  <string name="preference_privacy_notice">Notification de confidentialitate</string>
   <string name="preference_about">A proposito de %1$s</string>
   <string name="preference_search_installed_search_engines">Motores de recerca installate</string>
   <string name="preference_search_restore">Restaurar le motores de recerca predefinite</string>
@@ -189,8 +189,15 @@
   <string name="site_security_icon_content_description">Securitate del sito</string>
   <string name="preference_autocomplete_duplicate_url_error">Le URL existe ja</string>
   <string name="find_in_page">Trovar in le pagina</string>
+  <string name="find_in_page_input">Trovar in le pagina</string>
+  <string name="find_in_page_result">%1$d/%2$d</string>
+  <string name="accessibility_find_in_page_result">%1$d de %2$d</string>
+  <string name="accessibility_next_result">Trovar le resultato successive</string>
+  <string name="accessibility_previous_result">Trovar le resultato previe</string>
+  <string name="accessibility_dismiss_find_in_page">Dimitter le recerca in le pagina</string>
   <string name="http_auth_dialog_title">Authentication necessari</string>
   <string name="http_auth_dialog_username">Nomine de usator</string>
   <string name="http_auth_dialog_password">Contrasigno</string>
   <string name="preference_performance_request_desktop_site">Requirer le sito del scriptorio</string>
+  <string name="custom_tab_copy_url_action">URL copiate</string>
 </resources>

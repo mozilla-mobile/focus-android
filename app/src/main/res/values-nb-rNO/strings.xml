@@ -44,11 +44,11 @@
   <string name="preference_switch_autocomplete">Netadresse-autofullføring</string>
   <string name="preference_category_autocomplete_preinstalled">Standard nettadresseliste</string>
   <string name="preference_autocomplete_preinstalled_summary">Aktiver at %1$s autofullfører over 450 populære nettadresser i adressefeltet.</string>
-  <string name="preference_category_autocomplete_custom_urls">Egendefinerte nettadresser</string>
+  <string name="preference_category_autocomplete_custom_urls">Tilpassede nettadreser</string>
   <string name="preference_autocomplete_subitem_customlist">Tilpassede nettadresser</string>
-  <string name="preference_autocomplete_action_add">+ Legg til egendefinert nettadresse</string>
-  <string name="preference_autocomplete_title_add">Legg til egendefinert nettadresse</string>
-  <string name="custom_autocomplete_quick_add">Legg til egendefinert nettadresse</string>
+  <string name="preference_autocomplete_action_add">+ Legg til tilpasset nettadresse</string>
+  <string name="preference_autocomplete_title_add">Legg til tilpasset nettadresse</string>
+  <string name="custom_autocomplete_quick_add">Legg til tilpasset nettadresse</string>
   <string name="preference_category_cookies">Infokapsler og nettstedsdata</string>
   <string name="preference_category_data_choices">Datavalg</string>
   <string name="preference_autocomplete_title_remove">Fjern tilpassede nettadresser</string>
@@ -189,8 +189,15 @@
   <string name="site_security_icon_content_description">Nettstedssikkerhet</string>
   <string name="preference_autocomplete_duplicate_url_error">URL-en finnes allerede</string>
   <string name="find_in_page">Søk på siden</string>
+  <string name="find_in_page_input">Søk på siden</string>
+  <string name="find_in_page_result">%1$d/%2$d</string>
+  <string name="accessibility_find_in_page_result">%1$d av %2$d</string>
+  <string name="accessibility_next_result">Søk etter neste</string>
+  <string name="accessibility_previous_result">Søk etter forrige</string>
+  <string name="accessibility_dismiss_find_in_page">Lukk søk på siden</string>
   <string name="http_auth_dialog_title">Autentisering er nødvendig</string>
   <string name="http_auth_dialog_username">Brukernavn</string>
   <string name="http_auth_dialog_password">Passord</string>
   <string name="preference_performance_request_desktop_site">Vis skrivebordsversjon</string>
+  <string name="custom_tab_copy_url_action">URL kopiert</string>
 </resources>
