@@ -161,7 +161,7 @@
   <string name="firstrun_search_title">Your search, your way</string>
   <string name="firstrun_search_text">Searching for something different? Choose another default search engine in Settings.</string>
   <string name="firstrun_shortcut_title">Add shortcuts to your home screen</string>
-  <string name="firstrun_shortcut_text">Return to your favorite sites in %1$s quickly. Just select \"Add to Home screen\" from the %1$s menu.</string>
+  <string name="firstrun_shortcut_text">Return to your favourite sites in %1$s quickly. Just select \"Add to Home screen\" from the %1$s menu.</string>
   <string name="firstrun_privacy_title">Make privacy a habit</string>
   <string name="firstrun_privacy_text">Set %1$s as your default browser and get the benefits of private browsing when you open webpages from other apps.</string>
   <string name="firstrun_close_button">OK, got it!</string>
@@ -189,8 +189,15 @@
   <string name="site_security_icon_content_description">Site Security</string>
   <string name="preference_autocomplete_duplicate_url_error">URL already exists</string>
   <string name="find_in_page">Find in Page</string>
+  <string name="find_in_page_input">Find in page</string>
+  <string name="find_in_page_result">%1$d/%2$d</string>
+  <string name="accessibility_find_in_page_result">%1$d out of %2$d</string>
+  <string name="accessibility_next_result">Find next result</string>
+  <string name="accessibility_previous_result">Find previous result</string>
+  <string name="accessibility_dismiss_find_in_page">Dismiss find in page</string>
   <string name="http_auth_dialog_title">Authentication required</string>
   <string name="http_auth_dialog_username">Username</string>
   <string name="http_auth_dialog_password">Password</string>
   <string name="preference_performance_request_desktop_site">Request desktop site</string>
+  <string name="custom_tab_copy_url_action">URL copied</string>
 </resources>

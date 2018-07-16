@@ -26,6 +26,7 @@ import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -36,11 +37,13 @@ import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.view.inputmethod.EditorInfo;
 import android.webkit.CookieManager;
 import android.webkit.URLUtil;
 import android.widget.FrameLayout;
@@ -90,7 +93,7 @@ import java.util.List;
 import java.util.Objects;
 
 import kotlin.Unit;
-import kotlin.jvm.functions.Function0;
+import kotlin.jvm.functions.Function1;
 import mozilla.components.support.utils.ColorUtils;
 import mozilla.components.support.utils.DownloadUtils;
 import mozilla.components.support.utils.DrawableUtils;
@@ -152,6 +155,9 @@ public class BrowserFragment extends WebFragment implements View.OnClickListener
     private int findInPageViewHeight;
     private TextView findInPageQuery;
     private TextView findInPageResultTextView;
+    private ImageButton findInPageNext;
+    private ImageButton findInPagePrevious;
+    private ImageButton closeFindInPage;
 
     private IWebView.FullscreenCallback fullscreenCallback;
 
@@ -293,14 +299,25 @@ public class BrowserFragment extends WebFragment implements View.OnClickListener
                     }
                 }
         );
+        findInPageQuery.setOnClickListener(this);
+        findInPageQuery.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView textView, int actionId, KeyEvent keyEvent) {
+                if (actionId == EditorInfo.IME_ACTION_DONE) {
+                    ViewUtils.hideKeyboard(findInPageQuery);
+                    findInPageQuery.setCursorVisible(false);
+                }
+                return false;
+            }
+        });
 
-        final ImageButton findInPagePrevious = view.findViewById(R.id.previousResult);
+        findInPagePrevious = view.findViewById(R.id.previousResult);
         findInPagePrevious.setOnClickListener(this);
 
-        final ImageButton findInPageNext = view.findViewById(R.id.nextResult);
+        findInPageNext = view.findViewById(R.id.nextResult);
         findInPageNext.setOnClickListener(this);
 
-        final ImageButton closeFindInPage = view.findViewById(R.id.close_find_in_page);
+        closeFindInPage = view.findViewById(R.id.close_find_in_page);
         closeFindInPage.setOnClickListener(this);
 
         setBlockingEnabled(session.isBlockingEnabled());
@@ -542,6 +559,9 @@ public class BrowserFragment extends WebFragment implements View.OnClickListener
 
             @Override
             public void onURLChanged(final String url) {}
+
+            @Override
+            public void onTitleChanged(String title) {}
 
             @Override
             public void onRequest(boolean isTriggeredByUserGesture) {}
@@ -909,7 +929,11 @@ public class BrowserFragment extends WebFragment implements View.OnClickListener
             webView.cleanup();
         }
 
-        SessionManager.getInstance().removeCurrentSession();
+        if (session.isCustomTab()) {
+            SessionManager.getInstance().removeCustomTabSession(session.getUUID());
+        } else {
+            SessionManager.getInstance().removeCurrentSession();
+        }
     }
 
     private void shareCurrentUrl() {
@@ -1107,7 +1131,9 @@ public class BrowserFragment extends WebFragment implements View.OnClickListener
                 break;
 
             case R.id.report_site_issue:
-                SessionManager.getInstance().createSession(Source.MENU, SupportUtils.REPORT_SITE_ISSUE_URL.concat(getUrl()));
+                SessionManager.getInstance()
+                        .createSession(Source.MENU,
+                                String.format(SupportUtils.REPORT_SITE_ISSUE_URL, getUrl()));
                 TelemetryWrapper.reportSiteIssueEvent();
                 break;
 
@@ -1116,7 +1142,14 @@ public class BrowserFragment extends WebFragment implements View.OnClickListener
                 TelemetryWrapper.findInPageMenuEvent();
                 break;
 
+            case R.id.queryText:
+                findInPageQuery.setCursorVisible(true);
+                break;
+
             case R.id.nextResult: {
+                ViewUtils.hideKeyboard(findInPageQuery);
+                findInPageQuery.setCursorVisible(false);
+
                 final IWebView webView = getWebView();
                 if (webView == null) {
                     break;
@@ -1127,6 +1160,9 @@ public class BrowserFragment extends WebFragment implements View.OnClickListener
             }
 
             case R.id.previousResult: {
+                ViewUtils.hideKeyboard(findInPageQuery);
+                findInPageQuery.setCursorVisible(false);
+
                 final IWebView webView = getWebView();
                 if (webView == null) {
                     break;
@@ -1294,13 +1330,14 @@ public class BrowserFragment extends WebFragment implements View.OnClickListener
             AutocompleteQuickAddPopup autocompletePopup = new AutocompleteQuickAddPopup(context, urlView.getText().toString());
 
             // Show the Snackbar and dismiss the popup when a new URL is added.
-            autocompletePopup.setOnUrlAdded(new Function0<Unit>() {
+            autocompletePopup.setOnUrlAdded(new Function1<Boolean, Unit>() {
                 @Override
-                public Unit invoke() {
+                public Unit invoke(final Boolean didAddSuccessfully) {
                     getActivity().runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            ViewUtils.showBrandedSnackbar(Objects.requireNonNull(getView()), R.string.preference_autocomplete_add_confirmation, 0);
+                            final int messageId = didAddSuccessfully ? R.string.preference_autocomplete_add_confirmation : R.string.preference_autocomplete_duplicate_url_error;
+                            ViewUtils.showBrandedSnackbar(Objects.requireNonNull(getView()), messageId, 0);
                             dismissAutocompletePopup();
                         }
                     });
@@ -1320,7 +1357,9 @@ public class BrowserFragment extends WebFragment implements View.OnClickListener
         findInPageView.setVisibility(View.VISIBLE);
         findInPageQuery.requestFocus();
 
-        swipeRefresh.setPadding(0, 0, 0, findInPageViewHeight);
+        CoordinatorLayout.LayoutParams params = (CoordinatorLayout.LayoutParams) swipeRefresh.getLayoutParams();
+        params.bottomMargin = findInPageViewHeight;
+        swipeRefresh.setLayoutParams(params);
     }
 
     private void hideFindInPage() {
@@ -1334,7 +1373,10 @@ public class BrowserFragment extends WebFragment implements View.OnClickListener
         findInPageView.setVisibility(View.GONE);
         findInPageQuery.setText("");
         findInPageQuery.clearFocus();
-        swipeRefresh.setPadding(0, 0, 0, 0);
+
+        CoordinatorLayout.LayoutParams params = (CoordinatorLayout.LayoutParams) swipeRefresh.getLayoutParams();
+        params.bottomMargin = 0;
+        swipeRefresh.setLayoutParams(params);
         ViewUtils.hideKeyboard(findInPageQuery);
     }
 
@@ -1347,6 +1389,10 @@ public class BrowserFragment extends WebFragment implements View.OnClickListener
         if (numberOfMatches > 0) {
             // We don't want the presentation of the activeMatchOrdinal to be zero indexed. So let's
             // increment it by one.
+            findInPageNext.setColorFilter(getResources().getColor(R.color.photonWhite));
+            findInPageNext.setAlpha(1.0F);
+            findInPagePrevious.setColorFilter(getResources().getColor(R.color.photonWhite));
+            findInPagePrevious.setAlpha(1.0F);
             activeMatchOrdinal++;
             final String visibleString = String.format(context.getString(R.string.find_in_page_result), activeMatchOrdinal, numberOfMatches);
             final String accessibleString = String.format(context.getString(R.string.find_in_page_result), activeMatchOrdinal, numberOfMatches);
@@ -1354,6 +1400,10 @@ public class BrowserFragment extends WebFragment implements View.OnClickListener
             findInPageResultTextView.setText(visibleString);
             findInPageResultTextView.setContentDescription(accessibleString);
         } else {
+            findInPageNext.setColorFilter(getResources().getColor(R.color.photonGrey10));
+            findInPageNext.setAlpha(0.4F);
+            findInPagePrevious.setColorFilter(getResources().getColor(R.color.photonWhite));
+            findInPagePrevious.setAlpha(0.4F);
             findInPageResultTextView.setText("");
             findInPageResultTextView.setContentDescription("");
         }
