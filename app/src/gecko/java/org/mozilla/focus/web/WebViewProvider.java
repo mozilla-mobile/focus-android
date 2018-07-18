@@ -184,10 +184,10 @@ public class WebViewProvider {
                 updateBlocking();
                 applyAppSettings();
             } else {
-                if (geckoSession != null) {
-                    geckoRuntime.getSettings().setJavaScriptEnabled(true);
-                    geckoRuntime.getSettings().setWebFontsEnabled(true);
-                }
+                geckoRuntime.getSettings().setTrackingProtectionCategories(0);
+                geckoRuntime.getSettings().setJavaScriptEnabled(true);
+                geckoRuntime.getSettings().setWebFontsEnabled(true);
+                geckoRuntime.getSettings().setCookieBehavior(GeckoRuntimeSettings.COOKIE_ACCEPT_ALL);
             }
             if (callback != null) {
                 callback.onBlockingStateChanged(enabled);
@@ -248,6 +248,9 @@ public class WebViewProvider {
                 @Override
                 public void onTitleChange(GeckoSession session, String title) {
                     webViewTitle = title;
+                    if (callback != null) {
+                        callback.onTitleChanged(title);
+                    }
                 }
 
                 @Override
