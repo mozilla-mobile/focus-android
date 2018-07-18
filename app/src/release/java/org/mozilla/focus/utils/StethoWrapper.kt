@@ -4,10 +4,10 @@
 
 package org.mozilla.focus.utils
 
-import com.facebook.stetho.Stetho
+import android.content.Context
 
 object StethoWrapper {
-    fun init() {
+    fun init(context: Context) {
         // do nothing in release builds
     }
 }
