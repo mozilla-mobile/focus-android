@@ -14,7 +14,7 @@ import org.mozilla.focus.webview.SystemWebView
 const val ENGINE_PREF_STRING_KEY = "renderer_preference"
 
 object WebViewProvider : IWebViewProvider {
-    var useNewRenderer : Boolean = Config.defaultNewRenderer
+    private var useNewRenderer : Boolean = Config.defaultNewRenderer
     var engine : IWebViewProvider? = null
 
     fun readEnginePref(context: Context) {

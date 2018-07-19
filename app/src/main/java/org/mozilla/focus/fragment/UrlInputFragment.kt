@@ -479,31 +479,47 @@ class UrlInputFragment :
         }
 
         if (!input.trim { it <= ' ' }.isEmpty()) {
-            if (input == "focus:crash") { throw FocusCrashException() }
+            handleCrashTrigger(input)
 
             ViewUtils.hideKeyboard(urlView)
 
-            if (input == "focus:test") {
-                model?.showExperiments()
-                return
-            }
+            if (handleExperimentsTrigger(input)) return
 
-            val isUrl = UrlUtils.isUrl(input)
-
-            val url = if (isUrl)
-                UrlUtils.normalize(input)
-            else
-                UrlUtils.createSearchUrl(context, input)
-
-            val searchTerms = if (isUrl)
-                null
-            else
-                input.trim { it <= ' ' }
+            val (isUrl, url, searchTerms) = normalizeUrlAndSearchTerms(input)
 
             openUrl(url, searchTerms)
 
             TelemetryWrapper.urlBarEvent(isUrl, urlView.autocompleteResult)
         }
+    }
+
+    private fun handleExperimentsTrigger(input: String): Boolean {
+        if (input == "focus:test") {
+            model?.showExperiments()
+            return true
+        }
+        return false
+    }
+
+    private fun handleCrashTrigger(input: String) {
+        if (input == "focus:crash") {
+            throw FocusCrashException()
+        }
+    }
+
+    private fun normalizeUrlAndSearchTerms(input: String): Triple<Boolean, String, String?> {
+        val isUrl = UrlUtils.isUrl(input)
+
+        val url = if (isUrl)
+            UrlUtils.normalize(input)
+        else
+            UrlUtils.createSearchUrl(context, input)
+
+        val searchTerms = if (isUrl)
+            null
+        else
+            input.trim { it <= ' ' }
+        return Triple(isUrl, url, searchTerms)
     }
 
     private fun onSearch() {
