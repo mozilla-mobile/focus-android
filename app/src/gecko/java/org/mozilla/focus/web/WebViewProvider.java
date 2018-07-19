@@ -37,6 +37,7 @@ import org.mozilla.geckoview.GeckoSession;
 import org.mozilla.geckoview.GeckoSessionSettings;
 
 import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
 
 import kotlin.text.Charsets;
 
@@ -497,7 +498,7 @@ public class WebViewProvider {
             final CountDownLatch latch = new CountDownLatch(1);
             saveStateInBackground(latch, session);
             try {
-                latch.await();
+                latch.await(500, TimeUnit.MILLISECONDS);
             } catch (InterruptedException e) {
                 // State was not saved
             }
