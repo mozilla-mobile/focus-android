@@ -7,7 +7,7 @@ package org.mozilla.focus.utils
 import android.content.Context
 
 object StethoWrapper {
-    fun init(context: Context) {
+    fun init(@Suppress("UNUSED_PARAMETER") context: Context) {
         // do nothing in release builds
     }
 }
