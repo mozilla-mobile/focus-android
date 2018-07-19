@@ -346,7 +346,9 @@ task buildBlocklists(type:Copy) {
 }
 
 clean.doLast {
-    file(blockListOutputDir).deleteDir()
+    delete fileTree(blockListOutputDir) {
+        include '**/*.json'
+    }
 }
 
 tasks.whenTaskAdded { task ->
