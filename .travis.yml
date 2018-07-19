@@ -20,7 +20,7 @@ before_install:
   - yes | sdkmanager "platforms;android-27"
 
 script:
-  - ./gradlew --no-daemon clean assemble
+  - ./gradlew --no-daemon clean assembleX86
   - echo "--" > .adjust_token
   - ./gradlew --no-daemon jacocoTestReport
 
