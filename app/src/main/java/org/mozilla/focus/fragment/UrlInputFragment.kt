@@ -6,9 +6,12 @@ package org.mozilla.focus.fragment
 
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
+import android.content.Context
 import android.graphics.Typeface
 import android.graphics.drawable.TransitionDrawable
 import android.os.Bundle
+import android.support.v4.content.ContextCompat
+import android.support.v4.content.res.ResourcesCompat
 import android.text.SpannableString
 import android.text.TextUtils
 import android.text.style.StyleSpan
@@ -246,6 +249,8 @@ class UrlInputFragment :
             if (!Settings.getInstance(it).shouldShowFirstrun()) {
                 // Only show keyboard if we are not displaying the first run tour on top.
                 showKeyboard()
+
+                toolbarBackgroundView.setBackground(ContextCompat.getDrawable(context!!, R.drawable.animated_background_url))
             }
         }
     }
