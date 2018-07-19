@@ -61,4 +61,12 @@ object WebViewProvider : IWebViewProvider {
     override fun disableBlocking(webSettings: WebSettings, systemWebView: SystemWebView) {
         engine!!.disableBlocking(webSettings, systemWebView)
     }
+
+    override fun getUABrowserString(existingUAString: String, focusToken: String): String {
+        return engine!!.getUABrowserString(existingUAString, focusToken)
+    }
+
+    override fun buildUserAgentString(context: Context, settings: WebSettings, appName: String): String {
+        return engine!!.buildUserAgentString(context, settings, appName)
+    }
 }

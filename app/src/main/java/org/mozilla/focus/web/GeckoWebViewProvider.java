@@ -98,6 +98,18 @@ public class GeckoWebViewProvider implements IWebViewProvider {
 
     }
 
+    @NotNull
+    @Override
+    public String getUABrowserString(@NotNull String existingUAString, @NotNull String focusToken) {
+        return null;
+    }
+
+    @NotNull
+    @Override
+    public String buildUserAgentString(@NotNull Context context, @NotNull WebSettings settings, @NotNull String appName) {
+        return null;
+    }
+
     public static class GeckoWebView extends NestedGeckoView implements IWebView, SharedPreferences.OnSharedPreferenceChangeListener {
         private static final String TAG = "GeckoWebView";
         private Callback callback;

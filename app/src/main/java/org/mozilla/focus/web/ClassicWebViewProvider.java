@@ -108,7 +108,7 @@ public class ClassicWebViewProvider implements IWebViewProvider {
         settings.setAllowUniversalAccessFromFileURLs(false);
 
         final String appName = context.getResources().getString(R.string.useragent_appname);
-        settings.setUserAgentString(buildUserAgentString(context, settings, appName));
+        settings.setUserAgentString(WebViewProvider.INSTANCE.buildUserAgentString(context, settings, appName));
 
         // Right now I do not know why we should allow loading content from a content provider
         settings.setAllowContentAccess(false);
@@ -158,7 +158,7 @@ public class ClassicWebViewProvider implements IWebViewProvider {
     /**
      * Build the browser specific portion of the UA String, based on the webview's existing UA String.
      */
-    @VisibleForTesting static String getUABrowserString(final String existingUAString, final String focusToken) {
+    public String getUABrowserString(final String existingUAString, final String focusToken) {
         // Use the default WebView agent string here for everything after the platform, but insert
         // Focus in front of Chrome.
         // E.g. a default webview UA string might be:
@@ -192,7 +192,7 @@ public class ClassicWebViewProvider implements IWebViewProvider {
         return TextUtils.join(" ", tokens) + " " + focusToken;
     }
 
-    @VisibleForTesting static String buildUserAgentString(final Context context, final WebSettings settings, final String appName) {
+    public String buildUserAgentString(final Context context, final WebSettings settings, final String appName) {
         final StringBuilder uaBuilder = new StringBuilder();
 
         uaBuilder.append("Mozilla/5.0");
