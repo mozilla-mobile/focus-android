@@ -82,7 +82,7 @@ public class ClassicWebViewProvider implements IWebViewProvider {
     }
 
     @SuppressLint("SetJavaScriptEnabled") // We explicitly want to enable JavaScript
-    private static void configureDefaultSettings(Context context, WebSettings settings) {
+    private void configureDefaultSettings(Context context, WebSettings settings) {
         settings.setJavaScriptEnabled(true);
 
         // Needs to be enabled to display some HTML5 sites that use local storage
@@ -108,7 +108,7 @@ public class ClassicWebViewProvider implements IWebViewProvider {
         settings.setAllowUniversalAccessFromFileURLs(false);
 
         final String appName = context.getResources().getString(R.string.useragent_appname);
-        settings.setUserAgentString(WebViewProvider.INSTANCE.buildUserAgentString(context, settings, appName));
+        settings.setUserAgentString(buildUserAgentString(context, settings, appName));
 
         // Right now I do not know why we should allow loading content from a content provider
         settings.setAllowContentAccess(false);
@@ -127,21 +127,23 @@ public class ClassicWebViewProvider implements IWebViewProvider {
         settings.setSavePassword(false);
     }
 
-    public static void applyAppSettings(Context context, WebSettings settings, WebView webView) {
+    @Override
+    public void applyAppSettings(@NotNull Context context, @NotNull WebSettings webSettings, @NotNull SystemWebView systemWebView) {
         // We could consider calling setLoadsImagesAutomatically() here too (This will block images not loaded over the network too)
-        settings.setBlockNetworkImage(Settings.getInstance(context).shouldBlockImages());
-        settings.setJavaScriptEnabled(!Settings.getInstance(context).shouldBlockJavaScript());
-        CookieManager.getInstance().setAcceptThirdPartyCookies(webView, !Settings.getInstance
+        webSettings.setBlockNetworkImage(Settings.getInstance(context).shouldBlockImages());
+        webSettings.setJavaScriptEnabled(!Settings.getInstance(context).shouldBlockJavaScript());
+        CookieManager.getInstance().setAcceptThirdPartyCookies(systemWebView, !Settings.getInstance
                 (context).shouldBlockThirdPartyCookies());
         CookieManager.getInstance().setAcceptCookie(!Settings.getInstance(context)
                 .shouldBlockCookies());
     }
 
+    @Override
     @SuppressLint("SetJavaScriptEnabled") // We explicitly want to enable JavaScript
-    public static void disableBlocking(WebSettings settings, WebView webView) {
-        settings.setBlockNetworkImage(false);
-        settings.setJavaScriptEnabled(true);
-        CookieManager.getInstance().setAcceptThirdPartyCookies(webView, true);
+    public void disableBlocking(@NotNull WebSettings webSettings, @NotNull SystemWebView systemWebView) {
+        webSettings.setBlockNetworkImage(false);
+        webSettings.setJavaScriptEnabled(true);
+        CookieManager.getInstance().setAcceptThirdPartyCookies(systemWebView, true);
         CookieManager.getInstance().setAcceptCookie(true);
     }
 
@@ -192,7 +194,7 @@ public class ClassicWebViewProvider implements IWebViewProvider {
         return TextUtils.join(" ", tokens) + " " + focusToken;
     }
 
-    public String buildUserAgentString(final Context context, final WebSettings settings, final String appName) {
+    private String buildUserAgentString(final Context context, final WebSettings settings, final String appName) {
         final StringBuilder uaBuilder = new StringBuilder();
 
         uaBuilder.append("Mozilla/5.0");
@@ -227,15 +229,5 @@ public class ClassicWebViewProvider implements IWebViewProvider {
         } else {
             return existingUAString.replace("eliboM", "Mobile").replace("diordnA", "Android");
         }
-    }
-
-    @Override
-    public void applyAppSettings(@NotNull Context context, @NotNull WebSettings webSettings, @NotNull SystemWebView systemWebView) {
-
-    }
-
-    @Override
-    public void disableBlocking(@NotNull WebSettings webSettings, @NotNull SystemWebView systemWebView) {
-
     }
 }

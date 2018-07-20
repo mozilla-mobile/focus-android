@@ -104,12 +104,6 @@ public class GeckoWebViewProvider implements IWebViewProvider {
         return null;
     }
 
-    @NotNull
-    @Override
-    public String buildUserAgentString(@NotNull Context context, @NotNull WebSettings settings, @NotNull String appName) {
-        return null;
-    }
-
     public static class GeckoWebView extends NestedGeckoView implements IWebView, SharedPreferences.OnSharedPreferenceChangeListener {
         private static final String TAG = "GeckoWebView";
         private Callback callback;

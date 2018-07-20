@@ -14,16 +14,13 @@ import org.mozilla.focus.webview.SystemWebView
 const val ENGINE_PREF_STRING_KEY = "renderer_preference"
 
 object WebViewProvider : IWebViewProvider {
+
     private var useNewRenderer : Boolean = Config.defaultNewRenderer
-    var engine : IWebViewProvider? = null
+    private var engine : IWebViewProvider? = null
 
     fun readEnginePref(context: Context) {
         val prefs = PreferenceManager.getDefaultSharedPreferences(context)
         useNewRenderer = prefs.getBoolean(ENGINE_PREF_STRING_KEY, Config.defaultNewRenderer)
-        useEngine(useNewRenderer)
-    }
-
-    private fun useEngine(useNewRenderer: Boolean) {
         engine = when (useNewRenderer) {
             false -> ClassicWebViewProvider()
             true -> GeckoWebViewProvider()
@@ -54,19 +51,15 @@ object WebViewProvider : IWebViewProvider {
         engine!!.requestDesktopSite(webSettings)
     }
 
+    override fun getUABrowserString(existingUAString: String, focusToken: String): String {
+        return engine!!.getUABrowserString(existingUAString, focusToken)
+    }
+
     override fun applyAppSettings(context: Context, webSettings: WebSettings, systemWebView: SystemWebView) {
         engine!!.applyAppSettings(context, webSettings, systemWebView)
     }
 
     override fun disableBlocking(webSettings: WebSettings, systemWebView: SystemWebView) {
         engine!!.disableBlocking(webSettings, systemWebView)
-    }
-
-    override fun getUABrowserString(existingUAString: String, focusToken: String): String {
-        return engine!!.getUABrowserString(existingUAString, focusToken)
-    }
-
-    override fun buildUserAgentString(context: Context, settings: WebSettings, appName: String): String {
-        return engine!!.buildUserAgentString(context, settings, appName)
     }
 }
