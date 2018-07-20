@@ -122,7 +122,7 @@ class UrlInputFragment :
     private var isAnimating: Boolean = false
 
     private var session: Session? = null
-    private var model : MainViewModel? = null
+    private var model: MainViewModel? = null
 
     private val isOverlay: Boolean
         get() = session != null

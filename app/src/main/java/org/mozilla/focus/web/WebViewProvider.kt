@@ -15,8 +15,8 @@ const val ENGINE_PREF_STRING_KEY = "renderer_preference"
 
 object WebViewProvider : IWebViewProvider {
 
-    private var useNewRenderer : Boolean = Config.defaultNewRenderer
-    private var engine : IWebViewProvider? = null
+    private var useNewRenderer: Boolean = Config.defaultNewRenderer
+    private var engine: IWebViewProvider? = null
 
     fun readEnginePref(context: Context) {
         val prefs = PreferenceManager.getDefaultSharedPreferences(context)

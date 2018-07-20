@@ -19,7 +19,7 @@ class MainViewModel : ViewModel() {
         experimentsLiveData.value = true
     }
 
-    fun getExperimentsLiveData() : LiveData<Boolean> {
+    fun getExperimentsLiveData(): LiveData<Boolean> {
         return experimentsLiveData
     }
 }
