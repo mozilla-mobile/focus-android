@@ -71,7 +71,7 @@ public class MainActivity extends LocaleAwareAppCompatActivity {
 
         registerSessionObserver();
 
-        WebViewProvider.preload(this);
+        WebViewProvider.INSTANCE.preload(this);
     }
 
     private void registerSessionObserver() {
@@ -91,7 +91,7 @@ public class MainActivity extends LocaleAwareAppCompatActivity {
                 } else {
                     // This happens when we move from 0 to 1 sessions: either on startup or after an erase.
                     if (wasSessionsEmpty) {
-                        WebViewProvider.performNewBrowserSessionCleanup();
+                        WebViewProvider.INSTANCE.performNewBrowserSessionCleanup();
                         wasSessionsEmpty = false;
                     }
 
@@ -132,7 +132,7 @@ public class MainActivity extends LocaleAwareAppCompatActivity {
     @Override
     protected void onPause() {
         if (isFinishing()) {
-            WebViewProvider.performCleanup(this);
+            WebViewProvider.INSTANCE.performCleanup(this);
         }
 
         super.onPause();
@@ -244,7 +244,7 @@ public class MainActivity extends LocaleAwareAppCompatActivity {
     public View onCreateView(String name, Context context, AttributeSet attrs) {
         if (name.equals(IWebView.class.getName())) {
             // Inject our implementation of IWebView from the WebViewProvider.
-            return WebViewProvider.create(this, attrs);
+            return WebViewProvider.INSTANCE.create(this, attrs);
         }
 
         return super.onCreateView(name, context, attrs);
