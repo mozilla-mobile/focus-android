@@ -34,8 +34,8 @@ import org.mozilla.focus.utils.Settings;
 import org.mozilla.focus.utils.UrlUtils;
 import org.mozilla.focus.webview.SystemWebView;
 import org.mozilla.gecko.util.GeckoBundle;
-import org.mozilla.gecko.util.ThreadUtils;
 import org.mozilla.geckoview.GeckoResponse;
+import org.mozilla.geckoview.GeckoResult;
 import org.mozilla.geckoview.GeckoRuntime;
 import org.mozilla.geckoview.GeckoRuntimeSettings;
 import org.mozilla.geckoview.GeckoSession;
@@ -526,7 +526,7 @@ public class GeckoWebViewProvider implements IWebViewProvider {
         @Override
         public void saveWebViewState(@NonNull final Session session) {
             final CountDownLatch latch = new CountDownLatch(1);
-            saveStateInBackground(latch, session);
+            saveSessionState(latch, session);
             try {
                 latch.await();
             } catch (InterruptedException e) {
@@ -534,23 +534,17 @@ public class GeckoWebViewProvider implements IWebViewProvider {
             }
         }
 
-        private void saveStateInBackground(final CountDownLatch latch, final Session session) {
-            ThreadUtils.postToBackgroundThread(new Runnable() {
+        private void saveSessionState(final CountDownLatch latch, final Session session) {
+            geckoSession.saveState().then(new GeckoResult.OnValueListener<GeckoSession.SessionState, Object>() {
                 @Override
-                public void run() {
-                    final GeckoResponse<GeckoSession.SessionState> response = new GeckoResponse<GeckoSession.SessionState>() {
-                        @Override
-                        public void respond(GeckoSession.SessionState value) {
-                            if (value != null) {
-                                final Bundle bundle = new Bundle();
-                                bundle.putParcelable("state", value);
-                                session.saveWebViewState(bundle);
-                            }
-                            latch.countDown();
-                        }
-                    };
-
-                    geckoSession.saveState(response);
+                public GeckoResult<Object> onValue(final GeckoSession.SessionState value) throws Throwable {
+                    if (value != null) {
+                        final Bundle bundle = new Bundle();
+                        bundle.putParcelable("state", value);
+                        session.saveWebViewState(bundle);
+                    }
+                    latch.countDown();
+                    return null;
                 }
             });
         }
