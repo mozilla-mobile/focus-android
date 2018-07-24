@@ -27,6 +27,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CoordinatorLayout;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -75,6 +76,7 @@ import org.mozilla.focus.session.SessionManager;
 import org.mozilla.focus.session.Source;
 import org.mozilla.focus.session.ui.SessionsSheetFragment;
 import org.mozilla.focus.telemetry.TelemetryWrapper;
+import org.mozilla.focus.utils.AppConstants;
 import org.mozilla.focus.utils.Browsers;
 import org.mozilla.focus.utils.Features;
 import org.mozilla.focus.utils.StatusBarUtils;
@@ -673,7 +675,7 @@ public class BrowserFragment extends WebFragment implements View.OnClickListener
 
                     pendingDownload = download;
 
-                    requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_CODE_STORAGE_PERMISSION);
+                    ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_CODE_STORAGE_PERMISSION);
                 }
             }
         });
@@ -857,22 +859,25 @@ public class BrowserFragment extends WebFragment implements View.OnClickListener
             return;
         }
 
-        final String cookie = CookieManager.getInstance().getCookie(download.getUrl());
-        final String fileName = DownloadUtils.guessFileName(
-                download.getContentDisposition(),
-                download.getUrl(),
-                download.getMimeType());
+        final String fileName = download.getFileName() != null ? download.getFileName() :
+                DownloadUtils.guessFileName(
+                        download.getContentDisposition(),
+                        download.getUrl(),
+                        download.getMimeType());
 
         final DownloadManager.Request request = new DownloadManager.Request(Uri.parse(download.getUrl()))
                 .addRequestHeader("User-Agent", download.getUserAgent())
-                .addRequestHeader("Cookie", cookie)
                 .addRequestHeader("Referer", getUrl())
                 .setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
                 .setMimeType(download.getMimeType());
 
+        if (!AppConstants.isGeckoBuild(getContext())) {
+            final String cookie = CookieManager.getInstance().getCookie(download.getUrl());
+            request.addRequestHeader("Cookie", cookie);
+        }
+
         try {
-            request.setDestinationInExternalPublicDir(
-                    download.getDestinationDirectory(), fileName);
+            request.setDestinationInExternalPublicDir(download.getDestinationDirectory(), fileName);
         } catch (IllegalStateException e) {
             Log.e(FRAGMENT_TAG, "Cannot create download directory");
             return;

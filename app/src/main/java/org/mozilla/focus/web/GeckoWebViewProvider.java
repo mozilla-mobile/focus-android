@@ -6,7 +6,9 @@
 package org.mozilla.focus.web;
 
 import android.app.Activity;
+import android.content.ActivityNotFoundException;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
@@ -115,6 +117,7 @@ public class GeckoWebViewProvider implements IWebViewProvider {
         private boolean isLoadingInternalUrl = false;
         private String internalAboutData = null;
         private String internalRightsData = null;
+        private static final int REQUEST_FILE_PICKER = 1;
 
         public GeckoWebView(Context context, AttributeSet attrs) {
             super(context, attrs);
@@ -133,7 +136,9 @@ public class GeckoWebViewProvider implements IWebViewProvider {
             geckoSession.setProgressDelegate(createProgressDelegate());
             geckoSession.setNavigationDelegate(createNavigationDelegate());
             geckoSession.setTrackingProtectionDelegate(createTrackingProtectionDelegate());
-            geckoSession.setPromptDelegate(createPromptDelegate());
+            final GeckoViewPrompt prompt = (GeckoViewPrompt) createPromptDelegate();
+            prompt.filePickerRequestCode = REQUEST_FILE_PICKER;
+            geckoSession.setPromptDelegate(prompt);
         }
 
         private GeckoSession createGeckoSession() {
@@ -321,25 +326,32 @@ public class GeckoWebViewProvider implements IWebViewProvider {
 
                 @Override
                 public void onExternalResponse(GeckoSession session, GeckoSession.WebResponseInfo response) {
-                    if (!AppConstants.supportsDownloadingFiles()) {
-                        return;
-                    }
+                    try {
+                        Intent intent = new Intent(Intent.ACTION_VIEW);
+                        intent.setDataAndTypeAndNormalize(Uri.parse(response.uri), response.contentType);
+                        getContext().startActivity(intent);
+                    } catch (ActivityNotFoundException e) {
+                        if (!AppConstants.supportsDownloadingFiles()) {
+                            return;
+                        }
 
-                    final String scheme = Uri.parse(response.uri).getScheme();
-                    if (scheme == null || (!scheme.equals("http") && !scheme.equals("https"))) {
-                        // We are ignoring everything that is not http or https. This is a limitation of
-                        // Android's download manager. There's no reason to show a download dialog for
-                        // something we can't download anyways.
-                        Log.w(TAG, "Ignoring download from non http(s) URL: " + response.uri);
-                        return;
-                    }
+                        final String scheme = Uri.parse(response.uri).getScheme();
+                        if (scheme == null || (!scheme.equals("http") && !scheme.equals("https"))) {
+                            // We are ignoring everything that is not http or https. This is a limitation of
+                            // Android's download manager. There's no reason to show a download dialog for
+                            // something we can't download anyways.
+                            Log.w(TAG, "Ignoring download from non http(s) URL: " + response.uri);
+                            return;
+                        }
 
-                    if (callback != null) {
-                        // TODO: get user agent from GeckoView #2470
-                        final Download download = new Download(response.uri, "Mozilla/5.0 (Android 8.1.0; Mobile; rv:60.0) Gecko/60.0 Firefox/60.0",
-                                response.filename, response.contentType, response.contentLength,
-                                Environment.DIRECTORY_DOWNLOADS);
-                        callback.onDownloadStart(download);
+                        if (callback != null) {
+                            // TODO: get user agent from GeckoView #2470
+                            final String filename = response.filename;
+                            final Download download = new Download(response.uri, "Mozilla/5.0 (Android 8.1.0; Mobile; rv:60.0) Gecko/60.0 Firefox/60.0",
+                                    response.filename, response.contentType, response.contentLength,
+                                    Environment.DIRECTORY_DOWNLOADS, filename);
+                            callback.onDownloadStart(download);
+                        }
                     }
                 }
 
