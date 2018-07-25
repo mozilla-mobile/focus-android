@@ -111,7 +111,9 @@ import mozilla.components.support.utils.DrawableUtils;
  */
 @SuppressWarnings({"PMD.ExcessiveClassLength", "PMD.CyclomaticComplexity", "PMD.TooManyMethods",
         "PMD.ModifiedCyclomaticComplexity", "PMD.TooManyFields", "PMD.StdCyclomaticComplexity" })
-public class BrowserFragment extends WebFragment implements LifecycleObserver, View.OnClickListener, DownloadDialogFragment.DownloadDialogListener, View.OnLongClickListener, BiometricAuthenticationDialogFragment.BiometricAuthenticationListener {
+public class BrowserFragment extends WebFragment implements LifecycleObserver, View.OnClickListener,
+        DownloadDialogFragment.DownloadDialogListener, View.OnLongClickListener,
+        BiometricAuthenticationDialogFragment.BiometricAuthenticationListener {
     public static final String FRAGMENT_TAG = "browser";
 
     private static final int REQUEST_CODE_STORAGE_PERMISSION = 101;
@@ -179,7 +181,6 @@ public class BrowserFragment extends WebFragment implements LifecycleObserver, V
 
     private BiometricAuthenticationHandler biometricController = null;
 
-
     public BrowserFragment() {
         sessionManager = SessionManager.getInstance();
     }
@@ -224,7 +225,6 @@ public class BrowserFragment extends WebFragment implements LifecycleObserver, V
                 updateFindInPageResult(matches.getFirst(), matches.getSecond());
             }
         });
-
     }
 
     public Session getSession() {
@@ -250,6 +250,7 @@ public class BrowserFragment extends WebFragment implements LifecycleObserver, V
         final BrowserMenu menu = menuWeakReference.get();
         if (menu != null) {
             menu.dismiss();
+
             menuWeakReference.clear();
         }
     }
@@ -603,19 +604,19 @@ public class BrowserFragment extends WebFragment implements LifecycleObserver, V
             @Override
             public void onHttpAuthRequest(@NonNull final IWebView.HttpAuthCallback callback, String host, String realm) {
                 HttpAuthenticationDialogBuilder builder = new HttpAuthenticationDialogBuilder.Builder(getActivity(), host, realm)
-                        .setOkListener(new HttpAuthenticationDialogBuilder.OkListener() {
-                            @Override
-                            public void onOk(String host, String realm, String username, String password) {
-                                callback.proceed(username, password);
-                            }
-                        })
-                        .setCancelListener(new HttpAuthenticationDialogBuilder.CancelListener() {
-                            @Override
-                            public void onCancel() {
-                                callback.cancel();
-                            }
-                        })
-                        .build();
+                                .setOkListener(new HttpAuthenticationDialogBuilder.OkListener() {
+                                    @Override
+                                    public void onOk(String host, String realm, String username, String password) {
+                                        callback.proceed(username, password);
+                                    }
+                                })
+                                .setCancelListener(new HttpAuthenticationDialogBuilder.CancelListener() {
+                                    @Override
+                                    public void onCancel() {
+                                        callback.cancel();
+                                    }
+                                })
+                                .build();
 
                 builder.createDialog();
                 builder.show();
@@ -876,7 +877,6 @@ public class BrowserFragment extends WebFragment implements LifecycleObserver, V
             }
         });
 
-        // If biometrics are enabled and we're on an appropriate SDK...
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && Settings.getInstance(getContext()).shouldUseBiometrics()) {
             displayBiometricPromptIfNeeded();
         } else {
@@ -1039,11 +1039,14 @@ public class BrowserFragment extends WebFragment implements LifecycleObserver, V
                             .commit();
                 }
                 break;
+
             case R.id.erase: {
                 TelemetryWrapper.eraseEvent();
+
                 erase();
                 break;
             }
+
             case R.id.tabs:
                 getActivity().getSupportFragmentManager()
                         .beginTransaction()
