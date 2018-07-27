@@ -8,10 +8,8 @@ import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
-import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.v4.util.ArrayMap;
-import android.util.Log;
 import android.view.View;
 
 import org.mozilla.focus.BuildConfig;
@@ -74,7 +72,8 @@ public class LocalizedContent {
 
         final String data = HtmlLoader.loadResourceFile(context, R.raw.about, substitutionMap);
 
-        webView.loadData(AppConstants.isGeckoBuild() ?
+        // Base URL will be ignored by GV
+        webView.loadData(AppConstants.isGeckoBuild(context) ?
                 "resource://android/assets/about.html" :
                 "file:///android_asset/about.html",
                 data, "text/html", "UTF-8", URL_ABOUT);
@@ -113,7 +112,8 @@ public class LocalizedContent {
         putLayoutDirectionIntoMap(substitutionMap, context);
 
         final String data = HtmlLoader.loadResourceFile(context, R.raw.rights, substitutionMap);
-        webView.loadData(AppConstants.isGeckoBuild() ?
+        // Base URL will be ignored by GV
+        webView.loadData(AppConstants.isGeckoBuild(context) ?
                 "resource://android/assets/rights.html" :
                 "file:///android_asset/rights.html",
                 data, "text/html", "UTF-8", URL_RIGHTS);
