@@ -65,7 +65,7 @@ import org.mozilla.focus.findinpage.FindInPageCoordinator;
 import org.mozilla.focus.locale.LocaleAwareAppCompatActivity;
 import org.mozilla.focus.menu.browser.BrowserMenu;
 import org.mozilla.focus.menu.context.WebContextMenu;
-import org.mozilla.focus.observer.AverageLoadTimeObserver;
+import org.mozilla.focus.observer.LoadTimeObserver;
 import org.mozilla.focus.open.OpenWithFragment;
 import org.mozilla.focus.popup.PopupUtils;
 import org.mozilla.focus.session.NullSession;
@@ -82,8 +82,8 @@ import org.mozilla.focus.utils.SupportUtils;
 import org.mozilla.focus.utils.UrlUtils;
 import org.mozilla.focus.utils.ViewUtils;
 import org.mozilla.focus.web.Download;
-import org.mozilla.focus.web.IWebView;
 import org.mozilla.focus.web.HttpAuthenticationDialogBuilder;
+import org.mozilla.focus.web.IWebView;
 import org.mozilla.focus.widget.AnimatedProgressBar;
 import org.mozilla.focus.widget.FloatingEraseButton;
 import org.mozilla.focus.widget.FloatingSessionsButton;
@@ -323,7 +323,7 @@ public class BrowserFragment extends WebFragment implements View.OnClickListener
         setBlockingEnabled(session.isBlockingEnabled());
         setShouldRequestDesktop(session.shouldRequestDesktopSite());
 
-        session.getLoading().observe(this, new AverageLoadTimeObserver(session));
+        LoadTimeObserver.addObservers(session, this);
 
         session.getLoading().observe(this, new NonNullObserver<Boolean>() {
             @Override
@@ -559,6 +559,9 @@ public class BrowserFragment extends WebFragment implements View.OnClickListener
 
             @Override
             public void onURLChanged(final String url) {}
+
+            @Override
+            public void onTitleChanged(String title) {}
 
             @Override
             public void onRequest(boolean isTriggeredByUserGesture) {}

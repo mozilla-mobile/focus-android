@@ -45,14 +45,32 @@ def generate_code_quality_task(buildTaskId):
 		dependencies = [ buildTaskId ])
 
 
-def generate_ui_test_task(dependencies):
+def generate_webview_X86_ui_test_task(dependencies):
+		return taskcluster.slugId(), generate_task(
+			name = "(Focus for Android) UI tests - Webview X86",
+			description = "Run UI tests for Focus/Klar for Android.",
+			command = ('echo "--" > .adjust_token'
+					   ' && ./gradlew --no-daemon clean assembleFocusX86Debug assembleFocusX86DebugAndroidTest'
+					   ' && ./tools/taskcluster/google-firebase-testlab-login.sh'
+					   ' && tools/taskcluster/execute-firebase-test.sh focusX86Debug app-focus-x86-debug model=model=Nexus9,version=23'),
+			dependencies = dependencies,
+			scopes = [ 'secrets:get:project/focus/firebase' ],
+			artifacts = {
+				"public": {
+					"type": "directory",
+					"path": "/opt/focus-android/test_artifacts",
+					"expires": taskcluster.stringDate(taskcluster.fromNow('1 week'))
+				}
+			})
+
+def generate_webview_ARM_ui_test_task(dependencies):
 	return taskcluster.slugId(), generate_task(
-		name = "(Focus for Android) UI tests - Webview",
+		name = "(Focus for Android) UI tests - Webview ARM",
 		description = "Run UI tests for Focus/Klar for Android.",
 		command = ('echo "--" > .adjust_token'
-			' && ./gradlew --no-daemon clean assembleFocusWebviewUniversalDebug assembleFocusWebviewUniversalDebugAndroidTest'
-			' && ./tools/taskcluster/google-firebase-testlab-login.sh'
-			' && tools/taskcluster/execute-firebase-test.sh focusWebviewUniversal app-focus-webview-universal-debug model=walleye,version=26 model=shamu,version=23 model=Nexus9,version=23'),
+				   ' && ./gradlew --no-daemon clean assembleFocusArmDebug assembleFocusArmDebugAndroidTest'
+				   ' && ./tools/taskcluster/google-firebase-testlab-login.sh'
+				   ' && tools/taskcluster/execute-firebase-test.sh focusArmDebug app-focus-arm-debug model=walleye,version=26 model=shamu,version=23'),
 		dependencies = dependencies,
 		scopes = [ 'secrets:get:project/focus/firebase' ],
 		artifacts = {
@@ -68,11 +86,9 @@ def generate_gecko_X86_ui_test_task(dependencies):
 		name = "(Focus for Android) UI tests - Gecko X86",
 		description = "Run UI tests for Klar Gecko X86 for Android.",
 		command = ('echo "--" > .adjust_token'
-			' && ./gradlew --no-daemon clean assembleKlarGeckoX86Debug assembleKlarGeckoX86DebugAndroidTest'
-			' && ./gradlew --no-daemon clean assembleKlarGeckoArmDebug assembleKlarGeckoArmDebugAndroidTest'
+			' && ./gradlew --no-daemon clean assembleKlarX86Nightly assembleKlarX86NightlyAndroidTest'
 			' && ./tools/taskcluster/google-firebase-testlab-login.sh'
-			' && tools/taskcluster/execute-firebase-test.sh klarGeckoArm app-klar-gecko-arm-debug model=walleye,version=26 model=shamu,version=23'
-			' && tools/taskcluster/execute-firebase-test.sh klarGeckoX86 app-klar-gecko-x86-debug model=Nexus9,version=25'),
+			' && tools/taskcluster/execute-firebase-test.sh klarX86Nightly app-klar-x86-nightly model=Nexus9,version=25'),
 		dependencies = dependencies,
 		scopes = [ 'secrets:get:project/focus/firebase' ],
 		artifacts = {
@@ -88,9 +104,9 @@ def generate_gecko_ARM_ui_test_task(dependencies):
 		name = "(Focus for Android) UI tests - Gecko ARM",
 		description = "Run UI tests for Klar Gecko ARM build for Android.",
 		command = ('echo "--" > .adjust_token'
-			' && ./gradlew --no-daemon clean assembleKlarGeckoArmDebug assembleKlarGeckoArmDebugAndroidTest'
+			' && ./gradlew --no-daemon clean assembleKlarArmNightly assembleKlarArmNightlyAndroidTest'
 			' && ./tools/taskcluster/google-firebase-testlab-login.sh'
-			' && tools/taskcluster/execute-firebase-test.sh klarGeckoArm app-klar-gecko-arm-debug model=sailfish,version=26'),
+			' && tools/taskcluster/execute-firebase-test.sh klarArmNightly app-klar-arm-nightly model=sailfish,version=26'),
 		dependencies = dependencies,
 		scopes = [ 'secrets:get:project/focus/firebase' ],
 		artifacts = {
@@ -101,12 +117,13 @@ def generate_gecko_ARM_ui_test_task(dependencies):
 			}
 		})
 
+# For GeckoView, upload nightly (it has release config) by default, all Release builds have WV
 def upload_apk_nimbledroid_task(dependencies):
 	return taskcluster.slugId(), generate_task(
 		name = "(Focus for Android) Upload Debug APK to Nimbledroid",
 		description = "Upload APKs to Nimbledroid for performance measurement and tracking.",
 		command = ('echo "--" > .adjust_token'
-				   ' && ./gradlew --no-daemon clean assembleFocusWebviewUniversalRelease assembleKlarGeckoArmRelease'
+				   ' && ./gradlew --no-daemon clean assembleFocusArmRelease assembleKlarArmNightly'
 				   ' && python tools/taskcluster/upload_apk_nimbledroid.py'),
 		dependencies = dependencies,
 		scopes = [ 'secrets:get:project/focus/nimbledroid' ],
@@ -177,8 +194,11 @@ if __name__ == "__main__":
 	codeQualityTaskId, codeQualityTask = generate_code_quality_task(buildTaskId)
 	schedule_task(queue, codeQualityTaskId, codeQualityTask)
 
-	uiTestTaskId, uiTestTask = generate_ui_test_task([unitTestTaskId, codeQualityTaskId])
-	schedule_task(queue, uiTestTaskId, uiTestTask)
+	uiWebviewARMTestTaskId, uiWebviewARMTestTask = generate_webview_ARM_ui_test_task([unitTestTaskId, codeQualityTaskId])
+	schedule_task(queue, uiWebviewARMTestTaskId, uiWebviewARMTestTask)
+
+	uiWebviewX86TestTaskId, uiWebviewX86TestTask = generate_webview_X86_ui_test_task([unitTestTaskId, codeQualityTaskId])
+	schedule_task(queue, uiWebviewX86TestTaskId, uiWebviewX86TestTask)
 
 	uiGeckoX86TestTaskId, uiGeckoX86TestTask = generate_gecko_X86_ui_test_task([unitTestTaskId, codeQualityTaskId])
 	schedule_task(queue, uiGeckoX86TestTaskId, uiGeckoX86TestTask)

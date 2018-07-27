@@ -5,10 +5,10 @@ buildscript {
     ext.support_libraries_version = '27.1.1'
     ext.espresso_version = '3.0.1'
     ext.kotlin_version = '1.2.30'
-    ext.geckoview_revision = '801112336847960bbb9a018695cf09ea437dc137'
-    ext.geckoview_version = '62.0.20180702164905' // 62.0b5
+    ext.geckoview_revision = '02069dab4f3cabe06bdf8f824031e1aa6aef7dfd'
+    ext.geckoview_version = '62.0.20180712042337' // 62.0b8
     ext.spotbugs_version = '3.1.2'
-    ext.mozilla_components_version = '0.10'
+    ext.mozilla_components_version = '0.16.1'
 
     repositories {
         google()

@@ -5,6 +5,7 @@
 
 package org.mozilla.focus.helpers;
 
+import android.content.res.Resources;
 import android.support.annotation.NonNull;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.espresso.ViewInteraction;
@@ -13,6 +14,7 @@ import android.support.test.uiautomator.UiObject;
 import android.support.test.uiautomator.UiObjectNotFoundException;
 import android.support.test.uiautomator.UiSelector;
 import android.text.format.DateUtils;
+import android.util.DisplayMetrics;
 
 import org.mozilla.focus.R;
 import org.mozilla.focus.utils.AppConstants;
@@ -52,7 +54,7 @@ public final class TestHelper {
 
     // wait for web area to be visible
     public static void waitForWebContent() {
-        if (!AppConstants.isGeckoBuild()) {
+        if (!AppConstants.isGeckoBuild(InstrumentationRegistry.getContext())) {
             assertTrue(webView.waitForExists(waitingTime));
         } else {
             assertTrue(geckoView.waitForExists(waitingTime));
@@ -155,7 +157,8 @@ public final class TestHelper {
             .resourceId(getAppName() + ":id/addtohomescreen_dialog_add")
             .enabled(true));
     public static UiObject AddautoBtn = TestHelper.mDevice.findObject(new UiSelector()
-            .text("ADD AUTOMATICALLY")
+            .className("android.widget.Button")
+            .instance(1)
             .enabled(true));
     public static UiObject shortcutTitle = TestHelper.mDevice.findObject(new UiSelector()
             .resourceId(getAppName() + ":id/edit_title")
@@ -163,6 +166,13 @@ public final class TestHelper {
     public static UiObject savedNotification = TestHelper.mDevice.findObject(new UiSelector()
             .text("Download complete.")
             .resourceId("android:id/text")
+            .enabled(true));
+
+    public static UiObject securityInfoIcon = TestHelper.mDevice.findObject(new UiSelector()
+            .resourceId(TestHelper.getAppName() + ":id/security_info")
+            .enabled(true));
+    public static UiObject identityState = TestHelper.mDevice.findObject(new UiSelector()
+            .resourceId(TestHelper.getAppName() + ":id/site_identity_state")
             .enabled(true));
 
     /********* Main View Menu Item Locators ***********/
@@ -218,6 +228,25 @@ public final class TestHelper {
             }
             assertTrue(notificationOpenItem.exists());
         }
+    }
+
+    public static final int X_OFFSET = 20;
+    public static final int Y_OFFSET = 500;
+    public static final int STEPS = 10;
+
+    private static DisplayMetrics devicePixels() {
+        DisplayMetrics metrics = Resources.getSystem().getDisplayMetrics();
+        return metrics;
+    }
+
+    public static void swipeScreenLeft() {
+        DisplayMetrics metrics = devicePixels();
+        mDevice.swipe(metrics.widthPixels - X_OFFSET, Y_OFFSET, 0, Y_OFFSET, STEPS);
+    }
+
+    public static void swipeScreenRight() {
+        DisplayMetrics metrics = devicePixels();
+        mDevice.swipe(X_OFFSET, Y_OFFSET, metrics.widthPixels, Y_OFFSET, STEPS);
     }
 
     public static void waitForIdle() {

@@ -6,8 +6,11 @@ package org.mozilla.focus.fragment
 
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
+import android.arch.lifecycle.ViewModelProviders
 import android.graphics.Typeface
+import android.graphics.drawable.TransitionDrawable
 import android.os.Bundle
+import android.support.v4.content.ContextCompat
 import android.text.SpannableString
 import android.text.TextUtils
 import android.text.style.StyleSpan
@@ -18,9 +21,9 @@ import android.view.ViewTreeObserver
 import android.widget.FrameLayout
 import kotlinx.android.synthetic.main.fragment_urlinput.*
 import mozilla.components.browser.domains.DomainAutoCompleteProvider
+import mozilla.components.support.utils.ThreadUtils
 import mozilla.components.ui.autocomplete.InlineAutocompleteEditText
 import mozilla.components.ui.autocomplete.InlineAutocompleteEditText.AutocompleteResult
-import mozilla.components.support.utils.ThreadUtils
 import org.mozilla.focus.R
 import org.mozilla.focus.locale.LocaleAwareAppCompatActivity
 import org.mozilla.focus.locale.LocaleAwareFragment
@@ -35,6 +38,7 @@ import org.mozilla.focus.utils.StatusBarUtils
 import org.mozilla.focus.utils.SupportUtils
 import org.mozilla.focus.utils.UrlUtils
 import org.mozilla.focus.utils.ViewUtils
+import org.mozilla.focus.viewmodel.MainViewModel
 import org.mozilla.focus.whatsnew.WhatsNew
 
 class FocusCrashException : Exception()
@@ -119,12 +123,15 @@ class UrlInputFragment :
     private var isAnimating: Boolean = false
 
     private var session: Session? = null
+    private var model: MainViewModel? = null
 
     private val isOverlay: Boolean
         get() = session != null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        model = ViewModelProviders.of(activity!!).get(MainViewModel::class.java)
 
         // Get session from session manager if there's a session UUID in the fragment's arguments
         arguments?.getString(ARGUMENT_SESSION_UUID)?.let {
@@ -194,7 +201,6 @@ class UrlInputFragment :
             backgroundView?.setBackgroundResource(R.drawable.background_gradient)
 
             dismissView?.visibility = View.GONE
-            toolbarBackgroundView?.visibility = View.GONE
 
             menuView?.visibility = View.VISIBLE
             menuView?.setOnClickListener(this)
@@ -244,8 +250,12 @@ class UrlInputFragment :
 
         context?.let {
             if (!Settings.getInstance(it).shouldShowFirstrun()) {
+
                 // Only show keyboard if we are not displaying the first run tour on top.
                 showKeyboard()
+
+                toolbarBackgroundView.background = ContextCompat
+                        .getDrawable(context!!, R.drawable.animated_background_url)
             }
         }
     }
@@ -440,31 +450,24 @@ class UrlInputFragment :
         }
 
         if (!reverse) {
-            toolbarBackgroundView?.alpha = 0f
             clearView?.alpha = 0f
         }
 
         if (toolbarBackgroundView != null) {
-            // The darker background appears with an alpha animation
-            toolbarBackgroundView.animate()
-                .setDuration(ANIMATION_DURATION.toLong())
-                .alpha((if (reverse) 0 else 1).toFloat())
-                .setListener(object : AnimatorListenerAdapter() {
-                    override fun onAnimationStart(animation: Animator) {
-                        toolbarBackgroundView?.visibility = View.VISIBLE
-                    }
+            val transitionDrawable = toolbarBackgroundView?.background as TransitionDrawable
 
-                    override fun onAnimationEnd(animation: Animator) {
-                        if (reverse) {
-                            toolbarBackgroundView?.visibility = View.GONE
+            if (reverse) {
+                transitionDrawable.reverseTransition(ANIMATION_DURATION)
+                toolbarBottomBorder?.visibility = View.VISIBLE
 
-                            if (!isOverlay) {
-                                dismissView?.visibility = View.GONE
-                                menuView?.visibility = View.VISIBLE
-                            }
-                        }
-                    }
-                })
+                if (!isOverlay) {
+                    dismissView?.visibility = View.GONE
+                    menuView?.visibility = View.VISIBLE
+                }
+            } else {
+                transitionDrawable.startTransition(ANIMATION_DURATION)
+                toolbarBottomBorder?.visibility = View.GONE
+            }
         }
     }
 
@@ -486,26 +489,47 @@ class UrlInputFragment :
         }
 
         if (!input.trim { it <= ' ' }.isEmpty()) {
-            if (input == "focus:crash") { throw FocusCrashException() }
+            handleCrashTrigger(input)
 
             ViewUtils.hideKeyboard(urlView)
 
-            val isUrl = UrlUtils.isUrl(input)
+            if (handleExperimentsTrigger(input)) return
 
-            val url = if (isUrl)
-                UrlUtils.normalize(input)
-            else
-                UrlUtils.createSearchUrl(context, input)
-
-            val searchTerms = if (isUrl)
-                null
-            else
-                input.trim { it <= ' ' }
+            val (isUrl, url, searchTerms) = normalizeUrlAndSearchTerms(input)
 
             openUrl(url, searchTerms)
 
             TelemetryWrapper.urlBarEvent(isUrl, urlView.autocompleteResult)
         }
+    }
+
+    private fun handleExperimentsTrigger(input: String): Boolean {
+        if (input == "focus:test") {
+            model?.showExperiments()
+            return true
+        }
+        return false
+    }
+
+    private fun handleCrashTrigger(input: String) {
+        if (input == "focus:crash") {
+            throw FocusCrashException()
+        }
+    }
+
+    private fun normalizeUrlAndSearchTerms(input: String): Triple<Boolean, String, String?> {
+        val isUrl = UrlUtils.isUrl(input)
+
+        val url = if (isUrl)
+            UrlUtils.normalize(input)
+        else
+            UrlUtils.createSearchUrl(context, input)
+
+        val searchTerms = if (isUrl)
+            null
+        else
+            input.trim { it <= ' ' }
+        return Triple(isUrl, url, searchTerms)
     }
 
     private fun onSearch() {
@@ -558,7 +582,7 @@ class UrlInputFragment :
 
         view?.let {
             val result = autoCompleteProvider.autocomplete(searchText)
-            view.onAutocomplete(AutocompleteResult(result.text, result.source, result.size, { result.url }))
+            view.applyAutocompleteResult(AutocompleteResult(result.text, result.source, result.size, { result.url }))
         }
 
         if (searchText.trim { it <= ' ' }.isEmpty()) {
