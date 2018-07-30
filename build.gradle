@@ -4,9 +4,9 @@ buildscript {
     ext.architecture_components_version = '1.1.0'
     ext.support_libraries_version = '27.1.1'
     ext.espresso_version = '3.0.1'
-    ext.kotlin_version = '1.2.30'
-    ext.geckoview_revision = '02069dab4f3cabe06bdf8f824031e1aa6aef7dfd'
-    ext.geckoview_version = '62.0.20180712042337' // 62.0b8
+    ext.kotlin_version = '1.2.50'
+    ext.geckoview_revision = '23bc64507f53b0cba44c72f72539716adcf02d68'
+    ext.geckoview_version = '62.0.20180726161819' // 62.0b12
     ext.spotbugs_version = '3.1.2'
     ext.mozilla_components_version = '0.16.1'
 
@@ -34,7 +34,7 @@ plugins {
     // other methods involve using undocumented APIs
     // https://docs.gradle.org/current/userguide/plugins.html#plugins_dsl_limitations
     id "io.gitlab.arturbosch.detekt" version "1.0.0.RC6-3"
-    id "org.jetbrains.kotlin.kapt" version "1.2.30"
+    id "org.jetbrains.kotlin.kapt" version "1.2.50"
 }
 
 detekt {
