@@ -110,7 +110,8 @@ import mozilla.components.support.utils.DrawableUtils;
  * Fragment for displaying the browser UI.
  */
 @SuppressWarnings({"PMD.ExcessiveClassLength", "PMD.CyclomaticComplexity", "PMD.TooManyMethods",
-        "PMD.ModifiedCyclomaticComplexity", "PMD.TooManyFields", "PMD.StdCyclomaticComplexity" })
+        "PMD.ModifiedCyclomaticComplexity", "PMD.TooManyFields", "PMD.StdCyclomaticComplexity",
+        "PMD.NcssCount"})
 public class BrowserFragment extends WebFragment implements LifecycleObserver, View.OnClickListener,
         DownloadDialogFragment.DownloadDialogListener, View.OnLongClickListener,
         BiometricAuthenticationDialogFragment.BiometricAuthenticationListener {
@@ -185,6 +186,8 @@ public class BrowserFragment extends WebFragment implements LifecycleObserver, V
         sessionManager = SessionManager.getInstance();
     }
 
+
+    @SuppressWarnings({"PMD.ExcessiveMethodLength"})
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -236,6 +239,7 @@ public class BrowserFragment extends WebFragment implements LifecycleObserver, V
         return session.getUrl().getValue();
     }
 
+    @SuppressWarnings({"PMD.ExcessiveMethodLength"})
     @Override
     public void onPause() {
         super.onPause();
@@ -885,7 +889,7 @@ public class BrowserFragment extends WebFragment implements LifecycleObserver, V
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     private void displayBiometricPromptIfNeeded() {
-        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+        final FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
 
         // Check that we need to auth and that the fragment isn't already displayed
         if (biometricController.getNeedsAuth()) {
