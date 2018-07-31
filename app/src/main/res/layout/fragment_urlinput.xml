@@ -113,7 +113,7 @@
                     android:layout_marginBottom="8dp"
                     android:background="?android:attr/selectableItemBackgroundBorderless"
                     android:contentDescription="@string/content_description_clear_input"
-                    android:src="@drawable/ic_stop"
+                    android:src="@drawable/ic_clear_stop"
                     android:visibility="gone" />
 
                 <org.mozilla.focus.widget.IndicatorMenuButton

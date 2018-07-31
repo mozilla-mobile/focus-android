@@ -107,7 +107,7 @@
         android:background="?android:attr/selectableItemBackgroundBorderless"
         android:padding="4dp"
         android:contentDescription="@string/content_description_stop"
-        android:src="@drawable/ic_stop" />
+        android:src="@drawable/ic_clear_stop" />
 
     <!-- The contentDescription is supplied by other applications in the Custom Tab Intent, and
          is therefore set programatically. -->

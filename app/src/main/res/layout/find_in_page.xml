@@ -81,7 +81,7 @@
         android:layout_marginEnd="1dp"
         android:background="?android:attr/selectableItemBackgroundBorderless"
         android:contentDescription="@string/accessibility_dismiss_find_in_page"
-        android:src="@drawable/ic_close"
+        android:src="@drawable/ic_find_in_page_close"
         android:tint="@color/photonWhite"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
