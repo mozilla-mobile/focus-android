@@ -1,13 +1,12 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!-- This Source Code Form is subject to the terms of the Mozilla Public
+<?xml version="1.0" encoding="utf-8"?><!-- This Source Code Form is subject to the terms of the Mozilla Public
    - License, v. 2.0. If a copy of the MPL was not distributed with this
    - file, You can obtain one at http://mozilla.org/MPL/2.0/. -->
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
-        android:width="24dp"
-        android:height="24dp"
-        android:viewportWidth="24.0"
-        android:viewportHeight="24.0">
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="24"
+    android:viewportHeight="24">
     <path
-        android:fillColor="#ffffff"
-        android:pathData="M21,4.04a0.96,0.96 0,0 0,-0.96 0.96V8a8.981,8.981 0,1 0,-1.676 10.361A1,1 0,0 0,16.95 16.95a7.031,7.031 0,1 1,1.72 -6.91H15a0.96,0.96 0,0 0,0 1.92h6a0.96,0.96 0,0 0,0.96 -0.96V5A0.96,0.96 0,0 0,21 4.04Z"/>
+        android:fillColor="#F9F9FA"
+        android:pathData="M4,12.5C4,8.3652 7.3803,5 11.5665,5C14.8647,5 17.6651,7.0907 18.7026,10L15,10C14.4477,10 14,10.4477 14,11C14,11.5523 14.4477,12 15,12L21,12C21.5523,12 22,11.5523 22,11L22,5C22,4.4477 21.5523,4 21,4C20.4477,4 20,4.4477 20,5L20,8.0118C18.3857,5.0262 15.2123,3 11.5665,3C6.2904,3 2,7.246 2,12.5C2,17.754 6.2904,22 11.5665,22C13.9122,22 16.0639,21.1603 17.7287,19.7668C18.1522,19.4123 18.2082,18.7817 17.8537,18.3582C17.4992,17.9346 16.8685,17.8787 16.445,18.2332C15.1279,19.3356 13.4272,20 11.5665,20C7.3803,20 4,16.6348 4,12.5Z" />
 </vector>
