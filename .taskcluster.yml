@@ -138,6 +138,7 @@ tasks:
           && python tools/taskcluster/release.py \
             --tag {{ event.version }} \
             --track alpha \
+            --commit \
             --output /opt/focus-android/app/build/outputs/apk \
             --apk focusWebviewUniversal/release/app-focus-webview-universal-release-unsigned.apk \
             --apk klarWebviewUniversal/release/app-klar-webview-universal-release-unsigned.apk
