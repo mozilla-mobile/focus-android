@@ -370,6 +370,8 @@ android.applicationVariants.all { variant ->
             versionCode = versionCode + (2 * multiplier)
         } else if (variant.flavorName.contains("Arm")) {
             versionCode = versionCode + (1 * multiplier)
+        } else if (variant.flavorName.contains("Universal")) {
+            versionCode = versionCode + (3 * multiplier)
         }
 
         variant.outputs.all { output ->
