@@ -240,6 +240,7 @@ public class MainActivity extends LocaleAwareAppCompatActivity {
 
         transaction
                 .replace(R.id.container, UrlInputFragment.createWithoutSession(), UrlInputFragment.FRAGMENT_TAG)
+                .addToBackStack("browserFragment")
                 .commit();
     }
 
@@ -294,8 +295,19 @@ public class MainActivity extends LocaleAwareAppCompatActivity {
 
         final UrlInputFragment urlInputFragment = (UrlInputFragment) fragmentManager.findFragmentByTag(UrlInputFragment.FRAGMENT_TAG);
         if (urlInputFragment != null &&
-                urlInputFragment.isVisible() &&
-                urlInputFragment.onBackPressed()) {
+                urlInputFragment.isVisible()) {
+
+            if (!urlInputFragment.onBackPressed()) {
+                /* URL input fragment failed to handle the back press. This means the user has a
+                previous browsing session on the stack that we don't want to display, so go pop
+                the stack, then go home */
+
+                Intent homeIntent = new Intent(Intent.ACTION_MAIN);
+                homeIntent.addCategory(Intent.CATEGORY_HOME);
+                homeIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(homeIntent);
+            }
+
             // The URL input fragment has handled the back press. It does its own animations so
             // we do not try to remove it from outside.
             return;
