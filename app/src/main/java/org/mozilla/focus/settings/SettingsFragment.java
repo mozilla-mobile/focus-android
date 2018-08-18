@@ -12,6 +12,8 @@ import android.preference.Preference;
 import android.preference.PreferenceScreen;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
+import android.util.Log;
+
 import org.mozilla.focus.R;
 import org.mozilla.focus.activity.SettingsActivity;
 import org.mozilla.focus.autocomplete.AutocompleteSettingsFragment;
@@ -104,6 +106,7 @@ public class SettingsFragment extends BaseSettingsFragment implements SharedPref
             // cases. To avoid an infinite loop we won't update the preference a second time. This
             // fragment gets replaced at the end of this method anyways.
             localeUpdated = true;
+            InstalledSearchEnginesSettingsFragment.Companion.setLanguageChanged(true);
 
             final ListPreference languagePreference = (ListPreference) findPreference(getString(R.string.pref_key_locale));
             final String value = languagePreference.getValue();

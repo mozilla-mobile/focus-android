@@ -4,21 +4,26 @@
 
 package org.mozilla.focus.settings
 
+import android.content.Context
 import android.os.Bundle
 import android.preference.Preference
 import android.preference.PreferenceScreen
+import android.util.Log
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import org.mozilla.focus.R
+import org.mozilla.focus.activity.SettingsActivity
 import org.mozilla.focus.search.CustomSearchEngineStore
 import org.mozilla.focus.search.RadioSearchEngineListPreference
 import org.mozilla.focus.telemetry.TelemetryWrapper
 
 class InstalledSearchEnginesSettingsFragment : BaseSettingsFragment() {
-
     companion object {
         fun newInstance() = InstalledSearchEnginesSettingsFragment()
+
+        var languageChanged: Boolean = false
+
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -33,7 +38,10 @@ class InstalledSearchEnginesSettingsFragment : BaseSettingsFragment() {
             updateIcon(R.drawable.ic_back)
         }
 
-        refetchSearchEngines()
+        if (languageChanged == true)
+            restoreDefaultSearchEngines()
+        else
+            refetchSearchEngines()
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -56,13 +64,18 @@ class InstalledSearchEnginesSettingsFragment : BaseSettingsFragment() {
                 true
             }
             R.id.menu_restore_default_engines -> {
-                CustomSearchEngineStore.restoreDefaultSearchEngines(context)
-                refetchSearchEngines()
-                TelemetryWrapper.menuRestoreEnginesEvent()
+                restoreDefaultSearchEngines()
                 true
             }
             else -> super.onOptionsItemSelected(item)
         }
+    }
+
+    fun restoreDefaultSearchEngines() {
+        CustomSearchEngineStore.restoreDefaultSearchEngines(context)
+        refetchSearchEngines()
+        TelemetryWrapper.menuRestoreEnginesEvent()
+        languageChanged = false
     }
 
     override fun onPreferenceTreeClick(preferenceScreen: PreferenceScreen?, preference: Preference?): Boolean {
@@ -81,7 +94,7 @@ class InstalledSearchEnginesSettingsFragment : BaseSettingsFragment() {
     /**
      * Refresh search engines list.
      */
-    private fun refetchSearchEngines() {
+    fun refetchSearchEngines() {
         // Refresh this preference screen to display changes.
         preferenceScreen?.removeAll()
         addPreferencesFromResource(R.xml.search_engine_settings)
