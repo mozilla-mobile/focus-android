@@ -8,10 +8,12 @@ import android.content.Context
 import android.content.SharedPreferences
 import android.content.res.Resources
 import android.preference.PreferenceManager
-import mozilla.components.browser.search.SearchEngine
 
 import org.mozilla.focus.R
 import org.mozilla.focus.fragment.FirstrunFragment
+import org.mozilla.focus.web.GeckoWebViewProvider
+
+import org.mozilla.focus.searchsuggestions.SearchSuggestionsPreferences
 
 /**
  * A simple wrapper for SharedPreferences that makes reading preference a little bit easier.
@@ -35,7 +37,7 @@ class Settings private constructor(context: Context) {
     private val resources: Resources = context.resources
 
     val defaultSearchEngineName: String
-        get() = preferences.getString(getPreferenceKey(R.string.pref_key_search_engine), "")
+        get() = preferences.getString(getPreferenceKey(R.string.pref_key_search_engine), "")!!
 
     fun shouldBlockImages(): Boolean =
             // Not shipping in v1 (#188)
@@ -43,6 +45,16 @@ class Settings private constructor(context: Context) {
                     resources.getString(R.string.pref_key_performance_block_images),
                     false); */
             false
+
+    fun shouldEnableRemoteDebugging(): Boolean =
+            preferences.getBoolean(
+                    getPreferenceKey(R.string.pref_key_remote_debugging),
+                    false)
+
+    fun shouldShowSearchSuggestions(): Boolean =
+            preferences.getBoolean(
+                    getPreferenceKey(R.string.pref_key_show_search_suggestions),
+                    false)
 
     fun shouldBlockWebFonts(): Boolean =
         preferences.getBoolean(
@@ -54,10 +66,10 @@ class Settings private constructor(context: Context) {
                 getPreferenceKey(R.string.pref_key_performance_block_javascript),
                 false)
 
-    private fun shouldBlockCookiesValue(): String =
+    fun shouldBlockCookiesValue(): String =
             preferences.getString(getPreferenceKey(R.string
                     .pref_key_performance_enable_cookies),
-                    resources.getString(R.string.preference_privacy_should_block_cookies_no_option))
+                    resources.getString(R.string.preference_privacy_should_block_cookies_no_option))!!
 
     fun shouldBlockCookies(): Boolean =
             shouldBlockCookiesValue().equals(resources.getString(
@@ -74,12 +86,18 @@ class Settings private constructor(context: Context) {
     fun shouldShowFirstrun(): Boolean =
             !preferences.getBoolean(FirstrunFragment.FIRSTRUN_PREF, false)
 
+    fun isFirstGeckoRun(): Boolean =
+            preferences.getBoolean(GeckoWebViewProvider.PREF_FIRST_GECKO_RUN, true)
+
+    fun shouldUseBiometrics(): Boolean =
+            preferences.getBoolean(getPreferenceKey(R.string.pref_key_biometric), false)
+
     fun shouldUseSecureMode(): Boolean =
             preferences.getBoolean(getPreferenceKey(R.string.pref_key_secure), false)
 
-    fun setDefaultSearchEngine(searchEngine: SearchEngine) {
+    fun setDefaultSearchEngineByName(name: String) {
         preferences.edit()
-                .putString(getPreferenceKey(R.string.pref_key_search_engine), searchEngine.name)
+                .putString(getPreferenceKey(R.string.pref_key_search_engine), name)
                 .apply()
     }
 
@@ -112,6 +130,33 @@ class Settings private constructor(context: Context) {
             preferences.getBoolean(
                     getPreferenceKey(R.string.pref_key_privacy_block_other),
                     false)
+
+    fun userHasToggledSearchSuggestions(): Boolean =
+            preferences.getBoolean(SearchSuggestionsPreferences.TOGGLED_SUGGESTIONS_PREF, false)
+
+    fun userHasDismissedNoSuggestionsMessage(): Boolean =
+            preferences.getBoolean(SearchSuggestionsPreferences.DISMISSED_NO_SUGGESTIONS_PREF, false)
+
+    fun shouldDisplayHomescreenTips() =
+        preferences.getBoolean(
+            getPreferenceKey(R.string.pref_key_homescreen_tips),
+            false)
+
+    fun isDefaultBrowser() = preferences.getBoolean(
+        getPreferenceKey(R.string.pref_key_default_browser),
+        false)
+
+    fun hasOpenedInNewTab() = preferences.getBoolean(
+        getPreferenceKey(R.string.has_opened_new_tab),
+        false)
+
+    fun hasAddedToHomescreen() = preferences.getBoolean(
+        getPreferenceKey(R.string.has_added_to_home_screen),
+        false)
+
+    fun hasRequestedDesktop() = preferences.getBoolean(
+        getPreferenceKey(R.string.has_requested_desktop),
+        false)
 
     private fun getPreferenceKey(resourceId: Int): String =
             resources.getString(resourceId)

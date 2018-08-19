@@ -46,6 +46,8 @@ public interface IWebView {
 
         void onURLChanged(final String url);
 
+        void onTitleChanged(final String title);
+
         void onRequest(final boolean isTriggeredByUserGesture);
 
         void onDownloadStart(Download download);
@@ -75,16 +77,28 @@ public interface IWebView {
         void resetBlockedTrackers();
 
         void onBlockingStateChanged(boolean isBlockingEnabled);
+
+        void onHttpAuthRequest(@NonNull HttpAuthCallback callback, String host, String realm);
+
+        void onRequestDesktopStateChanged(boolean shouldRequestDesktop);
     }
 
     interface FullscreenCallback {
         void fullScreenExited();
     }
 
+    interface HttpAuthCallback {
+        void proceed(String username, String password);
+
+        void cancel();
+    }
+
     /**
      * Enable/Disable content blocking for this session (Only the blockers that are enabled in the app's settings will be turned on/off).
      */
     void setBlockingEnabled(boolean enabled);
+
+    void setRequestDesktop(boolean shouldRequestDesktop);
 
     void setCallback(Callback callback);
 
@@ -117,6 +131,14 @@ public interface IWebView {
     void saveWebViewState(@NonNull Session session);
 
     void exitFullscreen();
+
+    void findAllAsync(String find);
+
+    void findNext(boolean forward);
+
+    void clearMatches();
+
+    void setFindListener(IFindListener findListener);
 
     void loadData(String baseURL, String data, String mimeType, String encoding, String historyURL);
 

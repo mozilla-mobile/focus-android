@@ -20,8 +20,10 @@
 # shipping in previous releases. Ping :delphine in case you want
 # to add or remove locales from releases.
 RELEASE_LOCALES = [
+	"af",
 	"am",
 	"an",
+	"anp",
 	"ar",
 	"ast",
 	"az",
@@ -37,6 +39,7 @@ RELEASE_LOCALES = [
 	"de",
 	"dsb",
 	"el",
+	"en-CA",
 	"eo",
 	"es-AR",
 	"es-CL",
@@ -57,13 +60,16 @@ RELEASE_LOCALES = [
 	"ia",
 	"in",
 	"it",
+	"ixl",
 	"iw",
 	"ja",
 	"ka",
 	"kab",
 	"kk",
 	"ko",
+	"kw",
 	"lo",
+	"lt",
 	"meh",
 	"mix",
 	"ms",
@@ -73,8 +79,10 @@ RELEASE_LOCALES = [
 	"nl",
 	"nn-NO",
 	"oc",
+	"pai",
 	"pl",
 	"pt-BR",
+	"quy",
 	"ro",
 	"ru",
 	"sk",
@@ -87,13 +95,15 @@ RELEASE_LOCALES = [
 	"th",
 	"tr",
 	"trs",
+	"tsz",
 	"tt",
 	"uk",
 	"ur",
 	"vi",
+	"wo",
+	"zam",
 	"zh-CN",
-	"zh-TW",
-	"zam"
+	"zh-TW"
 ]
 
 # This is the list of locales that we want to take automated screenshots of
@@ -101,9 +111,9 @@ RELEASE_LOCALES = [
 # of other locales so that translators of not yet completed locales can
 # verify their work in progress.
 ADDITIONAL_SCREENSHOT_LOCALES = [
-	"anp",
-	"lt",
-	"wo"
+	"ay",
+	"quc",
+	"pa-IN"
 ]
 
 # Those are locales that we take automated screenshots of.

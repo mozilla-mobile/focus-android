@@ -13,10 +13,11 @@
         <item name="popupMenuStyle">@style/PopupMenu</item>
 
         <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="preferenceTheme">@style/PreferenceThemeOverlay.v14.Material</item>
     </style>
 
     <style name="DialogTitleStyle" parent="TextAppearance.AppCompat.Title">
-        <item name="android:textColor">#FFFFFF</item>
+        <item name="android:textColor">@color/home_screen_dialog_text</item>
         <item name="android:textSize">20sp</item>
         <item name="android:fontFamily">@string/font_roboto_medium</item>
     </style>
@@ -26,13 +27,22 @@
          We need this style because the accent colour for the MainActivity is purple,
          but we want different accents in the dialog. -->
     <style name="DialogStyle" parent="Theme.AppCompat.Dialog.Alert">
-        <item name="colorAccent">#FF00A4DC</item>
         <item name="android:windowTitleStyle">@style/DialogTitleStyle</item>
         <item name="dialogPreferredPadding">24dp</item>
+        <item name="android:background">@drawable/dialog_background</item>
+    </style>
+
+    <style name="ButtonStyle" parent="Base.Widget.AppCompat.ButtonBar.AlertDialog">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:textColor">@color/home_screen_dialog_button_text</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:fontFamily">@string/font_roboto_medium</item>
     </style>
 
     <style name="SettingsTheme" parent="Theme.AppCompat.NoActionBar">
-        <item name="colorAccent">@color/colorAccentSettings</item>
+        <item name="colorAccent">@color/colorAccent</item>
         <item name="actionButtonStyle">@style/SettingsActionButtonStyle</item>
     </style>
 
@@ -110,5 +120,14 @@
 
     <style name="DoorHanger.Medium.Light">
         <item name="android:fontFamily">sans-serif-light</item>
+    </style>
+
+    <style name="HintTextAppearance">
+        <item name="android:textColor">@color/colorTextInactive</item>
+        <item name="android:textSize">9sp</item>
+    </style>
+
+    <style name="ColorHandleTheme">
+        <item name="android:colorControlActivated">@color/photonBlue50</item>
     </style>
 </resources>

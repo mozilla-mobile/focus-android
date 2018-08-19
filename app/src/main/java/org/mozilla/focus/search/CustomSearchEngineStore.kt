@@ -34,7 +34,7 @@ object CustomSearchEngineStore {
 
     fun addSearchEngine(context: Context, engineName: String, searchQuery: String): Boolean {
         // This is not for a homescreen shortcut so we don't want an adaptive launcher icon.
-        val iconBitmap = IconGenerator.generateLauncherIconPreOreo(context, engineName[0])
+        val iconBitmap = IconGenerator.generateSearchEngineIcon(context)
         val searchEngineXml = SearchEngineWriter.buildSearchEngineXML(engineName, searchQuery, iconBitmap)
                 ?: return false
         val existingEngines = pref(context).getStringSet(PREF_KEY_CUSTOM_SEARCH_ENGINES, emptySet())
@@ -78,7 +78,7 @@ object CustomSearchEngineStore {
     }
 
     fun getRemovedSearchEngines(context: Context): Set<String> =
-            pref(context).getStringSet(PREF_KEY_HIDDEN_DEFAULT_ENGINES, emptySet())
+            pref(context).getStringSet(PREF_KEY_HIDDEN_DEFAULT_ENGINES, emptySet())!!
 
     fun isCustomSearchEngine(engineId: String, context: Context): Boolean {
         for (e in loadCustomSearchEngines(context)) {
@@ -97,7 +97,7 @@ object CustomSearchEngineStore {
 
         try {
             for (engine in engines!!) {
-                val engineInputStream = prefs.getString(engine, "").byteInputStream().buffered()
+                val engineInputStream = prefs.getString(engine, "")!!.byteInputStream().buffered()
                 // Search engine identifier is the search engine name.
                 customEngines.add(parser.load(engine, engineInputStream))
             }

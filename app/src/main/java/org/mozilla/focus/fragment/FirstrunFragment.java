@@ -61,7 +61,8 @@ public class FirstrunFragment extends Fragment implements View.OnClickListener {
 
         final FirstrunPagerAdapter adapter = new FirstrunPagerAdapter(container.getContext(), this);
 
-        viewPager = (ViewPager) view.findViewById(R.id.pager);
+        viewPager = view.findViewById(R.id.pager);
+        viewPager.setContentDescription(adapter.getPageAccessibilityDescription(0));
         viewPager.setFocusable(true);
 
         viewPager.setPageTransformer(true, new ViewPager.PageTransformer() {
@@ -70,24 +71,14 @@ public class FirstrunFragment extends Fragment implements View.OnClickListener {
                 page.setAlpha(1 - (0.5f * Math.abs(position)));
             }
         });
-        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageSelected(int position) {
-                TelemetryWrapper.showFirstRunPageEvent(position);
-            }
-
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {}
-
-            @Override
-            public void onPageScrollStateChanged(int state) {}
-        });
 
         viewPager.setClipToPadding(false);
         viewPager.setAdapter(adapter);
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageSelected(int position) {
+                TelemetryWrapper.showFirstRunPageEvent(position);
+
                 final TransitionDrawable drawable = (TransitionDrawable) background.getBackground();
 
                 if (position == adapter.getCount() - 1) {
@@ -95,6 +86,8 @@ public class FirstrunFragment extends Fragment implements View.OnClickListener {
                 } else {
                     drawable.resetTransition();
                 }
+
+                viewPager.setContentDescription(adapter.getPageAccessibilityDescription(position));
             }
 
             @Override
@@ -104,8 +97,14 @@ public class FirstrunFragment extends Fragment implements View.OnClickListener {
             public void onPageScrollStateChanged(int state) {}
         });
 
-        final TabLayout tabLayout = (TabLayout) view.findViewById(R.id.tabs);
+        final TabLayout tabLayout = view.findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager, true);
+
+        final FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+        final UrlInputFragment urlInputFragment = (UrlInputFragment) fragmentManager.findFragmentByTag(UrlInputFragment.FRAGMENT_TAG);
+        if (urlInputFragment != null) {
+            fragmentManager.beginTransaction().detach(urlInputFragment).commit();
+        }
 
         return view;
     }
@@ -147,6 +146,7 @@ public class FirstrunFragment extends Fragment implements View.OnClickListener {
 
         final UrlInputFragment inputFragment = (UrlInputFragment) fragmentManager.findFragmentByTag(UrlInputFragment.FRAGMENT_TAG);
         if (inputFragment != null) {
+            fragmentManager.beginTransaction().attach(inputFragment).commit();
             inputFragment.showKeyboard();
         }
     }
