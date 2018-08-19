@@ -15,12 +15,11 @@ import org.mozilla.focus.search.RadioSearchEngineListPreference
 import org.mozilla.focus.telemetry.TelemetryWrapper
 
 class InstalledSearchEnginesSettingsFragment : BaseSettingsFragment() {
-    override fun onCreatePreferences(p0: Bundle?, p1: String?) {
-        setHasOptionsMenu(true)
-    }
-
     companion object {
         fun newInstance() = InstalledSearchEnginesSettingsFragment()
+
+        var languageChanged: Boolean = false
+
     }
 
     override fun onResume() {
@@ -30,7 +29,10 @@ class InstalledSearchEnginesSettingsFragment : BaseSettingsFragment() {
             updateIcon(R.drawable.ic_back)
         }
 
-        refetchSearchEngines()
+        if (languageChanged == true)
+            restoreDefaultSearchEngines()
+        else
+            refetchSearchEngines()
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -53,17 +55,22 @@ class InstalledSearchEnginesSettingsFragment : BaseSettingsFragment() {
                 true
             }
             R.id.menu_restore_default_engines -> {
-                CustomSearchEngineStore.restoreDefaultSearchEngines(activity!!)
-                refetchSearchEngines()
-                TelemetryWrapper.menuRestoreEnginesEvent()
+                restoreDefaultSearchEngines()        
                 true
             }
             else -> super.onOptionsItemSelected(item)
         }
     }
 
-    override fun onPreferenceTreeClick(preference: Preference): Boolean {
-        return when (preference.key) {
+    private fun restoreDefaultSearchEngines() {
+        CustomSearchEngineStore.restoreDefaultSearchEngines(context)
+        refetchSearchEngines()
+        TelemetryWrapper.menuRestoreEnginesEvent()
+        languageChanged = false
+    }
+
+    override fun onPreferenceTreeClick(preferenceScreen: PreferenceScreen?, preference: Preference?): Boolean {
+        return when (preference?.key) {
             resources.getString(R.string.pref_key_manual_add_search_engine) -> {
                 navigateToFragment(ManualAddSearchEngineSettingsFragment())
                 TelemetryWrapper.menuAddSearchEngineEvent()

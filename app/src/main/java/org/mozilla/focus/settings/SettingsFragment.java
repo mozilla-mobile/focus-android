@@ -9,6 +9,7 @@ import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v7.preference.ListPreference;
 import android.text.TextUtils;
+
 import org.mozilla.focus.R;
 import org.mozilla.focus.activity.SettingsActivity;
 import org.mozilla.focus.locale.LocaleManager;
@@ -86,6 +87,7 @@ public class SettingsFragment extends BaseSettingsFragment implements SharedPref
             // cases. To avoid an infinite loop we won't update the preference a second time. This
             // fragment gets replaced at the end of this method anyways.
             localeUpdated = true;
+            InstalledSearchEnginesSettingsFragment.Companion.setLanguageChanged(true);
 
             final ListPreference languagePreference = (ListPreference) findPreference(getString(R.string.pref_key_locale));
             final String value = languagePreference.getValue();

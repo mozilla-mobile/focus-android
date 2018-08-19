@@ -9,12 +9,13 @@ import android.view.MenuItem
 import kotlinx.android.synthetic.main.activity_settings.*
 import org.mozilla.focus.R
 import org.mozilla.focus.locale.LocaleAwareAppCompatActivity
+import org.mozilla.focus.search.RadioSearchEngineListPreference
+import org.mozilla.focus.search.SearchEngineListPreference
 import org.mozilla.focus.settings.BaseSettingsFragment
 import org.mozilla.focus.settings.SettingsFragment
 import org.mozilla.focus.settings.PrivacySecuritySettingsFragment
 
 class SettingsActivity : LocaleAwareAppCompatActivity(), BaseSettingsFragment.ActionBarUpdater {
-
     companion object {
         @JvmField
         val ACTIVITY_RESULT_LOCALE_CHANGED = 1
@@ -66,4 +67,5 @@ class SettingsActivity : LocaleAwareAppCompatActivity(), BaseSettingsFragment.Ac
     override fun updateIcon(iconResId: Int) {
         supportActionBar?.setHomeAsUpIndicator(iconResId)
     }
+
 }
