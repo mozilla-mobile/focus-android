@@ -17,8 +17,6 @@ import android.util.AttributeSet
 import android.util.Log
 import android.view.View
 import android.webkit.WebSettings
-import kotlinx.coroutines.experimental.CompletableDeferred
-import kotlinx.coroutines.experimental.runBlocking
 import org.json.JSONException
 import org.mozilla.focus.browser.LocalizedContent
 import org.mozilla.focus.gecko.GeckoViewPrompt
@@ -31,7 +29,6 @@ import org.mozilla.focus.utils.IntentUtils
 import org.mozilla.focus.utils.Settings
 import org.mozilla.focus.utils.UrlUtils
 import org.mozilla.focus.webview.SystemWebView
-import org.mozilla.gecko.util.ThreadUtils
 import org.mozilla.geckoview.GeckoResult
 import org.mozilla.geckoview.GeckoRuntime
 import org.mozilla.geckoview.GeckoRuntimeSettings
@@ -170,7 +167,6 @@ class GeckoWebViewProvider : IWebViewProvider {
         }
 
         override fun destroy() {
-            geckoSession.close()
         }
 
         override fun onResume() {
@@ -497,35 +493,35 @@ class GeckoWebViewProvider : IWebViewProvider {
         override fun restoreWebViewState(session: Session) {
             val stateData = session.webViewState
             val desiredURL = session.url.value
-            val sessionState = stateData.getParcelable<GeckoSession.SessionState>("state")
-            if (sessionState != null) {
-                geckoSession.restoreState(sessionState)
+            val savedGeckoSession = stateData.getParcelable<GeckoSession>(GECKO_SESSION)
+            if (savedGeckoSession != null) {
+                // Close empty created session
+                geckoSession.close()
+                geckoSession = savedGeckoSession
+                canGoBack = stateData.getBoolean(CAN_GO_BACK, false)
+                canGoForward = stateData.getBoolean(CAN_GO_FORWARD, false)
+                isSecure = stateData.getBoolean(IS_SECURE, false)
+                webViewTitle = stateData.getString(WEBVIEW_TITLE, null)
+                currentUrl = stateData.getString(CURRENT_URL, ABOUT_BLANK)
+                applySettingsAndSetDelegates()
+                if (!geckoSession.isOpen) {
+                    geckoSession.open(geckoRuntime!!)
+                }
+                setSession(geckoSession)
             } else {
                 loadUrl(desiredURL)
             }
         }
 
         override fun saveWebViewState(session: Session) {
-            val sessionBundle = saveStateInBackground()
-            if (sessionBundle.containsKey("state")) {
-                session.saveWebViewState(sessionBundle)
-            }
-        }
-
-        private fun saveStateInBackground(): Bundle = runBlocking {
-            val stateBundle = CompletableDeferred<Bundle>()
-            ThreadUtils.sGeckoHandler.post {
-                geckoSession.saveState().then({ state ->
-                    val bundle = Bundle()
-                    bundle.putParcelable("state", state)
-                    stateBundle.complete(bundle)
-                    GeckoResult<Void>()
-                }, { throwable ->
-                    stateBundle.completeExceptionally(throwable)
-                    GeckoResult<Void>()
-                })
-            }
-            stateBundle.await()
+            val sessionBundle = Bundle()
+            sessionBundle.putParcelable(GECKO_SESSION, geckoSession)
+            sessionBundle.putBoolean(CAN_GO_BACK, canGoBack)
+            sessionBundle.putBoolean(CAN_GO_FORWARD, canGoForward)
+            sessionBundle.putBoolean(IS_SECURE, isSecure)
+            sessionBundle.putString(WEBVIEW_TITLE, webViewTitle)
+            sessionBundle.putString(CURRENT_URL, currentUrl)
+            session.saveWebViewState(sessionBundle)
         }
 
         override fun getTitle(): String? {
@@ -599,6 +595,7 @@ class GeckoWebViewProvider : IWebViewProvider {
         override fun onDetachedFromWindow() {
             PreferenceManager.getDefaultSharedPreferences(context)
                 .unregisterOnSharedPreferenceChangeListener(this)
+            releaseSession()
             super.onDetachedFromWindow()
         }
 
@@ -616,5 +613,12 @@ class GeckoWebViewProvider : IWebViewProvider {
             "Mozilla/5.0 (Android 8.1.0; Mobile; rv:60.0) Gecko/60.0 Firefox/60.0"
         const val PREF_FIRST_GECKO_RUN: String = "first_gecko_run"
         const val PROGRESS_100 = 100
+        const val CAN_GO_BACK = "canGoBack"
+        const val CAN_GO_FORWARD = "canGoForward"
+        const val GECKO_SESSION = "geckoSession"
+        const val IS_SECURE = "isSecure"
+        const val WEBVIEW_TITLE = "webViewTitle"
+        const val CURRENT_URL = "currentUrl"
+        const val ABOUT_BLANK = "about:blank"
     }
 }

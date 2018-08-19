@@ -228,6 +228,10 @@ public class SessionManager {
         return -1;
     }
 
+    public Session getSessionAtPosition(int position) {
+        return sessions.getValue().get(position);
+    }
+
     public NonNullLiveData<List<Session>> getSessions() {
         return sessions;
     }
@@ -241,10 +245,21 @@ public class SessionManager {
         addSession(session);
     }
 
+    public void replaceSession(@NonNull Source source, @NonNull String url) {
+        final Session session = new Session(source, url);
+        replaceSession(session, SessionManager.getInstance().getPositionOfCurrentSession());
+    }
+
     public void createSearchSession(@NonNull Source source, @NonNull String url, String searchTerms) {
         final Session session = new Session(source, url);
         session.setSearchTerms(searchTerms);
         addSession(session);
+    }
+
+    public void replaceSearchSession(@NonNull Source source, @NonNull String url, String searchTerms) {
+        final Session session = new Session(source, url);
+        session.setSearchTerms(searchTerms);
+        replaceSession(session, SessionManager.getInstance().getPositionOfCurrentSession());
     }
 
     private void createSession(Context context, Source source, SafeIntent intent, String url) {
@@ -274,6 +289,28 @@ public class SessionManager {
 
             final List<Session> sessions = new ArrayList<>(this.sessions.getValue());
             sessions.add(session);
+
+            this.sessions.setValue(Collections.unmodifiableList(sessions));
+        }
+    }
+
+    private void replaceSession(Session session, int position) {
+        if (session.isCustomTab()) {
+            final List<Session> sessions = new ArrayList<>(this.customTabSessions.getValue());
+            sessions.add(position + 1, session);
+            if (position > -1) {
+                sessions.remove(position);
+            }
+
+            customTabSessions.setValue(sessions);
+        } else {
+            currentSessionUUID = session.getUUID();
+
+            final List<Session> sessions = new ArrayList<>(this.sessions.getValue());
+            sessions.add(position + 1, session);
+            if (position > -1) {
+                sessions.remove(position);
+            }
 
             this.sessions.setValue(Collections.unmodifiableList(sessions));
         }

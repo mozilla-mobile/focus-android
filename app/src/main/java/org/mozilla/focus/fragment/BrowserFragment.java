@@ -84,7 +84,6 @@ import org.mozilla.focus.session.Session;
 import org.mozilla.focus.session.SessionCallbackProxy;
 import org.mozilla.focus.session.SessionManager;
 import org.mozilla.focus.session.Source;
-import org.mozilla.focus.session.ui.SessionsSheetFragment;
 import org.mozilla.focus.telemetry.TelemetryWrapper;
 import org.mozilla.focus.utils.AppConstants;
 import org.mozilla.focus.utils.Browsers;
@@ -127,6 +126,7 @@ public class BrowserFragment extends WebFragment implements LifecycleObserver, V
 
     private static final String ARGUMENT_SESSION_UUID = "sessionUUID";
     private static final String RESTORE_KEY_DOWNLOAD = "download";
+    public static final String ABOUT_BLANK = "about:blank";
 
     public static BrowserFragment createForSession(Session session) {
         final Bundle arguments = new Bundle();
@@ -909,6 +909,14 @@ public class BrowserFragment extends WebFragment implements LifecycleObserver, V
         } else {
             getView().setAlpha(1);
         }
+
+        if (getUrl().equals(ABOUT_BLANK) || getUrl().isEmpty()) {
+            UrlInputFragment urlFragment = UrlInputFragment.createWithSession(SessionManager.getInstance().getCurrentSession(), urlView);
+            getActivity().getSupportFragmentManager()
+                    .beginTransaction()
+                    .add(R.id.container, urlFragment, UrlInputFragment.FRAGMENT_TAG)
+                    .commit();
+        }
     }
 
     @RequiresApi(api = Build.VERSION_CODES.M)
@@ -1090,19 +1098,11 @@ public class BrowserFragment extends WebFragment implements LifecycleObserver, V
                 }
                 break;
 
-            case R.id.erase: {
-                TelemetryWrapper.eraseEvent();
-
-                erase();
-                break;
-            }
-
+            case R.id.erase:
             case R.id.tabs:
-                getActivity().getSupportFragmentManager()
-                        .beginTransaction()
-                        .add(R.id.container, new SessionsSheetFragment(), SessionsSheetFragment.FRAGMENT_TAG)
+                requireFragmentManager().beginTransaction()
+                        .replace(R.id.container, new TabSwitcherFragment(), TabSwitcherFragment.FRAGMENT_TAG)
                         .commit();
-
                 TelemetryWrapper.openTabsTrayEvent();
                 break;
 
