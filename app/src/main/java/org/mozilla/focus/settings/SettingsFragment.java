@@ -12,7 +12,6 @@ import android.preference.Preference;
 import android.preference.PreferenceScreen;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
-import android.util.Log;
 
 import org.mozilla.focus.R;
 import org.mozilla.focus.activity.SettingsActivity;

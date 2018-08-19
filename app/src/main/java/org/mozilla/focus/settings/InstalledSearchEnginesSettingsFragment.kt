@@ -4,16 +4,13 @@
 
 package org.mozilla.focus.settings
 
-import android.content.Context
 import android.os.Bundle
 import android.preference.Preference
 import android.preference.PreferenceScreen
-import android.util.Log
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import org.mozilla.focus.R
-import org.mozilla.focus.activity.SettingsActivity
 import org.mozilla.focus.search.CustomSearchEngineStore
 import org.mozilla.focus.search.RadioSearchEngineListPreference
 import org.mozilla.focus.telemetry.TelemetryWrapper
@@ -94,7 +91,7 @@ class InstalledSearchEnginesSettingsFragment : BaseSettingsFragment() {
     /**
      * Refresh search engines list.
      */
-    fun refetchSearchEngines() {
+    private fun refetchSearchEngines() {
         // Refresh this preference screen to display changes.
         preferenceScreen?.removeAll()
         addPreferencesFromResource(R.xml.search_engine_settings)
