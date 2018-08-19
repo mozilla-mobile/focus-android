@@ -8,34 +8,50 @@ import android.Manifest;
 import android.app.Activity;
 import android.app.DownloadManager;
 import android.app.PendingIntent;
+import android.arch.lifecycle.LifecycleObserver;
 import android.arch.lifecycle.Observer;
+import android.arch.lifecycle.ProcessLifecycleOwner;
+import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.TransitionDrawable;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.annotation.RequiresApi;
 import android.support.design.widget.AppBarLayout;
+import android.support.design.widget.CoordinatorLayout;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.view.accessibility.AccessibilityEvent;
+import android.view.accessibility.AccessibilityManager;
+import android.view.inputmethod.EditorInfo;
 import android.webkit.CookieManager;
 import android.webkit.URLUtil;
 import android.widget.FrameLayout;
@@ -50,12 +66,17 @@ import org.mozilla.focus.activity.InstallFirefoxActivity;
 import org.mozilla.focus.activity.MainActivity;
 import org.mozilla.focus.animation.TransitionDrawableGroup;
 import org.mozilla.focus.architecture.NonNullObserver;
+import org.mozilla.focus.autocomplete.AutocompleteQuickAddPopup;
+import org.mozilla.focus.biometrics.BiometricAuthenticationDialogFragment;
+import org.mozilla.focus.biometrics.BiometricAuthenticationHandler;
+import org.mozilla.focus.biometrics.Biometrics;
 import org.mozilla.focus.broadcastreceiver.DownloadBroadcastReceiver;
 import org.mozilla.focus.customtabs.CustomTabConfig;
+import org.mozilla.focus.findinpage.FindInPageCoordinator;
 import org.mozilla.focus.locale.LocaleAwareAppCompatActivity;
 import org.mozilla.focus.menu.browser.BrowserMenu;
 import org.mozilla.focus.menu.context.WebContextMenu;
-import org.mozilla.focus.observer.AverageLoadTimeObserver;
+import org.mozilla.focus.observer.LoadTimeObserver;
 import org.mozilla.focus.open.OpenWithFragment;
 import org.mozilla.focus.popup.PopupUtils;
 import org.mozilla.focus.session.NullSession;
@@ -65,12 +86,16 @@ import org.mozilla.focus.session.SessionManager;
 import org.mozilla.focus.session.Source;
 import org.mozilla.focus.session.ui.SessionsSheetFragment;
 import org.mozilla.focus.telemetry.TelemetryWrapper;
+import org.mozilla.focus.utils.AppConstants;
 import org.mozilla.focus.utils.Browsers;
 import org.mozilla.focus.utils.Features;
+import org.mozilla.focus.utils.Settings;
 import org.mozilla.focus.utils.StatusBarUtils;
 import org.mozilla.focus.utils.SupportUtils;
 import org.mozilla.focus.utils.UrlUtils;
+import org.mozilla.focus.utils.ViewUtils;
 import org.mozilla.focus.web.Download;
+import org.mozilla.focus.web.HttpAuthenticationDialogBuilder;
 import org.mozilla.focus.web.IWebView;
 import org.mozilla.focus.widget.AnimatedProgressBar;
 import org.mozilla.focus.widget.FloatingEraseButton;
@@ -78,7 +103,10 @@ import org.mozilla.focus.widget.FloatingSessionsButton;
 
 import java.lang.ref.WeakReference;
 import java.util.List;
+import java.util.Objects;
 
+import kotlin.Unit;
+import kotlin.jvm.functions.Function1;
 import mozilla.components.support.utils.ColorUtils;
 import mozilla.components.support.utils.DownloadUtils;
 import mozilla.components.support.utils.DrawableUtils;
@@ -86,7 +114,12 @@ import mozilla.components.support.utils.DrawableUtils;
 /**
  * Fragment for displaying the browser UI.
  */
-public class BrowserFragment extends WebFragment implements View.OnClickListener, DownloadDialogFragment.DownloadDialogListener {
+@SuppressWarnings({"PMD.ExcessiveClassLength", "PMD.CyclomaticComplexity", "PMD.TooManyMethods",
+        "PMD.ModifiedCyclomaticComplexity", "PMD.TooManyFields", "PMD.StdCyclomaticComplexity",
+        "PMD.NcssCount"})
+public class BrowserFragment extends WebFragment implements LifecycleObserver, View.OnClickListener,
+        DownloadDialogFragment.DownloadDialogListener, View.OnLongClickListener,
+        BiometricAuthenticationDialogFragment.BiometricAuthenticationListener {
     public static final String FRAGMENT_TAG = "browser";
 
     private static final int REQUEST_CODE_STORAGE_PERMISSION = 101;
@@ -117,11 +150,14 @@ public class BrowserFragment extends WebFragment implements View.OnClickListener
     private FrameLayout popupTint;
     private SwipeRefreshLayout swipeRefresh;
     private WeakReference<BrowserMenu> menuWeakReference = new WeakReference<>(null);
+    private WeakReference<AutocompleteQuickAddPopup> autocompletePopupWeakReference = new WeakReference<>(null);
 
     /**
      * Container for custom video views shown in fullscreen mode.
      */
     private ViewGroup videoContainer;
+
+    private boolean isFullscreen;
 
     /**
      * Container containing the browser chrome and web content.
@@ -133,22 +169,41 @@ public class BrowserFragment extends WebFragment implements View.OnClickListener
     private View refreshButton;
     private View stopButton;
 
+    private View findInPageView;
+    private int findInPageViewHeight;
+    private TextView findInPageQuery;
+    private TextView findInPageResultTextView;
+    private ImageButton findInPageNext;
+    private ImageButton findInPagePrevious;
+    private ImageButton closeFindInPage;
+
     private IWebView.FullscreenCallback fullscreenCallback;
 
     private DownloadManager manager;
 
     private DownloadBroadcastReceiver downloadBroadcastReceiver;
 
-    private SessionManager sessionManager;
+    private final SessionManager sessionManager;
     private Session session;
+    private final FindInPageCoordinator findInPageCoordinator = new FindInPageCoordinator();
+
+    private BiometricAuthenticationHandler biometricController = null;
 
     public BrowserFragment() {
         sessionManager = SessionManager.getInstance();
     }
 
+
+    @SuppressWarnings({"PMD.ExcessiveMethodLength"})
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        ProcessLifecycleOwner.get().getLifecycle().addObserver(this);
+
+        if (biometricController == null && Build.VERSION.SDK_INT >= Build.VERSION_CODES.M &&
+                Biometrics.INSTANCE.hasFingerprintHardware(getContext())) {
+            biometricController = new BiometricAuthenticationHandler(getContext());
+        }
 
         final String sessionUUID = getArguments().getString(ARGUMENT_SESSION_UUID);
         if (sessionUUID == null) {
@@ -174,6 +229,13 @@ public class BrowserFragment extends WebFragment implements View.OnClickListener
                 }
             }
         });
+
+        findInPageCoordinator.getMatches().observe(this, new Observer<kotlin.Pair<Integer, Integer>>() {
+            @Override
+            public void onChanged(@Nullable kotlin.Pair<Integer, Integer> matches) {
+                updateFindInPageResult(matches.getFirst(), matches.getSecond());
+            }
+        });
     }
 
     public Session getSession() {
@@ -185,10 +247,26 @@ public class BrowserFragment extends WebFragment implements View.OnClickListener
         return session.getUrl().getValue();
     }
 
+    @SuppressWarnings({"PMD.ExcessiveMethodLength"})
     @Override
     public void onPause() {
         super.onPause();
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M &&
+                Settings.getInstance(getContext()).shouldUseBiometrics() &&
+                Biometrics.INSTANCE.hasFingerprintHardware(getContext())) {
+            biometricController.stopListening();
+            getView().setAlpha(0);
+        }
+
         getContext().unregisterReceiver(downloadBroadcastReceiver);
+
+        if (isFullscreen) {
+            IWebView webView = getWebView();
+            if (webView != null) {
+                webView.exitFullscreen();
+            }
+        }
 
         final BrowserMenu menu = menuWeakReference.get();
         if (menu != null) {
@@ -217,6 +295,7 @@ public class BrowserFragment extends WebFragment implements View.OnClickListener
         popupTint = view.findViewById(R.id.popup_tint);
 
         urlView = (TextView) view.findViewById(R.id.display_url);
+        urlView.setOnLongClickListener(this);
 
         progressView = (AnimatedProgressBar) view.findViewById(R.id.progress);
 
@@ -240,9 +319,57 @@ public class BrowserFragment extends WebFragment implements View.OnClickListener
             }
         });
 
-        setBlockingEnabled(session.isBlockingEnabled());
+        findInPageView = view.findViewById(R.id.find_in_page);
 
-        session.getLoading().observe(this, new AverageLoadTimeObserver(session));
+        findInPageQuery = view.findViewById(R.id.queryText);
+        findInPageResultTextView = view.findViewById(R.id.resultText);
+
+        findInPageQuery.addTextChangedListener(
+                new TextWatcher() {
+                    @Override
+                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+                    @Override
+                    public void afterTextChanged(Editable s) {}
+
+                    @Override
+                    public void onTextChanged(CharSequence s, int start, int before, int count) {
+                        if (!TextUtils.isEmpty(s)) {
+                            final IWebView webView = getWebView();
+                            if (webView == null) {
+                                return;
+                            }
+
+                            webView.findAllAsync(s.toString());
+                        }
+                    }
+                }
+        );
+        findInPageQuery.setOnClickListener(this);
+        findInPageQuery.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView textView, int actionId, KeyEvent keyEvent) {
+                if (actionId == EditorInfo.IME_ACTION_DONE) {
+                    ViewUtils.hideKeyboard(findInPageQuery);
+                    findInPageQuery.setCursorVisible(false);
+                }
+                return false;
+            }
+        });
+
+        findInPagePrevious = view.findViewById(R.id.previousResult);
+        findInPagePrevious.setOnClickListener(this);
+
+        findInPageNext = view.findViewById(R.id.nextResult);
+        findInPageNext.setOnClickListener(this);
+
+        closeFindInPage = view.findViewById(R.id.close_find_in_page);
+        closeFindInPage.setOnClickListener(this);
+
+        setBlockingEnabled(session.isBlockingEnabled());
+        setShouldRequestDesktop(session.shouldRequestDesktopSite());
+
+        LoadTimeObserver.addObservers(session, this);
 
         session.getLoading().observe(this, new NonNullObserver<Boolean>() {
             @Override
@@ -270,6 +397,8 @@ public class BrowserFragment extends WebFragment implements View.OnClickListener
                 if (menu != null) {
                     menu.updateLoading(loading);
                 }
+
+                hideFindInPage();
             }
         });
 
@@ -332,6 +461,11 @@ public class BrowserFragment extends WebFragment implements View.OnClickListener
         } else {
             initialiseNormalBrowserUi(view);
         }
+
+        // Pre-calculate the height of the find in page UI so that we can accurately add padding
+        // to the WebView when we present it.
+        findInPageView.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED);
+        findInPageViewHeight = findInPageView.getMeasuredHeight();
 
         return view;
     }
@@ -473,6 +607,9 @@ public class BrowserFragment extends WebFragment implements View.OnClickListener
             public void onURLChanged(final String url) {}
 
             @Override
+            public void onTitleChanged(String title) {}
+
+            @Override
             public void onRequest(boolean isTriggeredByUserGesture) {}
 
             @Override
@@ -488,6 +625,30 @@ public class BrowserFragment extends WebFragment implements View.OnClickListener
             public void onBlockingStateChanged(boolean isBlockingEnabled) {}
 
             @Override
+            public void onHttpAuthRequest(@NonNull final IWebView.HttpAuthCallback callback, String host, String realm) {
+                HttpAuthenticationDialogBuilder builder = new HttpAuthenticationDialogBuilder.Builder(getActivity(), host, realm)
+                                .setOkListener(new HttpAuthenticationDialogBuilder.OkListener() {
+                                    @Override
+                                    public void onOk(String host, String realm, String username, String password) {
+                                        callback.proceed(username, password);
+                                    }
+                                })
+                                .setCancelListener(new HttpAuthenticationDialogBuilder.CancelListener() {
+                                    @Override
+                                    public void onCancel() {
+                                        callback.cancel();
+                                    }
+                                })
+                                .build();
+
+                builder.createDialog();
+                builder.show();
+            }
+
+            @Override
+            public void onRequestDesktopStateChanged(boolean shouldRequestDesktop) {}
+
+            @Override
             public void onLongPress(final IWebView.HitTarget hitTarget) {
                 WebContextMenu.show(getActivity(), this, hitTarget);
             }
@@ -495,6 +656,7 @@ public class BrowserFragment extends WebFragment implements View.OnClickListener
             @Override
             public void onEnterFullScreen(@NonNull final IWebView.FullscreenCallback callback, @Nullable View view) {
                 fullscreenCallback = callback;
+                isFullscreen = true;
 
                 // View is passed in as null for GeckoView fullscreen
                 if (view != null) {
@@ -519,6 +681,8 @@ public class BrowserFragment extends WebFragment implements View.OnClickListener
 
             @Override
             public void onExitFullScreen() {
+                isFullscreen = false;
+
                 // Remove custom video views and hide container
                 videoContainer.removeAllViews();
                 videoContainer.setVisibility(View.GONE);
@@ -558,7 +722,7 @@ public class BrowserFragment extends WebFragment implements View.OnClickListener
 
                     pendingDownload = download;
 
-                    requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_CODE_STORAGE_PERMISSION);
+                    ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_CODE_STORAGE_PERMISSION);
                 }
             }
         });
@@ -643,17 +807,17 @@ public class BrowserFragment extends WebFragment implements View.OnClickListener
     void showDownloadPromptDialog(Download download) {
         final FragmentManager fragmentManager = getFragmentManager();
 
-        if (fragmentManager.findFragmentByTag(DownloadDialogFragment.FRAGMENT_TAG) != null) {
+        if (fragmentManager.findFragmentByTag(DownloadDialogFragment.Companion.getFRAGMENT_TAG()) != null) {
             // We are already displaying a download dialog fragment (Probably a restored fragment).
             // No need to show another one.
             return;
         }
 
-        final DialogFragment downloadDialogFragment = DownloadDialogFragment.newInstance(download);
+        final DialogFragment downloadDialogFragment = DownloadDialogFragment.Companion.newInstance(download);
         downloadDialogFragment.setTargetFragment(BrowserFragment.this, 300);
 
         try {
-            downloadDialogFragment.show(fragmentManager, DownloadDialogFragment.FRAGMENT_TAG);
+            downloadDialogFragment.show(fragmentManager, DownloadDialogFragment.Companion.getFRAGMENT_TAG());
         } catch (IllegalStateException e) {
             // It can happen that at this point in time the activity is already in the background
             // and onSaveInstanceState() has already been called. Fragment transactions are not
@@ -674,7 +838,7 @@ public class BrowserFragment extends WebFragment implements View.OnClickListener
             return;
         }
 
-        final AddToHomescreenDialogFragment addToHomescreenDialogFragment = AddToHomescreenDialogFragment.newInstance(url, title, session.isBlockingEnabled());
+        final AddToHomescreenDialogFragment addToHomescreenDialogFragment = AddToHomescreenDialogFragment.newInstance(url, title, session.isBlockingEnabled(), session.shouldRequestDesktopSite());
         addToHomescreenDialogFragment.setTargetFragment(BrowserFragment.this, 300);
 
         try {
@@ -695,9 +859,24 @@ public class BrowserFragment extends WebFragment implements View.OnClickListener
     }
 
     @Override
+    public void onCreateNewSession() {
+        erase();
+    }
+
+    @Override
+    public void onAuthSuccess() {
+        getView().setAlpha(1);
+    }
+
+    @Override
     public void onCreateViewCalled() {
         manager = (DownloadManager) getContext().getSystemService(Context.DOWNLOAD_SERVICE);
         downloadBroadcastReceiver = new DownloadBroadcastReceiver(browserContainer, manager);
+
+        final IWebView webView = getWebView();
+        if (webView != null) {
+            webView.setFindListener(findInPageCoordinator);
+        }
     }
 
     @Override
@@ -722,6 +901,34 @@ public class BrowserFragment extends WebFragment implements View.OnClickListener
                 statusBar.getLayoutParams().height = statusBarHeight;
             }
         });
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M &&
+                Settings.getInstance(getContext()).shouldUseBiometrics() &&
+                Biometrics.INSTANCE.hasFingerprintHardware(getContext())) {
+            displayBiometricPromptIfNeeded();
+        } else {
+            getView().setAlpha(1);
+        }
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.M)
+    private void displayBiometricPromptIfNeeded() {
+        final FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+
+        // Check that we need to auth and that the fragment isn't already displayed
+        if (biometricController.getNeedsAuth()) {
+            biometricController.startAuthentication();
+
+            // Are we already displaying the biometric fragment?
+            if (fragmentManager.findFragmentByTag(BiometricAuthenticationDialogFragment.Companion.getFRAGMENT_TAG()) != null) {
+                return;
+            }
+
+            biometricController.getBiometricFragment().setTargetFragment(BrowserFragment.this, 300);
+            biometricController.getBiometricFragment().show(fragmentManager, BiometricAuthenticationDialogFragment.Companion.getFRAGMENT_TAG());
+        } else {
+            getView().setAlpha(1);
+        }
     }
 
     /**
@@ -737,22 +944,25 @@ public class BrowserFragment extends WebFragment implements View.OnClickListener
             return;
         }
 
-        final String cookie = CookieManager.getInstance().getCookie(download.getUrl());
-        final String fileName = DownloadUtils.guessFileName(
-                download.getContentDisposition(),
-                download.getUrl(),
-                download.getMimeType());
+        final String fileName = !TextUtils.isEmpty(download.getFileName()) ? download.getFileName() :
+                DownloadUtils.guessFileName(
+                        download.getContentDisposition(),
+                        download.getUrl(),
+                        download.getMimeType());
 
         final DownloadManager.Request request = new DownloadManager.Request(Uri.parse(download.getUrl()))
-                .addRequestHeader("User-Agent", download.getUserAgent())
-                .addRequestHeader("Cookie", cookie)
                 .addRequestHeader("Referer", getUrl())
                 .setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
                 .setMimeType(download.getMimeType());
 
+        if (!AppConstants.INSTANCE.isGeckoBuild()) {
+            final String cookie = CookieManager.getInstance().getCookie(download.getUrl());
+            request.addRequestHeader("Cookie", cookie)
+                    .addRequestHeader("User-Agent", download.getUserAgent());
+        }
+
         try {
-            request.setDestinationInExternalPublicDir(
-                    download.getDestinationDirectory(), fileName);
+            request.setDestinationInExternalPublicDir(download.getDestinationDirectory(), fileName);
         } catch (IllegalStateException e) {
             Log.e(FRAGMENT_TAG, "Cannot create download directory");
             return;
@@ -769,7 +979,14 @@ public class BrowserFragment extends WebFragment implements View.OnClickListener
     }
 
     public boolean onBackPressed() {
-        if (canGoBack()) {
+        if (findInPageView.getVisibility() == View.VISIBLE) {
+            hideFindInPage();
+        } else if (isFullscreen) {
+            final IWebView webView = getWebView();
+            if (webView != null) {
+                webView.exitFullscreen();
+            }
+        } else if (canGoBack()) {
             // Go back in web history
             goBack();
         } else {
@@ -803,11 +1020,30 @@ public class BrowserFragment extends WebFragment implements View.OnClickListener
 
     public void erase() {
         final IWebView webView = getWebView();
+        final Context context = getContext();
+
+        // Notify the user their session has been erased if Talk Back is enabled:
+        if (context != null) {
+            final AccessibilityManager manager = (AccessibilityManager) context
+                    .getSystemService(Context.ACCESSIBILITY_SERVICE);
+            if (manager != null && manager.isEnabled()) {
+                AccessibilityEvent event = AccessibilityEvent.obtain();
+                event.setEventType(AccessibilityEvent.TYPE_ANNOUNCEMENT);
+                event.setClassName(getClass().getName());
+                event.setPackageName(getContext().getPackageName());
+                event.getText().add(getString(R.string.feedback_erase));
+            }
+        }
+
         if (webView != null) {
             webView.cleanup();
         }
 
-        SessionManager.getInstance().removeCurrentSession();
+        if (session.isCustomTab()) {
+            SessionManager.getInstance().removeCustomTabSession(session.getUUID());
+        } else {
+            SessionManager.getInstance().removeCurrentSession();
+        }
     }
 
     private void shareCurrentUrl() {
@@ -899,7 +1135,6 @@ public class BrowserFragment extends WebFragment implements View.OnClickListener
             }
 
             case R.id.open_in_firefox_focus: {
-
                 sessionManager.moveCustomTabToRegularSessions(session);
 
                 final IWebView webView = getWebView();
@@ -989,7 +1224,7 @@ public class BrowserFragment extends WebFragment implements View.OnClickListener
                         SupportUtils.getSumoURLForTopic(getContext(), SupportUtils.SumoTopic.TRACKERS));
                 break;
 
-            case R.id.add_to_homescreen:
+            case R.id.add_to_homescreen: {
                 final IWebView webView = getWebView();
                 if (webView == null) {
                     break;
@@ -999,9 +1234,60 @@ public class BrowserFragment extends WebFragment implements View.OnClickListener
                 final String title = webView.getTitle();
                 showAddToHomescreenDialog(url, title);
                 break;
+            }
+
             case R.id.security_info:
                 showSecurityPopUp();
                 break;
+
+            case R.id.report_site_issue:
+                SessionManager.getInstance()
+                        .createSession(Source.MENU,
+                                String.format(SupportUtils.REPORT_SITE_ISSUE_URL, getUrl()));
+                TelemetryWrapper.reportSiteIssueEvent();
+                break;
+
+            case R.id.find_in_page:
+                showFindInPage();
+                ViewUtils.showKeyboard(findInPageQuery);
+                TelemetryWrapper.findInPageMenuEvent();
+                break;
+
+            case R.id.queryText:
+                findInPageQuery.setCursorVisible(true);
+                break;
+
+            case R.id.nextResult: {
+                ViewUtils.hideKeyboard(findInPageQuery);
+                findInPageQuery.setCursorVisible(false);
+
+                final IWebView webView = getWebView();
+                if (webView == null) {
+                    break;
+                }
+
+                webView.findNext(true);
+                break;
+            }
+
+            case R.id.previousResult: {
+                ViewUtils.hideKeyboard(findInPageQuery);
+                findInPageQuery.setCursorVisible(false);
+
+                final IWebView webView = getWebView();
+                if (webView == null) {
+                    break;
+                }
+
+                webView.findNext(false);
+                break;
+            }
+
+            case R.id.close_find_in_page: {
+                hideFindInPage();
+
+                break;
+            }
 
             default:
                 throw new IllegalArgumentException("Unhandled menu item in BrowserFragment");
@@ -1094,6 +1380,20 @@ public class BrowserFragment extends WebFragment implements View.OnClickListener
         }
     }
 
+    public void setShouldRequestDesktop(boolean enabled) {
+        final IWebView webView = getWebView();
+
+        if (enabled) {
+            PreferenceManager.getDefaultSharedPreferences(getContext()).edit()
+                    .putBoolean(getContext().getString(R.string.has_requested_desktop),
+                            true).apply();
+        }
+
+        if (webView != null) {
+            webView.setRequestDesktop(enabled);
+        }
+    }
+
     private void showSecurityPopUp() {
         // Don't show Security Popup if the page is loading
         if (session.getLoading().getValue()) {
@@ -1107,6 +1407,7 @@ public class BrowserFragment extends WebFragment implements View.OnClickListener
                     popupTint.setVisibility(View.GONE);
                 }
             });
+            securityPopup.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
             securityPopup.setAnimationStyle(android.R.style.Animation_Dialog);
             securityPopup.setTouchable(true);
             securityPopup.setFocusable(true);
@@ -1120,5 +1421,111 @@ public class BrowserFragment extends WebFragment implements View.OnClickListener
     // In the future, if more badging icons are needed, this should be abstracted
     public void updateBlockingBadging(boolean enabled) {
         blockView.setVisibility(enabled ? View.GONE : View.VISIBLE);
+    }
+
+    private void dismissAutocompletePopup() {
+        autocompletePopupWeakReference.get().dismiss();
+        autocompletePopupWeakReference.clear();
+    }
+
+    public boolean onLongClick(View view) {
+        // Detect long clicks on display_url
+        if (view.getId() == R.id.display_url) {
+            Context context = getActivity();
+            if (context == null) {
+                return false;
+            }
+
+            if (session.isCustomTab()) {
+                ClipboardManager clipBoard = (ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
+                if (clipBoard != null) {
+                    final Uri uri = Uri.parse(getUrl());
+                    clipBoard.setPrimaryClip(ClipData.newRawUri("Uri", uri));
+                    Toast.makeText(context, getString(R.string.custom_tab_copy_url_action), Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            AutocompleteQuickAddPopup autocompletePopup = new AutocompleteQuickAddPopup(context, urlView.getText().toString());
+
+            // Show the Snackbar and dismiss the popup when a new URL is added.
+            autocompletePopup.setOnUrlAdded(new Function1<Boolean, Unit>() {
+                @Override
+                public Unit invoke(final Boolean didAddSuccessfully) {
+                    getActivity().runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            final int messageId = didAddSuccessfully ? R.string.preference_autocomplete_add_confirmation : R.string.preference_autocomplete_duplicate_url_error;
+                            ViewUtils.showBrandedSnackbar(Objects.requireNonNull(getView()), messageId, 0);
+                            dismissAutocompletePopup();
+                        }
+                    });
+
+                    return Unit.INSTANCE;
+                }
+            });
+
+            autocompletePopup.show(urlView);
+            autocompletePopupWeakReference = new WeakReference<>(autocompletePopup);
+        }
+
+        return false;
+    }
+
+    private void showFindInPage() {
+        findInPageView.setVisibility(View.VISIBLE);
+        findInPageQuery.requestFocus();
+
+        CoordinatorLayout.LayoutParams params = (CoordinatorLayout.LayoutParams) swipeRefresh.getLayoutParams();
+        params.bottomMargin = findInPageViewHeight;
+        swipeRefresh.setLayoutParams(params);
+    }
+
+    private void hideFindInPage() {
+        final IWebView webView = getWebView();
+        if (webView == null) {
+            return;
+        }
+
+        webView.clearMatches();
+        findInPageCoordinator.reset();
+        findInPageView.setVisibility(View.GONE);
+        findInPageQuery.setText("");
+        findInPageQuery.clearFocus();
+
+        CoordinatorLayout.LayoutParams params = (CoordinatorLayout.LayoutParams) swipeRefresh.getLayoutParams();
+        params.bottomMargin = 0;
+        swipeRefresh.setLayoutParams(params);
+        ViewUtils.hideKeyboard(findInPageQuery);
+    }
+
+    private void updateFindInPageResult(Integer activeMatchOrdinal, Integer numberOfMatches) {
+        final Context context = getContext();
+        if (context == null) {
+            return;
+        }
+
+        if (numberOfMatches > 0) {
+            findInPageNext.setColorFilter(getResources().getColor(R.color.photonWhite));
+            findInPageNext.setAlpha(1.0F);
+            findInPagePrevious.setColorFilter(getResources().getColor(R.color.photonWhite));
+            findInPagePrevious.setAlpha(1.0F);
+            // We don't want the presentation of the activeMatchOrdinal to be zero indexed. So let's
+            // increment it by one for WebView.
+            if (!AppConstants.INSTANCE.isGeckoBuild()) {
+                activeMatchOrdinal++;
+            }
+            final String visibleString = String.format(context.getString(R.string.find_in_page_result), activeMatchOrdinal, numberOfMatches);
+            final String accessibleString = String.format(context.getString(R.string.find_in_page_result), activeMatchOrdinal, numberOfMatches);
+
+            findInPageResultTextView.setText(visibleString);
+            findInPageResultTextView.setContentDescription(accessibleString);
+        } else {
+            findInPageNext.setColorFilter(getResources().getColor(R.color.photonGrey10));
+            findInPageNext.setAlpha(0.4F);
+            findInPagePrevious.setColorFilter(getResources().getColor(R.color.photonWhite));
+            findInPagePrevious.setAlpha(0.4F);
+            findInPageResultTextView.setText("");
+            findInPageResultTextView.setContentDescription("");
+        }
     }
 }

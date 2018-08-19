@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mozilla.focus.browser.LocalizedContent;
 import org.robolectric.RobolectricTestRunner;
 
 import static org.junit.Assert.assertEquals;
@@ -105,14 +106,6 @@ public class UrlUtilsTest {
     }
 
     @Test
-    public void testIsSearchQuery() {
-        assertTrue(UrlUtils.isSearchQuery("hello world"));
-
-        assertFalse(UrlUtils.isSearchQuery("mozilla.org"));
-        assertFalse(UrlUtils.isSearchQuery("mozilla"));
-    }
-
-    @Test
     @SuppressLint("AuthLeak")
     public void testStripUserInfo() {
         assertEquals("", UrlUtils.stripUserInfo(null));
@@ -159,5 +152,15 @@ public class UrlUtilsTest {
         assertEquals("mozilla.org", UrlUtils.stripCommonSubdomains("m.mozilla.org"));
         assertEquals("mozilla.org", UrlUtils.stripCommonSubdomains("mobile.mozilla.org"));
         assertEquals("random.mozilla.org", UrlUtils.stripCommonSubdomains("random.mozilla.org"));
+    }
+
+    @Test
+    public void isLocalizedContent() {
+        assertFalse(UrlUtils.isLocalizedContent(null));
+        assertFalse(UrlUtils.isLocalizedContent("mozilla.org"));
+        assertFalse(UrlUtils.isLocalizedContent("http://www.mozilla.org"));
+        assertTrue(UrlUtils.isLocalizedContent("about:blank"));
+        assertTrue(UrlUtils.isLocalizedContent(LocalizedContent.URL_ABOUT));
+        assertTrue(UrlUtils.isLocalizedContent(LocalizedContent.URL_RIGHTS));
     }
 }

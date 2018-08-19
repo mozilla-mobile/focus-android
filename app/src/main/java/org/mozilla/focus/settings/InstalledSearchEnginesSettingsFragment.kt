@@ -5,8 +5,7 @@
 package org.mozilla.focus.settings
 
 import android.os.Bundle
-import android.preference.Preference
-import android.preference.PreferenceScreen
+import android.support.v7.preference.Preference
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
@@ -21,11 +20,6 @@ class InstalledSearchEnginesSettingsFragment : BaseSettingsFragment() {
 
         var languageChanged: Boolean = false
 
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setHasOptionsMenu(true)
     }
 
     override fun onResume() {
@@ -49,7 +43,7 @@ class InstalledSearchEnginesSettingsFragment : BaseSettingsFragment() {
     override fun onPrepareOptionsMenu(menu: Menu?) {
         super.onPrepareOptionsMenu(menu)
         menu?.findItem(R.id.menu_restore_default_engines)?.let {
-            it.isEnabled = !CustomSearchEngineStore.hasAllDefaultSearchEngines(context)
+            it.isEnabled = !CustomSearchEngineStore.hasAllDefaultSearchEngines(activity!!)
         }
     }
 
@@ -61,7 +55,7 @@ class InstalledSearchEnginesSettingsFragment : BaseSettingsFragment() {
                 true
             }
             R.id.menu_restore_default_engines -> {
-                restoreDefaultSearchEngines()
+                restoreDefaultSearchEngines()        
                 true
             }
             else -> super.onOptionsItemSelected(item)
@@ -83,7 +77,7 @@ class InstalledSearchEnginesSettingsFragment : BaseSettingsFragment() {
                 return true
             }
             else -> {
-                super.onPreferenceTreeClick(preferenceScreen, preference)
+                super.onPreferenceTreeClick(preference)
             }
         }
     }

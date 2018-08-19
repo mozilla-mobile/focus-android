@@ -23,6 +23,7 @@ public class Session {
     private Source source;
     private final String uuid;
     private final NonNullMutableLiveData<String> url;
+    private final MutableLiveData<String> pageTitle;
     private final NonNullMutableLiveData<Integer> progress;
     private final NonNullMutableLiveData<Boolean> secure;
     private final MutableLiveData<String> securityVerifier;
@@ -35,12 +36,14 @@ public class Session {
     private String searchUrl;
     private boolean isRecorded;
     private boolean isBlockingEnabled;
+    private boolean requestDesktopSite;
 
     /* package */ Session(Source source, String url) {
         this.uuid = UUID.randomUUID().toString();
         this.source = source;
 
         this.url = new NonNullMutableLiveData<>(url);
+        this.pageTitle = new MutableLiveData<>();
         this.progress = new NonNullMutableLiveData<>(0);
         this.secure = new NonNullMutableLiveData<>(false);
         this.loading = new NonNullMutableLiveData<>(false);
@@ -77,6 +80,14 @@ public class Session {
 
     public NonNullLiveData<String> getUrl() {
         return url;
+    }
+
+    public LiveData<String> getPageTitle() {
+        return pageTitle;
+    }
+
+    public void setPageTitle(String pageTitle) {
+        this.pageTitle.setValue(pageTitle);
     }
 
     /* package */ void setProgress(int progress) {
@@ -189,6 +200,14 @@ public class Session {
 
     public void setBlockingEnabled(boolean blockingEnabled) {
         this.isBlockingEnabled = blockingEnabled;
+    }
+
+    public boolean shouldRequestDesktopSite() {
+        return requestDesktopSite;
+    }
+
+    public void setRequestDesktopSite(boolean requestDesktopSite) {
+        this.requestDesktopSite = requestDesktopSite;
     }
 
     /**

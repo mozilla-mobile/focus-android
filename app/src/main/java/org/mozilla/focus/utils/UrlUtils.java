@@ -18,6 +18,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 
 import mozilla.components.browser.search.SearchEngine;
+import org.mozilla.focus.browser.LocalizedContent;
 
 public class UrlUtils {
     public static String normalize(@NonNull String input) {
@@ -66,10 +67,6 @@ public class UrlUtils {
         return url.startsWith("http:") || url.startsWith("https:");
     }
 
-    public static boolean isSearchQuery(String text) {
-        return text.contains(" ");
-    }
-
     public static String createSearchUrl(Context context, String searchTerm) {
         final String defaultIdentifier = Settings.getInstance(context).getDefaultSearchEngineName();
 
@@ -108,9 +105,11 @@ public class UrlUtils {
     public static boolean isPermittedResourceProtocol(@Nullable final String scheme) {
         return scheme != null && (
                 scheme.startsWith("http") ||
-                scheme.startsWith("https") ||
-                scheme.startsWith("file") ||
-                scheme.startsWith("data"));
+                        scheme.startsWith("https") ||
+                        scheme.startsWith("file") ||
+                        scheme.startsWith("data") ||
+                        scheme.startsWith("javascript") ||
+                        scheme.startsWith("about"));
     }
 
     public static boolean isSupportedProtocol(@Nullable final String scheme) {
@@ -182,5 +181,14 @@ public class UrlUtils {
         }
 
         return url.substring(start);
+    }
+
+    public static String stripSchemeAndSubDomain(String url) {
+        return normalize(stripCommonSubdomains(stripScheme(url)));
+    }
+
+    public static boolean isLocalizedContent(@Nullable String url) {
+        return url != null &&
+            (url.equals(LocalizedContent.URL_ABOUT) || url.equals(LocalizedContent.URL_RIGHTS) || url.equals("about:blank"));
     }
 }
