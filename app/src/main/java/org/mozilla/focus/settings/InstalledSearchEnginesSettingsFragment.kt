@@ -68,7 +68,7 @@ class InstalledSearchEnginesSettingsFragment : BaseSettingsFragment() {
         }
     }
 
-    fun restoreDefaultSearchEngines() {
+    private fun restoreDefaultSearchEngines() {
         CustomSearchEngineStore.restoreDefaultSearchEngines(context)
         refetchSearchEngines()
         TelemetryWrapper.menuRestoreEnginesEvent()
