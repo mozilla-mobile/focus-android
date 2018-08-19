@@ -7,22 +7,13 @@ package org.mozilla.focus.settings;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.os.Bundle;
-import android.preference.ListPreference;
-import android.preference.Preference;
-import android.preference.PreferenceScreen;
-import android.support.annotation.Nullable;
+import android.support.v7.preference.ListPreference;
 import android.text.TextUtils;
 import org.mozilla.focus.R;
 import org.mozilla.focus.activity.SettingsActivity;
-import org.mozilla.focus.autocomplete.AutocompleteSettingsFragment;
-import org.mozilla.focus.browser.LocalizedContent;
 import org.mozilla.focus.locale.LocaleManager;
 import org.mozilla.focus.locale.Locales;
-import org.mozilla.focus.session.SessionManager;
-import org.mozilla.focus.session.Source;
 import org.mozilla.focus.telemetry.TelemetryWrapper;
-import org.mozilla.focus.utils.AppConstants;
-import org.mozilla.focus.utils.SupportUtils;
 import org.mozilla.focus.widget.DefaultBrowserPreference;
 
 import java.util.Locale;
@@ -36,9 +27,10 @@ public class SettingsFragment extends BaseSettingsFragment implements SharedPref
     }
 
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public void onCreatePreferences(Bundle bundle, String s) {
         addPreferencesFromResource(R.xml.settings);
+        // TODO: #2869 Enable Debugging and Expose Advanced Setting
+        getPreferenceScreen().removePreference(findPreference(getString(R.string.pref_key_advanced_screen)));
     }
 
     @Override
@@ -64,35 +56,25 @@ public class SettingsFragment extends BaseSettingsFragment implements SharedPref
         super.onPause();
     }
 
-
     @Override
-    public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen, Preference preference) {
+    public boolean onPreferenceTreeClick(android.support.v7.preference.Preference preference) {
         final Resources resources = getResources();
 
-        // AppCompatActivity has a Toolbar that is used as the ActionBar, and it conflicts with the ActionBar
-        // used by PreferenceScreen to create the headers (with title, back navigation), so we wrap all these
-        // "preference screens" into separate activities.
-        if (preference.getKey().equals(resources.getString(R.string.pref_key_about))) {
-            SessionManager.getInstance().createSession(Source.MENU, LocalizedContent.URL_ABOUT);
-            getActivity().onBackPressed();
-        } else if (preference.getKey().equals(resources.getString(R.string.pref_key_help))) {
-            SessionManager.getInstance().createSession(Source.MENU, SupportUtils.HELP_URL);
-            getActivity().onBackPressed();
-        } else if (preference.getKey().equals(resources.getString(R.string.pref_key_rights))) {
-            SessionManager.getInstance().createSession(Source.MENU, LocalizedContent.URL_RIGHTS);
-            getActivity().onBackPressed();
-        } else if (preference.getKey().equals(resources.getString(R.string.pref_key_privacy_notice))) {
-            SessionManager.getInstance().createSession(Source.MENU, AppConstants.isKlarBuild() ?
-                    SupportUtils.PRIVACY_NOTICE_KLAR_URL : SupportUtils.PRIVACY_NOTICE_URL);
-            getActivity().onBackPressed();
-        } else if (preference.getKey().equals(resources.getString(R.string.pref_key_search_engine))) {
-            navigateToFragment(new InstalledSearchEnginesSettingsFragment());
-            TelemetryWrapper.openSearchSettingsEvent();
-        } else if (preference.getKey().equals(resources.getString(R.string.pref_key_screen_autocomplete))) {
-            navigateToFragment(new AutocompleteSettingsFragment());
+        if (preference.getKey().equals(resources.getString(R.string
+                .pref_key_privacy_security_screen))) {
+            navigateToFragment(new PrivacySecuritySettingsFragment());
+        } else if (preference.getKey().equals(resources.getString(R.string
+                .pref_key_search_screen))) {
+            navigateToFragment(new SearchSettingsFragment());
+        } else if (preference.getKey().equals(resources.getString(R.string
+                .pref_key_advanced_screen))) {
+            navigateToFragment(new AdvancedSettingsFragment());
+        } else if (preference.getKey().equals(resources.getString(R.string
+                .pref_key_mozilla_screen))) {
+            navigateToFragment(new MozillaSettingsFragment());
         }
 
-        return super.onPreferenceTreeClick(preferenceScreen, preference);
+        return super.onPreferenceTreeClick(preference);
     }
 
     @Override

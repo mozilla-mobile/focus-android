@@ -53,9 +53,9 @@ import org.mozilla.focus.telemetry.TelemetryWrapper;
         TelemetryWrapper.customTabMenuEvent();
     }
 
-    /* package-private */ void bind(BrowserMenuAdapter.MenuItem menuItem) {
+    /* package-private */ void bind(BrowserMenuAdapter.MenuItem.Custom menuItem) {
         super.bind(menuItem);
 
-        pendingIntent = menuItem.pendingIntent;
+        pendingIntent = menuItem.getPendingIntent();
     }
 }

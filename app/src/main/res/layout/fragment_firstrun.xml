@@ -14,8 +14,8 @@
         android:id="@+id/skip"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:paddingLeft="16dp"
-        android:paddingRight="16dp"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
         android:background="?android:attr/selectableItemBackgroundBorderless"
         android:text="@string/firstrun_skip_button" />
 
@@ -37,6 +37,7 @@
             android:layout_height="16dp"
             android:layout_gravity="bottom"
             android:layout_marginBottom="16dp"
+            android:importantForAccessibility="noHideDescendants"
             app:tabBackground="@drawable/indicator_onboarding"
             app:tabGravity="center"
             app:tabIndicatorHeight="0dp"

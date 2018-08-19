@@ -11,15 +11,15 @@ apply plugin: 'kotlin-android-extensions'
 apply from: "$project.rootDir/tools/gradle/versionCode.gradle"
 
 android {
-    compileSdkVersion 27
-    buildToolsVersion '27.0.3'
+    compileSdkVersion 28
+    buildToolsVersion '28.0.2'
     defaultConfig {
         applicationId "org.mozilla"
         minSdkVersion 21
-        targetSdkVersion 27
+        targetSdkVersion 28
         versionCode 11 // This versionCode is "frozen" for local builds. For "release" builds we
                        // override this with a generated versionCode at build time.
-        versionName "5.0"
+        versionName "7.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
         multiDexEnabled true
@@ -34,7 +34,7 @@ android {
     }
 
     // We have a three dimensional build configuration:
-    // BUILD TYPE (debug, beta, release) X PRODUCT FLAVOR (focus, klar) X ENGINE FLAVOR (webview, gecko)
+    // BUILD TYPE (debug, release) X PRODUCT FLAVOR (focus, klar) X ARCHITECTURE (x86, arm, aarch64)
 
     buildTypes {
         release {
@@ -42,38 +42,20 @@ android {
             shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
-        beta {
-            minifyEnabled true
-            shrinkResources true
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            applicationIdSuffix ".beta"
-        }
         debug {
             applicationIdSuffix ".debug"
         }
-        // Use a separate buildType for coverage: testCoverageEnabled produces slower code (4-5x slower
-        // in places that I've benchmarked), and more importantly seems to break debugging with Android Studio
-        // for some developers (i.e. variables can't be inspected or seen).
-        coverage {
-            initWith debug
-
-            applicationIdSuffix ".coverage"
-            testCoverageEnabled true
+        nightly {
+            initWith release
         }
     }
     testOptions {
         unitTests {
             includeAndroidResources = true
         }
-
-        unitTests.all {
-            jacoco {
-                includeNoLocationClasses = true
-            }
-        }
     }
 
-    flavorDimensions "product", "engine", "abi"
+    flavorDimensions "product", "abi"
 
     productFlavors {
         // In most countries we are Firefox Focus - but in some we need to be Firefox Klar
@@ -88,17 +70,6 @@ android {
             applicationIdSuffix ".klar"
         }
 
-        // We can build with two engines: webview or gecko
-        webview {
-            dimension "engine"
-        }
-
-        gecko {
-            dimension "engine"
-
-            applicationIdSuffix ".gecko"
-        }
-
         x86 {
             dimension "abi"
         }
@@ -109,33 +80,6 @@ android {
 
         aarch64 {
             dimension "abi"
-        }
-
-        universal {
-            dimension "abi"
-        }
-    }
-
-    variantFilter { variant ->
-        def flavors = variant.flavors*.name
-        if (flavors.contains("gecko") && flavors.contains("focus")) {
-            // We only need Klar builds with gecko for now
-            setIgnore(true)
-        }
-
-        if (variant.buildType.name == "release" && flavors.contains("gecko")) {
-            // Do not build release versions including Gecko until we actually want to release something.
-            setIgnore(true)
-        }
-
-        if (flavors.contains("webview") && !flavors.contains("universal")) {
-            // WebView builds support all ABIs
-            setIgnore(true)
-        }
-
-        if (flavors.contains("gecko") && flavors.contains("universal")) {
-            // There are only x86 and ARM builds using Gecko
-            setIgnore(true)
         }
     }
 
@@ -149,144 +93,23 @@ android {
             }
         }
 
-        ////////////////////////////////////////////////////////////////////////////////////////////
-        // WebView
-        ////////////////////////////////////////////////////////////////////////////////////////////
-
         // Release
+        focusX86Release.root = 'src/focusRelease'
+        focusArmRelease.root = 'src/focusRelease'
+        focusAarch64Release.root = 'src/focusRelease'
 
-        focusWebviewUniversalRelease {
-            java.srcDir 'src/focusRelease/java'
-            manifest.srcFile 'src/focusRelease/AndroidManifest.xml'
-            res.srcDir 'src/focusRelease/res'
-        }
-
-        klarWebviewUniversalRelease {
-            java.srcDir 'src/klarRelease/java'
-            res.srcDir 'src/klarRelease/res'
-        }
-
-        // Beta
-
-        focusWebviewUniversalBeta {
-            res.srcDir 'src/focusBeta/res'
-        }
-
-        klarWebviewUniversalBeta {
-            res.srcDir 'src/klarBeta/res'
-        }
+        klarX86Release.root = 'src/klarRelease'
+        klarArmRelease.root = 'src/klarRelease'
+        klarAarch64Release.root = 'src/klarRelease'
 
         // Debug
+        focusX86Debug.root = 'src/focusDebug'
+        focusX86Debug.root = 'src/focusDebug'
+        focusX86Debug.root = 'src/focusDebug'
 
-        focusWebviewDebug {
-            res.srcDir 'src/focusDebug/res'
-        }
-
-        klarWebviewDebug {
-            res.srcDir 'src/klarDebug/res'
-        }
-
-        // UI test
-        androidTestWebviewCompile {
-            java.srcDirs += ['src/androidTestWebview/java']
-        }
-
-
-        ////////////////////////////////////////////////////////////////////////////////////////////
-        // Gecko
-        ////////////////////////////////////////////////////////////////////////////////////////////
-
-        // Release
-
-        klarGeckoArmRelease {
-            java.srcDir 'src/klarRelease/java'
-            res.srcDir 'src/klarRelease/res'
-        }
-
-        klarGeckoX86Release {
-            java.srcDir 'src/klarRelease/java'
-            res.srcDir 'src/klarRelease/res'
-        }
-
-        klarGeckoAarch64Release {
-            java.srcDir 'src/klarRelease/java'
-            res.srcDir 'src/klarRelease/res'
-        }
-
-        focusGeckoArmRelease {
-            java.srcDir 'src/focusRelease/java'
-            manifest.srcFile 'src/focusRelease/AndroidManifest.xml'
-            res.srcDir 'src/focusRelease/res'
-        }
-
-        focusGeckoX86Release {
-            java.srcDir 'src/focusRelease/java'
-            manifest.srcFile 'src/focusRelease/AndroidManifest.xml'
-            res.srcDir 'src/focusRelease/res'
-        }
-
-        focusGeckoAarch64Release {
-            java.srcDir 'src/focusRelease/java'
-            manifest.srcFile 'src/focusRelease/AndroidManifest.xml'
-            res.srcDir 'src/focusRelease/res'
-        }
-
-        // Beta
-
-        focusGeckoArmBeta {
-            res.srcDir 'src/focusBeta/res'
-        }
-
-        focusGeckoX86Beta {
-            res.srcDir 'src/focusBeta/res'
-        }
-
-        focusGeckoAarch64Beta {
-            res.srcDir 'src/focusBeta/res'
-        }
-
-        klarGeckoArmBeta {
-            res.srcDir 'src/klarBeta/res'
-        }
-
-        klarGeckoX86Beta {
-            res.srcDir 'src/klarBeta/res'
-        }
-
-        klarGeckoAarch64Beta {
-            res.srcDir 'src/klarBeta/res'
-        }
-
-        // Debug
-
-        focusGeckoArmDebug {
-            res.srcDir 'src/focusDebug/res'
-        }
-
-        focusGeckoX86Debug {
-            res.srcDir 'src/focusDebug/res'
-        }
-
-        focusGeckoAarch64Debug {
-            res.srcDir 'src/focusDebug/res'
-        }
-
-        klarGeckoArmDebug {
-            res.srcDir 'src/klarDebug/res'
-        }
-
-        klarGeckoX86Debug {
-            res.srcDir 'src/klarDebug/res'
-        }
-
-        klarGeckoAarch64Debug {
-            res.srcDir 'src/klarDebug/res'
-        }
-
-        // UI tests
-        androidTestGeckoCompile {
-            java.srcDirs += ['src/androidTestGecko/java']
-        }
+        klarX86Debug.root = 'src/klarDebug'
+        klarX86Debug.root = 'src/klarDebug'
+        klarX86Debug.root = 'src/klarDebug'
     }
 }
 
@@ -298,37 +121,41 @@ tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {
         kotlinOptions.allWarningsAsErrors = true
 }
 
-jacocoAndroidUnitTestReport {
-    csv.enabled false
-    html.enabled true
-    xml.enabled true
-}
-
 repositories {
     mavenCentral()
     maven {
-        // For the latest version of GeckoView (moving target!) use:
-        //   https://index.taskcluster.net/v1/task/gecko.v2.mozilla-central.nightly.latest.mobile.android-api-16-opt/artifacts/public/android/maven
+        //  For the latest version of GeckoView (moving target!):
         //
-        // For discovering available versions go to:
-        //   https://tools.taskcluster.net/index/gecko.v2.mozilla-central.nightly
+        //  Look at the tags on the mozilla-beta repository:
+        //  hg.mozilla.org/releases/mozilla-beta/tags
+        //
+        //  Find the latest beta release tag. They look like this: FENNEC_61_0b13_RELEASE
+        //  (With Fennec we build GeckoView too; This tag is for 61.0 Beta 13).
+        //
+        //  Click on the changeset ID to find the matching changeset/commit ID (shortened).
+        //  For the example tag above that's 5b5e620e33ee.
+        //
+        //  Now go to the list of revisions to find the matching changeset
+        //  (It should start with the ID you got from the tag, remember the full ID!):
+        //  tools.taskcluster.net/index/gecko.v2.mozilla-beta.revision
+        //
+        //  Click through until you find the artifacts (revision -> mobile -> android-api-16-opt).
+        //
+        //  Remember the version of the artifacts. In the example above that's: 61.0.20180611134439
 
         // ARM GeckoView builds
-        url "https://index.taskcluster.net/v1/task/gecko.v2.mozilla-central.nightly" +
-                ".${geckoview_nightly_date}.revision.${geckoview_revision}.mobile" +
-                ".android-api-16-opt/artifacts/public/android/maven"
+        url "https://index.taskcluster.net/v1/task/gecko.v2.mozilla-beta.revision" +
+                ".${geckoview_revision}.mobile.android-api-16-opt/artifacts/public/android/maven"
     }
     maven {
         // x86 GeckoView builds
-        url "https://index.taskcluster.net/v1/task/gecko.v2.mozilla-central.nightly" +
-                ".${geckoview_nightly_date}.revision.${geckoview_revision}.mobile" +
-                ".android-x86-opt/artifacts/public/android/maven"
+        url "https://index.taskcluster.net/v1/task/gecko.v2.mozilla-beta.revision" +
+                ".${geckoview_revision}.mobile.android-x86-opt/artifacts/public/android/maven"
     }
     maven {
         // aarch64 builds
-        url "https://index.taskcluster.net/v1/task/gecko.v2.mozilla-central.nightly" +
-                ".${geckoview_nightly_date}.revision.${geckoview_revision}.mobile" +
-                ".android-aarch64-opt/artifacts/public/android/maven"
+        url "https://index.taskcluster.net/v1/task/gecko.v2.mozilla-beta.revision" +
+                ".${geckoview_revision}.mobile.android-aarch64-opt/artifacts/public/android/maven"
     }
 }
 
@@ -338,6 +165,7 @@ dependencies {
     implementation "com.android.support:design:$support_libraries_version"
     implementation "com.android.support:cardview-v7:$support_libraries_version"
     implementation "com.android.support:recyclerview-v7:$support_libraries_version"
+    implementation "com.android.support:support-v4:$support_libraries_version"
     implementation 'io.sentry:sentry-android:1.7.3'
 
     implementation "android.arch.lifecycle:extensions:$architecture_components_version"
@@ -345,30 +173,31 @@ dependencies {
     compileOnly 'net.jcip:jcip-annotations:1.0'
     compileOnly "com.github.spotbugs:spotbugs-annotations:$spotbugs_version"
 
-    implementation 'org.mozilla.telemetry:telemetry:1.1.1'
+    implementation "org.mozilla.components:telemetry:$mozilla_components_version"
     implementation "org.mozilla.components:ktx:$mozilla_components_version"
     implementation "org.mozilla.components:utils:$mozilla_components_version"
     implementation "org.mozilla.components:domains:$mozilla_components_version"
     implementation "org.mozilla.components:autocomplete:$mozilla_components_version"
     implementation "org.mozilla.components:search:$mozilla_components_version"
     implementation "org.mozilla.photon:colors:$mozilla_components_version"
+    implementation "org.mozilla.components:fretboard:$mozilla_components_version"
 
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:0.22.5"
+    implementation 'com.squareup.okhttp3:okhttp:3.11.0'
+
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:0.23.4"
 
     focusImplementation 'com.adjust.sdk:adjust-android:4.11.4'
-    focusImplementation 'com.google.android.gms:play-services-analytics:10.2.6' // Required by Adjust
+    focusImplementation 'com.android.installreferrer:installreferrer:1.0' // Required by Adjust
 
-    // What I actually want to define here is geckoArmCompile and geckoX86Compile. But gradle doesn't
-    // allow me to define dependencies for such a flavor combination. However as we are not building
-    // WebView + (ARM / x86) flavor combinations this should be good enough for now.
-    armImplementation "org.mozilla:geckoview-nightly-armeabi-v7a:${geckoview_nightly_version}"
-    x86Implementation "org.mozilla:geckoview-nightly-x86:${geckoview_nightly_version}"
-    aarch64Implementation "org.mozilla:geckoview-nightly-arm64-v8a:${geckoview_nightly_version}"
+    armImplementation "org.mozilla:geckoview-beta-armeabi-v7a:${geckoview_version}"
+    x86Implementation "org.mozilla:geckoview-beta-x86:${geckoview_version}"
+    aarch64Implementation "org.mozilla:geckoview-beta-arm64-v8a:${geckoview_version}"
 
     testImplementation 'junit:junit:4.12'
-    testImplementation "org.robolectric:robolectric:3.7.1"
-    testImplementation 'org.mockito:mockito-core:2.12.0'
+    testImplementation "org.robolectric:robolectric:4.0-alpha-3" // required to support api level 28
+    testImplementation 'org.mockito:mockito-core:2.19.0'
+    testImplementation "android.arch.core:core-testing:${architecture_components_version}"
 
     androidTestImplementation 'com.android.support.test.uiautomator:uiautomator-v18:2.1.3'
 
@@ -380,12 +209,25 @@ dependencies {
         exclude group: 'com.android.support', module: 'support-annotations'
     }
 
-    androidTestImplementation 'com.squareup.okhttp3:mockwebserver:3.7.0'
-    testImplementation 'com.squareup.okhttp3:mockwebserver:3.7.0'
+    androidTestImplementation 'com.squareup.okhttp3:mockwebserver:3.10.0'
+    testImplementation 'com.squareup.okhttp3:mockwebserver:3.10.0'
 
     androidTestImplementation "tools.fastlane:screengrab:1.1.0", {
         exclude group: 'com.android.support', module: 'support-annotations'
     }
+    androidTestImplementation 'com.android.support.test.espresso:espresso-contrib:2.2.2', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+        exclude group: 'com.android.support', module: 'support-v4'
+        exclude group: 'com.android.support', module: 'design'
+        exclude group: 'com.android.support', module: 'recyclerview-v7'
+    }
+    implementation 'com.android.support.test:runner:1.0.2'
+    testImplementation 'com.android.support.test:rules:1.0.2'
+
+    implementation 'com.android.support.constraint:constraint-layout:1.1.2'
+    implementation 'com.android.support:preference-v7:28.0.0-beta01'
+    implementation 'com.jakewharton:process-phoenix:2.0.0'
+    debugImplementation 'com.facebook.stetho:stetho:1.5.0'
 }
 // -------------------------------------------------------------------------------------------------
 //  Dynamically set versionCode (See tools/build/versionCode.gradle
@@ -393,27 +235,23 @@ dependencies {
 
 android.applicationVariants.all { variant ->
     def buildType = variant.buildType.name
-    def isBetaOrRelease = buildType == "release" || buildType == "beta"
 
-    if (isBetaOrRelease) {
+    if (buildType == "release" || buildType == "nightly") {
         def versionCode = generatedVersionCode
 
         // The Google Play Store does not allow multiple APKs for the same app that all have the
         // same version code. Therefore we need to have different version codes for our ARM and x86
         // builds.
-        // Our generated version code has a length of 8 (See tools/gradle/versionCode.gradle).
-        // We will prefix our ARM builds with 1 and our x86 builds with 2. Our x86 builds need a
-        // higher version code to avoid installing ARM builds on an x86 device with ARM
-        // compatibility mode.
-        def multiplier = 100000000
+
+        // Our generated version code now has a length of 9 (See tools/gradle/versionCode.gradle).
+        // Our x86 builds need a higher version code to avoid installing ARM builds on an x86 device
+        // with ARM compatibility mode.
 
         if (variant.flavorName.contains("X86")) {
-            versionCode = versionCode + (3 * multiplier)
+            versionCode = versionCode + 2
         } else if (variant.flavorName.contains("Aarch64")) {
-            versionCode = versionCode + (2 * multiplier)
-        } else if (variant.flavorName.contains("Arm")) {
-            versionCode = versionCode + (1 * multiplier)
-        }
+            versionCode = versionCode + 1
+        }// else variant.flavorName.contains("Arm")) use generated version code
 
         variant.outputs.all { output ->
             setVersionCodeOverride(versionCode)
@@ -432,7 +270,7 @@ android.applicationVariants.all { variant ->
 // Generate blocklists
 // -------------------------------------------------------------------------------------------------
 
-def blockListOutputDir = 'src/webview/res/raw'
+def blockListOutputDir = 'src/main/res/raw'
 
 task buildBlocklists(type:Copy) {
     from('../shavar-prod-lists') {
@@ -447,12 +285,14 @@ task buildBlocklists(type:Copy) {
 }
 
 clean.doLast {
-    file(blockListOutputDir).deleteDir()
+    delete fileTree(blockListOutputDir) {
+        include '**/*.json'
+    }
 }
 
 tasks.whenTaskAdded { task ->
     def name = task.name
-    if (name.contains("generate") && name.contains("Config") && name.contains("Webview")) {
+    if (name.contains("generate") && name.contains("Config")) {
         task.dependsOn buildBlocklists
     }
 }
@@ -479,6 +319,14 @@ android.applicationVariants.all { variant ->
         buildConfigField 'String', 'ADJUST_TOKEN', 'null'
         println("--")
     }
+}
+
+// -------------------------------------------------------------------------------------------------
+// Gecko: Put GeckoVersion into BuildConfig
+// -------------------------------------------------------------------------------------------------
+
+android.applicationVariants.all {
+    buildConfigField 'String', 'GECKOVIEW_VERSION', "\"${geckoview_version}\""
 }
 
 // -------------------------------------------------------------------------------------------------
@@ -509,7 +357,7 @@ def getEnabledLocales() {
     def potentialLanguageDirs = resDir.listFiles(new FilenameFilter() {
         @Override
         boolean accept(File dir, String name) {
-            return name.startsWith("values-");
+            return name.startsWith("values-")
         }
     })
 
@@ -640,4 +488,26 @@ task checkstyle(type: Checkstyle) {
 
 afterEvaluate {
     check.dependsOn 'spotbugs', 'pmd', 'checkstyle'
+}
+
+if (project.hasProperty("coverage")) {
+    tasks.withType(Test) {
+        jacoco.includeNoLocationClasses = true
+        doLast { jacocoTestReport.execute() }
+    }
+
+    jacocoAndroidUnitTestReport {
+        csv.enabled false
+        html.enabled true
+        xml.enabled true
+    }
+
+    android {
+        buildTypes {
+            debug {
+                testCoverageEnabled true
+                applicationIdSuffix ".coverage"
+            }
+        }
+    }
 }

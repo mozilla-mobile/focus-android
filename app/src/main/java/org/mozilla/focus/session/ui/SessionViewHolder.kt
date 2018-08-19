@@ -6,10 +6,8 @@ package org.mozilla.focus.session.ui
 
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
-import android.support.v4.content.ContextCompat
-import android.support.v4.graphics.drawable.DrawableCompat
-import android.support.v7.content.res.AppCompatResources
 import android.support.v7.widget.RecyclerView
+import android.text.TextUtils
 import android.view.View
 import android.widget.TextView
 import org.mozilla.focus.R
@@ -20,8 +18,8 @@ import org.mozilla.focus.ext.beautifyUrl
 import java.lang.ref.WeakReference
 
 class SessionViewHolder internal constructor(
-        private val fragment: SessionsSheetFragment,
-        private val textView: TextView
+    private val fragment: SessionsSheetFragment,
+    private val textView: TextView
 ) : RecyclerView.ViewHolder(textView), View.OnClickListener {
     companion object {
         @JvmField
@@ -37,31 +35,26 @@ class SessionViewHolder internal constructor(
     fun bind(session: Session) {
         this.sessionReference = WeakReference(session)
 
-        updateUrl(session)
+        updateTitle(session)
 
         val isCurrentSession = SessionManager.getInstance().isCurrentSession(session)
-        val actionColor = ContextCompat.getColor(textView.context, R.color.colorAction)
-        val darkColor = ContextCompat.getColor(textView.context, R.color.colorSession)
 
-        updateTextColor(isCurrentSession, actionColor, darkColor)
-        updateDrawable(isCurrentSession, actionColor, darkColor)
+        updateTextBackgroundColor(isCurrentSession)
     }
 
-    private fun updateTextColor(isCurrentSession: Boolean, actionColor: Int, darkColor: Int) {
-        textView.setTextColor(if (isCurrentSession) actionColor else darkColor)
+    private fun updateTextBackgroundColor(isCurrentSession: Boolean) {
+        val drawable = if (isCurrentSession) {
+            R.drawable.background_list_item_current_session
+        } else {
+            R.drawable.background_list_item_session
+        }
+        textView.setBackgroundResource(drawable)
     }
 
-    private fun updateDrawable(isCurrentSession: Boolean, actionColor: Int, darkColor: Int) {
-        val drawable = AppCompatResources.getDrawable(itemView.context, R.drawable.ic_link) ?: return
-
-        val wrapDrawable = DrawableCompat.wrap(drawable.mutate())
-        DrawableCompat.setTint(wrapDrawable, if (isCurrentSession) actionColor else darkColor)
-
-        textView.setCompoundDrawablesWithIntrinsicBounds(wrapDrawable, null, null, null)
-    }
-
-    private fun updateUrl(session: Session) {
-        textView.text = session.url.value.beautifyUrl()
+    private fun updateTitle(session: Session) {
+        textView.text =
+                if (TextUtils.isEmpty(session.pageTitle.value)) session.url.value.beautifyUrl()
+                else session.pageTitle.value
     }
 
     override fun onClick(view: View) {

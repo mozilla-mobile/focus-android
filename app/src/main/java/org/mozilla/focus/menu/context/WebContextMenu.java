@@ -10,9 +10,13 @@ import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Environment;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
+import android.support.design.internal.NavigationMenuView;
 import android.support.design.widget.NavigationView;
 import android.support.v7.app.AlertDialog;
 import android.text.Html;
@@ -25,6 +29,7 @@ import org.mozilla.focus.R;
 import org.mozilla.focus.session.SessionManager;
 import org.mozilla.focus.session.Source;
 import org.mozilla.focus.telemetry.TelemetryWrapper;
+import org.mozilla.focus.telemetry.TelemetryWrapper.BrowserContextMenuValue;
 import org.mozilla.focus.utils.UrlUtils;
 import org.mozilla.focus.web.Download;
 import org.mozilla.focus.web.IWebView;
@@ -66,19 +71,37 @@ public class WebContextMenu {
         builder.setOnCancelListener(new DialogInterface.OnCancelListener() {
             @Override
             public void onCancel(DialogInterface dialog) {
+                // What type of element was long-pressed
+                final BrowserContextMenuValue value;
+                if (hitTarget.isImage && hitTarget.isLink) {
+                    value = BrowserContextMenuValue.ImageWithLink;
+                } else if (hitTarget.isImage) {
+                    value = BrowserContextMenuValue.Image;
+                } else {
+                    value = BrowserContextMenuValue.Link;
+                }
+
                 // This even is only sent when the back button is pressed, or when a user
                 // taps outside of the dialog:
-                TelemetryWrapper.cancelWebContextMenuEvent();
+                TelemetryWrapper.cancelWebContextMenuEvent(value);
             }
         });
 
         final Dialog dialog = builder.create();
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
         final NavigationView menu = (NavigationView) view.findViewById(R.id.context_menu);
-        setupMenuForHitTarget(dialog, menu, callback, hitTarget);
+        menu.setElevation(0);
+        NavigationMenuView navigationMenuView = (NavigationMenuView) menu.getChildAt(0);
+        if (navigationMenuView != null) {
+            navigationMenuView.setVerticalScrollBarEnabled(false);
+        }
+
+        setupMenuForHitTarget(dialog, menu, callback, hitTarget, context);
 
         final TextView warningView = (TextView) view.findViewById(R.id.warning);
         if (hitTarget.isImage) {
+            menu.setBackgroundResource(R.drawable.no_corners_context_menu_navigation_view_background);
             //noinspection deprecation -- Mew API is only available on 24+
             warningView.setText(Html.fromHtml(
                     context.getString(R.string.contextmenu_image_warning, context.getString(R.string.app_name))));
@@ -97,7 +120,8 @@ public class WebContextMenu {
     private static void setupMenuForHitTarget(final @NonNull Dialog dialog,
                                               final @NonNull NavigationView navigationView,
                                               final @NonNull IWebView.Callback callback,
-                                              final @NonNull IWebView.HitTarget hitTarget) {
+                                              final @NonNull IWebView.HitTarget hitTarget,
+                                              final Context context) {
         navigationView.inflateMenu(R.menu.menu_browser_context);
 
         navigationView.getMenu().findItem(R.id.menu_new_tab).setVisible(hitTarget.isLink);
@@ -118,6 +142,10 @@ public class WebContextMenu {
                     case R.id.menu_new_tab: {
                         SessionManager.getInstance().createSession(Source.MENU, hitTarget.linkURL);
                         TelemetryWrapper.openLinkInNewTabEvent();
+                        PreferenceManager.getDefaultSharedPreferences(context).edit()
+                                .putBoolean(context.getString(R.string.has_opened_new_tab),
+                                        true).apply();
+
                         return true;
                     }
                     case R.id.menu_link_share: {
@@ -137,7 +165,7 @@ public class WebContextMenu {
                         return true;
                     }
                     case R.id.menu_image_save: {
-                        final Download download = new Download(hitTarget.imageURL, null, null, null, -1, Environment.DIRECTORY_PICTURES);
+                        final Download download = new Download(hitTarget.imageURL, null, null, null, -1, Environment.DIRECTORY_PICTURES, null);
                         callback.onDownloadStart(download);
                         TelemetryWrapper.saveImageEvent();
                         return true;
