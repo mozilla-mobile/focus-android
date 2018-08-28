@@ -84,6 +84,12 @@ public class MainActivity extends LocaleAwareAppCompatActivity {
         registerSessionObserver();
 
         WebViewProvider.INSTANCE.preload(this);
+
+        int launchCount = Settings.getInstance(this).getAppLaunchCount();
+        PreferenceManager.getDefaultSharedPreferences(this)
+                .edit()
+                .putInt(getString(R.string.app_launch_count), launchCount + 1)
+                .apply();
     }
 
     private void initViewModel() {

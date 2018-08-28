@@ -720,4 +720,8 @@ be temporary, and you can try again later.</li>
     <string name="tip_request_desktop"><![CDATA[Rather see the full desktop site?
     Menu > Request desktop site
     ]]></string>
+
+    <!-- Tip displayed on home view explaining how to add a custom autocomplete URL
+        Argument 1 is the app name (Firefox Focus/Firefox Klar/etc). -->
+    <string name="tip_disable_tips">Turn off tips on the %1$s start screen</string>
 </resources>

@@ -15,6 +15,7 @@ import org.mozilla.focus.R.string.tip_add_to_homescreen
 import org.mozilla.focus.R.string.tip_disable_tracking_protection
 import org.mozilla.focus.R.string.tip_autocomplete_url
 import org.mozilla.focus.R.string.tip_request_desktop
+import org.mozilla.focus.R.string.tip_disable_tips
 import org.mozilla.focus.R.string.app_name
 import org.mozilla.focus.locale.LocaleAwareAppCompatActivity
 import org.mozilla.focus.session.SessionManager
@@ -24,8 +25,8 @@ import org.mozilla.focus.utils.SupportUtils
 
 class Tip(val id: Int, val text: String, val shouldDisplay: () -> Boolean, val deepLink: () -> Unit)
 
+@Suppress("TooManyFunctions")
 object TipManager {
-
     private const val NEW_TAB_URL =
         "https://support.mozilla.org/en-US/kb/open-new-tab-firefox-focus-android"
     private const val ADD_HOMESCREEN_URL =
@@ -35,6 +36,8 @@ object TipManager {
     private const val REQUEST_DESKTOP_URL =
         "https://support.mozilla.org/en-US/kb/switch-desktop-view-firefox-focus-android"
     private const val MAX_TIPS_TO_DISPLAY = 3
+    private const val FORCE_SHOW_DISABLE_TIPS_LAUNCH_COUNT = 2
+    private const val FORCE_SHOW_DISABLE_TIPS_INTERVAL = 30
 
     private val listOfTips = mutableListOf<Tip>()
     private val random = Random()
@@ -48,9 +51,11 @@ object TipManager {
         addAutocompleteUrlTip(context)
         addOpenInNewTabTip(context)
         addRequestDesktopTip(context)
+        addDisableTipsTip(context)
     }
 
     // Will not return a tip if tips are disabled or if MAX TIPS have already been shown.
+    @Suppress("ReturnCount") // Using early returns
     fun getNextTipIfAvailable(context: Context): Tip? {
         if (!listInitialized) {
             populateListOfTips(context)
@@ -61,6 +66,14 @@ object TipManager {
         if (tipsShown == MAX_TIPS_TO_DISPLAY || listOfTips.count() <= 0 ||
             !Settings.getInstance(context).shouldDisplayHomescreenTips()) {
             return null
+        }
+
+        // Always show the disable tip if it's ready to be displayed
+        getDisableTipsTip()?.let {
+            if (it.shouldDisplay()) {
+                listOfTips.remove(it)
+                return it
+            }
         }
 
         var tip = listOfTips[getRandomTipIndex()]
@@ -76,6 +89,16 @@ object TipManager {
         tipsShown += 1
         TelemetryWrapper.displayTipEvent(tip.id)
         return tip
+    }
+
+    private fun getDisableTipsTip(): Tip? {
+        for (tip in listOfTips) {
+            if (tip.id == tip_disable_tips) {
+                return tip
+            }
+        }
+
+        return null
     }
 
     private fun getRandomTipIndex(): Int {
@@ -186,5 +209,32 @@ object TipManager {
         }
 
         listOfTips.add(Tip(id, name, shouldDisplayOpenInNewTab, deepLinkOpenInNewTab))
+    }
+
+    private fun addDisableTipsTip(context: Context) {
+        val appName = context.resources.getString(app_name)
+        val id = tip_disable_tips
+        val name = context.resources.getString(id, appName)
+
+        val shouldDisplayDisableTips = {
+            // Count number of app launches
+            val launchCount = Settings.getInstance(context).getAppLaunchCount()
+            var shouldDisplay = false
+
+            if (launchCount != 0 && (launchCount == FORCE_SHOW_DISABLE_TIPS_LAUNCH_COUNT ||
+                            launchCount % FORCE_SHOW_DISABLE_TIPS_INTERVAL == 0)) {
+                shouldDisplay = true
+            }
+
+            shouldDisplay
+        }
+
+        val deepLinkDisableTips = {
+            val activity = context as Activity
+            (activity as LocaleAwareAppCompatActivity).openMozillaSettings()
+            TelemetryWrapper.pressTipEvent(id)
+        }
+
+        listOfTips.add(Tip(id, name, shouldDisplayDisableTips, deepLinkDisableTips))
     }
 }

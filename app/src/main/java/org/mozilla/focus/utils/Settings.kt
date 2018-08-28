@@ -158,6 +158,10 @@ class Settings private constructor(context: Context) {
         getPreferenceKey(R.string.has_requested_desktop),
         false)
 
+    fun getAppLaunchCount() = preferences.getInt(
+            getPreferenceKey(R.string.app_launch_count),
+            0)
+
     private fun getPreferenceKey(resourceId: Int): String =
             resources.getString(resourceId)
 }
