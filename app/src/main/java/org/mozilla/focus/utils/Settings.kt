@@ -140,7 +140,7 @@ class Settings private constructor(context: Context) {
     fun shouldDisplayHomescreenTips() =
         preferences.getBoolean(
             getPreferenceKey(R.string.pref_key_homescreen_tips),
-            false)
+            true)
 
     fun isDefaultBrowser() = preferences.getBoolean(
         getPreferenceKey(R.string.pref_key_default_browser),
