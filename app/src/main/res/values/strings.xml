@@ -693,8 +693,7 @@ be temporary, and you can try again later.</li>
 
     <!-- Tip displayed on home view explaining how to add sites to homescreen
     The new line here must be kept as the second half of the string is clickable for the user. -->
-    <string name="tip_add_to_homescreen"><![CDATA[Get one-tap access to sites you use most
-        Menu > Add to Home screen]]></string>
+    <string name="tip_add_to_homescreen"><![CDATA[Get one-tap access to sites you use most\n Menu > Add to Home screen]]></string>
 
     <!-- Tip displayed on home view explaining how to make Focus the default browser
     Argument 1 is the app name (Firefox Focus/Firefox Klar/etc).
@@ -717,7 +716,5 @@ be temporary, and you can try again later.</li>
 
     <!-- Tip displayed on home view explaining how to request the desktop version of a website.
      The new line here must be kept as the second half of the string is clickable for the user. -->
-    <string name="tip_request_desktop"><![CDATA[Rather see the full desktop site?
-    Menu > Request desktop site
-    ]]></string>
+    <string name="tip_request_desktop"><![CDATA[Rather see the full desktop site?\n Menu > Request desktop site]]></string>
 </resources>
