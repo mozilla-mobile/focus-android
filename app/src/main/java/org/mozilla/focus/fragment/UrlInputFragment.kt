@@ -202,7 +202,8 @@ class UrlInputFragment :
 
             // Only make the second line clickable if applicable
             val linkStartIndex =
-                if (tip.text.contains("\n")) tip.text.indexOf("\n") + 2 else 0
+                if (tip.deepLink != null &&
+                        tip.text.contains("\n")) tip.text.indexOf("\n") + 2 else 0
             val textWithDeepLink = SpannableString(tip.text)
 
             keyboardLinearLayout.homeViewTipsLabel.movementMethod = LinkMovementMethod()
@@ -210,7 +211,7 @@ class UrlInputFragment :
 
             val deepLinkAction = object : ClickableSpan() {
                 override fun onClick(widget: View?) {
-                    tip.deepLink()
+                    tip.deepLink?.invoke()
                 }
             }
 

@@ -18,23 +18,18 @@ import org.mozilla.focus.R.string.tip_request_desktop
 import org.mozilla.focus.R.string.tip_disable_tips
 import org.mozilla.focus.R.string.app_name
 import org.mozilla.focus.locale.LocaleAwareAppCompatActivity
-import org.mozilla.focus.session.SessionManager
-import org.mozilla.focus.session.Source
 import org.mozilla.focus.telemetry.TelemetryWrapper
 import org.mozilla.focus.utils.SupportUtils
 
-class Tip(val id: Int, val text: String, val shouldDisplay: () -> Boolean, val deepLink: () -> Unit)
+class Tip(
+    val id: Int,
+    val text: String,
+    val shouldDisplay: () -> Boolean,
+    val deepLink: (() -> Unit)? = null
+)
 
 @Suppress("TooManyFunctions")
 object TipManager {
-    private const val NEW_TAB_URL =
-        "https://support.mozilla.org/en-US/kb/open-new-tab-firefox-focus-android"
-    private const val ADD_HOMESCREEN_URL =
-        "https://support.mozilla.org/en-US/kb/add-web-page-shortcuts-your-home-screen"
-    private const val AUTOCOMPLETE_URL =
-        "https://support.mozilla.org/en-US/kb/autocomplete-settings-firefox-focus-address-bar"
-    private const val REQUEST_DESKTOP_URL =
-        "https://support.mozilla.org/en-US/kb/switch-desktop-view-firefox-focus-android"
     private const val MAX_TIPS_TO_DISPLAY = 3
     private const val FORCE_SHOW_DISABLE_TIPS_LAUNCH_COUNT = 2
     private const val FORCE_SHOW_DISABLE_TIPS_INTERVAL = 30
@@ -115,13 +110,7 @@ object TipManager {
                     Settings.getInstance(context).shouldBlockAnalyticTrackers()
         }
 
-        val deepLinkTrackingProtection = {
-            val activity = context as Activity
-            (activity as LocaleAwareAppCompatActivity).openPrivacySecuritySettings()
-            TelemetryWrapper.pressTipEvent(id)
-        }
-
-        listOfTips.add(Tip(id, name, shouldDisplayTrackingProtection, deepLinkTrackingProtection))
+        listOfTips.add(Tip(id, name, shouldDisplayTrackingProtection))
     }
 
     private fun addHomescreenTip(context: Context) {
@@ -131,12 +120,7 @@ object TipManager {
             !Settings.getInstance(context).hasAddedToHomescreen()
         }
 
-        val deepLinkAddToHomescreen = {
-            SessionManager.getInstance().createSession(Source.MENU, ADD_HOMESCREEN_URL)
-            TelemetryWrapper.pressTipEvent(id)
-        }
-
-        listOfTips.add(Tip(id, name, shouldDisplayAddToHomescreen, deepLinkAddToHomescreen))
+        listOfTips.add(Tip(id, name, shouldDisplayAddToHomescreen))
     }
 
     private fun addDefaultBrowserTip(context: Context) {
@@ -171,12 +155,7 @@ object TipManager {
             !Settings.getInstance(context).shouldAutocompleteFromCustomDomainList()
         }
 
-        val deepLinkAutocompleteUrl = {
-            SessionManager.getInstance().createSession(Source.MENU, AUTOCOMPLETE_URL)
-            TelemetryWrapper.pressTipEvent(id)
-        }
-
-        listOfTips.add(Tip(id, name, shouldDisplayAutocompleteUrl, deepLinkAutocompleteUrl))
+        listOfTips.add(Tip(id, name, shouldDisplayAutocompleteUrl))
     }
 
     private fun addOpenInNewTabTip(context: Context) {
@@ -187,12 +166,7 @@ object TipManager {
             !Settings.getInstance(context).hasOpenedInNewTab()
         }
 
-        val deepLinkOpenInNewTab = {
-            SessionManager.getInstance().createSession(Source.MENU, NEW_TAB_URL)
-            TelemetryWrapper.pressTipEvent(id)
-        }
-
-        listOfTips.add(Tip(id, name, shouldDisplayOpenInNewTab, deepLinkOpenInNewTab))
+        listOfTips.add(Tip(id, name, shouldDisplayOpenInNewTab))
     }
 
     private fun addRequestDesktopTip(context: Context) {
@@ -203,12 +177,7 @@ object TipManager {
             !Settings.getInstance(context).hasRequestedDesktop()
         }
 
-        val deepLinkOpenInNewTab = {
-            SessionManager.getInstance().createSession(Source.MENU, REQUEST_DESKTOP_URL)
-            TelemetryWrapper.pressTipEvent(id)
-        }
-
-        listOfTips.add(Tip(id, name, shouldDisplayOpenInNewTab, deepLinkOpenInNewTab))
+        listOfTips.add(Tip(id, name, shouldDisplayOpenInNewTab))
     }
 
     private fun addDisableTipsTip(context: Context) {
