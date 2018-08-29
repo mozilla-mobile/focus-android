@@ -73,7 +73,7 @@ public class LocalizedContent {
         final String data = HtmlLoader.loadResourceFile(context, R.raw.about, substitutionMap);
 
         // Base URL will be ignored by GV
-        webView.loadData(AppConstants.isGeckoBuild(context) ?
+        webView.loadData(AppConstants.INSTANCE.isGeckoBuild() ?
                 "resource://android/assets/about.html" :
                 "file:///android_asset/about.html",
                 data, "text/html", "UTF-8", URL_ABOUT);
@@ -113,7 +113,7 @@ public class LocalizedContent {
 
         final String data = HtmlLoader.loadResourceFile(context, R.raw.rights, substitutionMap);
         // Base URL will be ignored by GV
-        webView.loadData(AppConstants.isGeckoBuild(context) ?
+        webView.loadData(AppConstants.INSTANCE.isGeckoBuild() ?
                 "resource://android/assets/rights.html" :
                 "file:///android_asset/rights.html",
                 data, "text/html", "UTF-8", URL_RIGHTS);
