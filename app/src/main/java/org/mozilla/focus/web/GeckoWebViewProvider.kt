@@ -497,7 +497,6 @@ class GeckoWebViewProvider : IWebViewProvider {
             if (savedGeckoSession != null && geckoSession != savedGeckoSession) {
                 // Close empty created session
                 geckoSession.close()
-
                 geckoSession = savedGeckoSession
                 canGoBack = stateData.getBoolean(CAN_GO_BACK, false)
                 canGoForward = stateData.getBoolean(CAN_GO_FORWARD, false)

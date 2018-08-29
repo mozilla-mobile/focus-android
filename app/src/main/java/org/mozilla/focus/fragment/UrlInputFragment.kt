@@ -670,9 +670,9 @@ class UrlInputFragment :
         } else {
             if (!TextUtils.isEmpty(searchTerms)) {
                 SessionManager.getInstance()
-                    .createSearchSession(Source.USER_ENTERED, url, searchTerms)
+                    .replaceSearchSession(Source.USER_ENTERED, url, searchTerms)
             } else {
-                SessionManager.getInstance().createSession(Source.USER_ENTERED, url)
+                SessionManager.getInstance().replaceSession(Source.USER_ENTERED, url)
             }
         }
     }

@@ -68,15 +68,15 @@
                 android:layout_gravity="end|bottom"
                 android:layout_marginBottom="@dimen/floating_action_button_margin"
                 android:layout_marginEnd="@dimen/floating_action_button_margin"
+                android:contentDescription="@string/content_description_erase"
                 android:elevation="4dp"
-                android:src="@drawable/ic_delete"
-                app:backgroundTint="@color/colorErase"
-                app:rippleColor="@color/colorErasePressed"
+                android:src="@drawable/ic_reorder"
                 android:visibility="gone"
+                app:backgroundTint="@color/colorErase"
                 app:fabSize="normal"
                 app:layout_behavior="org.mozilla.focus.widget.FloatingActionButtonBehavior"
-                android:contentDescription="@string/content_description_erase"
-                app:layout_dodgeInsetEdges="bottom"/>
+                app:layout_dodgeInsetEdges="bottom"
+                app:rippleColor="@color/colorErasePressed" />
 
             <include
                 android:id="@+id/find_in_page"
