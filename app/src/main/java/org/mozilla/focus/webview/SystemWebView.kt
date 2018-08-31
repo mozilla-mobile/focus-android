@@ -44,6 +44,7 @@ import java.util.HashMap
 
 import mozilla.components.support.utils.ThreadUtils
 
+@Suppress("TooManyFunctions")
 class SystemWebView(context: Context, attrs: AttributeSet) : NestedWebView(context, attrs),
     IWebView, SharedPreferences.OnSharedPreferenceChangeListener {
 
@@ -115,10 +116,7 @@ class SystemWebView(context: Context, attrs: AttributeSet) : NestedWebView(conte
     override fun restoreWebViewState(session: Session) {
         val stateData = session.webViewState
 
-        val backForwardList: WebBackForwardList? = if (stateData != null)
-            super.restoreState(stateData)
-        else
-            null
+        val backForwardList: WebBackForwardList? = stateData.let { super.restoreState(it) }
 
         val desiredURL = session.url.value
 
@@ -134,7 +132,7 @@ class SystemWebView(context: Context, attrs: AttributeSet) : NestedWebView(conte
         // If the app is paused/killed before the initial page finished loading, then the entire
         // list will be null - so we need to additionally check whether the list even exists.
 
-        if (backForwardList != null && backForwardList.currentItem!!.url == desiredURL) {
+        if (backForwardList != null && backForwardList.currentItem?.url == desiredURL) {
             // restoreState doesn't actually load the current page, it just restores navigation history,
             // so we also need to explicitly reload in this case:
             reload()
@@ -163,9 +161,7 @@ class SystemWebView(context: Context, attrs: AttributeSet) : NestedWebView(conte
             WebViewProvider.disableBlocking(settings, this)
         }
 
-        if (callback != null) {
-            callback!!.onBlockingStateChanged(enabled)
-        }
+        callback?.onBlockingStateChanged(enabled)
     }
 
     override fun setRequestDesktop(shouldRequestDesktop: Boolean) {
@@ -175,9 +171,7 @@ class SystemWebView(context: Context, attrs: AttributeSet) : NestedWebView(conte
             WebViewProvider.requestMobileSite(context, settings)
         }
 
-        if (callback != null) {
-            callback!!.onRequestDesktopStateChanged(shouldRequestDesktop)
-        }
+        callback?.onRequestDesktopStateChanged(shouldRequestDesktop)
     }
 
     override fun setCallback(callback: IWebView.Callback?) {
@@ -252,18 +246,16 @@ class SystemWebView(context: Context, attrs: AttributeSet) : NestedWebView(conte
     private fun createWebChromeClient(): WebChromeClient {
         return object : WebChromeClient() {
             override fun onProgressChanged(view: WebView, newProgress: Int) {
-                if (callback != null) {
-                    // This is the earliest point where we might be able to confirm a redirected
-                    // URL: we don't necessarily get a shouldInterceptRequest() after a redirect,
-                    // so we can only check the updated url in onProgressChanges(), or in onPageFinished()
-                    // (which is even later).
-                    val viewURL = view.url
-                    if (!UrlUtils.isInternalErrorURL(viewURL) && viewURL != null) {
-                        callback!!.onURLChanged(viewURL)
-                        callback!!.onTitleChanged(title)
-                    }
-                    callback!!.onProgress(newProgress)
+                // This is the earliest point where we might be able to confirm a redirected
+                // URL: we don't necessarily get a shouldInterceptRequest() after a redirect,
+                // so we can only check the updated url in onProgressChanges(), or in onPageFinished()
+                // (which is even later).
+                val viewURL = view.url
+                if (!UrlUtils.isInternalErrorURL(viewURL) && viewURL != null) {
+                    callback?.onURLChanged(viewURL)
+                    callback?.onTitleChanged(title)
                 }
+                callback?.onProgress(newProgress)
             }
 
             override fun onShowCustomView(
@@ -273,11 +265,11 @@ class SystemWebView(context: Context, attrs: AttributeSet) : NestedWebView(conte
                 val fullscreenCallback =
                     IWebView.FullscreenCallback { webviewCallback.onCustomViewHidden() }
 
-                callback!!.onEnterFullScreen(fullscreenCallback, view)
+                callback?.onEnterFullScreen(fullscreenCallback, view)
             }
 
             override fun onHideCustomView() {
-                callback!!.onExitFullScreen()
+                callback?.onExitFullScreen()
             }
         }
     }
@@ -297,7 +289,7 @@ class SystemWebView(context: Context, attrs: AttributeSet) : NestedWebView(conte
                 return@DownloadListener
             }
 
-            if (callback != null) {
+            callback?.let {
                 val download = Download(
                     url,
                     userAgent,
@@ -307,7 +299,7 @@ class SystemWebView(context: Context, attrs: AttributeSet) : NestedWebView(conte
                     Environment.DIRECTORY_DOWNLOADS,
                     null
                 )
-                callback!!.onDownloadStart(download)
+                it.onDownloadStart(download)
             }
         }
     }
