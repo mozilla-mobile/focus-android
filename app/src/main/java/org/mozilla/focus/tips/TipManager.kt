@@ -16,8 +16,6 @@ import org.mozilla.focus.R.string.tip_open_in_new_tab
 import org.mozilla.focus.R.string.tip_request_desktop
 import org.mozilla.focus.R.string.tip_set_default_browser
 import org.mozilla.focus.locale.LocaleAwareAppCompatActivity
-import org.mozilla.focus.session.SessionManager
-import org.mozilla.focus.session.Source
 import org.mozilla.focus.telemetry.TelemetryWrapper
 import org.mozilla.focus.utils.Settings
 import org.mozilla.focus.utils.SupportUtils
@@ -87,19 +85,12 @@ class Tip(val id: Int, val text: String, val shouldDisplay: () -> Boolean, val d
         fun createOpenInNewTabTip(context: Context): Tip {
             val id = tip_open_in_new_tab
             val name = context.resources.getString(id)
-            val newTabURL =
-                    "https://support.mozilla.org/en-US/kb/open-new-tab-firefox-focus-android"
 
             val shouldDisplayOpenInNewTab = {
                 !Settings.getInstance(context).hasOpenedInNewTab()
             }
 
-            val deepLinkOpenInNewTab = {
-                SessionManager.getInstance().createSession(Source.MENU, newTabURL)
-                TelemetryWrapper.pressTipEvent(id)
-            }
-
-            return Tip(id, name, shouldDisplayOpenInNewTab, deepLinkOpenInNewTab)
+            return Tip(id, name, shouldDisplayOpenInNewTab)
         }
 
         fun createRequestDesktopTip(context: Context): Tip {
