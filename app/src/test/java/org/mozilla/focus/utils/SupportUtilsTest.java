@@ -31,15 +31,15 @@ public class SupportUtilsTest {
         final String versionName = context.getPackageManager().getPackageInfo(context.getPackageName(), 0).versionName;
 
         final SupportUtils.SumoTopic testTopic = SupportUtils.SumoTopic.TRACKERS;
-        final String testTopicStr = testTopic.topicStr;
+        final String testTopicStr = testTopic.getTopicStr();
 
         Locale.setDefault(Locale.GERMANY);
         assertEquals("https://support.mozilla.org/1/mobile/" + versionName + "/Android/de-DE/" + testTopicStr,
-                SupportUtils.getSumoURLForTopic(RuntimeEnvironment.application, testTopic));
+                SupportUtils.INSTANCE.getSumoURLForTopic(RuntimeEnvironment.application, testTopic));
 
         Locale.setDefault(Locale.CANADA_FRENCH);
         assertEquals("https://support.mozilla.org/1/mobile/" + versionName + "/Android/fr-CA/" + testTopicStr,
-                SupportUtils.getSumoURLForTopic(RuntimeEnvironment.application, testTopic));
+                SupportUtils.INSTANCE.getSumoURLForTopic(RuntimeEnvironment.application, testTopic));
     }
 
     /**
@@ -50,11 +50,11 @@ public class SupportUtilsTest {
     public void getManifestoURL() throws Exception {
         Locale.setDefault(Locale.UK);
         assertEquals("https://www.mozilla.org/en-GB/about/manifesto/",
-                SupportUtils.getManifestoURL());
+                SupportUtils.INSTANCE.getManifestoURL());
 
         Locale.setDefault(Locale.KOREA);
         assertEquals("https://www.mozilla.org/ko-KR/about/manifesto/",
-                SupportUtils.getManifestoURL());
+                SupportUtils.INSTANCE.getManifestoURL());
     }
 
 }

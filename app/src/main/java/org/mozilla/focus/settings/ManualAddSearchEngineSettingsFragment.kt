@@ -4,6 +4,7 @@
 
 package org.mozilla.focus.settings
 
+import android.content.Context
 import android.net.Uri
 import android.os.AsyncTask
 import android.os.Bundle
@@ -85,7 +86,7 @@ class ManualAddSearchEngineSettingsFragment : BaseSettingsFragment() {
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         val openLearnMore = {
             SessionManager.getInstance().createSession(Source.MENU, SupportUtils
-                .getSumoURLForTopic(activity, SupportUtils.SumoTopic.ADD_SEARCH_ENGINE))
+                .getSumoURLForTopic(activity as Context, SupportUtils.SumoTopic.ADD_SEARCH_ENGINE))
             activity!!.finish()
             TelemetryWrapper.addSearchEngineLearnMoreEvent()
         }
