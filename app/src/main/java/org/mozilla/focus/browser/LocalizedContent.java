@@ -72,7 +72,11 @@ public class LocalizedContent {
 
         final String data = HtmlLoader.loadResourceFile(context, R.raw.about, substitutionMap);
 
-        webView.loadData(URL_ABOUT, data, "text/html", "UTF-8", URL_ABOUT);
+        // Base URL will be ignored by GV
+        webView.loadData(AppConstants.INSTANCE.isGeckoBuild() ?
+                "resource://android/assets/about.html" :
+                "file:///android_asset/about.html",
+                data, "text/html", "UTF-8", URL_ABOUT);
     }
 
     /**
@@ -108,7 +112,11 @@ public class LocalizedContent {
         putLayoutDirectionIntoMap(substitutionMap, context);
 
         final String data = HtmlLoader.loadResourceFile(context, R.raw.rights, substitutionMap);
-        webView.loadData(URL_RIGHTS, data, "text/html", "UTF-8", URL_RIGHTS);
+        // Base URL will be ignored by GV
+        webView.loadData(AppConstants.INSTANCE.isGeckoBuild() ?
+                "resource://android/assets/rights.html" :
+                "file:///android_asset/rights.html",
+                data, "text/html", "UTF-8", URL_RIGHTS);
     }
 
     private static void putLayoutDirectionIntoMap(Map<String, String> substitutionMap, Context context) {
