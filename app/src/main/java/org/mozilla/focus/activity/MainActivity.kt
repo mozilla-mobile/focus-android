@@ -148,11 +148,11 @@ open class MainActivity : LocaleAwareAppCompatActivity() {
 
         val fragmentManager = supportFragmentManager
         val browserFragment =
-            fragmentManager.findFragmentByTag(BrowserFragment.FRAGMENT_TAG) as BrowserFragment?
+                fragmentManager.findFragmentByTag(BrowserFragment.FRAGMENT_TAG) as BrowserFragment?
         browserFragment?.cancelAnimation()
 
         val urlInputFragment =
-            fragmentManager.findFragmentByTag(UrlInputFragment.FRAGMENT_TAG) as UrlInputFragment?
+                fragmentManager.findFragmentByTag(UrlInputFragment.FRAGMENT_TAG) as UrlInputFragment?
         urlInputFragment?.cancelAnimation()
 
         super.onPause()
@@ -269,7 +269,7 @@ open class MainActivity : LocaleAwareAppCompatActivity() {
         val fragmentManager = supportFragmentManager
 
         val sessionsSheetFragment = fragmentManager.findFragmentByTag(
-            SessionsSheetFragment.FRAGMENT_TAG) as SessionsSheetFragment?
+                SessionsSheetFragment.FRAGMENT_TAG) as SessionsSheetFragment?
         if (sessionsSheetFragment != null &&
                 sessionsSheetFragment.isVisible &&
                 sessionsSheetFragment.onBackPressed()) {
