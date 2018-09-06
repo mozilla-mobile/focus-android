@@ -206,7 +206,7 @@ public final class TestHelper {
 
     /********* Settings Menu Item Locators ***********/
     public static UiObject settingsList = mDevice.findObject(new UiSelector()
-            .resourceId(getAppName() + ":id/list"));
+            .resourceId(getAppName() + ":id/recycler_view"));
     public static UiObject settingsHeading = mDevice.findObject(new UiSelector()
             .resourceId(getAppName() + ":id/toolbar")
             .enabled(true));
