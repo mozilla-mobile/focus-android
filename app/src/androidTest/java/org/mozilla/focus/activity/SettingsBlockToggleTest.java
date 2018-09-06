@@ -101,23 +101,24 @@ public class SettingsBlockToggleTest {
         UiObject privacyHeading = TestHelper.mDevice.findObject(new UiSelector()
                 .text("Privacy & Security")
                 .resourceId("android:id/title"));
+
         UiObject blockAdTrackerEntry = TestHelper.settingsList.getChild(new UiSelector()
                 .className("android.widget.LinearLayout")
                 .instance(1));
-        UiObject blockAdTrackerValue = blockAdTrackerEntry.getChild(new UiSelector()
-                .className("android.widget.Switch"));
+       UiObject blockAdTrackerValue =  blockAdTrackerEntry.getChild(new UiSelector()
+                         .resourceId(TestHelper.getAppName() + ":id/switchWidget"));
 
         UiObject blockAnalyticTrackerEntry = TestHelper.settingsList.getChild(new UiSelector()
                 .className("android.widget.LinearLayout")
                 .instance(2));
         UiObject blockAnalyticTrackerValue = blockAnalyticTrackerEntry.getChild(new UiSelector()
-                .className("android.widget.Switch"));
+                .resourceId(TestHelper.getAppName() + ":id/switchWidget"));
 
         UiObject blockSocialTrackerEntry = TestHelper.settingsList.getChild(new UiSelector()
                 .className("android.widget.LinearLayout")
                 .instance(4));
         UiObject blockSocialTrackerValue = blockSocialTrackerEntry.getChild(new UiSelector()
-                .className("android.widget.Switch"));
+                .resourceId(TestHelper.getAppName() + ":id/switchWidget"));
 
         // Let's go to an actual URL which is http://
         TestHelper.inlineAutocompleteEditText.waitForExists(waitingTime);
