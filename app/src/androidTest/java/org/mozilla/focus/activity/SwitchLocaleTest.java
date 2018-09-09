@@ -34,6 +34,7 @@ import static android.support.test.espresso.action.ViewActions.click;
 import static org.mozilla.focus.fragment.FirstrunFragment.FIRSTRUN_PREF;
 import static org.mozilla.focus.helpers.EspressoHelper.openMenu;
 import static org.mozilla.focus.helpers.EspressoHelper.openSettings;
+import static org.mozilla.focus.helpers.TestHelper.mDevice;
 import static org.mozilla.focus.helpers.TestHelper.waitingTime;
 import static org.mozilla.focus.web.WebViewProviderKt.ENGINE_PREF_STRING_KEY;
 
@@ -184,6 +185,7 @@ public class SwitchLocaleTest {
         TestHelper.menuButton.perform(click());
         Assert.assertEquals(TestHelper.settingsMenuItem.getText(), "Settings");
         Assert.assertEquals(TestHelper.HelpItem.getText(), "Help");
+        mDevice.pressBack();
     }
 
     @Test
@@ -220,5 +222,6 @@ public class SwitchLocaleTest {
         englishHeading.waitForExists(waitingTime);
         Assert.assertTrue(englishHeading.exists());
         Assert.assertTrue(englishMenuItem.exists());
+        mDevice.pressBack();
     }
 }
