@@ -1230,13 +1230,10 @@ class BrowserFragment : WebFragment(), LifecycleObserver, View.OnClickListener,
         // Detect long clicks on display_url
         if (view.id == R.id.display_url) {
             val context = activity ?: return false
-
-            if (session!!.isCustomTab) {
-                val clipBoard = context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
-                val uri = Uri.parse(url)
-                clipBoard.primaryClip = ClipData.newRawUri("Uri", uri)
-                Toast.makeText(context, getString(R.string.custom_tab_copy_url_action), Toast.LENGTH_SHORT).show()
-            }
+            val clipBoard = context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+            val uri = Uri.parse(url)
+            clipBoard.primaryClip = ClipData.newRawUri("Uri", uri)
+            Toast.makeText(context, getString(R.string.custom_tab_copy_url_action), Toast.LENGTH_SHORT).show()
         }
 
         return false
