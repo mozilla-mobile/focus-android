@@ -1,14 +1,14 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 
 buildscript {
-    ext.architecture_components_version = '1.1.0'
-    ext.support_libraries_version = '27.1.1'
+    ext.architecture_components_version = '1.1.1'
+    ext.support_libraries_version = '28.0.0-rc02'
     ext.espresso_version = '3.0.1'
-    ext.kotlin_version = '1.2.50'
-    ext.geckoview_revision = '23bc64507f53b0cba44c72f72539716adcf02d68'
-    ext.geckoview_version = '62.0.20180726161819' // 62.0b12
+    ext.kotlin_version = '1.2.70'
+    ext.geckoview_revision = 'ae008cd087d2ea42c6642d34f7da68ef0084b23d'
+    ext.geckoview_version = '62.0.2.20180914202417' // GeckoView 62 RelBranch from 2018.09.14
     ext.spotbugs_version = '3.1.2'
-    ext.mozilla_components_version = '0.16.1'
+    ext.mozilla_components_version = '0.23'
 
     repositories {
         google()
@@ -16,9 +16,7 @@ buildscript {
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.0.1'
-        classpath 'com.dicedmelon.gradle:jacoco-android:0.1.2'
-
+        classpath 'com.android.tools.build:gradle:3.1.4'
         classpath 'org.ajoberstar:grgit:1.5.0'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
         classpath "gradle.plugin.com.github.spotbugs:spotbugs-gradle-plugin:1.6.1"
@@ -33,7 +31,7 @@ plugins {
     // limitations of the gradle plugin. We've decided to stick with duplication for now since the
     // other methods involve using undocumented APIs
     // https://docs.gradle.org/current/userguide/plugins.html#plugins_dsl_limitations
-    id "io.gitlab.arturbosch.detekt" version "1.0.0.RC6-3"
+    id "io.gitlab.arturbosch.detekt" version "1.0.0.RC8"
     id "org.jetbrains.kotlin.kapt" version "1.2.50"
 }
 

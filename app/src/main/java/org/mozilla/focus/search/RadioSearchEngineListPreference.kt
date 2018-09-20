@@ -5,9 +5,8 @@
 package org.mozilla.focus.search
 
 import android.content.Context
+import android.support.v7.preference.PreferenceViewHolder
 import android.util.AttributeSet
-import android.view.View
-import android.view.ViewGroup
 import android.widget.CompoundButton
 import android.widget.RadioGroup
 import org.mozilla.focus.R
@@ -25,10 +24,9 @@ class RadioSearchEngineListPreference : SearchEngineListPreference, RadioGroup.O
     @Suppress("unused")
     constructor(context: Context, attrs: AttributeSet, defStyleAttr: Int) : super(context, attrs, defStyleAttr)
 
-    override fun onCreateView(parent: ViewGroup): View {
-        val view = super.onCreateView(parent)
+    override fun onBindViewHolder(holder: PreferenceViewHolder?) {
+        super.onBindViewHolder(holder)
         searchEngineGroup!!.setOnCheckedChangeListener(this)
-        return view
     }
 
     override fun updateDefaultItem(defaultButton: CompoundButton) {
@@ -36,6 +34,13 @@ class RadioSearchEngineListPreference : SearchEngineListPreference, RadioGroup.O
     }
 
     override fun onCheckedChanged(group: RadioGroup, checkedId: Int) {
+
+        /* onCheckedChanged is called intermittently before the search engine table is full, so we
+           must check these conditions to prevent crashes and inconsistent states. */
+        if (group.childCount != searchEngines.count() || !group.getChildAt(checkedId).isPressed) {
+            return
+        }
+
         val newDefaultEngine = searchEngines[checkedId]
         Settings.getInstance(group.context).setDefaultSearchEngineByName(newDefaultEngine.name)
         val source = if (CustomSearchEngineStore.isCustomSearchEngine(newDefaultEngine.identifier, context))

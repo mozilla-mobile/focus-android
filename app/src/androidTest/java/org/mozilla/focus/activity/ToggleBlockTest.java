@@ -65,7 +65,7 @@ public class ToggleBlockTest {
 
             // This test runs on both GV and WV.
             // Klar is used to test Geckoview. make sure it's set to Gecko
-            if (AppConstants.isKlarBuild() && !AppConstants.isGeckoBuild(appContext)) {
+            if (AppConstants.INSTANCE.isKlarBuild() && !AppConstants.INSTANCE.isGeckoBuild()) {
                 PreferenceManager.getDefaultSharedPreferences(appContext)
                         .edit()
                         .putBoolean(ENGINE_PREF_STRING_KEY, true)
@@ -112,13 +112,13 @@ public class ToggleBlockTest {
     @After
     public void tearDown() {
         mActivityTestRule.getActivity().finishAndRemoveTask();
-
         IdlingRegistry.getInstance().unregister(loadingIdlingResource);
     }
 
     @Test
     public void SimpleToggleTest() {
         // Load mozilla.org
+        TestHelper.inlineAutocompleteEditText.waitForExists(TestHelper.waitingTime);
         onView(withId(R.id.urlView))
                 .check(matches(isDisplayed()))
                 .check(matches(hasFocus()))
@@ -134,11 +134,8 @@ public class ToggleBlockTest {
         // Open the menu
         onView(withId(R.id.menuView))
                 .perform(click());
-
         onView(withId(R.id.trackers_count))
                 .check(matches(not(withText("-"))));
-        onView(withId(R.id.trackers_count))
-                .check(matches(not(withText("0"))));
 
         // Disable blocking
         onView(withId(R.id.blocking_switch))

@@ -22,6 +22,7 @@
 
     <string name="pref_key_secure" translatable="false"><xliff:g id="preference_key">pref_secure</xliff:g></string>
 
+    <string name="pref_key_biometric" translatable="false"><xliff:g id="preference_key">pref_biometric</xliff:g></string>
     <string name="pref_key_about" translatable="false"><xliff:g id="preference_key">pref_about</xliff:g></string>
     <string name="pref_key_help" translatable="false"><xliff:g id="preference_key">pref_help</xliff:g></string>
     <string name="pref_key_rights" translatable="false"><xliff:g id="preference_key">pref_rights</xliff:g></string>
@@ -36,7 +37,22 @@
 
     <string name="pref_key_privacy_security_screen" translatable="false"><xliff:g id="preference_key">pref_screen_privacy_security</xliff:g></string>
     <string name="pref_key_advanced_screen" translatable="false"><xliff:g id="preference_key">pref_advanced_screen</xliff:g></string>
+    <string name="pref_key_general_screen" translatable="false"><xliff:g id="preference_key">pref_general_screen</xliff:g></string>
+
     <string name="pref_key_mozilla_screen" translatable="false"><xliff:g id="preference_key">pref_screen_mozilla</xliff:g></string>
     <string name="pref_key_search_screen" translatable="false"><xliff:g id="preference_key">pref_screen_search</xliff:g></string>
     <string name="pref_key_remote_debugging" translatable="false"><xliff:g id="preference_key">pref_remote_debugging</xliff:g></string>
+
+    <string name="has_opened_new_tab" translatable="false"><xliff:g id="preference_key">has_opened_new_tab</xliff:g></string>
+    <string name="has_added_to_home_screen" translatable="false"><xliff:g id="preference_key">has_added_to_home_screen</xliff:g></string>
+    <string name="has_requested_desktop" translatable="false"><xliff:g id="preference_key">has_requested_desktop</xliff:g></string>
+    <string name="app_launch_count" translatable="false"><xliff:g id="preference_key">app_launch_count</xliff:g></string>
+
+    <string name="pref_key_homescreen_tips" translatable="false">
+        <xliff:g id="preference_key">use_homescreen_tips</xliff:g>
+    </string>
+
+    <string name="pref_key_open_new_tab" translatable="false">
+        <xliff:g id="preference_key">pref_open_new_tab</xliff:g>
+    </string>
 </resources>

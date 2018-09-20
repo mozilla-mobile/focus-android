@@ -8,6 +8,7 @@ import android.content.Context
 import android.util.Log
 import mozilla.components.browser.search.SearchEngine
 import mozilla.components.browser.search.SearchEngineParser
+import org.mozilla.focus.Components
 import org.mozilla.focus.shortcut.IconGenerator
 import org.xmlpull.v1.XmlPullParserException
 import java.io.IOException
@@ -17,7 +18,9 @@ object CustomSearchEngineStore {
         val sharedPreferences = context.getSharedPreferences(PREF_FILE_SEARCH_ENGINES,
                 Context.MODE_PRIVATE)
 
-        return !sharedPreferences.contains(engineName)
+        val defaultEngines = Components.searchEngineManager.getSearchEngines(context)
+
+        return !sharedPreferences.contains(engineName) && !defaultEngines.any { it.name == engineName }
     }
 
     fun restoreDefaultSearchEngines(context: Context) {
@@ -78,7 +81,7 @@ object CustomSearchEngineStore {
     }
 
     fun getRemovedSearchEngines(context: Context): Set<String> =
-            pref(context).getStringSet(PREF_KEY_HIDDEN_DEFAULT_ENGINES, emptySet())
+            pref(context).getStringSet(PREF_KEY_HIDDEN_DEFAULT_ENGINES, emptySet())!!
 
     fun isCustomSearchEngine(engineId: String, context: Context): Boolean {
         for (e in loadCustomSearchEngines(context)) {
@@ -97,7 +100,7 @@ object CustomSearchEngineStore {
 
         try {
             for (engine in engines!!) {
-                val engineInputStream = prefs.getString(engine, "").byteInputStream().buffered()
+                val engineInputStream = prefs.getString(engine, "")!!.byteInputStream().buffered()
                 // Search engine identifier is the search engine name.
                 customEngines.add(parser.load(engine, engineInputStream))
             }

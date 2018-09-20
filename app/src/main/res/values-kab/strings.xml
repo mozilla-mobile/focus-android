@@ -37,6 +37,8 @@
   <string name="preference_category_general">Amatu</string>
   <string name="preference_category_data_collection_use">Alqaḍ &amp; Aseqdec n yisefka</string>
   <string name="preference_category_search">Nadi</string>
+  <string name="preference_show_search_suggestions">Sken isumar n unadi</string>
+  <string name="preference_show_search_suggestions_summary">%1$s ad ak-n-yazen tawsit-inek deg ufeggag n tansiwin ɣer umsedday-inek n unadi</string>
   <string name="preference_search_engine_default">Amezwer</string>
   <string name="preference_state_on">Yermed</string>
   <string name="preference_state_off">Yensa</string>
@@ -77,8 +79,11 @@
   <string name="preference_privacy_should_block_cookies_no_option">Ala</string>
   <string name="preference_privacy_should_block_cookies_third_party_only_option">Sewḥel kan inagan n tuqqna n ufecku wis 3</string>
   <string name="preference_privacy_should_block_cookies_yes_option">Ih</string>
+  <string name="preference_security_biometric">Seqdec adsil umḍin akken ad tserḥeḍ i usnas</string>
+  <string name="preference_security_biometric_summary">Aḍaḍ-ik izmer ad ikkes asewḥel i %1$s ma URL yeldin yakan deg usnas. Askar uffir ad ittwarmed.</string>
   <string name="preference_privacy_secure_mode">Tusligt</string>
-  <string name="preference_privacy_stealth_summary">Ffer isebtar web ticki tettbeddileḍ gar isnasen</string>
+  <string name="preference_privacy_stealth_summary">Ffer isebtar web ticki tettbeddileḍ gar isnasen sakin sewḥel tuṭṭfa n ugdil.</string>
+  <string name="preference_category_security">Taɣellist</string>
   <string name="preference_category_performance">Tamellit</string>
   <string name="preference_performance_block_webfonts">Sewḥel tisefsiyin Web</string>
   <string name="preference_performance_block_webfonts_summary">Ahat yekka-d seg tigitin neγ tugniwin yettwattun</string>
@@ -96,6 +101,7 @@
   <string name="preference_search_add2">+ Rnu amsedday nniḍen n unadi</string>
   <string name="preference_search_remove_title">Kkes imseddayen n unadi</string>
   <string name="preference_search_remove">Kkes</string>
+  <string name="preference_homescreen_tips">Sken-d timahaltin n ugdil agejdan</string>
   <string name="action_option_add_search_engine">Rnu amsedday n unadi</string>
   <string name="search_add_manually_name_hint">Isem n umsedday n unadi</string>
   <string name="search_add_manually_string">Nadi aḍris ad tesqedceḍ</string>
@@ -119,6 +125,7 @@
   <string name="content_description_back">Inig ar deffir</string>
   <string name="content_description_stop">Seḥbes asali n usmel</string>
   <string name="content_description_customtab_exit">Uγal ar usnas izrin</string>
+  <string name="content_description_trackers_blocked">Amḍan n ineḍfaṛen ittwaḥebsen</string>
   <string name="content_description_blocking_switch">Sewḥel ineḍfaṛen</string>
   <string name="your_rights">Izerfan-ik</string>
   <string name="external_app_prompt_title">Ldi aseγwen deg usnas-nniḍen</string>
@@ -200,4 +207,27 @@
   <string name="http_auth_dialog_password">Awal uffir</string>
   <string name="preference_performance_request_desktop_site">Suter asmel n tnarit</string>
   <string name="custom_tab_copy_url_action">Tansa URL tettwanγel</string>
+  <string name="preference_advanced_summary">Ifecka n tneflit</string>
+  <string name="preference_category_advanced">Talqayt</string>
+  <string name="preference_remote_debugging">Taseɣtit tanmeggagt s USB/Wi-Fii</string>
+  <string name="biometric_auth_title">Serreḥ %1$s</string>
+  <string name="biometric_auth_description">Nnal amaṭṭaf n uḍaḍ akken ad tkemleḍ.</string>
+  <string name="biometric_auth_new_session">Tiɣimit tamaynut</string>
+  <string name="biometric_auth_image_description">Tagnit n udsil umḍin</string>
+  <string name="biometric_auth_not_recognized_error">Ur yaêqil ara aḍaḍ. Ԑreḍ tikkelt-nniḍen.</string>
+  <string name="biometric_auth_moved_too_quickly">TƐherkeḍ aḍaḍ s lweǧlan. Ԑreḍ tikelt-nniḍen.</string>
+  <string name="enable_search_suggestion_title">Tebɣiḍ ad tekkseḍ armad n isumren n unadi?</string>
+  <string name="enable_search_suggestion_subtitle">"Akken ad tawiḍ isumar n unadi, %1$s isra ad ak-yazen  acu n tewsit deg ufeggag n tansa ɣer umsedday n unadi i tferneḍ. %2$s."</string>
+  <string name="enable_search_suggestion_subtitle_learnmore">Issin ugar</string>
+  <string name="enable_search_suggestions_no">Ala</string>
+  <string name="enable_search_suggestions_yes">Ih</string>
+  <string name="no_suggestions_message">Kra n imseddayen n unadi ur zmiren ara ad d-sken isumar.</string>
+  <string name="dismiss_no_suggestions_prompt_button">Zgel</string>
+  <string name="tip_disable_tracking_protection">Tigawin ur nettwerǧu sɣur usmel?\n Ɛṛeḍ ad tsenseḍ ammesten n usfuɣel</string>
+  <string name="tip_add_to_homescreen">"Awi anekcum fessusen ɣer ismal  i tseqdaceḍ aṭas %1$s Umuɣ &gt; Rnu ɣer ugdil agejdan"</string>
+  <string name="tip_set_default_browser">Ldi yal aseɣwen deg %1$s\n Sbadu %1$s d iming amezwar</string>
+  <string name="tip_autocomplete_url">Taččarant tawurmant URLs i yismal i tseqdaceḍ aṭas \n Asenned ɣezzifen ɣef URL ibɣu yilli deg ufeggag n tansiwin</string>
+  <string name="tip_open_in_new_tab">Ldi aseɣwen deg iccer amaynut\n Asenned ɣezzifen ɣef useɣwen deg usebter</string>
+  <string name="tip_request_desktop">Iff-itt ma twalaḍ asmel aččuran?%1$s Umuɣ &gt; Suter asmel n tnarit</string>
+  <string name="tip_disable_tips">Sens timahaltin deg %1$s ugdil n tnekra</string>
 </resources>

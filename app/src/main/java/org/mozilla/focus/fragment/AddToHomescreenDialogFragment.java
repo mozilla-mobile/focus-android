@@ -8,6 +8,7 @@ package org.mozilla.focus.fragment;
 import android.app.Dialog;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
@@ -69,12 +70,10 @@ public class AddToHomescreenDialogFragment extends DialogFragment {
         iconView.setImageBitmap(iconBitmap);
 
         final ImageView blockIcon = (ImageView) dialogView.findViewById(R.id.homescreen_dialog_block_icon);
-        blockIcon.setImageResource(R.drawable.ic_tracking_protection_16_disabled);
+        blockIcon.setImageResource(R.drawable.ic_tracking_protection_disabled);
 
         final Button addToHomescreenDialogCancelButton = (Button) dialogView.findViewById(R.id.addtohomescreen_dialog_cancel);
         final Button addToHomescreenDialogConfirmButton = (Button) dialogView.findViewById(R.id.addtohomescreen_dialog_add);
-        addToHomescreenDialogCancelButton.setText(getString(R.string.dialog_addtohomescreen_action_cancel));
-        addToHomescreenDialogConfirmButton.setText(getString(R.string.dialog_addtohomescreen_action_add));
 
         final LinearLayout warning = (LinearLayout) dialogView.findViewById(R.id.homescreen_dialog_warning_layout);
         warning.setVisibility(blockingEnabled ? View.GONE : View.VISIBLE);
@@ -100,11 +99,14 @@ public class AddToHomescreenDialogFragment extends DialogFragment {
                 HomeScreen.installShortCut(getContext(), IconGenerator.generateLauncherIcon(getContext(), url), url,
                         editableTitle.getText().toString().trim(), blockingEnabled, requestDesktop);
                 TelemetryWrapper.addToHomescreenShortcutEvent();
+                PreferenceManager.getDefaultSharedPreferences(getContext()).edit()
+                        .putBoolean(getContext().getString(R.string.has_added_to_home_screen),
+                                true).apply();
                 dismiss();
             }
         });
-
-        return builder.create();
+        AlertDialog dialog = builder.create();
+        return dialog;
     }
 
     @Override

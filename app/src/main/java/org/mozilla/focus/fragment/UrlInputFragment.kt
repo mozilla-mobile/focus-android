@@ -6,32 +6,49 @@ package org.mozilla.focus.fragment
 
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
+import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
+import android.content.SharedPreferences
+import android.content.res.Configuration
 import android.graphics.Typeface
 import android.graphics.drawable.TransitionDrawable
 import android.os.Bundle
-import android.support.v4.content.ContextCompat
+import android.preference.PreferenceManager
+import android.text.InputType
 import android.text.SpannableString
 import android.text.TextUtils
+import android.text.method.LinkMovementMethod
+import android.text.style.ClickableSpan
+import android.text.style.ForegroundColorSpan
 import android.text.style.StyleSpan
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.ViewTreeObserver
+import android.webkit.URLUtil
 import android.widget.FrameLayout
+import android.widget.TextView
 import kotlinx.android.synthetic.main.fragment_urlinput.*
+import kotlinx.android.synthetic.main.fragment_urlinput.view.*
 import mozilla.components.browser.domains.DomainAutoCompleteProvider
 import mozilla.components.support.utils.ThreadUtils
 import mozilla.components.ui.autocomplete.InlineAutocompleteEditText
 import mozilla.components.ui.autocomplete.InlineAutocompleteEditText.AutocompleteResult
 import org.mozilla.focus.R
+import org.mozilla.focus.R.string.pref_key_homescreen_tips
+import org.mozilla.focus.R.string.teaser
 import org.mozilla.focus.locale.LocaleAwareAppCompatActivity
 import org.mozilla.focus.locale.LocaleAwareFragment
 import org.mozilla.focus.menu.home.HomeMenu
+import org.mozilla.focus.searchsuggestions.SearchSuggestionsViewModel
+import org.mozilla.focus.searchsuggestions.ui.SearchSuggestionsFragment
 import org.mozilla.focus.session.Session
 import org.mozilla.focus.session.SessionManager
 import org.mozilla.focus.session.Source
 import org.mozilla.focus.telemetry.TelemetryWrapper
+import org.mozilla.focus.tips.Tip
+import org.mozilla.focus.tips.TipManager
+import org.mozilla.focus.utils.AppConstants
 import org.mozilla.focus.utils.Features
 import org.mozilla.focus.utils.Settings
 import org.mozilla.focus.utils.StatusBarUtils
@@ -51,10 +68,13 @@ class FocusCrashException : Exception()
 @Suppress("LargeClass", "TooManyFunctions")
 class UrlInputFragment :
     LocaleAwareFragment(),
-    View.OnClickListener {
+    View.OnClickListener,
+    SharedPreferences.OnSharedPreferenceChangeListener {
     companion object {
         @JvmField
         val FRAGMENT_TAG = "url_input"
+
+        private const val duckDuckGo = "DuckDuckGo"
 
         private val ARGUMENT_ANIMATION = "animation"
         private val ARGUMENT_X = "x"
@@ -69,6 +89,9 @@ class UrlInputFragment :
         private val PLACEHOLDER = "5981086f-9d45-4f64-be99-7d2ffa03befb"
 
         private val ANIMATION_DURATION = 200
+        private val TIPS_ALPHA = 0.65f
+
+        private lateinit var searchSuggestionsViewModel: SearchSuggestionsViewModel
 
         @JvmStatic
         fun createWithoutSession(): UrlInputFragment {
@@ -131,13 +154,36 @@ class UrlInputFragment :
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        model = ViewModelProviders.of(activity!!).get(MainViewModel::class.java)
+        model = ViewModelProviders.of(requireActivity()).get(MainViewModel::class.java)
+        searchSuggestionsViewModel = ViewModelProviders.of(this).get(SearchSuggestionsViewModel::class.java)
+
+        PreferenceManager.getDefaultSharedPreferences(context)
+            .registerOnSharedPreferenceChangeListener(this)
 
         // Get session from session manager if there's a session UUID in the fragment's arguments
         arguments?.getString(ARGUMENT_SESSION_UUID)?.let {
             session = if (SessionManager.getInstance().hasSessionWithUUID(it)) SessionManager
                 .getInstance().getSessionByUUID(it) else null
         }
+    }
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+
+        childFragmentManager.beginTransaction()
+                .replace(searchViewContainer.id, SearchSuggestionsFragment.create())
+                .commit()
+
+        searchSuggestionsViewModel.selectedSearchSuggestion.observe(this, Observer {
+            val isSuggestion = searchSuggestionsViewModel.searchQuery.value != it
+            it?.let {
+                if (searchSuggestionsViewModel.alwaysSearch) {
+                    onSearch(it, false, true)
+                } else {
+                    onSearch(it, isSuggestion)
+                }
+            }
+        })
     }
 
     override fun onResume() {
@@ -151,9 +197,59 @@ class UrlInputFragment :
                 useCustomDomains)
         }
 
-        StatusBarUtils.getStatusBarHeight(keyboardLinearLayout, {
+        StatusBarUtils.getStatusBarHeight(keyboardLinearLayout) {
             adjustViewToStatusBarHeight(it)
-        })
+        }
+    }
+
+    private fun updateTipsLabel() {
+        val context = context ?: return
+        val tip = TipManager.getNextTipIfAvailable(context)
+        updateSubtitle(tip)
+    }
+
+    private fun updateSubtitle(tip: Tip?) {
+        if (tip == null) {
+            showFocusSubtitle()
+            return
+        }
+
+        val tipText = String.format(tip.text, System.getProperty("line.separator"))
+        keyboardLinearLayout.homeViewTipsLabel.alpha = TIPS_ALPHA
+
+        if (tip.deepLink == null) {
+            homeViewTipsLabel.text = tipText
+            return
+        }
+
+        // Only make the second line clickable if applicable
+        val linkStartIndex =
+                if (tipText.contains("\n")) tipText.indexOf("\n") + 2
+                else 0
+
+        keyboardLinearLayout.homeViewTipsLabel.movementMethod = LinkMovementMethod()
+        homeViewTipsLabel.setText(tipText, TextView.BufferType.SPANNABLE)
+
+        val deepLinkAction = object : ClickableSpan() {
+            override fun onClick(widget: View?) {
+                tip.deepLink.invoke()
+            }
+        }
+
+        val textWithDeepLink = SpannableString(tipText).apply {
+            setSpan(deepLinkAction, linkStartIndex, tipText.length, 0)
+
+            val colorSpan = ForegroundColorSpan(homeViewTipsLabel.currentTextColor)
+            setSpan(colorSpan, linkStartIndex, tipText.length, 0)
+        }
+
+        homeViewTipsLabel.text = textWithDeepLink
+    }
+
+    private fun showFocusSubtitle() {
+        keyboardLinearLayout.homeViewTipsLabel.text = getString(teaser)
+        keyboardLinearLayout.homeViewTipsLabel.alpha = 1f
+        keyboardLinearLayout.homeViewTipsLabel.setOnClickListener(null)
     }
 
     private fun adjustViewToStatusBarHeight(statusBarHeight: Int) {
@@ -175,10 +271,11 @@ class UrlInputFragment :
         View? = inflater.inflate(R.layout.fragment_urlinput, container, false)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        listOf(dismissView, clearView, searchView).forEach { it.setOnClickListener(this) }
+        listOf(dismissView, clearView).forEach { it.setOnClickListener(this) }
 
         urlView?.setOnFilterListener(::onFilter)
         urlView?.imeOptions = urlView.imeOptions or ViewUtils.IME_FLAG_NO_PERSONALIZED_LEARNING
+        urlView?.inputType = urlView.inputType or InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS
 
         if (urlInputContainerView != null) {
             urlInputContainerView.viewTreeObserver.addOnPreDrawListener(object :
@@ -208,12 +305,24 @@ class UrlInputFragment :
 
         urlView?.setOnCommitListener(::onCommit)
 
+        val geckoViewAndDDG: Boolean =
+            Settings.getInstance(requireContext()).defaultSearchEngineName == duckDuckGo &&
+                    AppConstants.isGeckoBuild
+
         session?.let {
-            urlView?.setText(if (it.isSearch && Features.SEARCH_TERMS_OR_URL) it.searchTerms else
-                it.url.value)
+            urlView?.setText(
+                if (it.isSearch &&
+                    !geckoViewAndDDG &&
+                    Features.SEARCH_TERMS_OR_URL
+                )
+                    it.searchTerms else
+                    it.url.value
+            )
             clearView?.visibility = View.VISIBLE
             searchViewContainer?.visibility = View.GONE
         }
+
+        updateTipsLabel()
     }
 
     override fun applyLocale() {
@@ -248,16 +357,7 @@ class UrlInputFragment :
     override fun onStart() {
         super.onStart()
 
-        context?.let {
-            if (!Settings.getInstance(it).shouldShowFirstrun()) {
-
-                // Only show keyboard if we are not displaying the first run tour on top.
-                showKeyboard()
-
-                toolbarBackgroundView.background = ContextCompat
-                        .getDrawable(context!!, R.drawable.animated_background_url)
-            }
-        }
+        showKeyboard()
     }
 
     override fun onStop() {
@@ -271,13 +371,32 @@ class UrlInputFragment :
         ViewUtils.showKeyboard(urlView)
     }
 
+    override fun onConfigurationChanged(newConfig: Configuration?) {
+        super.onConfigurationChanged(newConfig)
+
+        if (newConfig?.orientation != Configuration.ORIENTATION_UNDEFINED) {
+            //This is a hack to make the HomeMenu actually stick on top of the menuView (#3287)
+
+            displayedPopupMenu?.let {
+                it.dismiss()
+
+                menuView.viewTreeObserver.addOnPreDrawListener (object : ViewTreeObserver.OnPreDrawListener {
+                    override fun onPreDraw(): Boolean {
+                        menuView.viewTreeObserver.removeOnPreDrawListener(this)
+                        showHomeMenu(menuView)
+
+                        return false
+                    }
+                })
+            }
+        }
+    }
+
     // This method triggers the complexity warning. However it's actually not that hard to understand.
     @Suppress("ComplexMethod")
     override fun onClick(view: View) {
         when (view.id) {
             R.id.clearView -> clear()
-
-            R.id.searchView -> onSearch()
 
             R.id.dismissView -> if (isOverlay) {
                 animateAndDismiss()
@@ -285,12 +404,7 @@ class UrlInputFragment :
                 clear()
             }
 
-            R.id.menuView -> context?.let {
-                val menu = HomeMenu(it, this)
-                menu.show(view)
-
-                displayedPopupMenu = menu
-            }
+            R.id.menuView -> showHomeMenu(view)
 
             R.id.whats_new -> context?.let {
                 TelemetryWrapper.openWhatsNewEvent(WhatsNew.shouldHighlightWhatsNew(it))
@@ -298,7 +412,7 @@ class UrlInputFragment :
                 WhatsNew.userViewedWhatsNew(it)
 
                 SessionManager.getInstance().createSession(Source.MENU,
-                    SupportUtils.getSumoURLForTopic(context, SupportUtils.SumoTopic.WHATS_NEW))
+                    SupportUtils.getSumoURLForTopic(it, SupportUtils.SumoTopic.WHATS_NEW))
             }
 
             R.id.settings -> (activity as LocaleAwareAppCompatActivity).openPreferences()
@@ -314,6 +428,16 @@ class UrlInputFragment :
     private fun clear() {
         urlView?.setText("")
         urlView?.requestFocus()
+    }
+
+    private fun showHomeMenu(anchor: View) = context?.let {
+        displayedPopupMenu = HomeMenu(it, this)
+
+        displayedPopupMenu?.show(anchor)
+
+        displayedPopupMenu?.dismissListener = {
+            displayedPopupMenu = null
+        }
     }
 
     override fun onDetach() {
@@ -410,7 +534,7 @@ class UrlInputFragment :
                 .setListener(object : AnimatorListenerAdapter() {
                     override fun onAnimationStart(animation: Animator) {
                         if (reverse) {
-                            clearView.alpha = 0f
+                            clearView?.alpha = 0f
                         }
                     }
 
@@ -485,7 +609,9 @@ class UrlInputFragment :
 
     private fun onCommit() {
         val input = urlView.autocompleteResult.formattedText.let {
-            if (it.isEmpty()) urlView?.text.toString() else it
+            if (it.isEmpty() || !URLUtil.isValidUrl(urlView?.text.toString())) {
+                urlView?.text.toString()
+            } else it
         }
 
         if (!input.trim { it <= ' ' }.isEmpty()) {
@@ -494,6 +620,7 @@ class UrlInputFragment :
             ViewUtils.hideKeyboard(urlView)
 
             if (handleExperimentsTrigger(input)) return
+            if (handleL10NTrigger(input)) return
 
             val (isUrl, url, searchTerms) = normalizeUrlAndSearchTerms(input)
 
@@ -501,6 +628,25 @@ class UrlInputFragment :
 
             TelemetryWrapper.urlBarEvent(isUrl, urlView.autocompleteResult)
         }
+    }
+
+    private fun handleL10NTrigger(input: String): Boolean {
+        if (!AppConstants.isDevBuild) return false
+
+        var triggerHandled = true
+
+        when (input) {
+            "l10n:tip:1" -> updateSubtitle(Tip.createTrackingProtectionTip(requireContext()))
+            "l10n:tip:2" -> updateSubtitle(Tip.createHomescreenTip(requireContext()))
+            "l10n:tip:3" -> updateSubtitle(Tip.createDefaultBrowserTip(requireContext()))
+            "l10n:tip:4" -> updateSubtitle(Tip.createAutocompleteURLTip(requireContext()))
+            "l10n:tip:5" -> updateSubtitle(Tip.createOpenInNewTabTip(requireContext()))
+            "l10n:tip:6" -> updateSubtitle(Tip.createRequestDesktopTip(requireContext()))
+            else -> triggerHandled = false
+        }
+
+        if (triggerHandled) clear()
+        return triggerHandled
     }
 
     private fun handleExperimentsTrigger(input: String): Boolean {
@@ -532,19 +678,24 @@ class UrlInputFragment :
         return Triple(isUrl, url, searchTerms)
     }
 
-    private fun onSearch() {
-        val searchTerms = urlView?.originalText
-        val searchUrl = UrlUtils.createSearchUrl(context, searchTerms)
+    private fun onSearch(query: String, isSuggestion: Boolean = false, alwaysSearch: Boolean = false) {
+        if (alwaysSearch) {
+            openUrl(UrlUtils.createSearchUrl(context, query), query)
+        } else {
+            val searchTerms = if (UrlUtils.isUrl(query)) null else query
+            val searchUrl =
+                if (searchTerms != null) UrlUtils.createSearchUrl(context, searchTerms) else UrlUtils.normalize(query)
 
-        openUrl(searchUrl, searchTerms)
+            openUrl(searchUrl, searchTerms)
+        }
 
-        TelemetryWrapper.searchSelectEvent()
+        TelemetryWrapper.searchSelectEvent(isSuggestion)
     }
 
     private fun openUrl(url: String, searchTerms: String?) {
         session?.searchTerms = searchTerms
 
-        val fragmentManager = activity!!.supportFragmentManager
+        val fragmentManager = requireActivity().supportFragmentManager
 
         // Replace all fragments with a fresh browser fragment. This means we either remove the
         // HomeFragment with an UrlInputFragment on top or an old BrowserFragment with an
@@ -585,6 +736,8 @@ class UrlInputFragment :
             view.applyAutocompleteResult(AutocompleteResult(result.text, result.source, result.size, { result.url }))
         }
 
+        searchSuggestionsViewModel.setSearchQuery(searchText)
+
         if (searchText.trim { it <= ' ' }.isEmpty()) {
             clearView?.visibility = View.GONE
             searchViewContainer?.visibility = View.GONE
@@ -609,9 +762,11 @@ class UrlInputFragment :
 
             val content = SpannableString(hint.replace(PLACEHOLDER, searchText))
             content.setSpan(StyleSpan(Typeface.BOLD), start, start + searchText.length, 0)
-
-            searchView?.text = content
             searchViewContainer?.visibility = View.VISIBLE
         }
+    }
+
+    override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences, key: String) {
+        if (key == activity?.getString(pref_key_homescreen_tips)) { updateTipsLabel() }
     }
 }

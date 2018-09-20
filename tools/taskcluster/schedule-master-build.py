@@ -52,7 +52,7 @@ def generate_webview_X86_ui_test_task(dependencies):
 			command = ('echo "--" > .adjust_token'
 					   ' && ./gradlew --no-daemon clean assembleFocusX86Debug assembleFocusX86DebugAndroidTest'
 					   ' && ./tools/taskcluster/google-firebase-testlab-login.sh'
-					   ' && tools/taskcluster/execute-firebase-test.sh focusX86 app-focus-x86-debug model=model=Nexus9,version=23'),
+					   ' && tools/taskcluster/execute-firebase-test.sh focusX86 app-focus-x86-debug model=Nexus9,version=23'),
 			dependencies = dependencies,
 			scopes = [ 'secrets:get:project/focus/firebase' ],
 			artifacts = {
@@ -154,7 +154,7 @@ def generate_task(name, description, command, dependencies = [], artifacts = {},
 	            "taskclusterProxy": True
 	        },
 	        "maxRunTime": 7200,
-	        "image": "mozillamobile/focus-android",
+	        "image": "mozillamobile/focus-android:1.0",
 	        "command": [
 	            "/bin/bash",
 	            "--login",
@@ -199,12 +199,6 @@ if __name__ == "__main__":
 
 	uiWebviewX86TestTaskId, uiWebviewX86TestTask = generate_webview_X86_ui_test_task([unitTestTaskId, codeQualityTaskId])
 	schedule_task(queue, uiWebviewX86TestTaskId, uiWebviewX86TestTask)
-
-	uiGeckoX86TestTaskId, uiGeckoX86TestTask = generate_gecko_X86_ui_test_task([unitTestTaskId, codeQualityTaskId])
-	schedule_task(queue, uiGeckoX86TestTaskId, uiGeckoX86TestTask)
-
-	uiGeckoARMTestTaskId, uiGeckoARMTestTask = generate_gecko_ARM_ui_test_task([unitTestTaskId, codeQualityTaskId])
-	schedule_task(queue, uiGeckoARMTestTaskId, uiGeckoARMTestTask)
 
 	uploadNDTaskId, uploadNDTask = upload_apk_nimbledroid_task([unitTestTaskId, codeQualityTaskId])
 	schedule_task(queue, uploadNDTaskId, uploadNDTask)

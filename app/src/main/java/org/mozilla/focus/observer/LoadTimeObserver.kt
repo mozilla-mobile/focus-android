@@ -24,14 +24,13 @@ object LoadTimeObserver {
                     if ((urlLoading != null && urlLoading != session.url.value) || urlLoading == null) {
                         urlLoading = session.url.value
                         startLoadTime = SystemClock.elapsedRealtime()
-                        Log.i(LOG_TAG, "zerdatime $startLoadTime - page load $urlLoading start")
+                        Log.i(LOG_TAG, "zerdatime $startLoadTime - page load start")
                     }
                 } else {
                     // Progress of 99 means the page completed loading and wasn't interrupted.
                     if (urlLoading != null &&
                             session.url.value == urlLoading &&
                             session.progress.value == MAX_PROGRESS) {
-                        Log.i(LOG_TAG, "Loaded page at $session.url.value")
                         val endTime = SystemClock.elapsedRealtime()
                         Log.i(LOG_TAG, "zerdatime $endTime - page load stop")
                         val elapsedLoad = endTime - startLoadTime
@@ -39,7 +38,7 @@ object LoadTimeObserver {
                         // Even internal pages take longer than 40 ms to load, let's not send any loads faster than this
                         if (elapsedLoad > MIN_LOAD_TIME && !UrlUtils.isLocalizedContent(urlLoading)) {
                             Log.i(LOG_TAG, "Sent load to histogram")
-                            TelemetryWrapper.addLoadToHistogram(elapsedLoad)
+                            TelemetryWrapper.addLoadToHistogram(session.url.value, elapsedLoad)
                         }
                     }
                 }

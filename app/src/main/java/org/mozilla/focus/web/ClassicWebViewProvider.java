@@ -39,7 +39,7 @@ public class ClassicWebViewProvider implements IWebViewProvider {
     }
 
     public void performCleanup(@NonNull final Context context) {
-        SystemWebView.deleteContentFromKnownLocations(context);
+        SystemWebView.Companion.deleteContentFromKnownLocations(context);
     }
 
     /**
@@ -128,6 +128,10 @@ public class ClassicWebViewProvider implements IWebViewProvider {
 
     @Override
     public void applyAppSettings(@NotNull Context context, @NotNull WebSettings webSettings, @NotNull SystemWebView systemWebView) {
+
+        // Clear the cache so trackers previously loaded are removed
+        systemWebView.clearCache(true);
+
         // We could consider calling setLoadsImagesAutomatically() here too (This will block images not loaded over the network too)
         webSettings.setBlockNetworkImage(Settings.getInstance(context).shouldBlockImages());
         webSettings.setJavaScriptEnabled(!Settings.getInstance(context).shouldBlockJavaScript());
@@ -146,12 +150,12 @@ public class ClassicWebViewProvider implements IWebViewProvider {
         CookieManager.getInstance().setAcceptCookie(true);
     }
 
-    public void requestDesktopSite(WebSettings settings) {
+    public void requestDesktopSite(@NonNull WebSettings settings) {
         settings.setUserAgentString(toggleDesktopUA(settings, true));
         settings.setUseWideViewPort(true);
     }
 
-    public void requestMobileSite(Context context, WebSettings settings) {
+    public void requestMobileSite(@NonNull Context context, @NonNull WebSettings settings) {
         settings.setUserAgentString(toggleDesktopUA(settings, false));
         settings.setUseWideViewPort(false);
     }
@@ -159,7 +163,8 @@ public class ClassicWebViewProvider implements IWebViewProvider {
     /**
      * Build the browser specific portion of the UA String, based on the webview's existing UA String.
      */
-    public String getUABrowserString(final String existingUAString, final String focusToken) {
+    @NonNull
+    public String getUABrowserString(@NonNull final String existingUAString, @NonNull final String focusToken) {
         // Use the default WebView agent string here for everything after the platform, but insert
         // Focus in front of Chrome.
         // E.g. a default webview UA string might be:

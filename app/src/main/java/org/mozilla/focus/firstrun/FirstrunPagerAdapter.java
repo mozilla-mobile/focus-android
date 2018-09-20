@@ -22,11 +22,13 @@ public class FirstrunPagerAdapter extends PagerAdapter {
         public final String title;
         public final String text;
         public final int imageResource;
+        public final String contentDescription;
 
         private FirstrunPage(String title, String text, int imageResource) {
             this.title = title;
             this.text = text;
             this.imageResource = imageResource;
+            this.contentDescription = title + text;
         }
     }
 
@@ -66,26 +68,31 @@ public class FirstrunPagerAdapter extends PagerAdapter {
 
         final FirstrunPage page = pages[position];
 
-        final TextView titleView = (TextView) view.findViewById(R.id.title);
+        final TextView titleView = view.findViewById(R.id.title);
         titleView.setText(page.title);
 
-        final TextView textView = (TextView) view.findViewById(R.id.text);
+        final TextView textView = view.findViewById(R.id.text);
         textView.setText(page.text);
 
-        final ImageView imageView = (ImageView) view.findViewById(R.id.image);
+        final ImageView imageView = view.findViewById(R.id.image);
         imageView.setImageResource(page.imageResource);
 
-        final Button buttonView = (Button) view.findViewById(R.id.button);
+        final Button buttonView = view.findViewById(R.id.button);
         buttonView.setOnClickListener(listener);
         if (position == pages.length - 1) {
             buttonView.setText(R.string.firstrun_close_button);
             buttonView.setId(R.id.finish);
+            buttonView.setContentDescription(buttonView.getText().toString().toLowerCase());
         } else {
             buttonView.setText(R.string.firstrun_next_button);
             buttonView.setId(R.id.next);
         }
 
         return view;
+    }
+
+    public String getPageAccessibilityDescription(int position) {
+        return pages[position].contentDescription;
     }
 
     @Override
@@ -101,8 +108,8 @@ public class FirstrunPagerAdapter extends PagerAdapter {
     @Override
     public Object instantiateItem(ViewGroup container, int position) {
         ViewPager pager = (ViewPager) container;
-        View view = getView(position, pager);
 
+        View view = getView(position, pager);
         pager.addView(view);
 
         return view;

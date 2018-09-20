@@ -9,7 +9,7 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.os.AsyncTask;
-import android.preference.ListPreference;
+import android.support.v7.preference.ListPreference;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -35,6 +35,7 @@ public class LocaleListPreference extends ListPreference {
     private static final String LOG_TAG = "GeckoLocaleList";
 
     private static final Map<String, String> languageCodeToNameMap = new HashMap<>();
+    private static final Map<String, String> localeToNameMap = new HashMap<>();
 
     static {
         // Only ICU 57 actually contains the Asturian name for Asturian, even Android 7.1 is still
@@ -61,6 +62,17 @@ public class LocaleListPreference extends ListPreference {
         languageCodeToNameMap.put("ay", "Aimara");
         languageCodeToNameMap.put("quc", "K'iche'");
         languageCodeToNameMap.put("tsz", "P'urhepecha");
+        languageCodeToNameMap.put("jv", "Basa Jawa");
+        languageCodeToNameMap.put("ppl", "Náhuat Pipil");
+        languageCodeToNameMap.put("su", "Basa Sunda");
+    }
+    static {
+        // Override the native name for certain locale regions based on language community needs.
+        localeToNameMap.put("zh-CN", "中文 (中国大陆)");
+    }
+
+    public LocaleListPreference(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+        super(context, attrs, defStyleAttr, defStyleRes);
     }
 
     /**
@@ -138,9 +150,8 @@ public class LocaleListPreference extends ListPreference {
     }
 
     @Override
-    protected void onAttachedToActivity() {
-        super.onAttachedToActivity();
-
+    public void onAttached() {
+        super.onAttached();
         // Thus far, missing glyphs are replaced by whitespace, not a box
         // or other Unicode codepoint.
         this.characterValidator = new CharacterValidator(" ");
@@ -191,6 +202,8 @@ public class LocaleListPreference extends ListPreference {
 
             if (languageCodeToNameMap.containsKey(locale.getLanguage())) {
                 displayName = languageCodeToNameMap.get(locale.getLanguage());
+            } else if (localeToNameMap.containsKey(locale)) {
+                displayName = localeToNameMap.get(locale);
             } else {
                 displayName = locale.getDisplayName(locale);
             }
@@ -297,9 +310,8 @@ public class LocaleListPreference extends ListPreference {
     }
 
     @Override
-    protected void onDialogClosed(boolean positiveResult) {
-        // The superclass will take care of persistence.
-        super.onDialogClosed(positiveResult);
+    protected void onClick() {
+        super.onClick();
 
         // Use this hook to try to fix up the environment ASAP.
         // Do this so that the redisplayed fragment is inflated

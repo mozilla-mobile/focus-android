@@ -7,6 +7,7 @@ package org.mozilla.focus.session.ui
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
 import android.support.v7.widget.RecyclerView
+import android.text.TextUtils
 import android.view.View
 import android.widget.TextView
 import org.mozilla.focus.R
@@ -28,6 +29,7 @@ class SessionViewHolder internal constructor(
     private var sessionReference: WeakReference<Session> = WeakReference<Session>(null)
 
     init {
+        textView.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_link, 0, 0, 0)
         textView.setOnClickListener(this)
     }
 
@@ -51,7 +53,9 @@ class SessionViewHolder internal constructor(
     }
 
     private fun updateTitle(session: Session) {
-        textView.text = session.pageTitle.value ?: session.url.value.beautifyUrl()
+        textView.text =
+                if (TextUtils.isEmpty(session.pageTitle.value)) session.url.value.beautifyUrl()
+                else session.pageTitle.value
     }
 
     override fun onClick(view: View) {

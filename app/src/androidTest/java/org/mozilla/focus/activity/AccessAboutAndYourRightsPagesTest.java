@@ -22,12 +22,10 @@ import org.mozilla.focus.R;
 import org.mozilla.focus.helpers.SessionLoadedIdlingResource;
 import org.mozilla.focus.utils.AppConstants;
 
-import static android.support.test.espresso.Espresso.onData;
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.Espresso.pressBack;
 import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
-import static android.support.test.espresso.matcher.PreferenceMatchers.withTitleText;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
@@ -53,7 +51,7 @@ public class AccessAboutAndYourRightsPagesTest {
                     .getApplicationContext();
 
             // This test is for webview only. Debug is defaulted to Webview, and Klar is used for GV testing.
-            org.junit.Assume.assumeTrue(!AppConstants.isGeckoBuild(appContext) && !AppConstants.isKlarBuild());
+            org.junit.Assume.assumeTrue(!AppConstants.INSTANCE.isGeckoBuild() && !AppConstants.INSTANCE.isKlarBuild());
 
             PreferenceManager.getDefaultSharedPreferences(appContext)
                     .edit()
@@ -98,28 +96,26 @@ public class AccessAboutAndYourRightsPagesTest {
         openMenu();
         clickMenuItem(R.id.settings);
         final String mozillaMenuLabel = context.getString(R.string.preference_category_mozilla, context.getString(R.string.app_name));
-        onData(withTitleText(mozillaMenuLabel))
+        onView(withText(mozillaMenuLabel))
                 .check(matches(isDisplayed()))
                 .perform(click());
+
         final String aboutLabel = context.getString(R.string.preference_about, context.getString(R.string.app_name));
-        onData(withTitleText(aboutLabel))
+        onView(withText(aboutLabel))
                 .check(matches(isDisplayed()))
                 .perform(click());
-
-        assertWebsiteUrlContains("focus:about");
-
-        pressBack();  // This takes to main view
-        openMenu();
-        clickMenuItem(R.id.settings);
-        onData(withTitleText(mozillaMenuLabel))
+        onView(withId(R.id.infofragment))
                 .check(matches(isDisplayed()))
                 .perform(click());
+        pressBack();  // This takes to Mozilla Submenu of settings
 
         // "Your rights" page
-        onData(withTitleText(context.getString(R.string.your_rights)))
+        onView(withText(context.getString(R.string.your_rights)))
                 .check(matches(isDisplayed()))
                 .perform(click());
-        assertWebsiteUrlContains("focus:rights");
+        onView(withId(R.id.infofragment))
+                .check(matches(isDisplayed()))
+                .perform(click());
     }
 
     private void clickMenuItem(@IdRes int id) {

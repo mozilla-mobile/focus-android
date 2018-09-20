@@ -27,6 +27,7 @@ import okhttp3.mockwebserver.MockResponse;
 import okhttp3.mockwebserver.MockWebServer;
 
 import static junit.framework.Assert.assertTrue;
+import static org.junit.Assert.assertFalse;
 import static org.mozilla.focus.fragment.FirstrunFragment.FIRSTRUN_PREF;
 import static org.mozilla.focus.helpers.EspressoHelper.openSettings;
 import static org.mozilla.focus.helpers.TestHelper.waitingTime;
@@ -56,7 +57,7 @@ public class SettingsBlockToggleTest {
 
             // This test runs on both GV and WV.
             // Klar is used to test Geckoview. make sure it's set to Gecko
-            if (AppConstants.isKlarBuild() && !AppConstants.isGeckoBuild(appContext)) {
+            if (AppConstants.INSTANCE.isKlarBuild() && !AppConstants.INSTANCE.isGeckoBuild()) {
                 PreferenceManager.getDefaultSharedPreferences(appContext)
                         .edit()
                         .putBoolean(ENGINE_PREF_STRING_KEY, true)
@@ -101,23 +102,23 @@ public class SettingsBlockToggleTest {
         UiObject privacyHeading = TestHelper.mDevice.findObject(new UiSelector()
                 .text("Privacy & Security")
                 .resourceId("android:id/title"));
-        UiObject blockAdTrackerEntry = TestHelper.settingsList.getChild(new UiSelector()
+        UiObject blockAdTrackerEntry = TestHelper.settingsMenu.getChild(new UiSelector()
                 .className("android.widget.LinearLayout")
                 .instance(1));
-        UiObject blockAdTrackerValue = blockAdTrackerEntry.getChild(new UiSelector()
-                .className("android.widget.Switch"));
+        UiObject blockAdTrackerSwitch = blockAdTrackerEntry.getChild(new UiSelector()
+                .resourceId(TestHelper.getAppName() + ":id/switchWidget"));
 
-        UiObject blockAnalyticTrackerEntry = TestHelper.settingsList.getChild(new UiSelector()
+        UiObject blockAnalyticTrackerEntry = TestHelper.settingsMenu.getChild(new UiSelector()
                 .className("android.widget.LinearLayout")
                 .instance(2));
-        UiObject blockAnalyticTrackerValue = blockAnalyticTrackerEntry.getChild(new UiSelector()
-                .className("android.widget.Switch"));
+        UiObject blockAnalyticTrackerSwitch = blockAnalyticTrackerEntry.getChild(new UiSelector()
+                .resourceId(TestHelper.getAppName() + ":id/switchWidget"));
 
-        UiObject blockSocialTrackerEntry = TestHelper.settingsList.getChild(new UiSelector()
+        UiObject blockSocialTrackerEntry = TestHelper.settingsMenu.getChild(new UiSelector()
                 .className("android.widget.LinearLayout")
                 .instance(4));
-        UiObject blockSocialTrackerValue = blockSocialTrackerEntry.getChild(new UiSelector()
-                .className("android.widget.Switch"));
+        UiObject blockSocialTrackerSwitch = blockSocialTrackerEntry.getChild(new UiSelector()
+                .resourceId(TestHelper.getAppName() + ":id/switchWidget"));
 
         // Let's go to an actual URL which is http://
         TestHelper.inlineAutocompleteEditText.waitForExists(waitingTime);
@@ -133,17 +134,27 @@ public class SettingsBlockToggleTest {
         openSettings();
         privacyHeading.waitForExists(waitingTime);
         privacyHeading.click();
-        blockAdTrackerEntry.click();
-        assertTrue(blockAdTrackerValue.getText().equals("OFF"));
-        blockAnalyticTrackerEntry.click();
-        assertTrue(blockAnalyticTrackerValue.getText().equals("OFF"));
-        blockSocialTrackerEntry.click();
-        assertTrue(blockSocialTrackerValue.getText().equals("OFF"));
 
-        // Turn back on
+        String blockAdTrackerValue = blockAdTrackerSwitch.getText();
+        String blockAnalyticTrackerValue = blockAnalyticTrackerSwitch.getText();
+        String blockSocialTrackerValue = blockSocialTrackerSwitch.getText();
+
+        // Turn off and back on
         blockAdTrackerEntry.click();
         blockAnalyticTrackerEntry.click();
         blockSocialTrackerEntry.click();
+
+        assertFalse(blockAdTrackerSwitch.getText().equals(blockAdTrackerValue));
+        assertFalse(blockAnalyticTrackerSwitch.getText().equals(blockAnalyticTrackerValue));
+        assertFalse(blockSocialTrackerSwitch.getText().equals(blockSocialTrackerValue));
+
+        blockAdTrackerEntry.click();
+        blockAnalyticTrackerEntry.click();
+        blockSocialTrackerEntry.click();
+
+        assertTrue(blockAdTrackerSwitch.getText().equals(blockAdTrackerValue));
+        assertTrue(blockAnalyticTrackerSwitch.getText().equals(blockAnalyticTrackerValue));
+        assertTrue(blockSocialTrackerSwitch.getText().equals(blockSocialTrackerValue));
 
         //Back to the webpage
         TestHelper.pressBackKey();

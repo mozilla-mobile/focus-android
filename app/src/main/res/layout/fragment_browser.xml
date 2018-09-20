@@ -38,6 +38,8 @@
                     android:id="@+id/webview"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true"
                     android:scrollbarThumbVertical="@drawable/scrollbar_thumb"
                     app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
@@ -54,7 +56,6 @@
                 android:layout_marginBottom="@dimen/floating_action_button_margin"
                 android:layout_marginEnd="@dimen/floating_action_button_margin"
                 android:elevation="4dp"
-                android:src="@drawable/tab_number_border"
                 android:visibility="gone"
                 app:backgroundTint="@color/colorMultitasking"
                 app:rippleColor="@color/colorMultitaskingPressed"

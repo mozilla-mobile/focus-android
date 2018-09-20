@@ -5,26 +5,30 @@
 package org.mozilla.focus.web
 
 import android.content.Context
-import android.preference.PreferenceManager
 import android.util.AttributeSet
 import android.view.View
 import android.webkit.WebSettings
+import org.mozilla.focus.utils.geckoEngineExperimentDescriptor
+import org.mozilla.focus.utils.isInExperiment
 import org.mozilla.focus.webview.SystemWebView
 
 const val ENGINE_PREF_STRING_KEY = "use_gecko_engine"
 
 object WebViewProvider : IWebViewProvider {
 
-    private var useNewRenderer: Boolean = Config.DEFAULT_NEW_RENDERER
-    private var engine: IWebViewProvider? = null
+    var engine: IWebViewProvider? = null
 
-    fun readEnginePref(context: Context) {
-        val prefs = PreferenceManager.getDefaultSharedPreferences(context)
-        useNewRenderer = prefs.getBoolean(ENGINE_PREF_STRING_KEY, Config.DEFAULT_NEW_RENDERER)
+    fun determineEngine(context: Context): IWebViewProvider {
+        val useNewRenderer =
+            if (context.isInExperiment(geckoEngineExperimentDescriptor))
+                    true
+                else
+                    Config.DEFAULT_NEW_RENDERER
         engine = when (useNewRenderer) {
             false -> ClassicWebViewProvider()
             true -> GeckoWebViewProvider()
         }
+        return engine!!
     }
 
     override fun preload(context: Context) {
@@ -51,7 +55,7 @@ object WebViewProvider : IWebViewProvider {
         engine!!.requestDesktopSite(webSettings)
     }
 
-    override fun getUABrowserString(existingUAString: String, focusToken: String): String? {
+    override fun getUABrowserString(existingUAString: String, focusToken: String): String {
         return engine!!.getUABrowserString(existingUAString, focusToken)
     }
 

@@ -4,8 +4,7 @@
 
 package org.mozilla.focus.screenshots;
 
-import android.content.Context;
-import android.support.test.InstrumentationRegistry;
+import android.os.SystemClock;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 import android.support.test.uiautomator.UiObjectNotFoundException;
@@ -24,6 +23,10 @@ import org.mozilla.focus.utils.AppConstants;
 import tools.fastlane.screengrab.Screengrab;
 import tools.fastlane.screengrab.locale.LocaleTestRule;
 
+import static android.support.test.espresso.Espresso.onView;
+import static android.support.test.espresso.assertion.ViewAssertions.matches;
+import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
+import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static junit.framework.Assert.assertTrue;
 
 @RunWith(AndroidJUnit4.class)
@@ -34,13 +37,9 @@ public class FirstRunScreenshots extends ScreenshotTest {
         protected void beforeActivityLaunched() {
             super.beforeActivityLaunched();
 
-            Context appContext = InstrumentationRegistry.getInstrumentation()
-                    .getTargetContext()
-                    .getApplicationContext();
-
             // This test is for webview only for now.
-            org.junit.Assume.assumeTrue(!AppConstants.isGeckoBuild(appContext.getApplicationContext()) &&
-                    !AppConstants.isKlarBuild());
+            org.junit.Assume.assumeTrue(!AppConstants.INSTANCE.isGeckoBuild() &&
+                    !AppConstants.INSTANCE.isKlarBuild());
         }
     };
 
@@ -48,13 +47,13 @@ public class FirstRunScreenshots extends ScreenshotTest {
     public static final LocaleTestRule localeTestRule = new LocaleTestRule();
 
     @Test
-    public void takeScreenshotsOfFirstrun() throws UiObjectNotFoundException {
-        Screengrab.screenshot("Ignore_FirstRun");
-        assertTrue(device.findObject(new UiSelector()
-                .text(getString(R.string.firstrun_defaultbrowser_title))
-                .enabled(true)
-        ).waitForExists(waitingTime));
+    public void takeScreenshotsOfFirstrun() throws UiObjectNotFoundException, InterruptedException {
+        onView(withText(R.string.firstrun_defaultbrowser_title))
+                .check(matches(isDisplayed()));
+
         device.waitForIdle();
+        SystemClock.sleep(5000);
+
         Screengrab.screenshot("Onboarding_1_View");
         TestHelper.nextBtn.click();
 

@@ -83,6 +83,18 @@ public abstract class LocaleAwareAppCompatActivity
         startActivityForResult(settingsIntent, 0);
     }
 
+    public void openPrivacySecuritySettings() {
+        final Intent settingsIntent = new Intent(this, SettingsActivity.class);
+        settingsIntent.putExtra(SettingsActivity.SHOULD_OPEN_PRIVACY_EXTRA, true);
+        startActivityForResult(settingsIntent, 0);
+    }
+
+    public void openMozillaSettings() {
+        final Intent settingsIntent = new Intent(this, SettingsActivity.class);
+        settingsIntent.putExtra(SettingsActivity.SHOULD_OPEN_MOZILLA_EXTRA, true);
+        startActivityForResult(settingsIntent, 0);
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);

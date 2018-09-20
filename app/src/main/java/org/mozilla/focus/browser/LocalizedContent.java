@@ -48,11 +48,11 @@ public class LocalizedContent {
 
         final Map<String, String> substitutionMap = new ArrayMap<>();
         final String appName = context.getResources().getString(R.string.app_name);
-        final String learnMoreURL = SupportUtils.getManifestoURL();
+        final String learnMoreURL = SupportUtils.INSTANCE.getManifestoURL();
 
         String aboutVersion = "";
         try {
-            final String engineIndicator = AppConstants.isGeckoBuild(context) ?
+            final String engineIndicator = AppConstants.INSTANCE.isGeckoBuild() ?
                     " \uD83E\uDD8E " + BuildConfig.GECKOVIEW_VERSION
                     : "";
             final PackageInfo packageInfo = context.getPackageManager().getPackageInfo(context.getPackageName(), 0);
@@ -72,7 +72,7 @@ public class LocalizedContent {
 
         final String data = HtmlLoader.loadResourceFile(context, R.raw.about, substitutionMap);
 
-        webView.loadData(URL_ABOUT, data, "text/html", "UTF-8", URL_ABOUT);
+        webView.loadData("file:///android_res/raw/about.html", data, "text/html", "UTF-8", URL_ABOUT);
     }
 
     /**
@@ -108,7 +108,7 @@ public class LocalizedContent {
         putLayoutDirectionIntoMap(substitutionMap, context);
 
         final String data = HtmlLoader.loadResourceFile(context, R.raw.rights, substitutionMap);
-        webView.loadData(URL_RIGHTS, data, "text/html", "UTF-8", URL_RIGHTS);
+        webView.loadData("file:///android_asset/rights.html", data, "text/html", "UTF-8", URL_RIGHTS);
     }
 
     private static void putLayoutDirectionIntoMap(Map<String, String> substitutionMap, Context context) {
