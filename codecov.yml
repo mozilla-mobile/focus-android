@@ -13,7 +13,10 @@ coverage:
        if_not_found: success
     patch:
       default:
-        enabled: yes
+        # Patch ensures X percent of added lines are covered by unit tests.
+        # However, we don't require unit tests for each commit so it doesn't
+        # make sense to enable patch checks.
+        enabled: no
         threshold: 0.1
         if_not_found: success
     changes:
