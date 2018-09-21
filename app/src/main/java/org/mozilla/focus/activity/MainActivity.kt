@@ -28,6 +28,7 @@ import org.mozilla.focus.settings.ExperimentsSettingsFragment
 import org.mozilla.focus.telemetry.SentryWrapper
 import org.mozilla.focus.telemetry.TelemetryWrapper
 import org.mozilla.focus.utils.AppConstants
+import org.mozilla.focus.utils.ExperimentsSyncService
 import org.mozilla.focus.utils.Settings
 import org.mozilla.focus.utils.ViewUtils
 import org.mozilla.focus.viewmodel.MainViewModel
@@ -164,6 +165,7 @@ open class MainActivity : LocaleAwareAppCompatActivity() {
         super.onStop()
 
         TelemetryWrapper.stopMainActivity()
+        ExperimentsSyncService.scheduleSync(this)
     }
 
     override fun onNewIntent(unsafeIntent: Intent) {
@@ -316,5 +318,7 @@ open class MainActivity : LocaleAwareAppCompatActivity() {
         const val EXTRA_NOTIFICATION = "notification"
 
         private const val EXTRA_SHORTCUT = "shortcut"
+
+        const val EXPERIMENTS_JOB_ID: Int = 4141
     }
 }
