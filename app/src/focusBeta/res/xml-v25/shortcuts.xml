@@ -24,7 +24,7 @@
       android:shortcutLongLabel="@string/shortcut_erase_and_open_long_label">
     <intent
         android:action="erase"
-        android:targetPackage="org.mozilla.focus.beta"
+        android:targetPackage="org.mozilla.focus"
         android:targetClass="org.mozilla.focus.activity.EraseAndOpenShortcutActivity">
       <extra android:name="shortcut" android:value="true" />
     </intent>

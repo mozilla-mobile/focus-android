@@ -12,6 +12,8 @@ class EraseAndOpenShortcutActivity: Activity(){
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
 
+    Toast.makeText(this,"INSIDE ERASE", Toast.LENGTH_SHORT).show()
+
     SessionManager.getInstance().removeAllSessions()
 
     TelemetryWrapper.eraseAndOpenShortcutEvent()
