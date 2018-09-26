@@ -14,7 +14,7 @@ import kotlinx.coroutines.experimental.runBlocking
 import kotlinx.coroutines.experimental.withTimeoutOrNull
 import mozilla.components.service.fretboard.Fretboard
 import mozilla.components.service.fretboard.source.kinto.KintoExperimentSource
-import mozilla.components.service.fretboard.storage.flatfile.FlatFileExperimentStorage
+import org.mozilla.focus.fretboard.FocusFlatFileExperimentStorage
 import org.mozilla.focus.locale.LocaleAwareApplication
 import org.mozilla.focus.session.NotificationSessionObserver
 import org.mozilla.focus.session.SessionManager
@@ -42,7 +42,7 @@ class FocusApplication : LocaleAwareApplication() {
     lateinit var fretboard: Fretboard
 
     companion object {
-        private const val FRETBOARD_BLOCKING_DISK_READ_TIMEOUT = 1000
+        private const val FRETBOARD_BLOCKING_NETWORK_READ_TIMEOUT = 10000
     }
 
     var visibilityLifeCycleCallback: VisibilityLifeCycleCallback? = null
@@ -69,34 +69,37 @@ class FocusApplication : LocaleAwareApplication() {
                 registerForLocaleUpdates(this@FocusApplication)
             }
 
-            WebViewProvider.determineEngine(this@FocusApplication)
-
             TelemetryWrapper.init(this@FocusApplication)
             AdjustHelper.setupAdjustIfNeeded(this@FocusApplication)
 
             visibilityLifeCycleCallback = VisibilityLifeCycleCallback(this@FocusApplication)
             registerActivityLifecycleCallbacks(visibilityLifeCycleCallback)
 
-            val sessions = SessionManager.getInstance().sessions
-            sessions.observeForever(NotificationSessionObserver(this@FocusApplication))
-            sessions.observeForever(TelemetrySessionObserver())
-            sessions.observeForever(CleanupSessionObserver(this@FocusApplication))
-
-            val customTabSessions = SessionManager.getInstance().customTabSessions
-            customTabSessions.observeForever(TelemetrySessionObserver())
+            setupSessions()
         }
+    }
+
+    private fun setupSessions() {
+        val sessions = SessionManager.getInstance().sessions
+        sessions.observeForever(NotificationSessionObserver(this@FocusApplication))
+        sessions.observeForever(TelemetrySessionObserver())
+        sessions.observeForever(CleanupSessionObserver(this@FocusApplication))
+
+        val customTabSessions = SessionManager.getInstance().customTabSessions
+        customTabSessions.observeForever(TelemetrySessionObserver())
     }
 
     private suspend fun loadExperiments() {
         val experimentsFile = File(filesDir, EXPERIMENTS_JSON_FILENAME)
         val experimentSource = KintoExperimentSource(
                 EXPERIMENTS_BASE_URL, EXPERIMENTS_BUCKET_NAME, EXPERIMENTS_COLLECTION_NAME)
-        fretboard = Fretboard(experimentSource, FlatFileExperimentStorage(experimentsFile))
-        withTimeoutOrNull(FRETBOARD_BLOCKING_DISK_READ_TIMEOUT) {
-            fretboard.loadExperiments() // load current settings from disk
-        }
+        fretboard = Fretboard(experimentSource, FocusFlatFileExperimentStorage(experimentsFile))
+        fretboard.loadExperiments()
+        WebViewProvider.determineEngine(this@FocusApplication)
         launch(IO) {
-            fretboard.updateExperiments() // then update disk and memory from the network
+            withTimeoutOrNull(FRETBOARD_BLOCKING_NETWORK_READ_TIMEOUT) {
+                fretboard.updateExperiments() // then update disk and memory from the network
+            }
         }
     }
 

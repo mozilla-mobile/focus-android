@@ -10,7 +10,6 @@ import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.content.SharedPreferences
 import android.content.res.Configuration
-import android.graphics.Typeface
 import android.graphics.drawable.TransitionDrawable
 import android.os.Bundle
 import android.preference.PreferenceManager
@@ -20,7 +19,6 @@ import android.text.TextUtils
 import android.text.method.LinkMovementMethod
 import android.text.style.ClickableSpan
 import android.text.style.ForegroundColorSpan
-import android.text.style.StyleSpan
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -30,6 +28,8 @@ import android.widget.FrameLayout
 import android.widget.TextView
 import kotlinx.android.synthetic.main.fragment_urlinput.*
 import kotlinx.android.synthetic.main.fragment_urlinput.view.*
+import kotlinx.coroutines.experimental.launch
+import mozilla.components.browser.domains.CustomDomains
 import mozilla.components.browser.domains.DomainAutoCompleteProvider
 import mozilla.components.support.utils.ThreadUtils
 import mozilla.components.ui.autocomplete.InlineAutocompleteEditText
@@ -57,6 +57,7 @@ import org.mozilla.focus.utils.UrlUtils
 import org.mozilla.focus.utils.ViewUtils
 import org.mozilla.focus.viewmodel.MainViewModel
 import org.mozilla.focus.whatsnew.WhatsNew
+import java.util.Objects
 
 class FocusCrashException : Exception()
 
@@ -85,8 +86,6 @@ class UrlInputFragment :
         private val ARGUMENT_SESSION_UUID = "sesssion_uuid"
 
         private val ANIMATION_BROWSER_SCREEN = "browser_screen"
-
-        private val PLACEHOLDER = "5981086f-9d45-4f64-be99-7d2ffa03befb"
 
         private val ANIMATION_DURATION = 200
         private val TIPS_ALPHA = 0.65f
@@ -265,6 +264,11 @@ class UrlInputFragment :
             val marginParams = searchViewContainer.layoutParams as ViewGroup.MarginLayoutParams
             marginParams.topMargin = (inputHeight + statusBarHeight).toInt()
         }
+
+        if (addToAutocompelte.layoutParams is ViewGroup.MarginLayoutParams) {
+            val marginParams = addToAutocompelte.layoutParams as ViewGroup.MarginLayoutParams
+            marginParams.topMargin = (inputHeight + statusBarHeight).toInt()
+        }
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?):
@@ -320,6 +324,12 @@ class UrlInputFragment :
             )
             clearView?.visibility = View.VISIBLE
             searchViewContainer?.visibility = View.GONE
+            addToAutocompelte?.visibility = View.VISIBLE
+        }
+
+        addToAutocompelte.setOnClickListener {
+            val url = urlView?.text.toString()
+            addUrlToAutocomplete(url)
         }
 
         updateTipsLabel()
@@ -437,6 +447,31 @@ class UrlInputFragment :
 
         displayedPopupMenu?.dismissListener = {
             displayedPopupMenu = null
+        }
+    }
+
+    private fun addUrlToAutocomplete(url: String) {
+        var duplicateURL = false
+        val job = launch {
+            duplicateURL = CustomDomains.load(requireContext()).contains(url)
+
+            if (duplicateURL) return@launch
+            CustomDomains.add(requireContext(), url)
+
+            TelemetryWrapper.saveAutocompleteDomainEvent(TelemetryWrapper.AutoCompleteEventSource.QUICK_ADD)
+        }
+
+        job.invokeOnCompletion {
+            requireActivity().runOnUiThread {
+                val messageId =
+                        if (!duplicateURL)
+                            R.string.preference_autocomplete_add_confirmation
+                        else
+                            R.string.preference_autocomplete_duplicate_url_error
+
+                ViewUtils.showBrandedSnackbar(Objects.requireNonNull<View>(view), messageId, 0)
+                animateAndDismiss()
+            }
         }
     }
 
@@ -741,6 +776,7 @@ class UrlInputFragment :
         if (searchText.trim { it <= ' ' }.isEmpty()) {
             clearView?.visibility = View.GONE
             searchViewContainer?.visibility = View.GONE
+            addToAutocompelte?.visibility = View.GONE
 
             if (!isOverlay) {
                 playVisibilityAnimation(true)
@@ -754,15 +790,8 @@ class UrlInputFragment :
                 dismissView?.visibility = View.VISIBLE
             }
 
-            // LTR languages sometimes have grammar where the search terms are displayed to the left
-            // of the hint string. To take care of LTR, RTL, and special LTR cases, we use a
-            // placeholder to know the start and end indices of where we should bold the search text
-            val hint = getString(R.string.search_hint, PLACEHOLDER)
-            val start = hint.indexOf(PLACEHOLDER)
-
-            val content = SpannableString(hint.replace(PLACEHOLDER, searchText))
-            content.setSpan(StyleSpan(Typeface.BOLD), start, start + searchText.length, 0)
             searchViewContainer?.visibility = View.VISIBLE
+            addToAutocompelte?.visibility = View.GONE
         }
     }
 
