@@ -6,6 +6,7 @@ package org.mozilla.focus.activity
 
 import android.app.Activity
 import android.os.Bundle
+import android.widget.Toast
 
 import org.mozilla.focus.session.SessionManager
 import org.mozilla.focus.telemetry.TelemetryWrapper
@@ -14,6 +15,7 @@ class EraseShortcutActivity : Activity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        Toast.makeText(this,"INSIDE ERASE",Toast.LENGTH_SHORT).show()
         SessionManager.getInstance().removeAllSessions()
 
         TelemetryWrapper.eraseShortcutEvent()
