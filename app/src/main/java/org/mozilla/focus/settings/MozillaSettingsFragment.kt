@@ -6,7 +6,6 @@ package org.mozilla.focus.settings
 
 import android.content.SharedPreferences
 import android.os.Bundle
-import android.support.v14.preference.SwitchPreference
 import android.support.v7.preference.Preference
 import org.mozilla.focus.R
 import org.mozilla.focus.activity.InfoActivity
@@ -15,7 +14,6 @@ import org.mozilla.focus.session.Source
 import org.mozilla.focus.telemetry.TelemetryWrapper
 import org.mozilla.focus.utils.AppConstants
 import org.mozilla.focus.utils.SupportUtils
-import org.mozilla.focus.utils.app
 import org.mozilla.focus.utils.homeScreenTipsExperimentDescriptor
 import org.mozilla.focus.utils.isInExperiment
 
@@ -23,9 +21,10 @@ class MozillaSettingsFragment : BaseSettingsFragment(),
         SharedPreferences.OnSharedPreferenceChangeListener {
     override fun onCreatePreferences(p0: Bundle?, p1: String?) {
         addPreferencesFromResource(R.xml.mozilla_settings)
-        val homeScreenTipsPref: SwitchPreference? = preferenceManager
-            .findPreference(getString(R.string.pref_key_homescreen_tips)) as SwitchPreference?
-        homeScreenTipsPref?.isChecked = activity!!.isInExperiment(homeScreenTipsExperimentDescriptor)
+
+        if (!requireContext().isInExperiment(homeScreenTipsExperimentDescriptor)) {
+            preferenceScreen.removePreference(findPreference(getString(R.string.pref_key_homescreen_tips)))
+        }
     }
 
     override fun onResume() {
@@ -74,14 +73,6 @@ class MozillaSettingsFragment : BaseSettingsFragment(),
 
     override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences, key: String) {
         TelemetryWrapper.settingsEvent(key, sharedPreferences.all[key].toString())
-        when (key) {
-            getString(R.string.pref_key_homescreen_tips) -> {
-                activity!!.app.fretboard.setOverride(
-                    activity!!.app, homeScreenTipsExperimentDescriptor,
-                    sharedPreferences.getBoolean(key, false)
-                )
-            }
-        }
     }
 
     companion object {
