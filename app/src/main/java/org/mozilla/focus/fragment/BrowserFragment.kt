@@ -346,7 +346,7 @@ class BrowserFragment : WebFragment(), LifecycleObserver, View.OnClickListener,
         val sessionManager = requireComponents.sessionManager
         sessionManager.register(object : SessionManager.Observer {
             override fun onSessionAdded(session: Session) {
-                Snackbar.make(view,"Session added",Snackbar.LENGTH_LONG)
+                Snackbar.make(view,"Session added", Snackbar.LENGTH_LONG)
                         .setAction("OPEN", View.OnClickListener {
                             activity!!.components.sessionManager.select(session)
                         })
