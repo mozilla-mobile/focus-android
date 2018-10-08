@@ -56,7 +56,7 @@ public class NotificationSessionObserverTest {
         observer.onChanged(sessions);
 
         verify(context, never()).stopService(anyIntent());
-        verify(context).startForegroundService(anyIntent());
+        verify(context).startService(anyIntent());
     }
 
     @Test
@@ -72,7 +72,7 @@ public class NotificationSessionObserverTest {
         observer.onChanged(sessions);
 
         verify(context, never()).stopService(anyIntent());
-        verify(context).startForegroundService(anyIntent());
+        verify(context).startService(anyIntent());
     }
 
     private Intent anyIntent() {
