@@ -130,7 +130,6 @@ tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {
 }
 
 repositories {
-    mavenCentral()
     maven {
         //  For the latest version of GeckoView (moving target!):
         //
@@ -189,6 +188,8 @@ dependencies {
     implementation "org.mozilla.components:fretboard:$mozilla_components_version", {
         exclude group: 'android.arch.work', module: 'work-runtime'
     }
+    implementation "org.mozilla.components:support-ktx:$mozilla_components_version"
+    implementation "org.mozilla.components:support-utils:$mozilla_components_version"
 
     implementation 'com.squareup.okhttp3:okhttp:3.11.0'
 
