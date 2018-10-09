@@ -15,8 +15,10 @@ import mozilla.components.browser.search.SearchEngine;
 import org.mozilla.focus.browser.LocalizedContent;
 import org.mozilla.focus.ext.ContextKt;
 
+import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.net.URL;
 
 public class UrlUtils {
     public static String normalize(@NonNull String input) {
@@ -41,7 +43,12 @@ public class UrlUtils {
             return false;
         }
 
-        return trimmedUrl.contains(".") || trimmedUrl.contains(":");
+        try {
+            new URL(trimmedUrl);
+            return trimmedUrl.contains(".") || trimmedUrl.contains(":");
+        } catch (MalformedURLException e) {
+            return false;
+        }
     }
 
     public static boolean isValidSearchQueryUrl(String url) {
