@@ -312,7 +312,7 @@ object TelemetryWrapper {
 
     @JvmStatic
     fun addLoadToHistogram(url: String, newLoadTime: Long) {
-        domainMap.add(UrlUtils.stripCommonSubdomains(URI(url).host))
+        domainMap.add(UrlUtils.stripCommonSubdomains(URI(url).host) ?: return)
         numUri++
         var histogramLoadIndex = (newLoadTime / BUCKET_SIZE_MS).toInt()
 

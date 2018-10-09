@@ -77,7 +77,7 @@ public class HomeScreen {
 
     @VisibleForTesting static String generateTitleFromUrl(String url) {
         // For now we just use the host name and strip common subdomains like "www" or "m".
-        return UrlUtils.stripCommonSubdomains(Uri.parse(url).getHost());
+        return UrlUtils.INSTANCE.stripCommonSubdomains(Uri.parse(url).getHost());
     }
 
     /**
