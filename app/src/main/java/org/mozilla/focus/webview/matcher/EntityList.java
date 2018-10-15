@@ -31,8 +31,8 @@ import org.mozilla.focus.webview.matcher.util.FocusString;
             return false;
         }
 
-        if (UrlUtils.isPermittedResourceProtocol(resource.getScheme()) &&
-                UrlUtils.isSupportedProtocol(site.getScheme())) {
+        if (UrlUtils.INSTANCE.isPermittedResourceProtocol(resource.getScheme()) &&
+                UrlUtils.INSTANCE.isSupportedProtocol(site.getScheme())) {
             final FocusString revSitehost = FocusString.create(site.getHost()).reverse();
             final FocusString revResourcehost = FocusString.create(resource.getHost()).reverse();
 

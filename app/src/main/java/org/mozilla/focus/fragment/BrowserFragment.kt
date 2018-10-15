@@ -1324,6 +1324,7 @@ class BrowserFragment : WebFragment(), LifecycleObserver, View.OnClickListener,
                 swipeRefresh!!.isRefreshing = false
 
                 updateSecurityIcon(session)
+                bringURLTLDIntoView()
             }
 
             updateBlockingBadging(loading || session.trackerBlockingEnabled)
@@ -1334,6 +1335,19 @@ class BrowserFragment : WebFragment(), LifecycleObserver, View.OnClickListener,
             menu?.updateLoading(loading)
 
             hideFindInPage()
+        }
+
+        fun bringURLTLDIntoView() {
+            if (urlView != null) {
+                val paint = urlView!!.paint
+                val charWidth = paint.measureText("a", 0, 1)
+                val urlViewWidth = urlView!!.measuredWidth
+                val numChars = urlViewWidth / charWidth
+                if (url.length > numChars) {
+                    val index = UrlUtils.getIndexOfTLD(url)
+                    urlView?.bringPointIntoView(index)
+                }
+            }
         }
 
         override fun onUrlChanged(session: Session, url: String) {

@@ -129,7 +129,7 @@ import static android.view.View.IMPORTANT_FOR_ACCESSIBILITY_YES;
             final String requestURL = request.getUrl().toString();
             final String currentURL = currentPageURL;
 
-            if (UrlUtils.urlsMatchExceptForTrailingSlash(currentURL, requestURL)) {
+            if (UrlUtils.INSTANCE.urlsMatchExceptForTrailingSlash(currentURL, requestURL)) {
                 view.post(new Runnable() {
                     @Override
                     public void run() {
@@ -216,7 +216,7 @@ import static android.view.View.IMPORTANT_FOR_ACCESSIBILITY_YES;
 
         if (callback != null) {
             // The page is secure when the url is a localized content or when the certificate isn't null
-            final boolean isSecure = certificate != null || UrlUtils.isLocalizedContent(view.getUrl());
+            final boolean isSecure = certificate != null || UrlUtils.INSTANCE.isLocalizedContent(view.getUrl());
 
             callback.onPageFinished(isSecure);
 
@@ -230,7 +230,7 @@ import static android.view.View.IMPORTANT_FOR_ACCESSIBILITY_YES;
             // The URL which is supplied in onPageFinished() could be fake (see #301), but webview's
             // URL is always correct _except_ for error pages
             final String viewURL = view.getUrl();
-            if (!UrlUtils.isInternalErrorURL(viewURL) && viewURL != null) {
+            if (!UrlUtils.INSTANCE.isInternalErrorURL(viewURL) && viewURL != null) {
                 callback.onURLChanged(viewURL);
             }
         }
@@ -273,7 +273,7 @@ import static android.view.View.IMPORTANT_FOR_ACCESSIBILITY_YES;
         // the request is for the main frame, and if it's not we could then completely
         // skip the external URL handling.)
         final Uri uri = Uri.parse(url);
-        if (!UrlUtils.isSupportedProtocol(uri.getScheme()) &&
+        if (!UrlUtils.INSTANCE.isSupportedProtocol(uri.getScheme()) &&
                 callback != null &&
                 IntentUtils.INSTANCE.handleExternalUri(view.getContext(), (IWebView) view, url)) {
             return true;

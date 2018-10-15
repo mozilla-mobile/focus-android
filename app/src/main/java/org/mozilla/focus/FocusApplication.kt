@@ -28,6 +28,7 @@ import org.mozilla.focus.utils.EXPERIMENTS_BUCKET_NAME
 import org.mozilla.focus.utils.EXPERIMENTS_COLLECTION_NAME
 import org.mozilla.focus.utils.EXPERIMENTS_JSON_FILENAME
 import org.mozilla.focus.utils.StethoWrapper
+import org.mozilla.focus.utils.TLDExtractor
 import org.mozilla.focus.web.CleanupSessionObserver
 import org.mozilla.focus.web.WebViewProvider
 import java.io.File
@@ -72,6 +73,9 @@ class FocusApplication : LocaleAwareApplication() {
 
             TelemetryWrapper.init(this@FocusApplication)
             AdjustHelper.setupAdjustIfNeeded(this@FocusApplication)
+            launch {
+                TLDExtractor.init(this@FocusApplication)
+            }
 
             visibilityLifeCycleCallback = VisibilityLifeCycleCallback(this@FocusApplication)
             registerActivityLifecycleCallbacks(visibilityLifeCycleCallback)
