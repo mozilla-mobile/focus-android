@@ -27,6 +27,7 @@ import android.preference.PreferenceManager
 import android.support.annotation.RequiresApi
 import android.support.design.widget.AppBarLayout
 import android.support.design.widget.CoordinatorLayout
+import android.support.design.widget.Snackbar
 import android.support.v4.app.ActivityCompat
 import android.support.v4.content.ContextCompat
 import android.support.v4.widget.SwipeRefreshLayout
@@ -63,6 +64,7 @@ import org.mozilla.focus.biometrics.BiometricAuthenticationDialogFragment
 import org.mozilla.focus.biometrics.BiometricAuthenticationHandler
 import org.mozilla.focus.biometrics.Biometrics
 import org.mozilla.focus.broadcastreceiver.DownloadBroadcastReceiver
+import org.mozilla.focus.ext.components
 import org.mozilla.focus.ext.requireComponents
 import org.mozilla.focus.ext.shouldRequestDesktopSite
 import org.mozilla.focus.findinpage.FindInPageCoordinator
@@ -334,6 +336,11 @@ class BrowserFragment : WebFragment(), LifecycleObserver, View.OnClickListener,
         val sessionManager = requireComponents.sessionManager
         sessionManager.register(object : SessionManager.Observer {
             override fun onSessionAdded(session: Session) {
+                Snackbar.make(view, "Session added", Snackbar.LENGTH_LONG)
+                        .setAction("OPEN", View.OnClickListener {
+                            activity!!.components.sessionManager.select(session)
+                        })
+                        .show()
                 tabsButton.updateSessionsCount(sessionManager.sessions.size)
                 eraseButton.updateSessionsCount(sessionManager.sessions.size)
             }
