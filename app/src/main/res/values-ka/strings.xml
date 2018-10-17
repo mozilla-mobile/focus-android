@@ -1,233 +1,693 @@
-<?xml version='1.0' encoding='utf-8'?>
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <string name="action_cancel">გაუქმება</string>
-  <string name="action_ok">კარგი</string>
-  <string name="action_save">შენახვა</string>
-  <string name="urlbar_hint">მოძებნეთ ან შეიყვანეთ მისამართი</string>
-  <string name="teaser">მხოლოდ თვალიერების პირადი რეჟიმი.\nმონახულება. წაშლა. თავიდან დაწყება.</string>
-  <string name="feedback_erase">მონახულებული გვერდების ისტორია წაიშალა.</string>
-  <string name="search_hint">მოძებნა: %1$s</string>
-  <string name="menu_share">გვერდის გაზიარება…</string>
-  <string name="menu_report_site_issue">საიტის ხარვეზის მოხსენება</string>
-  <string name="menu_open_with_default_browser2">%1$s-ში გახსნა</string>
-  <string name="menu_open_with_a_browser2">გახსნა…</string>
-  <string name="menu_add_to_home_screen">მთავარ ეკრანზე დამატება</string>
-  <string name="menu_whats_new">რა სიახლეებია</string>
-  <string name="menu_settings">პარამეტრები</string>
-  <string name="menu_about">შესახებ</string>
-  <string name="menu_help">დახმარება</string>
-  <string name="menu_rights">თქვენი უფლებები</string>
-  <string name="menu_trackers_blocked_title">შეზღუდული მეთვალყურეები</string>
-  <string name="menu_custom_tab_branding">უზრუნველყოფს %1$s</string>
-  <string name="share_dialog_title">გაზიარება</string>
-  <string name="notification_erase_text">ისტორიის წაშლა</string>
-  <string name="notification_action_open">გახსნა</string>
-  <string name="notification_action_erase_and_open">გასუფთავება და გახსნა</string>
-  <string name="shortcut_erase_short_label">გასუფთავება</string>
-  <string name="shortcut_erase_long_label">ისტორიის გასუფთავება</string>
-  <string name="text_selection_search_action">მოძებნეთ უსაფრთხოდ</string>
-  <string name="about_content"><![CDATA[<p xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">%1$s &#4321;&#4320;&#4323;&#4314;&#4304;&#4307; &#4306;&#4312;&#4305;&#4320;&#4323;&#4316;&#4308;&#4305;&#4311; &#4315;&#4304;&#4320;&#4311;&#4309;&#4312;&#4321; &#4321;&#4304;&#4307;&#4304;&#4309;&#4308;&#4308;&#4305;&#4321;.</p>\n<p xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">"&#4306;&#4304;&#4315;&#4317;&#4312;&#4327;&#4308;&#4316;&#4308;&#4311; &#4320;&#4317;&#4306;&#4317;&#4320;&#4330; &#4318;&#4312;&#4320;&#4304;&#4307;&#4312; &#4305;&#4320;&#4304;&#4323;&#4310;&#4308;&#4320;&#4312;:\n  "<ul>"\n    "<li>&#4315;&#4317;&#4331;&#4308;&#4305;&#4316;&#4308;&#4311; &#4307;&#4304; &#4307;&#4304;&#4304;&#4311;&#4309;&#4304;&#4314;&#4312;&#4308;&#4320;&#4308;&#4311; &#4306;&#4309;&#4308;&#4320;&#4307;&#4308;&#4305;&#4312;</li>"\n    "<li>&#4328;&#4308;&#4310;&#4326;&#4323;&#4307;&#4308;&#4311; &#4315;&#4308;&#4311;&#4309;&#4304;&#4314;&#4327;&#4323;&#4320;&#4308; &#4308;&#4314;&#4308;&#4315;&#4308;&#4316;&#4322;&#4308;&#4305;&#4312; (&#4318;&#4304;&#4320;&#4304;&#4315;&#4308;&#4322;&#4320;&#4308;&#4305;&#4312;&#4307;&#4304;&#4316; &#4307;&#4304;&#4328;&#4309;&#4308;&#4305;&#4304;&#4330; &#4328;&#4308;&#4312;&#4331;&#4314;&#4308;&#4305;&#4304;)</li>"\n    "<li>&#4306;&#4304;&#4304;&#4321;&#4323;&#4324;&#4311;&#4304;&#4309;&#4308;&#4311; &#4307;&#4304; &#4332;&#4304;&#4328;&#4304;&#4314;&#4308;&#4311; &#4324;&#4323;&#4316;&#4311;&#4323;&#4328;&#4308;&#4305;&#4312;, &#4331;&#4312;&#4308;&#4305;&#4312;&#4321;&#4304; &#4307;&#4304; &#4311;&#4309;&#4304;&#4314;&#4312;&#4308;&#4320;&#4308;&#4305;&#4312;&#4321; &#4312;&#4321;&#4322;&#4317;&#4320;&#4312;&#4304;</li>"\n  "</ul>\n</p>\n<p xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">%1$s &#4328;&#4308;&#4325;&#4315;&#4316;&#4312;&#4314;&#4312;&#4304; Mozilla-&#4321; &#4315;&#4312;&#4308;&#4320;. &#4329;&#4309;&#4308;&#4316;&#4312; &#4315;&#4312;&#4310;&#4304;&#4316;&#4312;, &#4312;&#4316;&#4322;&#4308;&#4320;&#4316;&#4308;&#4322;&#4312;&#4321; &#4306;&#4304;&#4334;&#4321;&#4316;&#4312;&#4314;&#4317;&#4305;&#4304; &#4307;&#4304; &#4321;&#4312;&#4335;&#4304;&#4316;&#4321;&#4304;&#4326;&#4308;&#4304;.<br/>\n<a href="%2$s">&#4309;&#4320;&#4330;&#4314;&#4304;&#4307;</a></p>]]></string>
-  <string name="preference_privacy_and_security_header">პირადულობა და უსაფრთხოება</string>
-  <string name="preference_privacy_and_security_summary">თვალთვალი, ფუნთუშები, მონაცემთა შერჩევა</string>
-  <string name="preference_search_summary">ნაგულისხმევად დაყენება, თვითშევსება</string>
-  <string name="preference_mozilla_summary">%1$s-ის შესახებ, დახმარება</string>
-  <string name="preference_category_tracking_protection">თვალთვალისგან დაცვა</string>
-  <string name="preference_category_web_content">ვებშიგთავსი</string>
-  <string name="preference_category_switching_apps">პროგრამების გადართვისას</string>
-  <string name="preference_category_general">მთავარი</string>
-  <string name="preference_category_data_collection_use">მონაცემთა აღრიცხვა და გამოყენება</string>
-  <string name="preference_category_search">ძიება</string>
-  <string name="preference_show_search_suggestions">ძიების შემოთავაზების ჩვენება</string>
-  <string name="preference_show_search_suggestions_summary">%1$s გაუგზავნის საძიებო სისტემას, მისამართების ველში აკრეფილ ტექსტს</string>
-  <string name="preference_search_engine_default">ნაგულისხმევი</string>
-  <string name="preference_state_on">ჩართული</string>
-  <string name="preference_state_off">გამორთული</string>
-  <string name="preference_subitem_autocomplete">URL-ს თვითშევსება</string>
-  <string name="preference_switch_autocomplete">თვითშევსება</string>
-  <string name="preference_category_autocomplete_preinstalled">ნაგულისხმევი URL-ების ჩამონათვალი</string>
-  <string name="preference_autocomplete_preinstalled_summary">ჩართეთ და %1$s თავად დაასრულებს 450-ზე მეტ ცნობილ URL-ბმულს, მისამართების ველში აკრეფისას.</string>
-  <string name="preference_category_autocomplete_custom_urls">საკუთარი URL-ები</string>
-  <string name="preference_autocomplete_subitem_customlist">საკუთარი URL-ები</string>
-  <string name="preference_autocomplete_action_add">+ საკუთარი URL-ების დამატება</string>
-  <string name="preference_autocomplete_title_add">საკუთარი URL-ს დამატება</string>
-  <string name="custom_autocomplete_quick_add">საკუთარი URL-ს დამატება</string>
-  <string name="preference_category_cookies">ფუნთუშები და საიტის მონაცემები</string>
-  <string name="preference_category_data_choices">მონაცემთა შერჩევა</string>
-  <string name="preference_autocomplete_title_remove">დამატებული URL-ების მოცილება</string>
-  <string name="preference_autocomplete_learn_more">ვრცლად</string>
-  <string name="preference_autocomplete_custom_summary">დაამატეთ და მართეთ საკუთარი URL-ები თვითშევსებისთვის.</string>
-  <string name="preference_autocomplete_add_title">URL დასამატებლად</string>
-  <string name="preference_autocomplete_add_hint">ჩასვით ან შეიყვანეთ URL</string>
-  <string name="preference_autocomplete_add_example2">მაგალითად: mozilla.org</string>
-  <string name="preference_autocomplete_add_example">მაგალითად: example.com</string>
-  <string name="preference_autocomplete_add_confirmation">ახალი URL დაემატა.</string>
-  <string name="preference_autocomplete_menu_remove">წაშლა</string>
-  <string name="preference_autocomplete_action_remove_content_description">წაშლა</string>
-  <string name="preference_autocomplete_add_error">გადაამოწმეთ შეყვანილი URL.</string>
-  <string name="preference_language">ენა</string>
-  <string name="preference_language_systemdefault">სისტემის ნაგულისხმევი</string>
-  <string name="preference_category_privacy">პირადულობა</string>
-  <string name="preference_privacy_block_ads">სარეკლამო მეთვალყურეების შეზღუდვა</string>
-  <string name="preference_privacy_block_ads_summary">ზოგიერთი სარეკლამო ელემენტი, თვალს ადევნებს თქვენს გადაადგილებას საიტებზე, მაშინაც კი როცა მათზე არ აწკაპებთ</string>
-  <string name="preference_privacy_block_analytics">სტატისტიკური აღრიცხვის ელემენტების შეზღუდვა</string>
-  <string name="preference_privacy_block_analytics_summary">გამოიყენება მონაცემთა აღრიცხვისთვის, დამუშავებისა და ისეთი მოქმედებების შესამოწმებლად, როგორიცაა თითის შეხება და გვერდის გადაადგილება</string>
-  <string name="preference_privacy_block_social">სოც. ქსელების ელემენტების შეზღუდვა</string>
-  <string name="preference_privacy_block_social_summary">თქვენს გადაადგილებაზე თვალყურის მისადევნებლად, საიტებზე განთავსებულია მოწონების, ან გაზიარების ღილაკების სახით</string>
-  <string name="preference_privacy_block_content">სხვა მეთვალყურე ელემენტების შეზღუდვა</string>
-  <string name="preference_privacy_block_content_summary2">ჩართვის შედეგად, ზოგიერთმა ვებგვერდმა, შესაძლოა გამართულად ვერ იმუშაოს</string>
-  <string name="preference_privacy_category_cookies">ფუნთუშების შეზღუდვა</string>
-  <string name="preference_privacy_should_block_cookies_no_option">არა</string>
-  <string name="preference_privacy_should_block_cookies_third_party_only_option">მხოლოდ მე-3 მხარის ფუნთუშების</string>
-  <string name="preference_privacy_should_block_cookies_yes_option">დიახ</string>
-  <string name="preference_security_biometric">გამოიყენეთ თითის ანაბეჭდი, პროგრამის გასახსნელად</string>
-  <string name="preference_security_biometric_summary">თითის ანაბეჭდით შეგიძლიათ შეხვიდეთ %1$s-ში თუ URL-ბმული უკვე გახსნილია პროგრამაში. ფარული რეჟიმი კვლავ ჩართული იქნება.</string>
-  <string name="preference_privacy_secure_mode">ფარული რეჟიმი</string>
-  <string name="preference_privacy_stealth_summary">ვებგვერდების დამალვა, პროგრამების გადართვისას და ეკრანის სურათების გადაღების შეზღუდვა.</string>
-  <string name="preference_category_security">უსაფრთხოება</string>
-  <string name="preference_category_performance">წარმადობა</string>
-  <string name="preference_performance_block_webfonts">საიტის შრიფტების შეზღუდვა</string>
-  <string name="preference_performance_block_webfonts_summary">შესაძლოა ხატულების და სურათების ნაწილი გაქრეს</string>
-  <string name="preference_performance_block_javascript">JavaScript-ის შეზღუდვა</string>
-  <string name="preference_performance_block_javascript_summary">გვერდები, შესაძლოა უფრო სწრაფად ჩაიტვირთოს, მაგრამ ხარვეზებით იმუშაოს</string>
-  <string name="preference_default_browser2">%1$s-ის ნაგულისხმევ ბრაუზერად მითითება</string>
-  <string name="preference_category_mozilla">Mozilla</string>
-  <string name="preference_mozilla_telemetry2">მონაცემების გაგზავნა</string>
-  <string name="preference_mozilla_telemetry_summary">იხილეთ ვრცლად</string>
-  <string name="preference_mozilla_telemetry_summary2">Mozilla აღრიცხავს მხოლოდ იმ მონაცემებს, რაც საჭიროა %1$s-ის გასაუმჯობესებლად.</string>
-  <string name="preference_privacy_notice">პირადი მონაცემების დაცვა</string>
-  <string name="preference_about">%1$s-ის შესახებ</string>
-  <string name="preference_search_installed_search_engines">დაყენებული საძიებოები</string>
-  <string name="preference_search_restore">ნაგულისხმევი საძიებო სისტემების აღდგენა</string>
-  <string name="preference_search_add2">+ სხვა საძიებო სისტემის დამატება</string>
-  <string name="preference_search_remove_title">საძიებოს ამოშლა</string>
-  <string name="preference_search_remove">მოცილება</string>
-  <string name="preference_homescreen_tips">ცნობების ჩვენება საწყის გვერდზე</string>
-  <string name="action_option_add_search_engine">საძიებოს დამატება</string>
-  <string name="search_add_manually_name_hint">საძიებოს დასახელება</string>
-  <string name="search_add_manually_string">საძიებო ფრაზა</string>
-  <string name="search_add_manually_save">შენახვა</string>
-  <string name="search_add_manually_example">მაგალითად: example.com/search/?q=%s</string>
-  <string name="search_add_confirmation">ახალი საძიებო სისტემა დამატებულია.</string>
-  <string name="search_add_error_empty_name">შეიყვანეთ საძიებო სისტემის სახელი</string>
-  <string name="search_add_error_duplicate_name">ამ სახელს, უკვე იყენებს ერთ-ერთი დაყენებული საძიებო სისტემა.</string>
-  <string name="search_add_error_empty_search">შეიყვანეთ საძიებო ფრაზა</string>
-  <string name="search_add_error_format">შეამოწმეთ, შეესაბამება თუ არა საძიებო ფრაზა მოცემულ ფორმატს</string>
-  <string name="content_description_clear_input">შეტანილის გასუფთავება</string>
-  <string name="content_description_dismiss_input">დახურვა</string>
-  <string name="content_description_erase">ისტორიის წაშლა</string>
-  <string name="content_description_tab_counter">გახსნილი ჩანართი: %1$s</string>
-  <string name="content_description_lock">დაცული კავშირი</string>
-  <string name="accessibility_announcement_loading">იტვირთება</string>
-  <string name="accessibility_announcement_loading_finished">საიტი ჩაიტვირთა</string>
-  <string name="content_description_menu">დამატებითი პარამეტრები</string>
-  <string name="content_description_forward">გადასვლა წინ</string>
-  <string name="content_description_reload">საიტის ხელახლა ჩატვირთვა</string>
-  <string name="content_description_back">გადასვლა უკან</string>
-  <string name="content_description_stop">საიტის ჩატვირთვის შეჩერება</string>
-  <string name="content_description_customtab_exit">წინა პროგრამაზე დაბრუნება</string>
-  <string name="content_description_trackers_blocked">შეზღუდული მეთვალყურეები</string>
-  <string name="content_description_blocking_switch">მეთვალყურე ელემენტების შეზღუდვა</string>
-  <string name="your_rights">თქვენი უფლებები</string>
-  <string name="external_app_prompt_title">ბმულის სხვა პროგრამით გახსნა</string>
-  <string name="external_app_prompt">შეგიძლიათ დატოვოთ %1$s ბმულის %2$s-ში გასახსნელად.</string>
-  <string name="external_app_prompt_no_app_title">პროგრამის მოძიება, რომელიც გახსნის ბმულს</string>
-  <string name="external_app_prompt_no_app">თქვენს მოწყობილობაზე არსებულ არცერთ პროგრამას არ შეუძლია ამ ბმულის გახსნა. შეგიძლიათ დატოვოთ %1$s საჭირო პროგრამის %2$s-ში მოსაძიებლად.</string>
-  <string name="external_multiple_apps_matched_exit">გსურთ პირადი დათვალიერებიდან გასვლა?</string>
-  <string name="download_snackbar_finished">%1$s დასრულდა</string>
-  <string name="download_snackbar_open">გახსნა</string>
-  <string name="download_dialog_warning"><![CDATA["ჩამოტვირთული ფაილები "<b xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">&#4304;&#4320; &#4332;&#4304;&#4312;&#4328;&#4314;&#4308;&#4305;&#4304;</b>" %1$s-ის ისტორიის გასუფთავებისას."]]></string>
-  <string name="download_dialog_title">ფაილის ჩამოტვირთვა</string>
-  <string name="download_dialog_action_cancel">გაუქმება</string>
-  <string name="download_dialog_action_download">ჩამოტვირთვა</string>
-  <string name="errorpage_title">ხარვეზები გვერდის ჩატვირთვისას</string>
-  <string name="errorpage_refresh">ხელახლა ცდა</string>
-  <string name="error_connectionfailure_title">დაკავშირება ვერ ხერხდება</string>
-  <string name="error_connectionfailure_message"><![CDATA[<ul xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">"\n        "<li>&#4308;&#4321; &#4321;&#4304;&#4312;&#4322;&#4312; &#4328;&#4308;&#4321;&#4304;&#4331;&#4314;&#4317;&#4304; &#4307;&#4320;&#4317;&#4308;&#4305;&#4312;&#4311; &#4315;&#4312;&#4323;&#4332;&#4309;&#4307;&#4317;&#4315;&#4308;&#4314;&#4312;&#4304; &#4304;&#4316; &#4331;&#4304;&#4314;&#4312;&#4304;&#4316; &#4307;&#4304;&#4322;&#4309;&#4312;&#4320;&#4311;&#4323;&#4314;&#4312;&#4304;. &#4321;&#4330;&#4304;&#4307;&#4308;&#4311; &#4334;&#4308;&#4314;&#4304;&#4334;&#4314;&#4304;, &#4320;&#4304;&#4315;&#4307;&#4308;&#4316;&#4312;&#4315;&#4308; &#4332;&#4323;&#4311;&#4328;&#4312;.</li>"\n        "<li>&#4311;&#4323; &#4321;&#4334;&#4309;&#4304; &#4321;&#4304;&#4312;&#4322;&#4308;&#4305;&#4312;&#4321; &#4306;&#4304;&#4334;&#4321;&#4316;&#4304;&#4321;&#4304;&#4330; &#4309;&#4308;&#4320; &#4304;&#4334;&#4308;&#4320;&#4334;&#4308;&#4305;&#4311;, &#4315;&#4304;&#4328;&#4312;&#4316; &#4328;&#4308;&#4304;&#4315;&#4317;&#4332;&#4315;&#4308;&#4311; &#4315;&#4317;&#4332;&#4327;&#4317;&#4305;&#4312;&#4314;&#4317;&#4305;&#4312;&#4321; &#4313;&#4304;&#4309;&#4328;&#4312;&#4320;&#4312; &#4315;&#4317;&#4305;&#4312;&#4314;&#4323;&#4320; &#4304;&#4316; Wi-Fi &#4312;&#4316;&#4322;&#4308;&#4320;&#4316;&#4308;&#4322;&#4311;&#4304;&#4316;.</li>"\n      "</ul>]]></string>
-  <string name="error_timeout_title">კავშირის დრო ამოიწურა</string>
-  <string name="error_hostLookup_title">გვერდი ვერ მოიძებნა</string>
-  <string name="error_hostLookup_message"><![CDATA[<ul xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">"\n        "<li>"&#4328;&#4308;&#4304;&#4315;&#4317;&#4332;&#4315;&#4308;&#4311; &#4304;&#4313;&#4320;&#4308;&#4324;&#4312;&#4314;&#4312; &#4315;&#4312;&#4321;&#4304;&#4315;&#4304;&#4320;&#4311;&#4312;&#4321; &#4321;&#4312;&#4321;&#4332;&#4317;&#4320;&#4308;. &#4315;&#4304;&#4306;&#4304;&#4314;&#4312;&#4311;&#4304;&#4307;\n          "<strong>ww</strong>".example.com-&#4312;&#4321; &#4316;&#4304;&#4330;&#4309;&#4314;&#4304;&#4307; &#4323;&#4316;&#4307;&#4304; &#4312;&#4327;&#4317;&#4321;\n          "<strong>www</strong>.example.com</li>"\n        "<li>&#4311;&#4323; &#4309;&#4308;&#4320;&#4330;&#4308;&#4320;&#4311;&#4312; &#4321;&#4304;&#4312;&#4322;&#4312;&#4321; &#4306;&#4304;&#4334;&#4321;&#4316;&#4304;&#4321; &#4309;&#4308;&#4320; &#4304;&#4334;&#4308;&#4320;&#4334;&#4308;&#4305;&#4311;, &#4328;&#4308;&#4304;&#4315;&#4317;&#4332;&#4315;&#4308;&#4311; &#4315;&#4317;&#4332;&#4327;&#4317;&#4305;&#4312;&#4314;&#4317;&#4305;&#4312;&#4321; &#4313;&#4304;&#4309;&#4328;&#4312;&#4320;&#4312; &#4315;&#4317;&#4305;&#4312;&#4314;&#4323;&#4320; &#4304;&#4316; Wi-Fi &#4312;&#4316;&#4322;&#4308;&#4320;&#4316;&#4308;&#4322;&#4311;&#4304;&#4316;.</li>"\n      "</ul>]]></string>
-  <string name="error_malformedURI_title">მისამართი არასწორია</string>
-  <string name="error_malformedURI_message"><![CDATA[<ul xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">"\n  "<li>"&#4321;&#4304;&#4312;&#4322;&#4312;&#4321; &#4315;&#4312;&#4321;&#4304;&#4315;&#4304;&#4320;&#4311;&#4308;&#4305;&#4312;, &#4329;&#4309;&#4308;&#4323;&#4314;&#4308;&#4305;&#4320;&#4312;&#4309;, &#4304;&#4321;&#4308; &#4312;&#4332;&#4308;&#4320;&#4308;&#4305;&#4304; "<strong>http://www.example.com/</strong></li>"\n  "<li>"&#4307;&#4304;&#4320;&#4332;&#4315;&#4323;&#4316;&#4307;&#4312;&#4311;, &#4320;&#4317;&#4315; &#4332;&#4312;&#4316; &#4306;&#4304;&#4307;&#4304;&#4334;&#4320;&#4312;&#4314; &#4334;&#4304;&#4310;&#4308;&#4305;&#4321; &#4312;&#4327;&#4308;&#4316;&#4308;&#4305;&#4311; (&#4304;&#4321;&#4308;&#4311;&#4321;: "<strong>/</strong>).</li>\n</ul>]]></string>
-  <string name="error_redirectLoop_title">ეს გვერდი არამართებულად გადამისამართდა</string>
-  <string name="error_redirectLoop_message"><![CDATA[<ul xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">"\n  "<li>&#4304;&#4315; &#4334;&#4304;&#4320;&#4309;&#4308;&#4310;&#4321;, &#4310;&#4317;&#4306;&#4335;&#4308;&#4320; &#4312;&#4332;&#4309;&#4308;&#4309;&#4321; &#4324;&#4323;&#4316;&#4311;&#4323;&#4328;&#4308;&#4305;&#4312;&#4321; &#4323;&#4304;&#4320;&#4327;&#4317;&#4324;&#4304; &#4304;&#4316; &#4306;&#4304;&#4315;&#4317;&#4320;&#4311;&#4309;&#4304;.</li>\n</ul>]]></string>
-  <string name="error_unsupportedprotocol_title">მისამართი გაუგებარია</string>
-  <string name="error_unsupportedprotocol_message"><![CDATA[<ul xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">"\n  "<li>&#4304;&#4315; &#4305;&#4315;&#4323;&#4314;&#4312;&#4321; &#4306;&#4304;&#4321;&#4304;&#4334;&#4321;&#4316;&#4308;&#4314;&#4304;&#4307;, &#4328;&#4308;&#4321;&#4304;&#4331;&#4314;&#4317;&#4304; &#4321;&#4334;&#4309;&#4304; &#4318;&#4320;&#4317;&#4306;&#4320;&#4304;&#4315;&#4312;&#4321; &#4307;&#4304;&#4327;&#4308;&#4316;&#4308;&#4305;&#4304; &#4312;&#4327;&#4317;&#4321; &#4321;&#4304;&#4333;&#4312;&#4320;&#4317;.</li>\n</ul>]]></string>
-  <string name="error_sslhandshake_title">უსაფრთხო დაკავშირება ვერ მოხერხდა</string>
-  <string name="error_sslhandshake_message"><![CDATA[<ul xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">"\n  "<li>&#4308;&#4321; &#4328;&#4308;&#4312;&#4331;&#4314;&#4308;&#4305;&#4304;, &#4321;&#4304;&#4312;&#4322;&#4312;&#4321; &#4306;&#4304;&#4323;&#4315;&#4304;&#4320;&#4311;&#4304;&#4317;&#4305;&#4312;&#4321; &#4305;&#4320;&#4304;&#4314;&#4312; &#4312;&#4327;&#4317;&#4321; &#4304;&#4316;\n&#4321;&#4334;&#4309;&#4304; &#4321;&#4304;&#4312;&#4322;&#4304;&#4307; &#4306;&#4304;&#4321;&#4304;&#4326;&#4308;&#4305;&#4312;&#4321; &#4315;&#4330;&#4307;&#4308;&#4314;&#4317;&#4305;&#4304;&#4321; &#4336;&#4325;&#4317;&#4316;&#4307;&#4308;&#4321; &#4304;&#4307;&#4306;&#4312;&#4314;&#4312;.</li>"\n  "<li>&#4311;&#4323; &#4304;&#4315; &#4321;&#4304;&#4312;&#4322;&#4321; &#4315;&#4304;&#4316;&#4304;&#4315;&#4307;&#4308; &#4332;&#4304;&#4320;&#4315;&#4304;&#4322;&#4308;&#4305;&#4312;&#4311; &#4323;&#4313;&#4304;&#4309;&#4328;&#4312;&#4320;&#4307;&#4308;&#4305;&#4317;&#4307;&#4312;&#4311;, &#4334;&#4304;&#4320;&#4309;&#4308;&#4310;&#4312; &#4328;&#4308;&#4321;&#4304;&#4331;&#4314;&#4317;&#4304;\n&#4307;&#4320;&#4317;&#4308;&#4305;&#4312;&#4311;&#4312; &#4312;&#4327;&#4317;&#4321; &#4307;&#4304; &#4315;&#4317;&#4306;&#4309;&#4312;&#4304;&#4316;&#4308;&#4305;&#4312;&#4311; &#4328;&#4308;&#4306;&#4312;&#4331;&#4314;&#4312;&#4304;&#4311; &#4313;&#4309;&#4314;&#4304;&#4309; &#4321;&#4330;&#4304;&#4307;&#4317;&#4311;.</li>\n</ul>]]></string>
-  <string name="error_generic_title">უი</string>
-  <string name="error_generic_message">ამ გვერდის ჩატვირთვა, რატომღაც ვერ მოხერხდა.</string>
-  <string name="contextmenu_link_share">ბმულის გაზიარება</string>
-  <string name="contextmenu_link_copy">მისამართის დაკოპირება</string>
-  <string name="contextmenu_image_share">სურათის გაზიარება</string>
-  <string name="contextmenu_image_copy">სურათის მისამართის ასლი</string>
-  <string name="contextmenu_image_save">სურათის შენახვა</string>
-  <string name="contextmenu_open_in_new_tab">ბმულის ახალ ჩანართში გახსნა</string>
-  <string name="contextmenu_image_warning"><![CDATA["შენახული და გაზიარებული სურათები "<b xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">&#4304;&#4320; &#4332;&#4304;&#4312;&#4328;&#4314;&#4308;&#4305;&#4304;</b>" %1$s-ის ისტორიის გასუფთავებისას."]]></string>
-  <string name="firstrun_defaultbrowser_title">გააძლიერეთ პირადი მონაცემების დაცვა</string>
-  <string name="firstrun_defaultbrowser_text2">პირადი მონაცემების უსაფრთხოება ახალ დონეზეა აყვანილი. შეზღუდეთ სარეკლამო და სხვა შიგთავსი, რომლითაც საიტებზე თქვენი დევნაა შესაძლებელი და შეამცირეთ გვერდების ჩატვირთვის დრო.</string>
-  <string name="firstrun_search_title">მოიძიეთ გვერდები, თქვენებურად</string>
-  <string name="firstrun_search_text">რამე განსხვავებულს ეძებთ? აირჩიეთ სხვა საძიებო სისტემა ნაგულისხმევად, პარამეტრებიდან.</string>
-  <string name="firstrun_shortcut_title">მალსახმობების დამატება მთავარ ეკრანზე</string>
-  <string name="firstrun_shortcut_text">%1$s-ის დახმარებით, სწრაფად შეგიძლიათ დაუბრუნდეთ რჩეულ საიტებს. უბრალოდ, მიუთითეთ \"მთავარ ეკრანზე დამატება\", %1$s-ის მენიუდან.</string>
-  <string name="firstrun_privacy_title">ჩვევად აქციეთ პირადულობის დაცვა</string>
-  <string name="firstrun_privacy_text">დააყენეთ %1$s ნაგულისხმევ ბრაუზერად და ისარგებლეთ პირადულობის დაცვით, სხვა პროგრამებიდან ბმულებზე გადასვლის შემთხვევაშიც.</string>
-  <string name="firstrun_close_button">კარგი, გასაგებია!</string>
-  <string name="firstrun_skip_button">გამოტოვება</string>
-  <string name="firstrun_next_button">შემდეგი</string>
-  <string name="content_blocking_disabled">-</string>
-  <string name="dialog_addtohomescreen_action_add">დამატება</string>
-  <string name="dialog_addtohomescreen_action_cancel">გაუქმება</string>
-  <string name="dialog_addtohomescreen_tracking_protection">ამ მალსახმობით გახსნისას, თვალთვალისგან დაცვა გამორთული იქნება</string>
-  <string name="notification_browsing_session_channel_name">პირადი დათვალიერების რეჟიმი</string>
-  <string name="notification_browsing_session_channel_description">შეტყობინებები საშუალებას გაძლევთ, ერთი შეხებით გაასუფთავოთ მონაცემები %1$s-ში. პროგრამის გახსნა, აღარ დაგჭირდებათ.</string>
-  <string name="tabs_tray_action_erase">ისტორიის გასუფთავება</string>
-  <string name="download_firefox">ჩამოტვირთეთ Firefox</string>
-  <string name="your_rights_content1">%1$s არის უფასო და ღია წყაროს მქონე პროგრამა, შექმნილი Mozilla-სა და სხვა მოხალისეების მიერ.</string>
-  <string name="your_rights_content2"><![CDATA["%1$s ვრცელდება "<a xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2" href="%2$s">Mozilla Public License</a>" და სხვა ღია წყაროს ლიცენზიებით."]]></string>
-  <string name="your_rights_content3"><![CDATA["თქვენ არ გეძლევათ რამე სახის უფლება ან ლიცენზია, Mozilla ფონდის სავაჭრო ნიშნებსა და სხვა საკუთრებაზე, მათ შორის დასახელებებზე Mozilla, Firefox, ან %1$s-ის სხვა სახელებსა და ლოგოებზე. დამატებითი ინფორმაცია შეგიძლიათ იხილოთ "<a xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2" href="%2$s">&#4304;&#4325;</a>.]]></string>
-  <string name="your_rights_content4"><![CDATA["%1$s-ის დამატებითი პირველწყარო კოდი ვრცელდება სხვადასხვა უფასო და ღია წყაროს მქონე "<a xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2" href="%2$s">&#4314;&#4312;&#4330;&#4308;&#4316;&#4310;&#4312;&#4308;&#4305;&#4312;&#4311;</a>.]]></string>
-  <string name="your_rights_content5"><![CDATA["%1$s ასევე იყენებს შეზღუდვის სიებს, რომლის მომწოდებელია Disconnect Inc. როგორც ცალკეული და დამოუკიდებელი ნამუშევრები, ვრცელდება "<a xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2" href="%2$s">GNU General Public License v3</a>" ლიცენზიით და ხელმისაწვდომია "<a xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2" href="%3$s">&#4304;&#4315; &#4305;&#4315;&#4323;&#4314;&#4310;&#4308;</a>.]]></string>
-  <string name="gv_prompt_username_hint">სახელი</string>
-  <string name="gv_prompt_password_hint">პაროლი</string>
-  <string name="gv_prompt_clear">გასუფთავება</string>
-  <string name="security_popup_secure_connection">დაცული კავშირი</string>
-  <string name="security_popup_insecure_connection">დაუცველი კავშირი</string>
-  <string name="security_popup_security_verified">დამმოწმებელი: %1$s</string>
-  <string name="site_security_icon_content_description">საიტის უსაფრთხოება</string>
-  <string name="preference_autocomplete_duplicate_url_error">URL უკვე არსებობს</string>
-  <string name="find_in_page">პოვნა გვერდზე</string>
-  <string name="find_in_page_input">პოვნა გვერდზე</string>
-  <string name="find_in_page_result">%1$d/%2$d</string>
-  <string name="accessibility_find_in_page_result">%1$d, %2$d-დან</string>
-  <string name="accessibility_next_result">მომდევნო შედეგი</string>
-  <string name="accessibility_previous_result">წინა შედეგი</string>
-  <string name="accessibility_dismiss_find_in_page">ძიების გაუქმება</string>
-  <string name="http_auth_dialog_title">საჭიროებს ანგარიშის მონაცემებს</string>
-  <string name="http_auth_dialog_username">მომხმარებლის სახელი</string>
-  <string name="http_auth_dialog_password">პაროლი</string>
-  <string name="preference_performance_request_desktop_site">სრული საიტის მოთხოვნა</string>
-  <string name="custom_tab_copy_url_action">URL დაკოპირდა</string>
-  <string name="preference_advanced_summary">შემმუშავებლის ხელსაწყოები</string>
-  <string name="preference_category_advanced">დამატებითი</string>
-  <string name="preference_remote_debugging">დისტანციური გამართვა USB/Wi-Fi-ით</string>
-  <string name="biometric_auth_title">გაიხსნას %1$s</string>
-  <string name="biometric_auth_description">შეახეთ თითი ანაბეჭდის აღმქმელს გასაგრძელებლად.</string>
-  <string name="biometric_auth_new_session">ახალი სეანსი</string>
-  <string name="biometric_auth_image_description">თითის ანაბეჭდის ხატულა</string>
-  <string name="biometric_auth_not_recognized_error">ანაბეჭდის ამოცნობა ვერ მოხერხდა. სცადეთ ხელახლა.</string>
-  <string name="biometric_auth_moved_too_quickly">თითი სწრაფად ამოძრავდა. სცადეთ ხელახლა.</string>
-  <string name="enable_search_suggestion_title">გსურთ ძიების შემოთავაზებების ჩართვა?</string>
-  <string name="enable_search_suggestion_subtitle">ძიების შემოთავაზებების მისაღებად, %1$s საჭიროებს მისამართების ველში აკრეფილი ტექსტის, შერჩეული საძიებო სისტემისთვის გადაგზავნას. %2$s.</string>
-  <string name="enable_search_suggestion_subtitle_learnmore">იხილეთ ვრცლად</string>
-  <string name="enable_search_suggestions_no">არა</string>
-  <string name="enable_search_suggestions_yes">დიახ</string>
-  <string name="no_suggestions_message">ზოგიერთ საძიებო სისტემას, არ აქვს შემოთავაზებების ჩვენების შესაძლებლობა.</string>
-  <string name="dismiss_no_suggestions_prompt_button">დახურვა</string>
-  <string name="tip_disable_tracking_protection">საიტი ხარვეზებით მუშაობს?\n სცადეთ თვალთვალისგან დაცვის გამორთვა</string>
-  <string name="tip_add_to_homescreen">მარტივი წვდომა სასურველ საიტებზე ერთი შეხებით%1$s მენიუ &gt; მთავარ ეკრანზე დამატება</string>
-  <string name="tip_set_default_browser">გახსნეთი ყველა ბმული %1$s-ით\n დააყენეთ %1$s ნაგულისხმევ ბრაუზერად</string>
-  <string name="tip_autocomplete_url">URL-ბმულების თვითშევსება სასურველი საიტებისთვის\n ნებისმიერ URL-ბმულზე ხანგრძლივი დაჭერით მისამართების ველში</string>
-  <string name="tip_open_in_new_tab">გახსენით ბმული ახალ ჩანართში\n გვერდის ნებისმიერ ბმულზე ხანგრძლივი დაჭერით</string>
-  <string name="tip_request_desktop">საიტის სრული ვერსიის ნახვას ამჯობინებთ?%1$s მენიუ &gt; სრული საიტის მოთხოვნა</string>
-  <string name="tip_disable_tips">რჩევების ჩვენება %1$s-ის მთავარ ეკრანზე</string>
-</resources>
+    <!-- ####################################################################################### -->
+    <!-- ## Put only strings into this file that should be translated. Move all other strings ## -->
+    <!-- ## into a separate file like strings_references.xml                                  ## -->
+    <!-- ####################################################################################### -->
+
+    <!-- Label used for buttons, e.g. in dialogs -->
+    <string name="action_cancel">გაუქმება</string>
+    <!-- Label used for buttons, e.g. in dialogs -->
+    <string name="action_ok">კარგი</string>
+
+    <string name="action_save">შენახვა</string>
+
+    <!-- This text is shown in the URL bar when it's empty -->
+    <string name="urlbar_hint">მოძებნეთ ან შეიყვანეთ მისამართი</string>
+
+    <string name="teaser">მხოლოდ თვალიერების პირადი რეჟიმი.
+მონახულება. წაშლა. თავიდან დაწყება.</string>
+
+    <!-- "Snackbar" shown after the user has pressed the 'erase' button at the end of a browsing session -->
+    <string name="feedback_erase">მონახულებული გვერდების ისტორია წაიშალა.</string>
+
+    <!-- This label is shown below the URL bar as soon as the user enters text. Clicking the label will perform a search -->
+    <string name="search_hint">მოძებნა: %1$s</string>
+
+    <!-- Menu item: Share the currently visible page -->
+    <string name="menu_share">გვერდის გაზიარება…</string>
+
+    <!-- Menu item: Report an issue on the current site -->
+    <string name="menu_report_site_issue">საიტის ხარვეზის მოხსენება</string>
+
+    <!-- Menu item: Switch to another browser to open the currently visible page. %1$s will be
+      replaced with the name of the browser like: "Open in Firefox" or "Open in Chrome". Some
+      links can be opened by native apps that aren't a browser, e.g. "Open in YouTube" -->
+    <string name="menu_open_with_default_browser2">%1$s-ში გახსნა</string>
+
+    <!-- Menu item: Switch to another browser to open the currently visible page. This menu item
+      will be shown if there are multiple browsers and we do not know which one is the default
+      browser or in case Focus is actually the default browser. Clicking this menu item will show
+      a screen with multiple browsers (or other apps that can open the current URL) to choose from. -->
+    <string name="menu_open_with_a_browser2">გახსნა…</string>
+
+    <!-- Menu item: Add the current page as a shortcut to the device's home screen (launcher). -->
+    <string name="menu_add_to_home_screen">მთავარ ეკრანზე დამატება</string>
+
+    <!-- Menu item: Shows information about features and changes that are new to this version -->
+    <string name="menu_whats_new">რა სიახლეებია</string>
+    <string name="menu_settings">პარამეტრები</string>
+    <string name="menu_about">შესახებ</string>
+    <string name="menu_help">დახმარება</string>
+    <string name="menu_rights">თქვენი უფლებები</string>
+
+    <!-- Menu item: This is the label for a menu entry that shows how many trackers have been blocked
+         for the currently loaded website. The number of blocked trackers is shown below this label.
+         Next to this label is a switch that allows the user to temporarily enable / disable the
+         blocking of trackers for the current browsing session - for example if the current website
+         doesn't work correctly with blocked content. -->
+    <string name="menu_trackers_blocked_title">შეზღუდული მეთვალყურეები</string>
+
+    <!-- This is a small text at the bottom of the menu shown in a "custom tab" for branding purposes.
+     See https://github.com/mozilla-mobile/focus-android/issues/2106
+      %1$s will be replaced by the app name (e.g. Firefox Focus) -->
+    <string name="menu_custom_tab_branding">უზრუნველყოფს %1$s</string>
+
+    <!-- This is the title of a dialog that shows all the share targets (apps or contacts) when
+         sharing an URL. -->
+    <string name="share_dialog_title">გაზიარება</string>
+
+    <!-- While a browsing session is active (in the foreground or background) we will show a notification
+         so that the user doesn't forget about the website still being open. This text is shown in
+         the notification. Clicking the notification will have the same effect as clicking the "erase"
+         button in the application. -->
+    <string name="notification_erase_text">ისტორიის წაშლა</string>
+
+    <!-- Notification action to open Focus and resume the current browsing session. -->
+    <string name="notification_action_open">გახსნა</string>
+
+    <!-- Notification action to erase the current browsing session AND switch to Focus (bring it
+         to the foreground) -->
+    <string name="notification_action_erase_and_open">გასუფთავება და გახსნა</string>
+
+    <!-- On Android 7+ users can add a shortcut for erasing the browsing history to the home screen.
+         This is the label for this shortcut. Android recommends a maximum length of 10 characters. -->
+    <string name="shortcut_erase_short_label">გასუფთავება</string>
+
+    <!-- The same as 'shortcut_erase_short_label' but more descriptive. The launcher shows this
+         instead of the short title when it has enough space. Android recommends a maximum length
+         of 25 characters. -->
+    <string name="shortcut_erase_long_label">ისტორიის გასუფთავება</string>
+
+    <!-- This is the label of an action we offer when the user selects text in other third-party apps.
+         Clicking this action will launch Focus and perform a search in the default search engine. -->
+    <string name="text_selection_search_action">მოძებნეთ უსაფრთხოდ</string>
+
+    <!-- Content of about focus. Argument 1 is the app name (Firefox Focus/Firefox Klar/etc).
+         Argument 2 is the url for the learn-more link. -->
+    <string name="about_content"><![CDATA[<p>%1$s სრულად გიბრუნებთ მართვის სადავეებს.</p>
+<p>გამოიყენეთ როგორც პირადი ბრაუზერი:
+  <ul>
+    <li>მოძებნეთ და დაათვალიერეთ გვერდები</li>
+    <li>შეზღუდეთ მეთვალყურე ელემენტები (პარამეტრებიდან დაშვებაც შეიძლება)</li>
+    <li>გაასუფთავეთ და წაშალეთ ფუნთუშები, ძიებისა და თვალიერების ისტორია</li>
+  </ul>
+</p>
+<p>%1$s შექმნილია Mozilla-ს მიერ. ჩვენი მიზანი, ინტერნეტის გახსნილობა და სიჯანსაღეა.<br/>
+<a href="%2$s">ვრცლად</a></p>]]></string>
+
+    <!-- Header for the Privacy and Security settings menu -->
+    <string name="preference_privacy_and_security_header">პირადულობა და უსაფრთხოება</string>
+
+    <!-- Preference summary for settings related to privacy and security -->
+    <string name="preference_privacy_and_security_summary">თვალთვალი, ფუნთუშები, მონაცემთა შერჩევა</string>
+
+    <!-- Preference category description for settings related to search, set default
+    and autocomplete are settings a user can find and change inside the "search" settings screen -->
+    <string name="preference_search_summary">ნაგულისხმევად დაყენება, თვითშევსება</string>
+
+    <!-- Preference category description for settings screen for settings related to Mozilla -->
+    <!-- About the app and help are links that are inside this menu -->
+    <!-- %1$s will be replaced by the app name (e.g. Firefox Focus) -->
+    <string name="preference_mozilla_summary">%1$s-ის შესახებ, დახმარება</string>
+
+    <!-- Preference category for ad blocking and tracking protection settings -->
+    <string name="preference_category_tracking_protection">თვალთვალისგან დაცვა</string>
+
+    <!-- Preference category for settings related to controlling web content -->
+    <string name="preference_category_web_content">ვებშიგთავსი</string>
+
+    <!-- Preference category: stealth settings for while switching apps -->
+    <string name="preference_category_switching_apps">პროგრამების გადართვისას</string>
+
+    <!-- Preference category for General Settings -->
+    <string name="preference_category_general">მთავარი</string>
+
+    <!-- Preference category for settings about sending usage data -->
+    <string name="preference_category_data_collection_use">მონაცემთა აღრიცხვა და გამოყენება</string>
+
+    <string name="preference_category_search">ძიება</string>
+
+    <!-- Title of "switch" preference that enables/disables search suggestions -->
+    <string name="preference_show_search_suggestions">ძიების შემოთავაზების ჩვენება</string>
+    <!-- Description of the preference that enables/disables search suggestions
+        %1$s will be replaced by the app name (e.g. Firefox Focus) -->
+    <string name="preference_show_search_suggestions_summary">%1$s გაუგზავნის საძიებო სისტემას, მისამართების ველში აკრეფილ ტექსტს</string>
+
+    <!-- This label is shown below the name of the default search engine in settings -->
+    <string name="preference_search_engine_default">ნაგულისხმევი</string>
+
+    <!-- Text that is shown below a "switch" preference that is enabled. -->
+    <string name="preference_state_on">ჩართული</string>
+
+    <!-- Text that is shown below a "switch" preference that is disabled. -->
+    <string name="preference_state_off">გამორთული</string>
+
+    <!-- Item in settings that will open a new preference screen for configuring the URL autocomplete behavior. -->
+    <string name="preference_subitem_autocomplete">URL-ს თვითშევსება</string>
+
+    <!-- Action at the bottom of the list of custom autocomplete URLs that will open a new screen to add a new URL to the list. -->
+    <string name="preference_autocomplete_action_add">+ საკუთარი URL-ების დამატება</string>
+
+    <!-- Title of the screen for adding custom autocomplete URLs. -->
+    <string name="preference_autocomplete_title_add">საკუთარი URL-ს დამატება</string>
+
+    <!-- Label for the button to quick add custom autocomplete URLs. -->
+    <string name="custom_autocomplete_quick_add">საკუთარი URL-ს დამატება</string>
+
+    <!-- Preference category for settings about cookies and site data -->
+    <string name="preference_category_cookies">ფუნთუშები და საიტის მონაცემები</string>
+
+    <!-- Preference category for settings about data choices -->
+    <string name="preference_category_data_choices">მონაცემთა შერჩევა</string>
+
+    <!-- Title of the screen for removing custom autocomplete URLs. -->
+    <string name="preference_autocomplete_title_remove">დამატებული URL-ების მოცილება</string>
+
+    <!-- A link to SUMO at autocomplete settings. -->
+    <string name="preference_autocomplete_learn_more">ვრცლად</string>
+
+    <!-- Preference summary: Custom (user-defined) autocomplete URLs. -->
+    <string name="preference_autocomplete_custom_summary">დაამატეთ და მართეთ საკუთარი URL-ები თვითშევსებისთვის.</string>
+
+    <!-- Label for the "custom autocomplete URL" input field -->
+    <string name="preference_autocomplete_add_title">URL დასამატებლად</string>
+
+    <!-- "Hint" text for the "custom autocomplete URL" input field. Shown when the field is empty. -->
+    <string name="preference_autocomplete_add_hint">ჩასვით ან შეიყვანეთ URL</string>
+
+    <!-- Example how a custom domain autocomplete URL be added (e.g. without http://) -->
+    <string name="preference_autocomplete_add_example2">მაგალითად: mozilla.org</string>
+
+    <!-- To be removed once the new hint has been translated -->
+    <string name="preference_autocomplete_add_example">მაგალითად: example.com</string>
+
+    <!-- Confirmation "snackbar" shown after a new custom autocomplete URL has been added. -->
+    <string name="preference_autocomplete_add_confirmation">ახალი URL დაემატა.</string>
+
+    <!-- Menu item to remove existing autocomplete URLs. -->
+    <string name="preference_autocomplete_menu_remove">წაშლა</string>
+
+    <!-- Content description (not visible, for screen readers etc.): Button that will delete all selected custom autocomplete URLs. -->
+    <string name="preference_autocomplete_action_remove_content_description">წაშლა</string>
+
+    <!-- Error message shown if the entered custom autocomplete URL is not valid or empty. -->
+    <string name="preference_autocomplete_add_error">გადაამოწმეთ შეყვანილი URL.</string>
+
+    <string name="preference_language">ენა</string>
+    <!-- This is shown when the user hasn't set a focus specific language, i.e. when Focus
+         is using the system default language. -->
+    <string name="preference_language_systemdefault">სისტემის ნაგულისხმევი</string>
+
+    <string name="preference_category_privacy">პირადულობა</string>
+    <string name="preference_privacy_block_ads">სარეკლამო მეთვალყურეების შეზღუდვა</string>
+    <string name="preference_privacy_block_ads_summary">ზოგიერთი სარეკლამო ელემენტი, თვალს ადევნებს თქვენს გადაადგილებას საიტებზე, მაშინაც კი როცა მათზე არ აწკაპებთ</string>
+    <string name="preference_privacy_block_analytics">სტატისტიკური აღრიცხვის ელემენტების შეზღუდვა</string>
+    <string name="preference_privacy_block_analytics_summary">გამოიყენება მონაცემთა აღრიცხვისთვის, დამუშავებისა და ისეთი მოქმედებების შესამოწმებლად, როგორიცაა თითის შეხება და გვერდის გადაადგილება</string>
+    <string name="preference_privacy_block_social">სოც. ქსელების ელემენტების შეზღუდვა</string>
+    <string name="preference_privacy_block_social_summary">თქვენს გადაადგილებაზე თვალყურის მისადევნებლად, საიტებზე განთავსებულია მოწონების, ან გაზიარების ღილაკების სახით</string>
+    <string name="preference_privacy_block_content">სხვა მეთვალყურე ელემენტების შეზღუდვა</string>
+    <string name="preference_privacy_block_content_summary2">ჩართვის შედეგად, ზოგიერთმა ვებგვერდმა, შესაძლოა გამართულად ვერ იმუშაოს</string>
+    <string name="preference_privacy_category_cookies">ფუნთუშების შეზღუდვა</string>
+
+    <!-- Three options for Cookie blocking. Yes (All cookies Blocked), Block 3rd-party cookies
+    only (Only 3rd-party Cookies Blocked), No (No cookies blocked) -->
+    <string name="preference_privacy_should_block_cookies_no_option">არა</string>
+    <string name="preference_privacy_should_block_cookies_third_party_only_option">მხოლოდ მე-3 მხარის ფუნთუშების</string>
+    <string name="preference_privacy_should_block_cookies_yes_option">დიახ</string>
+
+    <!-- Preference Title: Biometrics can be used to unlock Focus if the previous session's data was not erased by the user. -->
+    <string name="preference_security_biometric">გამოიყენეთ თითის ანაბეჭდი, პროგრამის გასახსნელად</string>
+    <!-- Preference Summary: Biometrics (iris scan, fingerprint, or facial scan) can be used to unlock Focus if the app had a URL
+        open when the app was last run to ensure that only the phone's owner can view a previous session.
+        %1$s will be replaced by the app name (e.g. Firefox Focus) -->
+    <string name="preference_security_biometric_summary">თითის ანაბეჭდით შეგიძლიათ შეხვიდეთ %1$s-ში თუ URL-ბმული უკვე გახსნილია პროგრამაში. ფარული რეჟიმი კვლავ ჩართული იქნება.</string>
+
+    <!-- Preference Title: Secure Mode is a setting that prevents the app's content to show up in the "recent apps" screen
+         and prevents the user from taking screenshots or casting the app to other displays. -->
+    <string name="preference_privacy_secure_mode">ფარული რეჟიმი</string>
+    <!-- Preference Summary: Stealth mode (previously "Secure mode") is a setting that prevents the
+     app's content (in our case especially the content of webpages) to show up in the "recent apps"
+     screen. Additionally Android will prevent the user from taking screenshots or casting the app
+     to other displays. -->
+    <string name="preference_privacy_stealth_summary">ვებგვერდების დამალვა, პროგრამების გადართვისას და ეკრანის სურათების გადაღების შეზღუდვა.</string>
+
+    <string name="preference_category_security">უსაფრთხოება</string>
+
+    <string name="preference_category_performance">წარმადობა</string>
+    <string name="preference_performance_block_webfonts">საიტის შრიფტების შეზღუდვა</string>
+    <!-- This text is shown below the setting for disabling web fonts. Some websites use icons/images from a font and those do not show up if fonts are blocked.-->
+    <string name="preference_performance_block_webfonts_summary">შესაძლოა ხატულების და სურათების ნაწილი გაქრეს</string>
+
+    <string name="preference_performance_block_javascript">JavaScript-ის შეზღუდვა</string>
+    <!-- This text is shown below setting for disabling JavaScript. Some websites may not work correctly when JavaScript is disabled -->
+    <string name="preference_performance_block_javascript_summary">გვერდები, შესაძლოა უფრო სწრაფად ჩაიტვირთოს, მაგრამ ხარვეზებით იმუშაოს</string>
+
+    <!-- This preference does not set Focus as the default browser but instead links to Android's
+     "default apps" settings screen or if not supported by this Android version to a SUMO page describing
+     how to set Focus as a default browser.
+      %1$s will be replaced by the app name (e.g. Firefox Focus) -->
+    <string name="preference_default_browser2">%1$s-ის ნაგულისხმევ ბრაუზერად მითითება</string>
+
+    <string name="preference_category_mozilla">Mozilla</string>
+    <string name="preference_mozilla_telemetry2">მონაცემების გაგზავნა</string>
+
+    <!-- A link to SUMO at the end of the summary (preference_mozilla_telemetry_summary2) of the "Send anonymous usage data" setting. -->
+    <string name="preference_mozilla_telemetry_summary">იხილეთ ვრცლად</string>
+
+    <!-- %1$s will be replaced with the name of the app (e.g. Firefox Focus) -->
+    <string name="preference_mozilla_telemetry_summary2">Mozilla აღრიცხავს მხოლოდ იმ მონაცემებს, რაც საჭიროა %1$s-ის გასაუმჯობესებლად.</string>
+
+    <!-- In-app link (in settings) to Focus privacy notice. -->
+    <string name="preference_privacy_notice">პირადი მონაცემების დაცვა</string>
+
+    <!-- Item in Preferences that shows the about page. Parameter 1 is the app name, i.e. Firefox Focus/Firefox Klar. -->
+    <string name="preference_about">%1$s-ის შესახებ</string>
+
+    <!-- Header for the list of installed search engines -->
+    <string name="preference_search_installed_search_engines">დაყენებული საძიებოები</string>
+
+    <!-- Action for restoring the default list of search engines -->
+    <string name="preference_search_restore">ნაგულისხმევი საძიებო სისტემების აღდგენა</string>
+
+    <!-- Action for adding an additional search engine to the list.
+    The "+" is used to emphasize that this is an "add" action -->
+    <string name="preference_search_add2">+ სხვა საძიებო სისტემის დამატება</string>
+    <string name="preference_search_remove_title">საძიებოს ამოშლა</string>
+    <string name="preference_search_remove">მოცილება</string>
+
+    <!-- Title: Homescreen tips settings toggle to determine whether or not tips are displayed when
+     a user first launches the app. -->
+    <string name="preference_homescreen_tips">ცნობების ჩვენება საწყის გვერდზე</string>
+
+    <!-- Clickable action text that shows when user long-presses on a search engine search field (this is similar to paste or copy when long-pressing a text field) -->
+    <string name="action_option_add_search_engine">საძიებოს დამატება</string>
+
+    <string name="search_add_manually_name_hint">საძიებოს დასახელება</string>
+    <string name="search_add_manually_string">საძიებო ფრაზა</string>
+    <string name="search_add_manually_save">შენახვა</string>
+
+    <!-- Example of search engine url -->
+    <string name="search_add_manually_example">მაგალითად: example.com/search/?q=%s</string>
+
+    <string name="search_add_confirmation">ახალი საძიებო სისტემა დამატებულია.</string>
+
+    <string name="search_add_error_empty_name">შეიყვანეთ საძიებო სისტემის სახელი</string>
+    <string name="search_add_error_duplicate_name">ამ სახელს, უკვე იყენებს ერთ-ერთი დაყენებული საძიებო სისტემა.</string>
+
+    <string name="search_add_error_empty_search">შეიყვანეთ საძიებო ფრაზა</string>
+
+    <string name="search_add_error_format">შეამოწმეთ, შეესაბამება თუ არა საძიებო ფრაზა მოცემულ ფორმატს</string>
+
+    <!-- Content description (not visible, for screen readers etc.): Clear text in URL bar -->
+    <string name="content_description_clear_input">შეტანილის გასუფთავება</string>
+
+    <!-- Content description (not visible, for screen readers etc.): Clicking on the website overlay
+     while in typing mode will dismiss and go back to the browser. This text will be read when the
+     overlay if focused. See https://github.com/mozilla-mobile/focus-android/issues/50 -->
+    <string name="content_description_dismiss_input">დახურვა</string>
+
+    <!-- Content description (not visible, for screen readers etc.): Erase button: Erase the browsing
+     history and go back to the home screen. -->
+    <string name="content_description_erase">ისტორიის წაშლა</string>
+
+    <!-- If the user has multiple tabs open we will show an addition "floating action button" showing how many tabs are open.
+     This string is not displayed and read only by screenreaders. %1$s will be replaced with the number of open tabs. This
+      button will only be visible when there is more than one tab open (>= 2). -->
+    <string name="content_description_tab_counter">გახსნილი ჩანართი: %1$s</string>
+
+    <!-- Content description (not visible, for screen readers etc.): Lock icon showed in the URL bar for
+     https pages.. -->
+    <string name="content_description_lock">დაცული კავშირი</string>
+
+    <!-- This text is not visible. Instead it will be read by the accessibility service once we start
+     loading a website -->
+    <string name="accessibility_announcement_loading">იტვირთება</string>
+
+    <!-- This text is not visible. Instead it will be read by the accessibility service once we
+     finished loading a website -->
+    <string name="accessibility_announcement_loading_finished">საიტი ჩაიტვირთა</string>
+
+    <!-- Content description (not visible, for screen readers etc.): "Three dot" menu button. -->
+    <string name="content_description_menu">დამატებითი პარამეტრები</string>
+
+    <!-- Content description (not visible, for screen readers etc.): Navigate forward (browsing history) -->
+    <string name="content_description_forward">გადასვლა წინ</string>
+
+    <!-- Content description (not visible, for screen readers etc.): Reload current website -->
+    <string name="content_description_reload">საიტის ხელახლა ჩატვირთვა</string>
+
+    <!-- Content description (not visible, for screen readers etc.): Navigate back (browsing history) -->
+    <string name="content_description_back">გადასვლა უკან</string>
+
+    <!-- Content description (not visible, for screen readers etc.): Stop loading the current website. This button will turn into the refresh button once loading has been completed (see content_description_reload) -->
+    <string name="content_description_stop">საიტის ჩატვირთვის შეჩერება</string>
+
+    <!-- Content description (not visible, for screen readers etc.): Custom Tab exit button - closes the custom tab and returns to the previous app. -->
+    <string name="content_description_customtab_exit">წინა პროგრამაზე დაბრუნება</string>
+
+    <!-- Content description (not visible, for screen readers etc.): This is the description for the ImageView in the menu that displays
+         the number of trackers blocked for the current session -->
+    <string name="content_description_trackers_blocked">შეზღუდული მეთვალყურეები</string>
+
+    <!-- Content description (not visible, for screen readers etc.): This is the description for the switch in the menu that temporarily disables/enables
+         content blocking for the current session -->
+    <string name="content_description_blocking_switch">მეთვალყურე ელემენტების შეზღუდვა</string>
+
+    <string name="your_rights">თქვენი უფლებები</string>
+
+    <string name="external_app_prompt_title">ბმულის სხვა პროგრამით გახსნა</string>
+    <!-- This string is shown when the user has clicked a link that needs to be opened in a different app.
+         Argument 2 is the external app name, argument 1 is our name (i.e. Firefox Focus, or Firefox Klar). -->
+    <string name="external_app_prompt">შეგიძლიათ დატოვოთ %1$s ბმულის %2$s-ში გასახსნელად.</string>
+    <!-- This text is the title of a dialog shown if no app could be found for a custom link protocol. -->
+    <string name="external_app_prompt_no_app_title">პროგრამის მოძიება, რომელიც გახსნის ბმულს</string>
+    <!-- This text is shown in a dialog if no app could be found for a custom link protocol. %1$s is the name of the app (i.e. Firefox Focus) and %2$s is the name of
+         the app store installed on the device (usually that's Google Play). -->
+    <string name="external_app_prompt_no_app">თქვენს მოწყობილობაზე არსებულ არცერთ პროგრამას არ შეუძლია ამ ბმულის გახსნა. შეგიძლიათ დატოვოთ %1$s საჭირო პროგრამის %2$s-ში მოსაძიებლად.</string>
+    <!-- This label is shown above a list of apps that can be used to open a given link -->
+    <string name="external_multiple_apps_matched_exit">გსურთ პირადი დათვალიერებიდან გასვლა?</string>
+
+    <!-- Snackbar that will be displayed after a download has completed. %1$s will be replaced with the file name. -->
+    <string name="download_snackbar_finished">%1$s დასრულდა</string>
+
+    <!-- Snackbar action to immediately open the successfully downloaded file. -->
+    <string name="download_snackbar_open">გახსნა</string>
+
+    <!-- Download dialog: Warns users that downloaded files will not be deleted even when erasing history. %1$s will be replaced with the app name (i.e. Firefox Focus). -->
+    <string name="download_dialog_warning"><![CDATA[ჩამოტვირთული ფაილები <b>არ წაიშლება</b> %1$s-ის ისტორიის გასუფთავებისას.]]></string>
+
+    <!-- Title of download dialogue -->
+    <string name="download_dialog_title">ფაილის ჩამოტვირთვა</string>
+
+    <!-- Option in download dialogue to cancel a download -->
+    <string name="download_dialog_action_cancel">გაუქმება</string>
+
+    <!-- Option in download dialogue to start a download -->
+     <string name="download_dialog_action_download">ჩამოტვირთვა</string>
+
+    <!-- The page html title (i.e. the <title> tag content) -->
+    <string name="errorpage_title">ხარვეზები გვერდის ჩატვირთვისას</string>
+    <string name="errorpage_refresh">ხელახლა ცდა</string>
+
+    <string name="error_connectionfailure_title">დაკავშირება ვერ ხერხდება</string>
+    <string name="error_connectionfailure_message">
+    <![CDATA[<ul>
+        <li>ეს საიტი შესაძლოა დროებით მიუწვდომელია ან ძალიან დატვირთულია. სცადეთ ხელახლა, რამდენიმე წუთში.</li>
+        <li>თუ სხვა საიტების გახსნასაც ვერ ახერხებთ, მაშინ შეამოწმეთ მოწყობილობის კავშირი მობილურ ან Wi-Fi ინტერნეტთან.</li>
+      </ul>]]>
+    </string>
+
+    <string name="error_timeout_title">კავშირის დრო ამოიწურა</string>
+
+    <string name="error_hostLookup_title">გვერდი ვერ მოიძებნა</string>
+    <string name="error_hostLookup_message"><![CDATA[<ul>
+        <li>შეამოწმეთ აკრეფილი მისამართის სისწორე. მაგალითად
+          <strong>ww</strong>.example.com-ის ნაცვლად უნდა იყოს
+          <strong>www</strong>.example.com</li>
+        <li>თუ ვერცერთი საიტის გახსნას ვერ ახერხებთ, შეამოწმეთ მოწყობილობის კავშირი მობილურ ან Wi-Fi ინტერნეტთან.</li>
+      </ul>]]></string>
+
+
+    <string name="error_malformedURI_title">მისამართი არასწორია</string>
+    <string name="error_malformedURI_message"><![CDATA[<ul>
+  <li>საიტის მისამართები, ჩვეულებრივ, ასე იწერება <strong>http://www.example.com/</strong></li>
+  <li>დარწმუნდით, რომ წინ გადახრილ ხაზებს იყენებთ (ასეთს: <strong>/</strong>).</li>
+</ul>]]></string>
+
+    <string name="error_redirectLoop_title">ეს გვერდი არამართებულად გადამისამართდა</string>
+    <string name="error_redirectLoop_message"><![CDATA[<ul>
+  <li>ამ ხარვეზს, ზოგჯერ იწვევს ფუნთუშების უარყოფა ან გამორთვა.</li>
+</ul>]]></string>
+
+    <string name="error_unsupportedprotocol_title">მისამართი გაუგებარია</string>
+    <string name="error_unsupportedprotocol_message"><![CDATA[<ul>
+  <li>ამ ბმულის გასახსნელად, შესაძლოა სხვა პროგრამის დაყენება იყოს საჭირო.</li>
+</ul>]]></string>
+
+    <string name="error_sslhandshake_title">უსაფრთხო დაკავშირება ვერ მოხერხდა</string>
+    <string name="error_sslhandshake_message"><![CDATA[<ul>
+  <li>ეს შეიძლება, საიტის გაუმართაობის ბრალი იყოს ან
+სხვა საიტად გასაღების მცდელობას ჰქონდეს ადგილი.</li>
+  <li>თუ ამ საიტს მანამდე წარმატებით უკავშირდებოდით, ხარვეზი შესაძლოა
+დროებითი იყოს და მოგვიანებით შეგიძლიათ კვლავ სცადოთ.</li>
+</ul>]]></string>
+
+    <string name="error_generic_title">უი</string>
+    <string name="error_generic_message">ამ გვერდის ჩატვირთვა, რატომღაც ვერ მოხერხდა.</string>
+
+    <!-- Label used in the contextmenu shown when long-pressing on a link -->
+    <string name="contextmenu_link_share">ბმულის გაზიარება</string>
+    <!-- Label used in the contextmenu shown when long-pressing on a link -->
+    <string name="contextmenu_link_copy">მისამართის დაკოპირება</string>
+    <!-- Label used in the contextmenu shown when long-pressing on an image -->
+    <string name="contextmenu_image_share">სურათის გაზიარება</string>
+    <!-- Label used in the contextmenu shown when long-pressing on an image -->
+    <string name="contextmenu_image_copy">სურათის მისამართის ასლი</string>
+    <!-- Label used in the contextmenu shown when long-pressing on an image -->
+    <string name="contextmenu_image_save">სურათის შენახვა</string>
+    <!-- Label used in the contextmenu shown when long-pressing on a link -->
+    <string name="contextmenu_open_in_new_tab">ბმულის ახალ ჩანართში გახსნა</string>
+
+    <!-- This is a warning shown in the browser's context menu (when long pressing an image). %1$s will be replaced with the long name of the app (e.g. Firefox Focus). -->
+    <string name="contextmenu_image_warning"><![CDATA[შენახული და გაზიარებული სურათები <b>არ წაიშლება</b> %1$s-ის ისტორიის გასუფთავებისას.]]></string>
+
+    <!-- First run tour (Default browser): Title -->
+    <string name="firstrun_defaultbrowser_title">გააძლიერეთ პირადი მონაცემების დაცვა</string>
+    <!-- First run tour (Default browser): Text. -->
+    <string name="firstrun_defaultbrowser_text2">პირადი მონაცემების უსაფრთხოება ახალ დონეზეა აყვანილი. შეზღუდეთ სარეკლამო და სხვა შიგთავსი, რომლითაც საიტებზე თქვენი დევნაა შესაძლებელი და შეამცირეთ გვერდების ჩატვირთვის დრო.</string>
+
+    <!-- First run tour (Search): Title -->
+    <string name="firstrun_search_title">მოიძიეთ გვერდები, თქვენებურად</string>
+    <!-- First run tour (Search): Text -->
+    <string name="firstrun_search_text">რამე განსხვავებულს ეძებთ? აირჩიეთ სხვა საძიებო სისტემა ნაგულისხმევად, პარამეტრებიდან.</string>
+
+    <!-- First run tour (Shortcut): Title -->
+    <string name="firstrun_shortcut_title">მალსახმობების დამატება მთავარ ეკრანზე</string>
+    <!-- First run tour (Shortcut): Text. %1$s will be replaced with the name of the app (e.g. Firefox Focus) -->
+    <string name="firstrun_shortcut_text">%1$s-ის დახმარებით, სწრაფად შეგიძლიათ დაუბრუნდეთ რჩეულ საიტებს. უბრალოდ, მიუთითეთ &quot;მთავარ ეკრანზე დამატება&quot;, %1$s-ის მენიუდან.</string>
+
+    <!-- First run tour (Privacy): Title -->
+    <string name="firstrun_privacy_title">ჩვევად აქციეთ პირადულობის დაცვა</string>
+    <!-- First run tour (Privacy): Text. %1$s will be replaced with the name of the app (e.g. Firefox Focus) -->
+    <string name="firstrun_privacy_text">დააყენეთ %1$s ნაგულისხმევ ბრაუზერად და ისარგებლეთ პირადულობის დაცვით, სხვა პროგრამებიდან ბმულებზე გადასვლის შემთხვევაშიც.</string>
+
+    <string name="firstrun_close_button">კარგი, გასაგებია!</string>
+    <string name="firstrun_skip_button">გამოტოვება</string>
+    <string name="firstrun_next_button">შემდეგი</string>
+
+    <!-- Indicator that no trackers are being blocked because content blocking is disabled; normally shows the number of blocked trackers -->
+    <string name="content_blocking_disabled">-</string>
+
+    <!-- Label of the action that will add the current website to the home screen (shown in the confirmation dialog). -->
+    <string name="dialog_addtohomescreen_action_add">დამატება</string>
+
+    <!-- Label of the action that will close the dialog and not add anything to the home screen (shown in the confirmation dialog). -->
+    <string name="dialog_addtohomescreen_action_cancel">გაუქმება</string>
+
+    <!-- When tracking protection is disabled for the current session then we will show this warning in the "Add to home screen" dialog to
+         let the user know that the shortcut will always be opened with tracking protection disabled. -->
+    <string name="dialog_addtohomescreen_tracking_protection">ამ მალსახმობით გახსნისას, თვალთვალისგან დაცვა გამორთული იქნება</string>
+
+    <!-- The user visible name of the "notification channel" (Android 8+ feature) for the ongoing notification shown while a browsing session is active.
+    The recommended maximum length is 40 characters; the value may be truncated if it is too long.
+
+    * To understand what notification channels are, see: https://www.androidcentral.com/notification-channels
+    * To see how this string will look like in Android's UI, see: https://github.com/mozilla-mobile/focus-android/issues/863#issuecomment-324105723
+    -->
+    <string name="notification_browsing_session_channel_name">პირადი დათვალიერების რეჟიმი</string>
+
+    <!-- The user visible description of the "notification channel" (Android 8+ feature) for the ongoing notification shown while a browsing session is active.
+    The recommended maximum length is 300 characters; the value may be truncated if it is too long. %1$s will be replaced with the name of the app (e.g. Firefox Focus).
+
+    * To understand what notification channels are, see: https://www.androidcentral.com/notification-channels
+    * To see how this string will look like in Android's UI, see: https://github.com/mozilla-mobile/focus-android/issues/863#issuecomment-324105723
+    -->
+    <string name="notification_browsing_session_channel_description">შეტყობინებები საშუალებას გაძლევთ, ერთი შეხებით გაასუფთავოთ მონაცემები %1$s-ში. პროგრამის გახსნა, აღარ დაგჭირდებათ.</string>
+
+    <!-- Label for a button in the "tabs tray" to erase the browsing history (closes all tabs and removes associated data). -->
+    <string name="tabs_tray_action_erase">ისტორიის გასუფთავება</string>
+
+    <!-- If the user decides to open the current page in another browser and if Firefox is not installed then we show this
+      item in the list of browsers. Clicking it will open the app store installed on the device (usually that's Google Play). -->
+    <string name="download_firefox">ჩამოტვირთეთ Firefox</string>
+
+    <!-- Text shown in the "Your rights" screen.
+    %1$s will be replaced with the name of the app (e.g. Firefox Focus)-->
+    <string name="your_rights_content1"><![CDATA[%1$s არის უფასო და ღია წყაროს მქონე პროგრამა, შექმნილი Mozilla-სა და სხვა მოხალისეების მიერ.]]></string>
+
+    <!-- Text shown in the "Your rights" screen.
+    %1$s will be replaced with the name of the app (e.g. Firefox Focus)
+    %2$s will be replaced with a URL linking to the MPL (e.g. https://www.mozilla.org/en-US/MPL/) -->
+    <string name="your_rights_content2"><![CDATA[%1$s ვრცელდება <a href="%2$s">Mozilla Public License</a> და სხვა ღია წყაროს ლიცენზიებით.]]></string>
+
+    <!-- Text shown in the "Your rights" screen.
+    %1$s will be replaced with the name of the app (e.g. Firefox Focus)
+    %2$s will be replaced with a URL linking to the trademark policy (e.g. https://www.mozilla.org/foundation/trademarks/policy/) -->
+    <string name="your_rights_content3"><![CDATA[თქვენ არ გეძლევათ რამე სახის უფლება ან ლიცენზია, Mozilla ფონდის სავაჭრო ნიშნებსა და სხვა საკუთრებაზე, მათ შორის დასახელებებზე Mozilla, Firefox, ან %1$s-ის სხვა სახელებსა და ლოგოებზე. დამატებითი ინფორმაცია შეგიძლიათ იხილოთ <a href="%2$s">აქ</a>.]]></string>
+
+    <!-- Text shown in the "Your rights" screen.
+    %1$s will be replaced with the name of the app (e.g. Firefox Focus)
+    %2$s will be replaced with a URL linking to the list of licenses used by the dependencies.-->
+    <string name="your_rights_content4"><![CDATA[%1$s-ის დამატებითი პირველწყარო კოდი ვრცელდება სხვადასხვა უფასო და ღია წყაროს მქონე <a href="%2$s">ლიცენზიებით</a>.]]></string>
+
+    <!-- Text shown in the "Your rights" screen.
+    %1$s will be replaced with the name of the app (e.g. Firefox Focus)
+    %2$s will be replaced with a URL linking to the GPL
+    %3$s will be replaced with a URL linking to the tracking protection wiki page (e.g. https://wiki.mozilla.org/Security/Tracking_protection#Lists) -->
+    <string name="your_rights_content5"><![CDATA[%1$s ასევე იყენებს შეზღუდვის სიებს, რომლის მომწოდებელია Disconnect Inc. როგორც ცალკეული და დამოუკიდებელი ნამუშევრები, ვრცელდება <a href="%2$s">GNU General Public License v3</a> ლიცენზიით და ხელმისაწვდომია <a href="%3$s">ამ ბმულზე</a>.]]></string>
+
+    <!-- Text shown in prompts for GeckoView -->
+    <string name="gv_prompt_username_hint">სახელი</string>
+    <string name="gv_prompt_password_hint">პაროლი</string>
+    <string name="gv_prompt_clear">გასუფთავება</string>
+
+    <!-- Text shown in Security Information Popup -->
+    <!-- Text to denote secure or insecure connection -->
+    <string name="security_popup_secure_connection">დაცული კავშირი</string>
+    <string name="security_popup_insecure_connection">დაუცველი კავშირი</string>
+    <!-- %1$s will be replaced with organization that granted the SSL certificate -->
+    <string name="security_popup_security_verified">დამმოწმებელი: %1$s</string>
+
+    <!-- Content Description of Security Icon in toolbar -->
+    <string name="site_security_icon_content_description">საიტის უსაფრთხოება</string>
+    <string name="preference_autocomplete_duplicate_url_error">URL უკვე არსებობს</string>
+
+    <!-- Label for the Find in page button -->
+    <string name="find_in_page">პოვნა გვერდზე</string>
+
+    <!-- Watermark/Hint for the find in page input field -->
+    <string name="find_in_page_input">პოვნა გვერდზე</string>
+
+    <!-- String to show the number of results found in the page and the
+        position the user is at. The first argument is the position, the second argument is the total -->
+    <string name="find_in_page_result">%1$d/%2$d</string>
+    <!-- String to be read by the accessibility service presenting the number of results found in the page
+        and the position the user is at. The first argument is the position, the second argument is the total -->
+    <string name="accessibility_find_in_page_result">%1$d, %2$d-დან</string>
+
+    <!-- String to be read by the accessibility service when focusing the next result button -->
+    <string name="accessibility_next_result">მომდევნო შედეგი</string>
+    <!-- String to be read by the accessibility service when focusing the previous result button -->
+    <string name="accessibility_previous_result">წინა შედეგი</string>
+    <!-- String to be read by the accessibility service when focusing the dismiss button in the "find in page" UI -->
+    <string name="accessibility_dismiss_find_in_page">ძიების გაუქმება</string>
+    
+    <!-- Http Authentication Popup: Title -->
+    <string name="http_auth_dialog_title">საჭიროებს ანგარიშის მონაცემებს</string>
+    <!-- Http Authentication Popup: Username -->
+    <string name="http_auth_dialog_username">მომხმარებლის სახელი</string>
+    <!-- Http Authentication Popup: Password -->
+    <string name="http_auth_dialog_password">პაროლი</string>
+
+    <!-- Checkbox menu item text to request desktop site -->
+    <string name="preference_performance_request_desktop_site">სრული საიტის მოთხოვნა</string>
+
+    <!-- Displayed after a user long presses on the URL in a custom tab to copy the URL -->
+    <string name="custom_tab_copy_url_action">URL დაკოპირდა</string>
+
+    <!-- Description of what a user may find in the Advanced Setting category, used for debugging -->
+    <string name="preference_advanced_summary">შემმუშავებლის ხელსაწყოები</string>
+
+    <!-- Title of Advanced Setting category -->
+    <string name="preference_category_advanced">დამატებითი</string>
+
+    <!-- Preference to enable remote debugging of the app via USB or Wi-Fi -->
+    <string name="preference_remote_debugging">დისტანციური გამართვა USB/Wi-Fi-ით</string>
+
+    <!-- Title for the fingerprint authentication dialog box that is shown to the user when opening the app.
+     %1$s is replaced with the app name -->
+    <string name="biometric_auth_title">გაიხსნას %1$s</string>
+
+    <!-- Description for the fingerprint authentication dialog box that is shown to the user when opening the app -->
+    <string name="biometric_auth_description">შეახეთ თითი ანაბეჭდის აღმქმელს გასაგრძელებლად.</string>
+
+    <!-- New session button for the fingerprint authentication dialog box that is shown to the user when opening the app.
+     When pressed, the user's previous session is cleared, and authentication is not required. -->
+    <string name="biometric_auth_new_session">ახალი სეანსი</string>
+
+    <!-- Description for the fingerprint authentication image. Used for accessibility purposes. -->
+    <string name="biometric_auth_image_description">თითის ანაბეჭდის ხატულა</string>
+
+    <!-- Error text displayed when the user's fingerprint cannot be recognized upon re-entering the app.
+     This is displayed during the authentication flow as the app launches. -->
+    <string name="biometric_auth_not_recognized_error">ანაბეჭდის ამოცნობა ვერ მოხერხდა. სცადეთ ხელახლა.</string>
+
+    <!-- Error text displayed when the user's fingerprint moved too quickly upon re-entering the app
+    This is displayed during the authentication flow as the app launches.-->
+    <string name="biometric_auth_moved_too_quickly">თითი სწრაფად ამოძრავდა. სცადეთ ხელახლა.</string>
+
+    <!-- Title for the prompt to enable search suggestions -->
+    <string name="enable_search_suggestion_title">გსურთ ძიების შემოთავაზებების ჩართვა?</string>
+
+    <!-- Description for the prompt to enable search suggestions
+        %1$s will be replaced by the app name (e.g. Firefox Focus)
+        %2$s will be replaced with "Learn more" which will be a tappable link
+        using the string: "enable_search_suggestion_subtitle_learnmore" -->
+    <string name="enable_search_suggestion_subtitle">ძიების შემოთავაზებების მისაღებად, %1$s საჭიროებს მისამართების ველში აკრეფილი ტექსტის, შერჩეული საძიებო სისტემისთვის გადაგზავნას. %2$s.</string>
+
+    <!-- String to be placed inside the string: enable_search_suggestion_subtitle,
+        which will be a "Learn More" link. -->
+    <string name="enable_search_suggestion_subtitle_learnmore">იხილეთ ვრცლად</string>
+
+    <!-- Label used for the "NO button" for the prompt to enable search suggestions -->
+    <string name="enable_search_suggestions_no">არა</string>
+
+    <!-- Label used for the "YES button" for the prompt to enable search suggestions -->
+    <string name="enable_search_suggestions_yes">დიახ</string>
+
+    <!-- Message displayed when using a search engine that doesn't provide suggestions -->
+    <string name="no_suggestions_message">ზოგიერთ საძიებო სისტემას, არ აქვს შემოთავაზებების ჩვენების შესაძლებლობა.</string>
+
+    <!-- Button to dismiss the message displayed  when using a search engine that doesn't provide suggestions-->
+    <string name="dismiss_no_suggestions_prompt_button">დახურვა</string>
+
+    <!-- Tips displayed on the home view -->
+
+    <!-- Tip displayed on home view explaining how to disable tracking protection
+    The new line here must be kept as the second half of the string is clickable for the user. -->
+    <string name="tip_disable_tracking_protection">საიტი ხარვეზებით მუშაობს?
+ სცადეთ თვალთვალისგან დაცვის გამორთვა</string>
+
+    <!-- Tip displayed on home view explaining how to add sites to homescreen
+    Argument 1 will be replaced with a line break in the application.-->
+    <string name="tip_add_to_homescreen"><![CDATA[მარტივი წვდომა სასურველ საიტებზე ერთი შეხებით%1$s მენიუ > მთავარ ეკრანზე დამატება]]></string>
+
+    <!-- Tip displayed on home view explaining how to make Focus the default browser
+    Argument 1 is the app name (Firefox Focus/Firefox Klar/etc).
+    The new line here must be kept as the second half of the string is clickable for the user. -->
+    <string name="tip_set_default_browser">გახსნეთი ყველა ბმული %1$s-ით
+ დააყენეთ %1$s ნაგულისხმევ ბრაუზერად</string>
+
+    <!-- Tip displayed on home view explaining how to add a custom autocomplete URL
+    The new line here must be kept as the second half of the string is clickable for the user. -->
+    <string name="tip_autocomplete_url">URL-ბმულების თვითშევსება სასურველი საიტებისთვის
+ ნებისმიერ URL-ბმულზე ხანგრძლივი დაჭერით მისამართების ველში</string>
+
+    <!-- Tip displayed on home view explaining how to add a custom autocomplete URL
+    The new line here must be kept as the second half of the string is clickable for the user. -->
+    <string name="tip_open_in_new_tab">გახსენით ბმული ახალ ჩანართში
+ გვერდის ნებისმიერ ბმულზე ხანგრძლივი დაჭერით</string>
+
+    <!-- Tip displayed on home view explaining how to request the desktop version of a website.
+     Argument 1 will be replaced with a line break in the application. -->
+    <string name="tip_request_desktop"><![CDATA[საიტის სრული ვერსიის ნახვას ამჯობინებთ?%1$s მენიუ > სრული საიტის მოთხოვნა]]></string>
+
+    <!-- deprecated strings -->
+    <string name="tip_disable_tips">რჩევების ჩვენება %1$s-ის მთავარ ეკრანზე</string>
+    <string name="preference_switch_autocomplete">თვითშევსება</string>
+    <string name="preference_category_autocomplete_preinstalled">ნაგულისხმევი URL-ების ჩამონათვალი</string>
+    <string name="preference_autocomplete_preinstalled_summary">ჩართეთ და %1$s თავად დაასრულებს 450-ზე მეტ ცნობილ URL-ბმულს, მისამართების ველში აკრეფისას.</string>
+    <string name="preference_category_autocomplete_custom_urls">საკუთარი URL-ები</string>
+    <string name="preference_autocomplete_subitem_customlist">საკუთარი URL-ები</string>
+  </resources>

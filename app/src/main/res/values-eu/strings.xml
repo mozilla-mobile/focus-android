@@ -1,233 +1,693 @@
-<?xml version='1.0' encoding='utf-8'?>
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <string name="action_cancel">Utzi</string>
-  <string name="action_ok">Ados</string>
-  <string name="action_save">Gorde</string>
-  <string name="urlbar_hint">Bilatu edo idatzi helbidea</string>
-  <string name="teaser">Nabigatze pribatu automatikoa.\nNabigatu. Ezabatu. Errepikatu.</string>
-  <string name="feedback_erase">Zure nabigatze-historia ezabatu egin da.</string>
-  <string name="search_hint">Bilatu %1$s</string>
-  <string name="menu_share">Partekatu…</string>
-  <string name="menu_report_site_issue">Eman gunearen arazoaren berri</string>
-  <string name="menu_open_with_default_browser2">Ireki %1$s nabigatzailean</string>
-  <string name="menu_open_with_a_browser2">Ireki honekin…</string>
-  <string name="menu_add_to_home_screen">Gehitu hasierako pantailan</string>
-  <string name="menu_whats_new">Nobedadeak</string>
-  <string name="menu_settings">Ezarpenak</string>
-  <string name="menu_about">Honi buruz</string>
-  <string name="menu_help">Laguntza</string>
-  <string name="menu_rights">Zure eskubideak</string>
-  <string name="menu_trackers_blocked_title">Blokeatutako elementuak</string>
-  <string name="menu_custom_tab_branding">%1$s nabigatzaileak hornitua</string>
-  <string name="share_dialog_title">Partekatu</string>
-  <string name="notification_erase_text">Ezabatu nabigatze-historia</string>
-  <string name="notification_action_open">Ireki</string>
-  <string name="notification_action_erase_and_open">Ezabatu eta ireki</string>
-  <string name="shortcut_erase_short_label">Ezabatu</string>
-  <string name="shortcut_erase_long_label">Ezabatu nabigatze-historia</string>
-  <string name="text_selection_search_action">Bilatu modu pribatuan</string>
-  <string name="about_content"><![CDATA[<p xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">%1$s(e)k agintea ematen dizu.</p>\n<p xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">"Erabili nabigatzaile pribatu gisa:\n  "<ul>"\n    "<li>Bilatu eta nabigatu aplikaziotik zuzenean</li>"\n    "<li>Blokeatu jarraipena (edo eguneratu ezarpenak jarraipena onartzeko)</li>"\n    "<li>Ezabatu cookieak eta bilaketa- eta nabigatze-historia</li>"\n  "</ul>\n</p>\n<p xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">Mozillak egina da %1$s. Internet osasuntsu eta irekia sustatzea da gure misioa.<br/>\n<a href="%2$s">Argibide gehiago</a></p>]]></string>
-  <string name="preference_privacy_and_security_header">Pribatutasuna eta segurtasuna</string>
-  <string name="preference_privacy_and_security_summary">Jarraipena, cookieak, datu-aukerak</string>
-  <string name="preference_search_summary">Ezarri lehenespenak, osatze automatikoa</string>
-  <string name="preference_mozilla_summary">%1$s(r)i buruz, laguntza</string>
-  <string name="preference_category_tracking_protection">Jarraipenaren babesa</string>
-  <string name="preference_category_web_content">Web edukia</string>
-  <string name="preference_category_switching_apps">Aplikazioak aldatzea</string>
-  <string name="preference_category_general">Orokorra</string>
-  <string name="preference_category_data_collection_use">Datuen bilketa eta erabilera</string>
-  <string name="preference_category_search">Bilaketa</string>
-  <string name="preference_show_search_suggestions">Eskuratu bilaketa-iradokizunak</string>
-  <string name="preference_show_search_suggestions_summary">Helbide-barran idazten duzuna bilaketa-motorrera bidaliko du %1$s(e)k</string>
-  <string name="preference_search_engine_default">Lehenetsia</string>
-  <string name="preference_state_on">Aktibatuta</string>
-  <string name="preference_state_off">Desaktibatuta</string>
-  <string name="preference_subitem_autocomplete">URLen osatze automatikoa</string>
-  <string name="preference_switch_autocomplete">Osatze automatikoa</string>
-  <string name="preference_category_autocomplete_preinstalled">URL zerrenda lehenetsia</string>
-  <string name="preference_autocomplete_preinstalled_summary">Gaituz gero, helbide-barran automatikoki osatuko ditu 450 URL ezagun baino gehiago %1$s(e)k.</string>
-  <string name="preference_category_autocomplete_custom_urls">URL pertsonalizatuak</string>
-  <string name="preference_autocomplete_subitem_customlist">URL pertsonalizatuak</string>
-  <string name="preference_autocomplete_action_add">+ Gehitu URL perstonalizatua</string>
-  <string name="preference_autocomplete_title_add">Gehitu URL perstonalizatua</string>
-  <string name="custom_autocomplete_quick_add">Gehitu URL pertsonalizatua</string>
-  <string name="preference_category_cookies">Cookieak eta guneetako datuak</string>
-  <string name="preference_category_data_choices">Datu-aukerak</string>
-  <string name="preference_autocomplete_title_remove">Kendu URL pertsonalizatuak</string>
-  <string name="preference_autocomplete_learn_more">Argibide gehiago</string>
-  <string name="preference_autocomplete_custom_summary">Gehitu eta kudeatu automatikoki osatzeko URL pertsonalizatuak.</string>
-  <string name="preference_autocomplete_add_title">Gehitu beharreko URLa</string>
-  <string name="preference_autocomplete_add_hint">Itsatsi edo idatzi URLa</string>
-  <string name="preference_autocomplete_add_example2">Adibidea: mozilla.org</string>
-  <string name="preference_autocomplete_add_example">Adibidea: adibidea.eus</string>
-  <string name="preference_autocomplete_add_confirmation">URL pertsonalizatu berria gehitu da.</string>
-  <string name="preference_autocomplete_menu_remove">Kendu</string>
-  <string name="preference_autocomplete_action_remove_content_description">Kendu</string>
-  <string name="preference_autocomplete_add_error">Egiaztatu idatzi duzun URLa.</string>
-  <string name="preference_language">Hizkuntza</string>
-  <string name="preference_language_systemdefault">Sistemaren lehenetsia</string>
-  <string name="preference_category_privacy">Pribatutasuna</string>
-  <string name="preference_privacy_block_ads">Blokeatu publizitatearen jarraipena</string>
-  <string name="preference_privacy_block_ads_summary">Zenbait iragarkik guneen bisiten jarraipena egiten dute, iragarkietan klik egiteko beharrik gabe ere</string>
-  <string name="preference_privacy_block_analytics">Blokeatu analitiken jarraipena</string>
-  <string name="preference_privacy_block_analytics_summary">Sakatzea edo korritzea bezalako jarduerak bildu, analizatu eta neurtzeko erabiltzen da</string>
-  <string name="preference_privacy_block_social">Blokeatu sare sozialetako jarraipena</string>
-  <string name="preference_privacy_block_social_summary">Guneetan txertatuta zure bisiten jarraipena egin eta partekatzeko botoien tankerako eginbideak bistaratzeko</string>
-  <string name="preference_privacy_block_content">Blokeatu bestelako edukien jarraipena</string>
-  <string name="preference_privacy_block_content_summary2">Gaituz gero, zenbait orrik espero gabeko portaera izan lezakete</string>
-  <string name="preference_privacy_category_cookies">Blokeatu cookieak</string>
-  <string name="preference_privacy_should_block_cookies_no_option">Ez</string>
-  <string name="preference_privacy_should_block_cookies_third_party_only_option">Blokeatu soilik hirugarrenen cookieak</string>
-  <string name="preference_privacy_should_block_cookies_yes_option">Bai</string>
-  <string name="preference_security_biometric">Erabili hatz-marka aplikazioa desblokeatzeko</string>
-  <string name="preference_security_biometric_summary">Zure hatz-markak %1$s desblokea dezake URL bat dagoeneko aplikazioan irekita badago. Modu isil-gordea aktibatu egingo da.</string>
-  <string name="preference_privacy_secure_mode">Modu isil-gordea</string>
-  <string name="preference_privacy_stealth_summary">Ezkutatu web orriak aplikazioak aldatzean eta blokeatu pantaila-argazkiak ateratzea.</string>
-  <string name="preference_category_security">Segurtasuna</string>
-  <string name="preference_category_performance">Errendimendua</string>
-  <string name="preference_performance_block_webfonts">Blokeatu webeko letra-tipoak</string>
-  <string name="preference_performance_block_webfonts_summary">Ikonoak edo irudiak ez bistaratzea eragin lezake</string>
-  <string name="preference_performance_block_javascript">Blokeatu JavaScript</string>
-  <string name="preference_performance_block_javascript_summary">Orriak azkarrago karga litezke baina espero gabeko portaera ere izan lezakete</string>
-  <string name="preference_default_browser2">Egin %1$s nabigatzaile lehenetsia</string>
-  <string name="preference_category_mozilla">Mozilla</string>
-  <string name="preference_mozilla_telemetry2">Bidali erabilera-datuak</string>
-  <string name="preference_mozilla_telemetry_summary">Argibide gehiago</string>
-  <string name="preference_mozilla_telemetry_summary2">%1$s denontzat eskaini eta hobetzeko beharrezkoa dena soilik biltzen ahalegintzen da Mozilla.</string>
-  <string name="preference_privacy_notice">Pribatutasun-oharra</string>
-  <string name="preference_about">%1$s(r)i buruz</string>
-  <string name="preference_search_installed_search_engines">Instalatutako bilaketa-motorrak</string>
-  <string name="preference_search_restore">Berrezarri bilaketa-motor lehenetsiak</string>
-  <string name="preference_search_add2">+ Gehitu beste bilaketa-motor bat</string>
-  <string name="preference_search_remove_title">Kendu bilaketa-motorrak</string>
-  <string name="preference_search_remove">Kendu</string>
-  <string name="preference_homescreen_tips">Erakutsi gomendioak hasierako pantailan</string>
-  <string name="action_option_add_search_engine">Gehitu bilaketa-motorra</string>
-  <string name="search_add_manually_name_hint">Bilaketa-motorraren izena</string>
-  <string name="search_add_manually_string">Erabili beharreko bilaketa-katea</string>
-  <string name="search_add_manually_save">Gorde</string>
-  <string name="search_add_manually_example">Adibidea: adibidea.eus/search/?q=%s</string>
-  <string name="search_add_confirmation">Bilaketa-motor berria gehitu da.</string>
-  <string name="search_add_error_empty_name">Idatzi bilaketa-motorraren izena</string>
-  <string name="search_add_error_duplicate_name">Instalatutako bilaketa-motor batek izen hori darabil lehendik ere.</string>
-  <string name="search_add_error_empty_search">Idatzi bilaketa-katea</string>
-  <string name="search_add_error_format">Egiaztatu bilaketa-katea adibidearen formatuarekin bat datorrela</string>
-  <string name="content_description_clear_input">Garbitu idatzitakoa</string>
-  <string name="content_description_dismiss_input">Baztertu</string>
-  <string name="content_description_erase">Ezabatu nabigatze-historia</string>
-  <string name="content_description_tab_counter">Irekitako fitxak: %1$s</string>
-  <string name="content_description_lock">Konexio segurua</string>
-  <string name="accessibility_announcement_loading">Kargatzen</string>
-  <string name="accessibility_announcement_loading_finished">Webgunea kargatuta</string>
-  <string name="content_description_menu">Aukera gehiago</string>
-  <string name="content_description_forward">Nabigatu aurrera</string>
-  <string name="content_description_reload">Berritu webgunea</string>
-  <string name="content_description_back">Nabigatu atzera</string>
-  <string name="content_description_stop">Gelditu webgunea kargatzen</string>
-  <string name="content_description_customtab_exit">Itzuli aurreko aplikaziora</string>
-  <string name="content_description_trackers_blocked">Blokeatutako elementu kopurua</string>
-  <string name="content_description_blocking_switch">Blokeatu jarraipena</string>
-  <string name="your_rights">Zure eskubideak</string>
-  <string name="external_app_prompt_title">Ireki lotura beste aplikazio batean</string>
-  <string name="external_app_prompt">%1$s utz dezakezu lotura hau %2$s aplikazioan irekitzeko.</string>
-  <string name="external_app_prompt_no_app_title">Bilatu lotura ireki dezakeen aplikazio bat</string>
-  <string name="external_app_prompt_no_app">Ez dago lotura hau irekitzeko gai den aplikaziorik zure gailuan. %1$s utz dezakezu lotura ireki dezaken aplikazio bat %2$s(e)n bilatzeko.</string>
-  <string name="external_multiple_apps_matched_exit">Irten nabigazio pribatutik?</string>
-  <string name="download_snackbar_finished">%1$s amaituta</string>
-  <string name="download_snackbar_open">Ireki</string>
-  <string name="download_dialog_warning"><![CDATA["Deskargatutako fitxategiak "<b xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">ez dira ezabatuko</b>" %1$s(r)en historia ezabatzean."]]></string>
-  <string name="download_dialog_title">Deskargatu fitxategia</string>
-  <string name="download_dialog_action_cancel">Utzi</string>
-  <string name="download_dialog_action_download">Deskargatu</string>
-  <string name="errorpage_title">Arazoa orria kargatzerakoan</string>
-  <string name="errorpage_refresh">Saiatu berriro</string>
-  <string name="error_connectionfailure_title">Ezin da konektatu</string>
-  <string name="error_connectionfailure_message"><![CDATA[<ul xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">"\n        "<li>Gunea une batez desgaituta edo oso lanpetuta egon daiteke. Saiatu berriro minutu batzuen buruan.</li>"\n        "<li>Ezin baduzu beste orririk kargatu, egiaztatu zure gailu mugikorraren datu- edo WiFi-konexioa.</li>"\n      "</ul>]]></string>
-  <string name="error_timeout_title">Konexioaren denbora-muga gainditu da</string>
-  <string name="error_hostLookup_title">Zerbitzaria ez da aurkitu</string>
-  <string name="error_hostLookup_message"><![CDATA[<ul xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">"\n        "<li>"Helbidea ondo begiratu mota honetako erroreak ekiditeko:\n          "<strong>ww</strong>".adibidea.eus \n          "<strong>www</strong>.adibidea.eus-en ordez</li>"\n        "<li>Ezin baduzu inolako orririk kargatu, begiratu zure gailuaren datu- edo WiFi-konexioa.</li>"\n      "</ul>]]></string>
-  <string name="error_malformedURI_title">Helbidea ez da baliozkoa</string>
-  <string name="error_malformedURI_message"><![CDATA[<ul xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">"\n  "<li>"Web helbideak normalean "<strong>http://www.adibidea.eus/</strong>" formatukoak dira"</li>"\n  "<li>"Ziurtatu aurrerako barrak erabiltzen dituzula (hau da, "<strong>/</strong>).</li>\n</ul>]]></string>
-  <string name="error_redirectLoop_title">Orriak ez du birbideraketa ondo egiten</string>
-  <string name="error_redirectLoop_message"><![CDATA[<ul xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">"\n  "<li>Arazo hau baliteke cookieak desgaituta eduki edo ez onartzeagatik izatea.</li>\n</ul>]]></string>
-  <string name="error_unsupportedprotocol_title">Ez da helbidea ulertu</string>
-  <string name="error_unsupportedprotocol_message"><![CDATA[<ul xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">"\n  "<li>Agian bestelako softwarea instalatu behar duzu helbide hau irekitzeko.</li>\n</ul>]]></string>
-  <string name="error_sslhandshake_title">Konexio seguruak huts egin du</string>
-  <string name="error_sslhandshake_message"><![CDATA[<ul xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">"\n  "<li>Hau zerbitzariaren konfigurazio-errore batengatik edo\nnorbait zerbitzariaren nortasuna hartzen ari delako izan daiteke.</li>"\n  "<li>Aurretik zerbitzari honetara behar bezala konektatu bazara, errorea\nbehin-behinekoa izan daiteke eta geroago saia zaitezke.</li>\n</ul>]]></string>
-  <string name="error_generic_title">Iepa</string>
-  <string name="error_generic_message">Ezin dugu orri hau kargatu arrazoi ezezagun batengatik.</string>
-  <string name="contextmenu_link_share">Partekatu lotura</string>
-  <string name="contextmenu_link_copy">Kopiatu loturaren helbidea</string>
-  <string name="contextmenu_image_share">Partekatu irudia</string>
-  <string name="contextmenu_image_copy">Kopiatu irudiaren helbidea</string>
-  <string name="contextmenu_image_save">Gorde irudia</string>
-  <string name="contextmenu_open_in_new_tab">Ireki lotura fitxa berrian</string>
-  <string name="contextmenu_image_warning"><![CDATA["Deskargatutako eta partekatutako irudiak "<b xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">ez dira ezabatuko</b>" %1$s(r)en historia ezabatzean."]]></string>
-  <string name="firstrun_defaultbrowser_title">Indartu zure pribatutasuna</string>
-  <string name="firstrun_defaultbrowser_text2">Eraman nabigatze pribatua hurrengo mailara. Blokeatu iragarkiak eta webguneetan zehar zure jarraipena egin edo orrien karga-denbora makal dezaketen edukiak.</string>
-  <string name="firstrun_search_title">Bilaketa, zure erara</string>
-  <string name="firstrun_search_text">Zerbait desberdinaren bila? Aukeratu beste bilaketa-motor lehenetsi bat ezarpenetan.</string>
-  <string name="firstrun_shortcut_title">Gehitu lasterbideak zure hasierako pantailan</string>
-  <string name="firstrun_shortcut_text">Itzuli azkar batean zure gogoko guneetara %1$s(r)en. Hautatu \'Gehitu hasierako pantailan\' %1$s menutik.</string>
-  <string name="firstrun_privacy_title">Egizu pribatutasuna zure ohitura</string>
-  <string name="firstrun_privacy_text">Ezarri %1$s nabigatzaile lehenetsi gisa eta eskuratu nabigatze pribatuaren onurak beste aplikazioetatik web orriak irekitzean.</string>
-  <string name="firstrun_close_button">Ulertuta!</string>
-  <string name="firstrun_skip_button">Saltatu</string>
-  <string name="firstrun_next_button">Hurrengoa</string>
-  <string name="content_blocking_disabled">-</string>
-  <string name="dialog_addtohomescreen_action_add">Gehitu</string>
-  <string name="dialog_addtohomescreen_action_cancel">Utzi</string>
-  <string name="dialog_addtohomescreen_tracking_protection">Lasterbidea jarraipenaren babesa desgaituta irekiko da</string>
-  <string name="notification_browsing_session_channel_name">Nabigatze pribatuko saioa</string>
-  <string name="notification_browsing_session_channel_description">Jakinarazpenetatik zure %1$s saioa ezaba dezakezu sakatzearekin soilik. Horretarako ez daukazu aplikazioa ireki edo nabigatzailean dagoena ikusi beharrik.</string>
-  <string name="tabs_tray_action_erase">Ezabatu nabigatze-historia</string>
-  <string name="download_firefox">Deskargatu Firefox</string>
-  <string name="your_rights_content1">Mozillak eta beste hainbat laguntzailek egindako software libre eta kode irekikoa da %1$s.</string>
-  <string name="your_rights_content2"><![CDATA["%1$s zure eskura dago "<a xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2" href="%2$s">Mozilla Public License</a>" eta kode irekiko beste lizentzien baldintzapean."]]></string>
-  <string name="your_rights_content3"><![CDATA["Ez zaizu inolako eskubiderik edo lizentziarik aitortzen Mozilla Fundazioaren edo bestelakoen marka erregistratuetan, Mozilla, Firefox eta %1$s izen edo logoetan barne. Argibide gehiago "<a xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2" href="%2$s">hemen</a>" aurki daitezke."]]></string>
-  <string name="your_rights_content4"><![CDATA["%1$s aplikazioaren iturburu-kode gehigarria erabilgarri dago kode irekikoak eta libreak diren bestelako "<a xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2" href="%2$s">lizentzietan</a>.]]></string>
-  <string name="your_rights_content5"><![CDATA["%1$s aplikazioak Diskonnect, Inc.-ek emandako blokeo-zerrendak ere erabiltzen ditu, "<a xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2" href="%2$s">GNU General Public License v3</a>" lizentziapeko aparteko lan independente gisa eta eskuragarri dago "<a xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2" href="%3$s">hemen</a>.]]></string>
-  <string name="gv_prompt_username_hint">Erabiltzaile-izena</string>
-  <string name="gv_prompt_password_hint">Pasahitza</string>
-  <string name="gv_prompt_clear">Garbitu</string>
-  <string name="security_popup_secure_connection">Konexio segurua</string>
-  <string name="security_popup_insecure_connection">Konexio ez-segurua</string>
-  <string name="security_popup_security_verified">Egiaztatzailea: %1$s</string>
-  <string name="site_security_icon_content_description">Gunearen segurtasuna</string>
-  <string name="preference_autocomplete_duplicate_url_error">URLa badago lehendik ere</string>
-  <string name="find_in_page">Bilatu orrian</string>
-  <string name="find_in_page_input">Bilatu orrian</string>
-  <string name="find_in_page_result">%2$d/%1$d</string>
-  <string name="accessibility_find_in_page_result">%2$d(e)tik %1$d</string>
-  <string name="accessibility_next_result">Bilatu hurrengo emaitza</string>
-  <string name="accessibility_previous_result">Bilatu aurreko emaitza</string>
-  <string name="accessibility_dismiss_find_in_page">Baztertu orrian bilatzea</string>
-  <string name="http_auth_dialog_title">Autentifikazioa beharrezkoa</string>
-  <string name="http_auth_dialog_username">Erabiltzaile-izena</string>
-  <string name="http_auth_dialog_password">Pasahitza</string>
-  <string name="preference_performance_request_desktop_site">Mahaigaineko gunea</string>
-  <string name="custom_tab_copy_url_action">URLa kopiatu da</string>
-  <string name="preference_advanced_summary">Garatzaile-tresnak</string>
-  <string name="preference_category_advanced">Aurreratua</string>
-  <string name="preference_remote_debugging">USB/Wi-Fi bidezko urruneko arazketa</string>
-  <string name="biometric_auth_title">Desblokeatu %1$s</string>
-  <string name="biometric_auth_description">Jarraitzeko, ukitu hatz-marka sentsorea.</string>
-  <string name="biometric_auth_new_session">Saio berria</string>
-  <string name="biometric_auth_image_description">Hatz-markaren ikonoa</string>
-  <string name="biometric_auth_not_recognized_error">Ez da hatz-marka ezagutu. Saiatu berriro.</string>
-  <string name="biometric_auth_moved_too_quickly">Hatza azkarregi mugitu da. Saiatu berriro.</string>
-  <string name="enable_search_suggestion_title">Bilaketa-iradokizunak gaitu nahi dituzu?</string>
-  <string name="enable_search_suggestion_subtitle">Bilaketa-iradokizunak lortzeko, helbide-barran idazten duzuna aukeratu duzun bilaketa-motorrari bidali behar dio %1$s(e)k. %2$s.</string>
-  <string name="enable_search_suggestion_subtitle_learnmore">Argibide gehiago</string>
-  <string name="enable_search_suggestions_no">Ez</string>
-  <string name="enable_search_suggestions_yes">Bai</string>
-  <string name="no_suggestions_message">Zenbait bilaketa-motorrek ezin dituzte iradokizunak erakutsi.</string>
-  <string name="dismiss_no_suggestions_prompt_button">Baztertu</string>
-  <string name="tip_disable_tracking_protection">Guneak espero gabeko portaera du?\n Saiatu jarraipenaren babesa itzaltzen</string>
-  <string name="tip_add_to_homescreen">Eskuratu behin sakatuta gehien bisitatzen dituzun webguneetarako sarbidea%1$s Menua &gt; Gehitu hasierako pantailan</string>
-  <string name="tip_set_default_browser">Ireki lotura guztiak %1$s aplikazioarekin\n Egin %1$s nabigatzaile lehenetsia</string>
-  <string name="tip_autocomplete_url">Osatu automatikoki gehien bisitatzen dituzun guneetako URLak\n Mantendu sakatuta helbide-barran edozein URL</string>
-  <string name="tip_open_in_new_tab">Ireki lotura fitxa berri batean\n Mantendu sakatuta orri bateko edozein lotura</string>
-  <string name="tip_request_desktop">Nahiago duzu mahaigaineko gune osoa ikusi?%1$s Menua &gt; Mahaigaineko gunea</string>
-  <string name="tip_disable_tips">Desgaitu %1$s(r)en hasierako pantailako aholkuak</string>
-</resources>
+    <!-- ####################################################################################### -->
+    <!-- ## Put only strings into this file that should be translated. Move all other strings ## -->
+    <!-- ## into a separate file like strings_references.xml                                  ## -->
+    <!-- ####################################################################################### -->
+
+    <!-- Label used for buttons, e.g. in dialogs -->
+    <string name="action_cancel">Utzi</string>
+    <!-- Label used for buttons, e.g. in dialogs -->
+    <string name="action_ok">Ados</string>
+
+    <string name="action_save">Gorde</string>
+
+    <!-- This text is shown in the URL bar when it's empty -->
+    <string name="urlbar_hint">Bilatu edo idatzi helbidea</string>
+
+    <string name="teaser">Nabigatze pribatu automatikoa.
+Nabigatu. Ezabatu. Errepikatu.</string>
+
+    <!-- "Snackbar" shown after the user has pressed the 'erase' button at the end of a browsing session -->
+    <string name="feedback_erase">Zure nabigatze-historia ezabatu egin da.</string>
+
+    <!-- This label is shown below the URL bar as soon as the user enters text. Clicking the label will perform a search -->
+    <string name="search_hint">Bilatu %1$s</string>
+
+    <!-- Menu item: Share the currently visible page -->
+    <string name="menu_share">Partekatu…</string>
+
+    <!-- Menu item: Report an issue on the current site -->
+    <string name="menu_report_site_issue">Eman gunearen arazoaren berri</string>
+
+    <!-- Menu item: Switch to another browser to open the currently visible page. %1$s will be
+      replaced with the name of the browser like: "Open in Firefox" or "Open in Chrome". Some
+      links can be opened by native apps that aren't a browser, e.g. "Open in YouTube" -->
+    <string name="menu_open_with_default_browser2">Ireki %1$s nabigatzailean</string>
+
+    <!-- Menu item: Switch to another browser to open the currently visible page. This menu item
+      will be shown if there are multiple browsers and we do not know which one is the default
+      browser or in case Focus is actually the default browser. Clicking this menu item will show
+      a screen with multiple browsers (or other apps that can open the current URL) to choose from. -->
+    <string name="menu_open_with_a_browser2">Ireki honekin…</string>
+
+    <!-- Menu item: Add the current page as a shortcut to the device's home screen (launcher). -->
+    <string name="menu_add_to_home_screen">Gehitu hasierako pantailan</string>
+
+    <!-- Menu item: Shows information about features and changes that are new to this version -->
+    <string name="menu_whats_new">Nobedadeak</string>
+    <string name="menu_settings">Ezarpenak</string>
+    <string name="menu_about">Honi buruz</string>
+    <string name="menu_help">Laguntza</string>
+    <string name="menu_rights">Zure eskubideak</string>
+
+    <!-- Menu item: This is the label for a menu entry that shows how many trackers have been blocked
+         for the currently loaded website. The number of blocked trackers is shown below this label.
+         Next to this label is a switch that allows the user to temporarily enable / disable the
+         blocking of trackers for the current browsing session - for example if the current website
+         doesn't work correctly with blocked content. -->
+    <string name="menu_trackers_blocked_title">Blokeatutako elementuak</string>
+
+    <!-- This is a small text at the bottom of the menu shown in a "custom tab" for branding purposes.
+     See https://github.com/mozilla-mobile/focus-android/issues/2106
+      %1$s will be replaced by the app name (e.g. Firefox Focus) -->
+    <string name="menu_custom_tab_branding">%1$s nabigatzaileak hornitua</string>
+
+    <!-- This is the title of a dialog that shows all the share targets (apps or contacts) when
+         sharing an URL. -->
+    <string name="share_dialog_title">Partekatu</string>
+
+    <!-- While a browsing session is active (in the foreground or background) we will show a notification
+         so that the user doesn't forget about the website still being open. This text is shown in
+         the notification. Clicking the notification will have the same effect as clicking the "erase"
+         button in the application. -->
+    <string name="notification_erase_text">Ezabatu nabigatze-historia</string>
+
+    <!-- Notification action to open Focus and resume the current browsing session. -->
+    <string name="notification_action_open">Ireki</string>
+
+    <!-- Notification action to erase the current browsing session AND switch to Focus (bring it
+         to the foreground) -->
+    <string name="notification_action_erase_and_open">Ezabatu eta ireki</string>
+
+    <!-- On Android 7+ users can add a shortcut for erasing the browsing history to the home screen.
+         This is the label for this shortcut. Android recommends a maximum length of 10 characters. -->
+    <string name="shortcut_erase_short_label">Ezabatu</string>
+
+    <!-- The same as 'shortcut_erase_short_label' but more descriptive. The launcher shows this
+         instead of the short title when it has enough space. Android recommends a maximum length
+         of 25 characters. -->
+    <string name="shortcut_erase_long_label">Ezabatu nabigatze-historia</string>
+
+    <!-- This is the label of an action we offer when the user selects text in other third-party apps.
+         Clicking this action will launch Focus and perform a search in the default search engine. -->
+    <string name="text_selection_search_action">Bilatu modu pribatuan</string>
+
+    <!-- Content of about focus. Argument 1 is the app name (Firefox Focus/Firefox Klar/etc).
+         Argument 2 is the url for the learn-more link. -->
+    <string name="about_content"><![CDATA[<p>%1$s(e)k agintea ematen dizu.</p>
+<p>Erabili nabigatzaile pribatu gisa:
+  <ul>
+    <li>Bilatu eta nabigatu aplikaziotik zuzenean</li>
+    <li>Blokeatu jarraipena (edo eguneratu ezarpenak jarraipena onartzeko)</li>
+    <li>Ezabatu cookieak eta bilaketa- eta nabigatze-historia</li>
+  </ul>
+</p>
+<p>Mozillak egina da %1$s. Internet osasuntsu eta irekia sustatzea da gure misioa.<br/>
+<a href="%2$s">Argibide gehiago</a></p>]]></string>
+
+    <!-- Header for the Privacy and Security settings menu -->
+    <string name="preference_privacy_and_security_header">Pribatutasuna eta segurtasuna</string>
+
+    <!-- Preference summary for settings related to privacy and security -->
+    <string name="preference_privacy_and_security_summary">Jarraipena, cookieak, datu-aukerak</string>
+
+    <!-- Preference category description for settings related to search, set default
+    and autocomplete are settings a user can find and change inside the "search" settings screen -->
+    <string name="preference_search_summary">Ezarri lehenespenak, osatze automatikoa</string>
+
+    <!-- Preference category description for settings screen for settings related to Mozilla -->
+    <!-- About the app and help are links that are inside this menu -->
+    <!-- %1$s will be replaced by the app name (e.g. Firefox Focus) -->
+    <string name="preference_mozilla_summary">%1$s(r)i buruz, laguntza</string>
+
+    <!-- Preference category for ad blocking and tracking protection settings -->
+    <string name="preference_category_tracking_protection">Jarraipenaren babesa</string>
+
+    <!-- Preference category for settings related to controlling web content -->
+    <string name="preference_category_web_content">Web edukia</string>
+
+    <!-- Preference category: stealth settings for while switching apps -->
+    <string name="preference_category_switching_apps">Aplikazioak aldatzea</string>
+
+    <!-- Preference category for General Settings -->
+    <string name="preference_category_general">Orokorra</string>
+
+    <!-- Preference category for settings about sending usage data -->
+    <string name="preference_category_data_collection_use">Datuen bilketa eta erabilera</string>
+
+    <string name="preference_category_search">Bilaketa</string>
+
+    <!-- Title of "switch" preference that enables/disables search suggestions -->
+    <string name="preference_show_search_suggestions">Eskuratu bilaketa-iradokizunak</string>
+    <!-- Description of the preference that enables/disables search suggestions
+        %1$s will be replaced by the app name (e.g. Firefox Focus) -->
+    <string name="preference_show_search_suggestions_summary">Helbide-barran idazten duzuna bilaketa-motorrera bidaliko du %1$s(e)k</string>
+
+    <!-- This label is shown below the name of the default search engine in settings -->
+    <string name="preference_search_engine_default">Lehenetsia</string>
+
+    <!-- Text that is shown below a "switch" preference that is enabled. -->
+    <string name="preference_state_on">Aktibatuta</string>
+
+    <!-- Text that is shown below a "switch" preference that is disabled. -->
+    <string name="preference_state_off">Desaktibatuta</string>
+
+    <!-- Item in settings that will open a new preference screen for configuring the URL autocomplete behavior. -->
+    <string name="preference_subitem_autocomplete">URLen osatze automatikoa</string>
+
+    <!-- Action at the bottom of the list of custom autocomplete URLs that will open a new screen to add a new URL to the list. -->
+    <string name="preference_autocomplete_action_add">+ Gehitu URL perstonalizatua</string>
+
+    <!-- Title of the screen for adding custom autocomplete URLs. -->
+    <string name="preference_autocomplete_title_add">Gehitu URL perstonalizatua</string>
+
+    <!-- Label for the button to quick add custom autocomplete URLs. -->
+    <string name="custom_autocomplete_quick_add">Gehitu URL pertsonalizatua</string>
+
+    <!-- Preference category for settings about cookies and site data -->
+    <string name="preference_category_cookies">Cookieak eta guneetako datuak</string>
+
+    <!-- Preference category for settings about data choices -->
+    <string name="preference_category_data_choices">Datu-aukerak</string>
+
+    <!-- Title of the screen for removing custom autocomplete URLs. -->
+    <string name="preference_autocomplete_title_remove">Kendu URL pertsonalizatuak</string>
+
+    <!-- A link to SUMO at autocomplete settings. -->
+    <string name="preference_autocomplete_learn_more">Argibide gehiago</string>
+
+    <!-- Preference summary: Custom (user-defined) autocomplete URLs. -->
+    <string name="preference_autocomplete_custom_summary">Gehitu eta kudeatu automatikoki osatzeko URL pertsonalizatuak.</string>
+
+    <!-- Label for the "custom autocomplete URL" input field -->
+    <string name="preference_autocomplete_add_title">Gehitu beharreko URLa</string>
+
+    <!-- "Hint" text for the "custom autocomplete URL" input field. Shown when the field is empty. -->
+    <string name="preference_autocomplete_add_hint">Itsatsi edo idatzi URLa</string>
+
+    <!-- Example how a custom domain autocomplete URL be added (e.g. without http://) -->
+    <string name="preference_autocomplete_add_example2">Adibidea: mozilla.org</string>
+
+    <!-- To be removed once the new hint has been translated -->
+    <string name="preference_autocomplete_add_example">Adibidea: adibidea.eus</string>
+
+    <!-- Confirmation "snackbar" shown after a new custom autocomplete URL has been added. -->
+    <string name="preference_autocomplete_add_confirmation">URL pertsonalizatu berria gehitu da.</string>
+
+    <!-- Menu item to remove existing autocomplete URLs. -->
+    <string name="preference_autocomplete_menu_remove">Kendu</string>
+
+    <!-- Content description (not visible, for screen readers etc.): Button that will delete all selected custom autocomplete URLs. -->
+    <string name="preference_autocomplete_action_remove_content_description">Kendu</string>
+
+    <!-- Error message shown if the entered custom autocomplete URL is not valid or empty. -->
+    <string name="preference_autocomplete_add_error">Egiaztatu idatzi duzun URLa.</string>
+
+    <string name="preference_language">Hizkuntza</string>
+    <!-- This is shown when the user hasn't set a focus specific language, i.e. when Focus
+         is using the system default language. -->
+    <string name="preference_language_systemdefault">Sistemaren lehenetsia</string>
+
+    <string name="preference_category_privacy">Pribatutasuna</string>
+    <string name="preference_privacy_block_ads">Blokeatu publizitatearen jarraipena</string>
+    <string name="preference_privacy_block_ads_summary">Zenbait iragarkik guneen bisiten jarraipena egiten dute, iragarkietan klik egiteko beharrik gabe ere</string>
+    <string name="preference_privacy_block_analytics">Blokeatu analitiken jarraipena</string>
+    <string name="preference_privacy_block_analytics_summary">Sakatzea edo korritzea bezalako jarduerak bildu, analizatu eta neurtzeko erabiltzen da</string>
+    <string name="preference_privacy_block_social">Blokeatu sare sozialetako jarraipena</string>
+    <string name="preference_privacy_block_social_summary">Guneetan txertatuta zure bisiten jarraipena egin eta partekatzeko botoien tankerako eginbideak bistaratzeko</string>
+    <string name="preference_privacy_block_content">Blokeatu bestelako edukien jarraipena</string>
+    <string name="preference_privacy_block_content_summary2">Gaituz gero, zenbait orrik espero gabeko portaera izan lezakete</string>
+    <string name="preference_privacy_category_cookies">Blokeatu cookieak</string>
+
+    <!-- Three options for Cookie blocking. Yes (All cookies Blocked), Block 3rd-party cookies
+    only (Only 3rd-party Cookies Blocked), No (No cookies blocked) -->
+    <string name="preference_privacy_should_block_cookies_no_option">Ez</string>
+    <string name="preference_privacy_should_block_cookies_third_party_only_option">Blokeatu soilik hirugarrenen cookieak</string>
+    <string name="preference_privacy_should_block_cookies_yes_option">Bai</string>
+
+    <!-- Preference Title: Biometrics can be used to unlock Focus if the previous session's data was not erased by the user. -->
+    <string name="preference_security_biometric">Erabili hatz-marka aplikazioa desblokeatzeko</string>
+    <!-- Preference Summary: Biometrics (iris scan, fingerprint, or facial scan) can be used to unlock Focus if the app had a URL
+        open when the app was last run to ensure that only the phone's owner can view a previous session.
+        %1$s will be replaced by the app name (e.g. Firefox Focus) -->
+    <string name="preference_security_biometric_summary">Zure hatz-markak %1$s desblokea dezake URL bat dagoeneko aplikazioan irekita badago. Modu isil-gordea aktibatu egingo da.</string>
+
+    <!-- Preference Title: Secure Mode is a setting that prevents the app's content to show up in the "recent apps" screen
+         and prevents the user from taking screenshots or casting the app to other displays. -->
+    <string name="preference_privacy_secure_mode">Modu isil-gordea</string>
+    <!-- Preference Summary: Stealth mode (previously "Secure mode") is a setting that prevents the
+     app's content (in our case especially the content of webpages) to show up in the "recent apps"
+     screen. Additionally Android will prevent the user from taking screenshots or casting the app
+     to other displays. -->
+    <string name="preference_privacy_stealth_summary">Ezkutatu web orriak aplikazioak aldatzean eta blokeatu pantaila-argazkiak ateratzea.</string>
+
+    <string name="preference_category_security">Segurtasuna</string>
+
+    <string name="preference_category_performance">Errendimendua</string>
+    <string name="preference_performance_block_webfonts">Blokeatu webeko letra-tipoak</string>
+    <!-- This text is shown below the setting for disabling web fonts. Some websites use icons/images from a font and those do not show up if fonts are blocked.-->
+    <string name="preference_performance_block_webfonts_summary">Ikonoak edo irudiak ez bistaratzea eragin lezake</string>
+
+    <string name="preference_performance_block_javascript">Blokeatu JavaScript</string>
+    <!-- This text is shown below setting for disabling JavaScript. Some websites may not work correctly when JavaScript is disabled -->
+    <string name="preference_performance_block_javascript_summary">Orriak azkarrago karga litezke baina espero gabeko portaera ere izan lezakete</string>
+
+    <!-- This preference does not set Focus as the default browser but instead links to Android's
+     "default apps" settings screen or if not supported by this Android version to a SUMO page describing
+     how to set Focus as a default browser.
+      %1$s will be replaced by the app name (e.g. Firefox Focus) -->
+    <string name="preference_default_browser2">Egin %1$s nabigatzaile lehenetsia</string>
+
+    <string name="preference_category_mozilla">Mozilla</string>
+    <string name="preference_mozilla_telemetry2">Bidali erabilera-datuak</string>
+
+    <!-- A link to SUMO at the end of the summary (preference_mozilla_telemetry_summary2) of the "Send anonymous usage data" setting. -->
+    <string name="preference_mozilla_telemetry_summary">Argibide gehiago</string>
+
+    <!-- %1$s will be replaced with the name of the app (e.g. Firefox Focus) -->
+    <string name="preference_mozilla_telemetry_summary2">%1$s denontzat eskaini eta hobetzeko beharrezkoa dena soilik biltzen ahalegintzen da Mozilla.</string>
+
+    <!-- In-app link (in settings) to Focus privacy notice. -->
+    <string name="preference_privacy_notice">Pribatutasun-oharra</string>
+
+    <!-- Item in Preferences that shows the about page. Parameter 1 is the app name, i.e. Firefox Focus/Firefox Klar. -->
+    <string name="preference_about">%1$s(r)i buruz</string>
+
+    <!-- Header for the list of installed search engines -->
+    <string name="preference_search_installed_search_engines">Instalatutako bilaketa-motorrak</string>
+
+    <!-- Action for restoring the default list of search engines -->
+    <string name="preference_search_restore">Berrezarri bilaketa-motor lehenetsiak</string>
+
+    <!-- Action for adding an additional search engine to the list.
+    The "+" is used to emphasize that this is an "add" action -->
+    <string name="preference_search_add2">+ Gehitu beste bilaketa-motor bat</string>
+    <string name="preference_search_remove_title">Kendu bilaketa-motorrak</string>
+    <string name="preference_search_remove">Kendu</string>
+
+    <!-- Title: Homescreen tips settings toggle to determine whether or not tips are displayed when
+     a user first launches the app. -->
+    <string name="preference_homescreen_tips">Erakutsi gomendioak hasierako pantailan</string>
+
+    <!-- Clickable action text that shows when user long-presses on a search engine search field (this is similar to paste or copy when long-pressing a text field) -->
+    <string name="action_option_add_search_engine">Gehitu bilaketa-motorra</string>
+
+    <string name="search_add_manually_name_hint">Bilaketa-motorraren izena</string>
+    <string name="search_add_manually_string">Erabili beharreko bilaketa-katea</string>
+    <string name="search_add_manually_save">Gorde</string>
+
+    <!-- Example of search engine url -->
+    <string name="search_add_manually_example">Adibidea: adibidea.eus/search/?q=%s</string>
+
+    <string name="search_add_confirmation">Bilaketa-motor berria gehitu da.</string>
+
+    <string name="search_add_error_empty_name">Idatzi bilaketa-motorraren izena</string>
+    <string name="search_add_error_duplicate_name">Instalatutako bilaketa-motor batek izen hori darabil lehendik ere.</string>
+
+    <string name="search_add_error_empty_search">Idatzi bilaketa-katea</string>
+
+    <string name="search_add_error_format">Egiaztatu bilaketa-katea adibidearen formatuarekin bat datorrela</string>
+
+    <!-- Content description (not visible, for screen readers etc.): Clear text in URL bar -->
+    <string name="content_description_clear_input">Garbitu idatzitakoa</string>
+
+    <!-- Content description (not visible, for screen readers etc.): Clicking on the website overlay
+     while in typing mode will dismiss and go back to the browser. This text will be read when the
+     overlay if focused. See https://github.com/mozilla-mobile/focus-android/issues/50 -->
+    <string name="content_description_dismiss_input">Baztertu</string>
+
+    <!-- Content description (not visible, for screen readers etc.): Erase button: Erase the browsing
+     history and go back to the home screen. -->
+    <string name="content_description_erase">Ezabatu nabigatze-historia</string>
+
+    <!-- If the user has multiple tabs open we will show an addition "floating action button" showing how many tabs are open.
+     This string is not displayed and read only by screenreaders. %1$s will be replaced with the number of open tabs. This
+      button will only be visible when there is more than one tab open (>= 2). -->
+    <string name="content_description_tab_counter">Irekitako fitxak: %1$s</string>
+
+    <!-- Content description (not visible, for screen readers etc.): Lock icon showed in the URL bar for
+     https pages.. -->
+    <string name="content_description_lock">Konexio segurua</string>
+
+    <!-- This text is not visible. Instead it will be read by the accessibility service once we start
+     loading a website -->
+    <string name="accessibility_announcement_loading">Kargatzen</string>
+
+    <!-- This text is not visible. Instead it will be read by the accessibility service once we
+     finished loading a website -->
+    <string name="accessibility_announcement_loading_finished">Webgunea kargatuta</string>
+
+    <!-- Content description (not visible, for screen readers etc.): "Three dot" menu button. -->
+    <string name="content_description_menu">Aukera gehiago</string>
+
+    <!-- Content description (not visible, for screen readers etc.): Navigate forward (browsing history) -->
+    <string name="content_description_forward">Nabigatu aurrera</string>
+
+    <!-- Content description (not visible, for screen readers etc.): Reload current website -->
+    <string name="content_description_reload">Berritu webgunea</string>
+
+    <!-- Content description (not visible, for screen readers etc.): Navigate back (browsing history) -->
+    <string name="content_description_back">Nabigatu atzera</string>
+
+    <!-- Content description (not visible, for screen readers etc.): Stop loading the current website. This button will turn into the refresh button once loading has been completed (see content_description_reload) -->
+    <string name="content_description_stop">Gelditu webgunea kargatzen</string>
+
+    <!-- Content description (not visible, for screen readers etc.): Custom Tab exit button - closes the custom tab and returns to the previous app. -->
+    <string name="content_description_customtab_exit">Itzuli aurreko aplikaziora</string>
+
+    <!-- Content description (not visible, for screen readers etc.): This is the description for the ImageView in the menu that displays
+         the number of trackers blocked for the current session -->
+    <string name="content_description_trackers_blocked">Blokeatutako elementu kopurua</string>
+
+    <!-- Content description (not visible, for screen readers etc.): This is the description for the switch in the menu that temporarily disables/enables
+         content blocking for the current session -->
+    <string name="content_description_blocking_switch">Blokeatu jarraipena</string>
+
+    <string name="your_rights">Zure eskubideak</string>
+
+    <string name="external_app_prompt_title">Ireki lotura beste aplikazio batean</string>
+    <!-- This string is shown when the user has clicked a link that needs to be opened in a different app.
+         Argument 2 is the external app name, argument 1 is our name (i.e. Firefox Focus, or Firefox Klar). -->
+    <string name="external_app_prompt">%1$s utz dezakezu lotura hau %2$s aplikazioan irekitzeko.</string>
+    <!-- This text is the title of a dialog shown if no app could be found for a custom link protocol. -->
+    <string name="external_app_prompt_no_app_title">Bilatu lotura ireki dezakeen aplikazio bat</string>
+    <!-- This text is shown in a dialog if no app could be found for a custom link protocol. %1$s is the name of the app (i.e. Firefox Focus) and %2$s is the name of
+         the app store installed on the device (usually that's Google Play). -->
+    <string name="external_app_prompt_no_app">Ez dago lotura hau irekitzeko gai den aplikaziorik zure gailuan. %1$s utz dezakezu lotura ireki dezaken aplikazio bat %2$s(e)n bilatzeko.</string>
+    <!-- This label is shown above a list of apps that can be used to open a given link -->
+    <string name="external_multiple_apps_matched_exit">Irten nabigazio pribatutik?</string>
+
+    <!-- Snackbar that will be displayed after a download has completed. %1$s will be replaced with the file name. -->
+    <string name="download_snackbar_finished">%1$s amaituta</string>
+
+    <!-- Snackbar action to immediately open the successfully downloaded file. -->
+    <string name="download_snackbar_open">Ireki</string>
+
+    <!-- Download dialog: Warns users that downloaded files will not be deleted even when erasing history. %1$s will be replaced with the app name (i.e. Firefox Focus). -->
+    <string name="download_dialog_warning"><![CDATA[Deskargatutako fitxategiak <b>ez dira ezabatuko</b> %1$s(r)en historia ezabatzean.]]></string>
+
+    <!-- Title of download dialogue -->
+    <string name="download_dialog_title">Deskargatu fitxategia</string>
+
+    <!-- Option in download dialogue to cancel a download -->
+    <string name="download_dialog_action_cancel">Utzi</string>
+
+    <!-- Option in download dialogue to start a download -->
+     <string name="download_dialog_action_download">Deskargatu</string>
+
+    <!-- The page html title (i.e. the <title> tag content) -->
+    <string name="errorpage_title">Arazoa orria kargatzerakoan</string>
+    <string name="errorpage_refresh">Saiatu berriro</string>
+
+    <string name="error_connectionfailure_title">Ezin da konektatu</string>
+    <string name="error_connectionfailure_message">
+    <![CDATA[<ul>
+        <li>Gunea une batez desgaituta edo oso lanpetuta egon daiteke. Saiatu berriro minutu batzuen buruan.</li>
+        <li>Ezin baduzu beste orririk kargatu, egiaztatu zure gailu mugikorraren datu- edo WiFi-konexioa.</li>
+      </ul>]]>
+    </string>
+
+    <string name="error_timeout_title">Konexioaren denbora-muga gainditu da</string>
+
+    <string name="error_hostLookup_title">Zerbitzaria ez da aurkitu</string>
+    <string name="error_hostLookup_message"><![CDATA[<ul>
+        <li>Helbidea ondo begiratu mota honetako erroreak ekiditeko:
+          <strong>ww</strong>.adibidea.eus 
+          <strong>www</strong>.adibidea.eus-en ordez</li>
+        <li>Ezin baduzu inolako orririk kargatu, begiratu zure gailuaren datu- edo WiFi-konexioa.</li>
+      </ul>]]></string>
+
+
+    <string name="error_malformedURI_title">Helbidea ez da baliozkoa</string>
+    <string name="error_malformedURI_message"><![CDATA[<ul>
+  <li>Web helbideak normalean <strong>http://www.adibidea.eus/</strong> formatukoak dira</li>
+  <li>Ziurtatu aurrerako barrak erabiltzen dituzula (hau da, <strong>/</strong>).</li>
+</ul>]]></string>
+
+    <string name="error_redirectLoop_title">Orriak ez du birbideraketa ondo egiten</string>
+    <string name="error_redirectLoop_message"><![CDATA[<ul>
+  <li>Arazo hau baliteke cookieak desgaituta eduki edo ez onartzeagatik izatea.</li>
+</ul>]]></string>
+
+    <string name="error_unsupportedprotocol_title">Ez da helbidea ulertu</string>
+    <string name="error_unsupportedprotocol_message"><![CDATA[<ul>
+  <li>Agian bestelako softwarea instalatu behar duzu helbide hau irekitzeko.</li>
+</ul>]]></string>
+
+    <string name="error_sslhandshake_title">Konexio seguruak huts egin du</string>
+    <string name="error_sslhandshake_message"><![CDATA[<ul>
+  <li>Hau zerbitzariaren konfigurazio-errore batengatik edo
+norbait zerbitzariaren nortasuna hartzen ari delako izan daiteke.</li>
+  <li>Aurretik zerbitzari honetara behar bezala konektatu bazara, errorea
+behin-behinekoa izan daiteke eta geroago saia zaitezke.</li>
+</ul>]]></string>
+
+    <string name="error_generic_title">Iepa</string>
+    <string name="error_generic_message">Ezin dugu orri hau kargatu arrazoi ezezagun batengatik.</string>
+
+    <!-- Label used in the contextmenu shown when long-pressing on a link -->
+    <string name="contextmenu_link_share">Partekatu lotura</string>
+    <!-- Label used in the contextmenu shown when long-pressing on a link -->
+    <string name="contextmenu_link_copy">Kopiatu loturaren helbidea</string>
+    <!-- Label used in the contextmenu shown when long-pressing on an image -->
+    <string name="contextmenu_image_share">Partekatu irudia</string>
+    <!-- Label used in the contextmenu shown when long-pressing on an image -->
+    <string name="contextmenu_image_copy">Kopiatu irudiaren helbidea</string>
+    <!-- Label used in the contextmenu shown when long-pressing on an image -->
+    <string name="contextmenu_image_save">Gorde irudia</string>
+    <!-- Label used in the contextmenu shown when long-pressing on a link -->
+    <string name="contextmenu_open_in_new_tab">Ireki lotura fitxa berrian</string>
+
+    <!-- This is a warning shown in the browser's context menu (when long pressing an image). %1$s will be replaced with the long name of the app (e.g. Firefox Focus). -->
+    <string name="contextmenu_image_warning"><![CDATA[Deskargatutako eta partekatutako irudiak <b>ez dira ezabatuko</b> %1$s(r)en historia ezabatzean.]]></string>
+
+    <!-- First run tour (Default browser): Title -->
+    <string name="firstrun_defaultbrowser_title">Indartu zure pribatutasuna</string>
+    <!-- First run tour (Default browser): Text. -->
+    <string name="firstrun_defaultbrowser_text2">Eraman nabigatze pribatua hurrengo mailara. Blokeatu iragarkiak eta webguneetan zehar zure jarraipena egin edo orrien karga-denbora makal dezaketen edukiak.</string>
+
+    <!-- First run tour (Search): Title -->
+    <string name="firstrun_search_title">Bilaketa, zure erara</string>
+    <!-- First run tour (Search): Text -->
+    <string name="firstrun_search_text">Zerbait desberdinaren bila? Aukeratu beste bilaketa-motor lehenetsi bat ezarpenetan.</string>
+
+    <!-- First run tour (Shortcut): Title -->
+    <string name="firstrun_shortcut_title">Gehitu lasterbideak zure hasierako pantailan</string>
+    <!-- First run tour (Shortcut): Text. %1$s will be replaced with the name of the app (e.g. Firefox Focus) -->
+    <string name="firstrun_shortcut_text">Itzuli azkar batean zure gogoko guneetara %1$s(r)en. Hautatu \'Gehitu hasierako pantailan\' %1$s menutik.</string>
+
+    <!-- First run tour (Privacy): Title -->
+    <string name="firstrun_privacy_title">Egizu pribatutasuna zure ohitura</string>
+    <!-- First run tour (Privacy): Text. %1$s will be replaced with the name of the app (e.g. Firefox Focus) -->
+    <string name="firstrun_privacy_text">Ezarri %1$s nabigatzaile lehenetsi gisa eta eskuratu nabigatze pribatuaren onurak beste aplikazioetatik web orriak irekitzean.</string>
+
+    <string name="firstrun_close_button">Ulertuta!</string>
+    <string name="firstrun_skip_button">Saltatu</string>
+    <string name="firstrun_next_button">Hurrengoa</string>
+
+    <!-- Indicator that no trackers are being blocked because content blocking is disabled; normally shows the number of blocked trackers -->
+    <string name="content_blocking_disabled">-</string>
+
+    <!-- Label of the action that will add the current website to the home screen (shown in the confirmation dialog). -->
+    <string name="dialog_addtohomescreen_action_add">Gehitu</string>
+
+    <!-- Label of the action that will close the dialog and not add anything to the home screen (shown in the confirmation dialog). -->
+    <string name="dialog_addtohomescreen_action_cancel">Utzi</string>
+
+    <!-- When tracking protection is disabled for the current session then we will show this warning in the "Add to home screen" dialog to
+         let the user know that the shortcut will always be opened with tracking protection disabled. -->
+    <string name="dialog_addtohomescreen_tracking_protection">Lasterbidea jarraipenaren babesa desgaituta irekiko da</string>
+
+    <!-- The user visible name of the "notification channel" (Android 8+ feature) for the ongoing notification shown while a browsing session is active.
+    The recommended maximum length is 40 characters; the value may be truncated if it is too long.
+
+    * To understand what notification channels are, see: https://www.androidcentral.com/notification-channels
+    * To see how this string will look like in Android's UI, see: https://github.com/mozilla-mobile/focus-android/issues/863#issuecomment-324105723
+    -->
+    <string name="notification_browsing_session_channel_name">Nabigatze pribatuko saioa</string>
+
+    <!-- The user visible description of the "notification channel" (Android 8+ feature) for the ongoing notification shown while a browsing session is active.
+    The recommended maximum length is 300 characters; the value may be truncated if it is too long. %1$s will be replaced with the name of the app (e.g. Firefox Focus).
+
+    * To understand what notification channels are, see: https://www.androidcentral.com/notification-channels
+    * To see how this string will look like in Android's UI, see: https://github.com/mozilla-mobile/focus-android/issues/863#issuecomment-324105723
+    -->
+    <string name="notification_browsing_session_channel_description">Jakinarazpenetatik zure %1$s saioa ezaba dezakezu sakatzearekin soilik. Horretarako ez daukazu aplikazioa ireki edo nabigatzailean dagoena ikusi beharrik.</string>
+
+    <!-- Label for a button in the "tabs tray" to erase the browsing history (closes all tabs and removes associated data). -->
+    <string name="tabs_tray_action_erase">Ezabatu nabigatze-historia</string>
+
+    <!-- If the user decides to open the current page in another browser and if Firefox is not installed then we show this
+      item in the list of browsers. Clicking it will open the app store installed on the device (usually that's Google Play). -->
+    <string name="download_firefox">Deskargatu Firefox</string>
+
+    <!-- Text shown in the "Your rights" screen.
+    %1$s will be replaced with the name of the app (e.g. Firefox Focus)-->
+    <string name="your_rights_content1"><![CDATA[Mozillak eta beste hainbat laguntzailek egindako software libre eta kode irekikoa da %1$s.]]></string>
+
+    <!-- Text shown in the "Your rights" screen.
+    %1$s will be replaced with the name of the app (e.g. Firefox Focus)
+    %2$s will be replaced with a URL linking to the MPL (e.g. https://www.mozilla.org/en-US/MPL/) -->
+    <string name="your_rights_content2"><![CDATA[%1$s zure eskura dago <a href="%2$s">Mozilla Public License</a> eta kode irekiko beste lizentzien baldintzapean.]]></string>
+
+    <!-- Text shown in the "Your rights" screen.
+    %1$s will be replaced with the name of the app (e.g. Firefox Focus)
+    %2$s will be replaced with a URL linking to the trademark policy (e.g. https://www.mozilla.org/foundation/trademarks/policy/) -->
+    <string name="your_rights_content3"><![CDATA[Ez zaizu inolako eskubiderik edo lizentziarik aitortzen Mozilla Fundazioaren edo bestelakoen marka erregistratuetan, Mozilla, Firefox eta %1$s izen edo logoetan barne. Argibide gehiago <a href="%2$s">hemen</a> aurki daitezke.]]></string>
+
+    <!-- Text shown in the "Your rights" screen.
+    %1$s will be replaced with the name of the app (e.g. Firefox Focus)
+    %2$s will be replaced with a URL linking to the list of licenses used by the dependencies.-->
+    <string name="your_rights_content4"><![CDATA[%1$s aplikazioaren iturburu-kode gehigarria erabilgarri dago kode irekikoak eta libreak diren bestelako <a href="%2$s">lizentzietan</a>.]]></string>
+
+    <!-- Text shown in the "Your rights" screen.
+    %1$s will be replaced with the name of the app (e.g. Firefox Focus)
+    %2$s will be replaced with a URL linking to the GPL
+    %3$s will be replaced with a URL linking to the tracking protection wiki page (e.g. https://wiki.mozilla.org/Security/Tracking_protection#Lists) -->
+    <string name="your_rights_content5"><![CDATA[%1$s aplikazioak Diskonnect, Inc.-ek emandako blokeo-zerrendak ere erabiltzen ditu, <a href="%2$s">GNU General Public License v3</a> lizentziapeko aparteko lan independente gisa eta eskuragarri dago <a href="%3$s">hemen</a>.]]></string>
+
+    <!-- Text shown in prompts for GeckoView -->
+    <string name="gv_prompt_username_hint">Erabiltzaile-izena</string>
+    <string name="gv_prompt_password_hint">Pasahitza</string>
+    <string name="gv_prompt_clear">Garbitu</string>
+
+    <!-- Text shown in Security Information Popup -->
+    <!-- Text to denote secure or insecure connection -->
+    <string name="security_popup_secure_connection">Konexio segurua</string>
+    <string name="security_popup_insecure_connection">Konexio ez-segurua</string>
+    <!-- %1$s will be replaced with organization that granted the SSL certificate -->
+    <string name="security_popup_security_verified">Egiaztatzailea: %1$s</string>
+
+    <!-- Content Description of Security Icon in toolbar -->
+    <string name="site_security_icon_content_description">Gunearen segurtasuna</string>
+    <string name="preference_autocomplete_duplicate_url_error">URLa badago lehendik ere</string>
+
+    <!-- Label for the Find in page button -->
+    <string name="find_in_page">Bilatu orrian</string>
+
+    <!-- Watermark/Hint for the find in page input field -->
+    <string name="find_in_page_input">Bilatu orrian</string>
+
+    <!-- String to show the number of results found in the page and the
+        position the user is at. The first argument is the position, the second argument is the total -->
+    <string name="find_in_page_result">%2$d/%1$d</string>
+    <!-- String to be read by the accessibility service presenting the number of results found in the page
+        and the position the user is at. The first argument is the position, the second argument is the total -->
+    <string name="accessibility_find_in_page_result">%2$d(e)tik %1$d</string>
+
+    <!-- String to be read by the accessibility service when focusing the next result button -->
+    <string name="accessibility_next_result">Bilatu hurrengo emaitza</string>
+    <!-- String to be read by the accessibility service when focusing the previous result button -->
+    <string name="accessibility_previous_result">Bilatu aurreko emaitza</string>
+    <!-- String to be read by the accessibility service when focusing the dismiss button in the "find in page" UI -->
+    <string name="accessibility_dismiss_find_in_page">Baztertu orrian bilatzea</string>
+    
+    <!-- Http Authentication Popup: Title -->
+    <string name="http_auth_dialog_title">Autentifikazioa beharrezkoa</string>
+    <!-- Http Authentication Popup: Username -->
+    <string name="http_auth_dialog_username">Erabiltzaile-izena</string>
+    <!-- Http Authentication Popup: Password -->
+    <string name="http_auth_dialog_password">Pasahitza</string>
+
+    <!-- Checkbox menu item text to request desktop site -->
+    <string name="preference_performance_request_desktop_site">Mahaigaineko gunea</string>
+
+    <!-- Displayed after a user long presses on the URL in a custom tab to copy the URL -->
+    <string name="custom_tab_copy_url_action">URLa kopiatu da</string>
+
+    <!-- Description of what a user may find in the Advanced Setting category, used for debugging -->
+    <string name="preference_advanced_summary">Garatzaile-tresnak</string>
+
+    <!-- Title of Advanced Setting category -->
+    <string name="preference_category_advanced">Aurreratua</string>
+
+    <!-- Preference to enable remote debugging of the app via USB or Wi-Fi -->
+    <string name="preference_remote_debugging">USB/Wi-Fi bidezko urruneko arazketa</string>
+
+    <!-- Title for the fingerprint authentication dialog box that is shown to the user when opening the app.
+     %1$s is replaced with the app name -->
+    <string name="biometric_auth_title">Desblokeatu %1$s</string>
+
+    <!-- Description for the fingerprint authentication dialog box that is shown to the user when opening the app -->
+    <string name="biometric_auth_description">Jarraitzeko, ukitu hatz-marka sentsorea.</string>
+
+    <!-- New session button for the fingerprint authentication dialog box that is shown to the user when opening the app.
+     When pressed, the user's previous session is cleared, and authentication is not required. -->
+    <string name="biometric_auth_new_session">Saio berria</string>
+
+    <!-- Description for the fingerprint authentication image. Used for accessibility purposes. -->
+    <string name="biometric_auth_image_description">Hatz-markaren ikonoa</string>
+
+    <!-- Error text displayed when the user's fingerprint cannot be recognized upon re-entering the app.
+     This is displayed during the authentication flow as the app launches. -->
+    <string name="biometric_auth_not_recognized_error">Ez da hatz-marka ezagutu. Saiatu berriro.</string>
+
+    <!-- Error text displayed when the user's fingerprint moved too quickly upon re-entering the app
+    This is displayed during the authentication flow as the app launches.-->
+    <string name="biometric_auth_moved_too_quickly">Hatza azkarregi mugitu da. Saiatu berriro.</string>
+
+    <!-- Title for the prompt to enable search suggestions -->
+    <string name="enable_search_suggestion_title">Bilaketa-iradokizunak gaitu nahi dituzu?</string>
+
+    <!-- Description for the prompt to enable search suggestions
+        %1$s will be replaced by the app name (e.g. Firefox Focus)
+        %2$s will be replaced with "Learn more" which will be a tappable link
+        using the string: "enable_search_suggestion_subtitle_learnmore" -->
+    <string name="enable_search_suggestion_subtitle">Bilaketa-iradokizunak lortzeko, helbide-barran idazten duzuna aukeratu duzun bilaketa-motorrari bidali behar dio %1$s(e)k. %2$s.</string>
+
+    <!-- String to be placed inside the string: enable_search_suggestion_subtitle,
+        which will be a "Learn More" link. -->
+    <string name="enable_search_suggestion_subtitle_learnmore">Argibide gehiago</string>
+
+    <!-- Label used for the "NO button" for the prompt to enable search suggestions -->
+    <string name="enable_search_suggestions_no">Ez</string>
+
+    <!-- Label used for the "YES button" for the prompt to enable search suggestions -->
+    <string name="enable_search_suggestions_yes">Bai</string>
+
+    <!-- Message displayed when using a search engine that doesn't provide suggestions -->
+    <string name="no_suggestions_message">Zenbait bilaketa-motorrek ezin dituzte iradokizunak erakutsi.</string>
+
+    <!-- Button to dismiss the message displayed  when using a search engine that doesn't provide suggestions-->
+    <string name="dismiss_no_suggestions_prompt_button">Baztertu</string>
+
+    <!-- Tips displayed on the home view -->
+
+    <!-- Tip displayed on home view explaining how to disable tracking protection
+    The new line here must be kept as the second half of the string is clickable for the user. -->
+    <string name="tip_disable_tracking_protection">Guneak espero gabeko portaera du?
+ Saiatu jarraipenaren babesa itzaltzen</string>
+
+    <!-- Tip displayed on home view explaining how to add sites to homescreen
+    Argument 1 will be replaced with a line break in the application.-->
+    <string name="tip_add_to_homescreen"><![CDATA[Eskuratu behin sakatuta gehien bisitatzen dituzun webguneetarako sarbidea%1$s Menua > Gehitu hasierako pantailan]]></string>
+
+    <!-- Tip displayed on home view explaining how to make Focus the default browser
+    Argument 1 is the app name (Firefox Focus/Firefox Klar/etc).
+    The new line here must be kept as the second half of the string is clickable for the user. -->
+    <string name="tip_set_default_browser">Ireki lotura guztiak %1$s aplikazioarekin
+ Egin %1$s nabigatzaile lehenetsia</string>
+
+    <!-- Tip displayed on home view explaining how to add a custom autocomplete URL
+    The new line here must be kept as the second half of the string is clickable for the user. -->
+    <string name="tip_autocomplete_url">Osatu automatikoki gehien bisitatzen dituzun guneetako URLak
+ Mantendu sakatuta helbide-barran edozein URL</string>
+
+    <!-- Tip displayed on home view explaining how to add a custom autocomplete URL
+    The new line here must be kept as the second half of the string is clickable for the user. -->
+    <string name="tip_open_in_new_tab">Ireki lotura fitxa berri batean
+ Mantendu sakatuta orri bateko edozein lotura</string>
+
+    <!-- Tip displayed on home view explaining how to request the desktop version of a website.
+     Argument 1 will be replaced with a line break in the application. -->
+    <string name="tip_request_desktop"><![CDATA[Nahiago duzu mahaigaineko gune osoa ikusi?%1$s Menua > Mahaigaineko gunea]]></string>
+
+    <!-- deprecated strings -->
+    <string name="tip_disable_tips">Desgaitu %1$s(r)en hasierako pantailako aholkuak</string>
+    <string name="preference_switch_autocomplete">Osatze automatikoa</string>
+    <string name="preference_category_autocomplete_preinstalled">URL zerrenda lehenetsia</string>
+    <string name="preference_autocomplete_preinstalled_summary">Gaituz gero, helbide-barran automatikoki osatuko ditu 450 URL ezagun baino gehiago %1$s(e)k.</string>
+    <string name="preference_category_autocomplete_custom_urls">URL pertsonalizatuak</string>
+    <string name="preference_autocomplete_subitem_customlist">URL pertsonalizatuak</string>
+  </resources>

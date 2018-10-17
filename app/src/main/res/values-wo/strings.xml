@@ -1,158 +1,687 @@
-<?xml version='1.0' encoding='utf-8'?>
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <string name="action_cancel">Neenal</string>
-  <string name="action_ok">OK</string>
-  <string name="action_save">Denc</string>
-  <string name="urlbar_hint">Seet walla dugal ag màkkaan</string>
-  <string name="teaser">Njoow ci sutura doxal boppam.\nJoow. Far. Tambaliwaat.</string>
-  <string name="feedback_erase">Farees na jaar-jaaru sag njoow.</string>
-  <string name="search_hint">Seet %1$s</string>
-  <string name="menu_share">Séddoo…</string>
-  <string name="menu_add_to_home_screen">Yokk ci njëlbéenu sa xoolu</string>
-  <string name="menu_whats_new">Lou bees</string>
-  <string name="menu_settings">Jekk-jekkal</string>
-  <string name="menu_about">Ñeel</string>
-  <string name="menu_help">Ndimbal</string>
-  <string name="menu_rights">Say yelleef</string>
-  <string name="menu_trackers_blocked_title">Téyees na toppaatekat yi</string>
-  <string name="share_dialog_title">Séddoo ci</string>
-  <string name="notification_erase_text">Far jaar-jaaru njoow gi</string>
-  <string name="notification_action_open">Ubbi</string>
-  <string name="notification_action_erase_and_open">Far te Ubbi</string>
-  <string name="shortcut_erase_short_label">Far</string>
-  <string name="shortcut_erase_long_label">Far jaar-jaaru njoow gi</string>
-  <string name="text_selection_search_action">Seet ci sutura</string>
-  <string name="about_content"><![CDATA[<p xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">Doonal kiy dogal ak %1$s.</p>\n<p xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">"J&#235;fandikoo ko soo nammee joow ci sutura:\n  "<ul>"\n    "<li>Man ngaa seet ak di joow ci biir j&#235;fekaay bi</li>"\n    "<li>T&#233;ye toppaatekat yi (walla yeesal say jekk-jekkal ngir sa&#241;al leen)</li>"\n    "<li>Far cookies yeek jaar-jaari say ceet ak njoow</li>"\n  "</ul>\n</p>\n<p xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">Mozilla moo defar %1$s. Sunu y&#233;ene mooy s&#224;mm w&#233;r-gi-yaram ak ubbeekug Internet.<br/>\n<a href="%2$s">G&#235;n cee xam</a></p>]]></string>
-  <string name="preference_category_search">Seet</string>
-  <string name="preference_search_engine_default">Wàccaale</string>
-  <string name="preference_state_on">Taalees</string>
-  <string name="preference_state_off">Fayees</string>
-  <string name="preference_subitem_autocomplete">Àggale mbindum màkkaan gu boppu</string>
-  <string name="preference_switch_autocomplete">Àggale mbind gu boppu</string>
-  <string name="preference_category_autocomplete_preinstalled">Limu màkkaan yim wàccaale</string>
-  <string name="preference_autocomplete_preinstalled_summary">Doxalal ngir %1$s man di la mottalil lu romb 450 màkkaani web yu siiw ci bànqaasu màkkaan bi.</string>
-  <string name="preference_autocomplete_subitem_customlist">Màkkaan yees jëmmal</string>
-  <string name="preference_autocomplete_action_add">+ Yokkal ag màkkaan gees jëmmal</string>
-  <string name="preference_autocomplete_title_add">Yokkal ag màkkaan gees jëmmal</string>
-  <string name="preference_autocomplete_title_remove">Dindi màkkaan gees Jëmmal</string>
-  <string name="preference_autocomplete_learn_more">Gën a xam</string>
-  <string name="preference_autocomplete_custom_summary">Yokkal te yor mottali gu boppu yu màkkaan yees jëmmal.</string>
-  <string name="preference_autocomplete_add_title">Màkkaan gees war a yokk</string>
-  <string name="preference_autocomplete_add_hint">Tafal wala bind ag màkkaan</string>
-  <string name="preference_autocomplete_add_example">Misaal: misaal.com</string>
-  <string name="preference_autocomplete_add_confirmation">Yokkees na màkkaan gees jëmmal gu bees.</string>
-  <string name="preference_autocomplete_menu_remove">Far</string>
-  <string name="preference_autocomplete_action_remove_content_description">Far</string>
-  <string name="preference_autocomplete_add_error">Xoolaatal màkkaan gi nga bind.</string>
-  <string name="preference_language">Làkk</string>
-  <string name="preference_language_systemdefault">Wàccaaleeg noste gi</string>
-  <string name="preference_category_privacy">Sutura</string>
-  <string name="preference_privacy_block_ads">Téye toppkati siiwal</string>
-  <string name="preference_privacy_block_ads_summary">Yenn siiwal yi, donte bësoo ci, man nañoo topp dal yi ngay ubbi</string>
-  <string name="preference_privacy_block_analytics">Téye toppkati xayma</string>
-  <string name="preference_privacy_block_analytics_summary">Dees leen di jëfandikoo ngir dajale, saytu ak natt yëngu-yëngu yu mel ni bës walla yéegal-wàcce aw xët</string>
-  <string name="preference_privacy_block_social">Téye toppkati mbaali mboolaay</string>
-  <string name="preference_privacy_block_social_summary">Dees leen di dugalaale ci dali web yi ngir topp sag njoow ak di wone ay solo niki bësu ngir séddoo</string>
-  <string name="preference_privacy_block_content">Téye yaneen toppkati ëmbéef</string>
-  <string name="preference_privacy_block_content_summary2">Doxal gi man naa jur yenn xëti web yi am doxaliin gees foogulwoon</string>
-  <string name="preference_privacy_secure_mode">Nëbbu</string>
-  <string name="preference_privacy_stealth_summary">Nëbb xëti web yi sooy jàll ci beneen jëfekaay</string>
-  <string name="preference_category_performance">Gaawaay</string>
-  <string name="preference_performance_block_webfonts">Téye loyi web yi</string>
-  <string name="preference_performance_block_webfonts_summary">Man naa jur njunj walla péeñ yu dul feeñ</string>
-  <string name="preference_default_browser2">Def %1$s muy sa joowukaay bu njëkk</string>
-  <string name="preference_category_mozilla">Mozilla</string>
-  <string name="preference_mozilla_telemetry2">Yónneey njoxe ci njëfandikoo gi</string>
-  <string name="preference_mozilla_telemetry_summary">Gën ce xam</string>
-  <string name="preference_mozilla_telemetry_summary2">Mozilla li mu soxla rekk, te manul ñàkk, lay jéem a dajale ngir man a gënal %1$s ngir nun ñépp.</string>
-  <string name="preference_privacy_notice">Sàrti Sutura</string>
-  <string name="preference_about">Ñeel %1$s</string>
-  <string name="preference_search_installed_search_engines">Seetukaay yiñ fi sàmp</string>
-  <string name="preference_search_restore">Delloo seetukaay yi na ñu meloon</string>
-  <string name="preference_search_add2">+ Yokk ab seetukaay</string>
-  <string name="preference_search_remove_title">Far ay seetukaay</string>
-  <string name="preference_search_remove">Far</string>
-  <string name="action_option_add_search_engine">Yokk ab seetukaay</string>
-  <string name="search_add_manually_name_hint">Turu seetukaay bi</string>
-  <string name="search_add_manually_string">Mbindum seet mees di jëfandikoo</string>
-  <string name="search_add_manually_save">Denc</string>
-  <string name="search_add_manually_example">Misaal: misaal.com//search/?q=%s</string>
-  <string name="search_add_confirmation">Yokkees na seetukaay bu bees.</string>
-  <string name="search_add_error_empty_name">Duggalal turu seetukaay bi</string>
-  <string name="search_add_error_empty_search">Duggalal mbind mi ngay seet</string>
-  <string name="search_add_error_format">Seetal ndax mbindum sa ceet méngoo naak melokaanu Misaal mi</string>
-  <string name="content_description_clear_input">Far mbind mi</string>
-  <string name="content_description_dismiss_input">Tëj</string>
-  <string name="content_description_erase">Far jaar-jaaru njoow gi</string>
-  <string name="content_description_tab_counter">Làcc yi ubbeeku: %1$s</string>
-  <string name="content_description_lock">Lonkoo gu wóor</string>
-  <string name="accessibility_announcement_loading">Mi ngi yeb</string>
-  <string name="accessibility_announcement_loading_finished">Yebees na dalu web bi</string>
-  <string name="content_description_menu">Yeneen tànnéef</string>
-  <string name="content_description_forward">Dem ci kanam</string>
-  <string name="content_description_reload">Yebaat dalu web bi</string>
-  <string name="content_description_back">Dellu ginnaaw</string>
-  <string name="content_description_stop">Dag dali web biy yeebu</string>
-  <string name="content_description_customtab_exit">Déllu ci app bi kë jiitu</string>
-  <string name="content_description_blocking_switch">Tëyyé trackers yi</string>
-  <string name="your_rights">Sa wareef</string>
-  <string name="external_app_prompt_title">Ubbil lëkkalekaay bi ci beneen jëfekaay</string>
-  <string name="external_app_prompt">Man ngaa génn %1$s ngir ubbi bii lëkkalekaay ci %2$s.</string>
-  <string name="external_app_prompt_no_app_title">Seet ab jëfekaay bu man a ubbu lëkkalekaay bi</string>
-  <string name="external_app_prompt_no_app">Amul benn jëfekaay ci sa jumtukaay bu man a ubbi bii lëkkalekaay. Man ngaa génn %1$s ngir seet ci %2$s ab jëfekaay bu ko man.</string>
-  <string name="external_multiple_apps_matched_exit">Génn ci Njoow gu Suturloo gi?</string>
-  <string name="download_snackbar_finished">%1$s mat na</string>
-  <string name="download_snackbar_open">Ubbi</string>
-  <string name="download_dialog_warning"><![CDATA["Dencukaay yees fi yebbi "<b xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">deesu leen far</b>" soo fare jaar-jaaru %1$s."]]></string>
-  <string name="download_dialog_title">Yebbi dencukaay bi</string>
-  <string name="download_dialog_action_cancel">Neenal</string>
-  <string name="download_dialog_action_download">Yebbi</string>
-  <string name="errorpage_title">Njuumte ci yebug xët wi</string>
-  <string name="errorpage_refresh">Jéemaatal</string>
-  <string name="error_connectionfailure_title">Lonkoo gi antuwul</string>
-  <string name="error_connectionfailure_message"><![CDATA[<ul xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">"\n        "<li>Dal bi man naa ba&#241; a j&#224;ppandi walla mu yebu lu &#235;pp. J&#233;emaatal bu ci kanamee</li>"\n        "<li>So manul a yeb wenn x&#235;t xoolaatal lonkoo gu sa jumtukaay.</li>"\n      "</ul>]]></string>
-  <string name="error_timeout_title">Àppu lonkoo gi romb na</string>
-  <string name="error_hostLookup_title">Giseesul joxekaay bi</string>
-  <string name="error_hostLookup_message"><![CDATA[<ul xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">"\n        "<li>"Xoolaatal m&#224;kkaan gi ndax amul njuumtey mbind niki\n          "<strong>ww</strong>".misaal.com te waroon doon\n          "<strong>www</strong>.misaal.com</li>"\n        "<li>Soo manul yeb wenn x&#235;t, xoolaatal lonkoo gu sa jumtukaay.</li>"\n      "</ul>]]></string>
-  <string name="error_malformedURI_title">Màkkaan gi baxul</string>
-  <string name="error_malformedURI_message"><![CDATA[<ul xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">"\n  "<li>"Naka-jekk m&#224;kkaani web yi nii lees di binde "<strong>http://www.misaal.com/</strong></li>"\n  "<li>"W&#243;orlul ni yaa ngi j&#235;fandikoo galan yi war (c.m. "<strong>/</strong>).</li>\n</ul>]]></string>
-  <string name="error_redirectLoop_title">Xët wii ni muy jubluwaatalee baaxul</string>
-  <string name="error_redirectLoop_message"><![CDATA[<ul xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">" \n  "<li>Liy indi jafe-jafe gii man naa nekk ag doxadil mbaa ba&#241; a nangu cookies yi.</li>" \n"</ul>]]></string>
-  <string name="error_unsupportedprotocol_title">Màkkaan gi kenn xamuko</string>
-  <string name="error_unsupportedprotocol_message"><![CDATA[<ul xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">" \n"<li>X&#233;j-na dafa laaj nga samp beneen j&#235;fekaay ngir man a ubbi gi m&#224;kkaan.</li>" \n"</ul>]]></string>
-  <string name="error_sslhandshake_title">Lonkoo gu wóor gi antuwul</string>
-  <string name="error_sslhandshake_message"><![CDATA[<ul xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">"\n  "<li>Lii man naa nekk jafe-jafe ci jekk-jekkalu joxekaay bi, walla it kenn kuy j&#233;em a dugg ci sa diggante ak joxekaay bi ci boppam.</li>"\n  "<li>Su fekkee mas ngaa lonku ci bii joxekaay jamono ci ginnaaw, Njuumte gi man naa doon lu jamonowe, kon di la digal nga j&#233;emaat ci kanam.</li>\n</ul>]]></string>
-  <string name="error_generic_title">Oo!</string>
-  <string name="error_generic_message">Lenn tere na yebug xët wii antu.</string>
-  <string name="contextmenu_link_share">Séddoo lëkkalekaay bi</string>
-  <string name="contextmenu_link_copy">Duppi màkkaanu lëkkalekaay bi</string>
-  <string name="contextmenu_image_share">Séddoo nataal bi</string>
-  <string name="contextmenu_image_copy">Duppi màkkaanu nataal bi</string>
-  <string name="contextmenu_image_save">Denc nataal bi</string>
-  <string name="contextmenu_open_in_new_tab">Ubbi lëkkalekaay bi ci làcc wu wees</string>
-  <string name="contextmenu_image_warning"><![CDATA["Péeñ yiñ nga séddoo ak yi nga denc "<b xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">deesu leen far</b>" soo fare jaar-jaaru %1$s."]]></string>
-  <string name="firstrun_defaultbrowser_title">Dooleel sa sutura</string>
-  <string name="firstrun_defaultbrowser_text2">Yóbbul njoow ci sutura ci geneen tolluwaay. Téyeel siiwal yeek yeneen ëmbeef yi lay man topp ci yeneen dal yi te di yeexal yebug xët yi.</string>
-  <string name="firstrun_search_title">Seet ak noo ko bëggee</string>
-  <string name="firstrun_search_text">Leneen ngay seet? Tànnal beneen seetukaay ci jekk-jekkal yi.</string>
-  <string name="firstrun_shortcut_title">Yokki lëkkalekaay ci njëlbeenu sa xoolu</string>
-  <string name="firstrun_shortcut_text">Dellu ci say dal yi nga taamu ci %1$s ci lu gaaw. Doy na nga bës ci \"Yokk ci njëlbeenu xoolu bi\" ci njëlu %1$s.</string>
-  <string name="firstrun_privacy_title">Def joow ci sutura doon jikko</string>
-  <string name="firstrun_privacy_text">Def %1$s sa joowukaay bu njëkk te jariñoo mbaaxi njoow ci sutura sooy ubbi xëti web ci yeneen jëfekaay.</string>
-  <string name="firstrun_close_button">OK, Dégg naa la!</string>
-  <string name="firstrun_skip_button">Tëb</string>
-  <string name="firstrun_next_button">Toftal</string>
-  <string name="content_blocking_disabled">-</string>
-  <string name="dialog_addtohomescreen_action_add">Yokk</string>
-  <string name="dialog_addtohomescreen_action_cancel">Neenal</string>
-  <string name="dialog_addtohomescreen_tracking_protection">Wii ñall suy ubbeeku kaaraange lank-toppaate gi du dox</string>
-  <string name="notification_browsing_session_channel_name">Ubbig njoow ci sutura</string>
-  <string name="notification_browsing_session_channel_description">Yëgle yi di nañ la may ngay man di far njoxéef yi ci sa %1$s ci benn bës rek. Soxlawoo ubbi jëfekaay walla xool liy dox ci sa joowukaay.</string>
-  <string name="tabs_tray_action_erase">Far jaar-jaaru njoow gi</string>
-  <string name="download_firefox">Yebbi Firefox</string>
-  <string name="your_rights_content1">%1$s jëfekaay bu amul-fay te ubbeeku la bu Mozilla ak yeneen aji-barkeelu defar.</string>
-  <string name="your_rights_content2"><![CDATA["%1$s moo ngi jàppandi sukkandiku ci "<a xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2" href="%2$s">Mozilla Public License</a>" ak yeneen sañali gongikuwaay yu ubbeeku."]]></string>
-  <string name="your_rights_content3"><![CDATA["Joxuñula genn yelleef walla sañal ci jëfandikoo turu Mozilla Foundation walla yu ñeneen, bokk nañ ci tur walla màndargay Mozilla, Firefox walla %1$s. Manees naa fekk yeneeni xibaar "<a xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2" href="%2$s">fii</a>.]]></string>
-  <string name="your_rights_content4"><![CDATA["Yeneen gongikuwaayu yoon yu %1$s jàppandi nañ ci ron yeneen "<a xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2" href="%2$s">sa&#241;al</a>.]]></string>
-  <string name="your_rights_content5"><![CDATA["%1$s dafay jëfandikoo ay limi téye yu Disconnect, Inc. di jébbale ci liggéeyu boppam ci ron "<a xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2" href="%2$s">GNU General Public License v3</a>", te jàppandi "<a xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2" href="%3$s">fii</a>.]]></string>
-</resources>
+    <!-- ####################################################################################### -->
+    <!-- ## Put only strings into this file that should be translated. Move all other strings ## -->
+    <!-- ## into a separate file like strings_references.xml                                  ## -->
+    <!-- ####################################################################################### -->
+
+    <!-- Label used for buttons, e.g. in dialogs -->
+    <string name="action_cancel">Neenal</string>
+    <!-- Label used for buttons, e.g. in dialogs -->
+    <string name="action_ok">OK</string>
+
+    <string name="action_save">Denc</string>
+
+    <!-- This text is shown in the URL bar when it's empty -->
+    <string name="urlbar_hint">Seet walla dugal ag màkkaan</string>
+
+    <string name="teaser">Njoow ci sutura doxal boppam.
+Joow. Far. Tambaliwaat.</string>
+
+    <!-- "Snackbar" shown after the user has pressed the 'erase' button at the end of a browsing session -->
+    <string name="feedback_erase">Farees na jaar-jaaru sag njoow.</string>
+
+    <!-- This label is shown below the URL bar as soon as the user enters text. Clicking the label will perform a search -->
+    <string name="search_hint">Seet %1$s</string>
+
+    <!-- Menu item: Share the currently visible page -->
+    <string name="menu_share">Séddoo…</string>
+
+    <!-- Menu item: Report an issue on the current site -->
+    <string name="menu_report_site_issue"></string>
+
+    <!-- Menu item: Switch to another browser to open the currently visible page. %1$s will be
+      replaced with the name of the browser like: "Open in Firefox" or "Open in Chrome". Some
+      links can be opened by native apps that aren't a browser, e.g. "Open in YouTube" -->
+    <string name="menu_open_with_default_browser2"></string>
+
+    <!-- Menu item: Switch to another browser to open the currently visible page. This menu item
+      will be shown if there are multiple browsers and we do not know which one is the default
+      browser or in case Focus is actually the default browser. Clicking this menu item will show
+      a screen with multiple browsers (or other apps that can open the current URL) to choose from. -->
+    <string name="menu_open_with_a_browser2"></string>
+
+    <!-- Menu item: Add the current page as a shortcut to the device's home screen (launcher). -->
+    <string name="menu_add_to_home_screen">Yokk ci njëlbéenu sa xoolu</string>
+
+    <!-- Menu item: Shows information about features and changes that are new to this version -->
+    <string name="menu_whats_new">Lou bees</string>
+    <string name="menu_settings">Jekk-jekkal</string>
+    <string name="menu_about">Ñeel</string>
+    <string name="menu_help">Ndimbal</string>
+    <string name="menu_rights">Say yelleef</string>
+
+    <!-- Menu item: This is the label for a menu entry that shows how many trackers have been blocked
+         for the currently loaded website. The number of blocked trackers is shown below this label.
+         Next to this label is a switch that allows the user to temporarily enable / disable the
+         blocking of trackers for the current browsing session - for example if the current website
+         doesn't work correctly with blocked content. -->
+    <string name="menu_trackers_blocked_title">Téyees na toppaatekat yi</string>
+
+    <!-- This is a small text at the bottom of the menu shown in a "custom tab" for branding purposes.
+     See https://github.com/mozilla-mobile/focus-android/issues/2106
+      %1$s will be replaced by the app name (e.g. Firefox Focus) -->
+    <string name="menu_custom_tab_branding"></string>
+
+    <!-- This is the title of a dialog that shows all the share targets (apps or contacts) when
+         sharing an URL. -->
+    <string name="share_dialog_title">Séddoo ci</string>
+
+    <!-- While a browsing session is active (in the foreground or background) we will show a notification
+         so that the user doesn't forget about the website still being open. This text is shown in
+         the notification. Clicking the notification will have the same effect as clicking the "erase"
+         button in the application. -->
+    <string name="notification_erase_text">Far jaar-jaaru njoow gi</string>
+
+    <!-- Notification action to open Focus and resume the current browsing session. -->
+    <string name="notification_action_open">Ubbi</string>
+
+    <!-- Notification action to erase the current browsing session AND switch to Focus (bring it
+         to the foreground) -->
+    <string name="notification_action_erase_and_open">Far te Ubbi</string>
+
+    <!-- On Android 7+ users can add a shortcut for erasing the browsing history to the home screen.
+         This is the label for this shortcut. Android recommends a maximum length of 10 characters. -->
+    <string name="shortcut_erase_short_label">Far</string>
+
+    <!-- The same as 'shortcut_erase_short_label' but more descriptive. The launcher shows this
+         instead of the short title when it has enough space. Android recommends a maximum length
+         of 25 characters. -->
+    <string name="shortcut_erase_long_label">Far jaar-jaaru njoow gi</string>
+
+    <!-- This is the label of an action we offer when the user selects text in other third-party apps.
+         Clicking this action will launch Focus and perform a search in the default search engine. -->
+    <string name="text_selection_search_action">Seet ci sutura</string>
+
+    <!-- Content of about focus. Argument 1 is the app name (Firefox Focus/Firefox Klar/etc).
+         Argument 2 is the url for the learn-more link. -->
+    <string name="about_content"><![CDATA[<p>Doonal kiy dogal ak %1$s.</p>
+<p>Jëfandikoo ko soo nammee joow ci sutura:
+  <ul>
+    <li>Man ngaa seet ak di joow ci biir jëfekaay bi</li>
+    <li>Téye toppaatekat yi (walla yeesal say jekk-jekkal ngir sañal leen)</li>
+    <li>Far cookies yeek jaar-jaari say ceet ak njoow</li>
+  </ul>
+</p>
+<p>Mozilla moo defar %1$s. Sunu yéene mooy sàmm wér-gi-yaram ak ubbeekug Internet.<br/>
+<a href="%2$s">Gën cee xam</a></p>]]></string>
+
+    <!-- Header for the Privacy and Security settings menu -->
+    <string name="preference_privacy_and_security_header"></string>
+
+    <!-- Preference summary for settings related to privacy and security -->
+    <string name="preference_privacy_and_security_summary"></string>
+
+    <!-- Preference category description for settings related to search, set default
+    and autocomplete are settings a user can find and change inside the "search" settings screen -->
+    <string name="preference_search_summary"></string>
+
+    <!-- Preference category description for settings screen for settings related to Mozilla -->
+    <!-- About the app and help are links that are inside this menu -->
+    <!-- %1$s will be replaced by the app name (e.g. Firefox Focus) -->
+    <string name="preference_mozilla_summary"></string>
+
+    <!-- Preference category for ad blocking and tracking protection settings -->
+    <string name="preference_category_tracking_protection"></string>
+
+    <!-- Preference category for settings related to controlling web content -->
+    <string name="preference_category_web_content"></string>
+
+    <!-- Preference category: stealth settings for while switching apps -->
+    <string name="preference_category_switching_apps"></string>
+
+    <!-- Preference category for General Settings -->
+    <string name="preference_category_general"></string>
+
+    <!-- Preference category for settings about sending usage data -->
+    <string name="preference_category_data_collection_use"></string>
+
+    <string name="preference_category_search">Seet</string>
+
+    <!-- Title of "switch" preference that enables/disables search suggestions -->
+    <string name="preference_show_search_suggestions"></string>
+    <!-- Description of the preference that enables/disables search suggestions
+        %1$s will be replaced by the app name (e.g. Firefox Focus) -->
+    <string name="preference_show_search_suggestions_summary"></string>
+
+    <!-- This label is shown below the name of the default search engine in settings -->
+    <string name="preference_search_engine_default">Wàccaale</string>
+
+    <!-- Text that is shown below a "switch" preference that is enabled. -->
+    <string name="preference_state_on">Taalees</string>
+
+    <!-- Text that is shown below a "switch" preference that is disabled. -->
+    <string name="preference_state_off">Fayees</string>
+
+    <!-- Item in settings that will open a new preference screen for configuring the URL autocomplete behavior. -->
+    <string name="preference_subitem_autocomplete">Àggale mbindum màkkaan gu boppu</string>
+
+    <!-- Action at the bottom of the list of custom autocomplete URLs that will open a new screen to add a new URL to the list. -->
+    <string name="preference_autocomplete_action_add">+ Yokkal ag màkkaan gees jëmmal</string>
+
+    <!-- Title of the screen for adding custom autocomplete URLs. -->
+    <string name="preference_autocomplete_title_add">Yokkal ag màkkaan gees jëmmal</string>
+
+    <!-- Label for the button to quick add custom autocomplete URLs. -->
+    <string name="custom_autocomplete_quick_add"></string>
+
+    <!-- Preference category for settings about cookies and site data -->
+    <string name="preference_category_cookies"></string>
+
+    <!-- Preference category for settings about data choices -->
+    <string name="preference_category_data_choices"></string>
+
+    <!-- Title of the screen for removing custom autocomplete URLs. -->
+    <string name="preference_autocomplete_title_remove">Dindi màkkaan gees Jëmmal</string>
+
+    <!-- A link to SUMO at autocomplete settings. -->
+    <string name="preference_autocomplete_learn_more">Gën a xam</string>
+
+    <!-- Preference summary: Custom (user-defined) autocomplete URLs. -->
+    <string name="preference_autocomplete_custom_summary">Yokkal te yor mottali gu boppu yu màkkaan yees jëmmal.</string>
+
+    <!-- Label for the "custom autocomplete URL" input field -->
+    <string name="preference_autocomplete_add_title">Màkkaan gees war a yokk</string>
+
+    <!-- "Hint" text for the "custom autocomplete URL" input field. Shown when the field is empty. -->
+    <string name="preference_autocomplete_add_hint">Tafal wala bind ag màkkaan</string>
+
+    <!-- Example how a custom domain autocomplete URL be added (e.g. without http://) -->
+    <string name="preference_autocomplete_add_example2"></string>
+
+    <!-- To be removed once the new hint has been translated -->
+    <string name="preference_autocomplete_add_example">Misaal: misaal.com</string>
+
+    <!-- Confirmation "snackbar" shown after a new custom autocomplete URL has been added. -->
+    <string name="preference_autocomplete_add_confirmation">Yokkees na màkkaan gees jëmmal gu bees.</string>
+
+    <!-- Menu item to remove existing autocomplete URLs. -->
+    <string name="preference_autocomplete_menu_remove">Far</string>
+
+    <!-- Content description (not visible, for screen readers etc.): Button that will delete all selected custom autocomplete URLs. -->
+    <string name="preference_autocomplete_action_remove_content_description">Far</string>
+
+    <!-- Error message shown if the entered custom autocomplete URL is not valid or empty. -->
+    <string name="preference_autocomplete_add_error">Xoolaatal màkkaan gi nga bind.</string>
+
+    <string name="preference_language">Làkk</string>
+    <!-- This is shown when the user hasn't set a focus specific language, i.e. when Focus
+         is using the system default language. -->
+    <string name="preference_language_systemdefault">Wàccaaleeg noste gi</string>
+
+    <string name="preference_category_privacy">Sutura</string>
+    <string name="preference_privacy_block_ads">Téye toppkati siiwal</string>
+    <string name="preference_privacy_block_ads_summary">Yenn siiwal yi, donte bësoo ci, man nañoo topp dal yi ngay ubbi</string>
+    <string name="preference_privacy_block_analytics">Téye toppkati xayma</string>
+    <string name="preference_privacy_block_analytics_summary">Dees leen di jëfandikoo ngir dajale, saytu ak natt yëngu-yëngu yu mel ni bës walla yéegal-wàcce aw xët</string>
+    <string name="preference_privacy_block_social">Téye toppkati mbaali mboolaay</string>
+    <string name="preference_privacy_block_social_summary">Dees leen di dugalaale ci dali web yi ngir topp sag njoow ak di wone ay solo niki bësu ngir séddoo</string>
+    <string name="preference_privacy_block_content">Téye yaneen toppkati ëmbéef</string>
+    <string name="preference_privacy_block_content_summary2">Doxal gi man naa jur yenn xëti web yi am doxaliin gees foogulwoon</string>
+    <string name="preference_privacy_category_cookies"></string>
+
+    <!-- Three options for Cookie blocking. Yes (All cookies Blocked), Block 3rd-party cookies
+    only (Only 3rd-party Cookies Blocked), No (No cookies blocked) -->
+    <string name="preference_privacy_should_block_cookies_no_option"></string>
+    <string name="preference_privacy_should_block_cookies_third_party_only_option"></string>
+    <string name="preference_privacy_should_block_cookies_yes_option"></string>
+
+    <!-- Preference Title: Biometrics can be used to unlock Focus if the previous session's data was not erased by the user. -->
+    <string name="preference_security_biometric"></string>
+    <!-- Preference Summary: Biometrics (iris scan, fingerprint, or facial scan) can be used to unlock Focus if the app had a URL
+        open when the app was last run to ensure that only the phone's owner can view a previous session.
+        %1$s will be replaced by the app name (e.g. Firefox Focus) -->
+    <string name="preference_security_biometric_summary"></string>
+
+    <!-- Preference Title: Secure Mode is a setting that prevents the app's content to show up in the "recent apps" screen
+         and prevents the user from taking screenshots or casting the app to other displays. -->
+    <string name="preference_privacy_secure_mode">Nëbbu</string>
+    <!-- Preference Summary: Stealth mode (previously "Secure mode") is a setting that prevents the
+     app's content (in our case especially the content of webpages) to show up in the "recent apps"
+     screen. Additionally Android will prevent the user from taking screenshots or casting the app
+     to other displays. -->
+    <string name="preference_privacy_stealth_summary">Nëbb xëti web yi sooy jàll ci beneen jëfekaay</string>
+
+    <string name="preference_category_security"></string>
+
+    <string name="preference_category_performance">Gaawaay</string>
+    <string name="preference_performance_block_webfonts">Téye loyi web yi</string>
+    <!-- This text is shown below the setting for disabling web fonts. Some websites use icons/images from a font and those do not show up if fonts are blocked.-->
+    <string name="preference_performance_block_webfonts_summary">Man naa jur njunj walla péeñ yu dul feeñ</string>
+
+    <string name="preference_performance_block_javascript"></string>
+    <!-- This text is shown below setting for disabling JavaScript. Some websites may not work correctly when JavaScript is disabled -->
+    <string name="preference_performance_block_javascript_summary"></string>
+
+    <!-- This preference does not set Focus as the default browser but instead links to Android's
+     "default apps" settings screen or if not supported by this Android version to a SUMO page describing
+     how to set Focus as a default browser.
+      %1$s will be replaced by the app name (e.g. Firefox Focus) -->
+    <string name="preference_default_browser2">Def %1$s muy sa joowukaay bu njëkk</string>
+
+    <string name="preference_category_mozilla">Mozilla</string>
+    <string name="preference_mozilla_telemetry2">Yónneey njoxe ci njëfandikoo gi</string>
+
+    <!-- A link to SUMO at the end of the summary (preference_mozilla_telemetry_summary2) of the "Send anonymous usage data" setting. -->
+    <string name="preference_mozilla_telemetry_summary">Gën ce xam</string>
+
+    <!-- %1$s will be replaced with the name of the app (e.g. Firefox Focus) -->
+    <string name="preference_mozilla_telemetry_summary2">Mozilla li mu soxla rekk, te manul ñàkk, lay jéem a dajale ngir man a gënal %1$s ngir nun ñépp.</string>
+
+    <!-- In-app link (in settings) to Focus privacy notice. -->
+    <string name="preference_privacy_notice">Sàrti Sutura</string>
+
+    <!-- Item in Preferences that shows the about page. Parameter 1 is the app name, i.e. Firefox Focus/Firefox Klar. -->
+    <string name="preference_about">Ñeel %1$s</string>
+
+    <!-- Header for the list of installed search engines -->
+    <string name="preference_search_installed_search_engines">Seetukaay yiñ fi sàmp</string>
+
+    <!-- Action for restoring the default list of search engines -->
+    <string name="preference_search_restore">Delloo seetukaay yi na ñu meloon</string>
+
+    <!-- Action for adding an additional search engine to the list.
+    The "+" is used to emphasize that this is an "add" action -->
+    <string name="preference_search_add2">+ Yokk ab seetukaay</string>
+    <string name="preference_search_remove_title">Far ay seetukaay</string>
+    <string name="preference_search_remove">Far</string>
+
+    <!-- Title: Homescreen tips settings toggle to determine whether or not tips are displayed when
+     a user first launches the app. -->
+    <string name="preference_homescreen_tips"></string>
+
+    <!-- Clickable action text that shows when user long-presses on a search engine search field (this is similar to paste or copy when long-pressing a text field) -->
+    <string name="action_option_add_search_engine">Yokk ab seetukaay</string>
+
+    <string name="search_add_manually_name_hint">Turu seetukaay bi</string>
+    <string name="search_add_manually_string">Mbindum seet mees di jëfandikoo</string>
+    <string name="search_add_manually_save">Denc</string>
+
+    <!-- Example of search engine url -->
+    <string name="search_add_manually_example">Misaal: misaal.com//search/?q=%s</string>
+
+    <string name="search_add_confirmation">Yokkees na seetukaay bu bees.</string>
+
+    <string name="search_add_error_empty_name">Duggalal turu seetukaay bi</string>
+    <string name="search_add_error_duplicate_name"></string>
+
+    <string name="search_add_error_empty_search">Duggalal mbind mi ngay seet</string>
+
+    <string name="search_add_error_format">Seetal ndax mbindum sa ceet méngoo naak melokaanu Misaal mi</string>
+
+    <!-- Content description (not visible, for screen readers etc.): Clear text in URL bar -->
+    <string name="content_description_clear_input">Far mbind mi</string>
+
+    <!-- Content description (not visible, for screen readers etc.): Clicking on the website overlay
+     while in typing mode will dismiss and go back to the browser. This text will be read when the
+     overlay if focused. See https://github.com/mozilla-mobile/focus-android/issues/50 -->
+    <string name="content_description_dismiss_input">Tëj</string>
+
+    <!-- Content description (not visible, for screen readers etc.): Erase button: Erase the browsing
+     history and go back to the home screen. -->
+    <string name="content_description_erase">Far jaar-jaaru njoow gi</string>
+
+    <!-- If the user has multiple tabs open we will show an addition "floating action button" showing how many tabs are open.
+     This string is not displayed and read only by screenreaders. %1$s will be replaced with the number of open tabs. This
+      button will only be visible when there is more than one tab open (>= 2). -->
+    <string name="content_description_tab_counter">Làcc yi ubbeeku: %1$s</string>
+
+    <!-- Content description (not visible, for screen readers etc.): Lock icon showed in the URL bar for
+     https pages.. -->
+    <string name="content_description_lock">Lonkoo gu wóor</string>
+
+    <!-- This text is not visible. Instead it will be read by the accessibility service once we start
+     loading a website -->
+    <string name="accessibility_announcement_loading">Mi ngi yeb</string>
+
+    <!-- This text is not visible. Instead it will be read by the accessibility service once we
+     finished loading a website -->
+    <string name="accessibility_announcement_loading_finished">Yebees na dalu web bi</string>
+
+    <!-- Content description (not visible, for screen readers etc.): "Three dot" menu button. -->
+    <string name="content_description_menu">Yeneen tànnéef</string>
+
+    <!-- Content description (not visible, for screen readers etc.): Navigate forward (browsing history) -->
+    <string name="content_description_forward">Dem ci kanam</string>
+
+    <!-- Content description (not visible, for screen readers etc.): Reload current website -->
+    <string name="content_description_reload">Yebaat dalu web bi</string>
+
+    <!-- Content description (not visible, for screen readers etc.): Navigate back (browsing history) -->
+    <string name="content_description_back">Dellu ginnaaw</string>
+
+    <!-- Content description (not visible, for screen readers etc.): Stop loading the current website. This button will turn into the refresh button once loading has been completed (see content_description_reload) -->
+    <string name="content_description_stop">Dag dali web biy yeebu</string>
+
+    <!-- Content description (not visible, for screen readers etc.): Custom Tab exit button - closes the custom tab and returns to the previous app. -->
+    <string name="content_description_customtab_exit">Déllu ci app bi kë jiitu</string>
+
+    <!-- Content description (not visible, for screen readers etc.): This is the description for the ImageView in the menu that displays
+         the number of trackers blocked for the current session -->
+    <string name="content_description_trackers_blocked"></string>
+
+    <!-- Content description (not visible, for screen readers etc.): This is the description for the switch in the menu that temporarily disables/enables
+         content blocking for the current session -->
+    <string name="content_description_blocking_switch">Tëyyé trackers yi</string>
+
+    <string name="your_rights">Sa wareef</string>
+
+    <string name="external_app_prompt_title">Ubbil lëkkalekaay bi ci beneen jëfekaay</string>
+    <!-- This string is shown when the user has clicked a link that needs to be opened in a different app.
+         Argument 2 is the external app name, argument 1 is our name (i.e. Firefox Focus, or Firefox Klar). -->
+    <string name="external_app_prompt">Man ngaa génn %1$s ngir ubbi bii lëkkalekaay ci %2$s.</string>
+    <!-- This text is the title of a dialog shown if no app could be found for a custom link protocol. -->
+    <string name="external_app_prompt_no_app_title">Seet ab jëfekaay bu man a ubbu lëkkalekaay bi</string>
+    <!-- This text is shown in a dialog if no app could be found for a custom link protocol. %1$s is the name of the app (i.e. Firefox Focus) and %2$s is the name of
+         the app store installed on the device (usually that's Google Play). -->
+    <string name="external_app_prompt_no_app">Amul benn jëfekaay ci sa jumtukaay bu man a ubbi bii lëkkalekaay. Man ngaa génn %1$s ngir seet ci %2$s ab jëfekaay bu ko man.</string>
+    <!-- This label is shown above a list of apps that can be used to open a given link -->
+    <string name="external_multiple_apps_matched_exit">Génn ci Njoow gu Suturloo gi?</string>
+
+    <!-- Snackbar that will be displayed after a download has completed. %1$s will be replaced with the file name. -->
+    <string name="download_snackbar_finished">%1$s mat na</string>
+
+    <!-- Snackbar action to immediately open the successfully downloaded file. -->
+    <string name="download_snackbar_open">Ubbi</string>
+
+    <!-- Download dialog: Warns users that downloaded files will not be deleted even when erasing history. %1$s will be replaced with the app name (i.e. Firefox Focus). -->
+    <string name="download_dialog_warning"><![CDATA[Dencukaay yees fi yebbi <b>deesu leen far</b> soo fare jaar-jaaru %1$s.]]></string>
+
+    <!-- Title of download dialogue -->
+    <string name="download_dialog_title">Yebbi dencukaay bi</string>
+
+    <!-- Option in download dialogue to cancel a download -->
+    <string name="download_dialog_action_cancel">Neenal</string>
+
+    <!-- Option in download dialogue to start a download -->
+     <string name="download_dialog_action_download">Yebbi</string>
+
+    <!-- The page html title (i.e. the <title> tag content) -->
+    <string name="errorpage_title">Njuumte ci yebug xët wi</string>
+    <string name="errorpage_refresh">Jéemaatal</string>
+
+    <string name="error_connectionfailure_title">Lonkoo gi antuwul</string>
+    <string name="error_connectionfailure_message">
+    <![CDATA[<ul>
+        <li>Dal bi man naa bañ a jàppandi walla mu yebu lu ëpp. Jéemaatal bu ci kanamee</li>
+        <li>So manul a yeb wenn xët xoolaatal lonkoo gu sa jumtukaay.</li>
+      </ul>]]>
+    </string>
+
+    <string name="error_timeout_title">Àppu lonkoo gi romb na</string>
+
+    <string name="error_hostLookup_title">Giseesul joxekaay bi</string>
+    <string name="error_hostLookup_message"><![CDATA[<ul>
+        <li>Xoolaatal màkkaan gi ndax amul njuumtey mbind niki
+          <strong>ww</strong>.misaal.com te waroon doon
+          <strong>www</strong>.misaal.com</li>
+        <li>Soo manul yeb wenn xët, xoolaatal lonkoo gu sa jumtukaay.</li>
+      </ul>]]></string>
+
+
+    <string name="error_malformedURI_title">Màkkaan gi baxul</string>
+    <string name="error_malformedURI_message"><![CDATA[<ul>
+  <li>Naka-jekk màkkaani web yi nii lees di binde <strong>http://www.misaal.com/</strong></li>
+  <li>Wóorlul ni yaa ngi jëfandikoo galan yi war (c.m. <strong>/</strong>).</li>
+</ul>]]></string>
+
+    <string name="error_redirectLoop_title">Xët wii ni muy jubluwaatalee baaxul</string>
+    <string name="error_redirectLoop_message"><![CDATA[<ul> 
+  <li>Liy indi jafe-jafe gii man naa nekk ag doxadil mbaa bañ a nangu cookies yi.</li> 
+</ul>]]></string>
+
+    <string name="error_unsupportedprotocol_title">Màkkaan gi kenn xamuko</string>
+    <string name="error_unsupportedprotocol_message"><![CDATA[<ul> 
+<li>Xéj-na dafa laaj nga samp beneen jëfekaay ngir man a ubbi gi màkkaan.</li> 
+</ul>]]></string>
+
+    <string name="error_sslhandshake_title">Lonkoo gu wóor gi antuwul</string>
+    <string name="error_sslhandshake_message"><![CDATA[<ul>
+  <li>Lii man naa nekk jafe-jafe ci jekk-jekkalu joxekaay bi, walla it kenn kuy jéem a dugg ci sa diggante ak joxekaay bi ci boppam.</li>
+  <li>Su fekkee mas ngaa lonku ci bii joxekaay jamono ci ginnaaw, Njuumte gi man naa doon lu jamonowe, kon di la digal nga jéemaat ci kanam.</li>
+</ul>]]></string>
+
+    <string name="error_generic_title">Oo!</string>
+    <string name="error_generic_message">Lenn tere na yebug xët wii antu.</string>
+
+    <!-- Label used in the contextmenu shown when long-pressing on a link -->
+    <string name="contextmenu_link_share">Séddoo lëkkalekaay bi</string>
+    <!-- Label used in the contextmenu shown when long-pressing on a link -->
+    <string name="contextmenu_link_copy">Duppi màkkaanu lëkkalekaay bi</string>
+    <!-- Label used in the contextmenu shown when long-pressing on an image -->
+    <string name="contextmenu_image_share">Séddoo nataal bi</string>
+    <!-- Label used in the contextmenu shown when long-pressing on an image -->
+    <string name="contextmenu_image_copy">Duppi màkkaanu nataal bi</string>
+    <!-- Label used in the contextmenu shown when long-pressing on an image -->
+    <string name="contextmenu_image_save">Denc nataal bi</string>
+    <!-- Label used in the contextmenu shown when long-pressing on a link -->
+    <string name="contextmenu_open_in_new_tab">Ubbi lëkkalekaay bi ci làcc wu wees</string>
+
+    <!-- This is a warning shown in the browser's context menu (when long pressing an image). %1$s will be replaced with the long name of the app (e.g. Firefox Focus). -->
+    <string name="contextmenu_image_warning"><![CDATA[Péeñ yiñ nga séddoo ak yi nga denc <b>deesu leen far</b> soo fare jaar-jaaru %1$s.]]></string>
+
+    <!-- First run tour (Default browser): Title -->
+    <string name="firstrun_defaultbrowser_title">Dooleel sa sutura</string>
+    <!-- First run tour (Default browser): Text. -->
+    <string name="firstrun_defaultbrowser_text2">Yóbbul njoow ci sutura ci geneen tolluwaay. Téyeel siiwal yeek yeneen ëmbeef yi lay man topp ci yeneen dal yi te di yeexal yebug xët yi.</string>
+
+    <!-- First run tour (Search): Title -->
+    <string name="firstrun_search_title">Seet ak noo ko bëggee</string>
+    <!-- First run tour (Search): Text -->
+    <string name="firstrun_search_text">Leneen ngay seet? Tànnal beneen seetukaay ci jekk-jekkal yi.</string>
+
+    <!-- First run tour (Shortcut): Title -->
+    <string name="firstrun_shortcut_title">Yokki lëkkalekaay ci njëlbeenu sa xoolu</string>
+    <!-- First run tour (Shortcut): Text. %1$s will be replaced with the name of the app (e.g. Firefox Focus) -->
+    <string name="firstrun_shortcut_text">Dellu ci say dal yi nga taamu ci %1$s ci lu gaaw. Doy na nga bës ci &quot;Yokk ci njëlbeenu xoolu bi&quot; ci njëlu %1$s.</string>
+
+    <!-- First run tour (Privacy): Title -->
+    <string name="firstrun_privacy_title">Def joow ci sutura doon jikko</string>
+    <!-- First run tour (Privacy): Text. %1$s will be replaced with the name of the app (e.g. Firefox Focus) -->
+    <string name="firstrun_privacy_text">Def %1$s sa joowukaay bu njëkk te jariñoo mbaaxi njoow ci sutura sooy ubbi xëti web ci yeneen jëfekaay.</string>
+
+    <string name="firstrun_close_button">OK, Dégg naa la!</string>
+    <string name="firstrun_skip_button">Tëb</string>
+    <string name="firstrun_next_button">Toftal</string>
+
+    <!-- Indicator that no trackers are being blocked because content blocking is disabled; normally shows the number of blocked trackers -->
+    <string name="content_blocking_disabled">-</string>
+
+    <!-- Label of the action that will add the current website to the home screen (shown in the confirmation dialog). -->
+    <string name="dialog_addtohomescreen_action_add">Yokk</string>
+
+    <!-- Label of the action that will close the dialog and not add anything to the home screen (shown in the confirmation dialog). -->
+    <string name="dialog_addtohomescreen_action_cancel">Neenal</string>
+
+    <!-- When tracking protection is disabled for the current session then we will show this warning in the "Add to home screen" dialog to
+         let the user know that the shortcut will always be opened with tracking protection disabled. -->
+    <string name="dialog_addtohomescreen_tracking_protection">Wii ñall suy ubbeeku kaaraange lank-toppaate gi du dox</string>
+
+    <!-- The user visible name of the "notification channel" (Android 8+ feature) for the ongoing notification shown while a browsing session is active.
+    The recommended maximum length is 40 characters; the value may be truncated if it is too long.
+
+    * To understand what notification channels are, see: https://www.androidcentral.com/notification-channels
+    * To see how this string will look like in Android's UI, see: https://github.com/mozilla-mobile/focus-android/issues/863#issuecomment-324105723
+    -->
+    <string name="notification_browsing_session_channel_name">Ubbig njoow ci sutura</string>
+
+    <!-- The user visible description of the "notification channel" (Android 8+ feature) for the ongoing notification shown while a browsing session is active.
+    The recommended maximum length is 300 characters; the value may be truncated if it is too long. %1$s will be replaced with the name of the app (e.g. Firefox Focus).
+
+    * To understand what notification channels are, see: https://www.androidcentral.com/notification-channels
+    * To see how this string will look like in Android's UI, see: https://github.com/mozilla-mobile/focus-android/issues/863#issuecomment-324105723
+    -->
+    <string name="notification_browsing_session_channel_description">Yëgle yi di nañ la may ngay man di far njoxéef yi ci sa %1$s ci benn bës rek. Soxlawoo ubbi jëfekaay walla xool liy dox ci sa joowukaay.</string>
+
+    <!-- Label for a button in the "tabs tray" to erase the browsing history (closes all tabs and removes associated data). -->
+    <string name="tabs_tray_action_erase">Far jaar-jaaru njoow gi</string>
+
+    <!-- If the user decides to open the current page in another browser and if Firefox is not installed then we show this
+      item in the list of browsers. Clicking it will open the app store installed on the device (usually that's Google Play). -->
+    <string name="download_firefox">Yebbi Firefox</string>
+
+    <!-- Text shown in the "Your rights" screen.
+    %1$s will be replaced with the name of the app (e.g. Firefox Focus)-->
+    <string name="your_rights_content1"><![CDATA[%1$s jëfekaay bu amul-fay te ubbeeku la bu Mozilla ak yeneen aji-barkeelu defar.]]></string>
+
+    <!-- Text shown in the "Your rights" screen.
+    %1$s will be replaced with the name of the app (e.g. Firefox Focus)
+    %2$s will be replaced with a URL linking to the MPL (e.g. https://www.mozilla.org/en-US/MPL/) -->
+    <string name="your_rights_content2"><![CDATA[%1$s moo ngi jàppandi sukkandiku ci <a href="%2$s">Mozilla Public License</a> ak yeneen sañali gongikuwaay yu ubbeeku.]]></string>
+
+    <!-- Text shown in the "Your rights" screen.
+    %1$s will be replaced with the name of the app (e.g. Firefox Focus)
+    %2$s will be replaced with a URL linking to the trademark policy (e.g. https://www.mozilla.org/foundation/trademarks/policy/) -->
+    <string name="your_rights_content3"><![CDATA[Joxuñula genn yelleef walla sañal ci jëfandikoo turu Mozilla Foundation walla yu ñeneen, bokk nañ ci tur walla màndargay Mozilla, Firefox walla %1$s. Manees naa fekk yeneeni xibaar <a href="%2$s">fii</a>.]]></string>
+
+    <!-- Text shown in the "Your rights" screen.
+    %1$s will be replaced with the name of the app (e.g. Firefox Focus)
+    %2$s will be replaced with a URL linking to the list of licenses used by the dependencies.-->
+    <string name="your_rights_content4"><![CDATA[Yeneen gongikuwaayu yoon yu %1$s jàppandi nañ ci ron yeneen <a href="%2$s">sañal</a>.]]></string>
+
+    <!-- Text shown in the "Your rights" screen.
+    %1$s will be replaced with the name of the app (e.g. Firefox Focus)
+    %2$s will be replaced with a URL linking to the GPL
+    %3$s will be replaced with a URL linking to the tracking protection wiki page (e.g. https://wiki.mozilla.org/Security/Tracking_protection#Lists) -->
+    <string name="your_rights_content5"><![CDATA[%1$s dafay jëfandikoo ay limi téye yu Disconnect, Inc. di jébbale ci liggéeyu boppam ci ron <a href="%2$s">GNU General Public License v3</a>, te jàppandi <a href="%3$s">fii</a>.]]></string>
+
+    <!-- Text shown in prompts for GeckoView -->
+    <string name="gv_prompt_username_hint"></string>
+    <string name="gv_prompt_password_hint"></string>
+    <string name="gv_prompt_clear"></string>
+
+    <!-- Text shown in Security Information Popup -->
+    <!-- Text to denote secure or insecure connection -->
+    <string name="security_popup_secure_connection"></string>
+    <string name="security_popup_insecure_connection"></string>
+    <!-- %1$s will be replaced with organization that granted the SSL certificate -->
+    <string name="security_popup_security_verified"></string>
+
+    <!-- Content Description of Security Icon in toolbar -->
+    <string name="site_security_icon_content_description"></string>
+    <string name="preference_autocomplete_duplicate_url_error"></string>
+
+    <!-- Label for the Find in page button -->
+    <string name="find_in_page"></string>
+
+    <!-- Watermark/Hint for the find in page input field -->
+    <string name="find_in_page_input"></string>
+
+    <!-- String to show the number of results found in the page and the
+        position the user is at. The first argument is the position, the second argument is the total -->
+    <string name="find_in_page_result"></string>
+    <!-- String to be read by the accessibility service presenting the number of results found in the page
+        and the position the user is at. The first argument is the position, the second argument is the total -->
+    <string name="accessibility_find_in_page_result"></string>
+
+    <!-- String to be read by the accessibility service when focusing the next result button -->
+    <string name="accessibility_next_result"></string>
+    <!-- String to be read by the accessibility service when focusing the previous result button -->
+    <string name="accessibility_previous_result"></string>
+    <!-- String to be read by the accessibility service when focusing the dismiss button in the "find in page" UI -->
+    <string name="accessibility_dismiss_find_in_page"></string>
+    
+    <!-- Http Authentication Popup: Title -->
+    <string name="http_auth_dialog_title"></string>
+    <!-- Http Authentication Popup: Username -->
+    <string name="http_auth_dialog_username"></string>
+    <!-- Http Authentication Popup: Password -->
+    <string name="http_auth_dialog_password"></string>
+
+    <!-- Checkbox menu item text to request desktop site -->
+    <string name="preference_performance_request_desktop_site"></string>
+
+    <!-- Displayed after a user long presses on the URL in a custom tab to copy the URL -->
+    <string name="custom_tab_copy_url_action"></string>
+
+    <!-- Description of what a user may find in the Advanced Setting category, used for debugging -->
+    <string name="preference_advanced_summary"></string>
+
+    <!-- Title of Advanced Setting category -->
+    <string name="preference_category_advanced"></string>
+
+    <!-- Preference to enable remote debugging of the app via USB or Wi-Fi -->
+    <string name="preference_remote_debugging"></string>
+
+    <!-- Title for the fingerprint authentication dialog box that is shown to the user when opening the app.
+     %1$s is replaced with the app name -->
+    <string name="biometric_auth_title"></string>
+
+    <!-- Description for the fingerprint authentication dialog box that is shown to the user when opening the app -->
+    <string name="biometric_auth_description"></string>
+
+    <!-- New session button for the fingerprint authentication dialog box that is shown to the user when opening the app.
+     When pressed, the user's previous session is cleared, and authentication is not required. -->
+    <string name="biometric_auth_new_session"></string>
+
+    <!-- Description for the fingerprint authentication image. Used for accessibility purposes. -->
+    <string name="biometric_auth_image_description"></string>
+
+    <!-- Error text displayed when the user's fingerprint cannot be recognized upon re-entering the app.
+     This is displayed during the authentication flow as the app launches. -->
+    <string name="biometric_auth_not_recognized_error"></string>
+
+    <!-- Error text displayed when the user's fingerprint moved too quickly upon re-entering the app
+    This is displayed during the authentication flow as the app launches.-->
+    <string name="biometric_auth_moved_too_quickly"></string>
+
+    <!-- Title for the prompt to enable search suggestions -->
+    <string name="enable_search_suggestion_title"></string>
+
+    <!-- Description for the prompt to enable search suggestions
+        %1$s will be replaced by the app name (e.g. Firefox Focus)
+        %2$s will be replaced with "Learn more" which will be a tappable link
+        using the string: "enable_search_suggestion_subtitle_learnmore" -->
+    <string name="enable_search_suggestion_subtitle"></string>
+
+    <!-- String to be placed inside the string: enable_search_suggestion_subtitle,
+        which will be a "Learn More" link. -->
+    <string name="enable_search_suggestion_subtitle_learnmore"></string>
+
+    <!-- Label used for the "NO button" for the prompt to enable search suggestions -->
+    <string name="enable_search_suggestions_no"></string>
+
+    <!-- Label used for the "YES button" for the prompt to enable search suggestions -->
+    <string name="enable_search_suggestions_yes"></string>
+
+    <!-- Message displayed when using a search engine that doesn't provide suggestions -->
+    <string name="no_suggestions_message"></string>
+
+    <!-- Button to dismiss the message displayed  when using a search engine that doesn't provide suggestions-->
+    <string name="dismiss_no_suggestions_prompt_button"></string>
+
+    <!-- Tips displayed on the home view -->
+
+    <!-- Tip displayed on home view explaining how to disable tracking protection
+    The new line here must be kept as the second half of the string is clickable for the user. -->
+    <string name="tip_disable_tracking_protection"></string>
+
+    <!-- Tip displayed on home view explaining how to add sites to homescreen
+    Argument 1 will be replaced with a line break in the application.-->
+    <string name="tip_add_to_homescreen"><![CDATA[]]></string>
+
+    <!-- Tip displayed on home view explaining how to make Focus the default browser
+    Argument 1 is the app name (Firefox Focus/Firefox Klar/etc).
+    The new line here must be kept as the second half of the string is clickable for the user. -->
+    <string name="tip_set_default_browser"></string>
+
+    <!-- Tip displayed on home view explaining how to add a custom autocomplete URL
+    The new line here must be kept as the second half of the string is clickable for the user. -->
+    <string name="tip_autocomplete_url"></string>
+
+    <!-- Tip displayed on home view explaining how to add a custom autocomplete URL
+    The new line here must be kept as the second half of the string is clickable for the user. -->
+    <string name="tip_open_in_new_tab"></string>
+
+    <!-- Tip displayed on home view explaining how to request the desktop version of a website.
+     Argument 1 will be replaced with a line break in the application. -->
+    <string name="tip_request_desktop"><![CDATA[]]></string>
+
+    <!-- deprecated strings -->
+    <string name="tip_disable_tips"></string>
+    <string name="preference_switch_autocomplete">Àggale mbind gu boppu</string>
+    <string name="preference_category_autocomplete_preinstalled">Limu màkkaan yim wàccaale</string>
+    <string name="preference_autocomplete_preinstalled_summary">Doxalal ngir %1$s man di la mottalil lu romb 450 màkkaani web yu siiw ci bànqaasu màkkaan bi.</string>
+    <string name="preference_category_autocomplete_custom_urls"></string>
+    <string name="preference_autocomplete_subitem_customlist">Màkkaan yees jëmmal</string>
+  </resources>

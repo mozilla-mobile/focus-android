@@ -1,178 +1,687 @@
-<?xml version='1.0' encoding='utf-8'?>
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <string name="action_cancel">Չեղարկել</string>
-  <string name="action_ok">Լավ</string>
-  <string name="action_save">Պահպանել</string>
-  <string name="urlbar_hint">Որոնեք կամ մուտքագրեք հասցեն</string>
-  <string name="teaser">Ինքնաշխատ գաղտնի դիտարկում: \nԴիտարկել: Ջնջել: Կրկնել:</string>
-  <string name="feedback_erase">Դիտարկումների պատմությունը ջնջվել է:</string>
-  <string name="search_hint">Որոնել %1$s-ի համար</string>
-  <string name="menu_share">Համօգտագործել</string>
-  <string name="menu_open_with_default_browser2">Բացել %1$s-ում</string>
-  <string name="menu_open_with_a_browser2">Բացել հետևյալում՝</string>
-  <string name="menu_add_to_home_screen">Ավելացնել Տուն էկրանին</string>
-  <string name="menu_whats_new">Ինչն է նոր</string>
-  <string name="menu_settings">Կարգավորումներ</string>
-  <string name="menu_about">Մասին</string>
-  <string name="menu_help">Օգնություն</string>
-  <string name="menu_rights">Ձեր իրավունքները</string>
-  <string name="menu_trackers_blocked_title">Արգել. հետագծումներ</string>
-  <string name="menu_custom_tab_branding">%1$s-ի կողմից</string>
-  <string name="share_dialog_title">Համօգտագործել՝</string>
-  <string name="notification_erase_text">Ջնջել դիտարկումների պատմությունը</string>
-  <string name="notification_action_open">Բացել</string>
-  <string name="notification_action_erase_and_open">Ջնջել ու Բացել</string>
-  <string name="shortcut_erase_short_label">Ջնջել</string>
-  <string name="shortcut_erase_long_label">Ջնջել դիտարկման պատմությունը</string>
-  <string name="text_selection_search_action">Գաղտնի որոնում</string>
-  <string name="about_content"><![CDATA[<p xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">%1$s-&#1384; &#1392;&#1398;&#1377;&#1408;&#1377;&#1406;&#1400;&#1408;&#1400;&#1410;&#1385;&#1397;&#1400;&#1410;&#1398; &#1383; &#1407;&#1377;&#1388;&#1387;&#1405; &#1345;&#1381;&#1382; &#1391;&#1377;&#1404;&#1377;&#1406;&#1377;&#1408;&#1381;&#1388;:</p>\n<p xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">"&#1365;&#1379;&#1407;&#1377;&#1379;&#1400;&#1408;&#1390;&#1381;&#1412; &#1377;&#1397;&#1398; &#1400;&#1408;&#1402;&#1381;&#1405; &#1379;&#1377;&#1394;&#1407;&#1398;&#1387; &#1380;&#1387;&#1407;&#1377;&#1408;&#1391;&#1387;&#1401;.\n  "<ul>"\n    "<li>&#1352;&#1408;&#1400;&#1398;&#1381;&#1412; &#1415; &#1380;&#1387;&#1407;&#1377;&#1408;&#1391;&#1381;&#1412; &#1377;&#1398;&#1396;&#1387;&#1403;&#1377;&#1402;&#1381;&#1405; &#1392;&#1377;&#1406;&#1381;&#1388;&#1406;&#1377;&#1390;&#1400;&#1410;&#1396;</li>"\n    "<li>&#1329;&#1408;&#1379;&#1381;&#1388;&#1377;&#1411;&#1377;&#1391;&#1381;&#1412; &#1392;&#1381;&#1407;&#1377;&#1379;&#1390;&#1400;&#1410;&#1396;&#1398;&#1381;&#1408;&#1384; (&#1391;&#1377;&#1396; &#1391;&#1377;&#1408;&#1379;&#1377;&#1406;&#1400;&#1408;&#1381;&#1412;&#1373; &#1385;&#1400;&#1410;&#1397;&#1388;&#1377;&#1407;&#1408;&#1381;&#1388;&#1400;&#1410; &#1380;&#1408;&#1377;&#1398;&#1412;)</li>"\n    "<li>&#1355;&#1398;&#1403;&#1381;&#1412;&#1373; cookie-&#1398;&#1381;&#1408;&#1384;, &#1400;&#1408;&#1400;&#1398;&#1400;&#1410;&#1396;&#1384; &#1415; &#1380;&#1387;&#1407;&#1377;&#1408;&#1391;&#1400;&#1410;&#1396;&#1398;&#1381;&#1408;&#1387; &#1402;&#1377;&#1407;&#1396;&#1400;&#1410;&#1385;&#1397;&#1400;&#1410;&#1398;&#1384; &#1396;&#1377;&#1412;&#1408;&#1381;&#1388;&#1400;&#1410; &#1392;&#1377;&#1396;&#1377;&#1408;</li>"\n  "</ul>\n</p>\n<p xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">%1$s-&#1384; &#1402;&#1377;&#1399;&#1407;&#1402;&#1377;&#1398;&#1406;&#1377;&#1390; &#1383; Mozilla-&#1387; &#1391;&#1400;&#1394;&#1396;&#1387;&#1409;: &#1348;&#1381;&#1408; &#1377;&#1404;&#1377;&#1412;&#1381;&#1388;&#1400;&#1410;&#1385;&#1397;&#1400;&#1410;&#1398;&#1398; &#1383; &#1398;&#1402;&#1377;&#1405;&#1407;&#1381;&#1388; &#1392;&#1377;&#1396;&#1377;&#1409;&#1377;&#1398;&#1409;&#1387; &#1377;&#1404;&#1400;&#1394;&#1403; &#1415; &#1378;&#1377;&#1409; &#1388;&#1387;&#1398;&#1381;&#1388;&#1400;&#1410;&#1398;:<br/>\n<a href="%2$s">Learn more</a></p>]]></string>
-  <string name="preference_category_search">Որոնում</string>
-  <string name="preference_search_engine_default">Լռելյայն</string>
-  <string name="preference_state_on">Միաց.</string>
-  <string name="preference_state_off">Անջ.</string>
-  <string name="preference_subitem_autocomplete">URL ինքնալրացում</string>
-  <string name="preference_switch_autocomplete">Ինքնալրացում</string>
-  <string name="preference_category_autocomplete_preinstalled">Սկզբնադիր URL ցանկ</string>
-  <string name="preference_autocomplete_preinstalled_summary">Միացրեք՝ ունենալու համար %1$s ինքնալրացում աեվլի քան 450 հանրահայտ URL-ների համար:</string>
-  <string name="preference_category_autocomplete_custom_urls">Հարմարեցված URL-ներ</string>
-  <string name="preference_autocomplete_subitem_customlist">Հարմարեցված URL-ներ</string>
-  <string name="preference_autocomplete_action_add">+ Հավելել հարմարեցված URL</string>
-  <string name="preference_autocomplete_title_add">Հավելել հարմարեցված URL</string>
-  <string name="custom_autocomplete_quick_add">Ավելացնել հարմարեցված URL</string>
-  <string name="preference_autocomplete_title_remove">ՀԵռացնել հարմարեցված URL-ները</string>
-  <string name="preference_autocomplete_learn_more">Իմանալ ավելին</string>
-  <string name="preference_autocomplete_custom_summary">Ավելացնել և կառավարել հարմարեցված ինքնալրացվող URL-ները:</string>
-  <string name="preference_autocomplete_add_title">URL՝ ավելացնելու համար</string>
-  <string name="preference_autocomplete_add_hint">Տեղադրեք կամ մուտքագրեք URL-ն</string>
-  <string name="preference_autocomplete_add_example">Օրինակ՝ example.com</string>
-  <string name="preference_autocomplete_add_confirmation">Նոր հարմարեցված URL է ավելացվել:</string>
-  <string name="preference_autocomplete_menu_remove">Հեռացնել</string>
-  <string name="preference_autocomplete_action_remove_content_description">Հեռացնել</string>
-  <string name="preference_autocomplete_add_error">Ստուգեք մուտքագրված URL-ն:</string>
-  <string name="preference_language">Լեզուն</string>
-  <string name="preference_language_systemdefault">Համակարգայինը</string>
-  <string name="preference_category_privacy">Գաղտնիություն</string>
-  <string name="preference_privacy_block_ads">Արգելափակել գովազդային հետագծումները</string>
-  <string name="preference_privacy_block_ads_summary">Որոշ գովազդներ հետևում են կայքի այցելուներին, եթե անգամ չեք սեղմում գովազդին</string>
-  <string name="preference_privacy_block_analytics">Արգելափակել վերլուծական հետագծումները</string>
-  <string name="preference_privacy_block_analytics_summary">Օգտագործվում է հավաքելու, վերլուծելու և ակտիվությունը չափելու համար, ինչպես օրինակ՝ հպումը և գլորումը:</string>
-  <string name="preference_privacy_block_social">Արգելափակել սոցիալական հետագծումները</string>
-  <string name="preference_privacy_block_social_summary">Ներկառուցված կայքերում՝ հետևելուհ ամար ձեր այցելուներին և ցուցադրելու համար գործառությունը, ինչպես օրինակ՝ կոճակների համօգտագործում</string>
-  <string name="preference_privacy_block_content">Արգելափակել այլ բովանդակության հետագծումները</string>
-  <string name="preference_privacy_block_content_summary2">Միացնելու դեպքում որոշ էջեր կարող են անսպասելի վարք ցուցադրել</string>
-  <string name="preference_privacy_category_cookies">"Արգելափակել cookie-ները "</string>
-  <string name="preference_privacy_should_block_cookies_no_option">Ոչ</string>
-  <string name="preference_privacy_should_block_cookies_third_party_only_option">Արգելափակել 3-րդ կողմի cookie-ները հիմա</string>
-  <string name="preference_privacy_should_block_cookies_yes_option">Այո</string>
-  <string name="preference_privacy_secure_mode">Թաքնված</string>
-  <string name="preference_privacy_stealth_summary">Թաքցնել վեբ էջերը հավելվածները փոխանջատելիս</string>
-  <string name="preference_category_performance">Արդյունավետություն</string>
-  <string name="preference_performance_block_webfonts">Արգելափակել վեբ տառատեսակները</string>
-  <string name="preference_performance_block_webfonts_summary">Կարող է հանգեցնել պատկերակների և պատկերների բացակայության</string>
-  <string name="preference_performance_block_javascript">Արգելափակել JavaScript-ը</string>
-  <string name="preference_performance_block_javascript_summary">Էջերը կարող են ավելի արագ բեռնվել, բայց նաև կարող են իրենց անսպասելի պահել:</string>
-  <string name="preference_default_browser2">Դարձնել %1$s-ը հիմնական դիտարկիչ</string>
-  <string name="preference_category_mozilla">Mozilla</string>
-  <string name="preference_mozilla_telemetry2">Ուղարկել օգտագործման տվյալները</string>
-  <string name="preference_mozilla_telemetry_summary">Իմանալ ավելին</string>
-  <string name="preference_mozilla_telemetry_summary2">Mozilla-ն ձգտում է հավաքել միայն այն, ինչ պետք է՝ %1$s-ը լավարկելու համար:</string>
-  <string name="preference_privacy_notice">Գաղտնիության ծանուցում</string>
-  <string name="preference_about">%1$s-ի մասին</string>
-  <string name="preference_search_installed_search_engines">Տեղադրված որոնիչներ</string>
-  <string name="preference_search_restore">Վերականգնել լռելյայն որոնիչները</string>
-  <string name="preference_search_add2">+ Ավելացնել այլ որոնիչ</string>
-  <string name="preference_search_remove_title">Հեռացնել որոնիչները</string>
-  <string name="preference_search_remove">Հեռացնել</string>
-  <string name="action_option_add_search_engine">Ավելացնել որոնիչ</string>
-  <string name="search_add_manually_name_hint">Որոնել որոնիչ</string>
-  <string name="search_add_manually_string">Որոնել տողը՝ օգտագործելու համար</string>
-  <string name="search_add_manually_save">Պահպանել</string>
-  <string name="search_add_manually_example">Օրինակ՝ example.com/search/?q=%s</string>
-  <string name="search_add_confirmation">Նոր որոնիչը ավելացվել է:</string>
-  <string name="search_add_error_empty_name">Մուտքագրեք որոնիչի անունը</string>
-  <string name="search_add_error_duplicate_name">Տեղադրված որոնիչը արդեն օգտագործում է այդ անունը:</string>
-  <string name="search_add_error_empty_search">Մուտքագրել որոնման տողը</string>
-  <string name="search_add_error_format">Ստուգեք, որոնման տողը համապատասխանում է օրինակի ձևաչափին</string>
-  <string name="content_description_clear_input">Մաքրել ներածումը</string>
-  <string name="content_description_dismiss_input">Բաց թողնել</string>
-  <string name="content_description_erase">Ջնջել դիտարկման պատմությունը</string>
-  <string name="content_description_tab_counter">Բաց ներդիրներ. %1$s</string>
-  <string name="content_description_lock">Անվտանգ կապակցում</string>
-  <string name="accessibility_announcement_loading">Բեռնում</string>
-  <string name="accessibility_announcement_loading_finished">Կայքը բեռնվել է</string>
-  <string name="content_description_menu">Լր. ընտրանքներ</string>
-  <string name="content_description_forward">Ուղղորդել առաջ</string>
-  <string name="content_description_reload">Կրկին բեռնել կայքը</string>
-  <string name="content_description_back">Ուղղորդել հետ</string>
-  <string name="content_description_stop">Կանգնեցնել էջի բեռնումը</string>
-  <string name="content_description_customtab_exit">Վերադառնալ նախորդ հավելվածին</string>
-  <string name="content_description_blocking_switch">Արգելափակել հետագծումները</string>
-  <string name="your_rights">Ձեր իրավունքները</string>
-  <string name="external_app_prompt_title">Բացել հղումը այլ հավելվածով</string>
-  <string name="external_app_prompt">Կարող եք բաց պահել %1$s-ը և բացել այս հղումը %2$s-ում:</string>
-  <string name="external_app_prompt_no_app_title">Գտեք հավելված, որը կարող է բացել հղումը</string>
-  <string name="external_app_prompt_no_app">Ձեր սարքի ոչ մի հավելված չի կարողանում բացել այս հղումը: Դուք կարող եք թողնել %1$s-ը՝ որոնելու համար %2$s-ում այն հավելվածը, որը կարող է այն բացել:</string>
-  <string name="external_multiple_apps_matched_exit">Փակե՞լ Գաղտնի դիտարկումը</string>
-  <string name="download_snackbar_finished">%1$s ավարտվել է</string>
-  <string name="download_snackbar_open">Բացել</string>
-  <string name="download_dialog_warning"><![CDATA["Ներբեռնված ֆայլերը "<b xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">&#1401;&#1381;&#1398; &#1403;&#1398;&#1403;&#1406;&#1387;</b>, երբ դուք ջնջեք %1$s-ի պատմությունը:]]></string>
-  <string name="download_dialog_title">Ներբեռնել ֆայլ</string>
-  <string name="download_dialog_action_cancel">Չեղարկել</string>
-  <string name="download_dialog_action_download">Ներբեռնել</string>
-  <string name="errorpage_title">Էջը բեռնելու խնդիր</string>
-  <string name="errorpage_refresh">Կրկին փորձել</string>
-  <string name="error_connectionfailure_title">Հնարավոր չէ կապակցվել</string>
-  <string name="error_connectionfailure_message"><![CDATA[<ul xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">"\n        "<li>&#1343;&#1377;&#1397;&#1412;&#1384; &#1386;&#1377;&#1396;&#1377;&#1398;&#1377;&#1391;&#1377;&#1406;&#1400;&#1408; &#1377;&#1398;&#1392;&#1377;&#1405;&#1377;&#1398;&#1381;&#1388;&#1387; &#1391;&#1377;&#1396; &#1382;&#1378;&#1377;&#1394;&#1406;&#1377;&#1390; &#1383;: &#1363;&#1400;&#1408;&#1393;&#1381;&#1412; &#1396;&#1387; &#1411;&#1400;&#1412;&#1408; &#1377;&#1406;&#1381;&#1388;&#1387; &#1400;&#1410;&#1399;:</li>"\n        "<li>&#1333;&#1385;&#1381; &#1401;&#1391;&#1377;&#1408;&#1400;&#1394;&#1377;&#1398;&#1377;&#1412; &#1378;&#1381;&#1404;&#1398;&#1381;&#1388; &#1400;&#1408;&#1415;&#1383; &#1383;&#1403;&#1373; &#1405;&#1407;&#1400;&#1410;&#1379;&#1381;&#1412; &#1393;&#1381;&#1408; &#1405;&#1377;&#1408;&#1412;&#1387; &#1407;&#1406;&#1397;&#1377;&#1388;&#1398;&#1381;&#1408;&#1384; &#1391;&#1377;&#1396; Wi-Fi &#1391;&#1377;&#1402;&#1377;&#1391;&#1409;&#1400;&#1410;&#1396;&#1384;:</li>"\n      "</ul>]]></string>
-  <string name="error_timeout_title">Կապակցման ժամանակը սպառված է</string>
-  <string name="error_hostLookup_title">Սպասարկիչը չի գտնվել</string>
-  <string name="error_hostLookup_message"><![CDATA[<ul xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">"\n        "<li>"&#1357;&#1407;&#1400;&#1410;&#1379;&#1381;&#1412; &#1392;&#1377;&#1405;&#1409;&#1381;&#1398; &#1396;&#1400;&#1410;&#1407;&#1412;&#1377;&#1379;&#1408;&#1396;&#1377;&#1398; &#1405;&#1389;&#1377;&#1388;&#1387; &#1392;&#1377;&#1396;&#1377;&#1408;, &#1413;&#1408;&#1387;&#1398;&#1377;&#1391;&#1373;\n          "<strong>ww</strong>".example.com\n          "<strong>www</strong>.example.com-&#1387; &#1411;&#1400;&#1389;&#1377;&#1408;&#1381;&#1398;</li>"\n        "<li>&#1333;&#1385;&#1381; &#1401;&#1387; &#1405;&#1407;&#1377;&#1409;&#1406;&#1400;&#1410;&#1396; &#1378;&#1381;&#1404;&#1398;&#1381;&#1388; &#1400;&#1408;&#1415;&#1383; &#1383;&#1403;, &#1377;&#1402;&#1377; &#1405;&#1407;&#1400;&#1410;&#1379;&#1381;&#1412; &#1405;&#1377;&#1408;&#1412;&#1387; &#1407;&#1406;&#1397;&#1377;&#1388;&#1398;&#1381;&#1408;&#1384; &#1391;&#1377;&#1396; Wi-Fi &#1391;&#1377;&#1402;&#1377;&#1391;&#1409;&#1400;&#1410;&#1396;&#1384;:</li>"\n      "</ul>]]></string>
-  <string name="error_malformedURI_title">Հասցեն վավեր չէ</string>
-  <string name="error_malformedURI_message"><![CDATA[<ul xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">"\n  "<li>"&#1358;&#1381;&#1378; &#1392;&#1377;&#1405;&#1409;&#1381;&#1398;&#1381;&#1408;&#1384; &#1405;&#1400;&#1406;&#1400;&#1408;&#1377;&#1378;&#1377;&#1408; &#1379;&#1408;&#1406;&#1400;&#1410;&#1396; &#1381;&#1398; &#1392;&#1381;&#1407;&#1415;&#1397;&#1377;&#1388; &#1391;&#1381;&#1408;&#1402;` "<strong>http://www.example.com/</strong></li>"\n  "<li>"&#1344;&#1377;&#1396;&#1400;&#1382;&#1406;&#1381;&#1412;, &#1400;&#1408; &#1413;&#1379;&#1407;&#1377;&#1379;&#1400;&#1408;&#1390;&#1400;&#1410;&#1396; &#1381;&#1412; &#1392;&#1377;&#1391;&#1377;&#1380;&#1377;&#1408;&#1393; &#1405;&#1388;&#1381;&#1399;&#1398;&#1381;&#1408; (&#1377;&#1397;&#1405;&#1387;&#1398;&#1412;&#1398;` "<strong>/</strong>):</li>\n</ul>]]></string>
-  <string name="error_redirectLoop_title">Էջը հաջողությամբ չի վերաուղղորդվել</string>
-  <string name="error_redirectLoop_message"><![CDATA[<ul xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">"\n  "<li>&#1329;&#1397;&#1405; &#1389;&#1398;&#1380;&#1387;&#1408;&#1384; &#1381;&#1408;&#1378;&#1381;&#1396;&#1398; &#1391;&#1377;&#1408;&#1400;&#1394; &#1383; &#1392;&#1377;&#1398;&#1379;&#1381;&#1409;&#1398;&#1381;&#1388; cookie-&#1398;&#1381;&#1408;&#1387; &#1377;&#1398;&#1403;&#1377;&#1407;&#1396;&#1377;&#1398;&#1384; &#1391;&#1377;&#1396; &#1396;&#1381;&#1408;&#1386;&#1396;&#1377;&#1398;&#1384;:</li>\n</ul>]]></string>
-  <string name="error_unsupportedprotocol_title">Հասցեն չի հասկացվել</string>
-  <string name="error_unsupportedprotocol_message"><![CDATA[<ul xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">"\n  "<li>&#1329;&#1397;&#1405; &#1392;&#1377;&#1405;&#1409;&#1381;&#1398; &#1378;&#1377;&#1409;&#1381;&#1388;&#1400;&#1410; &#1392;&#1377;&#1396;&#1377;&#1408;, &#1392;&#1398;&#1377;&#1408;&#1377;&#1406;&#1400;&#1408; &#1383;, &#1391;&#1377;&#1408;&#1387;&#1412; &#1391;&#1388;&#1387;&#1398;&#1387; &#1407;&#1381;&#1394;&#1377;&#1380;&#1408;&#1381;&#1388; &#1377;&#1397;&#1388; &#1390;&#1408;&#1377;&#1379;&#1387;&#1408;:</li>\n</ul>]]></string>
-  <string name="error_sslhandshake_title">Անվտանգ կապակցումը ձախողվեց</string>
-  <string name="error_sslhandshake_message"><![CDATA[<ul xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">"\n  "<li>&#1341;&#1398;&#1380;&#1387;&#1408;&#1384; &#1391;&#1377;&#1408;&#1400;&#1394; &#1383; &#1391;&#1377;&#1402;&#1406;&#1377;&#1390; &#1388;&#1387;&#1398;&#1381;&#1388; &#1405;&#1402;&#1377;&#1405;&#1377;&#1408;&#1391;&#1387;&#1401;&#1387; &#1391;&#1377;&#1382;&#1396;&#1377;&#1393;&#1415;&#1387; &#1392;&#1381;&#1407; &#1391;&#1377;&#1396;, &#1392;&#1398;&#1377;&#1408;&#1377;&#1406;&#1400;&#1408; &#1383;, &#1400;&#1408; &#1400;&#1408;&#1415;&#1383; &#1396;&#1381;&#1391;&#1384; &#1411;&#1400;&#1408;&#1393;&#1400;&#1410;&#1396; &#1383; &#1400;&#1408;&#1402;&#1381;&#1405; &#1405;&#1402;&#1377;&#1405;&#1377;&#1408;&#1391;&#1387;&#1401; &#1392;&#1377;&#1398;&#1380;&#1381;&#1405; &#1379;&#1377;&#1388;:</li>"\n  "<li>&#1333;&#1385;&#1381; &#1380;&#1400;&#1410;&#1412; &#1377;&#1397;&#1405; &#1405;&#1402;&#1377;&#1405;&#1377;&#1408;&#1391;&#1387;&#1401;&#1387;&#1398; &#1398;&#1377;&#1389;&#1391;&#1387;&#1398;&#1400;&#1410;&#1396; &#1392;&#1377;&#1403;&#1400;&#1394;&#1400;&#1410;&#1385;&#1397;&#1377;&#1396;&#1378; &#1381;&#1412; &#1391;&#1377;&#1402;&#1377;&#1391;&#1409;&#1406;&#1381;&#1388;, &#1377;&#1402;&#1377; &#1405;&#1389;&#1377;&#1388;&#1384; &#1391;&#1377;&#1408;&#1400;&#1394; &#1383; &#1386;&#1377;&#1396;&#1377;&#1398;&#1377;&#1391;&#1377;&#1406;&#1400;&#1408; &#1378;&#1398;&#1400;&#1410;&#1397;&#1385; &#1391;&#1408;&#1381;&#1388; &#1415; &#1391;&#1377;&#1408;&#1400;&#1394; &#1381;&#1412; &#1391;&#1408;&#1391;&#1387;&#1398; &#1411;&#1400;&#1408;&#1393;&#1381;&#1388; &#1377;&#1406;&#1381;&#1388;&#1387; &#1400;&#1410;&#1399;:</li>\n</ul>]]></string>
-  <string name="error_generic_title">Վա՜յ</string>
-  <string name="error_generic_message">Ինչ-որ պատճառով հնարավոր չէ բեռնել այս էջը</string>
-  <string name="contextmenu_link_share">Համօգտագործել հղումը</string>
-  <string name="contextmenu_link_copy">Պատճենել հղման հասցեն</string>
-  <string name="contextmenu_image_share">Համօգտագործել պատկերը</string>
-  <string name="contextmenu_image_copy">Պատճենել պատկերի հասցեն</string>
-  <string name="contextmenu_image_save">Պահպանել պատկերը</string>
-  <string name="contextmenu_open_in_new_tab">Բացել հղումը նոր ներդիրում</string>
-  <string name="contextmenu_image_warning"><![CDATA["Պահպանված և համօգտագործված պատկերները "<b xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">&#1401;&#1381;&#1398; &#1403;&#1398;&#1403;&#1406;&#1387;</b>, երբ դուք ջնջեք %1$s-ը]]></string>
-  <string name="firstrun_defaultbrowser_title">Հզորացրեք ձեր գաղտնիությունը</string>
-  <string name="firstrun_defaultbrowser_text2">Տարեք գաղտնի դիտարկումը հաջորդ մակարդակ: Արգելափակեք գովազդները և այլ բովանդակություն, որը կարող է հետագծել ձեզ կայքերում և արագացրեք էջի բեռնումը:</string>
-  <string name="firstrun_search_title">Ձեր որոնումը, ձեր ընտրությունը</string>
-  <string name="firstrun_search_text">Այլ բա՞ն եք փնտրում: Ընտրեք այլ որոնիչ Կարգավորումներում:</string>
-  <string name="firstrun_shortcut_title">Հավելել դյուրանցումները տուն էկրանին:</string>
-  <string name="firstrun_shortcut_text">Արագորեն վերադարձեք ձեր ընտրյալ կայքերին %1$s-ում: Պարզապես ընտեք\"Հավելել Տուն էկրանին\" %1$s ցանկից:</string>
-  <string name="firstrun_privacy_title">Գայղտնիությունը դարձրեք սովորույթ</string>
-  <string name="firstrun_privacy_text">Կայեք %1$s-ը որպես հիմնական դիտարկիչ և ստացեք գաղտնի դիտարկման բոլոր առավելությունները՝ այլ հավելվածներից վեբ էջեր բացելիս:</string>
-  <string name="firstrun_close_button">Լավ, հասկացա:</string>
-  <string name="firstrun_skip_button">Բաց թողնել</string>
-  <string name="firstrun_next_button">Հաջորդը</string>
-  <string name="content_blocking_disabled">-</string>
-  <string name="dialog_addtohomescreen_action_add">Ավելացնել</string>
-  <string name="dialog_addtohomescreen_action_cancel">Չեղարկել</string>
-  <string name="dialog_addtohomescreen_tracking_protection">Դյուրանցումը կբացվի Հետագծման պաշտպանությունը անջատած</string>
-  <string name="notification_browsing_session_channel_name">Գանղտնի դիտարկման աշխատաշրջան</string>
-  <string name="notification_browsing_session_channel_description">Ծանուցումները հնարավորություն են տալիս ջնջել ձեր %1$s աշխատարջանը մեկ հպումով: Կարիք չկա բացել հավելվածը կամ տեսնել, թե ինչ է աշխատեցվում դիտարկիչում:</string>
-  <string name="tabs_tray_action_erase">Ջնջել դիտարկման պատմությունը</string>
-  <string name="download_firefox">Ներբեռնել Firefox-ը</string>
-  <string name="your_rights_content1">%1$s-ը անվճար և բաց կոդով ծրագիր է Mozilla-ի և այլ մասնակիցների կողմից:</string>
-  <string name="your_rights_content2"><![CDATA["%1$s-ը հասանելի է "<a xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2" href="%2$s">Mozilla Public License</a>-ի պայմաններով և բաց կոդով այլ ծրագրերի արտոնագրերի համաձայն:]]></string>
-  <string name="your_rights_content3"><![CDATA["Դուք արտոնություն չունեք Mozilla Foundation-ի կողմից որևէ իրավունքի կամ արտոնագրի, ներառյալ՝ Mozilla, Firefox կամ %1$s անունների կամ պատկերանշանների: Լրացուցիչ տեղեկություններ կարող եք գտնել "<a xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2" href="%2$s">&#1377;&#1397;&#1405;&#1407;&#1381;&#1394;</a>:]]></string>
-  <string name="your_rights_content4"><![CDATA["Լրացուցիչ աղբյուր կոդը %1$s-ի համար մատչելի է այլ անվճար և բաց աղբյուրով "<a xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2" href="%2$s">&#1377;&#1408;&#1407;&#1400;&#1398;&#1377;&#1379;&#1408;&#1381;&#1408;&#1400;&#1406;</a>:]]></string>
-  <string name="your_rights_content5"><![CDATA["%1$s-ը նաև օգտագործում է արգելացուցակ՝ տրամադրված Disconnect-ի կողմից և անկախ աշխատանքներ "<a xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2" href="%2$s">General Public License v3</a>"-ի ներքո և մատչելի է "<a xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2" href="%3$s">&#1377;&#1397;&#1405;&#1407;&#1381;&#1394;</a>:]]></string>
-  <string name="gv_prompt_username_hint">Օգտվողի անուն</string>
-  <string name="gv_prompt_password_hint">Գաղտնաբառ</string>
-  <string name="gv_prompt_clear">Մաքրել</string>
-  <string name="security_popup_secure_connection">Անվտանգ կապակցում</string>
-  <string name="security_popup_insecure_connection">Ոչ անվտանգ կապակցում</string>
-  <string name="security_popup_security_verified">Ստուգված է՝ %1$s</string>
-  <string name="site_security_icon_content_description">Կայքի անվտանգությունը</string>
-  <string name="preference_autocomplete_duplicate_url_error">URL-ն արդեն գոյություն ունի</string>
-</resources>
+    <!-- ####################################################################################### -->
+    <!-- ## Put only strings into this file that should be translated. Move all other strings ## -->
+    <!-- ## into a separate file like strings_references.xml                                  ## -->
+    <!-- ####################################################################################### -->
+
+    <!-- Label used for buttons, e.g. in dialogs -->
+    <string name="action_cancel">Չեղարկել</string>
+    <!-- Label used for buttons, e.g. in dialogs -->
+    <string name="action_ok">Լավ</string>
+
+    <string name="action_save">Պահպանել</string>
+
+    <!-- This text is shown in the URL bar when it's empty -->
+    <string name="urlbar_hint">Որոնեք կամ մուտքագրեք հասցեն</string>
+
+    <string name="teaser">Ինքնաշխատ գաղտնի դիտարկում: 
+Դիտարկել: Ջնջել: Կրկնել:</string>
+
+    <!-- "Snackbar" shown after the user has pressed the 'erase' button at the end of a browsing session -->
+    <string name="feedback_erase">Դիտարկումների պատմությունը ջնջվել է:</string>
+
+    <!-- This label is shown below the URL bar as soon as the user enters text. Clicking the label will perform a search -->
+    <string name="search_hint">Որոնել %1$s-ի համար</string>
+
+    <!-- Menu item: Share the currently visible page -->
+    <string name="menu_share">Համօգտագործել</string>
+
+    <!-- Menu item: Report an issue on the current site -->
+    <string name="menu_report_site_issue"></string>
+
+    <!-- Menu item: Switch to another browser to open the currently visible page. %1$s will be
+      replaced with the name of the browser like: "Open in Firefox" or "Open in Chrome". Some
+      links can be opened by native apps that aren't a browser, e.g. "Open in YouTube" -->
+    <string name="menu_open_with_default_browser2">Բացել %1$s-ում</string>
+
+    <!-- Menu item: Switch to another browser to open the currently visible page. This menu item
+      will be shown if there are multiple browsers and we do not know which one is the default
+      browser or in case Focus is actually the default browser. Clicking this menu item will show
+      a screen with multiple browsers (or other apps that can open the current URL) to choose from. -->
+    <string name="menu_open_with_a_browser2">Բացել հետևյալում՝</string>
+
+    <!-- Menu item: Add the current page as a shortcut to the device's home screen (launcher). -->
+    <string name="menu_add_to_home_screen">Ավելացնել Տուն էկրանին</string>
+
+    <!-- Menu item: Shows information about features and changes that are new to this version -->
+    <string name="menu_whats_new">Ինչն է նոր</string>
+    <string name="menu_settings">Կարգավորումներ</string>
+    <string name="menu_about">Մասին</string>
+    <string name="menu_help">Օգնություն</string>
+    <string name="menu_rights">Ձեր իրավունքները</string>
+
+    <!-- Menu item: This is the label for a menu entry that shows how many trackers have been blocked
+         for the currently loaded website. The number of blocked trackers is shown below this label.
+         Next to this label is a switch that allows the user to temporarily enable / disable the
+         blocking of trackers for the current browsing session - for example if the current website
+         doesn't work correctly with blocked content. -->
+    <string name="menu_trackers_blocked_title">Արգել. հետագծումներ</string>
+
+    <!-- This is a small text at the bottom of the menu shown in a "custom tab" for branding purposes.
+     See https://github.com/mozilla-mobile/focus-android/issues/2106
+      %1$s will be replaced by the app name (e.g. Firefox Focus) -->
+    <string name="menu_custom_tab_branding">%1$s-ի կողմից</string>
+
+    <!-- This is the title of a dialog that shows all the share targets (apps or contacts) when
+         sharing an URL. -->
+    <string name="share_dialog_title">Համօգտագործել՝</string>
+
+    <!-- While a browsing session is active (in the foreground or background) we will show a notification
+         so that the user doesn't forget about the website still being open. This text is shown in
+         the notification. Clicking the notification will have the same effect as clicking the "erase"
+         button in the application. -->
+    <string name="notification_erase_text">Ջնջել դիտարկումների պատմությունը</string>
+
+    <!-- Notification action to open Focus and resume the current browsing session. -->
+    <string name="notification_action_open">Բացել</string>
+
+    <!-- Notification action to erase the current browsing session AND switch to Focus (bring it
+         to the foreground) -->
+    <string name="notification_action_erase_and_open">Ջնջել ու Բացել</string>
+
+    <!-- On Android 7+ users can add a shortcut for erasing the browsing history to the home screen.
+         This is the label for this shortcut. Android recommends a maximum length of 10 characters. -->
+    <string name="shortcut_erase_short_label">Ջնջել</string>
+
+    <!-- The same as 'shortcut_erase_short_label' but more descriptive. The launcher shows this
+         instead of the short title when it has enough space. Android recommends a maximum length
+         of 25 characters. -->
+    <string name="shortcut_erase_long_label">Ջնջել դիտարկման պատմությունը</string>
+
+    <!-- This is the label of an action we offer when the user selects text in other third-party apps.
+         Clicking this action will launch Focus and perform a search in the default search engine. -->
+    <string name="text_selection_search_action">Գաղտնի որոնում</string>
+
+    <!-- Content of about focus. Argument 1 is the app name (Firefox Focus/Firefox Klar/etc).
+         Argument 2 is the url for the learn-more link. -->
+    <string name="about_content"><![CDATA[<p>%1$s-ը հնարավորություն է տալիս Ձեզ կառավարել:</p>
+<p>Օգտագործեք այն որպես գաղտնի դիտարկիչ.
+  <ul>
+    <li>Որոնեք և դիտարկեք անմիջապես հավելվածում</li>
+    <li>Արգելափակեք հետագծումները (կամ կարգավորեք՝ թույլատրելու դրանք)</li>
+    <li>Ջնջեք՝ cookie-ները, որոնումը և դիտարկումների պատմությունը մաքրելու համար</li>
+  </ul>
+</p>
+<p>%1$s-ը պաշտպանված է Mozilla-ի կողմից: Մեր առաքելությունն է նպաստել համացանցի առողջ և բաց լինելուն:<br/>
+<a href="%2$s">Learn more</a></p>]]></string>
+
+    <!-- Header for the Privacy and Security settings menu -->
+    <string name="preference_privacy_and_security_header"></string>
+
+    <!-- Preference summary for settings related to privacy and security -->
+    <string name="preference_privacy_and_security_summary"></string>
+
+    <!-- Preference category description for settings related to search, set default
+    and autocomplete are settings a user can find and change inside the "search" settings screen -->
+    <string name="preference_search_summary"></string>
+
+    <!-- Preference category description for settings screen for settings related to Mozilla -->
+    <!-- About the app and help are links that are inside this menu -->
+    <!-- %1$s will be replaced by the app name (e.g. Firefox Focus) -->
+    <string name="preference_mozilla_summary"></string>
+
+    <!-- Preference category for ad blocking and tracking protection settings -->
+    <string name="preference_category_tracking_protection"></string>
+
+    <!-- Preference category for settings related to controlling web content -->
+    <string name="preference_category_web_content"></string>
+
+    <!-- Preference category: stealth settings for while switching apps -->
+    <string name="preference_category_switching_apps"></string>
+
+    <!-- Preference category for General Settings -->
+    <string name="preference_category_general"></string>
+
+    <!-- Preference category for settings about sending usage data -->
+    <string name="preference_category_data_collection_use"></string>
+
+    <string name="preference_category_search">Որոնում</string>
+
+    <!-- Title of "switch" preference that enables/disables search suggestions -->
+    <string name="preference_show_search_suggestions"></string>
+    <!-- Description of the preference that enables/disables search suggestions
+        %1$s will be replaced by the app name (e.g. Firefox Focus) -->
+    <string name="preference_show_search_suggestions_summary"></string>
+
+    <!-- This label is shown below the name of the default search engine in settings -->
+    <string name="preference_search_engine_default">Լռելյայն</string>
+
+    <!-- Text that is shown below a "switch" preference that is enabled. -->
+    <string name="preference_state_on">Միաց.</string>
+
+    <!-- Text that is shown below a "switch" preference that is disabled. -->
+    <string name="preference_state_off">Անջ.</string>
+
+    <!-- Item in settings that will open a new preference screen for configuring the URL autocomplete behavior. -->
+    <string name="preference_subitem_autocomplete">URL ինքնալրացում</string>
+
+    <!-- Action at the bottom of the list of custom autocomplete URLs that will open a new screen to add a new URL to the list. -->
+    <string name="preference_autocomplete_action_add">+ Հավելել հարմարեցված URL</string>
+
+    <!-- Title of the screen for adding custom autocomplete URLs. -->
+    <string name="preference_autocomplete_title_add">Հավելել հարմարեցված URL</string>
+
+    <!-- Label for the button to quick add custom autocomplete URLs. -->
+    <string name="custom_autocomplete_quick_add">Ավելացնել հարմարեցված URL</string>
+
+    <!-- Preference category for settings about cookies and site data -->
+    <string name="preference_category_cookies"></string>
+
+    <!-- Preference category for settings about data choices -->
+    <string name="preference_category_data_choices"></string>
+
+    <!-- Title of the screen for removing custom autocomplete URLs. -->
+    <string name="preference_autocomplete_title_remove">ՀԵռացնել հարմարեցված URL-ները</string>
+
+    <!-- A link to SUMO at autocomplete settings. -->
+    <string name="preference_autocomplete_learn_more">Իմանալ ավելին</string>
+
+    <!-- Preference summary: Custom (user-defined) autocomplete URLs. -->
+    <string name="preference_autocomplete_custom_summary">Ավելացնել և կառավարել հարմարեցված ինքնալրացվող URL-ները:</string>
+
+    <!-- Label for the "custom autocomplete URL" input field -->
+    <string name="preference_autocomplete_add_title">URL՝ ավելացնելու համար</string>
+
+    <!-- "Hint" text for the "custom autocomplete URL" input field. Shown when the field is empty. -->
+    <string name="preference_autocomplete_add_hint">Տեղադրեք կամ մուտքագրեք URL-ն</string>
+
+    <!-- Example how a custom domain autocomplete URL be added (e.g. without http://) -->
+    <string name="preference_autocomplete_add_example2"></string>
+
+    <!-- To be removed once the new hint has been translated -->
+    <string name="preference_autocomplete_add_example">Օրինակ՝ example.com</string>
+
+    <!-- Confirmation "snackbar" shown after a new custom autocomplete URL has been added. -->
+    <string name="preference_autocomplete_add_confirmation">Նոր հարմարեցված URL է ավելացվել:</string>
+
+    <!-- Menu item to remove existing autocomplete URLs. -->
+    <string name="preference_autocomplete_menu_remove">Հեռացնել</string>
+
+    <!-- Content description (not visible, for screen readers etc.): Button that will delete all selected custom autocomplete URLs. -->
+    <string name="preference_autocomplete_action_remove_content_description">Հեռացնել</string>
+
+    <!-- Error message shown if the entered custom autocomplete URL is not valid or empty. -->
+    <string name="preference_autocomplete_add_error">Ստուգեք մուտքագրված URL-ն:</string>
+
+    <string name="preference_language">Լեզուն</string>
+    <!-- This is shown when the user hasn't set a focus specific language, i.e. when Focus
+         is using the system default language. -->
+    <string name="preference_language_systemdefault">Համակարգայինը</string>
+
+    <string name="preference_category_privacy">Գաղտնիություն</string>
+    <string name="preference_privacy_block_ads">Արգելափակել գովազդային հետագծումները</string>
+    <string name="preference_privacy_block_ads_summary">Որոշ գովազդներ հետևում են կայքի այցելուներին, եթե անգամ չեք սեղմում գովազդին</string>
+    <string name="preference_privacy_block_analytics">Արգելափակել վերլուծական հետագծումները</string>
+    <string name="preference_privacy_block_analytics_summary">Օգտագործվում է հավաքելու, վերլուծելու և ակտիվությունը չափելու համար, ինչպես օրինակ՝ հպումը և գլորումը:</string>
+    <string name="preference_privacy_block_social">Արգելափակել սոցիալական հետագծումները</string>
+    <string name="preference_privacy_block_social_summary">Ներկառուցված կայքերում՝ հետևելուհ ամար ձեր այցելուներին և ցուցադրելու համար գործառությունը, ինչպես օրինակ՝ կոճակների համօգտագործում</string>
+    <string name="preference_privacy_block_content">Արգելափակել այլ բովանդակության հետագծումները</string>
+    <string name="preference_privacy_block_content_summary2">Միացնելու դեպքում որոշ էջեր կարող են անսպասելի վարք ցուցադրել</string>
+    <string name="preference_privacy_category_cookies">Արգելափակել cookie-ները </string>
+
+    <!-- Three options for Cookie blocking. Yes (All cookies Blocked), Block 3rd-party cookies
+    only (Only 3rd-party Cookies Blocked), No (No cookies blocked) -->
+    <string name="preference_privacy_should_block_cookies_no_option">Ոչ</string>
+    <string name="preference_privacy_should_block_cookies_third_party_only_option">Արգելափակել 3-րդ կողմի cookie-ները հիմա</string>
+    <string name="preference_privacy_should_block_cookies_yes_option">Այո</string>
+
+    <!-- Preference Title: Biometrics can be used to unlock Focus if the previous session's data was not erased by the user. -->
+    <string name="preference_security_biometric"></string>
+    <!-- Preference Summary: Biometrics (iris scan, fingerprint, or facial scan) can be used to unlock Focus if the app had a URL
+        open when the app was last run to ensure that only the phone's owner can view a previous session.
+        %1$s will be replaced by the app name (e.g. Firefox Focus) -->
+    <string name="preference_security_biometric_summary"></string>
+
+    <!-- Preference Title: Secure Mode is a setting that prevents the app's content to show up in the "recent apps" screen
+         and prevents the user from taking screenshots or casting the app to other displays. -->
+    <string name="preference_privacy_secure_mode">Թաքնված</string>
+    <!-- Preference Summary: Stealth mode (previously "Secure mode") is a setting that prevents the
+     app's content (in our case especially the content of webpages) to show up in the "recent apps"
+     screen. Additionally Android will prevent the user from taking screenshots or casting the app
+     to other displays. -->
+    <string name="preference_privacy_stealth_summary">Թաքցնել վեբ էջերը հավելվածները փոխանջատելիս</string>
+
+    <string name="preference_category_security"></string>
+
+    <string name="preference_category_performance">Արդյունավետություն</string>
+    <string name="preference_performance_block_webfonts">Արգելափակել վեբ տառատեսակները</string>
+    <!-- This text is shown below the setting for disabling web fonts. Some websites use icons/images from a font and those do not show up if fonts are blocked.-->
+    <string name="preference_performance_block_webfonts_summary">Կարող է հանգեցնել պատկերակների և պատկերների բացակայության</string>
+
+    <string name="preference_performance_block_javascript">Արգելափակել JavaScript-ը</string>
+    <!-- This text is shown below setting for disabling JavaScript. Some websites may not work correctly when JavaScript is disabled -->
+    <string name="preference_performance_block_javascript_summary">Էջերը կարող են ավելի արագ բեռնվել, բայց նաև կարող են իրենց անսպասելի պահել:</string>
+
+    <!-- This preference does not set Focus as the default browser but instead links to Android's
+     "default apps" settings screen or if not supported by this Android version to a SUMO page describing
+     how to set Focus as a default browser.
+      %1$s will be replaced by the app name (e.g. Firefox Focus) -->
+    <string name="preference_default_browser2">Դարձնել %1$s-ը հիմնական դիտարկիչ</string>
+
+    <string name="preference_category_mozilla">Mozilla</string>
+    <string name="preference_mozilla_telemetry2">Ուղարկել օգտագործման տվյալները</string>
+
+    <!-- A link to SUMO at the end of the summary (preference_mozilla_telemetry_summary2) of the "Send anonymous usage data" setting. -->
+    <string name="preference_mozilla_telemetry_summary">Իմանալ ավելին</string>
+
+    <!-- %1$s will be replaced with the name of the app (e.g. Firefox Focus) -->
+    <string name="preference_mozilla_telemetry_summary2">Mozilla-ն ձգտում է հավաքել միայն այն, ինչ պետք է՝ %1$s-ը լավարկելու համար:</string>
+
+    <!-- In-app link (in settings) to Focus privacy notice. -->
+    <string name="preference_privacy_notice">Գաղտնիության ծանուցում</string>
+
+    <!-- Item in Preferences that shows the about page. Parameter 1 is the app name, i.e. Firefox Focus/Firefox Klar. -->
+    <string name="preference_about">%1$s-ի մասին</string>
+
+    <!-- Header for the list of installed search engines -->
+    <string name="preference_search_installed_search_engines">Տեղադրված որոնիչներ</string>
+
+    <!-- Action for restoring the default list of search engines -->
+    <string name="preference_search_restore">Վերականգնել լռելյայն որոնիչները</string>
+
+    <!-- Action for adding an additional search engine to the list.
+    The "+" is used to emphasize that this is an "add" action -->
+    <string name="preference_search_add2">+ Ավելացնել այլ որոնիչ</string>
+    <string name="preference_search_remove_title">Հեռացնել որոնիչները</string>
+    <string name="preference_search_remove">Հեռացնել</string>
+
+    <!-- Title: Homescreen tips settings toggle to determine whether or not tips are displayed when
+     a user first launches the app. -->
+    <string name="preference_homescreen_tips"></string>
+
+    <!-- Clickable action text that shows when user long-presses on a search engine search field (this is similar to paste or copy when long-pressing a text field) -->
+    <string name="action_option_add_search_engine">Ավելացնել որոնիչ</string>
+
+    <string name="search_add_manually_name_hint">Որոնել որոնիչ</string>
+    <string name="search_add_manually_string">Որոնել տողը՝ օգտագործելու համար</string>
+    <string name="search_add_manually_save">Պահպանել</string>
+
+    <!-- Example of search engine url -->
+    <string name="search_add_manually_example">Օրինակ՝ example.com/search/?q=%s</string>
+
+    <string name="search_add_confirmation">Նոր որոնիչը ավելացվել է:</string>
+
+    <string name="search_add_error_empty_name">Մուտքագրեք որոնիչի անունը</string>
+    <string name="search_add_error_duplicate_name">Տեղադրված որոնիչը արդեն օգտագործում է այդ անունը:</string>
+
+    <string name="search_add_error_empty_search">Մուտքագրել որոնման տողը</string>
+
+    <string name="search_add_error_format">Ստուգեք, որոնման տողը համապատասխանում է օրինակի ձևաչափին</string>
+
+    <!-- Content description (not visible, for screen readers etc.): Clear text in URL bar -->
+    <string name="content_description_clear_input">Մաքրել ներածումը</string>
+
+    <!-- Content description (not visible, for screen readers etc.): Clicking on the website overlay
+     while in typing mode will dismiss and go back to the browser. This text will be read when the
+     overlay if focused. See https://github.com/mozilla-mobile/focus-android/issues/50 -->
+    <string name="content_description_dismiss_input">Բաց թողնել</string>
+
+    <!-- Content description (not visible, for screen readers etc.): Erase button: Erase the browsing
+     history and go back to the home screen. -->
+    <string name="content_description_erase">Ջնջել դիտարկման պատմությունը</string>
+
+    <!-- If the user has multiple tabs open we will show an addition "floating action button" showing how many tabs are open.
+     This string is not displayed and read only by screenreaders. %1$s will be replaced with the number of open tabs. This
+      button will only be visible when there is more than one tab open (>= 2). -->
+    <string name="content_description_tab_counter">Բաց ներդիրներ. %1$s</string>
+
+    <!-- Content description (not visible, for screen readers etc.): Lock icon showed in the URL bar for
+     https pages.. -->
+    <string name="content_description_lock">Անվտանգ կապակցում</string>
+
+    <!-- This text is not visible. Instead it will be read by the accessibility service once we start
+     loading a website -->
+    <string name="accessibility_announcement_loading">Բեռնում</string>
+
+    <!-- This text is not visible. Instead it will be read by the accessibility service once we
+     finished loading a website -->
+    <string name="accessibility_announcement_loading_finished">Կայքը բեռնվել է</string>
+
+    <!-- Content description (not visible, for screen readers etc.): "Three dot" menu button. -->
+    <string name="content_description_menu">Լր. ընտրանքներ</string>
+
+    <!-- Content description (not visible, for screen readers etc.): Navigate forward (browsing history) -->
+    <string name="content_description_forward">Ուղղորդել առաջ</string>
+
+    <!-- Content description (not visible, for screen readers etc.): Reload current website -->
+    <string name="content_description_reload">Կրկին բեռնել կայքը</string>
+
+    <!-- Content description (not visible, for screen readers etc.): Navigate back (browsing history) -->
+    <string name="content_description_back">Ուղղորդել հետ</string>
+
+    <!-- Content description (not visible, for screen readers etc.): Stop loading the current website. This button will turn into the refresh button once loading has been completed (see content_description_reload) -->
+    <string name="content_description_stop">Կանգնեցնել էջի բեռնումը</string>
+
+    <!-- Content description (not visible, for screen readers etc.): Custom Tab exit button - closes the custom tab and returns to the previous app. -->
+    <string name="content_description_customtab_exit">Վերադառնալ նախորդ հավելվածին</string>
+
+    <!-- Content description (not visible, for screen readers etc.): This is the description for the ImageView in the menu that displays
+         the number of trackers blocked for the current session -->
+    <string name="content_description_trackers_blocked"></string>
+
+    <!-- Content description (not visible, for screen readers etc.): This is the description for the switch in the menu that temporarily disables/enables
+         content blocking for the current session -->
+    <string name="content_description_blocking_switch">Արգելափակել հետագծումները</string>
+
+    <string name="your_rights">Ձեր իրավունքները</string>
+
+    <string name="external_app_prompt_title">Բացել հղումը այլ հավելվածով</string>
+    <!-- This string is shown when the user has clicked a link that needs to be opened in a different app.
+         Argument 2 is the external app name, argument 1 is our name (i.e. Firefox Focus, or Firefox Klar). -->
+    <string name="external_app_prompt">Կարող եք բաց պահել %1$s-ը և բացել այս հղումը %2$s-ում:</string>
+    <!-- This text is the title of a dialog shown if no app could be found for a custom link protocol. -->
+    <string name="external_app_prompt_no_app_title">Գտեք հավելված, որը կարող է բացել հղումը</string>
+    <!-- This text is shown in a dialog if no app could be found for a custom link protocol. %1$s is the name of the app (i.e. Firefox Focus) and %2$s is the name of
+         the app store installed on the device (usually that's Google Play). -->
+    <string name="external_app_prompt_no_app">Ձեր սարքի ոչ մի հավելված չի կարողանում բացել այս հղումը: Դուք կարող եք թողնել %1$s-ը՝ որոնելու համար %2$s-ում այն հավելվածը, որը կարող է այն բացել:</string>
+    <!-- This label is shown above a list of apps that can be used to open a given link -->
+    <string name="external_multiple_apps_matched_exit">Փակե՞լ Գաղտնի դիտարկումը</string>
+
+    <!-- Snackbar that will be displayed after a download has completed. %1$s will be replaced with the file name. -->
+    <string name="download_snackbar_finished">%1$s ավարտվել է</string>
+
+    <!-- Snackbar action to immediately open the successfully downloaded file. -->
+    <string name="download_snackbar_open">Բացել</string>
+
+    <!-- Download dialog: Warns users that downloaded files will not be deleted even when erasing history. %1$s will be replaced with the app name (i.e. Firefox Focus). -->
+    <string name="download_dialog_warning"><![CDATA[Ներբեռնված ֆայլերը <b>չեն ջնջվի</b>, երբ դուք ջնջեք %1$s-ի պատմությունը:]]></string>
+
+    <!-- Title of download dialogue -->
+    <string name="download_dialog_title">Ներբեռնել ֆայլ</string>
+
+    <!-- Option in download dialogue to cancel a download -->
+    <string name="download_dialog_action_cancel">Չեղարկել</string>
+
+    <!-- Option in download dialogue to start a download -->
+     <string name="download_dialog_action_download">Ներբեռնել</string>
+
+    <!-- The page html title (i.e. the <title> tag content) -->
+    <string name="errorpage_title">Էջը բեռնելու խնդիր</string>
+    <string name="errorpage_refresh">Կրկին փորձել</string>
+
+    <string name="error_connectionfailure_title">Հնարավոր չէ կապակցվել</string>
+    <string name="error_connectionfailure_message">
+    <![CDATA[<ul>
+        <li>Կայքը ժամանակավոր անհասանելի կամ զբաղված է: Փորձեք մի փոքր ավելի ուշ:</li>
+        <li>Եթե չկարողանաք բեռնել որևէ էջ՝ ստուգեք ձեր սարքի տվյալները կամ Wi-Fi կապակցումը:</li>
+      </ul>]]>
+    </string>
+
+    <string name="error_timeout_title">Կապակցման ժամանակը սպառված է</string>
+
+    <string name="error_hostLookup_title">Սպասարկիչը չի գտնվել</string>
+    <string name="error_hostLookup_message"><![CDATA[<ul>
+        <li>Ստուգեք հասցեն մուտքագրման սխալի համար, օրինակ՝
+          <strong>ww</strong>.example.com
+          <strong>www</strong>.example.com-ի փոխարեն</li>
+        <li>Եթե չի ստացվում բեռնել որևէ էջ, ապա ստուգեք սարքի տվյալները կամ Wi-Fi կապակցումը:</li>
+      </ul>]]></string>
+
+
+    <string name="error_malformedURI_title">Հասցեն վավեր չէ</string>
+    <string name="error_malformedURI_message"><![CDATA[<ul>
+  <li>Վեբ հասցեները սովորաբար գրվում են հետևյալ կերպ` <strong>http://www.example.com/</strong></li>
+  <li>Համոզվեք, որ օգտագործում եք հակադարձ սլեշներ (այսինքն` <strong>/</strong>):</li>
+</ul>]]></string>
+
+    <string name="error_redirectLoop_title">Էջը հաջողությամբ չի վերաուղղորդվել</string>
+    <string name="error_redirectLoop_message"><![CDATA[<ul>
+  <li>Այս խնդիրը երբեմն կարող է հանգեցնել cookie-ների անջատմանը կամ մերժմանը:</li>
+</ul>]]></string>
+
+    <string name="error_unsupportedprotocol_title">Հասցեն չի հասկացվել</string>
+    <string name="error_unsupportedprotocol_message"><![CDATA[<ul>
+  <li>Այս հասցեն բացելու համար, հնարավոր է, կարիք կլինի տեղադրել այլ ծրագիր:</li>
+</ul>]]></string>
+
+    <string name="error_sslhandshake_title">Անվտանգ կապակցումը ձախողվեց</string>
+    <string name="error_sslhandshake_message"><![CDATA[<ul>
+  <li>Խնդիրը կարող է կապված լինել սպասարկիչի կազմաձևի հետ կամ, հնարավոր է, որ որևէ մեկը փորձում է որպես սպասարկիչ հանդես գալ:</li>
+  <li>Եթե դուք այս սպասարկիչին նախկինում հաջողությամբ եք կապակցվել, ապա սխալը կարող է ժամանակավոր բնույթ կրել և կարող եք կրկին փորձել ավելի ուշ:</li>
+</ul>]]></string>
+
+    <string name="error_generic_title">Վա՜յ</string>
+    <string name="error_generic_message">Ինչ-որ պատճառով հնարավոր չէ բեռնել այս էջը</string>
+
+    <!-- Label used in the contextmenu shown when long-pressing on a link -->
+    <string name="contextmenu_link_share">Համօգտագործել հղումը</string>
+    <!-- Label used in the contextmenu shown when long-pressing on a link -->
+    <string name="contextmenu_link_copy">Պատճենել հղման հասցեն</string>
+    <!-- Label used in the contextmenu shown when long-pressing on an image -->
+    <string name="contextmenu_image_share">Համօգտագործել պատկերը</string>
+    <!-- Label used in the contextmenu shown when long-pressing on an image -->
+    <string name="contextmenu_image_copy">Պատճենել պատկերի հասցեն</string>
+    <!-- Label used in the contextmenu shown when long-pressing on an image -->
+    <string name="contextmenu_image_save">Պահպանել պատկերը</string>
+    <!-- Label used in the contextmenu shown when long-pressing on a link -->
+    <string name="contextmenu_open_in_new_tab">Բացել հղումը նոր ներդիրում</string>
+
+    <!-- This is a warning shown in the browser's context menu (when long pressing an image). %1$s will be replaced with the long name of the app (e.g. Firefox Focus). -->
+    <string name="contextmenu_image_warning"><![CDATA[Պահպանված և համօգտագործված պատկերները <b>չեն ջնջվի</b>, երբ դուք ջնջեք %1$s-ը]]></string>
+
+    <!-- First run tour (Default browser): Title -->
+    <string name="firstrun_defaultbrowser_title">Հզորացրեք ձեր գաղտնիությունը</string>
+    <!-- First run tour (Default browser): Text. -->
+    <string name="firstrun_defaultbrowser_text2">Տարեք գաղտնի դիտարկումը հաջորդ մակարդակ: Արգելափակեք գովազդները և այլ բովանդակություն, որը կարող է հետագծել ձեզ կայքերում և արագացրեք էջի բեռնումը:</string>
+
+    <!-- First run tour (Search): Title -->
+    <string name="firstrun_search_title">Ձեր որոնումը, ձեր ընտրությունը</string>
+    <!-- First run tour (Search): Text -->
+    <string name="firstrun_search_text">Այլ բա՞ն եք փնտրում: Ընտրեք այլ որոնիչ Կարգավորումներում:</string>
+
+    <!-- First run tour (Shortcut): Title -->
+    <string name="firstrun_shortcut_title">Հավելել դյուրանցումները տուն էկրանին:</string>
+    <!-- First run tour (Shortcut): Text. %1$s will be replaced with the name of the app (e.g. Firefox Focus) -->
+    <string name="firstrun_shortcut_text">Արագորեն վերադարձեք ձեր ընտրյալ կայքերին %1$s-ում: Պարզապես ընտեք&quot;Հավելել Տուն էկրանին&quot; %1$s ցանկից:</string>
+
+    <!-- First run tour (Privacy): Title -->
+    <string name="firstrun_privacy_title">Գայղտնիությունը դարձրեք սովորույթ</string>
+    <!-- First run tour (Privacy): Text. %1$s will be replaced with the name of the app (e.g. Firefox Focus) -->
+    <string name="firstrun_privacy_text">Կայեք %1$s-ը որպես հիմնական դիտարկիչ և ստացեք գաղտնի դիտարկման բոլոր առավելությունները՝ այլ հավելվածներից վեբ էջեր բացելիս:</string>
+
+    <string name="firstrun_close_button">Լավ, հասկացա:</string>
+    <string name="firstrun_skip_button">Բաց թողնել</string>
+    <string name="firstrun_next_button">Հաջորդը</string>
+
+    <!-- Indicator that no trackers are being blocked because content blocking is disabled; normally shows the number of blocked trackers -->
+    <string name="content_blocking_disabled">-</string>
+
+    <!-- Label of the action that will add the current website to the home screen (shown in the confirmation dialog). -->
+    <string name="dialog_addtohomescreen_action_add">Ավելացնել</string>
+
+    <!-- Label of the action that will close the dialog and not add anything to the home screen (shown in the confirmation dialog). -->
+    <string name="dialog_addtohomescreen_action_cancel">Չեղարկել</string>
+
+    <!-- When tracking protection is disabled for the current session then we will show this warning in the "Add to home screen" dialog to
+         let the user know that the shortcut will always be opened with tracking protection disabled. -->
+    <string name="dialog_addtohomescreen_tracking_protection">Դյուրանցումը կբացվի Հետագծման պաշտպանությունը անջատած</string>
+
+    <!-- The user visible name of the "notification channel" (Android 8+ feature) for the ongoing notification shown while a browsing session is active.
+    The recommended maximum length is 40 characters; the value may be truncated if it is too long.
+
+    * To understand what notification channels are, see: https://www.androidcentral.com/notification-channels
+    * To see how this string will look like in Android's UI, see: https://github.com/mozilla-mobile/focus-android/issues/863#issuecomment-324105723
+    -->
+    <string name="notification_browsing_session_channel_name">Գանղտնի դիտարկման աշխատաշրջան</string>
+
+    <!-- The user visible description of the "notification channel" (Android 8+ feature) for the ongoing notification shown while a browsing session is active.
+    The recommended maximum length is 300 characters; the value may be truncated if it is too long. %1$s will be replaced with the name of the app (e.g. Firefox Focus).
+
+    * To understand what notification channels are, see: https://www.androidcentral.com/notification-channels
+    * To see how this string will look like in Android's UI, see: https://github.com/mozilla-mobile/focus-android/issues/863#issuecomment-324105723
+    -->
+    <string name="notification_browsing_session_channel_description">Ծանուցումները հնարավորություն են տալիս ջնջել ձեր %1$s աշխատարջանը մեկ հպումով: Կարիք չկա բացել հավելվածը կամ տեսնել, թե ինչ է աշխատեցվում դիտարկիչում:</string>
+
+    <!-- Label for a button in the "tabs tray" to erase the browsing history (closes all tabs and removes associated data). -->
+    <string name="tabs_tray_action_erase">Ջնջել դիտարկման պատմությունը</string>
+
+    <!-- If the user decides to open the current page in another browser and if Firefox is not installed then we show this
+      item in the list of browsers. Clicking it will open the app store installed on the device (usually that's Google Play). -->
+    <string name="download_firefox">Ներբեռնել Firefox-ը</string>
+
+    <!-- Text shown in the "Your rights" screen.
+    %1$s will be replaced with the name of the app (e.g. Firefox Focus)-->
+    <string name="your_rights_content1"><![CDATA[%1$s-ը անվճար և բաց կոդով ծրագիր է Mozilla-ի և այլ մասնակիցների կողմից:]]></string>
+
+    <!-- Text shown in the "Your rights" screen.
+    %1$s will be replaced with the name of the app (e.g. Firefox Focus)
+    %2$s will be replaced with a URL linking to the MPL (e.g. https://www.mozilla.org/en-US/MPL/) -->
+    <string name="your_rights_content2"><![CDATA[%1$s-ը հասանելի է <a href="%2$s">Mozilla Public License</a>-ի պայմաններով և բաց կոդով այլ ծրագրերի արտոնագրերի համաձայն:]]></string>
+
+    <!-- Text shown in the "Your rights" screen.
+    %1$s will be replaced with the name of the app (e.g. Firefox Focus)
+    %2$s will be replaced with a URL linking to the trademark policy (e.g. https://www.mozilla.org/foundation/trademarks/policy/) -->
+    <string name="your_rights_content3"><![CDATA[Դուք արտոնություն չունեք Mozilla Foundation-ի կողմից որևէ իրավունքի կամ արտոնագրի, ներառյալ՝ Mozilla, Firefox կամ %1$s անունների կամ պատկերանշանների: Լրացուցիչ տեղեկություններ կարող եք գտնել <a href="%2$s">այստեղ</a>:]]></string>
+
+    <!-- Text shown in the "Your rights" screen.
+    %1$s will be replaced with the name of the app (e.g. Firefox Focus)
+    %2$s will be replaced with a URL linking to the list of licenses used by the dependencies.-->
+    <string name="your_rights_content4"><![CDATA[Լրացուցիչ աղբյուր կոդը %1$s-ի համար մատչելի է այլ անվճար և բաց աղբյուրով <a href="%2$s">արտոնագրերով</a>:]]></string>
+
+    <!-- Text shown in the "Your rights" screen.
+    %1$s will be replaced with the name of the app (e.g. Firefox Focus)
+    %2$s will be replaced with a URL linking to the GPL
+    %3$s will be replaced with a URL linking to the tracking protection wiki page (e.g. https://wiki.mozilla.org/Security/Tracking_protection#Lists) -->
+    <string name="your_rights_content5"><![CDATA[%1$s-ը նաև օգտագործում է արգելացուցակ՝ տրամադրված Disconnect-ի կողմից և անկախ աշխատանքներ <a href="%2$s">General Public License v3</a>-ի ներքո և մատչելի է <a href="%3$s">այստեղ</a>:]]></string>
+
+    <!-- Text shown in prompts for GeckoView -->
+    <string name="gv_prompt_username_hint">Օգտվողի անուն</string>
+    <string name="gv_prompt_password_hint">Գաղտնաբառ</string>
+    <string name="gv_prompt_clear">Մաքրել</string>
+
+    <!-- Text shown in Security Information Popup -->
+    <!-- Text to denote secure or insecure connection -->
+    <string name="security_popup_secure_connection">Անվտանգ կապակցում</string>
+    <string name="security_popup_insecure_connection">Ոչ անվտանգ կապակցում</string>
+    <!-- %1$s will be replaced with organization that granted the SSL certificate -->
+    <string name="security_popup_security_verified">Ստուգված է՝ %1$s</string>
+
+    <!-- Content Description of Security Icon in toolbar -->
+    <string name="site_security_icon_content_description">Կայքի անվտանգությունը</string>
+    <string name="preference_autocomplete_duplicate_url_error">URL-ն արդեն գոյություն ունի</string>
+
+    <!-- Label for the Find in page button -->
+    <string name="find_in_page"></string>
+
+    <!-- Watermark/Hint for the find in page input field -->
+    <string name="find_in_page_input"></string>
+
+    <!-- String to show the number of results found in the page and the
+        position the user is at. The first argument is the position, the second argument is the total -->
+    <string name="find_in_page_result"></string>
+    <!-- String to be read by the accessibility service presenting the number of results found in the page
+        and the position the user is at. The first argument is the position, the second argument is the total -->
+    <string name="accessibility_find_in_page_result"></string>
+
+    <!-- String to be read by the accessibility service when focusing the next result button -->
+    <string name="accessibility_next_result"></string>
+    <!-- String to be read by the accessibility service when focusing the previous result button -->
+    <string name="accessibility_previous_result"></string>
+    <!-- String to be read by the accessibility service when focusing the dismiss button in the "find in page" UI -->
+    <string name="accessibility_dismiss_find_in_page"></string>
+    
+    <!-- Http Authentication Popup: Title -->
+    <string name="http_auth_dialog_title"></string>
+    <!-- Http Authentication Popup: Username -->
+    <string name="http_auth_dialog_username"></string>
+    <!-- Http Authentication Popup: Password -->
+    <string name="http_auth_dialog_password"></string>
+
+    <!-- Checkbox menu item text to request desktop site -->
+    <string name="preference_performance_request_desktop_site"></string>
+
+    <!-- Displayed after a user long presses on the URL in a custom tab to copy the URL -->
+    <string name="custom_tab_copy_url_action"></string>
+
+    <!-- Description of what a user may find in the Advanced Setting category, used for debugging -->
+    <string name="preference_advanced_summary"></string>
+
+    <!-- Title of Advanced Setting category -->
+    <string name="preference_category_advanced"></string>
+
+    <!-- Preference to enable remote debugging of the app via USB or Wi-Fi -->
+    <string name="preference_remote_debugging"></string>
+
+    <!-- Title for the fingerprint authentication dialog box that is shown to the user when opening the app.
+     %1$s is replaced with the app name -->
+    <string name="biometric_auth_title"></string>
+
+    <!-- Description for the fingerprint authentication dialog box that is shown to the user when opening the app -->
+    <string name="biometric_auth_description"></string>
+
+    <!-- New session button for the fingerprint authentication dialog box that is shown to the user when opening the app.
+     When pressed, the user's previous session is cleared, and authentication is not required. -->
+    <string name="biometric_auth_new_session"></string>
+
+    <!-- Description for the fingerprint authentication image. Used for accessibility purposes. -->
+    <string name="biometric_auth_image_description"></string>
+
+    <!-- Error text displayed when the user's fingerprint cannot be recognized upon re-entering the app.
+     This is displayed during the authentication flow as the app launches. -->
+    <string name="biometric_auth_not_recognized_error"></string>
+
+    <!-- Error text displayed when the user's fingerprint moved too quickly upon re-entering the app
+    This is displayed during the authentication flow as the app launches.-->
+    <string name="biometric_auth_moved_too_quickly"></string>
+
+    <!-- Title for the prompt to enable search suggestions -->
+    <string name="enable_search_suggestion_title"></string>
+
+    <!-- Description for the prompt to enable search suggestions
+        %1$s will be replaced by the app name (e.g. Firefox Focus)
+        %2$s will be replaced with "Learn more" which will be a tappable link
+        using the string: "enable_search_suggestion_subtitle_learnmore" -->
+    <string name="enable_search_suggestion_subtitle"></string>
+
+    <!-- String to be placed inside the string: enable_search_suggestion_subtitle,
+        which will be a "Learn More" link. -->
+    <string name="enable_search_suggestion_subtitle_learnmore"></string>
+
+    <!-- Label used for the "NO button" for the prompt to enable search suggestions -->
+    <string name="enable_search_suggestions_no"></string>
+
+    <!-- Label used for the "YES button" for the prompt to enable search suggestions -->
+    <string name="enable_search_suggestions_yes"></string>
+
+    <!-- Message displayed when using a search engine that doesn't provide suggestions -->
+    <string name="no_suggestions_message"></string>
+
+    <!-- Button to dismiss the message displayed  when using a search engine that doesn't provide suggestions-->
+    <string name="dismiss_no_suggestions_prompt_button"></string>
+
+    <!-- Tips displayed on the home view -->
+
+    <!-- Tip displayed on home view explaining how to disable tracking protection
+    The new line here must be kept as the second half of the string is clickable for the user. -->
+    <string name="tip_disable_tracking_protection"></string>
+
+    <!-- Tip displayed on home view explaining how to add sites to homescreen
+    Argument 1 will be replaced with a line break in the application.-->
+    <string name="tip_add_to_homescreen"><![CDATA[]]></string>
+
+    <!-- Tip displayed on home view explaining how to make Focus the default browser
+    Argument 1 is the app name (Firefox Focus/Firefox Klar/etc).
+    The new line here must be kept as the second half of the string is clickable for the user. -->
+    <string name="tip_set_default_browser"></string>
+
+    <!-- Tip displayed on home view explaining how to add a custom autocomplete URL
+    The new line here must be kept as the second half of the string is clickable for the user. -->
+    <string name="tip_autocomplete_url"></string>
+
+    <!-- Tip displayed on home view explaining how to add a custom autocomplete URL
+    The new line here must be kept as the second half of the string is clickable for the user. -->
+    <string name="tip_open_in_new_tab"></string>
+
+    <!-- Tip displayed on home view explaining how to request the desktop version of a website.
+     Argument 1 will be replaced with a line break in the application. -->
+    <string name="tip_request_desktop"><![CDATA[]]></string>
+
+    <!-- deprecated strings -->
+    <string name="tip_disable_tips"></string>
+    <string name="preference_switch_autocomplete">Ինքնալրացում</string>
+    <string name="preference_category_autocomplete_preinstalled">Սկզբնադիր URL ցանկ</string>
+    <string name="preference_autocomplete_preinstalled_summary">Միացրեք՝ ունենալու համար %1$s ինքնալրացում աեվլի քան 450 հանրահայտ URL-ների համար:</string>
+    <string name="preference_category_autocomplete_custom_urls">Հարմարեցված URL-ներ</string>
+    <string name="preference_autocomplete_subitem_customlist">Հարմարեցված URL-ներ</string>
+  </resources>

@@ -1,233 +1,691 @@
-<?xml version='1.0' encoding='utf-8'?>
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <string name="action_cancel">لغو</string>
-  <string name="action_ok">تایید</string>
-  <string name="action_save">ذخیره</string>
-  <string name="urlbar_hint">جست‌وجو کنید یا آدرسی را وارد کنید</string>
-  <string name="teaser">مرور ناشناس خودکار.\nمرور کنید. پاک کنید. تکرار کنید.</string>
-  <string name="feedback_erase">تاریخچه مرور شما حذف شد.</string>
-  <string name="search_hint">جست‌وجو برای %1$s</string>
-  <string name="menu_share">اشتراک‌گذاری…</string>
-  <string name="menu_report_site_issue">گزارش مشکل در پایگاه</string>
-  <string name="menu_open_with_default_browser2">بازکردن در %1$s</string>
-  <string name="menu_open_with_a_browser2">بازکردن…</string>
-  <string name="menu_add_to_home_screen">افزودن به صفحه‌ی خانه</string>
-  <string name="menu_whats_new">امکانات جدید</string>
-  <string name="menu_settings">تنظیمات</string>
-  <string name="menu_about">درباره</string>
-  <string name="menu_help">راهنما</string>
-  <string name="menu_rights">حقوق شما</string>
-  <string name="menu_trackers_blocked_title">دنبال کننده‌های مسدود شده</string>
-  <string name="menu_custom_tab_branding">نیرو گرفته توسط%1$s</string>
-  <string name="share_dialog_title">اشتراک‌گذاری از طریق</string>
-  <string name="notification_erase_text">پاک کردن تاریخچهٔ مرورگر</string>
-  <string name="notification_action_open">باز کردن</string>
-  <string name="notification_action_erase_and_open">حذف و باز کن</string>
-  <string name="shortcut_erase_short_label">پاک کردن</string>
-  <string name="shortcut_erase_long_label">پاک کردن تاریخچهٔ مرورگر</string>
-  <string name="text_selection_search_action">جست‌وجو ناشناس</string>
-  <string name="about_content"><![CDATA[<p xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">%1$s &#1588;&#1605;&#1575; &#1585;&#1575; &#1583;&#1585; &#1705;&#1606;&#1578;&#1585;&#1604; &#1602;&#1585;&#1575;&#1585; &#1605;&#1740;&#1583;&#1607;&#1583;.</p>\n<p xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">"&#1575;&#1586; &#1575;&#1740;&#1606; &#1576;&#1585;&#1606;&#1575;&#1605;&#1607; &#1576;&#1607; &#1593;&#1606;&#1608;&#1575;&#1606; &#1740;&#1705; &#1605;&#1585;&#1608;&#1585;&#1711;&#1585; &#1606;&#1575;&#1588;&#1606;&#1575;&#1587; &#1575;&#1587;&#1578;&#1601;&#1575;&#1583;&#1607; &#1705;&#1606;&#1740;&#1583;:\n  "<ul>"\n    "<li>&#1576;&#1583;&#1608;&#1606; &#1582;&#1585;&#1608;&#1580; &#1575;&#1586; &#1576;&#1585;&#1606;&#1575;&#1605;&#1607;&#1548; &#1575;&#1740;&#1606;&#1578;&#1585;&#1606;&#1578; &#1585;&#1575; &#1580;&#1587;&#1578;&#8204;&#1608;&#1580;&#1608; &#1608; &#1605;&#1585;&#1608;&#1585; &#1705;&#1606;&#1740;&#1583;</li>"\n    "<li>&#1585;&#1583;&#1740;&#1575;&#1576;&#8204;&#1607;&#1575; &#1585;&#1575; &#1605;&#1587;&#1583;&#1608;&#1583; &#1705;&#1606;&#1740;&#1583; (&#1740;&#1575; &#1575;&#1740;&#1606;&#1705;&#1607; &#1578;&#1606;&#1592;&#1740;&#1605;&#1575;&#1578; &#1582;&#1608;&#1583; &#1585;&#1575; &#1576;&#1585;&#1575;&#1740; &#1575;&#1580;&#1575;&#1586;&#1607; &#1583;&#1575;&#1583;&#1606; &#1576;&#1607; &#1585;&#1583;&#1740;&#1575;&#1576;&#8204;&#1607;&#1575; &#1578;&#1594;&#1740;&#1740;&#1585; &#1583;&#1607;&#1740;&#1583;)</li>"\n    "<li>&#1662;&#1575;&#1705; &#1705;&#1606;&#1740;&#1583; &#1578;&#1575; &#1575;&#1591;&#1604;&#1575;&#1593;&#1575;&#1578;&#1740; &#1605;&#1575;&#1606;&#1606;&#1583; &#1705;&#1608;&#1705;&#1740;&#8204;&#1607;&#1575; &#1608; &#1607;&#1605;&#1670;&#1606;&#1740;&#1606; &#1580;&#1587;&#1578;&#8204;&#1608;&#1580;&#1608;&#1607;&#1575; &#1608; &#1578;&#1575;&#1585;&#1740;&#1582;&#1670;&#1607; &#1605;&#1585;&#1608;&#1585; &#1581;&#1584;&#1601; &#1588;&#1608;&#1606;&#1583;</li>"\n  "</ul>\n</p>\n<p xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">%1$s &#1578;&#1608;&#1587;&#1617;&#1591; &#1605;&#1608;&#1586;&#1740;&#1604;&#1575; &#1605;&#1606;&#1578;&#1588;&#1585; &#1588;&#1583;&#1607; &#1575;&#1587;&#1578;. &#1605;&#1571;&#1605;&#1608;&#1585;&#1740;&#1578; &#1605;&#1575; &#1578;&#1575; &#1585;&#1608;&#1575;&#1580; &#1740;&#1705; &#1575;&#1740;&#1606;&#1578;&#1585;&#1606;&#1578; &#1587;&#1575;&#1604;&#1605; &#1608; &#1576;&#1575;&#1586; &#1575;&#1587;&#1578;.<br/>\n<a href="%2$s">&#1576;&#1740;&#1588;&#1578;&#1585; &#1576;&#1583;&#1575;&#1606;&#1740;&#1583;</a></p>]]></string>
-  <string name="preference_privacy_and_security_header">حریم خصوصی و امنیت</string>
-  <string name="preference_privacy_and_security_summary">ردیابی، کوکی‌ها، انتخاب‌های داده</string>
-  <string name="preference_search_summary">تنظیم پیش‌فرض، پرکردن خودکار</string>
-  <string name="preference_mozilla_summary">درباره‌ی %1$s، راهنما</string>
-  <string name="preference_category_tracking_protection">محافظت در برابر ردگیری</string>
-  <string name="preference_category_web_content">محتوای وب</string>
-  <string name="preference_category_switching_apps">تعوض برنامه‌ها</string>
-  <string name="preference_category_general">عمومی</string>
-  <string name="preference_category_data_collection_use">گردآوری داده و موارد استفاده</string>
-  <string name="preference_category_search">جست‌وجو</string>
-  <string name="preference_show_search_suggestions">دریافت پیشنهادات جست‌وجو</string>
-  <string name="preference_show_search_suggestions_summary">%1$sچیزهایی رو که شما در نوار آدرس وارد می‌کنید برای موتور جست‌وجوی شما ارسال خواهد کرد</string>
-  <string name="preference_search_engine_default">پیش‌فرض</string>
-  <string name="preference_state_on">روشن</string>
-  <string name="preference_state_off">خاموش</string>
-  <string name="preference_subitem_autocomplete">تکمیل خودکار URL</string>
-  <string name="preference_switch_autocomplete">تکمیل خودکار</string>
-  <string name="preference_category_autocomplete_preinstalled">فهرستِ پیش‌فرض URL</string>
-  <string name="preference_autocomplete_preinstalled_summary">برای داشتن تکمیل خودکار %1$s برای بیش از ۴۵۰ نشانی محبوب در نوار آدرس، فعال کنید.</string>
-  <string name="preference_category_autocomplete_custom_urls">نشانی‌های سفارشی</string>
-  <string name="preference_autocomplete_subitem_customlist">نشانی‌های سفارشی</string>
-  <string name="preference_autocomplete_action_add">+ اضافه کردن نشانی سفارشی</string>
-  <string name="preference_autocomplete_title_add">اضافه کردن نشانی سفارشی</string>
-  <string name="custom_autocomplete_quick_add">اضافه کردن نشانی سفارشی</string>
-  <string name="preference_category_cookies">کوکی‌ها و داده‌های پایگاه</string>
-  <string name="preference_category_data_choices">انتخاب‌های داده</string>
-  <string name="preference_autocomplete_title_remove">حذف نشانی سفارشی</string>
-  <string name="preference_autocomplete_learn_more">اطلاعات بیشتر</string>
-  <string name="preference_autocomplete_custom_summary">اضافه و مدیریت کردنِ تکمیل خودکار نشانی‌های سفارشی.</string>
-  <string name="preference_autocomplete_add_title">نشانی برای اضافه کردن</string>
-  <string name="preference_autocomplete_add_hint">جای‌گذاری یا ورود نشانی</string>
-  <string name="preference_autocomplete_add_example2">مثال: mozilla.org</string>
-  <string name="preference_autocomplete_add_example">مثال: example.com</string>
-  <string name="preference_autocomplete_add_confirmation">نشانی سفارشی جدید اضافه شد</string>
-  <string name="preference_autocomplete_menu_remove">حذف</string>
-  <string name="preference_autocomplete_action_remove_content_description">حذف</string>
-  <string name="preference_autocomplete_add_error">نشانی که وارد کردید را دوباره بررسی کنید.</string>
-  <string name="preference_language">زبان</string>
-  <string name="preference_language_systemdefault">پیش‌فرض سیستم</string>
-  <string name="preference_category_privacy">حریم‌خصوصی</string>
-  <string name="preference_privacy_block_ads">مسدود کردن ردیاب‌های تبلیغاتی</string>
-  <string name="preference_privacy_block_ads_summary">برخی از تبلیغ‌ها بازدیدهای سایت را دنبال می‌کنند، حتّی اگر شما روی تبلیغ‌ها کلیک نکنید</string>
-  <string name="preference_privacy_block_analytics">مسدود کردن ردیاب‌های آماری</string>
-  <string name="preference_privacy_block_analytics_summary">استفاده شده برای جمع‌آوری، تحلیل و اندازه‌گیری فعّالیت‌هایی مانند لمس کردن و پیمایش کردن</string>
-  <string name="preference_privacy_block_social">مسدود کردن ردیاب‌های شبکه‌های اجتماعی</string>
-  <string name="preference_privacy_block_social_summary">جاسازی شده در سایت‌ها برای دنبال کردن بازدیدهای شما و برای نشان دادن عملکردهایی مانند دکمه‌های به اشتراک گذاری</string>
-  <string name="preference_privacy_block_content">مسدود کردن سایر ردیاب‌های محتوا</string>
-  <string name="preference_privacy_block_content_summary2">فعّال کردنش ممکن است منجر به آن شود که برخی از صفحات بطور غیر منتظره عمل کنند</string>
-  <string name="preference_privacy_category_cookies">مسدود کردن کوکی‌ها</string>
-  <string name="preference_privacy_should_block_cookies_no_option">خیر</string>
-  <string name="preference_privacy_should_block_cookies_third_party_only_option">فقط مسدود کردن کوکی‌های شخص ثالث</string>
-  <string name="preference_privacy_should_block_cookies_yes_option">بله</string>
-  <string name="preference_security_biometric">استفاده از اثرانگشت برای بازکردن برنامه</string>
-  <string name="preference_security_biometric_summary">اثرانگشت شما همچنین می‌تواند%1$s را بازکند اگر یکURL در برنامه باز بوده باشد مخفی خواهد ماند تا زمانی که باز شود.</string>
-  <string name="preference_privacy_secure_mode">حالت پنهان</string>
-  <string name="preference_privacy_stealth_summary">هنگام تعویض برنامه‌ها صفحه‌های وب را مخفی و گرفتن تصاویر صفحه را مسدود کن.</string>
-  <string name="preference_category_security">امنیت</string>
-  <string name="preference_category_performance">کارایی</string>
-  <string name="preference_performance_block_webfonts">مسدود کردن قلم‌های وب</string>
-  <string name="preference_performance_block_webfonts_summary">ممکن است باعث بارگیری نشدن برخی از شمایل‌ها و تصاویر بشود</string>
-  <string name="preference_performance_block_javascript">مسدود کردن جاوا اسکریپت</string>
-  <string name="preference_performance_block_javascript_summary">صفحات احتمالاً سریع‌تر بارگیری می‌شوند، اما ممکن است به طرز غیر متنظره عمل کنند</string>
-  <string name="preference_default_browser2">تبدیل %1$s به مرورگر پیش‌فرض</string>
-  <string name="preference_category_mozilla">موزیلا</string>
-  <string name="preference_mozilla_telemetry2">ارسال اطلاعات استفاده</string>
-  <string name="preference_mozilla_telemetry_summary">اطلاعات بیشتر</string>
-  <string name="preference_mozilla_telemetry_summary2">موزیلا تلاش می‌کند تنها اطلاعاتی که برای بهینه‌سازی %1$s برای همه به آنها نیاز دارد را جمع‌آوری کند.</string>
-  <string name="preference_privacy_notice">نکات حریم‌خصوصی</string>
-  <string name="preference_about">درباره %1$s</string>
-  <string name="preference_search_installed_search_engines">موتورهای جست‌وجو نصب شده</string>
-  <string name="preference_search_restore">بازآوری موتورهای جست‌وجو پیش‌فرض</string>
-  <string name="preference_search_add2">+ افزودن یک موتور جستجوی دیگر</string>
-  <string name="preference_search_remove_title">حذف موتورهای جست‌وجو</string>
-  <string name="preference_search_remove">حذف</string>
-  <string name="preference_homescreen_tips">نمایش نکات صفحه اصلی</string>
-  <string name="action_option_add_search_engine">اضافه کردن موتور جست‌وجو</string>
-  <string name="search_add_manually_name_hint">نام موتور جست‌وجو</string>
-  <string name="search_add_manually_string">رشتهٔ جست‌وجو جهت استفاده</string>
-  <string name="search_add_manually_save">ذخیره</string>
-  <string name="search_add_manually_example">مثال: example.com/search/?q=%s</string>
-  <string name="search_add_confirmation">موتور جست‌وجو جدید اضافه شد.</string>
-  <string name="search_add_error_empty_name">نام موتور جست‌وجو را وارد کنید</string>
-  <string name="search_add_error_duplicate_name">پیش از این یک موتور جستجوی نصب شده از این نام استفاده می‌کند.</string>
-  <string name="search_add_error_empty_search">رشتهٔ جست‌وجو را وارد کنید</string>
-  <string name="search_add_error_format">بررسی کنید که رشته جست‌وجو با شکل و قالب نمونهٔ ارائه شده مطابقت دارد</string>
-  <string name="content_description_clear_input">پاک کردن وروردی</string>
-  <string name="content_description_dismiss_input">رد کردن</string>
-  <string name="content_description_erase">حذف تاریخچه مرور</string>
-  <string name="content_description_tab_counter">زبانه‌های باز: %1$s</string>
-  <string name="content_description_lock">اتصال امن</string>
-  <string name="accessibility_announcement_loading">در حال بارگیری</string>
-  <string name="accessibility_announcement_loading_finished">وب‌سایت بارگیری شد</string>
-  <string name="content_description_menu">گزینه‌های بیشتر</string>
-  <string name="content_description_forward">حرکت به جلو</string>
-  <string name="content_description_reload">بارگیری مجدد سایت</string>
-  <string name="content_description_back">بازگشت به عقب</string>
-  <string name="content_description_stop">توقف بارگیری وب‌سایت</string>
-  <string name="content_description_customtab_exit">بازگشت به برنامهٔ قبل</string>
-  <string name="content_description_trackers_blocked">تعداد دنبال کننده‌های مسدود شده</string>
-  <string name="content_description_blocking_switch">مسدود کردن ردیاب‌ها</string>
-  <string name="your_rights">حقوق شما</string>
-  <string name="external_app_prompt_title">باز کردن پیوند در برنامه‌ای دیگر</string>
-  <string name="external_app_prompt">می‌توانید از %1$s خارج شوید تا پیوند را در %2$s باز کنید.</string>
-  <string name="external_app_prompt_no_app_title">برنامه‌ای برای باز کردن پیوند پیدا کنید</string>
-  <string name="external_app_prompt_no_app">هیچکدام از برنامه‌های روی دستگاه شما امکان باز کردن این پیوند را ندارند. می‌توانید از %1$s خارج شوید تا در %2$s برای برنامه‌ای که بتواند اینکار را انجام دهد جست‌وجو کنید.</string>
-  <string name="external_multiple_apps_matched_exit">از مرور ناشناس خارج می‌شوید؟</string>
-  <string name="download_snackbar_finished">%1$s پایان‌یافته است</string>
-  <string name="download_snackbar_open">باز کردن</string>
-  <string name="download_dialog_warning"><![CDATA["وقتی تاریخ‌چه %1$s را پاک می‌کنید، پرونده‌های دریافت شده "<b xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">&#1662;&#1575;&#1705; &#1606;&#1582;&#1608;&#1575;&#1607;&#1606;&#1583; &#1588;&#1583;</b>.]]></string>
-  <string name="download_dialog_title">دریافت پرونده</string>
-  <string name="download_dialog_action_cancel">انصراف</string>
-  <string name="download_dialog_action_download">دریافت</string>
-  <string name="errorpage_title">مشکل در بارگیری صفحه</string>
-  <string name="errorpage_refresh">تلاش مجدد</string>
-  <string name="error_connectionfailure_title">اتصال ناموفق بود</string>
-  <string name="error_connectionfailure_message"><![CDATA[<ul xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">\n<li>&#1587;&#1575;&#1740;&#1578; &#1605;&#1740;&#8204;&#1578;&#1608;&#1575;&#1606;&#1583; &#1605;&#1608;&#1602;&#1578;&#1575; &#1583;&#1585; &#1583;&#1587;&#1578;&#1585;&#1587; &#1606;&#1576;&#1575;&#1588;&#1583; &#1740;&#1575; &#1582;&#1740;&#1604;&#1740; &#1588;&#1604;&#1608;&#1594; &#1576;&#1575;&#1588;&#1583;. &#1670;&#1606;&#1583; &#1604;&#1581;&#1592;&#1607; &#1583;&#1740;&#1711;&#1585; &#1605;&#1580;&#1583;&#1583;&#1575; &#1578;&#1604;&#1575;&#1588; &#1705;&#1606;&#1740;&#1583;.</li>\n<li>&#1575;&#1711;&#1585; &#1588;&#1605;&#1575; &#1606;&#1605;&#1740;&#8204;&#1578;&#1608;&#1575;&#1606;&#1740;&#1583; &#1607;&#1740;&#1670; &#1589;&#1601;&#1581;&#1607;&#8204;&#1575;&#1740; &#1585;&#1575; &#1576;&#1575;&#1586; &#1705;&#1606;&#1740;&#1583;&#1548; &#1575;&#1578;&#1589;&#1575;&#1604; &#1583;&#1575;&#1583;&#1607; &#1740;&#1575; Wi-Fi &#1583;&#1587;&#1578;&#1711;&#1575;&#1607; &#1582;&#1608;&#1583; &#1585;&#1575; &#1576;&#1585;&#1585;&#1587;&#1740; &#1705;&#1606;&#1740;&#1583;.</li>" \n"</ul>]]></string>
-  <string name="error_timeout_title">مهلت اتصال تمام شد</string>
-  <string name="error_hostLookup_title">کارگزار پیدا نشد</string>
-  <string name="error_hostLookup_message"><![CDATA[<ul xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">\n<li>&#1606;&#1588;&#1575;&#1606;&#1740; &#1585;&#1575; &#1576;&#1585;&#1575;&#1740; &#1575;&#1588;&#1578;&#1576;&#1575;&#1607;&#1575;&#1578; &#1578;&#1575;&#1740;&#1662;&#1740; &#1576;&#1585;&#1585;&#1587;&#1740; &#1705;&#1606;&#1740;&#1583; &#1705;&#1607; &#1605;&#1579;&#1604;&#1575;\n<strong>"ww "</strong>.example.com &#1576;&#1607; &#1591;&#1608;&#1585; &#1575;&#1588;&#1578;&#1576;&#1575;&#1607; &#1576;&#1607; &#1580;&#1575;&#1740; \n<strong>www</strong>.example.com &#1608;&#1575;&#1585;&#1583; &#1606;&#1588;&#1583;&#1607; &#1576;&#1575;&#1588;&#1583;.</li>" \n"<li>&#1575;&#1711;&#1585; &#1606;&#1605;&#1740;&#8204;&#1578;&#1608;&#1575;&#1606;&#1740;&#1583; &#1607;&#1740;&#1670; &#1589;&#1601;&#1581;&#1607;&#8204;&#1575;&#1740; &#1585;&#1575; &#1576;&#1575;&#1585;&#1711;&#1584;&#1575;&#1585;&#1740; &#1705;&#1606;&#1740;&#1583;&#1548; &#1575;&#1578;&#1589;&#1575;&#1604; &#1588;&#1576;&#1705;&#1607;&#1620; &#1585;&#1575;&#1740;&#1575;&#1606;&#1607;&#1620; &#1582;&#1608;&#1583; &#1585;&#1575; &#1576;&#1585;&#1585;&#1587;&#1740; &#1705;&#1606;&#1740;&#1583;.</li>\n</ul>]]></string>
-  <string name="error_malformedURI_title">این آدرس معتبر نیست</string>
-  <string name="error_malformedURI_message"><![CDATA[<ul xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">\n<li>"&#1606;&#1588;&#1575;&#1606;&#1740;&#8204;&#1607;&#1575;&#1740; &#1608;&#1576; &#1605;&#1593;&#1605;&#1608;&#1604;&#1575;&#1611; &#1576;&#1607; &#1575;&#1740;&#1606; &#1589;&#1608;&#1585;&#1578; &#1606;&#1608;&#1588;&#1578;&#1607; &#1605;&#1740;&#8204;&#1588;&#1608;&#1606;&#1583; "<strong>http://www.example.com/</strong></li>\n<li>"&#1605;&#1591;&#1605;&#1574;&#1606; &#1588;&#1608;&#1740;&#1583; &#1705;&#1607; &#1575;&#1586; &#1605;&#1605;&#1740;&#1586; &#1583;&#1585;&#1587;&#1578; &#1575;&#1587;&#1578;&#1601;&#1575;&#1583;&#1607; &#1605;&#1740;&#8204;&#1705;&#1606;&#1740;&#1583; (&#1740;&#1593;&#1606;&#1740; "<strong>/</strong>).</li>\n</ul>]]></string>
-  <string name="error_redirectLoop_title">تغییر مسیر این صفحه به درستی انجام نمی‌شود</string>
-  <string name="error_redirectLoop_message"><![CDATA[<ul xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">"\n  "<li>&#1575;&#1740;&#1606; &#1605;&#1588;&#1705;&#1604; &#1711;&#1575;&#1607;&#1740; &#1605;&#1605;&#1705;&#1606; &#1575;&#1587;&#1578; &#1576;&#1607; &#1583;&#1604;&#1740;&#1604; &#1594;&#1740;&#1585;&#1601;&#1593;&#1575;&#1604; &#1705;&#1585;&#1583;&#1606; &#1740;&#1575; &#1602;&#1576;&#1608;&#1604; &#1606;&#1705;&#1585;&#1583;&#1606; &#1705;&#1608;&#1705;&#1740;&#8204;&#1607;&#1575; &#1575;&#1578;&#1601;&#1575;&#1602; &#1576;&#1740;&#1575;&#1601;&#1578;&#1583;.</li>\n</ul>]]></string>
-  <string name="error_unsupportedprotocol_title">آدرس قابل فهم نبود</string>
-  <string name="error_unsupportedprotocol_message"><![CDATA[<ul xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">"\n  "<li>&#1605;&#1605;&#1705;&#1606; &#1575;&#1587;&#1578; &#1604;&#1575;&#1586;&#1605; &#1576;&#1575;&#1588;&#1583; &#1578;&#1575; &#1576;&#1585;&#1606;&#1575;&#1605;&#1607;&#1620; &#1583;&#1740;&#1711;&#1585;&#1740; &#1585;&#1575; &#1576;&#1585;&#1575;&#1740; &#1576;&#1575;&#1586; &#1705;&#1585;&#1583;&#1606; &#1575;&#1740;&#1606; &#1570;&#1583;&#1585;&#1587; &#1606;&#1589;&#1576; &#1705;&#1606;&#1740;&#1583;.</li>\n</ul>]]></string>
-  <string name="error_sslhandshake_title">اتصال امن شکست خورد</string>
-  <string name="error_sslhandshake_message"><![CDATA[<ul xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">\n<li>&#1575;&#1605;&#1705;&#1575;&#1606; &#1583;&#1575;&#1585;&#1740;&#1583; &#1575;&#1740;&#1606; &#1575;&#1588;&#1705;&#1575;&#1604;&#1740; &#1583;&#1585; &#1578;&#1606;&#1592;&#1740;&#1605;&#1575;&#1578; &#1705;&#1575;&#1585;&#1711;&#1586;&#1575;&#1585; &#1576;&#1575;&#1588;&#1583;&#1548; &#1740;&#1575; &#1705;&#1587;&#1740; &#1576;&#1607; &#1583;&#1606;&#1576;&#1575;&#1604; &#1576;&#1575;&#1586;&#1740; &#1705;&#1585;&#1583;&#1606; &#1606;&#1602;&#1588; &#1575;&#1740;&#1606; &#1705;&#1575;&#1585;&#1711;&#1586;&#1575;&#1585; &#1576;&#1575;&#1588;&#1583;.</li>\n<li>&#1575;&#1711;&#1585; &#1662;&#1740;&#1588; &#1575;&#1586; &#1575;&#1740;&#1606; &#1576;&#1583;&#1608;&#1606; &#1583;&#1585;&#1740;&#1575;&#1601;&#1578; &#1575;&#1740;&#1606; &#1582;&#1591;&#1575; &#1575;&#1586; &#1575;&#1740;&#1606; &#1608;&#1576;&#8204;&#1711;&#1575;&#1607; &#1576;&#1575;&#1586;&#1583;&#1740;&#1583; &#1705;&#1585;&#1583;&#1607;&#8204;&#1575;&#1740;&#1583;&#1548; &#1575;&#1740;&#1606; &#1582;&#1591;&#1575; &#1575;&#1605;&#1705;&#1575;&#1606; &#1583;&#1575;&#1585;&#1583; &#1605;&#1608;&#1602;&#1578;&#1740; &#1576;&#1575;&#1588;&#1583;&#1548; &#1576;&#1593;&#1583;&#1575;&#1611; &#1583;&#1608;&#1576;&#1575;&#1585;&#1607; &#1578;&#1604;&#1575;&#1588; &#1705;&#1606;&#1740;&#1583;.</li>\n</ul>]]></string>
-  <string name="error_generic_title">اوه</string>
-  <string name="error_generic_message">بنا به دلایلی بارگیری این صفحه ممکن نبود.</string>
-  <string name="contextmenu_link_share">اشتراک‌گذاری پیوند</string>
-  <string name="contextmenu_link_copy">رونوشت از آدرس پیوند</string>
-  <string name="contextmenu_image_share">اشتراک‌گذاری تصویر</string>
-  <string name="contextmenu_image_copy">رونوشت از آدرس تصویر</string>
-  <string name="contextmenu_image_save">ذخیره تصویر</string>
-  <string name="contextmenu_open_in_new_tab">بازکردن پیوند در زبانه جدید</string>
-  <string name="contextmenu_image_warning"><![CDATA["وقتی شما تاریخ‌جه %1$s را پاک می‌کنید، تصاویر ذخیره یا هم‌رسان شده "<b xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">&#1662;&#1575;&#1705; &#1606;&#1582;&#1608;&#1575;&#1607;&#1606;&#1583; &#1588;&#1583;</b>.]]></string>
-  <string name="firstrun_defaultbrowser_title">قدرت حریم‌شخصی خود را افزایش دهید</string>
-  <string name="firstrun_defaultbrowser_text2">مرور خصوصی را به سطحی بالاتر ببرید. تبلیغات و دیگر محتواهایی را مسدود کنید که می‌توانند شما را در سراسر سایت‌ها ردیابی و زمان‌های بارگذاری صفحه را خراب کنند.</string>
-  <string name="firstrun_search_title">جستجوی شما، به روش شما</string>
-  <string name="firstrun_search_text">به دنبال چیز متفاوتی هستید؟ موتور جستجوی پیش‌فرض دیگری را در تنظیمات انتخاب کنید.</string>
-  <string name="firstrun_shortcut_title">میان‌برها را به صفحه خانگی خود اضافه کنید</string>
-  <string name="firstrun_shortcut_text">در %1$s به سرعت به سایت‌های محبوب خود برگردید. فقط «افزودن به صفحه خانگی» را از منوی %1$s انتخاب کنید.</string>
-  <string name="firstrun_privacy_title">حفظ حریم خصوصی را به یک عادت تبدیل کنید</string>
-  <string name="firstrun_privacy_text">%1$s را به عنوان مرورگر پیش‌فرض خود انتخاب کنید و وقتی از اپ‌های دیگر صفحه‌های وب را باز می‌کنید از مزایای مرور خصوصی بهره‌مند شوید.</string>
-  <string name="firstrun_close_button">باشه، گرفتم!</string>
-  <string name="firstrun_skip_button">رد کردن</string>
-  <string name="firstrun_next_button">بعدی</string>
-  <string name="content_blocking_disabled">-</string>
-  <string name="dialog_addtohomescreen_action_add">افزودن</string>
-  <string name="dialog_addtohomescreen_action_cancel">انصراف</string>
-  <string name="dialog_addtohomescreen_tracking_protection">میان‌بر بدون محافظت در برابر ردگیری باز خواهد شد</string>
-  <string name="notification_browsing_session_channel_name">نشستِ مرور ناشناس</string>
-  <string name="notification_browsing_session_channel_description">اعلان‌ها امکان پاک کردن اطلاعات نشستِ %1$s را با یک ضربه به شما می‌دهند. لازم نیست که برنامه را باز کنید یا ببینید که چه چیزی در مرورگر در حال اجراست.</string>
-  <string name="tabs_tray_action_erase">پاک کردن تاریخچهٔ مرور</string>
-  <string name="download_firefox">دریافت فایرفاکس</string>
-  <string name="your_rights_content1">%1$s نرم‌افزاری آزاد و متن‌باز است که توسط موزیلا و سایر مشارکت کنندگان ساخته شده است.</string>
-  <string name="your_rights_content2"><![CDATA["%1$s تحت شرایط "<a xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2" href="%2$s">&#1711;&#1608;&#1575;&#1607;&#1740;&#1606;&#1575;&#1605;&#1607; &#1593;&#1605;&#1608;&#1605;&#1740; &#1605;&#1608;&#1586;&#1740;&#1604;&#1575;</a>" و گواهینامه‌‌‌های دیگر متن باز در دسترس شما است."]]></string>
-  <string name="your_rights_content3"><![CDATA["به شما هیچ گونه اجازه یا گواهی‌ای برای علامت‌های تجاری بنیاد موزیلا یا هر شخص ثالثی، شامل موزیلا، فایرفاکس یا نام‌ها یا نشان‌های %1$s اعطا نشده است. اطّلاعات بیشتر ممکن است در "<a xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2" href="%2$s">&#1575;&#1740;&#1606;&#1580;&#1575;</a>" یافت شوند."]]></string>
-  <string name="your_rights_content4"><![CDATA["کد منبع بیشتری برای %1$s تحت تعداد دیگری از "<a xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2" href="%2$s">" &#1711;&#1608;&#1575;&#1607;&#1740;&#1606;&#1575;&#1605;&#1607;&#8204;&#1607;&#1575;&#1740;"</a>" آزاد و متن باز در دسترس است."]]></string>
-  <string name="your_rights_content5"><![CDATA["%1$s همچنین از فهرست‌های مسدودی فراهم شده توسط Disconnect استفاده می‌کند. به عنوان کارهای جدا و مستقل تحت "<a xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2" href="%2$s">&#1711;&#1608;&#1575;&#1607;&#1740;&#1606;&#1575;&#1605;&#1607; &#1593;&#1605;&#1608;&#1605;&#1740; GNU &#1606;&#1587;&#1582;&#1607;3</a>"،‌ و "<a xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2" href="%3$s">&#1575;&#1740;&#1606;&#1580;&#1575;</a>" در دسترس است."]]></string>
-  <string name="gv_prompt_username_hint">نام کاربری</string>
-  <string name="gv_prompt_password_hint">کلمه عبور</string>
-  <string name="gv_prompt_clear">پاک کردن</string>
-  <string name="security_popup_secure_connection">اتصال امن</string>
-  <string name="security_popup_insecure_connection">اتصال ناامن</string>
-  <string name="security_popup_security_verified">تایید شده توسط:%1$s</string>
-  <string name="site_security_icon_content_description">امنیت پایگاه اینترنتی</string>
-  <string name="preference_autocomplete_duplicate_url_error">نشانی قبلاً وجود دارد</string>
-  <string name="find_in_page">یافتن در صفحه</string>
-  <string name="find_in_page_input">پیدا کردن در صفحه</string>
-  <string name="find_in_page_result">%1$d/%2$d</string>
-  <string name="accessibility_find_in_page_result">%1$d از %2$d</string>
-  <string name="accessibility_next_result">پیدا کردن نتیجه بعدی</string>
-  <string name="accessibility_previous_result">پیدا کردن نتیجه قبلی</string>
-  <string name="accessibility_dismiss_find_in_page">رد کردن پیدا کردن در این صفحه</string>
-  <string name="http_auth_dialog_title">تایید هویت لازم است</string>
-  <string name="http_auth_dialog_username">نام کاربری</string>
-  <string name="http_auth_dialog_password">گذرواژه</string>
-  <string name="preference_performance_request_desktop_site">درخواست نسخه رومیزی پایگاه</string>
-  <string name="custom_tab_copy_url_action">برداشتURL</string>
-  <string name="preference_advanced_summary">ابزارهای توسعه دهنده</string>
-  <string name="preference_category_advanced">پیشرفته</string>
-  <string name="preference_remote_debugging">اشکال زدایی از طریق USB/Wi-Fi</string>
-  <string name="biometric_auth_title">بازکردن%1$s</string>
-  <string name="biometric_auth_description">سنسور اثرانگشت را برای ادامه لمس کنید.</string>
-  <string name="biometric_auth_new_session">جلسه جدید</string>
-  <string name="biometric_auth_image_description">نشانه اثرانگشت</string>
-  <string name="biometric_auth_not_recognized_error">اثرانگشت شناسایی نشد. مجددا تلاش کنید.</string>
-  <string name="biometric_auth_moved_too_quickly">انگشت خیلی سریع حرکت کرد. مجدد تلاش کنید.</string>
-  <string name="enable_search_suggestion_title">آیا مایل هستید پیشنهاد بر روی جست‌وجو خود را فعال کنید؟</string>
-  <string name="enable_search_suggestion_subtitle">برای دریافت پیشنهاد روی جست‌وجو، %1$s بایستی موارد تایپ شده در نوار آدرس را برای موتور جست‌وجو انتخاب شده توسط شما ارسال کند.%2$s.</string>
-  <string name="enable_search_suggestion_subtitle_learnmore">بیشتر بدانید</string>
-  <string name="enable_search_suggestions_no">خیر</string>
-  <string name="enable_search_suggestions_yes">بله</string>
-  <string name="no_suggestions_message">تعدادی از موتورهای ‌جست‌وجو امکان نمایش پیشنهادات را ندارند.</string>
-  <string name="dismiss_no_suggestions_prompt_button">رد کردن</string>
-  <string name="tip_disable_tracking_protection">سایت رفتار غیرمنتظره‌ای دارد؟\n محافظت از دنبال کردن را خاموش کنید</string>
-  <string name="tip_add_to_homescreen">با اشاره یک انگشت به سایت های پربازدید خود دسترسی داشته باشید%1$s فهرست&gt; اضافه کردن به صفحه خانگی</string>
-  <string name="tip_set_default_browser">بازکردن هر پیوندی در %1$s\n تنظیم%1$s به عنوان مرورگر پیش فرض</string>
-  <string name="tip_autocomplete_url">پرکردن خودکارURLs برای سایت های پربازدید شما\n نگاه داشتن بیشتر انگشت بر روی هر URL در نوار آدرس برای انجام این کار</string>
-  <string name="tip_open_in_new_tab">بازکردن یک پیوند در زبانه جدید\n نگاه داشتن بیشتر انگشت برای باز کردن پیوند در صفحه</string>
-  <string name="tip_request_desktop">ترجیح به دیدن نسخه رومیزی وب‌سایت؟%1$s فهرست &gt; درخواست نسخه رومیزی وب‌سایت</string>
-  <string name="tip_disable_tips">خاموش کردن نکات بر روی صفحه آغازین %1$s</string>
-</resources>
+    <!-- ####################################################################################### -->
+    <!-- ## Put only strings into this file that should be translated. Move all other strings ## -->
+    <!-- ## into a separate file like strings_references.xml                                  ## -->
+    <!-- ####################################################################################### -->
+
+    <!-- Label used for buttons, e.g. in dialogs -->
+    <string name="action_cancel">لغو</string>
+    <!-- Label used for buttons, e.g. in dialogs -->
+    <string name="action_ok">تایید</string>
+
+    <string name="action_save">ذخیره</string>
+
+    <!-- This text is shown in the URL bar when it's empty -->
+    <string name="urlbar_hint">جست‌وجو کنید یا آدرسی را وارد کنید</string>
+
+    <string name="teaser">مرور ناشناس خودکار.
+مرور کنید. پاک کنید. تکرار کنید.</string>
+
+    <!-- "Snackbar" shown after the user has pressed the 'erase' button at the end of a browsing session -->
+    <string name="feedback_erase">تاریخچه مرور شما حذف شد.</string>
+
+    <!-- This label is shown below the URL bar as soon as the user enters text. Clicking the label will perform a search -->
+    <string name="search_hint">جست‌وجو برای %1$s</string>
+
+    <!-- Menu item: Share the currently visible page -->
+    <string name="menu_share">اشتراک‌گذاری…</string>
+
+    <!-- Menu item: Report an issue on the current site -->
+    <string name="menu_report_site_issue">گزارش مشکل در پایگاه</string>
+
+    <!-- Menu item: Switch to another browser to open the currently visible page. %1$s will be
+      replaced with the name of the browser like: "Open in Firefox" or "Open in Chrome". Some
+      links can be opened by native apps that aren't a browser, e.g. "Open in YouTube" -->
+    <string name="menu_open_with_default_browser2">بازکردن در %1$s</string>
+
+    <!-- Menu item: Switch to another browser to open the currently visible page. This menu item
+      will be shown if there are multiple browsers and we do not know which one is the default
+      browser or in case Focus is actually the default browser. Clicking this menu item will show
+      a screen with multiple browsers (or other apps that can open the current URL) to choose from. -->
+    <string name="menu_open_with_a_browser2">بازکردن…</string>
+
+    <!-- Menu item: Add the current page as a shortcut to the device's home screen (launcher). -->
+    <string name="menu_add_to_home_screen">افزودن به صفحه‌ی خانه</string>
+
+    <!-- Menu item: Shows information about features and changes that are new to this version -->
+    <string name="menu_whats_new">امکانات جدید</string>
+    <string name="menu_settings">تنظیمات</string>
+    <string name="menu_about">درباره</string>
+    <string name="menu_help">راهنما</string>
+    <string name="menu_rights">حقوق شما</string>
+
+    <!-- Menu item: This is the label for a menu entry that shows how many trackers have been blocked
+         for the currently loaded website. The number of blocked trackers is shown below this label.
+         Next to this label is a switch that allows the user to temporarily enable / disable the
+         blocking of trackers for the current browsing session - for example if the current website
+         doesn't work correctly with blocked content. -->
+    <string name="menu_trackers_blocked_title">دنبال کننده‌های مسدود شده</string>
+
+    <!-- This is a small text at the bottom of the menu shown in a "custom tab" for branding purposes.
+     See https://github.com/mozilla-mobile/focus-android/issues/2106
+      %1$s will be replaced by the app name (e.g. Firefox Focus) -->
+    <string name="menu_custom_tab_branding">نیرو گرفته توسط%1$s</string>
+
+    <!-- This is the title of a dialog that shows all the share targets (apps or contacts) when
+         sharing an URL. -->
+    <string name="share_dialog_title">اشتراک‌گذاری از طریق</string>
+
+    <!-- While a browsing session is active (in the foreground or background) we will show a notification
+         so that the user doesn't forget about the website still being open. This text is shown in
+         the notification. Clicking the notification will have the same effect as clicking the "erase"
+         button in the application. -->
+    <string name="notification_erase_text">پاک کردن تاریخچهٔ مرورگر</string>
+
+    <!-- Notification action to open Focus and resume the current browsing session. -->
+    <string name="notification_action_open">باز کردن</string>
+
+    <!-- Notification action to erase the current browsing session AND switch to Focus (bring it
+         to the foreground) -->
+    <string name="notification_action_erase_and_open">حذف و باز کن</string>
+
+    <!-- On Android 7+ users can add a shortcut for erasing the browsing history to the home screen.
+         This is the label for this shortcut. Android recommends a maximum length of 10 characters. -->
+    <string name="shortcut_erase_short_label">پاک کردن</string>
+
+    <!-- The same as 'shortcut_erase_short_label' but more descriptive. The launcher shows this
+         instead of the short title when it has enough space. Android recommends a maximum length
+         of 25 characters. -->
+    <string name="shortcut_erase_long_label">پاک کردن تاریخچهٔ مرورگر</string>
+
+    <!-- This is the label of an action we offer when the user selects text in other third-party apps.
+         Clicking this action will launch Focus and perform a search in the default search engine. -->
+    <string name="text_selection_search_action">جست‌وجو ناشناس</string>
+
+    <!-- Content of about focus. Argument 1 is the app name (Firefox Focus/Firefox Klar/etc).
+         Argument 2 is the url for the learn-more link. -->
+    <string name="about_content"><![CDATA[<p>%1$s شما را در کنترل قرار میدهد.</p>
+<p>از این برنامه به عنوان یک مرورگر ناشناس استفاده کنید:
+  <ul>
+    <li>بدون خروج از برنامه، اینترنت را جست‌وجو و مرور کنید</li>
+    <li>ردیاب‌ها را مسدود کنید (یا اینکه تنظیمات خود را برای اجازه دادن به ردیاب‌ها تغییر دهید)</li>
+    <li>پاک کنید تا اطلاعاتی مانند کوکی‌ها و همچنین جست‌وجوها و تاریخچه مرور حذف شوند</li>
+  </ul>
+</p>
+<p>%1$s توسّط موزیلا منتشر شده است. مأموریت ما تا رواج یک اینترنت سالم و باز است.<br/>
+<a href="%2$s">بیشتر بدانید</a></p>]]></string>
+
+    <!-- Header for the Privacy and Security settings menu -->
+    <string name="preference_privacy_and_security_header">حریم خصوصی و امنیت</string>
+
+    <!-- Preference summary for settings related to privacy and security -->
+    <string name="preference_privacy_and_security_summary">ردیابی، کوکی‌ها، انتخاب‌های داده</string>
+
+    <!-- Preference category description for settings related to search, set default
+    and autocomplete are settings a user can find and change inside the "search" settings screen -->
+    <string name="preference_search_summary">تنظیم پیش‌فرض، پرکردن خودکار</string>
+
+    <!-- Preference category description for settings screen for settings related to Mozilla -->
+    <!-- About the app and help are links that are inside this menu -->
+    <!-- %1$s will be replaced by the app name (e.g. Firefox Focus) -->
+    <string name="preference_mozilla_summary">درباره‌ی %1$s، راهنما</string>
+
+    <!-- Preference category for ad blocking and tracking protection settings -->
+    <string name="preference_category_tracking_protection">محافظت در برابر ردگیری</string>
+
+    <!-- Preference category for settings related to controlling web content -->
+    <string name="preference_category_web_content">محتوای وب</string>
+
+    <!-- Preference category: stealth settings for while switching apps -->
+    <string name="preference_category_switching_apps">تعوض برنامه‌ها</string>
+
+    <!-- Preference category for General Settings -->
+    <string name="preference_category_general">عمومی</string>
+
+    <!-- Preference category for settings about sending usage data -->
+    <string name="preference_category_data_collection_use">گردآوری داده و موارد استفاده</string>
+
+    <string name="preference_category_search">جست‌وجو</string>
+
+    <!-- Title of "switch" preference that enables/disables search suggestions -->
+    <string name="preference_show_search_suggestions">دریافت پیشنهادات جست‌وجو</string>
+    <!-- Description of the preference that enables/disables search suggestions
+        %1$s will be replaced by the app name (e.g. Firefox Focus) -->
+    <string name="preference_show_search_suggestions_summary">%1$sچیزهایی رو که شما در نوار آدرس وارد می‌کنید برای موتور جست‌وجوی شما ارسال خواهد کرد</string>
+
+    <!-- This label is shown below the name of the default search engine in settings -->
+    <string name="preference_search_engine_default">پیش‌فرض</string>
+
+    <!-- Text that is shown below a "switch" preference that is enabled. -->
+    <string name="preference_state_on">روشن</string>
+
+    <!-- Text that is shown below a "switch" preference that is disabled. -->
+    <string name="preference_state_off">خاموش</string>
+
+    <!-- Item in settings that will open a new preference screen for configuring the URL autocomplete behavior. -->
+    <string name="preference_subitem_autocomplete">تکمیل خودکار URL</string>
+
+    <!-- Action at the bottom of the list of custom autocomplete URLs that will open a new screen to add a new URL to the list. -->
+    <string name="preference_autocomplete_action_add">+ اضافه کردن نشانی سفارشی</string>
+
+    <!-- Title of the screen for adding custom autocomplete URLs. -->
+    <string name="preference_autocomplete_title_add">اضافه کردن نشانی سفارشی</string>
+
+    <!-- Label for the button to quick add custom autocomplete URLs. -->
+    <string name="custom_autocomplete_quick_add">اضافه کردن نشانی سفارشی</string>
+
+    <!-- Preference category for settings about cookies and site data -->
+    <string name="preference_category_cookies">کوکی‌ها و داده‌های پایگاه</string>
+
+    <!-- Preference category for settings about data choices -->
+    <string name="preference_category_data_choices">انتخاب‌های داده</string>
+
+    <!-- Title of the screen for removing custom autocomplete URLs. -->
+    <string name="preference_autocomplete_title_remove">حذف نشانی سفارشی</string>
+
+    <!-- A link to SUMO at autocomplete settings. -->
+    <string name="preference_autocomplete_learn_more">اطلاعات بیشتر</string>
+
+    <!-- Preference summary: Custom (user-defined) autocomplete URLs. -->
+    <string name="preference_autocomplete_custom_summary">اضافه و مدیریت کردنِ تکمیل خودکار نشانی‌های سفارشی.</string>
+
+    <!-- Label for the "custom autocomplete URL" input field -->
+    <string name="preference_autocomplete_add_title">نشانی برای اضافه کردن</string>
+
+    <!-- "Hint" text for the "custom autocomplete URL" input field. Shown when the field is empty. -->
+    <string name="preference_autocomplete_add_hint">جای‌گذاری یا ورود نشانی</string>
+
+    <!-- Example how a custom domain autocomplete URL be added (e.g. without http://) -->
+    <string name="preference_autocomplete_add_example2">مثال: mozilla.org</string>
+
+    <!-- To be removed once the new hint has been translated -->
+    <string name="preference_autocomplete_add_example">مثال: example.com</string>
+
+    <!-- Confirmation "snackbar" shown after a new custom autocomplete URL has been added. -->
+    <string name="preference_autocomplete_add_confirmation">نشانی سفارشی جدید اضافه شد</string>
+
+    <!-- Menu item to remove existing autocomplete URLs. -->
+    <string name="preference_autocomplete_menu_remove">حذف</string>
+
+    <!-- Content description (not visible, for screen readers etc.): Button that will delete all selected custom autocomplete URLs. -->
+    <string name="preference_autocomplete_action_remove_content_description">حذف</string>
+
+    <!-- Error message shown if the entered custom autocomplete URL is not valid or empty. -->
+    <string name="preference_autocomplete_add_error">نشانی که وارد کردید را دوباره بررسی کنید.</string>
+
+    <string name="preference_language">زبان</string>
+    <!-- This is shown when the user hasn't set a focus specific language, i.e. when Focus
+         is using the system default language. -->
+    <string name="preference_language_systemdefault">پیش‌فرض سیستم</string>
+
+    <string name="preference_category_privacy">حریم‌خصوصی</string>
+    <string name="preference_privacy_block_ads">مسدود کردن ردیاب‌های تبلیغاتی</string>
+    <string name="preference_privacy_block_ads_summary">برخی از تبلیغ‌ها بازدیدهای سایت را دنبال می‌کنند، حتّی اگر شما روی تبلیغ‌ها کلیک نکنید</string>
+    <string name="preference_privacy_block_analytics">مسدود کردن ردیاب‌های آماری</string>
+    <string name="preference_privacy_block_analytics_summary">استفاده شده برای جمع‌آوری، تحلیل و اندازه‌گیری فعّالیت‌هایی مانند لمس کردن و پیمایش کردن</string>
+    <string name="preference_privacy_block_social">مسدود کردن ردیاب‌های شبکه‌های اجتماعی</string>
+    <string name="preference_privacy_block_social_summary">جاسازی شده در سایت‌ها برای دنبال کردن بازدیدهای شما و برای نشان دادن عملکردهایی مانند دکمه‌های به اشتراک گذاری</string>
+    <string name="preference_privacy_block_content">مسدود کردن سایر ردیاب‌های محتوا</string>
+    <string name="preference_privacy_block_content_summary2">فعّال کردنش ممکن است منجر به آن شود که برخی از صفحات بطور غیر منتظره عمل کنند</string>
+    <string name="preference_privacy_category_cookies">مسدود کردن کوکی‌ها</string>
+
+    <!-- Three options for Cookie blocking. Yes (All cookies Blocked), Block 3rd-party cookies
+    only (Only 3rd-party Cookies Blocked), No (No cookies blocked) -->
+    <string name="preference_privacy_should_block_cookies_no_option">خیر</string>
+    <string name="preference_privacy_should_block_cookies_third_party_only_option">فقط مسدود کردن کوکی‌های شخص ثالث</string>
+    <string name="preference_privacy_should_block_cookies_yes_option">بله</string>
+
+    <!-- Preference Title: Biometrics can be used to unlock Focus if the previous session's data was not erased by the user. -->
+    <string name="preference_security_biometric">استفاده از اثرانگشت برای بازکردن برنامه</string>
+    <!-- Preference Summary: Biometrics (iris scan, fingerprint, or facial scan) can be used to unlock Focus if the app had a URL
+        open when the app was last run to ensure that only the phone's owner can view a previous session.
+        %1$s will be replaced by the app name (e.g. Firefox Focus) -->
+    <string name="preference_security_biometric_summary">اثرانگشت شما همچنین می‌تواند%1$s را بازکند اگر یکURL در برنامه باز بوده باشد مخفی خواهد ماند تا زمانی که باز شود.</string>
+
+    <!-- Preference Title: Secure Mode is a setting that prevents the app's content to show up in the "recent apps" screen
+         and prevents the user from taking screenshots or casting the app to other displays. -->
+    <string name="preference_privacy_secure_mode">حالت پنهان</string>
+    <!-- Preference Summary: Stealth mode (previously "Secure mode") is a setting that prevents the
+     app's content (in our case especially the content of webpages) to show up in the "recent apps"
+     screen. Additionally Android will prevent the user from taking screenshots or casting the app
+     to other displays. -->
+    <string name="preference_privacy_stealth_summary">هنگام تعویض برنامه‌ها صفحه‌های وب را مخفی و گرفتن تصاویر صفحه را مسدود کن.</string>
+
+    <string name="preference_category_security">امنیت</string>
+
+    <string name="preference_category_performance">کارایی</string>
+    <string name="preference_performance_block_webfonts">مسدود کردن قلم‌های وب</string>
+    <!-- This text is shown below the setting for disabling web fonts. Some websites use icons/images from a font and those do not show up if fonts are blocked.-->
+    <string name="preference_performance_block_webfonts_summary">ممکن است باعث بارگیری نشدن برخی از شمایل‌ها و تصاویر بشود</string>
+
+    <string name="preference_performance_block_javascript">مسدود کردن جاوا اسکریپت</string>
+    <!-- This text is shown below setting for disabling JavaScript. Some websites may not work correctly when JavaScript is disabled -->
+    <string name="preference_performance_block_javascript_summary">صفحات احتمالاً سریع‌تر بارگیری می‌شوند، اما ممکن است به طرز غیر متنظره عمل کنند</string>
+
+    <!-- This preference does not set Focus as the default browser but instead links to Android's
+     "default apps" settings screen or if not supported by this Android version to a SUMO page describing
+     how to set Focus as a default browser.
+      %1$s will be replaced by the app name (e.g. Firefox Focus) -->
+    <string name="preference_default_browser2">تبدیل %1$s به مرورگر پیش‌فرض</string>
+
+    <string name="preference_category_mozilla">موزیلا</string>
+    <string name="preference_mozilla_telemetry2">ارسال اطلاعات استفاده</string>
+
+    <!-- A link to SUMO at the end of the summary (preference_mozilla_telemetry_summary2) of the "Send anonymous usage data" setting. -->
+    <string name="preference_mozilla_telemetry_summary">اطلاعات بیشتر</string>
+
+    <!-- %1$s will be replaced with the name of the app (e.g. Firefox Focus) -->
+    <string name="preference_mozilla_telemetry_summary2">موزیلا تلاش می‌کند تنها اطلاعاتی که برای بهینه‌سازی %1$s برای همه به آنها نیاز دارد را جمع‌آوری کند.</string>
+
+    <!-- In-app link (in settings) to Focus privacy notice. -->
+    <string name="preference_privacy_notice">نکات حریم‌خصوصی</string>
+
+    <!-- Item in Preferences that shows the about page. Parameter 1 is the app name, i.e. Firefox Focus/Firefox Klar. -->
+    <string name="preference_about">درباره %1$s</string>
+
+    <!-- Header for the list of installed search engines -->
+    <string name="preference_search_installed_search_engines">موتورهای جست‌وجو نصب شده</string>
+
+    <!-- Action for restoring the default list of search engines -->
+    <string name="preference_search_restore">بازآوری موتورهای جست‌وجو پیش‌فرض</string>
+
+    <!-- Action for adding an additional search engine to the list.
+    The "+" is used to emphasize that this is an "add" action -->
+    <string name="preference_search_add2">+ افزودن یک موتور جستجوی دیگر</string>
+    <string name="preference_search_remove_title">حذف موتورهای جست‌وجو</string>
+    <string name="preference_search_remove">حذف</string>
+
+    <!-- Title: Homescreen tips settings toggle to determine whether or not tips are displayed when
+     a user first launches the app. -->
+    <string name="preference_homescreen_tips">نمایش نکات صفحه اصلی</string>
+
+    <!-- Clickable action text that shows when user long-presses on a search engine search field (this is similar to paste or copy when long-pressing a text field) -->
+    <string name="action_option_add_search_engine">اضافه کردن موتور جست‌وجو</string>
+
+    <string name="search_add_manually_name_hint">نام موتور جست‌وجو</string>
+    <string name="search_add_manually_string">رشتهٔ جست‌وجو جهت استفاده</string>
+    <string name="search_add_manually_save">ذخیره</string>
+
+    <!-- Example of search engine url -->
+    <string name="search_add_manually_example">مثال: example.com/search/?q=%s</string>
+
+    <string name="search_add_confirmation">موتور جست‌وجو جدید اضافه شد.</string>
+
+    <string name="search_add_error_empty_name">نام موتور جست‌وجو را وارد کنید</string>
+    <string name="search_add_error_duplicate_name">پیش از این یک موتور جستجوی نصب شده از این نام استفاده می‌کند.</string>
+
+    <string name="search_add_error_empty_search">رشتهٔ جست‌وجو را وارد کنید</string>
+
+    <string name="search_add_error_format">بررسی کنید که رشته جست‌وجو با شکل و قالب نمونهٔ ارائه شده مطابقت دارد</string>
+
+    <!-- Content description (not visible, for screen readers etc.): Clear text in URL bar -->
+    <string name="content_description_clear_input">پاک کردن وروردی</string>
+
+    <!-- Content description (not visible, for screen readers etc.): Clicking on the website overlay
+     while in typing mode will dismiss and go back to the browser. This text will be read when the
+     overlay if focused. See https://github.com/mozilla-mobile/focus-android/issues/50 -->
+    <string name="content_description_dismiss_input">رد کردن</string>
+
+    <!-- Content description (not visible, for screen readers etc.): Erase button: Erase the browsing
+     history and go back to the home screen. -->
+    <string name="content_description_erase">حذف تاریخچه مرور</string>
+
+    <!-- If the user has multiple tabs open we will show an addition "floating action button" showing how many tabs are open.
+     This string is not displayed and read only by screenreaders. %1$s will be replaced with the number of open tabs. This
+      button will only be visible when there is more than one tab open (>= 2). -->
+    <string name="content_description_tab_counter">زبانه‌های باز: %1$s</string>
+
+    <!-- Content description (not visible, for screen readers etc.): Lock icon showed in the URL bar for
+     https pages.. -->
+    <string name="content_description_lock">اتصال امن</string>
+
+    <!-- This text is not visible. Instead it will be read by the accessibility service once we start
+     loading a website -->
+    <string name="accessibility_announcement_loading">در حال بارگیری</string>
+
+    <!-- This text is not visible. Instead it will be read by the accessibility service once we
+     finished loading a website -->
+    <string name="accessibility_announcement_loading_finished">وب‌سایت بارگیری شد</string>
+
+    <!-- Content description (not visible, for screen readers etc.): "Three dot" menu button. -->
+    <string name="content_description_menu">گزینه‌های بیشتر</string>
+
+    <!-- Content description (not visible, for screen readers etc.): Navigate forward (browsing history) -->
+    <string name="content_description_forward">حرکت به جلو</string>
+
+    <!-- Content description (not visible, for screen readers etc.): Reload current website -->
+    <string name="content_description_reload">بارگیری مجدد سایت</string>
+
+    <!-- Content description (not visible, for screen readers etc.): Navigate back (browsing history) -->
+    <string name="content_description_back">بازگشت به عقب</string>
+
+    <!-- Content description (not visible, for screen readers etc.): Stop loading the current website. This button will turn into the refresh button once loading has been completed (see content_description_reload) -->
+    <string name="content_description_stop">توقف بارگیری وب‌سایت</string>
+
+    <!-- Content description (not visible, for screen readers etc.): Custom Tab exit button - closes the custom tab and returns to the previous app. -->
+    <string name="content_description_customtab_exit">بازگشت به برنامهٔ قبل</string>
+
+    <!-- Content description (not visible, for screen readers etc.): This is the description for the ImageView in the menu that displays
+         the number of trackers blocked for the current session -->
+    <string name="content_description_trackers_blocked">تعداد دنبال کننده‌های مسدود شده</string>
+
+    <!-- Content description (not visible, for screen readers etc.): This is the description for the switch in the menu that temporarily disables/enables
+         content blocking for the current session -->
+    <string name="content_description_blocking_switch">مسدود کردن ردیاب‌ها</string>
+
+    <string name="your_rights">حقوق شما</string>
+
+    <string name="external_app_prompt_title">باز کردن پیوند در برنامه‌ای دیگر</string>
+    <!-- This string is shown when the user has clicked a link that needs to be opened in a different app.
+         Argument 2 is the external app name, argument 1 is our name (i.e. Firefox Focus, or Firefox Klar). -->
+    <string name="external_app_prompt">می‌توانید از %1$s خارج شوید تا پیوند را در %2$s باز کنید.</string>
+    <!-- This text is the title of a dialog shown if no app could be found for a custom link protocol. -->
+    <string name="external_app_prompt_no_app_title">برنامه‌ای برای باز کردن پیوند پیدا کنید</string>
+    <!-- This text is shown in a dialog if no app could be found for a custom link protocol. %1$s is the name of the app (i.e. Firefox Focus) and %2$s is the name of
+         the app store installed on the device (usually that's Google Play). -->
+    <string name="external_app_prompt_no_app">هیچکدام از برنامه‌های روی دستگاه شما امکان باز کردن این پیوند را ندارند. می‌توانید از %1$s خارج شوید تا در %2$s برای برنامه‌ای که بتواند اینکار را انجام دهد جست‌وجو کنید.</string>
+    <!-- This label is shown above a list of apps that can be used to open a given link -->
+    <string name="external_multiple_apps_matched_exit">از مرور ناشناس خارج می‌شوید؟</string>
+
+    <!-- Snackbar that will be displayed after a download has completed. %1$s will be replaced with the file name. -->
+    <string name="download_snackbar_finished">%1$s پایان‌یافته است</string>
+
+    <!-- Snackbar action to immediately open the successfully downloaded file. -->
+    <string name="download_snackbar_open">باز کردن</string>
+
+    <!-- Download dialog: Warns users that downloaded files will not be deleted even when erasing history. %1$s will be replaced with the app name (i.e. Firefox Focus). -->
+    <string name="download_dialog_warning"><![CDATA[وقتی تاریخ‌چه %1$s را پاک می‌کنید، پرونده‌های دریافت شده <b>پاک نخواهند شد</b>.]]></string>
+
+    <!-- Title of download dialogue -->
+    <string name="download_dialog_title">دریافت پرونده</string>
+
+    <!-- Option in download dialogue to cancel a download -->
+    <string name="download_dialog_action_cancel">انصراف</string>
+
+    <!-- Option in download dialogue to start a download -->
+     <string name="download_dialog_action_download">دریافت</string>
+
+    <!-- The page html title (i.e. the <title> tag content) -->
+    <string name="errorpage_title">مشکل در بارگیری صفحه</string>
+    <string name="errorpage_refresh">تلاش مجدد</string>
+
+    <string name="error_connectionfailure_title">اتصال ناموفق بود</string>
+    <string name="error_connectionfailure_message">
+    <![CDATA[<ul>
+<li>سایت می‌تواند موقتا در دسترس نباشد یا خیلی شلوغ باشد. چند لحظه دیگر مجددا تلاش کنید.</li>
+<li>اگر شما نمی‌توانید هیچ صفحه‌ای را باز کنید، اتصال داده یا Wi-Fi دستگاه خود را بررسی کنید.</li> 
+</ul>]]>
+    </string>
+
+    <string name="error_timeout_title">مهلت اتصال تمام شد</string>
+
+    <string name="error_hostLookup_title">کارگزار پیدا نشد</string>
+    <string name="error_hostLookup_message"><![CDATA[<ul>
+<li>نشانی را برای اشتباهات تایپی بررسی کنید که مثلا
+<strong>ww </strong>.example.com به طور اشتباه به جای 
+<strong>www</strong>.example.com وارد نشده باشد.</li> 
+<li>اگر نمی‌توانید هیچ صفحه‌ای را بارگذاری کنید، اتصال شبکهٔ رایانهٔ خود را بررسی کنید.</li>
+</ul>]]></string>
+
+
+    <string name="error_malformedURI_title">این آدرس معتبر نیست</string>
+    <string name="error_malformedURI_message"><![CDATA[<ul>
+<li>نشانی‌های وب معمولاً به این صورت نوشته می‌شوند <strong>http://www.example.com/</strong></li>
+<li>مطمئن شوید که از ممیز درست استفاده می‌کنید (یعنی <strong>/</strong>).</li>
+</ul>]]></string>
+
+    <string name="error_redirectLoop_title">تغییر مسیر این صفحه به درستی انجام نمی‌شود</string>
+    <string name="error_redirectLoop_message"><![CDATA[<ul>
+  <li>این مشکل گاهی ممکن است به دلیل غیرفعال کردن یا قبول نکردن کوکی‌ها اتفاق بیافتد.</li>
+</ul>]]></string>
+
+    <string name="error_unsupportedprotocol_title">آدرس قابل فهم نبود</string>
+    <string name="error_unsupportedprotocol_message"><![CDATA[<ul>
+  <li>ممکن است لازم باشد تا برنامهٔ دیگری را برای باز کردن این آدرس نصب کنید.</li>
+</ul>]]></string>
+
+    <string name="error_sslhandshake_title">اتصال امن شکست خورد</string>
+    <string name="error_sslhandshake_message"><![CDATA[<ul>
+<li>امکان دارید این اشکالی در تنظیمات کارگزار باشد، یا کسی به دنبال بازی کردن نقش این کارگزار باشد.</li>
+<li>اگر پیش از این بدون دریافت این خطا از این وب‌گاه بازدید کرده‌اید، این خطا امکان دارد موقتی باشد، بعداً دوباره تلاش کنید.</li>
+</ul>]]></string>
+
+    <string name="error_generic_title">اوه</string>
+    <string name="error_generic_message">بنا به دلایلی بارگیری این صفحه ممکن نبود.</string>
+
+    <!-- Label used in the contextmenu shown when long-pressing on a link -->
+    <string name="contextmenu_link_share">اشتراک‌گذاری پیوند</string>
+    <!-- Label used in the contextmenu shown when long-pressing on a link -->
+    <string name="contextmenu_link_copy">رونوشت از آدرس پیوند</string>
+    <!-- Label used in the contextmenu shown when long-pressing on an image -->
+    <string name="contextmenu_image_share">اشتراک‌گذاری تصویر</string>
+    <!-- Label used in the contextmenu shown when long-pressing on an image -->
+    <string name="contextmenu_image_copy">رونوشت از آدرس تصویر</string>
+    <!-- Label used in the contextmenu shown when long-pressing on an image -->
+    <string name="contextmenu_image_save">ذخیره تصویر</string>
+    <!-- Label used in the contextmenu shown when long-pressing on a link -->
+    <string name="contextmenu_open_in_new_tab">بازکردن پیوند در زبانه جدید</string>
+
+    <!-- This is a warning shown in the browser's context menu (when long pressing an image). %1$s will be replaced with the long name of the app (e.g. Firefox Focus). -->
+    <string name="contextmenu_image_warning"><![CDATA[وقتی شما تاریخ‌جه %1$s را پاک می‌کنید، تصاویر ذخیره یا هم‌رسان شده <b>پاک نخواهند شد</b>.]]></string>
+
+    <!-- First run tour (Default browser): Title -->
+    <string name="firstrun_defaultbrowser_title">قدرت حریم‌شخصی خود را افزایش دهید</string>
+    <!-- First run tour (Default browser): Text. -->
+    <string name="firstrun_defaultbrowser_text2">مرور خصوصی را به سطحی بالاتر ببرید. تبلیغات و دیگر محتواهایی را مسدود کنید که می‌توانند شما را در سراسر سایت‌ها ردیابی و زمان‌های بارگذاری صفحه را خراب کنند.</string>
+
+    <!-- First run tour (Search): Title -->
+    <string name="firstrun_search_title">جستجوی شما، به روش شما</string>
+    <!-- First run tour (Search): Text -->
+    <string name="firstrun_search_text">به دنبال چیز متفاوتی هستید؟ موتور جستجوی پیش‌فرض دیگری را در تنظیمات انتخاب کنید.</string>
+
+    <!-- First run tour (Shortcut): Title -->
+    <string name="firstrun_shortcut_title">میان‌برها را به صفحه خانگی خود اضافه کنید</string>
+    <!-- First run tour (Shortcut): Text. %1$s will be replaced with the name of the app (e.g. Firefox Focus) -->
+    <string name="firstrun_shortcut_text">در %1$s به سرعت به سایت‌های محبوب خود برگردید. فقط «افزودن به صفحه خانگی» را از منوی %1$s انتخاب کنید.</string>
+
+    <!-- First run tour (Privacy): Title -->
+    <string name="firstrun_privacy_title">حفظ حریم خصوصی را به یک عادت تبدیل کنید</string>
+    <!-- First run tour (Privacy): Text. %1$s will be replaced with the name of the app (e.g. Firefox Focus) -->
+    <string name="firstrun_privacy_text">%1$s را به عنوان مرورگر پیش‌فرض خود انتخاب کنید و وقتی از اپ‌های دیگر صفحه‌های وب را باز می‌کنید از مزایای مرور خصوصی بهره‌مند شوید.</string>
+
+    <string name="firstrun_close_button">باشه، گرفتم!</string>
+    <string name="firstrun_skip_button">رد کردن</string>
+    <string name="firstrun_next_button">بعدی</string>
+
+    <!-- Indicator that no trackers are being blocked because content blocking is disabled; normally shows the number of blocked trackers -->
+    <string name="content_blocking_disabled">-</string>
+
+    <!-- Label of the action that will add the current website to the home screen (shown in the confirmation dialog). -->
+    <string name="dialog_addtohomescreen_action_add">افزودن</string>
+
+    <!-- Label of the action that will close the dialog and not add anything to the home screen (shown in the confirmation dialog). -->
+    <string name="dialog_addtohomescreen_action_cancel">انصراف</string>
+
+    <!-- When tracking protection is disabled for the current session then we will show this warning in the "Add to home screen" dialog to
+         let the user know that the shortcut will always be opened with tracking protection disabled. -->
+    <string name="dialog_addtohomescreen_tracking_protection">میان‌بر بدون محافظت در برابر ردگیری باز خواهد شد</string>
+
+    <!-- The user visible name of the "notification channel" (Android 8+ feature) for the ongoing notification shown while a browsing session is active.
+    The recommended maximum length is 40 characters; the value may be truncated if it is too long.
+
+    * To understand what notification channels are, see: https://www.androidcentral.com/notification-channels
+    * To see how this string will look like in Android's UI, see: https://github.com/mozilla-mobile/focus-android/issues/863#issuecomment-324105723
+    -->
+    <string name="notification_browsing_session_channel_name">نشستِ مرور ناشناس</string>
+
+    <!-- The user visible description of the "notification channel" (Android 8+ feature) for the ongoing notification shown while a browsing session is active.
+    The recommended maximum length is 300 characters; the value may be truncated if it is too long. %1$s will be replaced with the name of the app (e.g. Firefox Focus).
+
+    * To understand what notification channels are, see: https://www.androidcentral.com/notification-channels
+    * To see how this string will look like in Android's UI, see: https://github.com/mozilla-mobile/focus-android/issues/863#issuecomment-324105723
+    -->
+    <string name="notification_browsing_session_channel_description">اعلان‌ها امکان پاک کردن اطلاعات نشستِ %1$s را با یک ضربه به شما می‌دهند. لازم نیست که برنامه را باز کنید یا ببینید که چه چیزی در مرورگر در حال اجراست.</string>
+
+    <!-- Label for a button in the "tabs tray" to erase the browsing history (closes all tabs and removes associated data). -->
+    <string name="tabs_tray_action_erase">پاک کردن تاریخچهٔ مرور</string>
+
+    <!-- If the user decides to open the current page in another browser and if Firefox is not installed then we show this
+      item in the list of browsers. Clicking it will open the app store installed on the device (usually that's Google Play). -->
+    <string name="download_firefox">دریافت فایرفاکس</string>
+
+    <!-- Text shown in the "Your rights" screen.
+    %1$s will be replaced with the name of the app (e.g. Firefox Focus)-->
+    <string name="your_rights_content1"><![CDATA[%1$s نرم‌افزاری آزاد و متن‌باز است که توسط موزیلا و سایر مشارکت کنندگان ساخته شده است.]]></string>
+
+    <!-- Text shown in the "Your rights" screen.
+    %1$s will be replaced with the name of the app (e.g. Firefox Focus)
+    %2$s will be replaced with a URL linking to the MPL (e.g. https://www.mozilla.org/en-US/MPL/) -->
+    <string name="your_rights_content2"><![CDATA[%1$s تحت شرایط <a href="%2$s">گواهینامه عمومی موزیلا</a> و گواهینامه‌‌‌های دیگر متن باز در دسترس شما است.]]></string>
+
+    <!-- Text shown in the "Your rights" screen.
+    %1$s will be replaced with the name of the app (e.g. Firefox Focus)
+    %2$s will be replaced with a URL linking to the trademark policy (e.g. https://www.mozilla.org/foundation/trademarks/policy/) -->
+    <string name="your_rights_content3"><![CDATA[به شما هیچ گونه اجازه یا گواهی‌ای برای علامت‌های تجاری بنیاد موزیلا یا هر شخص ثالثی، شامل موزیلا، فایرفاکس یا نام‌ها یا نشان‌های %1$s اعطا نشده است. اطّلاعات بیشتر ممکن است در <a href="%2$s">اینجا</a> یافت شوند.]]></string>
+
+    <!-- Text shown in the "Your rights" screen.
+    %1$s will be replaced with the name of the app (e.g. Firefox Focus)
+    %2$s will be replaced with a URL linking to the list of licenses used by the dependencies.-->
+    <string name="your_rights_content4"><![CDATA[کد منبع بیشتری برای %1$s تحت تعداد دیگری از <a href="%2$s"> گواهینامه‌های</a> آزاد و متن باز در دسترس است.]]></string>
+
+    <!-- Text shown in the "Your rights" screen.
+    %1$s will be replaced with the name of the app (e.g. Firefox Focus)
+    %2$s will be replaced with a URL linking to the GPL
+    %3$s will be replaced with a URL linking to the tracking protection wiki page (e.g. https://wiki.mozilla.org/Security/Tracking_protection#Lists) -->
+    <string name="your_rights_content5"><![CDATA[%1$s همچنین از فهرست‌های مسدودی فراهم شده توسط Disconnect استفاده می‌کند. به عنوان کارهای جدا و مستقل تحت <a href="%2$s">گواهینامه عمومی GNU نسخه3</a>،‌ و <a href="%3$s">اینجا</a> در دسترس است.]]></string>
+
+    <!-- Text shown in prompts for GeckoView -->
+    <string name="gv_prompt_username_hint">نام کاربری</string>
+    <string name="gv_prompt_password_hint">کلمه عبور</string>
+    <string name="gv_prompt_clear">پاک کردن</string>
+
+    <!-- Text shown in Security Information Popup -->
+    <!-- Text to denote secure or insecure connection -->
+    <string name="security_popup_secure_connection">اتصال امن</string>
+    <string name="security_popup_insecure_connection">اتصال ناامن</string>
+    <!-- %1$s will be replaced with organization that granted the SSL certificate -->
+    <string name="security_popup_security_verified">تایید شده توسط:%1$s</string>
+
+    <!-- Content Description of Security Icon in toolbar -->
+    <string name="site_security_icon_content_description">امنیت پایگاه اینترنتی</string>
+    <string name="preference_autocomplete_duplicate_url_error">نشانی قبلاً وجود دارد</string>
+
+    <!-- Label for the Find in page button -->
+    <string name="find_in_page">یافتن در صفحه</string>
+
+    <!-- Watermark/Hint for the find in page input field -->
+    <string name="find_in_page_input">پیدا کردن در صفحه</string>
+
+    <!-- String to show the number of results found in the page and the
+        position the user is at. The first argument is the position, the second argument is the total -->
+    <string name="find_in_page_result">%1$d/%2$d</string>
+    <!-- String to be read by the accessibility service presenting the number of results found in the page
+        and the position the user is at. The first argument is the position, the second argument is the total -->
+    <string name="accessibility_find_in_page_result">%1$d از %2$d</string>
+
+    <!-- String to be read by the accessibility service when focusing the next result button -->
+    <string name="accessibility_next_result">پیدا کردن نتیجه بعدی</string>
+    <!-- String to be read by the accessibility service when focusing the previous result button -->
+    <string name="accessibility_previous_result">پیدا کردن نتیجه قبلی</string>
+    <!-- String to be read by the accessibility service when focusing the dismiss button in the "find in page" UI -->
+    <string name="accessibility_dismiss_find_in_page">رد کردن پیدا کردن در این صفحه</string>
+    
+    <!-- Http Authentication Popup: Title -->
+    <string name="http_auth_dialog_title">تایید هویت لازم است</string>
+    <!-- Http Authentication Popup: Username -->
+    <string name="http_auth_dialog_username">نام کاربری</string>
+    <!-- Http Authentication Popup: Password -->
+    <string name="http_auth_dialog_password">گذرواژه</string>
+
+    <!-- Checkbox menu item text to request desktop site -->
+    <string name="preference_performance_request_desktop_site">درخواست نسخه رومیزی پایگاه</string>
+
+    <!-- Displayed after a user long presses on the URL in a custom tab to copy the URL -->
+    <string name="custom_tab_copy_url_action">برداشتURL</string>
+
+    <!-- Description of what a user may find in the Advanced Setting category, used for debugging -->
+    <string name="preference_advanced_summary">ابزارهای توسعه دهنده</string>
+
+    <!-- Title of Advanced Setting category -->
+    <string name="preference_category_advanced">پیشرفته</string>
+
+    <!-- Preference to enable remote debugging of the app via USB or Wi-Fi -->
+    <string name="preference_remote_debugging">اشکال زدایی از طریق USB/Wi-Fi</string>
+
+    <!-- Title for the fingerprint authentication dialog box that is shown to the user when opening the app.
+     %1$s is replaced with the app name -->
+    <string name="biometric_auth_title">بازکردن%1$s</string>
+
+    <!-- Description for the fingerprint authentication dialog box that is shown to the user when opening the app -->
+    <string name="biometric_auth_description">سنسور اثرانگشت را برای ادامه لمس کنید.</string>
+
+    <!-- New session button for the fingerprint authentication dialog box that is shown to the user when opening the app.
+     When pressed, the user's previous session is cleared, and authentication is not required. -->
+    <string name="biometric_auth_new_session">جلسه جدید</string>
+
+    <!-- Description for the fingerprint authentication image. Used for accessibility purposes. -->
+    <string name="biometric_auth_image_description">نشانه اثرانگشت</string>
+
+    <!-- Error text displayed when the user's fingerprint cannot be recognized upon re-entering the app.
+     This is displayed during the authentication flow as the app launches. -->
+    <string name="biometric_auth_not_recognized_error">اثرانگشت شناسایی نشد. مجددا تلاش کنید.</string>
+
+    <!-- Error text displayed when the user's fingerprint moved too quickly upon re-entering the app
+    This is displayed during the authentication flow as the app launches.-->
+    <string name="biometric_auth_moved_too_quickly">انگشت خیلی سریع حرکت کرد. مجدد تلاش کنید.</string>
+
+    <!-- Title for the prompt to enable search suggestions -->
+    <string name="enable_search_suggestion_title">آیا مایل هستید پیشنهاد بر روی جست‌وجو خود را فعال کنید؟</string>
+
+    <!-- Description for the prompt to enable search suggestions
+        %1$s will be replaced by the app name (e.g. Firefox Focus)
+        %2$s will be replaced with "Learn more" which will be a tappable link
+        using the string: "enable_search_suggestion_subtitle_learnmore" -->
+    <string name="enable_search_suggestion_subtitle">برای دریافت پیشنهاد روی جست‌وجو، %1$s بایستی موارد تایپ شده در نوار آدرس را برای موتور جست‌وجو انتخاب شده توسط شما ارسال کند.%2$s.</string>
+
+    <!-- String to be placed inside the string: enable_search_suggestion_subtitle,
+        which will be a "Learn More" link. -->
+    <string name="enable_search_suggestion_subtitle_learnmore">بیشتر بدانید</string>
+
+    <!-- Label used for the "NO button" for the prompt to enable search suggestions -->
+    <string name="enable_search_suggestions_no">خیر</string>
+
+    <!-- Label used for the "YES button" for the prompt to enable search suggestions -->
+    <string name="enable_search_suggestions_yes">بله</string>
+
+    <!-- Message displayed when using a search engine that doesn't provide suggestions -->
+    <string name="no_suggestions_message">تعدادی از موتورهای ‌جست‌وجو امکان نمایش پیشنهادات را ندارند.</string>
+
+    <!-- Button to dismiss the message displayed  when using a search engine that doesn't provide suggestions-->
+    <string name="dismiss_no_suggestions_prompt_button">رد کردن</string>
+
+    <!-- Tips displayed on the home view -->
+
+    <!-- Tip displayed on home view explaining how to disable tracking protection
+    The new line here must be kept as the second half of the string is clickable for the user. -->
+    <string name="tip_disable_tracking_protection">سایت رفتار غیرمنتظره‌ای دارد؟
+ محافظت از دنبال کردن را خاموش کنید</string>
+
+    <!-- Tip displayed on home view explaining how to add sites to homescreen
+    Argument 1 will be replaced with a line break in the application.-->
+    <string name="tip_add_to_homescreen"><![CDATA[با اشاره یک انگشت به سایت های پربازدید خود دسترسی داشته باشید%1$s فهرست> اضافه کردن به صفحه خانگی]]></string>
+
+    <!-- Tip displayed on home view explaining how to make Focus the default browser
+    Argument 1 is the app name (Firefox Focus/Firefox Klar/etc).
+    The new line here must be kept as the second half of the string is clickable for the user. -->
+    <string name="tip_set_default_browser">بازکردن هر پیوندی در %1$s
+ تنظیم%1$s به عنوان مرورگر پیش فرض</string>
+
+    <!-- Tip displayed on home view explaining how to add a custom autocomplete URL
+    The new line here must be kept as the second half of the string is clickable for the user. -->
+    <string name="tip_autocomplete_url">پرکردن خودکارURLs برای سایت های پربازدید شما
+ نگاه داشتن بیشتر انگشت بر روی هر URL در نوار آدرس برای انجام این کار</string>
+
+    <!-- Tip displayed on home view explaining how to add a custom autocomplete URL
+    The new line here must be kept as the second half of the string is clickable for the user. -->
+    <string name="tip_open_in_new_tab">بازکردن یک پیوند در زبانه جدید
+ نگاه داشتن بیشتر انگشت برای باز کردن پیوند در صفحه</string>
+
+    <!-- Tip displayed on home view explaining how to request the desktop version of a website.
+     Argument 1 will be replaced with a line break in the application. -->
+    <string name="tip_request_desktop"><![CDATA[ترجیح به دیدن نسخه رومیزی وب‌سایت؟%1$s فهرست > درخواست نسخه رومیزی وب‌سایت]]></string>
+
+    <!-- deprecated strings -->
+    <string name="tip_disable_tips">خاموش کردن نکات بر روی صفحه آغازین %1$s</string>
+    <string name="preference_switch_autocomplete">تکمیل خودکار</string>
+    <string name="preference_category_autocomplete_preinstalled">فهرستِ پیش‌فرض URL</string>
+    <string name="preference_autocomplete_preinstalled_summary">برای داشتن تکمیل خودکار %1$s برای بیش از ۴۵۰ نشانی محبوب در نوار آدرس، فعال کنید.</string>
+    <string name="preference_category_autocomplete_custom_urls">نشانی‌های سفارشی</string>
+    <string name="preference_autocomplete_subitem_customlist">نشانی‌های سفارشی</string>
+  </resources>

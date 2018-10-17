@@ -1,233 +1,691 @@
-<?xml version='1.0' encoding='utf-8'?>
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <string name="action_cancel">取消</string>
-  <string name="action_ok">确定</string>
-  <string name="action_save">保存</string>
-  <string name="urlbar_hint">搜索或输入网址</string>
-  <string name="teaser">全自动的私密浏览。\n无痕浏览，不必劳心。</string>
-  <string name="feedback_erase">您的浏览记录已清除。</string>
-  <string name="search_hint">搜索 %1$s</string>
-  <string name="menu_share">分享…</string>
-  <string name="menu_report_site_issue">反馈网站问题</string>
-  <string name="menu_open_with_default_browser2">用 %1$s 打开</string>
-  <string name="menu_open_with_a_browser2">打开于…</string>
-  <string name="menu_add_to_home_screen">添加到主屏幕</string>
-  <string name="menu_whats_new">新版变化</string>
-  <string name="menu_settings">设置</string>
-  <string name="menu_about">关于</string>
-  <string name="menu_help">帮助</string>
-  <string name="menu_rights">您的权利</string>
-  <string name="menu_trackers_blocked_title">已屏蔽跟踪器</string>
-  <string name="menu_custom_tab_branding">由 %1$s 提供</string>
-  <string name="share_dialog_title">分享方式</string>
-  <string name="notification_erase_text">清除浏览记录</string>
-  <string name="notification_action_open">打开</string>
-  <string name="notification_action_erase_and_open">清除并打开</string>
-  <string name="shortcut_erase_short_label">清除</string>
-  <string name="shortcut_erase_long_label">清除浏览记录</string>
-  <string name="text_selection_search_action">私密搜索</string>
-  <string name="about_content"><![CDATA[<p xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">%1$s &#35753;&#24744;&#25484;&#25511;&#32447;&#19978;&#29983;&#27963;&#12290;</p>\n<p xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">"&#29992;&#20316;&#38544;&#31169;&#27983;&#35272;&#22120;&#65292;&#21487;&#20197;&#65306;\n  "<ul>"\n    "<li>&#30452;&#25509;&#22312;&#24212;&#29992;&#20013;&#25628;&#32034;&#21644;&#27983;&#35272;</li>"\n    "<li>&#25318;&#25130;&#36319;&#36394;&#22120;&#65288;&#20063;&#21487;&#35843;&#25972;&#20026;&#20801;&#35768;&#36319;&#36394;&#22120;&#65289;</li>"\n    "<li>&#33258;&#21160;&#28165;&#38500; Cookie&#12289;&#25628;&#32034;&#35760;&#24405;&#21644;&#27983;&#35272;&#35760;&#24405;</li>"\n  "</ul>\n</p>\n<p xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">%1$s &#30001; Mozilla &#20986;&#21697;&#12290;&#25105;&#20204;&#30340;&#20351;&#21629;&#26159;&#20419;&#25104;&#20581;&#24247;&#12289;&#24320;&#25918;&#30340;&#20114;&#32852;&#32593;&#12290;<br/>\n<a href="%2$s">&#35814;&#32454;&#20102;&#35299;</a></p>]]></string>
-  <string name="preference_privacy_and_security_header">隐私与安全</string>
-  <string name="preference_privacy_and_security_summary">跟踪、Cookie、数据反馈</string>
-  <string name="preference_search_summary">设置默认引擎、自动补全</string>
-  <string name="preference_mozilla_summary">关于 %1$s、使用说明</string>
-  <string name="preference_category_tracking_protection">跟踪保护</string>
-  <string name="preference_category_web_content">网络内容</string>
-  <string name="preference_category_switching_apps">切换应用程序</string>
-  <string name="preference_category_general">常规</string>
-  <string name="preference_category_data_collection_use">数据收集与使用</string>
-  <string name="preference_category_search">搜索</string>
-  <string name="preference_show_search_suggestions">获取搜索建议</string>
-  <string name="preference_show_search_suggestions_summary">%1$s 会将您在地址栏中输入的内容发送至您的搜索引擎</string>
-  <string name="preference_search_engine_default">默认</string>
-  <string name="preference_state_on">开</string>
-  <string name="preference_state_off">关</string>
-  <string name="preference_subitem_autocomplete">网址自动补全</string>
-  <string name="preference_switch_autocomplete">自动补全</string>
-  <string name="preference_category_autocomplete_preinstalled">默认网址列表</string>
-  <string name="preference_autocomplete_preinstalled_summary">开启之后，%1$s 地址栏可以自动补全超过 450 个热门网站。</string>
-  <string name="preference_category_autocomplete_custom_urls">自定义网址</string>
-  <string name="preference_autocomplete_subitem_customlist">自定义网址</string>
-  <string name="preference_autocomplete_action_add">+ 添加自定义网址</string>
-  <string name="preference_autocomplete_title_add">添加自定义网址</string>
-  <string name="custom_autocomplete_quick_add">添加自定义网址</string>
-  <string name="preference_category_cookies">Cookie 和网站数据</string>
-  <string name="preference_category_data_choices">数据反馈</string>
-  <string name="preference_autocomplete_title_remove">移除自定义网址</string>
-  <string name="preference_autocomplete_learn_more">详细了解</string>
-  <string name="preference_autocomplete_custom_summary">添加和管理自定义的自动补全网址。</string>
-  <string name="preference_autocomplete_add_title">要添加的网址</string>
-  <string name="preference_autocomplete_add_hint">粘贴或输入网址</string>
-  <string name="preference_autocomplete_add_example2">示例：mozilla.org</string>
-  <string name="preference_autocomplete_add_example">例如：example.com</string>
-  <string name="preference_autocomplete_add_confirmation">已添加新的自定义网址。</string>
-  <string name="preference_autocomplete_menu_remove">移除</string>
-  <string name="preference_autocomplete_action_remove_content_description">移除</string>
-  <string name="preference_autocomplete_add_error">请复查您输入的网址。</string>
-  <string name="preference_language">语言</string>
-  <string name="preference_language_systemdefault">系统默认</string>
-  <string name="preference_category_privacy">隐私</string>
-  <string name="preference_privacy_block_ads">拦截广告跟踪器</string>
-  <string name="preference_privacy_block_ads_summary">一些广告跟踪您的访问，即便您没有点击广告</string>
-  <string name="preference_privacy_block_analytics">拦截分析跟踪器</string>
-  <string name="preference_privacy_block_analytics_summary">会收集、分析和测量您的活动，例如点击与滚动</string>
-  <string name="preference_privacy_block_social">拦截社交跟踪器</string>
-  <string name="preference_privacy_block_social_summary">嵌入到网站上从而跟踪您的访问和显示分享按钮</string>
-  <string name="preference_privacy_block_content">拦截其他内容跟踪器</string>
-  <string name="preference_privacy_block_content_summary2">启用可能导致部分网站工作异常</string>
-  <string name="preference_privacy_category_cookies">阻止 Cookie</string>
-  <string name="preference_privacy_should_block_cookies_no_option">否</string>
-  <string name="preference_privacy_should_block_cookies_third_party_only_option">仅阻止第三方 Cookie</string>
-  <string name="preference_privacy_should_block_cookies_yes_option">是</string>
-  <string name="preference_security_biometric">使用指纹解锁应用</string>
-  <string name="preference_security_biometric_summary">如果应用内有已打开的网址，您需用指纹解锁 %1$s。隐形模式将被开启。</string>
-  <string name="preference_privacy_secure_mode">隐形</string>
-  <string name="preference_privacy_stealth_summary">切换应用时隐藏网页内容，并阻止截屏、投屏。</string>
-  <string name="preference_category_security">安全</string>
-  <string name="preference_category_performance">性能</string>
-  <string name="preference_performance_block_webfonts">拦截网络字体</string>
-  <string name="preference_performance_block_webfonts_summary">可能造成图标或图像缺失</string>
-  <string name="preference_performance_block_javascript">阻止 JavaScript</string>
-  <string name="preference_performance_block_javascript_summary">页面加载可能更快，但可能遭遇意外状况</string>
-  <string name="preference_default_browser2">使 %1$s 成为默认浏览器</string>
-  <string name="preference_category_mozilla">Mozilla</string>
-  <string name="preference_mozilla_telemetry2">发送使用统计</string>
-  <string name="preference_mozilla_telemetry_summary">详细了解</string>
-  <string name="preference_mozilla_telemetry_summary2">Mozilla 坚持仅收集用来为大众改进 %1$s 所必需的数据。</string>
-  <string name="preference_privacy_notice">隐私声明</string>
-  <string name="preference_about">关于 %1$s</string>
-  <string name="preference_search_installed_search_engines">已安装的搜索引擎</string>
-  <string name="preference_search_restore">恢复默认搜索引擎</string>
-  <string name="preference_search_add2">添加更多搜索引擎</string>
-  <string name="preference_search_remove_title">移除搜索引擎</string>
-  <string name="preference_search_remove">移除</string>
-  <string name="preference_homescreen_tips">显示主屏幕提示</string>
-  <string name="action_option_add_search_engine">添加搜索引擎</string>
-  <string name="search_add_manually_name_hint">搜索引擎名称</string>
-  <string name="search_add_manually_string">搜索字符串</string>
-  <string name="search_add_manually_save">保存</string>
-  <string name="search_add_manually_example">例如：example.com/search/?q=%s</string>
-  <string name="search_add_confirmation">已添加新的搜索引擎。</string>
-  <string name="search_add_error_empty_name">输入搜索引擎名称</string>
-  <string name="search_add_error_duplicate_name">一个已安装的搜索引擎已在使用该名称。</string>
-  <string name="search_add_error_empty_search">输入搜索字符串</string>
-  <string name="search_add_error_format">请检查搜索字符串与示例格式是否匹配</string>
-  <string name="content_description_clear_input">清空输入内容</string>
-  <string name="content_description_dismiss_input">关闭</string>
-  <string name="content_description_erase">清除浏览记录</string>
-  <string name="content_description_tab_counter">已打开 %1$s 个标签页</string>
-  <string name="content_description_lock">安全连接</string>
-  <string name="accessibility_announcement_loading">正在载入</string>
-  <string name="accessibility_announcement_loading_finished">网站已载入</string>
-  <string name="content_description_menu">更多选项</string>
-  <string name="content_description_forward">浏览下一页</string>
-  <string name="content_description_reload">重新载入网站</string>
-  <string name="content_description_back">浏览上一页</string>
-  <string name="content_description_stop">停止载入网站</string>
-  <string name="content_description_customtab_exit">返回之前的应用</string>
-  <string name="content_description_trackers_blocked">拦截的跟踪器数量</string>
-  <string name="content_description_blocking_switch">拦截跟踪器</string>
-  <string name="your_rights">您的权利</string>
-  <string name="external_app_prompt_title">用另一个应用打开链接</string>
-  <string name="external_app_prompt">您可以离开 %1$s，用 %2$s 打开此链接。</string>
-  <string name="external_app_prompt_no_app_title">寻找可以打开此链接的应用</string>
-  <string name="external_app_prompt_no_app">您的设备上的应用都不能打开此链接。您可以离开 %1$s，到 %2$s 找找适合的应用。</string>
-  <string name="external_multiple_apps_matched_exit">退出隐私浏览模式？</string>
-  <string name="download_snackbar_finished">%1$s 下载完毕</string>
-  <string name="download_snackbar_open">打开</string>
-  <string name="download_dialog_warning"><![CDATA[清除 %1$s 的历史记录时，<b xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">&#19981;&#20250;&#21024;&#38500;</b>已下载的文件。]]></string>
-  <string name="download_dialog_title">下载文件</string>
-  <string name="download_dialog_action_cancel">取消</string>
-  <string name="download_dialog_action_download">下载</string>
-  <string name="errorpage_title">页面载入出错</string>
-  <string name="errorpage_refresh">重试</string>
-  <string name="error_connectionfailure_title">无法连接</string>
-  <string name="error_connectionfailure_message"><![CDATA[<ul xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">"\n        "<li>&#35813;&#32593;&#31449;&#21487;&#33021;&#26242;&#26102;&#19981;&#21487;&#29992;&#25110;&#22826;&#24537;&#20102;&#12290;&#19968;&#20250;&#20799;&#20877;&#35797;&#35797;&#21543;&#12290;</li>"\n        "<li>&#22914;&#26524;&#20320;&#26080;&#27861;&#36733;&#20837;&#20219;&#20309;&#39029;&#38754;&#65292;&#35831;&#26816;&#26597;&#24744;&#30340;&#31227;&#21160;&#35774;&#22791;&#30340;&#25968;&#25454;&#25110; Wi-Fi &#36830;&#25509;&#12290;</li>"\n      "</ul>]]></string>
-  <string name="error_timeout_title">连接超时</string>
-  <string name="error_hostLookup_title">找不到服务器</string>
-  <string name="error_hostLookup_message"><![CDATA[<ul xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">"\n        "<li>"&#35831;&#26816;&#26597;&#35813;&#22320;&#22336;&#26159;&#21542;&#36755;&#38169;&#65292;&#27604;&#22914;&#23558;\n          "<strong>www</strong>".example.com &#38169;&#20889;&#25104; \n          "<strong>ww</strong>.example.com</li>"\n        "<li>&#22914;&#26524;&#24744;&#26080;&#27861;&#36733;&#20837;&#20219;&#20309;&#39029;&#38754;&#65292;&#35831;&#26816;&#26597;&#35813;&#35774;&#22791;&#30340;&#25968;&#25454;&#25110; Wi-Fi &#36830;&#25509;&#12290;</li>"\n      "</ul>]]></string>
-  <string name="error_malformedURI_title">地址无效</string>
-  <string name="error_malformedURI_message"><![CDATA[<ul xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">"\n  "<li>"&#32593;&#39029;&#22320;&#22336;&#36890;&#24120;&#26684;&#24335;&#20026; "<strong>http://www.example.com/</strong></li>"\n  "<li>"&#35831;&#30830;&#35748;&#24744;&#20351;&#29992;&#30340;&#26159;&#27491;&#26012;&#26464;&#65288;&#21363; "<strong>/</strong>&#65289;&#12290;</li>\n</ul>]]></string>
-  <string name="error_redirectLoop_title">此页面不正确地重定向</string>
-  <string name="error_redirectLoop_message"><![CDATA[<ul xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">"\n  "<li>&#26377;&#26102;&#20505;&#31105;&#29992;&#25110;&#25298;&#32477;&#25509;&#21463; Cookie &#20250;&#23548;&#33268;&#27492;&#38382;&#39064;&#12290;</li>\n</ul>]]></string>
-  <string name="error_unsupportedprotocol_title">无法理解该地址</string>
-  <string name="error_unsupportedprotocol_message"><![CDATA[<ul xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">"\n  "<li>&#24744;&#21487;&#33021;&#38656;&#35201;&#23433;&#35013;&#20854;&#20182;&#36719;&#20214;&#25165;&#33021;&#25171;&#24320;&#27492;&#22320;&#22336;&#12290;</li>\n</ul>]]></string>
-  <string name="error_sslhandshake_title">安全连接失败</string>
-  <string name="error_sslhandshake_message"><![CDATA[<ul xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">"\n  "<li>&#36825;&#21487;&#33021;&#26159;&#26381;&#21153;&#22120;&#37197;&#32622;&#30340;&#38382;&#39064;&#65292;&#25110;&#32773;&#26377;&#20154;&#23581;&#35797;&#20882;&#20805;&#35813;&#26381;&#21153;&#22120;&#25152;&#33268;&#12290;</li>"\n  "<li>&#22914;&#26524;&#24744;&#20043;&#21069;&#26366;&#25104;&#21151;&#36830;&#25509;&#35813;&#26381;&#21153;&#22120;&#65292;&#37027;&#20040;&#27492;&#38169;&#35823;&#21487;&#33021;&#26159;&#26242;&#26102;&#30340;&#65292;&#24744;&#21487;&#20197;&#31245;&#21518;&#20877;&#35797;&#12290;</li>\n</ul>]]></string>
-  <string name="error_generic_title">啊哦</string>
-  <string name="error_generic_message">由于某些原因，我们无法载入此页面。</string>
-  <string name="contextmenu_link_share">分享链接</string>
-  <string name="contextmenu_link_copy">复制链接地址</string>
-  <string name="contextmenu_image_share">分享图像</string>
-  <string name="contextmenu_image_copy">复制图像地址</string>
-  <string name="contextmenu_image_save">保存图像</string>
-  <string name="contextmenu_open_in_new_tab">新建标签页打开链接</string>
-  <string name="contextmenu_image_warning"><![CDATA[清除 %1$s 的历史记录时，<b xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">&#19981;&#20250;&#21024;&#38500;</b>已保存和已分享的图像。]]></string>
-  <string name="firstrun_defaultbrowser_title">强化您的隐私</string>
-  <string name="firstrun_defaultbrowser_text2">隐私浏览模式变得更强大了。能拦截广告，还能拦截在不同网站跟踪您，又拖慢网页载入的内容。</string>
-  <string name="firstrun_search_title">用你的方式搜你所寻</string>
-  <string name="firstrun_search_text">想搜点不一样的东西？可在设置里选择换个默认搜索引擎。</string>
-  <string name="firstrun_shortcut_title">在主屏幕中添加快捷方式</string>
-  <string name="firstrun_shortcut_text">快速用 %1$s 回到您喜爱的网站。只需在 %1$s 菜单中选择“添加到主屏幕”。</string>
-  <string name="firstrun_privacy_title">让隐私成为一种习惯</string>
-  <string name="firstrun_privacy_text">将 %1$s 设为您的默认浏览器，用其他应用打开网页时即可享受隐私浏览。</string>
-  <string name="firstrun_close_button">明白了！</string>
-  <string name="firstrun_skip_button">跳过</string>
-  <string name="firstrun_next_button">下一步</string>
-  <string name="content_blocking_disabled">-</string>
-  <string name="dialog_addtohomescreen_action_add">添加</string>
-  <string name="dialog_addtohomescreen_action_cancel">取消</string>
-  <string name="dialog_addtohomescreen_tracking_protection">快捷方式打开时跟踪保护将被禁用</string>
-  <string name="notification_browsing_session_channel_name">隐私浏览会话</string>
-  <string name="notification_browsing_session_channel_description">通知您可以一键清除您的 %1$s 浏览记录。清除无需打开应用或查看浏览器中的内容。</string>
-  <string name="tabs_tray_action_erase">清除浏览记录</string>
-  <string name="download_firefox">下载 Firefox</string>
-  <string name="your_rights_content1">%1$s 是由 Mozilla 及贡献者制作的一款自由的开源软件。</string>
-  <string name="your_rights_content2"><![CDATA["%1$s 依照 "<a xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2" href="%2$s">Mozilla &#20844;&#20849;&#35768;&#21487;&#35777;</a>及其他一些开源许可证向您授权。]]></string>
-  <string name="your_rights_content3"><![CDATA[您没有取得 Mozilla 基金会或任何一方的商标的任何权利或许可，包括 Mozilla、Firefox 和 %1$s 名称或徽标的许可。有关信息请查阅<a xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2" href="%2$s">&#27492;&#22788;</a>。]]></string>
-  <string name="your_rights_content4"><![CDATA[%1$s 其他源代码以各类自由和开源<a xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2" href="%2$s">&#35768;&#21487;&#35777;</a>开放。]]></string>
-  <string name="your_rights_content5"><![CDATA["%1$s 还使用 Disconnect 公司提供的阻止列表，它是以 "<a xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2" href="%2$s">GNU &#36890;&#29992;&#20844;&#20849;&#35768;&#21487;&#35777; v3</a>" 提供的一个独立的作品，可在"<a xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2" href="%3$s">&#36825;&#37324;</a>找到。]]></string>
-  <string name="gv_prompt_username_hint">用户名</string>
-  <string name="gv_prompt_password_hint">密码</string>
-  <string name="gv_prompt_clear">清除</string>
-  <string name="security_popup_secure_connection">安全连接</string>
-  <string name="security_popup_insecure_connection">不安全连接</string>
-  <string name="security_popup_security_verified">验证机构：%1$s</string>
-  <string name="site_security_icon_content_description">网站安全性</string>
-  <string name="preference_autocomplete_duplicate_url_error">网址已存在</string>
-  <string name="find_in_page">在页面中查找</string>
-  <string name="find_in_page_input">在此页面中查找</string>
-  <string name="find_in_page_result">%1$d/%2$d</string>
-  <string name="accessibility_find_in_page_result">第 %1$d 项，共 %2$d 个匹配项</string>
-  <string name="accessibility_next_result">查找下一个结果</string>
-  <string name="accessibility_previous_result">查找上一个结果</string>
-  <string name="accessibility_dismiss_find_in_page">关闭页内查找</string>
-  <string name="http_auth_dialog_title">需要验证身份</string>
-  <string name="http_auth_dialog_username">用户名</string>
-  <string name="http_auth_dialog_password">密码</string>
-  <string name="preference_performance_request_desktop_site">要求桌面版网站</string>
-  <string name="custom_tab_copy_url_action">已复制网址</string>
-  <string name="preference_advanced_summary">开发者工具</string>
-  <string name="preference_category_advanced">高级</string>
-  <string name="preference_remote_debugging">通过 USB/Wi-Fi 远程调试</string>
-  <string name="biometric_auth_title">解锁 %1$s</string>
-  <string name="biometric_auth_description">触摸指纹传感器以继续。</string>
-  <string name="biometric_auth_new_session">新会话</string>
-  <string name="biometric_auth_image_description">指纹图标</string>
-  <string name="biometric_auth_not_recognized_error">指纹无法识别。请重试。</string>
-  <string name="biometric_auth_moved_too_quickly">手指移动太快。请重试。</string>
-  <string name="enable_search_suggestion_title">想要开启搜索建议吗？</string>
-  <string name="enable_search_suggestion_subtitle">为获取搜索建议，%1$s 需将您在地址栏中输入的内容发送至您选择的搜索引擎。%2$s。</string>
-  <string name="enable_search_suggestion_subtitle_learnmore">详细了解</string>
-  <string name="enable_search_suggestions_no">否</string>
-  <string name="enable_search_suggestions_yes">是</string>
-  <string name="no_suggestions_message">某些搜索引擎无法显示建议。</string>
-  <string name="dismiss_no_suggestions_prompt_button">关闭</string>
-  <string name="tip_disable_tracking_protection">网站表现异常？\n 尝试关闭跟踪保护</string>
-  <string name="tip_add_to_homescreen">一键访问您的常用网站%1$s菜单 &gt; 添加到主屏幕</string>
-  <string name="tip_set_default_browser">在 %1$s 中打开链接\n 将 %1$s 设为默认浏览器</string>
-  <string name="tip_autocomplete_url">自动补全您的常用网站地址\n 长按地址栏的中任一链接</string>
-  <string name="tip_open_in_new_tab">新建标签页打开链接\n 长按页面上的任一链接</string>
-  <string name="tip_request_desktop">想查看更完整的桌面版网站？%1$s菜单 &gt; 要求桌面版网站</string>
-  <string name="tip_disable_tips">关闭 %1$s 启动页上的小提示</string>
-</resources>
+    <!-- ####################################################################################### -->
+    <!-- ## Put only strings into this file that should be translated. Move all other strings ## -->
+    <!-- ## into a separate file like strings_references.xml                                  ## -->
+    <!-- ####################################################################################### -->
+
+    <!-- Label used for buttons, e.g. in dialogs -->
+    <string name="action_cancel">取消</string>
+    <!-- Label used for buttons, e.g. in dialogs -->
+    <string name="action_ok">确定</string>
+
+    <string name="action_save">保存</string>
+
+    <!-- This text is shown in the URL bar when it's empty -->
+    <string name="urlbar_hint">搜索或输入网址</string>
+
+    <string name="teaser">全自动的私密浏览。
+无痕浏览，不必劳心。</string>
+
+    <!-- "Snackbar" shown after the user has pressed the 'erase' button at the end of a browsing session -->
+    <string name="feedback_erase">您的浏览记录已清除。</string>
+
+    <!-- This label is shown below the URL bar as soon as the user enters text. Clicking the label will perform a search -->
+    <string name="search_hint">搜索 %1$s</string>
+
+    <!-- Menu item: Share the currently visible page -->
+    <string name="menu_share">分享…</string>
+
+    <!-- Menu item: Report an issue on the current site -->
+    <string name="menu_report_site_issue">反馈网站问题</string>
+
+    <!-- Menu item: Switch to another browser to open the currently visible page. %1$s will be
+      replaced with the name of the browser like: "Open in Firefox" or "Open in Chrome". Some
+      links can be opened by native apps that aren't a browser, e.g. "Open in YouTube" -->
+    <string name="menu_open_with_default_browser2">用 %1$s 打开</string>
+
+    <!-- Menu item: Switch to another browser to open the currently visible page. This menu item
+      will be shown if there are multiple browsers and we do not know which one is the default
+      browser or in case Focus is actually the default browser. Clicking this menu item will show
+      a screen with multiple browsers (or other apps that can open the current URL) to choose from. -->
+    <string name="menu_open_with_a_browser2">打开于…</string>
+
+    <!-- Menu item: Add the current page as a shortcut to the device's home screen (launcher). -->
+    <string name="menu_add_to_home_screen">添加到主屏幕</string>
+
+    <!-- Menu item: Shows information about features and changes that are new to this version -->
+    <string name="menu_whats_new">新版变化</string>
+    <string name="menu_settings">设置</string>
+    <string name="menu_about">关于</string>
+    <string name="menu_help">帮助</string>
+    <string name="menu_rights">您的权利</string>
+
+    <!-- Menu item: This is the label for a menu entry that shows how many trackers have been blocked
+         for the currently loaded website. The number of blocked trackers is shown below this label.
+         Next to this label is a switch that allows the user to temporarily enable / disable the
+         blocking of trackers for the current browsing session - for example if the current website
+         doesn't work correctly with blocked content. -->
+    <string name="menu_trackers_blocked_title">已屏蔽跟踪器</string>
+
+    <!-- This is a small text at the bottom of the menu shown in a "custom tab" for branding purposes.
+     See https://github.com/mozilla-mobile/focus-android/issues/2106
+      %1$s will be replaced by the app name (e.g. Firefox Focus) -->
+    <string name="menu_custom_tab_branding">由 %1$s 提供</string>
+
+    <!-- This is the title of a dialog that shows all the share targets (apps or contacts) when
+         sharing an URL. -->
+    <string name="share_dialog_title">分享方式</string>
+
+    <!-- While a browsing session is active (in the foreground or background) we will show a notification
+         so that the user doesn't forget about the website still being open. This text is shown in
+         the notification. Clicking the notification will have the same effect as clicking the "erase"
+         button in the application. -->
+    <string name="notification_erase_text">清除浏览记录</string>
+
+    <!-- Notification action to open Focus and resume the current browsing session. -->
+    <string name="notification_action_open">打开</string>
+
+    <!-- Notification action to erase the current browsing session AND switch to Focus (bring it
+         to the foreground) -->
+    <string name="notification_action_erase_and_open">清除并打开</string>
+
+    <!-- On Android 7+ users can add a shortcut for erasing the browsing history to the home screen.
+         This is the label for this shortcut. Android recommends a maximum length of 10 characters. -->
+    <string name="shortcut_erase_short_label">清除</string>
+
+    <!-- The same as 'shortcut_erase_short_label' but more descriptive. The launcher shows this
+         instead of the short title when it has enough space. Android recommends a maximum length
+         of 25 characters. -->
+    <string name="shortcut_erase_long_label">清除浏览记录</string>
+
+    <!-- This is the label of an action we offer when the user selects text in other third-party apps.
+         Clicking this action will launch Focus and perform a search in the default search engine. -->
+    <string name="text_selection_search_action">私密搜索</string>
+
+    <!-- Content of about focus. Argument 1 is the app name (Firefox Focus/Firefox Klar/etc).
+         Argument 2 is the url for the learn-more link. -->
+    <string name="about_content"><![CDATA[<p>%1$s 让您掌控线上生活。</p>
+<p>用作隐私浏览器，可以：
+  <ul>
+    <li>直接在应用中搜索和浏览</li>
+    <li>拦截跟踪器（也可调整为允许跟踪器）</li>
+    <li>自动清除 Cookie、搜索记录和浏览记录</li>
+  </ul>
+</p>
+<p>%1$s 由 Mozilla 出品。我们的使命是促成健康、开放的互联网。<br/>
+<a href="%2$s">详细了解</a></p>]]></string>
+
+    <!-- Header for the Privacy and Security settings menu -->
+    <string name="preference_privacy_and_security_header">隐私与安全</string>
+
+    <!-- Preference summary for settings related to privacy and security -->
+    <string name="preference_privacy_and_security_summary">跟踪、Cookie、数据反馈</string>
+
+    <!-- Preference category description for settings related to search, set default
+    and autocomplete are settings a user can find and change inside the "search" settings screen -->
+    <string name="preference_search_summary">设置默认引擎、自动补全</string>
+
+    <!-- Preference category description for settings screen for settings related to Mozilla -->
+    <!-- About the app and help are links that are inside this menu -->
+    <!-- %1$s will be replaced by the app name (e.g. Firefox Focus) -->
+    <string name="preference_mozilla_summary">关于 %1$s、使用说明</string>
+
+    <!-- Preference category for ad blocking and tracking protection settings -->
+    <string name="preference_category_tracking_protection">跟踪保护</string>
+
+    <!-- Preference category for settings related to controlling web content -->
+    <string name="preference_category_web_content">网络内容</string>
+
+    <!-- Preference category: stealth settings for while switching apps -->
+    <string name="preference_category_switching_apps">切换应用程序</string>
+
+    <!-- Preference category for General Settings -->
+    <string name="preference_category_general">常规</string>
+
+    <!-- Preference category for settings about sending usage data -->
+    <string name="preference_category_data_collection_use">数据收集与使用</string>
+
+    <string name="preference_category_search">搜索</string>
+
+    <!-- Title of "switch" preference that enables/disables search suggestions -->
+    <string name="preference_show_search_suggestions">获取搜索建议</string>
+    <!-- Description of the preference that enables/disables search suggestions
+        %1$s will be replaced by the app name (e.g. Firefox Focus) -->
+    <string name="preference_show_search_suggestions_summary">%1$s 会将您在地址栏中输入的内容发送至您的搜索引擎</string>
+
+    <!-- This label is shown below the name of the default search engine in settings -->
+    <string name="preference_search_engine_default">默认</string>
+
+    <!-- Text that is shown below a "switch" preference that is enabled. -->
+    <string name="preference_state_on">开</string>
+
+    <!-- Text that is shown below a "switch" preference that is disabled. -->
+    <string name="preference_state_off">关</string>
+
+    <!-- Item in settings that will open a new preference screen for configuring the URL autocomplete behavior. -->
+    <string name="preference_subitem_autocomplete">网址自动补全</string>
+
+    <!-- Action at the bottom of the list of custom autocomplete URLs that will open a new screen to add a new URL to the list. -->
+    <string name="preference_autocomplete_action_add">+ 添加自定义网址</string>
+
+    <!-- Title of the screen for adding custom autocomplete URLs. -->
+    <string name="preference_autocomplete_title_add">添加自定义网址</string>
+
+    <!-- Label for the button to quick add custom autocomplete URLs. -->
+    <string name="custom_autocomplete_quick_add">添加自定义网址</string>
+
+    <!-- Preference category for settings about cookies and site data -->
+    <string name="preference_category_cookies">Cookie 和网站数据</string>
+
+    <!-- Preference category for settings about data choices -->
+    <string name="preference_category_data_choices">数据反馈</string>
+
+    <!-- Title of the screen for removing custom autocomplete URLs. -->
+    <string name="preference_autocomplete_title_remove">移除自定义网址</string>
+
+    <!-- A link to SUMO at autocomplete settings. -->
+    <string name="preference_autocomplete_learn_more">详细了解</string>
+
+    <!-- Preference summary: Custom (user-defined) autocomplete URLs. -->
+    <string name="preference_autocomplete_custom_summary">添加和管理自定义的自动补全网址。</string>
+
+    <!-- Label for the "custom autocomplete URL" input field -->
+    <string name="preference_autocomplete_add_title">要添加的网址</string>
+
+    <!-- "Hint" text for the "custom autocomplete URL" input field. Shown when the field is empty. -->
+    <string name="preference_autocomplete_add_hint">粘贴或输入网址</string>
+
+    <!-- Example how a custom domain autocomplete URL be added (e.g. without http://) -->
+    <string name="preference_autocomplete_add_example2">示例：mozilla.org</string>
+
+    <!-- To be removed once the new hint has been translated -->
+    <string name="preference_autocomplete_add_example">例如：example.com</string>
+
+    <!-- Confirmation "snackbar" shown after a new custom autocomplete URL has been added. -->
+    <string name="preference_autocomplete_add_confirmation">已添加新的自定义网址。</string>
+
+    <!-- Menu item to remove existing autocomplete URLs. -->
+    <string name="preference_autocomplete_menu_remove">移除</string>
+
+    <!-- Content description (not visible, for screen readers etc.): Button that will delete all selected custom autocomplete URLs. -->
+    <string name="preference_autocomplete_action_remove_content_description">移除</string>
+
+    <!-- Error message shown if the entered custom autocomplete URL is not valid or empty. -->
+    <string name="preference_autocomplete_add_error">请复查您输入的网址。</string>
+
+    <string name="preference_language">语言</string>
+    <!-- This is shown when the user hasn't set a focus specific language, i.e. when Focus
+         is using the system default language. -->
+    <string name="preference_language_systemdefault">系统默认</string>
+
+    <string name="preference_category_privacy">隐私</string>
+    <string name="preference_privacy_block_ads">拦截广告跟踪器</string>
+    <string name="preference_privacy_block_ads_summary">一些广告跟踪您的访问，即便您没有点击广告</string>
+    <string name="preference_privacy_block_analytics">拦截分析跟踪器</string>
+    <string name="preference_privacy_block_analytics_summary">会收集、分析和测量您的活动，例如点击与滚动</string>
+    <string name="preference_privacy_block_social">拦截社交跟踪器</string>
+    <string name="preference_privacy_block_social_summary">嵌入到网站上从而跟踪您的访问和显示分享按钮</string>
+    <string name="preference_privacy_block_content">拦截其他内容跟踪器</string>
+    <string name="preference_privacy_block_content_summary2">启用可能导致部分网站工作异常</string>
+    <string name="preference_privacy_category_cookies">阻止 Cookie</string>
+
+    <!-- Three options for Cookie blocking. Yes (All cookies Blocked), Block 3rd-party cookies
+    only (Only 3rd-party Cookies Blocked), No (No cookies blocked) -->
+    <string name="preference_privacy_should_block_cookies_no_option">否</string>
+    <string name="preference_privacy_should_block_cookies_third_party_only_option">仅阻止第三方 Cookie</string>
+    <string name="preference_privacy_should_block_cookies_yes_option">是</string>
+
+    <!-- Preference Title: Biometrics can be used to unlock Focus if the previous session's data was not erased by the user. -->
+    <string name="preference_security_biometric">使用指纹解锁应用</string>
+    <!-- Preference Summary: Biometrics (iris scan, fingerprint, or facial scan) can be used to unlock Focus if the app had a URL
+        open when the app was last run to ensure that only the phone's owner can view a previous session.
+        %1$s will be replaced by the app name (e.g. Firefox Focus) -->
+    <string name="preference_security_biometric_summary">如果应用内有已打开的网址，您需用指纹解锁 %1$s。隐形模式将被开启。</string>
+
+    <!-- Preference Title: Secure Mode is a setting that prevents the app's content to show up in the "recent apps" screen
+         and prevents the user from taking screenshots or casting the app to other displays. -->
+    <string name="preference_privacy_secure_mode">隐形</string>
+    <!-- Preference Summary: Stealth mode (previously "Secure mode") is a setting that prevents the
+     app's content (in our case especially the content of webpages) to show up in the "recent apps"
+     screen. Additionally Android will prevent the user from taking screenshots or casting the app
+     to other displays. -->
+    <string name="preference_privacy_stealth_summary">切换应用时隐藏网页内容，并阻止截屏、投屏。</string>
+
+    <string name="preference_category_security">安全</string>
+
+    <string name="preference_category_performance">性能</string>
+    <string name="preference_performance_block_webfonts">拦截网络字体</string>
+    <!-- This text is shown below the setting for disabling web fonts. Some websites use icons/images from a font and those do not show up if fonts are blocked.-->
+    <string name="preference_performance_block_webfonts_summary">可能造成图标或图像缺失</string>
+
+    <string name="preference_performance_block_javascript">阻止 JavaScript</string>
+    <!-- This text is shown below setting for disabling JavaScript. Some websites may not work correctly when JavaScript is disabled -->
+    <string name="preference_performance_block_javascript_summary">页面加载可能更快，但可能遭遇意外状况</string>
+
+    <!-- This preference does not set Focus as the default browser but instead links to Android's
+     "default apps" settings screen or if not supported by this Android version to a SUMO page describing
+     how to set Focus as a default browser.
+      %1$s will be replaced by the app name (e.g. Firefox Focus) -->
+    <string name="preference_default_browser2">使 %1$s 成为默认浏览器</string>
+
+    <string name="preference_category_mozilla">Mozilla</string>
+    <string name="preference_mozilla_telemetry2">发送使用统计</string>
+
+    <!-- A link to SUMO at the end of the summary (preference_mozilla_telemetry_summary2) of the "Send anonymous usage data" setting. -->
+    <string name="preference_mozilla_telemetry_summary">详细了解</string>
+
+    <!-- %1$s will be replaced with the name of the app (e.g. Firefox Focus) -->
+    <string name="preference_mozilla_telemetry_summary2">Mozilla 坚持仅收集用来为大众改进 %1$s 所必需的数据。</string>
+
+    <!-- In-app link (in settings) to Focus privacy notice. -->
+    <string name="preference_privacy_notice">隐私声明</string>
+
+    <!-- Item in Preferences that shows the about page. Parameter 1 is the app name, i.e. Firefox Focus/Firefox Klar. -->
+    <string name="preference_about">关于 %1$s</string>
+
+    <!-- Header for the list of installed search engines -->
+    <string name="preference_search_installed_search_engines">已安装的搜索引擎</string>
+
+    <!-- Action for restoring the default list of search engines -->
+    <string name="preference_search_restore">恢复默认搜索引擎</string>
+
+    <!-- Action for adding an additional search engine to the list.
+    The "+" is used to emphasize that this is an "add" action -->
+    <string name="preference_search_add2">添加更多搜索引擎</string>
+    <string name="preference_search_remove_title">移除搜索引擎</string>
+    <string name="preference_search_remove">移除</string>
+
+    <!-- Title: Homescreen tips settings toggle to determine whether or not tips are displayed when
+     a user first launches the app. -->
+    <string name="preference_homescreen_tips">显示主屏幕提示</string>
+
+    <!-- Clickable action text that shows when user long-presses on a search engine search field (this is similar to paste or copy when long-pressing a text field) -->
+    <string name="action_option_add_search_engine">添加搜索引擎</string>
+
+    <string name="search_add_manually_name_hint">搜索引擎名称</string>
+    <string name="search_add_manually_string">搜索字符串</string>
+    <string name="search_add_manually_save">保存</string>
+
+    <!-- Example of search engine url -->
+    <string name="search_add_manually_example">例如：example.com/search/?q=%s</string>
+
+    <string name="search_add_confirmation">已添加新的搜索引擎。</string>
+
+    <string name="search_add_error_empty_name">输入搜索引擎名称</string>
+    <string name="search_add_error_duplicate_name">一个已安装的搜索引擎已在使用该名称。</string>
+
+    <string name="search_add_error_empty_search">输入搜索字符串</string>
+
+    <string name="search_add_error_format">请检查搜索字符串与示例格式是否匹配</string>
+
+    <!-- Content description (not visible, for screen readers etc.): Clear text in URL bar -->
+    <string name="content_description_clear_input">清空输入内容</string>
+
+    <!-- Content description (not visible, for screen readers etc.): Clicking on the website overlay
+     while in typing mode will dismiss and go back to the browser. This text will be read when the
+     overlay if focused. See https://github.com/mozilla-mobile/focus-android/issues/50 -->
+    <string name="content_description_dismiss_input">关闭</string>
+
+    <!-- Content description (not visible, for screen readers etc.): Erase button: Erase the browsing
+     history and go back to the home screen. -->
+    <string name="content_description_erase">清除浏览记录</string>
+
+    <!-- If the user has multiple tabs open we will show an addition "floating action button" showing how many tabs are open.
+     This string is not displayed and read only by screenreaders. %1$s will be replaced with the number of open tabs. This
+      button will only be visible when there is more than one tab open (>= 2). -->
+    <string name="content_description_tab_counter">已打开 %1$s 个标签页</string>
+
+    <!-- Content description (not visible, for screen readers etc.): Lock icon showed in the URL bar for
+     https pages.. -->
+    <string name="content_description_lock">安全连接</string>
+
+    <!-- This text is not visible. Instead it will be read by the accessibility service once we start
+     loading a website -->
+    <string name="accessibility_announcement_loading">正在载入</string>
+
+    <!-- This text is not visible. Instead it will be read by the accessibility service once we
+     finished loading a website -->
+    <string name="accessibility_announcement_loading_finished">网站已载入</string>
+
+    <!-- Content description (not visible, for screen readers etc.): "Three dot" menu button. -->
+    <string name="content_description_menu">更多选项</string>
+
+    <!-- Content description (not visible, for screen readers etc.): Navigate forward (browsing history) -->
+    <string name="content_description_forward">浏览下一页</string>
+
+    <!-- Content description (not visible, for screen readers etc.): Reload current website -->
+    <string name="content_description_reload">重新载入网站</string>
+
+    <!-- Content description (not visible, for screen readers etc.): Navigate back (browsing history) -->
+    <string name="content_description_back">浏览上一页</string>
+
+    <!-- Content description (not visible, for screen readers etc.): Stop loading the current website. This button will turn into the refresh button once loading has been completed (see content_description_reload) -->
+    <string name="content_description_stop">停止载入网站</string>
+
+    <!-- Content description (not visible, for screen readers etc.): Custom Tab exit button - closes the custom tab and returns to the previous app. -->
+    <string name="content_description_customtab_exit">返回之前的应用</string>
+
+    <!-- Content description (not visible, for screen readers etc.): This is the description for the ImageView in the menu that displays
+         the number of trackers blocked for the current session -->
+    <string name="content_description_trackers_blocked">拦截的跟踪器数量</string>
+
+    <!-- Content description (not visible, for screen readers etc.): This is the description for the switch in the menu that temporarily disables/enables
+         content blocking for the current session -->
+    <string name="content_description_blocking_switch">拦截跟踪器</string>
+
+    <string name="your_rights">您的权利</string>
+
+    <string name="external_app_prompt_title">用另一个应用打开链接</string>
+    <!-- This string is shown when the user has clicked a link that needs to be opened in a different app.
+         Argument 2 is the external app name, argument 1 is our name (i.e. Firefox Focus, or Firefox Klar). -->
+    <string name="external_app_prompt">您可以离开 %1$s，用 %2$s 打开此链接。</string>
+    <!-- This text is the title of a dialog shown if no app could be found for a custom link protocol. -->
+    <string name="external_app_prompt_no_app_title">寻找可以打开此链接的应用</string>
+    <!-- This text is shown in a dialog if no app could be found for a custom link protocol. %1$s is the name of the app (i.e. Firefox Focus) and %2$s is the name of
+         the app store installed on the device (usually that's Google Play). -->
+    <string name="external_app_prompt_no_app">您的设备上的应用都不能打开此链接。您可以离开 %1$s，到 %2$s 找找适合的应用。</string>
+    <!-- This label is shown above a list of apps that can be used to open a given link -->
+    <string name="external_multiple_apps_matched_exit">退出隐私浏览模式？</string>
+
+    <!-- Snackbar that will be displayed after a download has completed. %1$s will be replaced with the file name. -->
+    <string name="download_snackbar_finished">%1$s 下载完毕</string>
+
+    <!-- Snackbar action to immediately open the successfully downloaded file. -->
+    <string name="download_snackbar_open">打开</string>
+
+    <!-- Download dialog: Warns users that downloaded files will not be deleted even when erasing history. %1$s will be replaced with the app name (i.e. Firefox Focus). -->
+    <string name="download_dialog_warning"><![CDATA[清除 %1$s 的历史记录时，<b>不会删除</b>已下载的文件。]]></string>
+
+    <!-- Title of download dialogue -->
+    <string name="download_dialog_title">下载文件</string>
+
+    <!-- Option in download dialogue to cancel a download -->
+    <string name="download_dialog_action_cancel">取消</string>
+
+    <!-- Option in download dialogue to start a download -->
+     <string name="download_dialog_action_download">下载</string>
+
+    <!-- The page html title (i.e. the <title> tag content) -->
+    <string name="errorpage_title">页面载入出错</string>
+    <string name="errorpage_refresh">重试</string>
+
+    <string name="error_connectionfailure_title">无法连接</string>
+    <string name="error_connectionfailure_message">
+    <![CDATA[<ul>
+        <li>该网站可能暂时不可用或太忙了。一会儿再试试吧。</li>
+        <li>如果你无法载入任何页面，请检查您的移动设备的数据或 Wi-Fi 连接。</li>
+      </ul>]]>
+    </string>
+
+    <string name="error_timeout_title">连接超时</string>
+
+    <string name="error_hostLookup_title">找不到服务器</string>
+    <string name="error_hostLookup_message"><![CDATA[<ul>
+        <li>请检查该地址是否输错，比如将
+          <strong>www</strong>.example.com 错写成 
+          <strong>ww</strong>.example.com</li>
+        <li>如果您无法载入任何页面，请检查该设备的数据或 Wi-Fi 连接。</li>
+      </ul>]]></string>
+
+
+    <string name="error_malformedURI_title">地址无效</string>
+    <string name="error_malformedURI_message"><![CDATA[<ul>
+  <li>网页地址通常格式为 <strong>http://www.example.com/</strong></li>
+  <li>请确认您使用的是正斜杠（即 <strong>/</strong>）。</li>
+</ul>]]></string>
+
+    <string name="error_redirectLoop_title">此页面不正确地重定向</string>
+    <string name="error_redirectLoop_message"><![CDATA[<ul>
+  <li>有时候禁用或拒绝接受 Cookie 会导致此问题。</li>
+</ul>]]></string>
+
+    <string name="error_unsupportedprotocol_title">无法理解该地址</string>
+    <string name="error_unsupportedprotocol_message"><![CDATA[<ul>
+  <li>您可能需要安装其他软件才能打开此地址。</li>
+</ul>]]></string>
+
+    <string name="error_sslhandshake_title">安全连接失败</string>
+    <string name="error_sslhandshake_message"><![CDATA[<ul>
+  <li>这可能是服务器配置的问题，或者有人尝试冒充该服务器所致。</li>
+  <li>如果您之前曾成功连接该服务器，那么此错误可能是暂时的，您可以稍后再试。</li>
+</ul>]]></string>
+
+    <string name="error_generic_title">啊哦</string>
+    <string name="error_generic_message">由于某些原因，我们无法载入此页面。</string>
+
+    <!-- Label used in the contextmenu shown when long-pressing on a link -->
+    <string name="contextmenu_link_share">分享链接</string>
+    <!-- Label used in the contextmenu shown when long-pressing on a link -->
+    <string name="contextmenu_link_copy">复制链接地址</string>
+    <!-- Label used in the contextmenu shown when long-pressing on an image -->
+    <string name="contextmenu_image_share">分享图像</string>
+    <!-- Label used in the contextmenu shown when long-pressing on an image -->
+    <string name="contextmenu_image_copy">复制图像地址</string>
+    <!-- Label used in the contextmenu shown when long-pressing on an image -->
+    <string name="contextmenu_image_save">保存图像</string>
+    <!-- Label used in the contextmenu shown when long-pressing on a link -->
+    <string name="contextmenu_open_in_new_tab">新建标签页打开链接</string>
+
+    <!-- This is a warning shown in the browser's context menu (when long pressing an image). %1$s will be replaced with the long name of the app (e.g. Firefox Focus). -->
+    <string name="contextmenu_image_warning"><![CDATA[清除 %1$s 的历史记录时，<b>不会删除</b>已保存和已分享的图像。]]></string>
+
+    <!-- First run tour (Default browser): Title -->
+    <string name="firstrun_defaultbrowser_title">强化您的隐私</string>
+    <!-- First run tour (Default browser): Text. -->
+    <string name="firstrun_defaultbrowser_text2">隐私浏览模式变得更强大了。能拦截广告，还能拦截在不同网站跟踪您，又拖慢网页载入的内容。</string>
+
+    <!-- First run tour (Search): Title -->
+    <string name="firstrun_search_title">用你的方式搜你所寻</string>
+    <!-- First run tour (Search): Text -->
+    <string name="firstrun_search_text">想搜点不一样的东西？可在设置里选择换个默认搜索引擎。</string>
+
+    <!-- First run tour (Shortcut): Title -->
+    <string name="firstrun_shortcut_title">在主屏幕中添加快捷方式</string>
+    <!-- First run tour (Shortcut): Text. %1$s will be replaced with the name of the app (e.g. Firefox Focus) -->
+    <string name="firstrun_shortcut_text">快速用 %1$s 回到您喜爱的网站。只需在 %1$s 菜单中选择“添加到主屏幕”。</string>
+
+    <!-- First run tour (Privacy): Title -->
+    <string name="firstrun_privacy_title">让隐私成为一种习惯</string>
+    <!-- First run tour (Privacy): Text. %1$s will be replaced with the name of the app (e.g. Firefox Focus) -->
+    <string name="firstrun_privacy_text">将 %1$s 设为您的默认浏览器，用其他应用打开网页时即可享受隐私浏览。</string>
+
+    <string name="firstrun_close_button">明白了！</string>
+    <string name="firstrun_skip_button">跳过</string>
+    <string name="firstrun_next_button">下一步</string>
+
+    <!-- Indicator that no trackers are being blocked because content blocking is disabled; normally shows the number of blocked trackers -->
+    <string name="content_blocking_disabled">-</string>
+
+    <!-- Label of the action that will add the current website to the home screen (shown in the confirmation dialog). -->
+    <string name="dialog_addtohomescreen_action_add">添加</string>
+
+    <!-- Label of the action that will close the dialog and not add anything to the home screen (shown in the confirmation dialog). -->
+    <string name="dialog_addtohomescreen_action_cancel">取消</string>
+
+    <!-- When tracking protection is disabled for the current session then we will show this warning in the "Add to home screen" dialog to
+         let the user know that the shortcut will always be opened with tracking protection disabled. -->
+    <string name="dialog_addtohomescreen_tracking_protection">快捷方式打开时跟踪保护将被禁用</string>
+
+    <!-- The user visible name of the "notification channel" (Android 8+ feature) for the ongoing notification shown while a browsing session is active.
+    The recommended maximum length is 40 characters; the value may be truncated if it is too long.
+
+    * To understand what notification channels are, see: https://www.androidcentral.com/notification-channels
+    * To see how this string will look like in Android's UI, see: https://github.com/mozilla-mobile/focus-android/issues/863#issuecomment-324105723
+    -->
+    <string name="notification_browsing_session_channel_name">隐私浏览会话</string>
+
+    <!-- The user visible description of the "notification channel" (Android 8+ feature) for the ongoing notification shown while a browsing session is active.
+    The recommended maximum length is 300 characters; the value may be truncated if it is too long. %1$s will be replaced with the name of the app (e.g. Firefox Focus).
+
+    * To understand what notification channels are, see: https://www.androidcentral.com/notification-channels
+    * To see how this string will look like in Android's UI, see: https://github.com/mozilla-mobile/focus-android/issues/863#issuecomment-324105723
+    -->
+    <string name="notification_browsing_session_channel_description">通知您可以一键清除您的 %1$s 浏览记录。清除无需打开应用或查看浏览器中的内容。</string>
+
+    <!-- Label for a button in the "tabs tray" to erase the browsing history (closes all tabs and removes associated data). -->
+    <string name="tabs_tray_action_erase">清除浏览记录</string>
+
+    <!-- If the user decides to open the current page in another browser and if Firefox is not installed then we show this
+      item in the list of browsers. Clicking it will open the app store installed on the device (usually that's Google Play). -->
+    <string name="download_firefox">下载 Firefox</string>
+
+    <!-- Text shown in the "Your rights" screen.
+    %1$s will be replaced with the name of the app (e.g. Firefox Focus)-->
+    <string name="your_rights_content1"><![CDATA[%1$s 是由 Mozilla 及贡献者制作的一款自由的开源软件。]]></string>
+
+    <!-- Text shown in the "Your rights" screen.
+    %1$s will be replaced with the name of the app (e.g. Firefox Focus)
+    %2$s will be replaced with a URL linking to the MPL (e.g. https://www.mozilla.org/en-US/MPL/) -->
+    <string name="your_rights_content2"><![CDATA[%1$s 依照 <a href="%2$s">Mozilla 公共许可证</a>及其他一些开源许可证向您授权。]]></string>
+
+    <!-- Text shown in the "Your rights" screen.
+    %1$s will be replaced with the name of the app (e.g. Firefox Focus)
+    %2$s will be replaced with a URL linking to the trademark policy (e.g. https://www.mozilla.org/foundation/trademarks/policy/) -->
+    <string name="your_rights_content3"><![CDATA[您没有取得 Mozilla 基金会或任何一方的商标的任何权利或许可，包括 Mozilla、Firefox 和 %1$s 名称或徽标的许可。有关信息请查阅<a href="%2$s">此处</a>。]]></string>
+
+    <!-- Text shown in the "Your rights" screen.
+    %1$s will be replaced with the name of the app (e.g. Firefox Focus)
+    %2$s will be replaced with a URL linking to the list of licenses used by the dependencies.-->
+    <string name="your_rights_content4"><![CDATA[%1$s 其他源代码以各类自由和开源<a href="%2$s">许可证</a>开放。]]></string>
+
+    <!-- Text shown in the "Your rights" screen.
+    %1$s will be replaced with the name of the app (e.g. Firefox Focus)
+    %2$s will be replaced with a URL linking to the GPL
+    %3$s will be replaced with a URL linking to the tracking protection wiki page (e.g. https://wiki.mozilla.org/Security/Tracking_protection#Lists) -->
+    <string name="your_rights_content5"><![CDATA[%1$s 还使用 Disconnect 公司提供的阻止列表，它是以 <a href="%2$s">GNU 通用公共许可证 v3</a> 提供的一个独立的作品，可在<a href="%3$s">这里</a>找到。]]></string>
+
+    <!-- Text shown in prompts for GeckoView -->
+    <string name="gv_prompt_username_hint">用户名</string>
+    <string name="gv_prompt_password_hint">密码</string>
+    <string name="gv_prompt_clear">清除</string>
+
+    <!-- Text shown in Security Information Popup -->
+    <!-- Text to denote secure or insecure connection -->
+    <string name="security_popup_secure_connection">安全连接</string>
+    <string name="security_popup_insecure_connection">不安全连接</string>
+    <!-- %1$s will be replaced with organization that granted the SSL certificate -->
+    <string name="security_popup_security_verified">验证机构：%1$s</string>
+
+    <!-- Content Description of Security Icon in toolbar -->
+    <string name="site_security_icon_content_description">网站安全性</string>
+    <string name="preference_autocomplete_duplicate_url_error">网址已存在</string>
+
+    <!-- Label for the Find in page button -->
+    <string name="find_in_page">在页面中查找</string>
+
+    <!-- Watermark/Hint for the find in page input field -->
+    <string name="find_in_page_input">在此页面中查找</string>
+
+    <!-- String to show the number of results found in the page and the
+        position the user is at. The first argument is the position, the second argument is the total -->
+    <string name="find_in_page_result">%1$d/%2$d</string>
+    <!-- String to be read by the accessibility service presenting the number of results found in the page
+        and the position the user is at. The first argument is the position, the second argument is the total -->
+    <string name="accessibility_find_in_page_result">第 %1$d 项，共 %2$d 个匹配项</string>
+
+    <!-- String to be read by the accessibility service when focusing the next result button -->
+    <string name="accessibility_next_result">查找下一个结果</string>
+    <!-- String to be read by the accessibility service when focusing the previous result button -->
+    <string name="accessibility_previous_result">查找上一个结果</string>
+    <!-- String to be read by the accessibility service when focusing the dismiss button in the "find in page" UI -->
+    <string name="accessibility_dismiss_find_in_page">关闭页内查找</string>
+    
+    <!-- Http Authentication Popup: Title -->
+    <string name="http_auth_dialog_title">需要验证身份</string>
+    <!-- Http Authentication Popup: Username -->
+    <string name="http_auth_dialog_username">用户名</string>
+    <!-- Http Authentication Popup: Password -->
+    <string name="http_auth_dialog_password">密码</string>
+
+    <!-- Checkbox menu item text to request desktop site -->
+    <string name="preference_performance_request_desktop_site">要求桌面版网站</string>
+
+    <!-- Displayed after a user long presses on the URL in a custom tab to copy the URL -->
+    <string name="custom_tab_copy_url_action">已复制网址</string>
+
+    <!-- Description of what a user may find in the Advanced Setting category, used for debugging -->
+    <string name="preference_advanced_summary">开发者工具</string>
+
+    <!-- Title of Advanced Setting category -->
+    <string name="preference_category_advanced">高级</string>
+
+    <!-- Preference to enable remote debugging of the app via USB or Wi-Fi -->
+    <string name="preference_remote_debugging">通过 USB/Wi-Fi 远程调试</string>
+
+    <!-- Title for the fingerprint authentication dialog box that is shown to the user when opening the app.
+     %1$s is replaced with the app name -->
+    <string name="biometric_auth_title">解锁 %1$s</string>
+
+    <!-- Description for the fingerprint authentication dialog box that is shown to the user when opening the app -->
+    <string name="biometric_auth_description">触摸指纹传感器以继续。</string>
+
+    <!-- New session button for the fingerprint authentication dialog box that is shown to the user when opening the app.
+     When pressed, the user's previous session is cleared, and authentication is not required. -->
+    <string name="biometric_auth_new_session">新会话</string>
+
+    <!-- Description for the fingerprint authentication image. Used for accessibility purposes. -->
+    <string name="biometric_auth_image_description">指纹图标</string>
+
+    <!-- Error text displayed when the user's fingerprint cannot be recognized upon re-entering the app.
+     This is displayed during the authentication flow as the app launches. -->
+    <string name="biometric_auth_not_recognized_error">指纹无法识别。请重试。</string>
+
+    <!-- Error text displayed when the user's fingerprint moved too quickly upon re-entering the app
+    This is displayed during the authentication flow as the app launches.-->
+    <string name="biometric_auth_moved_too_quickly">手指移动太快。请重试。</string>
+
+    <!-- Title for the prompt to enable search suggestions -->
+    <string name="enable_search_suggestion_title">想要开启搜索建议吗？</string>
+
+    <!-- Description for the prompt to enable search suggestions
+        %1$s will be replaced by the app name (e.g. Firefox Focus)
+        %2$s will be replaced with "Learn more" which will be a tappable link
+        using the string: "enable_search_suggestion_subtitle_learnmore" -->
+    <string name="enable_search_suggestion_subtitle">为获取搜索建议，%1$s 需将您在地址栏中输入的内容发送至您选择的搜索引擎。%2$s。</string>
+
+    <!-- String to be placed inside the string: enable_search_suggestion_subtitle,
+        which will be a "Learn More" link. -->
+    <string name="enable_search_suggestion_subtitle_learnmore">详细了解</string>
+
+    <!-- Label used for the "NO button" for the prompt to enable search suggestions -->
+    <string name="enable_search_suggestions_no">否</string>
+
+    <!-- Label used for the "YES button" for the prompt to enable search suggestions -->
+    <string name="enable_search_suggestions_yes">是</string>
+
+    <!-- Message displayed when using a search engine that doesn't provide suggestions -->
+    <string name="no_suggestions_message">某些搜索引擎无法显示建议。</string>
+
+    <!-- Button to dismiss the message displayed  when using a search engine that doesn't provide suggestions-->
+    <string name="dismiss_no_suggestions_prompt_button">关闭</string>
+
+    <!-- Tips displayed on the home view -->
+
+    <!-- Tip displayed on home view explaining how to disable tracking protection
+    The new line here must be kept as the second half of the string is clickable for the user. -->
+    <string name="tip_disable_tracking_protection">网站表现异常？
+ 尝试关闭跟踪保护</string>
+
+    <!-- Tip displayed on home view explaining how to add sites to homescreen
+    Argument 1 will be replaced with a line break in the application.-->
+    <string name="tip_add_to_homescreen"><![CDATA[一键访问您的常用网站%1$s菜单 > 添加到主屏幕]]></string>
+
+    <!-- Tip displayed on home view explaining how to make Focus the default browser
+    Argument 1 is the app name (Firefox Focus/Firefox Klar/etc).
+    The new line here must be kept as the second half of the string is clickable for the user. -->
+    <string name="tip_set_default_browser">在 %1$s 中打开链接
+ 将 %1$s 设为默认浏览器</string>
+
+    <!-- Tip displayed on home view explaining how to add a custom autocomplete URL
+    The new line here must be kept as the second half of the string is clickable for the user. -->
+    <string name="tip_autocomplete_url">自动补全您的常用网站地址
+ 长按地址栏的中任一链接</string>
+
+    <!-- Tip displayed on home view explaining how to add a custom autocomplete URL
+    The new line here must be kept as the second half of the string is clickable for the user. -->
+    <string name="tip_open_in_new_tab">新建标签页打开链接
+ 长按页面上的任一链接</string>
+
+    <!-- Tip displayed on home view explaining how to request the desktop version of a website.
+     Argument 1 will be replaced with a line break in the application. -->
+    <string name="tip_request_desktop"><![CDATA[想查看更完整的桌面版网站？%1$s菜单 > 要求桌面版网站]]></string>
+
+    <!-- deprecated strings -->
+    <string name="tip_disable_tips">关闭 %1$s 启动页上的小提示</string>
+    <string name="preference_switch_autocomplete">自动补全</string>
+    <string name="preference_category_autocomplete_preinstalled">默认网址列表</string>
+    <string name="preference_autocomplete_preinstalled_summary">开启之后，%1$s 地址栏可以自动补全超过 450 个热门网站。</string>
+    <string name="preference_category_autocomplete_custom_urls">自定义网址</string>
+    <string name="preference_autocomplete_subitem_customlist">自定义网址</string>
+  </resources>

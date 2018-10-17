@@ -1,233 +1,693 @@
-<?xml version='1.0' encoding='utf-8'?>
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-  <string name="action_cancel">Annulearje</string>
-  <string name="action_ok">OK</string>
-  <string name="action_save">Bewarje</string>
-  <string name="urlbar_hint">Fier sykterm of adres yn</string>
-  <string name="teaser">Automatysk privee sneupe.\nSneupe. Wiskje. Werhelje.</string>
-  <string name="feedback_erase">Jo sneupskiednis is wiske.</string>
-  <string name="search_hint">Sykje nei %1$s</string>
-  <string name="menu_share">Diele…</string>
-  <string name="menu_report_site_issue">Websiteprobleem rapportearje</string>
-  <string name="menu_open_with_default_browser2">Iepenje yn %1$s</string>
-  <string name="menu_open_with_a_browser2">Iepenje yn…</string>
-  <string name="menu_add_to_home_screen">Tafoegje oan startskerm</string>
-  <string name="menu_whats_new">Wat is nij</string>
-  <string name="menu_settings">Ynstellingen</string>
-  <string name="menu_about">Oer</string>
-  <string name="menu_help">Help</string>
-  <string name="menu_rights">Jo rjochten</string>
-  <string name="menu_trackers_blocked_title">Trackers blokkearre</string>
-  <string name="menu_custom_tab_branding">Mooglik makke troch %1$s</string>
-  <string name="share_dialog_title">Diele fia</string>
-  <string name="notification_erase_text">Navigaasjeskiednis wiskje</string>
-  <string name="notification_action_open">Iepenje</string>
-  <string name="notification_action_erase_and_open">Wiskje en iepenje</string>
-  <string name="shortcut_erase_short_label">Wiskje</string>
-  <string name="shortcut_erase_long_label">Navigaasjeskiednis wiskje</string>
-  <string name="text_selection_search_action">Privee sykje</string>
-  <string name="about_content"><![CDATA[<p xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">%1$s jout jo de kontr&#244;le.</p>\n<p xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">"Br&#251;k as in priveebrowser:\n  "<ul>"\n    "<li>Streekrjocht fan de app &#250;t sykje en browse</li>"\n    "<li>Trackers blokkearje (of ynstellingen bywurkje om se ta te stean)</li>"\n    "<li>Wiskjen smyt sawol cookies as syk- en navigaasjeskiednis fuort</li>"\n  "</ul>\n</p>\n<p xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">%1$s wurdt makke troch Mozilla. Us misje is it fersoargjen fan in s&#251;n en iepen ynternet.<br/>\n<a href="%2$s">Mear ynfo</a></p>]]></string>
-  <string name="preference_privacy_and_security_header">Privacy en befeiliging</string>
-  <string name="preference_privacy_and_security_summary">Folgjen, cookies, gegevenskarren</string>
-  <string name="preference_search_summary">As standert ynstelle, auto-oanfolje</string>
-  <string name="preference_mozilla_summary">Oer %1$s, help</string>
-  <string name="preference_category_tracking_protection">Beskerming tsjin folgjen</string>
-  <string name="preference_category_web_content">Webynhâld</string>
-  <string name="preference_category_switching_apps">Apps wikselje</string>
-  <string name="preference_category_general">Algemien</string>
-  <string name="preference_category_data_collection_use">Gegevenssamling en gebrûk</string>
-  <string name="preference_category_search">Sykje</string>
-  <string name="preference_show_search_suggestions">Syksuggesties krije</string>
-  <string name="preference_show_search_suggestions_summary">%1$s sil wat jo yn de adresbalke yntype nei jo sykmasine stjoere</string>
-  <string name="preference_search_engine_default">Standert</string>
-  <string name="preference_state_on">Oan</string>
-  <string name="preference_state_off">Ut</string>
-  <string name="preference_subitem_autocomplete">URL\'s automatysk oanfolje</string>
-  <string name="preference_switch_autocomplete">Automatysk oanfolje</string>
-  <string name="preference_category_autocomplete_preinstalled">Standert URL-list</string>
-  <string name="preference_autocomplete_preinstalled_summary">Skeakel dit yn om %1$s automatysk mear as 450 populêre URL’s yn de adresbalke oanfolje te litten.</string>
-  <string name="preference_category_autocomplete_custom_urls">Eigen URL\'s</string>
-  <string name="preference_autocomplete_subitem_customlist">Oanpaste URL\'s</string>
-  <string name="preference_autocomplete_action_add">+ Oanpaste URL tafoegje</string>
-  <string name="preference_autocomplete_title_add">Oanpaste URL tafoegje</string>
-  <string name="custom_autocomplete_quick_add">Oanpaste URL tafoegje</string>
-  <string name="preference_category_cookies">Cookies en websitegegevens</string>
-  <string name="preference_category_data_choices">Gegevensopsjes</string>
-  <string name="preference_autocomplete_title_remove">Oanpaste URL’s fuortsmite</string>
-  <string name="preference_autocomplete_learn_more">Mear ynfo</string>
-  <string name="preference_autocomplete_custom_summary">Eigen URL’s foar automatysk oanfoljen tafoegje en beheare.</string>
-  <string name="preference_autocomplete_add_title">Ta te foegjen URL</string>
-  <string name="preference_autocomplete_add_hint">Plak of fier URL yn</string>
-  <string name="preference_autocomplete_add_example2">Foarbyld: mozilla.org</string>
-  <string name="preference_autocomplete_add_example">Foarbyld: example.com</string>
-  <string name="preference_autocomplete_add_confirmation">Nije oanpaste URL tafoege.</string>
-  <string name="preference_autocomplete_menu_remove">Fuortsmite</string>
-  <string name="preference_autocomplete_action_remove_content_description">Fuortsmite</string>
-  <string name="preference_autocomplete_add_error">Kontrolearje de ynfierde URL.</string>
-  <string name="preference_language">Taal</string>
-  <string name="preference_language_systemdefault">Systeemstandert</string>
-  <string name="preference_category_privacy">Privacy</string>
-  <string name="preference_privacy_block_ads">Advertinsjetrackers blokkearje</string>
-  <string name="preference_privacy_block_ads_summary">Guon advertinsjes folgje websitebesiten, sels as jo net op de advertinsjes klikke</string>
-  <string name="preference_privacy_block_analytics">Analysetrackers blokkearje</string>
-  <string name="preference_privacy_block_analytics_summary">Brûkt foar it sammeljen, analysearjen en mjitten fan aktiviteiten lykas tikken en skowen</string>
-  <string name="preference_privacy_block_social">Sosjale trackers blokkearje</string>
-  <string name="preference_privacy_block_social_summary">Ynboud op websites om jo besiken te folgjen en funksjonaliteit as dielknoppen te toanen</string>
-  <string name="preference_privacy_block_content">Oare ynhâldstrackers blokkearje</string>
-  <string name="preference_privacy_block_content_summary2">Ynskeakeljen kin feroarsaakje dat guon siden ûnferwachts wurkje</string>
-  <string name="preference_privacy_category_cookies">Cookies blokkearje</string>
-  <string name="preference_privacy_should_block_cookies_no_option">Nee</string>
-  <string name="preference_privacy_should_block_cookies_third_party_only_option">Allinnich cookies fan tredden</string>
-  <string name="preference_privacy_should_block_cookies_yes_option">Ja</string>
-  <string name="preference_security_biometric">Fingerôfdruk foar ûntskoatteljen fan app brûke</string>
-  <string name="preference_security_biometric_summary">Jo fingerôfdruk kin %1$s ûntskoattelje as der al in URL yn de app iepene is. Stealth wurdt ynskeakele.</string>
-  <string name="preference_privacy_secure_mode">Stealth</string>
-  <string name="preference_privacy_stealth_summary">Websiden ferstopje by wikseljen fan apps en meitsjen fan skermôfdrukken blokkearje.</string>
-  <string name="preference_category_security">Befeiliging</string>
-  <string name="preference_category_performance">Prestaasjes</string>
-  <string name="preference_performance_block_webfonts">Weblettertypen blokkearje</string>
-  <string name="preference_performance_block_webfonts_summary">Kin ta ûntbrekkende piktogrammen of ôfbyldingen liede</string>
-  <string name="preference_performance_block_javascript">JavaScript blokkearje</string>
-  <string name="preference_performance_block_javascript_summary">Siden kinne flugger laden wurde, mar kinne harren ek ûnferwachte hâlde en drage</string>
-  <string name="preference_default_browser2">%1$s standertbrowser meitsje</string>
-  <string name="preference_category_mozilla">Mozilla</string>
-  <string name="preference_mozilla_telemetry2">Brûksgegevens ferstjoere</string>
-  <string name="preference_mozilla_telemetry_summary">Mear ynfo</string>
-  <string name="preference_mozilla_telemetry_summary2">Mozilla stribbet dernei allinnich te sammeljen wat nedich is om %1$s foar elkenien oan te bieden en te ferbetterjen.</string>
-  <string name="preference_privacy_notice">Privacyferklearring</string>
-  <string name="preference_about">Oer %1$s</string>
-  <string name="preference_search_installed_search_engines">Ynstallearre sykmasinen</string>
-  <string name="preference_search_restore">Standert-sykmasinen opnij ynstelle</string>
-  <string name="preference_search_add2">+ In oare sykmasine tafoegje</string>
-  <string name="preference_search_remove_title">Sykmasinen fuortsmite</string>
-  <string name="preference_search_remove">Fuortsmite</string>
-  <string name="preference_homescreen_tips">Tips op startskerm toane</string>
-  <string name="action_option_add_search_engine">Sykmasine tafoegje</string>
-  <string name="search_add_manually_name_hint">Namme sykmasine</string>
-  <string name="search_add_manually_string">Te brûken sykterm</string>
-  <string name="search_add_manually_save">Bewarje</string>
-  <string name="search_add_manually_example">Bygelyls: example.com/search/?q=%s</string>
-  <string name="search_add_confirmation">Nije sykmasine tafoege.</string>
-  <string name="search_add_error_empty_name">Fier namme fan sykmasine yn</string>
-  <string name="search_add_error_duplicate_name">Dizze namme wurdt al troch in ynstallearre sykmasine brûkt.</string>
-  <string name="search_add_error_empty_search">Fier syksterm yn</string>
-  <string name="search_add_error_format">Kontrolearje oft sykterm oan foarbyldnotaasje foldocht</string>
-  <string name="content_description_clear_input">Ynfier wiskje</string>
-  <string name="content_description_dismiss_input">Fuortsmite</string>
-  <string name="content_description_erase">Navigaasjeskiednis wiskje</string>
-  <string name="content_description_tab_counter">Iepen ljepblêden: %1$s</string>
-  <string name="content_description_lock">Befeilige ferbining</string>
-  <string name="accessibility_announcement_loading">Lade</string>
-  <string name="accessibility_announcement_loading_finished">Website laden</string>
-  <string name="content_description_menu">Mear opsjes</string>
-  <string name="content_description_forward">Foarút blêdzje</string>
-  <string name="content_description_reload">Website opnij lade</string>
-  <string name="content_description_back">Werom blêdzje</string>
-  <string name="content_description_stop">Laden fan website stopje</string>
-  <string name="content_description_customtab_exit">Tebek nei foarige app</string>
-  <string name="content_description_trackers_blocked">Oantal blokkearre trackers</string>
-  <string name="content_description_blocking_switch">Trackers blokkearje</string>
-  <string name="your_rights">Jo rjochten</string>
-  <string name="external_app_prompt_title">Keppeling yn oare app iepenje</string>
-  <string name="external_app_prompt">Jo kinne %1$s ferlitte om dizze keppeling yn %2$s te iepenjen.</string>
-  <string name="external_app_prompt_no_app_title">Fyn in app dy\'t dizze keppeling iepenje kin</string>
-  <string name="external_app_prompt_no_app">Gjin inkelde app op jo apparaat kin dizze keppeling iepenje. Jo kinne %1$s ferlitte en %2$s iepenje om in geskikte app te finen.</string>
-  <string name="external_multiple_apps_matched_exit">Priveenavigaasje ôfslute?</string>
-  <string name="download_snackbar_finished">%1$s is foltôge</string>
-  <string name="download_snackbar_open">Iepenje</string>
-  <string name="download_dialog_warning"><![CDATA["Downloade bestannen "<b xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">wurde net fuortsmiten</b>" as jo skiednis fan %1$s wiskje."]]></string>
-  <string name="download_dialog_title">Bestân downloade</string>
-  <string name="download_dialog_action_cancel">Annulearje</string>
-  <string name="download_dialog_action_download">Downloade</string>
-  <string name="errorpage_title">Probleem by it laden fan de side</string>
-  <string name="errorpage_refresh">Opnij probearje</string>
-  <string name="error_connectionfailure_title">Kin gjin ferbining meitsje</string>
-  <string name="error_connectionfailure_message"><![CDATA[<ul xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">"\n        "<li>Miskien is de website tydlik net beskikber of oerbel&#234;st. Probearje it oer inkelde mominten opnij.</li>"\n        "<li>As jo gjin inkelde side lade kinne, kontrolearje dan de gegevens- of wifi-ferbining fan jo apparaat.</li>"\n      "</ul>]]></string>
-  <string name="error_timeout_title">De wachttiid foar de ferbining is ferstrutsen</string>
-  <string name="error_hostLookup_title">Server net fûn</string>
-  <string name="error_hostLookup_message"><![CDATA[<ul xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">"\n        "<li>"Kontrolearje it adres op typflaters, lykas\n          "<strong>ww</strong>".example.com yn stee fan\n          "<strong>www</strong>.example.com</li>"\n        "<li>As jo gjin inkelde side lade kinne, kontrolearje dan de gegevens- of wifi-ferbining fan jo apparaat.</li>"\n      "</ul>]]></string>
-  <string name="error_malformedURI_title">It adres is net jildich</string>
-  <string name="error_malformedURI_message"><![CDATA[<ul xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">"\n  "<li>"Webadressen wurde trochgeans skreaun as "<strong>http://www.example.com/</strong></li>"\n  "<li>"Let derop dat jo foar&#250;tgeande slashes br&#251;ke (d.y. "<strong>/</strong>).</li>\n</ul>]]></string>
-  <string name="error_redirectLoop_title">De side ferwiist net op in krekte wize troch</string>
-  <string name="error_redirectLoop_message"><![CDATA[<ul xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">"\n  "<li>Dit probleem kin somtiden feroarsake wurde troch it &#250;tskeakeljen of wegerjen fan cookies</li>\n</ul>]]></string>
-  <string name="error_unsupportedprotocol_title">It adres waard net begrepen</string>
-  <string name="error_unsupportedprotocol_message"><![CDATA[<ul xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">"\n  "<li>Miskien moatte jo oare software ynstallearje om dit adres te iepenjen.</li>\n</ul>]]></string>
-  <string name="error_sslhandshake_title">Befeilige ferbining mislearre</string>
-  <string name="error_sslhandshake_message"><![CDATA[<ul xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">"\n  "<li>Dit kin in probleem mei de serverkonfiguraasje w&#234;ze, of ien probearret\ndizze server nei te meitsjen.</li>"\n  "<li>As jo yn it ferline wol mei sukses ferbining makke hawwe mei dizze server,\ndan is de flater mooglik tydlik en kinne jo it letter nochris probearje.</li>\n</ul>]]></string>
-  <string name="error_generic_title">Oeps</string>
-  <string name="error_generic_message">De side kin om de ien oft oare reden net laden wurde.</string>
-  <string name="contextmenu_link_share">Keppeling diele</string>
-  <string name="contextmenu_link_copy">Keppelingsadres kopiearje</string>
-  <string name="contextmenu_image_share">Ofbylding diele</string>
-  <string name="contextmenu_image_copy">Ofbyldingsadres kopiearje</string>
-  <string name="contextmenu_image_save">Ofbylding bewarje</string>
-  <string name="contextmenu_open_in_new_tab">Keppeling iepenje yn nij ljepblêd</string>
-  <string name="contextmenu_image_warning"><![CDATA["Bewarre en dielde ôfbyldingen "<b xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">wurde net fuortsmiten</b>" as jo skiednis fan %1$s wiskje."]]></string>
-  <string name="firstrun_defaultbrowser_title">Fergrutsje jo privacy</string>
-  <string name="firstrun_defaultbrowser_text2">Bring priveenavigaasje nei in heger nivo. Blokkearje advertinsjes en oare ynhâld dy\'t jo op websites folgje kinne en laadtiden fan siden ferlingje.</string>
-  <string name="firstrun_search_title">Sykje op jo manier</string>
-  <string name="firstrun_search_text">Op syk nei wat oars? Kies in oare standertsykmasine yn Ynstellingen.</string>
-  <string name="firstrun_shortcut_title">Foegje keppelingen ta oan jo startskerm</string>
-  <string name="firstrun_shortcut_text">Kear fluch werom nei jo favorite websites yn %1$s. Selektearje gewoanwei ‘Tafoegje oan startskerm’ fan it %1$s-menu út.</string>
-  <string name="firstrun_privacy_title">Meitsje privacy gewoan</string>
-  <string name="firstrun_privacy_text">Stel %1$s yn as jo standertbrowser en ûnderfyn de foardielen fan priveenavigaasje as jo websiden iepenje fan oare apps út.</string>
-  <string name="firstrun_close_button">OK, begrepen!</string>
-  <string name="firstrun_skip_button">Oerslaan</string>
-  <string name="firstrun_next_button">Folgjende</string>
-  <string name="content_blocking_disabled">-</string>
-  <string name="dialog_addtohomescreen_action_add">Tafoegje</string>
-  <string name="dialog_addtohomescreen_action_cancel">Annulearje</string>
-  <string name="dialog_addtohomescreen_tracking_protection">Keppeling sil iepenje mei folchbeskerming útskeakele</string>
-  <string name="notification_browsing_session_channel_name">Priveenavigaasjesesje</string>
-  <string name="notification_browsing_session_channel_description">Mei notifikaasjes kinne jo fia ien tik jo %1$s-sesje wiskje. Jo hoege de app net te iepenjen of te sjen wat der yn jo browser aktyf is.</string>
-  <string name="tabs_tray_action_erase">Navigaasjeskiednis wiskje</string>
-  <string name="download_firefox">Firefox downloade</string>
-  <string name="your_rights_content1">%1$s is fergese en iepenboarnesoftware makke troch Mozilla en oare meiwurkers.</string>
-  <string name="your_rights_content2"><![CDATA["%1$s wurdt beskikber steld ûnder de betingsten fan de "<a xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2" href="%2$s">Mozilla Public License</a>" en oare iepenboarnelisinsjes."]]></string>
-  <string name="your_rights_content3"><![CDATA["Der wurde jo gjin rjochten of lisinsjes ferliend op de hannelsmerken fan de Mozilla Foundation of iennige oare partij, mei ynbegryp fan de nammen of logo’s fan Mozilla, Firefox of %1$s. Oanfoljende ynformaasje is "<a xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2" href="%2$s">hjir</a>" te finen."]]></string>
-  <string name="your_rights_content4"><![CDATA[Oanfoljende boarnekoade foar %1$s is beskikber ûnder ferskate oare frije en iepenboarne-<a xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2" href="%2$s">lisinsjes</a>.]]></string>
-  <string name="your_rights_content5"><![CDATA["%1$s brûkt ek blokkearlisten dy\'t troch Disconnect, Inc. beskikber steld wurde as ôfsûnderlike en ûnôfhinklike wurken ûnder de "<a xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2" href="%2$s">GNU General Public License v3</a>", en dy "<a xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2" href="%3$s">hjir</a>" beskikber binne."]]></string>
-  <string name="gv_prompt_username_hint">Brûkersnamme</string>
-  <string name="gv_prompt_password_hint">Wachtwurd</string>
-  <string name="gv_prompt_clear">Wiskje</string>
-  <string name="security_popup_secure_connection">Befeilige ferbining</string>
-  <string name="security_popup_insecure_connection">Net-befeilige ferbining</string>
-  <string name="security_popup_security_verified">Ferifiearre troch: %1$s</string>
-  <string name="site_security_icon_content_description">Sidefeilichheid</string>
-  <string name="preference_autocomplete_duplicate_url_error">URL bestiet al</string>
-  <string name="find_in_page">Sykje op side</string>
-  <string name="find_in_page_input">Sykje op side</string>
-  <string name="find_in_page_result">%1$d/%2$d</string>
-  <string name="accessibility_find_in_page_result">%1$d fan %2$d</string>
-  <string name="accessibility_next_result">Folgjende resultaat fine</string>
-  <string name="accessibility_previous_result">Foarige resultaat fine</string>
-  <string name="accessibility_dismiss_find_in_page">Sykje op side slute</string>
-  <string name="http_auth_dialog_title">Autentikaasje fereaske</string>
-  <string name="http_auth_dialog_username">Brûkersnamme</string>
-  <string name="http_auth_dialog_password">Wachtwurd</string>
-  <string name="preference_performance_request_desktop_site">Desktopwebsite opfreegje</string>
-  <string name="custom_tab_copy_url_action">URL kopiearre</string>
-  <string name="preference_advanced_summary">Untwikkelersark</string>
-  <string name="preference_category_advanced">Avansearre</string>
-  <string name="preference_remote_debugging">Remote debugging fia USB/wifi</string>
-  <string name="biometric_auth_title">%1$s ûntskoattelje</string>
-  <string name="biometric_auth_description">Reitsje de fingerôfdruksensor oan om troch te gean.</string>
-  <string name="biometric_auth_new_session">Nije sesje</string>
-  <string name="biometric_auth_image_description">Fingerôfdrukpiktogram</string>
-  <string name="biometric_auth_not_recognized_error">Fingerôfdruk net werkend. Probearje it opnij.</string>
-  <string name="biometric_auth_moved_too_quickly">Finger te fluch beweegd. Probearje it opnij.</string>
-  <string name="enable_search_suggestion_title">Wolle jo syksuggestjes oansette?</string>
-  <string name="enable_search_suggestion_subtitle">Om syksuggestjes te krijen, moat %1$s wat jo yn de adresbalke yntype nei de keazen sykmasine stjoere. %2$s.</string>
-  <string name="enable_search_suggestion_subtitle_learnmore">Mear ynfo</string>
-  <string name="enable_search_suggestions_no">Nee</string>
-  <string name="enable_search_suggestions_yes">Ja</string>
-  <string name="no_suggestions_message">Guon sykmasinen kinne gjin suggestjes toane.</string>
-  <string name="dismiss_no_suggestions_prompt_button">Fuortsmite</string>
-  <string name="tip_disable_tracking_protection">Wuket in website frjemd?\n Probearje Beskerming tsjin folgjen út te skeakeljen</string>
-  <string name="tip_add_to_homescreen">Tagong ta de meastbesochte websites mei ien tik%1$s Menu &gt; Tafoegje oan startskerm</string>
-  <string name="tip_set_default_browser">Alle keppelingen yn %1$s iepenje\n Stel %1$s yn as jo standertbrowser</string>
-  <string name="tip_autocomplete_url">URL’s foar meastbrûkte websites automatysk oanfolje\n Hâld jo finger op in URL yn de adresbalke</string>
-  <string name="tip_open_in_new_tab">In keppeling yn in nij ljepblêd iepenje\n Hâld jo finger op in keppeling op in side</string>
-  <string name="tip_request_desktop">Leaver de folsleine Desktop-website besjen?%1$s Menu &gt; Desktopwebsite opfreegje</string>
-  <string name="tip_disable_tips">Tips op it %1$s-startskerm útskeakelje</string>
-</resources>
+    <!-- ####################################################################################### -->
+    <!-- ## Put only strings into this file that should be translated. Move all other strings ## -->
+    <!-- ## into a separate file like strings_references.xml                                  ## -->
+    <!-- ####################################################################################### -->
+
+    <!-- Label used for buttons, e.g. in dialogs -->
+    <string name="action_cancel">Annulearje</string>
+    <!-- Label used for buttons, e.g. in dialogs -->
+    <string name="action_ok">OK</string>
+
+    <string name="action_save">Bewarje</string>
+
+    <!-- This text is shown in the URL bar when it's empty -->
+    <string name="urlbar_hint">Fier sykterm of adres yn</string>
+
+    <string name="teaser">Automatysk privee sneupe.
+Sneupe. Wiskje. Werhelje.</string>
+
+    <!-- "Snackbar" shown after the user has pressed the 'erase' button at the end of a browsing session -->
+    <string name="feedback_erase">Jo sneupskiednis is wiske.</string>
+
+    <!-- This label is shown below the URL bar as soon as the user enters text. Clicking the label will perform a search -->
+    <string name="search_hint">Sykje nei %1$s</string>
+
+    <!-- Menu item: Share the currently visible page -->
+    <string name="menu_share">Diele…</string>
+
+    <!-- Menu item: Report an issue on the current site -->
+    <string name="menu_report_site_issue">Websiteprobleem rapportearje</string>
+
+    <!-- Menu item: Switch to another browser to open the currently visible page. %1$s will be
+      replaced with the name of the browser like: "Open in Firefox" or "Open in Chrome". Some
+      links can be opened by native apps that aren't a browser, e.g. "Open in YouTube" -->
+    <string name="menu_open_with_default_browser2">Iepenje yn %1$s</string>
+
+    <!-- Menu item: Switch to another browser to open the currently visible page. This menu item
+      will be shown if there are multiple browsers and we do not know which one is the default
+      browser or in case Focus is actually the default browser. Clicking this menu item will show
+      a screen with multiple browsers (or other apps that can open the current URL) to choose from. -->
+    <string name="menu_open_with_a_browser2">Iepenje yn…</string>
+
+    <!-- Menu item: Add the current page as a shortcut to the device's home screen (launcher). -->
+    <string name="menu_add_to_home_screen">Tafoegje oan startskerm</string>
+
+    <!-- Menu item: Shows information about features and changes that are new to this version -->
+    <string name="menu_whats_new">Wat is nij</string>
+    <string name="menu_settings">Ynstellingen</string>
+    <string name="menu_about">Oer</string>
+    <string name="menu_help">Help</string>
+    <string name="menu_rights">Jo rjochten</string>
+
+    <!-- Menu item: This is the label for a menu entry that shows how many trackers have been blocked
+         for the currently loaded website. The number of blocked trackers is shown below this label.
+         Next to this label is a switch that allows the user to temporarily enable / disable the
+         blocking of trackers for the current browsing session - for example if the current website
+         doesn't work correctly with blocked content. -->
+    <string name="menu_trackers_blocked_title">Trackers blokkearre</string>
+
+    <!-- This is a small text at the bottom of the menu shown in a "custom tab" for branding purposes.
+     See https://github.com/mozilla-mobile/focus-android/issues/2106
+      %1$s will be replaced by the app name (e.g. Firefox Focus) -->
+    <string name="menu_custom_tab_branding">Mooglik makke troch %1$s</string>
+
+    <!-- This is the title of a dialog that shows all the share targets (apps or contacts) when
+         sharing an URL. -->
+    <string name="share_dialog_title">Diele fia</string>
+
+    <!-- While a browsing session is active (in the foreground or background) we will show a notification
+         so that the user doesn't forget about the website still being open. This text is shown in
+         the notification. Clicking the notification will have the same effect as clicking the "erase"
+         button in the application. -->
+    <string name="notification_erase_text">Navigaasjeskiednis wiskje</string>
+
+    <!-- Notification action to open Focus and resume the current browsing session. -->
+    <string name="notification_action_open">Iepenje</string>
+
+    <!-- Notification action to erase the current browsing session AND switch to Focus (bring it
+         to the foreground) -->
+    <string name="notification_action_erase_and_open">Wiskje en iepenje</string>
+
+    <!-- On Android 7+ users can add a shortcut for erasing the browsing history to the home screen.
+         This is the label for this shortcut. Android recommends a maximum length of 10 characters. -->
+    <string name="shortcut_erase_short_label">Wiskje</string>
+
+    <!-- The same as 'shortcut_erase_short_label' but more descriptive. The launcher shows this
+         instead of the short title when it has enough space. Android recommends a maximum length
+         of 25 characters. -->
+    <string name="shortcut_erase_long_label">Navigaasjeskiednis wiskje</string>
+
+    <!-- This is the label of an action we offer when the user selects text in other third-party apps.
+         Clicking this action will launch Focus and perform a search in the default search engine. -->
+    <string name="text_selection_search_action">Privee sykje</string>
+
+    <!-- Content of about focus. Argument 1 is the app name (Firefox Focus/Firefox Klar/etc).
+         Argument 2 is the url for the learn-more link. -->
+    <string name="about_content"><![CDATA[<p>%1$s jout jo de kontrôle.</p>
+<p>Brûk as in priveebrowser:
+  <ul>
+    <li>Streekrjocht fan de app út sykje en browse</li>
+    <li>Trackers blokkearje (of ynstellingen bywurkje om se ta te stean)</li>
+    <li>Wiskjen smyt sawol cookies as syk- en navigaasjeskiednis fuort</li>
+  </ul>
+</p>
+<p>%1$s wurdt makke troch Mozilla. Us misje is it fersoargjen fan in sûn en iepen ynternet.<br/>
+<a href="%2$s">Mear ynfo</a></p>]]></string>
+
+    <!-- Header for the Privacy and Security settings menu -->
+    <string name="preference_privacy_and_security_header">Privacy en befeiliging</string>
+
+    <!-- Preference summary for settings related to privacy and security -->
+    <string name="preference_privacy_and_security_summary">Folgjen, cookies, gegevenskarren</string>
+
+    <!-- Preference category description for settings related to search, set default
+    and autocomplete are settings a user can find and change inside the "search" settings screen -->
+    <string name="preference_search_summary">As standert ynstelle, auto-oanfolje</string>
+
+    <!-- Preference category description for settings screen for settings related to Mozilla -->
+    <!-- About the app and help are links that are inside this menu -->
+    <!-- %1$s will be replaced by the app name (e.g. Firefox Focus) -->
+    <string name="preference_mozilla_summary">Oer %1$s, help</string>
+
+    <!-- Preference category for ad blocking and tracking protection settings -->
+    <string name="preference_category_tracking_protection">Beskerming tsjin folgjen</string>
+
+    <!-- Preference category for settings related to controlling web content -->
+    <string name="preference_category_web_content">Webynhâld</string>
+
+    <!-- Preference category: stealth settings for while switching apps -->
+    <string name="preference_category_switching_apps">Apps wikselje</string>
+
+    <!-- Preference category for General Settings -->
+    <string name="preference_category_general">Algemien</string>
+
+    <!-- Preference category for settings about sending usage data -->
+    <string name="preference_category_data_collection_use">Gegevenssamling en gebrûk</string>
+
+    <string name="preference_category_search">Sykje</string>
+
+    <!-- Title of "switch" preference that enables/disables search suggestions -->
+    <string name="preference_show_search_suggestions">Syksuggesties krije</string>
+    <!-- Description of the preference that enables/disables search suggestions
+        %1$s will be replaced by the app name (e.g. Firefox Focus) -->
+    <string name="preference_show_search_suggestions_summary">%1$s sil wat jo yn de adresbalke yntype nei jo sykmasine stjoere</string>
+
+    <!-- This label is shown below the name of the default search engine in settings -->
+    <string name="preference_search_engine_default">Standert</string>
+
+    <!-- Text that is shown below a "switch" preference that is enabled. -->
+    <string name="preference_state_on">Oan</string>
+
+    <!-- Text that is shown below a "switch" preference that is disabled. -->
+    <string name="preference_state_off">Ut</string>
+
+    <!-- Item in settings that will open a new preference screen for configuring the URL autocomplete behavior. -->
+    <string name="preference_subitem_autocomplete">URL\'s automatysk oanfolje</string>
+
+    <!-- Action at the bottom of the list of custom autocomplete URLs that will open a new screen to add a new URL to the list. -->
+    <string name="preference_autocomplete_action_add">+ Oanpaste URL tafoegje</string>
+
+    <!-- Title of the screen for adding custom autocomplete URLs. -->
+    <string name="preference_autocomplete_title_add">Oanpaste URL tafoegje</string>
+
+    <!-- Label for the button to quick add custom autocomplete URLs. -->
+    <string name="custom_autocomplete_quick_add">Oanpaste URL tafoegje</string>
+
+    <!-- Preference category for settings about cookies and site data -->
+    <string name="preference_category_cookies">Cookies en websitegegevens</string>
+
+    <!-- Preference category for settings about data choices -->
+    <string name="preference_category_data_choices">Gegevensopsjes</string>
+
+    <!-- Title of the screen for removing custom autocomplete URLs. -->
+    <string name="preference_autocomplete_title_remove">Oanpaste URL’s fuortsmite</string>
+
+    <!-- A link to SUMO at autocomplete settings. -->
+    <string name="preference_autocomplete_learn_more">Mear ynfo</string>
+
+    <!-- Preference summary: Custom (user-defined) autocomplete URLs. -->
+    <string name="preference_autocomplete_custom_summary">Eigen URL’s foar automatysk oanfoljen tafoegje en beheare.</string>
+
+    <!-- Label for the "custom autocomplete URL" input field -->
+    <string name="preference_autocomplete_add_title">Ta te foegjen URL</string>
+
+    <!-- "Hint" text for the "custom autocomplete URL" input field. Shown when the field is empty. -->
+    <string name="preference_autocomplete_add_hint">Plak of fier URL yn</string>
+
+    <!-- Example how a custom domain autocomplete URL be added (e.g. without http://) -->
+    <string name="preference_autocomplete_add_example2">Foarbyld: mozilla.org</string>
+
+    <!-- To be removed once the new hint has been translated -->
+    <string name="preference_autocomplete_add_example">Foarbyld: example.com</string>
+
+    <!-- Confirmation "snackbar" shown after a new custom autocomplete URL has been added. -->
+    <string name="preference_autocomplete_add_confirmation">Nije oanpaste URL tafoege.</string>
+
+    <!-- Menu item to remove existing autocomplete URLs. -->
+    <string name="preference_autocomplete_menu_remove">Fuortsmite</string>
+
+    <!-- Content description (not visible, for screen readers etc.): Button that will delete all selected custom autocomplete URLs. -->
+    <string name="preference_autocomplete_action_remove_content_description">Fuortsmite</string>
+
+    <!-- Error message shown if the entered custom autocomplete URL is not valid or empty. -->
+    <string name="preference_autocomplete_add_error">Kontrolearje de ynfierde URL.</string>
+
+    <string name="preference_language">Taal</string>
+    <!-- This is shown when the user hasn't set a focus specific language, i.e. when Focus
+         is using the system default language. -->
+    <string name="preference_language_systemdefault">Systeemstandert</string>
+
+    <string name="preference_category_privacy">Privacy</string>
+    <string name="preference_privacy_block_ads">Advertinsjetrackers blokkearje</string>
+    <string name="preference_privacy_block_ads_summary">Guon advertinsjes folgje websitebesiten, sels as jo net op de advertinsjes klikke</string>
+    <string name="preference_privacy_block_analytics">Analysetrackers blokkearje</string>
+    <string name="preference_privacy_block_analytics_summary">Brûkt foar it sammeljen, analysearjen en mjitten fan aktiviteiten lykas tikken en skowen</string>
+    <string name="preference_privacy_block_social">Sosjale trackers blokkearje</string>
+    <string name="preference_privacy_block_social_summary">Ynboud op websites om jo besiken te folgjen en funksjonaliteit as dielknoppen te toanen</string>
+    <string name="preference_privacy_block_content">Oare ynhâldstrackers blokkearje</string>
+    <string name="preference_privacy_block_content_summary2">Ynskeakeljen kin feroarsaakje dat guon siden ûnferwachts wurkje</string>
+    <string name="preference_privacy_category_cookies">Cookies blokkearje</string>
+
+    <!-- Three options for Cookie blocking. Yes (All cookies Blocked), Block 3rd-party cookies
+    only (Only 3rd-party Cookies Blocked), No (No cookies blocked) -->
+    <string name="preference_privacy_should_block_cookies_no_option">Nee</string>
+    <string name="preference_privacy_should_block_cookies_third_party_only_option">Allinnich cookies fan tredden</string>
+    <string name="preference_privacy_should_block_cookies_yes_option">Ja</string>
+
+    <!-- Preference Title: Biometrics can be used to unlock Focus if the previous session's data was not erased by the user. -->
+    <string name="preference_security_biometric">Fingerôfdruk foar ûntskoatteljen fan app brûke</string>
+    <!-- Preference Summary: Biometrics (iris scan, fingerprint, or facial scan) can be used to unlock Focus if the app had a URL
+        open when the app was last run to ensure that only the phone's owner can view a previous session.
+        %1$s will be replaced by the app name (e.g. Firefox Focus) -->
+    <string name="preference_security_biometric_summary">Jo fingerôfdruk kin %1$s ûntskoattelje as der al in URL yn de app iepene is. Stealth wurdt ynskeakele.</string>
+
+    <!-- Preference Title: Secure Mode is a setting that prevents the app's content to show up in the "recent apps" screen
+         and prevents the user from taking screenshots or casting the app to other displays. -->
+    <string name="preference_privacy_secure_mode">Stealth</string>
+    <!-- Preference Summary: Stealth mode (previously "Secure mode") is a setting that prevents the
+     app's content (in our case especially the content of webpages) to show up in the "recent apps"
+     screen. Additionally Android will prevent the user from taking screenshots or casting the app
+     to other displays. -->
+    <string name="preference_privacy_stealth_summary">Websiden ferstopje by wikseljen fan apps en meitsjen fan skermôfdrukken blokkearje.</string>
+
+    <string name="preference_category_security">Befeiliging</string>
+
+    <string name="preference_category_performance">Prestaasjes</string>
+    <string name="preference_performance_block_webfonts">Weblettertypen blokkearje</string>
+    <!-- This text is shown below the setting for disabling web fonts. Some websites use icons/images from a font and those do not show up if fonts are blocked.-->
+    <string name="preference_performance_block_webfonts_summary">Kin ta ûntbrekkende piktogrammen of ôfbyldingen liede</string>
+
+    <string name="preference_performance_block_javascript">JavaScript blokkearje</string>
+    <!-- This text is shown below setting for disabling JavaScript. Some websites may not work correctly when JavaScript is disabled -->
+    <string name="preference_performance_block_javascript_summary">Siden kinne flugger laden wurde, mar kinne harren ek ûnferwachte hâlde en drage</string>
+
+    <!-- This preference does not set Focus as the default browser but instead links to Android's
+     "default apps" settings screen or if not supported by this Android version to a SUMO page describing
+     how to set Focus as a default browser.
+      %1$s will be replaced by the app name (e.g. Firefox Focus) -->
+    <string name="preference_default_browser2">%1$s standertbrowser meitsje</string>
+
+    <string name="preference_category_mozilla">Mozilla</string>
+    <string name="preference_mozilla_telemetry2">Brûksgegevens ferstjoere</string>
+
+    <!-- A link to SUMO at the end of the summary (preference_mozilla_telemetry_summary2) of the "Send anonymous usage data" setting. -->
+    <string name="preference_mozilla_telemetry_summary">Mear ynfo</string>
+
+    <!-- %1$s will be replaced with the name of the app (e.g. Firefox Focus) -->
+    <string name="preference_mozilla_telemetry_summary2">Mozilla stribbet dernei allinnich te sammeljen wat nedich is om %1$s foar elkenien oan te bieden en te ferbetterjen.</string>
+
+    <!-- In-app link (in settings) to Focus privacy notice. -->
+    <string name="preference_privacy_notice">Privacyferklearring</string>
+
+    <!-- Item in Preferences that shows the about page. Parameter 1 is the app name, i.e. Firefox Focus/Firefox Klar. -->
+    <string name="preference_about">Oer %1$s</string>
+
+    <!-- Header for the list of installed search engines -->
+    <string name="preference_search_installed_search_engines">Ynstallearre sykmasinen</string>
+
+    <!-- Action for restoring the default list of search engines -->
+    <string name="preference_search_restore">Standert-sykmasinen opnij ynstelle</string>
+
+    <!-- Action for adding an additional search engine to the list.
+    The "+" is used to emphasize that this is an "add" action -->
+    <string name="preference_search_add2">+ In oare sykmasine tafoegje</string>
+    <string name="preference_search_remove_title">Sykmasinen fuortsmite</string>
+    <string name="preference_search_remove">Fuortsmite</string>
+
+    <!-- Title: Homescreen tips settings toggle to determine whether or not tips are displayed when
+     a user first launches the app. -->
+    <string name="preference_homescreen_tips">Tips op startskerm toane</string>
+
+    <!-- Clickable action text that shows when user long-presses on a search engine search field (this is similar to paste or copy when long-pressing a text field) -->
+    <string name="action_option_add_search_engine">Sykmasine tafoegje</string>
+
+    <string name="search_add_manually_name_hint">Namme sykmasine</string>
+    <string name="search_add_manually_string">Te brûken sykterm</string>
+    <string name="search_add_manually_save">Bewarje</string>
+
+    <!-- Example of search engine url -->
+    <string name="search_add_manually_example">Bygelyls: example.com/search/?q=%s</string>
+
+    <string name="search_add_confirmation">Nije sykmasine tafoege.</string>
+
+    <string name="search_add_error_empty_name">Fier namme fan sykmasine yn</string>
+    <string name="search_add_error_duplicate_name">Dizze namme wurdt al troch in ynstallearre sykmasine brûkt.</string>
+
+    <string name="search_add_error_empty_search">Fier syksterm yn</string>
+
+    <string name="search_add_error_format">Kontrolearje oft sykterm oan foarbyldnotaasje foldocht</string>
+
+    <!-- Content description (not visible, for screen readers etc.): Clear text in URL bar -->
+    <string name="content_description_clear_input">Ynfier wiskje</string>
+
+    <!-- Content description (not visible, for screen readers etc.): Clicking on the website overlay
+     while in typing mode will dismiss and go back to the browser. This text will be read when the
+     overlay if focused. See https://github.com/mozilla-mobile/focus-android/issues/50 -->
+    <string name="content_description_dismiss_input">Fuortsmite</string>
+
+    <!-- Content description (not visible, for screen readers etc.): Erase button: Erase the browsing
+     history and go back to the home screen. -->
+    <string name="content_description_erase">Navigaasjeskiednis wiskje</string>
+
+    <!-- If the user has multiple tabs open we will show an addition "floating action button" showing how many tabs are open.
+     This string is not displayed and read only by screenreaders. %1$s will be replaced with the number of open tabs. This
+      button will only be visible when there is more than one tab open (>= 2). -->
+    <string name="content_description_tab_counter">Iepen ljepblêden: %1$s</string>
+
+    <!-- Content description (not visible, for screen readers etc.): Lock icon showed in the URL bar for
+     https pages.. -->
+    <string name="content_description_lock">Befeilige ferbining</string>
+
+    <!-- This text is not visible. Instead it will be read by the accessibility service once we start
+     loading a website -->
+    <string name="accessibility_announcement_loading">Lade</string>
+
+    <!-- This text is not visible. Instead it will be read by the accessibility service once we
+     finished loading a website -->
+    <string name="accessibility_announcement_loading_finished">Website laden</string>
+
+    <!-- Content description (not visible, for screen readers etc.): "Three dot" menu button. -->
+    <string name="content_description_menu">Mear opsjes</string>
+
+    <!-- Content description (not visible, for screen readers etc.): Navigate forward (browsing history) -->
+    <string name="content_description_forward">Foarút blêdzje</string>
+
+    <!-- Content description (not visible, for screen readers etc.): Reload current website -->
+    <string name="content_description_reload">Website opnij lade</string>
+
+    <!-- Content description (not visible, for screen readers etc.): Navigate back (browsing history) -->
+    <string name="content_description_back">Werom blêdzje</string>
+
+    <!-- Content description (not visible, for screen readers etc.): Stop loading the current website. This button will turn into the refresh button once loading has been completed (see content_description_reload) -->
+    <string name="content_description_stop">Laden fan website stopje</string>
+
+    <!-- Content description (not visible, for screen readers etc.): Custom Tab exit button - closes the custom tab and returns to the previous app. -->
+    <string name="content_description_customtab_exit">Tebek nei foarige app</string>
+
+    <!-- Content description (not visible, for screen readers etc.): This is the description for the ImageView in the menu that displays
+         the number of trackers blocked for the current session -->
+    <string name="content_description_trackers_blocked">Oantal blokkearre trackers</string>
+
+    <!-- Content description (not visible, for screen readers etc.): This is the description for the switch in the menu that temporarily disables/enables
+         content blocking for the current session -->
+    <string name="content_description_blocking_switch">Trackers blokkearje</string>
+
+    <string name="your_rights">Jo rjochten</string>
+
+    <string name="external_app_prompt_title">Keppeling yn oare app iepenje</string>
+    <!-- This string is shown when the user has clicked a link that needs to be opened in a different app.
+         Argument 2 is the external app name, argument 1 is our name (i.e. Firefox Focus, or Firefox Klar). -->
+    <string name="external_app_prompt">Jo kinne %1$s ferlitte om dizze keppeling yn %2$s te iepenjen.</string>
+    <!-- This text is the title of a dialog shown if no app could be found for a custom link protocol. -->
+    <string name="external_app_prompt_no_app_title">Fyn in app dy\'t dizze keppeling iepenje kin</string>
+    <!-- This text is shown in a dialog if no app could be found for a custom link protocol. %1$s is the name of the app (i.e. Firefox Focus) and %2$s is the name of
+         the app store installed on the device (usually that's Google Play). -->
+    <string name="external_app_prompt_no_app">Gjin inkelde app op jo apparaat kin dizze keppeling iepenje. Jo kinne %1$s ferlitte en %2$s iepenje om in geskikte app te finen.</string>
+    <!-- This label is shown above a list of apps that can be used to open a given link -->
+    <string name="external_multiple_apps_matched_exit">Priveenavigaasje ôfslute?</string>
+
+    <!-- Snackbar that will be displayed after a download has completed. %1$s will be replaced with the file name. -->
+    <string name="download_snackbar_finished">%1$s is foltôge</string>
+
+    <!-- Snackbar action to immediately open the successfully downloaded file. -->
+    <string name="download_snackbar_open">Iepenje</string>
+
+    <!-- Download dialog: Warns users that downloaded files will not be deleted even when erasing history. %1$s will be replaced with the app name (i.e. Firefox Focus). -->
+    <string name="download_dialog_warning"><![CDATA[Downloade bestannen <b>wurde net fuortsmiten</b> as jo skiednis fan %1$s wiskje.]]></string>
+
+    <!-- Title of download dialogue -->
+    <string name="download_dialog_title">Bestân downloade</string>
+
+    <!-- Option in download dialogue to cancel a download -->
+    <string name="download_dialog_action_cancel">Annulearje</string>
+
+    <!-- Option in download dialogue to start a download -->
+     <string name="download_dialog_action_download">Downloade</string>
+
+    <!-- The page html title (i.e. the <title> tag content) -->
+    <string name="errorpage_title">Probleem by it laden fan de side</string>
+    <string name="errorpage_refresh">Opnij probearje</string>
+
+    <string name="error_connectionfailure_title">Kin gjin ferbining meitsje</string>
+    <string name="error_connectionfailure_message">
+    <![CDATA[<ul>
+        <li>Miskien is de website tydlik net beskikber of oerbelêst. Probearje it oer inkelde mominten opnij.</li>
+        <li>As jo gjin inkelde side lade kinne, kontrolearje dan de gegevens- of wifi-ferbining fan jo apparaat.</li>
+      </ul>]]>
+    </string>
+
+    <string name="error_timeout_title">De wachttiid foar de ferbining is ferstrutsen</string>
+
+    <string name="error_hostLookup_title">Server net fûn</string>
+    <string name="error_hostLookup_message"><![CDATA[<ul>
+        <li>Kontrolearje it adres op typflaters, lykas
+          <strong>ww</strong>.example.com yn stee fan
+          <strong>www</strong>.example.com</li>
+        <li>As jo gjin inkelde side lade kinne, kontrolearje dan de gegevens- of wifi-ferbining fan jo apparaat.</li>
+      </ul>]]></string>
+
+
+    <string name="error_malformedURI_title">It adres is net jildich</string>
+    <string name="error_malformedURI_message"><![CDATA[<ul>
+  <li>Webadressen wurde trochgeans skreaun as <strong>http://www.example.com/</strong></li>
+  <li>Let derop dat jo foarútgeande slashes brûke (d.y. <strong>/</strong>).</li>
+</ul>]]></string>
+
+    <string name="error_redirectLoop_title">De side ferwiist net op in krekte wize troch</string>
+    <string name="error_redirectLoop_message"><![CDATA[<ul>
+  <li>Dit probleem kin somtiden feroarsake wurde troch it útskeakeljen of wegerjen fan cookies</li>
+</ul>]]></string>
+
+    <string name="error_unsupportedprotocol_title">It adres waard net begrepen</string>
+    <string name="error_unsupportedprotocol_message"><![CDATA[<ul>
+  <li>Miskien moatte jo oare software ynstallearje om dit adres te iepenjen.</li>
+</ul>]]></string>
+
+    <string name="error_sslhandshake_title">Befeilige ferbining mislearre</string>
+    <string name="error_sslhandshake_message"><![CDATA[<ul>
+  <li>Dit kin in probleem mei de serverkonfiguraasje wêze, of ien probearret
+dizze server nei te meitsjen.</li>
+  <li>As jo yn it ferline wol mei sukses ferbining makke hawwe mei dizze server,
+dan is de flater mooglik tydlik en kinne jo it letter nochris probearje.</li>
+</ul>]]></string>
+
+    <string name="error_generic_title">Oeps</string>
+    <string name="error_generic_message">De side kin om de ien oft oare reden net laden wurde.</string>
+
+    <!-- Label used in the contextmenu shown when long-pressing on a link -->
+    <string name="contextmenu_link_share">Keppeling diele</string>
+    <!-- Label used in the contextmenu shown when long-pressing on a link -->
+    <string name="contextmenu_link_copy">Keppelingsadres kopiearje</string>
+    <!-- Label used in the contextmenu shown when long-pressing on an image -->
+    <string name="contextmenu_image_share">Ofbylding diele</string>
+    <!-- Label used in the contextmenu shown when long-pressing on an image -->
+    <string name="contextmenu_image_copy">Ofbyldingsadres kopiearje</string>
+    <!-- Label used in the contextmenu shown when long-pressing on an image -->
+    <string name="contextmenu_image_save">Ofbylding bewarje</string>
+    <!-- Label used in the contextmenu shown when long-pressing on a link -->
+    <string name="contextmenu_open_in_new_tab">Keppeling iepenje yn nij ljepblêd</string>
+
+    <!-- This is a warning shown in the browser's context menu (when long pressing an image). %1$s will be replaced with the long name of the app (e.g. Firefox Focus). -->
+    <string name="contextmenu_image_warning"><![CDATA[Bewarre en dielde ôfbyldingen <b>wurde net fuortsmiten</b> as jo skiednis fan %1$s wiskje.]]></string>
+
+    <!-- First run tour (Default browser): Title -->
+    <string name="firstrun_defaultbrowser_title">Fergrutsje jo privacy</string>
+    <!-- First run tour (Default browser): Text. -->
+    <string name="firstrun_defaultbrowser_text2">Bring priveenavigaasje nei in heger nivo. Blokkearje advertinsjes en oare ynhâld dy\'t jo op websites folgje kinne en laadtiden fan siden ferlingje.</string>
+
+    <!-- First run tour (Search): Title -->
+    <string name="firstrun_search_title">Sykje op jo manier</string>
+    <!-- First run tour (Search): Text -->
+    <string name="firstrun_search_text">Op syk nei wat oars? Kies in oare standertsykmasine yn Ynstellingen.</string>
+
+    <!-- First run tour (Shortcut): Title -->
+    <string name="firstrun_shortcut_title">Foegje keppelingen ta oan jo startskerm</string>
+    <!-- First run tour (Shortcut): Text. %1$s will be replaced with the name of the app (e.g. Firefox Focus) -->
+    <string name="firstrun_shortcut_text">Kear fluch werom nei jo favorite websites yn %1$s. Selektearje gewoanwei ‘Tafoegje oan startskerm’ fan it %1$s-menu út.</string>
+
+    <!-- First run tour (Privacy): Title -->
+    <string name="firstrun_privacy_title">Meitsje privacy gewoan</string>
+    <!-- First run tour (Privacy): Text. %1$s will be replaced with the name of the app (e.g. Firefox Focus) -->
+    <string name="firstrun_privacy_text">Stel %1$s yn as jo standertbrowser en ûnderfyn de foardielen fan priveenavigaasje as jo websiden iepenje fan oare apps út.</string>
+
+    <string name="firstrun_close_button">OK, begrepen!</string>
+    <string name="firstrun_skip_button">Oerslaan</string>
+    <string name="firstrun_next_button">Folgjende</string>
+
+    <!-- Indicator that no trackers are being blocked because content blocking is disabled; normally shows the number of blocked trackers -->
+    <string name="content_blocking_disabled">-</string>
+
+    <!-- Label of the action that will add the current website to the home screen (shown in the confirmation dialog). -->
+    <string name="dialog_addtohomescreen_action_add">Tafoegje</string>
+
+    <!-- Label of the action that will close the dialog and not add anything to the home screen (shown in the confirmation dialog). -->
+    <string name="dialog_addtohomescreen_action_cancel">Annulearje</string>
+
+    <!-- When tracking protection is disabled for the current session then we will show this warning in the "Add to home screen" dialog to
+         let the user know that the shortcut will always be opened with tracking protection disabled. -->
+    <string name="dialog_addtohomescreen_tracking_protection">Keppeling sil iepenje mei folchbeskerming útskeakele</string>
+
+    <!-- The user visible name of the "notification channel" (Android 8+ feature) for the ongoing notification shown while a browsing session is active.
+    The recommended maximum length is 40 characters; the value may be truncated if it is too long.
+
+    * To understand what notification channels are, see: https://www.androidcentral.com/notification-channels
+    * To see how this string will look like in Android's UI, see: https://github.com/mozilla-mobile/focus-android/issues/863#issuecomment-324105723
+    -->
+    <string name="notification_browsing_session_channel_name">Priveenavigaasjesesje</string>
+
+    <!-- The user visible description of the "notification channel" (Android 8+ feature) for the ongoing notification shown while a browsing session is active.
+    The recommended maximum length is 300 characters; the value may be truncated if it is too long. %1$s will be replaced with the name of the app (e.g. Firefox Focus).
+
+    * To understand what notification channels are, see: https://www.androidcentral.com/notification-channels
+    * To see how this string will look like in Android's UI, see: https://github.com/mozilla-mobile/focus-android/issues/863#issuecomment-324105723
+    -->
+    <string name="notification_browsing_session_channel_description">Mei notifikaasjes kinne jo fia ien tik jo %1$s-sesje wiskje. Jo hoege de app net te iepenjen of te sjen wat der yn jo browser aktyf is.</string>
+
+    <!-- Label for a button in the "tabs tray" to erase the browsing history (closes all tabs and removes associated data). -->
+    <string name="tabs_tray_action_erase">Navigaasjeskiednis wiskje</string>
+
+    <!-- If the user decides to open the current page in another browser and if Firefox is not installed then we show this
+      item in the list of browsers. Clicking it will open the app store installed on the device (usually that's Google Play). -->
+    <string name="download_firefox">Firefox downloade</string>
+
+    <!-- Text shown in the "Your rights" screen.
+    %1$s will be replaced with the name of the app (e.g. Firefox Focus)-->
+    <string name="your_rights_content1"><![CDATA[%1$s is fergese en iepenboarnesoftware makke troch Mozilla en oare meiwurkers.]]></string>
+
+    <!-- Text shown in the "Your rights" screen.
+    %1$s will be replaced with the name of the app (e.g. Firefox Focus)
+    %2$s will be replaced with a URL linking to the MPL (e.g. https://www.mozilla.org/en-US/MPL/) -->
+    <string name="your_rights_content2"><![CDATA[%1$s wurdt beskikber steld ûnder de betingsten fan de <a href="%2$s">Mozilla Public License</a> en oare iepenboarnelisinsjes.]]></string>
+
+    <!-- Text shown in the "Your rights" screen.
+    %1$s will be replaced with the name of the app (e.g. Firefox Focus)
+    %2$s will be replaced with a URL linking to the trademark policy (e.g. https://www.mozilla.org/foundation/trademarks/policy/) -->
+    <string name="your_rights_content3"><![CDATA[Der wurde jo gjin rjochten of lisinsjes ferliend op de hannelsmerken fan de Mozilla Foundation of iennige oare partij, mei ynbegryp fan de nammen of logo’s fan Mozilla, Firefox of %1$s. Oanfoljende ynformaasje is <a href="%2$s">hjir</a> te finen.]]></string>
+
+    <!-- Text shown in the "Your rights" screen.
+    %1$s will be replaced with the name of the app (e.g. Firefox Focus)
+    %2$s will be replaced with a URL linking to the list of licenses used by the dependencies.-->
+    <string name="your_rights_content4"><![CDATA[Oanfoljende boarnekoade foar %1$s is beskikber ûnder ferskate oare frije en iepenboarne-<a href="%2$s">lisinsjes</a>.]]></string>
+
+    <!-- Text shown in the "Your rights" screen.
+    %1$s will be replaced with the name of the app (e.g. Firefox Focus)
+    %2$s will be replaced with a URL linking to the GPL
+    %3$s will be replaced with a URL linking to the tracking protection wiki page (e.g. https://wiki.mozilla.org/Security/Tracking_protection#Lists) -->
+    <string name="your_rights_content5"><![CDATA[%1$s brûkt ek blokkearlisten dy\'t troch Disconnect, Inc. beskikber steld wurde as ôfsûnderlike en ûnôfhinklike wurken ûnder de <a href="%2$s">GNU General Public License v3</a>, en dy <a href="%3$s">hjir</a> beskikber binne.]]></string>
+
+    <!-- Text shown in prompts for GeckoView -->
+    <string name="gv_prompt_username_hint">Brûkersnamme</string>
+    <string name="gv_prompt_password_hint">Wachtwurd</string>
+    <string name="gv_prompt_clear">Wiskje</string>
+
+    <!-- Text shown in Security Information Popup -->
+    <!-- Text to denote secure or insecure connection -->
+    <string name="security_popup_secure_connection">Befeilige ferbining</string>
+    <string name="security_popup_insecure_connection">Net-befeilige ferbining</string>
+    <!-- %1$s will be replaced with organization that granted the SSL certificate -->
+    <string name="security_popup_security_verified">Ferifiearre troch: %1$s</string>
+
+    <!-- Content Description of Security Icon in toolbar -->
+    <string name="site_security_icon_content_description">Sidefeilichheid</string>
+    <string name="preference_autocomplete_duplicate_url_error">URL bestiet al</string>
+
+    <!-- Label for the Find in page button -->
+    <string name="find_in_page">Sykje op side</string>
+
+    <!-- Watermark/Hint for the find in page input field -->
+    <string name="find_in_page_input">Sykje op side</string>
+
+    <!-- String to show the number of results found in the page and the
+        position the user is at. The first argument is the position, the second argument is the total -->
+    <string name="find_in_page_result">%1$d/%2$d</string>
+    <!-- String to be read by the accessibility service presenting the number of results found in the page
+        and the position the user is at. The first argument is the position, the second argument is the total -->
+    <string name="accessibility_find_in_page_result">%1$d fan %2$d</string>
+
+    <!-- String to be read by the accessibility service when focusing the next result button -->
+    <string name="accessibility_next_result">Folgjende resultaat fine</string>
+    <!-- String to be read by the accessibility service when focusing the previous result button -->
+    <string name="accessibility_previous_result">Foarige resultaat fine</string>
+    <!-- String to be read by the accessibility service when focusing the dismiss button in the "find in page" UI -->
+    <string name="accessibility_dismiss_find_in_page">Sykje op side slute</string>
+    
+    <!-- Http Authentication Popup: Title -->
+    <string name="http_auth_dialog_title">Autentikaasje fereaske</string>
+    <!-- Http Authentication Popup: Username -->
+    <string name="http_auth_dialog_username">Brûkersnamme</string>
+    <!-- Http Authentication Popup: Password -->
+    <string name="http_auth_dialog_password">Wachtwurd</string>
+
+    <!-- Checkbox menu item text to request desktop site -->
+    <string name="preference_performance_request_desktop_site">Desktopwebsite opfreegje</string>
+
+    <!-- Displayed after a user long presses on the URL in a custom tab to copy the URL -->
+    <string name="custom_tab_copy_url_action">URL kopiearre</string>
+
+    <!-- Description of what a user may find in the Advanced Setting category, used for debugging -->
+    <string name="preference_advanced_summary">Untwikkelersark</string>
+
+    <!-- Title of Advanced Setting category -->
+    <string name="preference_category_advanced">Avansearre</string>
+
+    <!-- Preference to enable remote debugging of the app via USB or Wi-Fi -->
+    <string name="preference_remote_debugging">Remote debugging fia USB/wifi</string>
+
+    <!-- Title for the fingerprint authentication dialog box that is shown to the user when opening the app.
+     %1$s is replaced with the app name -->
+    <string name="biometric_auth_title">%1$s ûntskoattelje</string>
+
+    <!-- Description for the fingerprint authentication dialog box that is shown to the user when opening the app -->
+    <string name="biometric_auth_description">Reitsje de fingerôfdruksensor oan om troch te gean.</string>
+
+    <!-- New session button for the fingerprint authentication dialog box that is shown to the user when opening the app.
+     When pressed, the user's previous session is cleared, and authentication is not required. -->
+    <string name="biometric_auth_new_session">Nije sesje</string>
+
+    <!-- Description for the fingerprint authentication image. Used for accessibility purposes. -->
+    <string name="biometric_auth_image_description">Fingerôfdrukpiktogram</string>
+
+    <!-- Error text displayed when the user's fingerprint cannot be recognized upon re-entering the app.
+     This is displayed during the authentication flow as the app launches. -->
+    <string name="biometric_auth_not_recognized_error">Fingerôfdruk net werkend. Probearje it opnij.</string>
+
+    <!-- Error text displayed when the user's fingerprint moved too quickly upon re-entering the app
+    This is displayed during the authentication flow as the app launches.-->
+    <string name="biometric_auth_moved_too_quickly">Finger te fluch beweegd. Probearje it opnij.</string>
+
+    <!-- Title for the prompt to enable search suggestions -->
+    <string name="enable_search_suggestion_title">Wolle jo syksuggestjes oansette?</string>
+
+    <!-- Description for the prompt to enable search suggestions
+        %1$s will be replaced by the app name (e.g. Firefox Focus)
+        %2$s will be replaced with "Learn more" which will be a tappable link
+        using the string: "enable_search_suggestion_subtitle_learnmore" -->
+    <string name="enable_search_suggestion_subtitle">Om syksuggestjes te krijen, moat %1$s wat jo yn de adresbalke yntype nei de keazen sykmasine stjoere. %2$s.</string>
+
+    <!-- String to be placed inside the string: enable_search_suggestion_subtitle,
+        which will be a "Learn More" link. -->
+    <string name="enable_search_suggestion_subtitle_learnmore">Mear ynfo</string>
+
+    <!-- Label used for the "NO button" for the prompt to enable search suggestions -->
+    <string name="enable_search_suggestions_no">Nee</string>
+
+    <!-- Label used for the "YES button" for the prompt to enable search suggestions -->
+    <string name="enable_search_suggestions_yes">Ja</string>
+
+    <!-- Message displayed when using a search engine that doesn't provide suggestions -->
+    <string name="no_suggestions_message">Guon sykmasinen kinne gjin suggestjes toane.</string>
+
+    <!-- Button to dismiss the message displayed  when using a search engine that doesn't provide suggestions-->
+    <string name="dismiss_no_suggestions_prompt_button">Fuortsmite</string>
+
+    <!-- Tips displayed on the home view -->
+
+    <!-- Tip displayed on home view explaining how to disable tracking protection
+    The new line here must be kept as the second half of the string is clickable for the user. -->
+    <string name="tip_disable_tracking_protection">Wuket in website frjemd?
+ Probearje Beskerming tsjin folgjen út te skeakeljen</string>
+
+    <!-- Tip displayed on home view explaining how to add sites to homescreen
+    Argument 1 will be replaced with a line break in the application.-->
+    <string name="tip_add_to_homescreen"><![CDATA[Tagong ta de meastbesochte websites mei ien tik%1$s Menu > Tafoegje oan startskerm]]></string>
+
+    <!-- Tip displayed on home view explaining how to make Focus the default browser
+    Argument 1 is the app name (Firefox Focus/Firefox Klar/etc).
+    The new line here must be kept as the second half of the string is clickable for the user. -->
+    <string name="tip_set_default_browser">Alle keppelingen yn %1$s iepenje
+ Stel %1$s yn as jo standertbrowser</string>
+
+    <!-- Tip displayed on home view explaining how to add a custom autocomplete URL
+    The new line here must be kept as the second half of the string is clickable for the user. -->
+    <string name="tip_autocomplete_url">URL’s foar meastbrûkte websites automatysk oanfolje
+ Hâld jo finger op in URL yn de adresbalke</string>
+
+    <!-- Tip displayed on home view explaining how to add a custom autocomplete URL
+    The new line here must be kept as the second half of the string is clickable for the user. -->
+    <string name="tip_open_in_new_tab">In keppeling yn in nij ljepblêd iepenje
+ Hâld jo finger op in keppeling op in side</string>
+
+    <!-- Tip displayed on home view explaining how to request the desktop version of a website.
+     Argument 1 will be replaced with a line break in the application. -->
+    <string name="tip_request_desktop"><![CDATA[Leaver de folsleine Desktop-website besjen?%1$s Menu > Desktopwebsite opfreegje]]></string>
+
+    <!-- deprecated strings -->
+    <string name="tip_disable_tips">Tips op it %1$s-startskerm útskeakelje</string>
+    <string name="preference_switch_autocomplete">Automatysk oanfolje</string>
+    <string name="preference_category_autocomplete_preinstalled">Standert URL-list</string>
+    <string name="preference_autocomplete_preinstalled_summary">Skeakel dit yn om %1$s automatysk mear as 450 populêre URL’s yn de adresbalke oanfolje te litten.</string>
+    <string name="preference_category_autocomplete_custom_urls">Eigen URL\'s</string>
+    <string name="preference_autocomplete_subitem_customlist">Oanpaste URL\'s</string>
+  </resources>
