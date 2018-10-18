@@ -138,12 +138,6 @@ Brabhsáil. Bánaigh. Arís is arís eile.</string>
 
     <string name="preference_category_search">Cuardach</string>
 
-    <!-- Title of "switch" preference that enables/disables search suggestions -->
-    <string name="preference_show_search_suggestions"></string>
-    <!-- Description of the preference that enables/disables search suggestions
-        %1$s will be replaced by the app name (e.g. Firefox Focus) -->
-    <string name="preference_show_search_suggestions_summary"></string>
-
     <!-- This label is shown below the name of the default search engine in settings -->
     <string name="preference_search_engine_default">Réamhshocrú</string>
 
@@ -177,9 +171,6 @@ Brabhsáil. Bánaigh. Arís is arís eile.</string>
     <!-- A link to SUMO at autocomplete settings. -->
     <string name="preference_autocomplete_learn_more">Tuilleadh eolais</string>
 
-    <!-- Preference summary: Custom (user-defined) autocomplete URLs. -->
-    <string name="preference_autocomplete_custom_summary"></string>
-
     <!-- Label for the "custom autocomplete URL" input field -->
     <string name="preference_autocomplete_add_title">URL le cur leis</string>
 
@@ -191,9 +182,6 @@ Brabhsáil. Bánaigh. Arís is arís eile.</string>
 
     <!-- To be removed once the new hint has been translated -->
     <string name="preference_autocomplete_add_example">Sampla: example.com</string>
-
-    <!-- Confirmation "snackbar" shown after a new custom autocomplete URL has been added. -->
-    <string name="preference_autocomplete_add_confirmation"></string>
 
     <!-- Menu item to remove existing autocomplete URLs. -->
     <string name="preference_autocomplete_menu_remove">Bain</string>
@@ -211,27 +199,15 @@ Brabhsáil. Bánaigh. Arís is arís eile.</string>
 
     <string name="preference_category_privacy">Príobháideachas</string>
     <string name="preference_privacy_block_ads">Cuir cosc ar lorgairí fógraíochta</string>
-    <string name="preference_privacy_block_ads_summary"></string>
     <string name="preference_privacy_block_analytics">Cuir cosc ar lorgairí anailísíochta</string>
-    <string name="preference_privacy_block_analytics_summary"></string>
     <string name="preference_privacy_block_social">Cuir cosc ar lorgairí sóisialta</string>
-    <string name="preference_privacy_block_social_summary"></string>
     <string name="preference_privacy_block_content">Cuir cosc ar lorgairí ábhair eile</string>
-    <string name="preference_privacy_block_content_summary2"></string>
     <string name="preference_privacy_category_cookies">Cuir cosc ar fhianáin</string>
 
     <!-- Three options for Cookie blocking. Yes (All cookies Blocked), Block 3rd-party cookies
     only (Only 3rd-party Cookies Blocked), No (No cookies blocked) -->
     <string name="preference_privacy_should_block_cookies_no_option">Níl</string>
-    <string name="preference_privacy_should_block_cookies_third_party_only_option"></string>
     <string name="preference_privacy_should_block_cookies_yes_option">Tá</string>
-
-    <!-- Preference Title: Biometrics can be used to unlock Focus if the previous session's data was not erased by the user. -->
-    <string name="preference_security_biometric"></string>
-    <!-- Preference Summary: Biometrics (iris scan, fingerprint, or facial scan) can be used to unlock Focus if the app had a URL
-        open when the app was last run to ensure that only the phone's owner can view a previous session.
-        %1$s will be replaced by the app name (e.g. Firefox Focus) -->
-    <string name="preference_security_biometric_summary"></string>
 
     <!-- Preference Title: Secure Mode is a setting that prevents the app's content to show up in the "recent apps" screen
          and prevents the user from taking screenshots or casting the app to other displays. -->
@@ -242,31 +218,18 @@ Brabhsáil. Bánaigh. Arís is arís eile.</string>
      to other displays. -->
     <string name="preference_privacy_stealth_summary">Folaigh leathanaigh Ghréasáin agus an aip á hathrú</string>
 
-    <string name="preference_category_security"></string>
-
     <string name="preference_category_performance">Feidhmíocht</string>
     <string name="preference_performance_block_webfonts">Cuir cosc ar chlónna Gréasáin</string>
     <!-- This text is shown below the setting for disabling web fonts. Some websites use icons/images from a font and those do not show up if fonts are blocked.-->
     <string name="preference_performance_block_webfonts_summary">D\'fhéadfadh go mbeadh deilbhíní nó íomhánna ar iarraidh</string>
 
     <string name="preference_performance_block_javascript">Cuir cosc ar JavaScript</string>
-    <!-- This text is shown below setting for disabling JavaScript. Some websites may not work correctly when JavaScript is disabled -->
-    <string name="preference_performance_block_javascript_summary"></string>
-
-    <!-- This preference does not set Focus as the default browser but instead links to Android's
-     "default apps" settings screen or if not supported by this Android version to a SUMO page describing
-     how to set Focus as a default browser.
-      %1$s will be replaced by the app name (e.g. Firefox Focus) -->
-    <string name="preference_default_browser2"></string>
 
     <string name="preference_category_mozilla">Mozilla</string>
     <string name="preference_mozilla_telemetry2">Seol sonraí úsáide chugainn</string>
 
     <!-- A link to SUMO at the end of the summary (preference_mozilla_telemetry_summary2) of the "Send anonymous usage data" setting. -->
     <string name="preference_mozilla_telemetry_summary">Tuilleadh eolais</string>
-
-    <!-- %1$s will be replaced with the name of the app (e.g. Firefox Focus) -->
-    <string name="preference_mozilla_telemetry_summary2"></string>
 
     <!-- In-app link (in settings) to Focus privacy notice. -->
     <string name="preference_privacy_notice">Fógra Príobháideachais</string>
@@ -286,10 +249,6 @@ Brabhsáil. Bánaigh. Arís is arís eile.</string>
     <string name="preference_search_remove_title">Bain innill chuardaigh</string>
     <string name="preference_search_remove">Bain</string>
 
-    <!-- Title: Homescreen tips settings toggle to determine whether or not tips are displayed when
-     a user first launches the app. -->
-    <string name="preference_homescreen_tips"></string>
-
     <!-- Clickable action text that shows when user long-presses on a search engine search field (this is similar to paste or copy when long-pressing a text field) -->
     <string name="action_option_add_search_engine">Inneall cuardaigh nua</string>
 
@@ -303,11 +262,8 @@ Brabhsáil. Bánaigh. Arís is arís eile.</string>
     <string name="search_add_confirmation">Cuireadh inneall cuardaigh nua leis.</string>
 
     <string name="search_add_error_empty_name">Cuir isteach ainm an innill cuardaigh</string>
-    <string name="search_add_error_duplicate_name"></string>
 
     <string name="search_add_error_empty_search">Cuir teaghrán cuardaigh isteach</string>
-
-    <string name="search_add_error_format"></string>
 
     <!-- Content description (not visible, for screen readers etc.): Clear text in URL bar -->
     <string name="content_description_clear_input">Glan an réimse</string>
@@ -355,10 +311,6 @@ Brabhsáil. Bánaigh. Arís is arís eile.</string>
 
     <!-- Content description (not visible, for screen readers etc.): Custom Tab exit button - closes the custom tab and returns to the previous app. -->
     <string name="content_description_customtab_exit">Fill ar an aip roimhe seo</string>
-
-    <!-- Content description (not visible, for screen readers etc.): This is the description for the ImageView in the menu that displays
-         the number of trackers blocked for the current session -->
-    <string name="content_description_trackers_blocked"></string>
 
     <!-- Content description (not visible, for screen readers etc.): This is the description for the switch in the menu that temporarily disables/enables
          content blocking for the current session -->
@@ -456,7 +408,6 @@ gur fadhb shealadach í agus gur féidir leat iarracht a dhéanamh níos déana�
     <string name="contextmenu_image_copy">Cóipeáil seoladh na híomhá</string>
     <!-- Label used in the contextmenu shown when long-pressing on an image -->
     <string name="contextmenu_image_save">Sábháil an íomhá</string>
-    <!-- Label used in the contextmenu shown when long-pressing on a link -->
     <string name="contextmenu_open_in_new_tab">Oscail an nasc i gcluaisín nua</string>
 
     <!-- This is a warning shown in the browser's context menu (when long pressing an image). %1$s will be replaced with the long name of the app (e.g. Firefox Focus). -->
@@ -464,23 +415,9 @@ gur fadhb shealadach í agus gur féidir leat iarracht a dhéanamh níos déana�
 
     <!-- First run tour (Default browser): Title -->
     <string name="firstrun_defaultbrowser_title">Príobháideachas praiticiúil proifisiúnta</string>
-    <!-- First run tour (Default browser): Text. -->
-    <string name="firstrun_defaultbrowser_text2"></string>
-
-    <!-- First run tour (Search): Title -->
-    <string name="firstrun_search_title"></string>
-    <!-- First run tour (Search): Text -->
-    <string name="firstrun_search_text"></string>
 
     <!-- First run tour (Shortcut): Title -->
     <string name="firstrun_shortcut_title">Cuir aicearraí leis an leathanach baile</string>
-    <!-- First run tour (Shortcut): Text. %1$s will be replaced with the name of the app (e.g. Firefox Focus) -->
-    <string name="firstrun_shortcut_text"></string>
-
-    <!-- First run tour (Privacy): Title -->
-    <string name="firstrun_privacy_title"></string>
-    <!-- First run tour (Privacy): Text. %1$s will be replaced with the name of the app (e.g. Firefox Focus) -->
-    <string name="firstrun_privacy_text"></string>
 
     <string name="firstrun_close_button">OK, tuigim!</string>
     <string name="firstrun_skip_button">Ná bac leis</string>
@@ -495,57 +432,9 @@ gur fadhb shealadach í agus gur féidir leat iarracht a dhéanamh níos déana�
     <!-- Label of the action that will close the dialog and not add anything to the home screen (shown in the confirmation dialog). -->
     <string name="dialog_addtohomescreen_action_cancel">Cealaigh</string>
 
-    <!-- When tracking protection is disabled for the current session then we will show this warning in the "Add to home screen" dialog to
-         let the user know that the shortcut will always be opened with tracking protection disabled. -->
-    <string name="dialog_addtohomescreen_tracking_protection"></string>
-
-    <!-- The user visible name of the "notification channel" (Android 8+ feature) for the ongoing notification shown while a browsing session is active.
-    The recommended maximum length is 40 characters; the value may be truncated if it is too long.
-
-    * To understand what notification channels are, see: https://www.androidcentral.com/notification-channels
-    * To see how this string will look like in Android's UI, see: https://github.com/mozilla-mobile/focus-android/issues/863#issuecomment-324105723
-    -->
-    <string name="notification_browsing_session_channel_name"></string>
-
-    <!-- The user visible description of the "notification channel" (Android 8+ feature) for the ongoing notification shown while a browsing session is active.
-    The recommended maximum length is 300 characters; the value may be truncated if it is too long. %1$s will be replaced with the name of the app (e.g. Firefox Focus).
-
-    * To understand what notification channels are, see: https://www.androidcentral.com/notification-channels
-    * To see how this string will look like in Android's UI, see: https://github.com/mozilla-mobile/focus-android/issues/863#issuecomment-324105723
-    -->
-    <string name="notification_browsing_session_channel_description"></string>
-
-    <!-- Label for a button in the "tabs tray" to erase the browsing history (closes all tabs and removes associated data). -->
-    <string name="tabs_tray_action_erase"></string>
-
     <!-- If the user decides to open the current page in another browser and if Firefox is not installed then we show this
       item in the list of browsers. Clicking it will open the app store installed on the device (usually that's Google Play). -->
     <string name="download_firefox">Íoslódáil Firefox</string>
-
-    <!-- Text shown in the "Your rights" screen.
-    %1$s will be replaced with the name of the app (e.g. Firefox Focus)-->
-    <string name="your_rights_content1"><![CDATA[]]></string>
-
-    <!-- Text shown in the "Your rights" screen.
-    %1$s will be replaced with the name of the app (e.g. Firefox Focus)
-    %2$s will be replaced with a URL linking to the MPL (e.g. https://www.mozilla.org/en-US/MPL/) -->
-    <string name="your_rights_content2"><![CDATA[]]></string>
-
-    <!-- Text shown in the "Your rights" screen.
-    %1$s will be replaced with the name of the app (e.g. Firefox Focus)
-    %2$s will be replaced with a URL linking to the trademark policy (e.g. https://www.mozilla.org/foundation/trademarks/policy/) -->
-    <string name="your_rights_content3"><![CDATA[]]></string>
-
-    <!-- Text shown in the "Your rights" screen.
-    %1$s will be replaced with the name of the app (e.g. Firefox Focus)
-    %2$s will be replaced with a URL linking to the list of licenses used by the dependencies.-->
-    <string name="your_rights_content4"><![CDATA[]]></string>
-
-    <!-- Text shown in the "Your rights" screen.
-    %1$s will be replaced with the name of the app (e.g. Firefox Focus)
-    %2$s will be replaced with a URL linking to the GPL
-    %3$s will be replaced with a URL linking to the tracking protection wiki page (e.g. https://wiki.mozilla.org/Security/Tracking_protection#Lists) -->
-    <string name="your_rights_content5"><![CDATA[]]></string>
 
     <!-- Text shown in prompts for GeckoView -->
     <string name="gv_prompt_username_hint">Ainm úsáideora</string>
@@ -562,128 +451,11 @@ gur fadhb shealadach í agus gur féidir leat iarracht a dhéanamh níos déana�
     <!-- Content Description of Security Icon in toolbar -->
     <string name="site_security_icon_content_description">Slándáil an tSuímh</string>
     <string name="preference_autocomplete_duplicate_url_error">Tá an URL ann cheana</string>
-
-    <!-- Label for the Find in page button -->
-    <string name="find_in_page"></string>
-
-    <!-- Watermark/Hint for the find in page input field -->
-    <string name="find_in_page_input"></string>
-
-    <!-- String to show the number of results found in the page and the
-        position the user is at. The first argument is the position, the second argument is the total -->
-    <string name="find_in_page_result"></string>
-    <!-- String to be read by the accessibility service presenting the number of results found in the page
-        and the position the user is at. The first argument is the position, the second argument is the total -->
-    <string name="accessibility_find_in_page_result"></string>
-
-    <!-- String to be read by the accessibility service when focusing the next result button -->
-    <string name="accessibility_next_result"></string>
-    <!-- String to be read by the accessibility service when focusing the previous result button -->
-    <string name="accessibility_previous_result"></string>
-    <!-- String to be read by the accessibility service when focusing the dismiss button in the "find in page" UI -->
-    <string name="accessibility_dismiss_find_in_page"></string>
     
-    <!-- Http Authentication Popup: Title -->
-    <string name="http_auth_dialog_title"></string>
-    <!-- Http Authentication Popup: Username -->
-    <string name="http_auth_dialog_username"></string>
-    <!-- Http Authentication Popup: Password -->
-    <string name="http_auth_dialog_password"></string>
-
-    <!-- Checkbox menu item text to request desktop site -->
-    <string name="preference_performance_request_desktop_site"></string>
-
-    <!-- Displayed after a user long presses on the URL in a custom tab to copy the URL -->
-    <string name="custom_tab_copy_url_action"></string>
-
-    <!-- Description of what a user may find in the Advanced Setting category, used for debugging -->
-    <string name="preference_advanced_summary"></string>
-
-    <!-- Title of Advanced Setting category -->
-    <string name="preference_category_advanced"></string>
-
-    <!-- Preference to enable remote debugging of the app via USB or Wi-Fi -->
-    <string name="preference_remote_debugging"></string>
-
-    <!-- Title for the fingerprint authentication dialog box that is shown to the user when opening the app.
-     %1$s is replaced with the app name -->
-    <string name="biometric_auth_title"></string>
-
-    <!-- Description for the fingerprint authentication dialog box that is shown to the user when opening the app -->
-    <string name="biometric_auth_description"></string>
-
-    <!-- New session button for the fingerprint authentication dialog box that is shown to the user when opening the app.
-     When pressed, the user's previous session is cleared, and authentication is not required. -->
-    <string name="biometric_auth_new_session"></string>
-
-    <!-- Description for the fingerprint authentication image. Used for accessibility purposes. -->
-    <string name="biometric_auth_image_description"></string>
-
-    <!-- Error text displayed when the user's fingerprint cannot be recognized upon re-entering the app.
-     This is displayed during the authentication flow as the app launches. -->
-    <string name="biometric_auth_not_recognized_error"></string>
-
-    <!-- Error text displayed when the user's fingerprint moved too quickly upon re-entering the app
-    This is displayed during the authentication flow as the app launches.-->
-    <string name="biometric_auth_moved_too_quickly"></string>
-
-    <!-- Title for the prompt to enable search suggestions -->
-    <string name="enable_search_suggestion_title"></string>
-
-    <!-- Description for the prompt to enable search suggestions
-        %1$s will be replaced by the app name (e.g. Firefox Focus)
-        %2$s will be replaced with "Learn more" which will be a tappable link
-        using the string: "enable_search_suggestion_subtitle_learnmore" -->
-    <string name="enable_search_suggestion_subtitle"></string>
-
-    <!-- String to be placed inside the string: enable_search_suggestion_subtitle,
-        which will be a "Learn More" link. -->
-    <string name="enable_search_suggestion_subtitle_learnmore"></string>
-
-    <!-- Label used for the "NO button" for the prompt to enable search suggestions -->
-    <string name="enable_search_suggestions_no"></string>
-
-    <!-- Label used for the "YES button" for the prompt to enable search suggestions -->
-    <string name="enable_search_suggestions_yes"></string>
-
-    <!-- Message displayed when using a search engine that doesn't provide suggestions -->
-    <string name="no_suggestions_message"></string>
-
-    <!-- Button to dismiss the message displayed  when using a search engine that doesn't provide suggestions-->
-    <string name="dismiss_no_suggestions_prompt_button"></string>
-
     <!-- Tips displayed on the home view -->
 
-    <!-- Tip displayed on home view explaining how to disable tracking protection
-    The new line here must be kept as the second half of the string is clickable for the user. -->
-    <string name="tip_disable_tracking_protection"></string>
-
-    <!-- Tip displayed on home view explaining how to add sites to homescreen
-    Argument 1 will be replaced with a line break in the application.-->
-    <string name="tip_add_to_homescreen"><![CDATA[]]></string>
-
-    <!-- Tip displayed on home view explaining how to make Focus the default browser
-    Argument 1 is the app name (Firefox Focus/Firefox Klar/etc).
-    The new line here must be kept as the second half of the string is clickable for the user. -->
-    <string name="tip_set_default_browser"></string>
-
-    <!-- Tip displayed on home view explaining how to add a custom autocomplete URL
-    The new line here must be kept as the second half of the string is clickable for the user. -->
-    <string name="tip_autocomplete_url"></string>
-
-    <!-- Tip displayed on home view explaining how to add a custom autocomplete URL
-    The new line here must be kept as the second half of the string is clickable for the user. -->
-    <string name="tip_open_in_new_tab"></string>
-
-    <!-- Tip displayed on home view explaining how to request the desktop version of a website.
-     Argument 1 will be replaced with a line break in the application. -->
-    <string name="tip_request_desktop"><![CDATA[]]></string>
-
-    <!-- deprecated strings -->
-    <string name="tip_disable_tips"></string>
     <string name="preference_switch_autocomplete">Uathchríochnú</string>
     <string name="preference_category_autocomplete_preinstalled">Liosta URLanna réamhshocraithe</string>
-    <string name="preference_autocomplete_preinstalled_summary"></string>
     <string name="preference_category_autocomplete_custom_urls">URLanna saincheaptha</string>
     <string name="preference_autocomplete_subitem_customlist">URLanna saincheaptha</string>
   </resources>

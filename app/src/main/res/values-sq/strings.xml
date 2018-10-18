@@ -454,7 +454,6 @@ Shfletoni. Fshini Gjurmët. Përsëriteni.</string>
     <string name="contextmenu_image_copy">Kopjo adresë figure</string>
     <!-- Label used in the contextmenu shown when long-pressing on an image -->
     <string name="contextmenu_image_save">Ruaje figurën</string>
-    <!-- Label used in the contextmenu shown when long-pressing on a link -->
     <string name="contextmenu_open_in_new_tab">Hape lidhjen në skedë të re</string>
 
     <!-- This is a warning shown in the browser's context menu (when long pressing an image). %1$s will be replaced with the long name of the app (e.g. Firefox Focus). -->

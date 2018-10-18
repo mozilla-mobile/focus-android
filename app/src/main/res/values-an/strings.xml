@@ -138,12 +138,6 @@ Navegar. Borrar. Repetir.</string>
 
     <string name="preference_category_search">Buscar</string>
 
-    <!-- Title of "switch" preference that enables/disables search suggestions -->
-    <string name="preference_show_search_suggestions"></string>
-    <!-- Description of the preference that enables/disables search suggestions
-        %1$s will be replaced by the app name (e.g. Firefox Focus) -->
-    <string name="preference_show_search_suggestions_summary"></string>
-
     <!-- This label is shown below the name of the default search engine in settings -->
     <string name="preference_search_engine_default">Per defecto</string>
 
@@ -226,13 +220,6 @@ Navegar. Borrar. Repetir.</string>
     <string name="preference_privacy_should_block_cookies_third_party_only_option">Blocar nomás las cookies de tercers</string>
     <string name="preference_privacy_should_block_cookies_yes_option">Sí</string>
 
-    <!-- Preference Title: Biometrics can be used to unlock Focus if the previous session's data was not erased by the user. -->
-    <string name="preference_security_biometric"></string>
-    <!-- Preference Summary: Biometrics (iris scan, fingerprint, or facial scan) can be used to unlock Focus if the app had a URL
-        open when the app was last run to ensure that only the phone's owner can view a previous session.
-        %1$s will be replaced by the app name (e.g. Firefox Focus) -->
-    <string name="preference_security_biometric_summary"></string>
-
     <!-- Preference Title: Secure Mode is a setting that prevents the app's content to show up in the "recent apps" screen
          and prevents the user from taking screenshots or casting the app to other displays. -->
     <string name="preference_privacy_secure_mode">Indetectable</string>
@@ -241,8 +228,6 @@ Navegar. Borrar. Repetir.</string>
      screen. Additionally Android will prevent the user from taking screenshots or casting the app
      to other displays. -->
     <string name="preference_privacy_stealth_summary">Amagar pachinas web quan se cambie d\'aplicación</string>
-
-    <string name="preference_category_security"></string>
 
     <string name="preference_category_performance">Rendimiento</string>
     <string name="preference_performance_block_webfonts">Blocar fuents de Web</string>
@@ -285,10 +270,6 @@ Navegar. Borrar. Repetir.</string>
     <string name="preference_search_add2">+ Anyader belatro motor de busqueda</string>
     <string name="preference_search_remove_title">Sacar motors de busqueda</string>
     <string name="preference_search_remove">Eliminar</string>
-
-    <!-- Title: Homescreen tips settings toggle to determine whether or not tips are displayed when
-     a user first launches the app. -->
-    <string name="preference_homescreen_tips"></string>
 
     <!-- Clickable action text that shows when user long-presses on a search engine search field (this is similar to paste or copy when long-pressing a text field) -->
     <string name="action_option_add_search_engine">Anyader motor de busqueda</string>
@@ -355,10 +336,6 @@ Navegar. Borrar. Repetir.</string>
 
     <!-- Content description (not visible, for screen readers etc.): Custom Tab exit button - closes the custom tab and returns to the previous app. -->
     <string name="content_description_customtab_exit">Tornar ta l\'aplicación anterior</string>
-
-    <!-- Content description (not visible, for screen readers etc.): This is the description for the ImageView in the menu that displays
-         the number of trackers blocked for the current session -->
-    <string name="content_description_trackers_blocked"></string>
 
     <!-- Content description (not visible, for screen readers etc.): This is the description for the switch in the menu that temporarily disables/enables
          content blocking for the current session -->
@@ -456,7 +433,6 @@ d\'una error temporal, torna a intentar-lo dimpués.</li>
     <string name="contextmenu_image_copy">Copiar l\'adreza d\'a imachen</string>
     <!-- Label used in the contextmenu shown when long-pressing on an image -->
     <string name="contextmenu_image_save">Alzar la imachen</string>
-    <!-- Label used in the contextmenu shown when long-pressing on a link -->
     <string name="contextmenu_open_in_new_tab">Ubrir lo vinclo en una nueva pestanya</string>
 
     <!-- This is a warning shown in the browser's context menu (when long pressing an image). %1$s will be replaced with the long name of the app (e.g. Firefox Focus). -->
@@ -596,91 +572,8 @@ d\'una error temporal, torna a intentar-lo dimpués.</li>
     <!-- Displayed after a user long presses on the URL in a custom tab to copy the URL -->
     <string name="custom_tab_copy_url_action">URL copiada</string>
 
-    <!-- Description of what a user may find in the Advanced Setting category, used for debugging -->
-    <string name="preference_advanced_summary"></string>
-
-    <!-- Title of Advanced Setting category -->
-    <string name="preference_category_advanced"></string>
-
-    <!-- Preference to enable remote debugging of the app via USB or Wi-Fi -->
-    <string name="preference_remote_debugging"></string>
-
-    <!-- Title for the fingerprint authentication dialog box that is shown to the user when opening the app.
-     %1$s is replaced with the app name -->
-    <string name="biometric_auth_title"></string>
-
-    <!-- Description for the fingerprint authentication dialog box that is shown to the user when opening the app -->
-    <string name="biometric_auth_description"></string>
-
-    <!-- New session button for the fingerprint authentication dialog box that is shown to the user when opening the app.
-     When pressed, the user's previous session is cleared, and authentication is not required. -->
-    <string name="biometric_auth_new_session"></string>
-
-    <!-- Description for the fingerprint authentication image. Used for accessibility purposes. -->
-    <string name="biometric_auth_image_description"></string>
-
-    <!-- Error text displayed when the user's fingerprint cannot be recognized upon re-entering the app.
-     This is displayed during the authentication flow as the app launches. -->
-    <string name="biometric_auth_not_recognized_error"></string>
-
-    <!-- Error text displayed when the user's fingerprint moved too quickly upon re-entering the app
-    This is displayed during the authentication flow as the app launches.-->
-    <string name="biometric_auth_moved_too_quickly"></string>
-
-    <!-- Title for the prompt to enable search suggestions -->
-    <string name="enable_search_suggestion_title"></string>
-
-    <!-- Description for the prompt to enable search suggestions
-        %1$s will be replaced by the app name (e.g. Firefox Focus)
-        %2$s will be replaced with "Learn more" which will be a tappable link
-        using the string: "enable_search_suggestion_subtitle_learnmore" -->
-    <string name="enable_search_suggestion_subtitle"></string>
-
-    <!-- String to be placed inside the string: enable_search_suggestion_subtitle,
-        which will be a "Learn More" link. -->
-    <string name="enable_search_suggestion_subtitle_learnmore"></string>
-
-    <!-- Label used for the "NO button" for the prompt to enable search suggestions -->
-    <string name="enable_search_suggestions_no"></string>
-
-    <!-- Label used for the "YES button" for the prompt to enable search suggestions -->
-    <string name="enable_search_suggestions_yes"></string>
-
-    <!-- Message displayed when using a search engine that doesn't provide suggestions -->
-    <string name="no_suggestions_message"></string>
-
-    <!-- Button to dismiss the message displayed  when using a search engine that doesn't provide suggestions-->
-    <string name="dismiss_no_suggestions_prompt_button"></string>
-
     <!-- Tips displayed on the home view -->
 
-    <!-- Tip displayed on home view explaining how to disable tracking protection
-    The new line here must be kept as the second half of the string is clickable for the user. -->
-    <string name="tip_disable_tracking_protection"></string>
-
-    <!-- Tip displayed on home view explaining how to add sites to homescreen
-    Argument 1 will be replaced with a line break in the application.-->
-    <string name="tip_add_to_homescreen"><![CDATA[]]></string>
-
-    <!-- Tip displayed on home view explaining how to make Focus the default browser
-    Argument 1 is the app name (Firefox Focus/Firefox Klar/etc).
-    The new line here must be kept as the second half of the string is clickable for the user. -->
-    <string name="tip_set_default_browser"></string>
-
-    <!-- Tip displayed on home view explaining how to add a custom autocomplete URL
-    The new line here must be kept as the second half of the string is clickable for the user. -->
-    <string name="tip_autocomplete_url"></string>
-
-    <!-- Tip displayed on home view explaining how to add a custom autocomplete URL
-    The new line here must be kept as the second half of the string is clickable for the user. -->
-    <string name="tip_open_in_new_tab"></string>
-
-    <!-- Tip displayed on home view explaining how to request the desktop version of a website.
-     Argument 1 will be replaced with a line break in the application. -->
-    <string name="tip_request_desktop"><![CDATA[]]></string>
-
-    <!-- deprecated strings -->
-    <string name="tip_disable_tips"></string>
     <string name="preference_switch_autocomplete">Autocompletar</string>
     <string name="preference_category_autocomplete_preinstalled">Lista URL per defecto</string>
     <string name="preference_autocomplete_preinstalled_summary">Activar pa tener autocompletau de %1$s con 450 URLs populars en a barra d\'adrezas.</string>

@@ -223,10 +223,6 @@
 
     <!-- Preference Title: Biometrics can be used to unlock Focus if the previous session's data was not erased by the user. -->
     <string name="preference_security_biometric">Ŕalum mchknaa sak muyok mjab hikyawa</string>
-    <!-- Preference Summary: Biometrics (iris scan, fingerprint, or facial scan) can be used to unlock Focus if the app had a URL
-        open when the app was last run to ensure that only the phone's owner can view a previous session.
-        %1$s will be replaced by the app name (e.g. Firefox Focus) -->
-    <string name="preference_security_biometric_summary"></string>
 
     <!-- Preference Title: Secure Mode is a setting that prevents the app's content to show up in the "recent apps" screen
          and prevents the user from taking screenshots or casting the app to other displays. -->
@@ -367,9 +363,6 @@
     <string name="external_app_prompt">%1$s hal mchpaa pay jabchu %2$s msol.</string>
     <!-- This text is the title of a dialog shown if no app could be found for a custom link protocol. -->
     <string name="external_app_prompt_no_app_title">Aplicacion ŕit jabchu solum mŕmee</string>
-    <!-- This text is shown in a dialog if no app could be found for a custom link protocol. %1$s is the name of the app (i.e. Firefox Focus) and %2$s is the name of
-         the app store installed on the device (usually that's Google Play). -->
-    <string name="external_app_prompt_no_app"></string>
     <!-- This label is shown above a list of apps that can be used to open a given link -->
     <string name="external_multiple_apps_matched_exit">Sal amchu jabch tpaay al chpaa?</string>
 
@@ -378,9 +371,6 @@
 
     <!-- Snackbar action to immediately open the successfully downloaded file. -->
     <string name="download_snackbar_open">Sol</string>
-
-    <!-- Download dialog: Warns users that downloaded files will not be deleted even when erasing history. %1$s will be replaced with the app name (i.e. Firefox Focus). -->
-    <string name="download_dialog_warning"><![CDATA[]]></string>
 
     <!-- Title of download dialogue -->
     <string name="download_dialog_title">Tñur unal</string>
@@ -396,18 +386,11 @@
     <string name="errorpage_refresh">Tkweek wiyi</string>
 
     <string name="error_connectionfailure_title">Kos tublich kyaaw yutem</string>
-    <string name="error_connectionfailure_message">
-    <![CDATA[]]>
-    </string>
-
-    <string name="error_timeout_title"></string>
 
     <string name="error_hostLookup_title">Paa kubtaar kos chyawtem</string>
-    <string name="error_hostLookup_message"><![CDATA[]]></string>
 
 
     <string name="error_malformedURI_title">Jabchu kos buyutem</string>
-    <string name="error_malformedURI_message"><![CDATA[]]></string>
 
     <string name="error_redirectLoop_title">Chyakuhay kos nyaamuham blwiytemka</string>
     <string name="error_redirectLoop_message"><![CDATA[<ul>
@@ -418,49 +401,16 @@
   <li>Yakuya smolhikyawa ch trchechu jkaay msol yaŕaalka.</li></ul>]]></string>
 
     <string name="error_sslhandshake_title">Tublich chu kajanhay wupar</string>
-    <string name="error_sslhandshake_message"><![CDATA[]]></string>
 
     <string name="error_generic_title">Ups</string>
-    <string name="error_generic_message"></string>
 
     <!-- Label used in the contextmenu shown when long-pressing on a link -->
+
     <string name="contextmenu_link_share">Jabchu paa maat eecha</string>
-    <!-- Label used in the contextmenu shown when long-pressing on a link -->
-    <string name="contextmenu_link_copy"></string>
     <!-- Label used in the contextmenu shown when long-pressing on an image -->
     <string name="contextmenu_image_share">Tñurch paa eem</string>
-    <!-- Label used in the contextmenu shown when long-pressing on an image -->
-    <string name="contextmenu_image_copy"></string>
-    <!-- Label used in the contextmenu shown when long-pressing on an image -->
     <string name="contextmenu_image_save">Tñurch chgo</string>
-    <!-- Label used in the contextmenu shown when long-pressing on a link -->
-    <string name="contextmenu_open_in_new_tab"></string>
 
-    <!-- This is a warning shown in the browser's context menu (when long pressing an image). %1$s will be replaced with the long name of the app (e.g. Firefox Focus). -->
-    <string name="contextmenu_image_warning"><![CDATA[]]></string>
-
-    <!-- First run tour (Default browser): Title -->
-    <string name="firstrun_defaultbrowser_title"></string>
-    <!-- First run tour (Default browser): Text. -->
-    <string name="firstrun_defaultbrowser_text2"></string>
-
-    <!-- First run tour (Search): Title -->
-    <string name="firstrun_search_title"></string>
-    <!-- First run tour (Search): Text -->
-    <string name="firstrun_search_text"></string>
-
-    <!-- First run tour (Shortcut): Title -->
-    <string name="firstrun_shortcut_title"></string>
-    <!-- First run tour (Shortcut): Text. %1$s will be replaced with the name of the app (e.g. Firefox Focus) -->
-    <string name="firstrun_shortcut_text"></string>
-
-    <!-- First run tour (Privacy): Title -->
-    <string name="firstrun_privacy_title"></string>
-    <!-- First run tour (Privacy): Text. %1$s will be replaced with the name of the app (e.g. Firefox Focus) -->
-    <string name="firstrun_privacy_text"></string>
-
-    <string name="firstrun_close_button"></string>
-    <string name="firstrun_skip_button"></string>
     <string name="firstrun_next_button">Nulkpeeb</string>
 
     <!-- Indicator that no trackers are being blocked because content blocking is disabled; normally shows the number of blocked trackers -->
@@ -472,57 +422,8 @@
     <!-- Label of the action that will close the dialog and not add anything to the home screen (shown in the confirmation dialog). -->
     <string name="dialog_addtohomescreen_action_cancel">Tubspach</string>
 
-    <!-- When tracking protection is disabled for the current session then we will show this warning in the "Add to home screen" dialog to
-         let the user know that the shortcut will always be opened with tracking protection disabled. -->
-    <string name="dialog_addtohomescreen_tracking_protection"></string>
-
-    <!-- The user visible name of the "notification channel" (Android 8+ feature) for the ongoing notification shown while a browsing session is active.
-    The recommended maximum length is 40 characters; the value may be truncated if it is too long.
-
-    * To understand what notification channels are, see: https://www.androidcentral.com/notification-channels
-    * To see how this string will look like in Android's UI, see: https://github.com/mozilla-mobile/focus-android/issues/863#issuecomment-324105723
-    -->
-    <string name="notification_browsing_session_channel_name"></string>
-
-    <!-- The user visible description of the "notification channel" (Android 8+ feature) for the ongoing notification shown while a browsing session is active.
-    The recommended maximum length is 300 characters; the value may be truncated if it is too long. %1$s will be replaced with the name of the app (e.g. Firefox Focus).
-
-    * To understand what notification channels are, see: https://www.androidcentral.com/notification-channels
-    * To see how this string will look like in Android's UI, see: https://github.com/mozilla-mobile/focus-android/issues/863#issuecomment-324105723
-    -->
-    <string name="notification_browsing_session_channel_description"></string>
-
     <!-- Label for a button in the "tabs tray" to erase the browsing history (closes all tabs and removes associated data). -->
     <string name="tabs_tray_action_erase">Sal amchu mujiñ</string>
-
-    <!-- If the user decides to open the current page in another browser and if Firefox is not installed then we show this
-      item in the list of browsers. Clicking it will open the app store installed on the device (usually that's Google Play). -->
-    <string name="download_firefox"></string>
-
-    <!-- Text shown in the "Your rights" screen.
-    %1$s will be replaced with the name of the app (e.g. Firefox Focus)-->
-    <string name="your_rights_content1"><![CDATA[]]></string>
-
-    <!-- Text shown in the "Your rights" screen.
-    %1$s will be replaced with the name of the app (e.g. Firefox Focus)
-    %2$s will be replaced with a URL linking to the MPL (e.g. https://www.mozilla.org/en-US/MPL/) -->
-    <string name="your_rights_content2"><![CDATA[]]></string>
-
-    <!-- Text shown in the "Your rights" screen.
-    %1$s will be replaced with the name of the app (e.g. Firefox Focus)
-    %2$s will be replaced with a URL linking to the trademark policy (e.g. https://www.mozilla.org/foundation/trademarks/policy/) -->
-    <string name="your_rights_content3"><![CDATA[]]></string>
-
-    <!-- Text shown in the "Your rights" screen.
-    %1$s will be replaced with the name of the app (e.g. Firefox Focus)
-    %2$s will be replaced with a URL linking to the list of licenses used by the dependencies.-->
-    <string name="your_rights_content4"><![CDATA[]]></string>
-
-    <!-- Text shown in the "Your rights" screen.
-    %1$s will be replaced with the name of the app (e.g. Firefox Focus)
-    %2$s will be replaced with a URL linking to the GPL
-    %3$s will be replaced with a URL linking to the tracking protection wiki page (e.g. https://wiki.mozilla.org/Security/Tracking_protection#Lists) -->
-    <string name="your_rights_content5"><![CDATA[]]></string>
 
     <!-- Text shown in prompts for GeckoView -->
     <string name="gv_prompt_username_hint">M´mulha myoka</string>
@@ -536,10 +437,6 @@
     <!-- %1$s will be replaced with organization that granted the SSL certificate -->
     <string name="security_popup_security_verified">Say uu: %1$s</string>
 
-    <!-- Content Description of Security Icon in toolbar -->
-    <string name="site_security_icon_content_description"></string>
-    <string name="preference_autocomplete_duplicate_url_error"></string>
-
     <!-- Label for the Find in page button -->
     <string name="find_in_page">Chŕmeechu myook</string>
 
@@ -549,19 +446,7 @@
     <!-- String to show the number of results found in the page and the
         position the user is at. The first argument is the position, the second argument is the total -->
     <string name="find_in_page_result">%1$d/%2$d</string>
-    <!-- String to be read by the accessibility service presenting the number of results found in the page
-        and the position the user is at. The first argument is the position, the second argument is the total -->
-    <string name="accessibility_find_in_page_result"></string>
-
-    <!-- String to be read by the accessibility service when focusing the next result button -->
-    <string name="accessibility_next_result"></string>
-    <!-- String to be read by the accessibility service when focusing the previous result button -->
-    <string name="accessibility_previous_result"></string>
-    <!-- String to be read by the accessibility service when focusing the dismiss button in the "find in page" UI -->
-    <string name="accessibility_dismiss_find_in_page"></string>
     
-    <!-- Http Authentication Popup: Title -->
-    <string name="http_auth_dialog_title"></string>
     <!-- Http Authentication Popup: Username -->
     <string name="http_auth_dialog_username">M´mulha myoka</string>
     <!-- Http Authentication Popup: Password -->
@@ -573,91 +458,8 @@
     <!-- Displayed after a user long presses on the URL in a custom tab to copy the URL -->
     <string name="custom_tab_copy_url_action">URL tñurch</string>
 
-    <!-- Description of what a user may find in the Advanced Setting category, used for debugging -->
-    <string name="preference_advanced_summary"></string>
-
-    <!-- Title of Advanced Setting category -->
-    <string name="preference_category_advanced"></string>
-
-    <!-- Preference to enable remote debugging of the app via USB or Wi-Fi -->
-    <string name="preference_remote_debugging"></string>
-
-    <!-- Title for the fingerprint authentication dialog box that is shown to the user when opening the app.
-     %1$s is replaced with the app name -->
-    <string name="biometric_auth_title"></string>
-
-    <!-- Description for the fingerprint authentication dialog box that is shown to the user when opening the app -->
-    <string name="biometric_auth_description"></string>
-
-    <!-- New session button for the fingerprint authentication dialog box that is shown to the user when opening the app.
-     When pressed, the user's previous session is cleared, and authentication is not required. -->
-    <string name="biometric_auth_new_session"></string>
-
-    <!-- Description for the fingerprint authentication image. Used for accessibility purposes. -->
-    <string name="biometric_auth_image_description"></string>
-
-    <!-- Error text displayed when the user's fingerprint cannot be recognized upon re-entering the app.
-     This is displayed during the authentication flow as the app launches. -->
-    <string name="biometric_auth_not_recognized_error"></string>
-
-    <!-- Error text displayed when the user's fingerprint moved too quickly upon re-entering the app
-    This is displayed during the authentication flow as the app launches.-->
-    <string name="biometric_auth_moved_too_quickly"></string>
-
-    <!-- Title for the prompt to enable search suggestions -->
-    <string name="enable_search_suggestion_title"></string>
-
-    <!-- Description for the prompt to enable search suggestions
-        %1$s will be replaced by the app name (e.g. Firefox Focus)
-        %2$s will be replaced with "Learn more" which will be a tappable link
-        using the string: "enable_search_suggestion_subtitle_learnmore" -->
-    <string name="enable_search_suggestion_subtitle"></string>
-
-    <!-- String to be placed inside the string: enable_search_suggestion_subtitle,
-        which will be a "Learn More" link. -->
-    <string name="enable_search_suggestion_subtitle_learnmore"></string>
-
-    <!-- Label used for the "NO button" for the prompt to enable search suggestions -->
-    <string name="enable_search_suggestions_no"></string>
-
-    <!-- Label used for the "YES button" for the prompt to enable search suggestions -->
-    <string name="enable_search_suggestions_yes"></string>
-
-    <!-- Message displayed when using a search engine that doesn't provide suggestions -->
-    <string name="no_suggestions_message"></string>
-
-    <!-- Button to dismiss the message displayed  when using a search engine that doesn't provide suggestions-->
-    <string name="dismiss_no_suggestions_prompt_button"></string>
-
     <!-- Tips displayed on the home view -->
 
-    <!-- Tip displayed on home view explaining how to disable tracking protection
-    The new line here must be kept as the second half of the string is clickable for the user. -->
-    <string name="tip_disable_tracking_protection"></string>
-
-    <!-- Tip displayed on home view explaining how to add sites to homescreen
-    Argument 1 will be replaced with a line break in the application.-->
-    <string name="tip_add_to_homescreen"><![CDATA[]]></string>
-
-    <!-- Tip displayed on home view explaining how to make Focus the default browser
-    Argument 1 is the app name (Firefox Focus/Firefox Klar/etc).
-    The new line here must be kept as the second half of the string is clickable for the user. -->
-    <string name="tip_set_default_browser"></string>
-
-    <!-- Tip displayed on home view explaining how to add a custom autocomplete URL
-    The new line here must be kept as the second half of the string is clickable for the user. -->
-    <string name="tip_autocomplete_url"></string>
-
-    <!-- Tip displayed on home view explaining how to add a custom autocomplete URL
-    The new line here must be kept as the second half of the string is clickable for the user. -->
-    <string name="tip_open_in_new_tab"></string>
-
-    <!-- Tip displayed on home view explaining how to request the desktop version of a website.
-     Argument 1 will be replaced with a line break in the application. -->
-    <string name="tip_request_desktop"><![CDATA[]]></string>
-
-    <!-- deprecated strings -->
-    <string name="tip_disable_tips"></string>
     <string name="preference_switch_autocomplete">Yeemik chublwi</string>
     <string name="preference_category_autocomplete_preinstalled">URL mul te ñub ik chmiich</string>
     <string name="preference_autocomplete_preinstalled_summary">Mchubowuka %1$s ey 450 URLs jaab trchech chu paa tek krab ñum ktrchech chayoomum chublwihikyawa.</string>

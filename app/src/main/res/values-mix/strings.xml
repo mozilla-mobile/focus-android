@@ -453,7 +453,6 @@
     <string name="contextmenu_image_copy">Ntatava direcciòn nu inka tutu ntatavana</string>
     <!-- Label used in the contextmenu shown when long-pressing on an image -->
     <string name="contextmenu_image_save">Chika va\'a tutu ntatavana</string>
-    <!-- Label used in the contextmenu shown when long-pressing on a link -->
     <string name="contextmenu_open_in_new_tab">Kuna ña kunu kuncheu nu inka xikua</string>
 
     <!-- This is a warning shown in the browser's context menu (when long pressing an image). %1$s will be replaced with the long name of the app (e.g. Firefox Focus). -->
@@ -651,14 +650,6 @@
 
     <!-- Tips displayed on the home view -->
 
-    <!-- Tip displayed on home view explaining how to disable tracking protection
-    The new line here must be kept as the second half of the string is clickable for the user. -->
-    <string name="tip_disable_tracking_protection"></string>
-
-    <!-- Tip displayed on home view explaining how to add sites to homescreen
-    Argument 1 will be replaced with a line break in the application.-->
-    <string name="tip_add_to_homescreen"><![CDATA[]]></string>
-
     <!-- Tip displayed on home view explaining how to make Focus the default browser
     Argument 1 is the app name (Firefox Focus/Firefox Klar/etc).
     The new line here must be kept as the second half of the string is clickable for the user. -->
@@ -679,8 +670,6 @@
      Argument 1 will be replaced with a line break in the application. -->
     <string name="tip_request_desktop"><![CDATA[¿A kunu kuncheu sitio nu escritorio?%1$s Menú > Kaka sitio de escritorio]]></string>
 
-    <!-- deprecated strings -->
-    <string name="tip_disable_tips"></string>
     <string name="preference_switch_autocomplete">Chaa</string>
     <string name="preference_category_autocomplete_preinstalled">URLs ña tsa sa\'an inka</string>
     <string name="preference_autocomplete_preinstalled_summary">Kuachi\'in tava %1$s na skuti 450 URLs ña kuaka che\'e na nu direcciòn.</string>

@@ -58,11 +58,6 @@
          doesn't work correctly with blocked content. -->
     <string name="menu_trackers_blocked_title">ٹریکر بلاک کردہ</string>
 
-    <!-- This is a small text at the bottom of the menu shown in a "custom tab" for branding purposes.
-     See https://github.com/mozilla-mobile/focus-android/issues/2106
-      %1$s will be replaced by the app name (e.g. Firefox Focus) -->
-    <string name="menu_custom_tab_branding"></string>
-
     <!-- This is the title of a dialog that shows all the share targets (apps or contacts) when
          sharing an URL. -->
     <string name="share_dialog_title">کے زریعے شیئر کریں</string>
@@ -127,9 +122,6 @@
     <!-- Preference category for settings related to controlling web content -->
     <string name="preference_category_web_content">ویب مواد</string>
 
-    <!-- Preference category: stealth settings for while switching apps -->
-    <string name="preference_category_switching_apps"></string>
-
     <!-- Preference category for General Settings -->
     <string name="preference_category_general">عمومی</string>
 
@@ -140,9 +132,6 @@
 
     <!-- Title of "switch" preference that enables/disables search suggestions -->
     <string name="preference_show_search_suggestions">تلاش تجاویز حاصل کریں</string>
-    <!-- Description of the preference that enables/disables search suggestions
-        %1$s will be replaced by the app name (e.g. Firefox Focus) -->
-    <string name="preference_show_search_suggestions_summary"></string>
 
     <!-- This label is shown below the name of the default search engine in settings -->
     <string name="preference_search_engine_default">طے شدہ</string>
@@ -176,9 +165,6 @@
 
     <!-- A link to SUMO at autocomplete settings. -->
     <string name="preference_autocomplete_learn_more">مزید سیکھیں</string>
-
-    <!-- Preference summary: Custom (user-defined) autocomplete URLs. -->
-    <string name="preference_autocomplete_custom_summary"></string>
 
     <!-- Label for the "custom autocomplete URL" input field -->
     <string name="preference_autocomplete_add_title">URL اظافہ کرنے کے لیئے</string>
@@ -215,7 +201,6 @@
     <string name="preference_privacy_block_analytics">تجزیاتی ٹریکرز کو بلاک کریں</string>
     <string name="preference_privacy_block_analytics_summary">سرگرمی جیسے کہ تھپتپانا اور طورمار کرنا کی پہمائش اور تجزیہ کرنے کے لیئے استعمال ہوتا ہے</string>
     <string name="preference_privacy_block_social">سماجی ٹریکرز بلاک کریں</string>
-    <string name="preference_privacy_block_social_summary"></string>
     <string name="preference_privacy_block_content">دیگر مواد کے ٹڑیکرز بلاک کریں</string>
     <string name="preference_privacy_block_content_summary2">اہل بنانے کی وجہ سے شاید چند صفحات غیر متوقع برتائو کر سکتے ہیں</string>
     <string name="preference_privacy_category_cookies">کوکیز بلاک کری٘ں</string>
@@ -225,13 +210,6 @@
     <string name="preference_privacy_should_block_cookies_no_option">نہیں</string>
     <string name="preference_privacy_should_block_cookies_third_party_only_option">صرف 3-فریق کی کوکیاں بلاک کریں</string>
     <string name="preference_privacy_should_block_cookies_yes_option">ہاں</string>
-
-    <!-- Preference Title: Biometrics can be used to unlock Focus if the previous session's data was not erased by the user. -->
-    <string name="preference_security_biometric"></string>
-    <!-- Preference Summary: Biometrics (iris scan, fingerprint, or facial scan) can be used to unlock Focus if the app had a URL
-        open when the app was last run to ensure that only the phone's owner can view a previous session.
-        %1$s will be replaced by the app name (e.g. Firefox Focus) -->
-    <string name="preference_security_biometric_summary"></string>
 
     <!-- Preference Title: Secure Mode is a setting that prevents the app's content to show up in the "recent apps" screen
          and prevents the user from taking screenshots or casting the app to other displays. -->
@@ -265,9 +243,6 @@
     <!-- A link to SUMO at the end of the summary (preference_mozilla_telemetry_summary2) of the "Send anonymous usage data" setting. -->
     <string name="preference_mozilla_telemetry_summary">مزید سیکھیں</string>
 
-    <!-- %1$s will be replaced with the name of the app (e.g. Firefox Focus) -->
-    <string name="preference_mozilla_telemetry_summary2"></string>
-
     <!-- In-app link (in settings) to Focus privacy notice. -->
     <string name="preference_privacy_notice">رازداری کا نوٹس</string>
 
@@ -286,10 +261,6 @@
     <string name="preference_search_remove_title">تلاش انجن ہٹائیں</string>
     <string name="preference_search_remove">ہٹائیں</string>
 
-    <!-- Title: Homescreen tips settings toggle to determine whether or not tips are displayed when
-     a user first launches the app. -->
-    <string name="preference_homescreen_tips"></string>
-
     <!-- Clickable action text that shows when user long-presses on a search engine search field (this is similar to paste or copy when long-pressing a text field) -->
     <string name="action_option_add_search_engine">تلاش انجن اضافہ کریں</string>
 
@@ -306,8 +277,6 @@
     <string name="search_add_error_duplicate_name">ایک تنصیب شدہ تلاش کے انجن پہلے ہی اس نام کا استعمال کر رہا ہے۔</string>
 
     <string name="search_add_error_empty_search">ایک سٹرنگ داخل کریں</string>
-
-    <string name="search_add_error_format"></string>
 
     <!-- Content description (not visible, for screen readers etc.): Clear text in URL bar -->
     <string name="content_description_clear_input">ان پٹ صاف کریں</string>
@@ -355,10 +324,6 @@
 
     <!-- Content description (not visible, for screen readers etc.): Custom Tab exit button - closes the custom tab and returns to the previous app. -->
     <string name="content_description_customtab_exit">پچھلی ایپلیکیشن میں واپس جائیں</string>
-
-    <!-- Content description (not visible, for screen readers etc.): This is the description for the ImageView in the menu that displays
-         the number of trackers blocked for the current session -->
-    <string name="content_description_trackers_blocked"></string>
 
     <!-- Content description (not visible, for screen readers etc.): This is the description for the switch in the menu that temporarily disables/enables
          content blocking for the current session -->
@@ -454,7 +419,6 @@
     <string name="contextmenu_image_copy">نقش کا پتہ نقل کریں</string>
     <!-- Label used in the contextmenu shown when long-pressing on an image -->
     <string name="contextmenu_image_save">نقش محفوظ کریں</string>
-    <!-- Label used in the contextmenu shown when long-pressing on a link -->
     <string name="contextmenu_open_in_new_tab">ربط نئی ٹیب میں کھولیں</string>
 
     <!-- This is a warning shown in the browser's context menu (when long pressing an image). %1$s will be replaced with the long name of the app (e.g. Firefox Focus). -->
@@ -477,8 +441,6 @@
 
     <!-- First run tour (Privacy): Title -->
     <string name="firstrun_privacy_title">رازداری کو عادت بنائیں</string>
-    <!-- First run tour (Privacy): Text. %1$s will be replaced with the name of the app (e.g. Firefox Focus) -->
-    <string name="firstrun_privacy_text"></string>
 
     <string name="firstrun_close_button">ٹھیک ہے، مجھے سمجھ آگئی ہے!</string>
     <string name="firstrun_skip_button">چھوڑ دیں</string>
@@ -492,10 +454,6 @@
 
     <!-- Label of the action that will close the dialog and not add anything to the home screen (shown in the confirmation dialog). -->
     <string name="dialog_addtohomescreen_action_cancel">منسوخ کریں</string>
-
-    <!-- When tracking protection is disabled for the current session then we will show this warning in the "Add to home screen" dialog to
-         let the user know that the shortcut will always be opened with tracking protection disabled. -->
-    <string name="dialog_addtohomescreen_tracking_protection"></string>
 
     <!-- The user visible name of the "notification channel" (Android 8+ feature) for the ongoing notification shown while a browsing session is active.
     The recommended maximum length is 40 characters; the value may be truncated if it is too long.
@@ -519,31 +477,6 @@
     <!-- If the user decides to open the current page in another browser and if Firefox is not installed then we show this
       item in the list of browsers. Clicking it will open the app store installed on the device (usually that's Google Play). -->
     <string name="download_firefox">Firefox ڈائونلوڈ کریں</string>
-
-    <!-- Text shown in the "Your rights" screen.
-    %1$s will be replaced with the name of the app (e.g. Firefox Focus)-->
-    <string name="your_rights_content1"><![CDATA[]]></string>
-
-    <!-- Text shown in the "Your rights" screen.
-    %1$s will be replaced with the name of the app (e.g. Firefox Focus)
-    %2$s will be replaced with a URL linking to the MPL (e.g. https://www.mozilla.org/en-US/MPL/) -->
-    <string name="your_rights_content2"><![CDATA[]]></string>
-
-    <!-- Text shown in the "Your rights" screen.
-    %1$s will be replaced with the name of the app (e.g. Firefox Focus)
-    %2$s will be replaced with a URL linking to the trademark policy (e.g. https://www.mozilla.org/foundation/trademarks/policy/) -->
-    <string name="your_rights_content3"><![CDATA[]]></string>
-
-    <!-- Text shown in the "Your rights" screen.
-    %1$s will be replaced with the name of the app (e.g. Firefox Focus)
-    %2$s will be replaced with a URL linking to the list of licenses used by the dependencies.-->
-    <string name="your_rights_content4"><![CDATA[]]></string>
-
-    <!-- Text shown in the "Your rights" screen.
-    %1$s will be replaced with the name of the app (e.g. Firefox Focus)
-    %2$s will be replaced with a URL linking to the GPL
-    %3$s will be replaced with a URL linking to the tracking protection wiki page (e.g. https://wiki.mozilla.org/Security/Tracking_protection#Lists) -->
-    <string name="your_rights_content5"><![CDATA[]]></string>
 
     <!-- Text shown in prompts for GeckoView -->
     <string name="gv_prompt_username_hint">صارف کا نام</string>
@@ -594,45 +527,9 @@
     <!-- Displayed after a user long presses on the URL in a custom tab to copy the URL -->
     <string name="custom_tab_copy_url_action">نقل شدہ URL</string>
 
-    <!-- Description of what a user may find in the Advanced Setting category, used for debugging -->
-    <string name="preference_advanced_summary"></string>
-
-    <!-- Title of Advanced Setting category -->
-    <string name="preference_category_advanced"></string>
-
-    <!-- Preference to enable remote debugging of the app via USB or Wi-Fi -->
-    <string name="preference_remote_debugging"></string>
-
-    <!-- Title for the fingerprint authentication dialog box that is shown to the user when opening the app.
-     %1$s is replaced with the app name -->
-    <string name="biometric_auth_title"></string>
-
-    <!-- Description for the fingerprint authentication dialog box that is shown to the user when opening the app -->
-    <string name="biometric_auth_description"></string>
-
     <!-- New session button for the fingerprint authentication dialog box that is shown to the user when opening the app.
      When pressed, the user's previous session is cleared, and authentication is not required. -->
     <string name="biometric_auth_new_session">نیا سیشن</string>
-
-    <!-- Description for the fingerprint authentication image. Used for accessibility purposes. -->
-    <string name="biometric_auth_image_description"></string>
-
-    <!-- Error text displayed when the user's fingerprint cannot be recognized upon re-entering the app.
-     This is displayed during the authentication flow as the app launches. -->
-    <string name="biometric_auth_not_recognized_error"></string>
-
-    <!-- Error text displayed when the user's fingerprint moved too quickly upon re-entering the app
-    This is displayed during the authentication flow as the app launches.-->
-    <string name="biometric_auth_moved_too_quickly"></string>
-
-    <!-- Title for the prompt to enable search suggestions -->
-    <string name="enable_search_suggestion_title"></string>
-
-    <!-- Description for the prompt to enable search suggestions
-        %1$s will be replaced by the app name (e.g. Firefox Focus)
-        %2$s will be replaced with "Learn more" which will be a tappable link
-        using the string: "enable_search_suggestion_subtitle_learnmore" -->
-    <string name="enable_search_suggestion_subtitle"></string>
 
     <!-- String to be placed inside the string: enable_search_suggestion_subtitle,
         which will be a "Learn More" link. -->
@@ -652,36 +549,8 @@
 
     <!-- Tips displayed on the home view -->
 
-    <!-- Tip displayed on home view explaining how to disable tracking protection
-    The new line here must be kept as the second half of the string is clickable for the user. -->
-    <string name="tip_disable_tracking_protection"></string>
-
-    <!-- Tip displayed on home view explaining how to add sites to homescreen
-    Argument 1 will be replaced with a line break in the application.-->
-    <string name="tip_add_to_homescreen"><![CDATA[]]></string>
-
-    <!-- Tip displayed on home view explaining how to make Focus the default browser
-    Argument 1 is the app name (Firefox Focus/Firefox Klar/etc).
-    The new line here must be kept as the second half of the string is clickable for the user. -->
-    <string name="tip_set_default_browser"></string>
-
-    <!-- Tip displayed on home view explaining how to add a custom autocomplete URL
-    The new line here must be kept as the second half of the string is clickable for the user. -->
-    <string name="tip_autocomplete_url"></string>
-
-    <!-- Tip displayed on home view explaining how to add a custom autocomplete URL
-    The new line here must be kept as the second half of the string is clickable for the user. -->
-    <string name="tip_open_in_new_tab"></string>
-
-    <!-- Tip displayed on home view explaining how to request the desktop version of a website.
-     Argument 1 will be replaced with a line break in the application. -->
-    <string name="tip_request_desktop"><![CDATA[]]></string>
-
-    <!-- deprecated strings -->
-    <string name="tip_disable_tips"></string>
     <string name="preference_switch_autocomplete">خودکار تکميل</string>
     <string name="preference_category_autocomplete_preinstalled">طے شدہ URL فہرست</string>
-    <string name="preference_autocomplete_preinstalled_summary"></string>
     <string name="preference_category_autocomplete_custom_urls">مخصوص URLs</string>
     <string name="preference_autocomplete_subitem_customlist">مخصوص URLs</string>
   </resources>

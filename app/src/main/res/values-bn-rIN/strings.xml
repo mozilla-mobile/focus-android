@@ -10,8 +10,6 @@
     <!-- Label used for buttons, e.g. in dialogs -->
     <string name="action_ok">ঠিক আছে</string>
 
-    <string name="action_save"></string>
-
     <!-- This text is shown in the URL bar when it's empty -->
     <string name="urlbar_hint">অনুসন্ধান করুন অথবা ঠিকানা দিন</string>
 
@@ -26,20 +24,6 @@
 
     <!-- Menu item: Share the currently visible page -->
     <string name="menu_share">শেয়ার করুন…</string>
-
-    <!-- Menu item: Report an issue on the current site -->
-    <string name="menu_report_site_issue"></string>
-
-    <!-- Menu item: Switch to another browser to open the currently visible page. %1$s will be
-      replaced with the name of the browser like: "Open in Firefox" or "Open in Chrome". Some
-      links can be opened by native apps that aren't a browser, e.g. "Open in YouTube" -->
-    <string name="menu_open_with_default_browser2"></string>
-
-    <!-- Menu item: Switch to another browser to open the currently visible page. This menu item
-      will be shown if there are multiple browsers and we do not know which one is the default
-      browser or in case Focus is actually the default browser. Clicking this menu item will show
-      a screen with multiple browsers (or other apps that can open the current URL) to choose from. -->
-    <string name="menu_open_with_a_browser2"></string>
 
     <!-- Menu item: Add the current page as a shortcut to the device's home screen (launcher). -->
     <string name="menu_add_to_home_screen">হোম স্ক্রিনে যুক্ত করুন</string>
@@ -57,11 +41,6 @@
          blocking of trackers for the current browsing session - for example if the current website
          doesn't work correctly with blocked content. -->
     <string name="menu_trackers_blocked_title">ট্র্যাকারদের অবরুদ্ধ করা হয়েছে</string>
-
-    <!-- This is a small text at the bottom of the menu shown in a "custom tab" for branding purposes.
-     See https://github.com/mozilla-mobile/focus-android/issues/2106
-      %1$s will be replaced by the app name (e.g. Firefox Focus) -->
-    <string name="menu_custom_tab_branding"></string>
 
     <!-- This is the title of a dialog that shows all the share targets (apps or contacts) when
          sharing an URL. -->
@@ -106,103 +85,13 @@
 <p>%1$s তৈরী করেছে Mozilla। আমাদের মিশন হচ্ছে, ইন্টারনেটকে উন্মুক্ত রাখা এবং সেটির গুণগত মান বজায় রাখতে উৎসাহ দেওয়া।<br/>
 <a href="%2$s">আরও জানুন</a></p>]]></string>
 
-    <!-- Header for the Privacy and Security settings menu -->
-    <string name="preference_privacy_and_security_header"></string>
-
-    <!-- Preference summary for settings related to privacy and security -->
-    <string name="preference_privacy_and_security_summary"></string>
-
-    <!-- Preference category description for settings related to search, set default
-    and autocomplete are settings a user can find and change inside the "search" settings screen -->
-    <string name="preference_search_summary"></string>
-
     <!-- Preference category description for settings screen for settings related to Mozilla -->
     <!-- About the app and help are links that are inside this menu -->
-    <!-- %1$s will be replaced by the app name (e.g. Firefox Focus) -->
-    <string name="preference_mozilla_summary"></string>
-
-    <!-- Preference category for ad blocking and tracking protection settings -->
-    <string name="preference_category_tracking_protection"></string>
-
-    <!-- Preference category for settings related to controlling web content -->
-    <string name="preference_category_web_content"></string>
-
-    <!-- Preference category: stealth settings for while switching apps -->
-    <string name="preference_category_switching_apps"></string>
-
-    <!-- Preference category for General Settings -->
-    <string name="preference_category_general"></string>
-
-    <!-- Preference category for settings about sending usage data -->
-    <string name="preference_category_data_collection_use"></string>
 
     <string name="preference_category_search">অনুসন্ধান</string>
 
-    <!-- Title of "switch" preference that enables/disables search suggestions -->
-    <string name="preference_show_search_suggestions"></string>
-    <!-- Description of the preference that enables/disables search suggestions
-        %1$s will be replaced by the app name (e.g. Firefox Focus) -->
-    <string name="preference_show_search_suggestions_summary"></string>
-
     <!-- This label is shown below the name of the default search engine in settings -->
     <string name="preference_search_engine_default">ডিফল্ট</string>
-
-    <!-- Text that is shown below a "switch" preference that is enabled. -->
-    <string name="preference_state_on"></string>
-
-    <!-- Text that is shown below a "switch" preference that is disabled. -->
-    <string name="preference_state_off"></string>
-
-    <!-- Item in settings that will open a new preference screen for configuring the URL autocomplete behavior. -->
-    <string name="preference_subitem_autocomplete"></string>
-
-    <!-- Action at the bottom of the list of custom autocomplete URLs that will open a new screen to add a new URL to the list. -->
-    <string name="preference_autocomplete_action_add"></string>
-
-    <!-- Title of the screen for adding custom autocomplete URLs. -->
-    <string name="preference_autocomplete_title_add"></string>
-
-    <!-- Label for the button to quick add custom autocomplete URLs. -->
-    <string name="custom_autocomplete_quick_add"></string>
-
-    <!-- Preference category for settings about cookies and site data -->
-    <string name="preference_category_cookies"></string>
-
-    <!-- Preference category for settings about data choices -->
-    <string name="preference_category_data_choices"></string>
-
-    <!-- Title of the screen for removing custom autocomplete URLs. -->
-    <string name="preference_autocomplete_title_remove"></string>
-
-    <!-- A link to SUMO at autocomplete settings. -->
-    <string name="preference_autocomplete_learn_more"></string>
-
-    <!-- Preference summary: Custom (user-defined) autocomplete URLs. -->
-    <string name="preference_autocomplete_custom_summary"></string>
-
-    <!-- Label for the "custom autocomplete URL" input field -->
-    <string name="preference_autocomplete_add_title"></string>
-
-    <!-- "Hint" text for the "custom autocomplete URL" input field. Shown when the field is empty. -->
-    <string name="preference_autocomplete_add_hint"></string>
-
-    <!-- Example how a custom domain autocomplete URL be added (e.g. without http://) -->
-    <string name="preference_autocomplete_add_example2"></string>
-
-    <!-- To be removed once the new hint has been translated -->
-    <string name="preference_autocomplete_add_example"></string>
-
-    <!-- Confirmation "snackbar" shown after a new custom autocomplete URL has been added. -->
-    <string name="preference_autocomplete_add_confirmation"></string>
-
-    <!-- Menu item to remove existing autocomplete URLs. -->
-    <string name="preference_autocomplete_menu_remove"></string>
-
-    <!-- Content description (not visible, for screen readers etc.): Button that will delete all selected custom autocomplete URLs. -->
-    <string name="preference_autocomplete_action_remove_content_description"></string>
-
-    <!-- Error message shown if the entered custom autocomplete URL is not valid or empty. -->
-    <string name="preference_autocomplete_add_error"></string>
 
     <string name="preference_language">ভাষা</string>
     <!-- This is shown when the user hasn't set a focus specific language, i.e. when Focus
@@ -218,20 +107,6 @@
     <string name="preference_privacy_block_social_summary">আপনার ভিজিট ট্র্যাক করতে এবং শেয়ার বোতামগুলির মত কার্যকারিতা দেখাতে সাইটে এম্বেড রয়েছে</string>
     <string name="preference_privacy_block_content">অন্যন্য কনটেন্ট ট্রাকাদেরকে অবরুদ্ধ করুন</string>
     <string name="preference_privacy_block_content_summary2">সক্রিয় করলে কিছু পেজ অপ্রত্যাশিত আচরণ করতে পারে</string>
-    <string name="preference_privacy_category_cookies"></string>
-
-    <!-- Three options for Cookie blocking. Yes (All cookies Blocked), Block 3rd-party cookies
-    only (Only 3rd-party Cookies Blocked), No (No cookies blocked) -->
-    <string name="preference_privacy_should_block_cookies_no_option"></string>
-    <string name="preference_privacy_should_block_cookies_third_party_only_option"></string>
-    <string name="preference_privacy_should_block_cookies_yes_option"></string>
-
-    <!-- Preference Title: Biometrics can be used to unlock Focus if the previous session's data was not erased by the user. -->
-    <string name="preference_security_biometric"></string>
-    <!-- Preference Summary: Biometrics (iris scan, fingerprint, or facial scan) can be used to unlock Focus if the app had a URL
-        open when the app was last run to ensure that only the phone's owner can view a previous session.
-        %1$s will be replaced by the app name (e.g. Firefox Focus) -->
-    <string name="preference_security_biometric_summary"></string>
 
     <!-- Preference Title: Secure Mode is a setting that prevents the app's content to show up in the "recent apps" screen
          and prevents the user from taking screenshots or casting the app to other displays. -->
@@ -242,16 +117,10 @@
      to other displays. -->
     <string name="preference_privacy_stealth_summary">অ্যাপগুলির মধ্যে স্যুইচ করার সময় ওয়েবপৃষ্ঠাগুলিকে লুকান</string>
 
-    <string name="preference_category_security"></string>
-
     <string name="preference_category_performance">কর্মক্ষমতা</string>
     <string name="preference_performance_block_webfonts">ওয়েব ফন্টকে অবরুদ্ধ করুন</string>
     <!-- This text is shown below the setting for disabling web fonts. Some websites use icons/images from a font and those do not show up if fonts are blocked.-->
     <string name="preference_performance_block_webfonts_summary">ছবি অথবা আইকন দৃশ্যমান নাও হতে পারে</string>
-
-    <string name="preference_performance_block_javascript"></string>
-    <!-- This text is shown below setting for disabling JavaScript. Some websites may not work correctly when JavaScript is disabled -->
-    <string name="preference_performance_block_javascript_summary"></string>
 
     <!-- This preference does not set Focus as the default browser but instead links to Android's
      "default apps" settings screen or if not supported by this Android version to a SUMO page describing
@@ -286,10 +155,6 @@
     <string name="preference_search_remove_title">সার্চ ইঞ্জিনগুলি অপসারণ করুন</string>
     <string name="preference_search_remove">মুছে ফেলুন</string>
 
-    <!-- Title: Homescreen tips settings toggle to determine whether or not tips are displayed when
-     a user first launches the app. -->
-    <string name="preference_homescreen_tips"></string>
-
     <!-- Clickable action text that shows when user long-presses on a search engine search field (this is similar to paste or copy when long-pressing a text field) -->
     <string name="action_option_add_search_engine">সার্চ ইঞ্জিন যোগ করুন</string>
 
@@ -301,13 +166,6 @@
     <string name="search_add_manually_example">উদাহরন: example.com/search/?q=%s</string>
 
     <string name="search_add_confirmation">নতুন সার্চ ইঞ্জিন যোগ করা হয়েছে।</string>
-
-    <string name="search_add_error_empty_name"></string>
-    <string name="search_add_error_duplicate_name"></string>
-
-    <string name="search_add_error_empty_search"></string>
-
-    <string name="search_add_error_format"></string>
 
     <!-- Content description (not visible, for screen readers etc.): Clear text in URL bar -->
     <string name="content_description_clear_input">ইনপুট করা তথ্য মুছে ফেলুন</string>
@@ -355,10 +213,6 @@
 
     <!-- Content description (not visible, for screen readers etc.): Custom Tab exit button - closes the custom tab and returns to the previous app. -->
     <string name="content_description_customtab_exit">আগের অ্যাপে ফিরে যান</string>
-
-    <!-- Content description (not visible, for screen readers etc.): This is the description for the ImageView in the menu that displays
-         the number of trackers blocked for the current session -->
-    <string name="content_description_trackers_blocked"></string>
 
     <!-- Content description (not visible, for screen readers etc.): This is the description for the switch in the menu that temporarily disables/enables
          content blocking for the current session -->
@@ -456,7 +310,6 @@
     <string name="contextmenu_image_copy">ছবির ঠিকানা অনুলিপি করুন</string>
     <!-- Label used in the contextmenu shown when long-pressing on an image -->
     <string name="contextmenu_image_save">ছবি সংরক্ষণ করুন</string>
-    <!-- Label used in the contextmenu shown when long-pressing on a link -->
     <string name="contextmenu_open_in_new_tab">নতুন ট্যাবে লিঙ্ক খুলুন</string>
 
     <!-- This is a warning shown in the browser's context menu (when long pressing an image). %1$s will be replaced with the long name of the app (e.g. Firefox Focus). -->
@@ -547,143 +400,8 @@
     %3$s will be replaced with a URL linking to the tracking protection wiki page (e.g. https://wiki.mozilla.org/Security/Tracking_protection#Lists) -->
     <string name="your_rights_content5"><![CDATA[%1$s ও Disconnect, Inc, দ্বারা প্রদত্ত ব্লকস্ট্রিস্ট ব্যবহার করে, <a href="%2$s">GNU জেনারেল পাবলিক লাইসেন্স v3</a> র অধীনে পৃথক এবং স্বাধীন কাজ হিসাবে এবং <a href="%3$s">এখানে</a> পাওয়া যাবে।]]></string>
 
-    <!-- Text shown in prompts for GeckoView -->
-    <string name="gv_prompt_username_hint"></string>
-    <string name="gv_prompt_password_hint"></string>
-    <string name="gv_prompt_clear"></string>
-
     <!-- Text shown in Security Information Popup -->
-    <!-- Text to denote secure or insecure connection -->
-    <string name="security_popup_secure_connection"></string>
-    <string name="security_popup_insecure_connection"></string>
-    <!-- %1$s will be replaced with organization that granted the SSL certificate -->
-    <string name="security_popup_security_verified"></string>
-
-    <!-- Content Description of Security Icon in toolbar -->
-    <string name="site_security_icon_content_description"></string>
-    <string name="preference_autocomplete_duplicate_url_error"></string>
-
-    <!-- Label for the Find in page button -->
-    <string name="find_in_page"></string>
-
-    <!-- Watermark/Hint for the find in page input field -->
-    <string name="find_in_page_input"></string>
-
-    <!-- String to show the number of results found in the page and the
-        position the user is at. The first argument is the position, the second argument is the total -->
-    <string name="find_in_page_result"></string>
-    <!-- String to be read by the accessibility service presenting the number of results found in the page
-        and the position the user is at. The first argument is the position, the second argument is the total -->
-    <string name="accessibility_find_in_page_result"></string>
-
-    <!-- String to be read by the accessibility service when focusing the next result button -->
-    <string name="accessibility_next_result"></string>
-    <!-- String to be read by the accessibility service when focusing the previous result button -->
-    <string name="accessibility_previous_result"></string>
-    <!-- String to be read by the accessibility service when focusing the dismiss button in the "find in page" UI -->
-    <string name="accessibility_dismiss_find_in_page"></string>
     
-    <!-- Http Authentication Popup: Title -->
-    <string name="http_auth_dialog_title"></string>
-    <!-- Http Authentication Popup: Username -->
-    <string name="http_auth_dialog_username"></string>
-    <!-- Http Authentication Popup: Password -->
-    <string name="http_auth_dialog_password"></string>
-
-    <!-- Checkbox menu item text to request desktop site -->
-    <string name="preference_performance_request_desktop_site"></string>
-
-    <!-- Displayed after a user long presses on the URL in a custom tab to copy the URL -->
-    <string name="custom_tab_copy_url_action"></string>
-
-    <!-- Description of what a user may find in the Advanced Setting category, used for debugging -->
-    <string name="preference_advanced_summary"></string>
-
-    <!-- Title of Advanced Setting category -->
-    <string name="preference_category_advanced"></string>
-
-    <!-- Preference to enable remote debugging of the app via USB or Wi-Fi -->
-    <string name="preference_remote_debugging"></string>
-
-    <!-- Title for the fingerprint authentication dialog box that is shown to the user when opening the app.
-     %1$s is replaced with the app name -->
-    <string name="biometric_auth_title"></string>
-
-    <!-- Description for the fingerprint authentication dialog box that is shown to the user when opening the app -->
-    <string name="biometric_auth_description"></string>
-
-    <!-- New session button for the fingerprint authentication dialog box that is shown to the user when opening the app.
-     When pressed, the user's previous session is cleared, and authentication is not required. -->
-    <string name="biometric_auth_new_session"></string>
-
-    <!-- Description for the fingerprint authentication image. Used for accessibility purposes. -->
-    <string name="biometric_auth_image_description"></string>
-
-    <!-- Error text displayed when the user's fingerprint cannot be recognized upon re-entering the app.
-     This is displayed during the authentication flow as the app launches. -->
-    <string name="biometric_auth_not_recognized_error"></string>
-
-    <!-- Error text displayed when the user's fingerprint moved too quickly upon re-entering the app
-    This is displayed during the authentication flow as the app launches.-->
-    <string name="biometric_auth_moved_too_quickly"></string>
-
-    <!-- Title for the prompt to enable search suggestions -->
-    <string name="enable_search_suggestion_title"></string>
-
-    <!-- Description for the prompt to enable search suggestions
-        %1$s will be replaced by the app name (e.g. Firefox Focus)
-        %2$s will be replaced with "Learn more" which will be a tappable link
-        using the string: "enable_search_suggestion_subtitle_learnmore" -->
-    <string name="enable_search_suggestion_subtitle"></string>
-
-    <!-- String to be placed inside the string: enable_search_suggestion_subtitle,
-        which will be a "Learn More" link. -->
-    <string name="enable_search_suggestion_subtitle_learnmore"></string>
-
-    <!-- Label used for the "NO button" for the prompt to enable search suggestions -->
-    <string name="enable_search_suggestions_no"></string>
-
-    <!-- Label used for the "YES button" for the prompt to enable search suggestions -->
-    <string name="enable_search_suggestions_yes"></string>
-
-    <!-- Message displayed when using a search engine that doesn't provide suggestions -->
-    <string name="no_suggestions_message"></string>
-
-    <!-- Button to dismiss the message displayed  when using a search engine that doesn't provide suggestions-->
-    <string name="dismiss_no_suggestions_prompt_button"></string>
-
     <!-- Tips displayed on the home view -->
 
-    <!-- Tip displayed on home view explaining how to disable tracking protection
-    The new line here must be kept as the second half of the string is clickable for the user. -->
-    <string name="tip_disable_tracking_protection"></string>
-
-    <!-- Tip displayed on home view explaining how to add sites to homescreen
-    Argument 1 will be replaced with a line break in the application.-->
-    <string name="tip_add_to_homescreen"><![CDATA[]]></string>
-
-    <!-- Tip displayed on home view explaining how to make Focus the default browser
-    Argument 1 is the app name (Firefox Focus/Firefox Klar/etc).
-    The new line here must be kept as the second half of the string is clickable for the user. -->
-    <string name="tip_set_default_browser"></string>
-
-    <!-- Tip displayed on home view explaining how to add a custom autocomplete URL
-    The new line here must be kept as the second half of the string is clickable for the user. -->
-    <string name="tip_autocomplete_url"></string>
-
-    <!-- Tip displayed on home view explaining how to add a custom autocomplete URL
-    The new line here must be kept as the second half of the string is clickable for the user. -->
-    <string name="tip_open_in_new_tab"></string>
-
-    <!-- Tip displayed on home view explaining how to request the desktop version of a website.
-     Argument 1 will be replaced with a line break in the application. -->
-    <string name="tip_request_desktop"><![CDATA[]]></string>
-
-    <!-- deprecated strings -->
-    <string name="tip_disable_tips"></string>
-    <string name="preference_switch_autocomplete"></string>
-    <string name="preference_category_autocomplete_preinstalled"></string>
-    <string name="preference_autocomplete_preinstalled_summary"></string>
-    <string name="preference_category_autocomplete_custom_urls"></string>
-    <string name="preference_autocomplete_subitem_customlist"></string>
-</resources>
+    </resources>

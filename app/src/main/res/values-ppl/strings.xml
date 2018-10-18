@@ -265,25 +265,12 @@ Shipashalu. Shitapupulu. Shikchiwa uksenpa.</string>
     <!-- A link to SUMO at the end of the summary (preference_mozilla_telemetry_summary2) of the "Send anonymous usage data" setting. -->
     <string name="preference_mozilla_telemetry_summary">Shikmatiuk</string>
 
-    <!-- %1$s will be replaced with the name of the app (e.g. Firefox Focus) -->
-    <string name="preference_mozilla_telemetry_summary2"></string>
-
-    <!-- In-app link (in settings) to Focus privacy notice. -->
-    <string name="preference_privacy_notice"></string>
-
     <!-- Item in Preferences that shows the about page. Parameter 1 is the app name, i.e. Firefox Focus/Firefox Klar. -->
     <string name="preference_about">Ipanpa %1$s</string>
-
-    <!-- Header for the list of installed search engines -->
-    <string name="preference_search_installed_search_engines"></string>
 
     <!-- Action for restoring the default list of search engines -->
     <string name="preference_search_restore">Shimukwepa ka achtutalijtuk motor tatemua</string>
 
-    <!-- Action for adding an additional search engine to the list.
-    The "+" is used to emphasize that this is an "add" action -->
-    <string name="preference_search_add2"></string>
-    <string name="preference_search_remove_title"></string>
     <string name="preference_search_remove">Shikishti</string>
 
     <!-- Title: Homescreen tips settings toggle to determine whether or not tips are displayed when
@@ -299,15 +286,6 @@ Shipashalu. Shitapupulu. Shikchiwa uksenpa.</string>
 
     <!-- Example of search engine url -->
     <string name="search_add_manually_example">Machiut: machiut.com/search/?q=%s</string>
-
-    <string name="search_add_confirmation"></string>
-
-    <string name="search_add_error_empty_name"></string>
-    <string name="search_add_error_duplicate_name"></string>
-
-    <string name="search_add_error_empty_search"></string>
-
-    <string name="search_add_error_format"></string>
 
     <!-- Content description (not visible, for screen readers etc.): Clear text in URL bar -->
     <string name="content_description_clear_input">Shikpupu ne tajkwilujtuk</string>
@@ -356,10 +334,6 @@ Shipashalu. Shitapupulu. Shikchiwa uksenpa.</string>
     <!-- Content description (not visible, for screen readers etc.): Custom Tab exit button - closes the custom tab and returns to the previous app. -->
     <string name="content_description_customtab_exit">Shimukwepa ka ne aplicación panutuk</string>
 
-    <!-- Content description (not visible, for screen readers etc.): This is the description for the ImageView in the menu that displays
-         the number of trackers blocked for the current session -->
-    <string name="content_description_trackers_blocked"></string>
-
     <!-- Content description (not visible, for screen readers etc.): This is the description for the switch in the menu that temporarily disables/enables
          content blocking for the current session -->
     <string name="content_description_blocking_switch">Shiktzakwa ne rajrastreador</string>
@@ -386,9 +360,6 @@ Shipashalu. Shitapupulu. Shikchiwa uksenpa.</string>
     <!-- Snackbar action to immediately open the successfully downloaded file. -->
     <string name="download_snackbar_open">Shiktapu</string>
 
-    <!-- Download dialog: Warns users that downloaded files will not be deleted even when erasing history. %1$s will be replaced with the app name (i.e. Firefox Focus). -->
-    <string name="download_dialog_warning"><![CDATA[]]></string>
-
     <!-- Title of download dialogue -->
     <string name="download_dialog_title">Shiktemulti ne archivoj</string>
 
@@ -398,32 +369,22 @@ Shipashalu. Shitapupulu. Shikchiwa uksenpa.</string>
     <!-- Option in download dialogue to start a download -->
      <string name="download_dialog_action_download">Shitemulti</string>
 
-    <!-- The page html title (i.e. the <title> tag content) -->
-    <string name="errorpage_title"></string>
     <string name="errorpage_refresh">Shikejeku uksenpa</string>
 
     <string name="error_connectionfailure_title">Tesu weli musalua</string>
-    <string name="error_connectionfailure_message">
-    <![CDATA[]]>
-    </string>
 
     <string name="error_timeout_title">Tea tinemi salujtuk</string>
 
     <string name="error_hostLookup_title">Ne servidor te muajsik</string>
-    <string name="error_hostLookup_message"><![CDATA[]]></string>
 
 
     <string name="error_malformedURI_title">Ne dirección tesu yek</string>
-    <string name="error_malformedURI_message"><![CDATA[]]></string>
 
     <string name="error_redirectLoop_title">Ne iswat tesu muchiwa redireccionar yek</string>
-    <string name="error_redirectLoop_message"><![CDATA[]]></string>
 
     <string name="error_unsupportedprotocol_title">Ne dirección tesu mumati</string>
-    <string name="error_unsupportedprotocol_message"><![CDATA[]]></string>
 
     <string name="error_sslhandshake_title">Tesu muajshitij ne conexión seguruj</string>
-    <string name="error_sslhandshake_message"><![CDATA[]]></string>
 
     <string name="error_generic_title">Ups</string>
     <string name="error_generic_message">Anka se te kiajkawa mutemiltia ini iswat.</string>
@@ -438,31 +399,19 @@ Shipashalu. Shitapupulu. Shikchiwa uksenpa.</string>
     <string name="contextmenu_image_copy">Shikupina ne idirección ne kwikwil</string>
     <!-- Label used in the contextmenu shown when long-pressing on an image -->
     <string name="contextmenu_image_save">Shikana ne kwikwil</string>
-    <!-- Label used in the contextmenu shown when long-pressing on a link -->
     <string name="contextmenu_open_in_new_tab">Shiktapu ne ilpika tik se yankwik pestañaj</string>
-
-    <!-- This is a warning shown in the browser's context menu (when long pressing an image). %1$s will be replaced with the long name of the app (e.g. Firefox Focus). -->
-    <string name="contextmenu_image_warning"><![CDATA[]]></string>
 
     <!-- First run tour (Default browser): Title -->
     <string name="firstrun_defaultbrowser_title">Shikchikawa ne muichtakanemilis</string>
-    <!-- First run tour (Default browser): Text. -->
-    <string name="firstrun_defaultbrowser_text2"></string>
 
     <!-- First run tour (Search): Title -->
     <string name="firstrun_search_title">Ken tikneki titatemua</string>
-    <!-- First run tour (Search): Text -->
-    <string name="firstrun_search_text"></string>
 
     <!-- First run tour (Shortcut): Title -->
     <string name="firstrun_shortcut_title">Shiktalili ne achtu iswat se atajoj</string>
-    <!-- First run tour (Shortcut): Text. %1$s will be replaced with the name of the app (e.g. Firefox Focus) -->
-    <string name="firstrun_shortcut_text"></string>
 
     <!-- First run tour (Privacy): Title -->
     <string name="firstrun_privacy_title">Shinemi ichtaka mujmusta</string>
-    <!-- First run tour (Privacy): Text. %1$s will be replaced with the name of the app (e.g. Firefox Focus) -->
-    <string name="firstrun_privacy_text"></string>
 
     <string name="firstrun_close_button">Yek nemi, nikmatiaya!</string>
     <string name="firstrun_skip_button">Te nikneki nikita</string>
@@ -477,57 +426,12 @@ Shipashalu. Shitapupulu. Shikchiwa uksenpa.</string>
     <!-- Label of the action that will close the dialog and not add anything to the home screen (shown in the confirmation dialog). -->
     <string name="dialog_addtohomescreen_action_cancel">Shikajkawa</string>
 
-    <!-- When tracking protection is disabled for the current session then we will show this warning in the "Add to home screen" dialog to
-         let the user know that the shortcut will always be opened with tracking protection disabled. -->
-    <string name="dialog_addtohomescreen_tracking_protection"></string>
-
-    <!-- The user visible name of the "notification channel" (Android 8+ feature) for the ongoing notification shown while a browsing session is active.
-    The recommended maximum length is 40 characters; the value may be truncated if it is too long.
-
-    * To understand what notification channels are, see: https://www.androidcentral.com/notification-channels
-    * To see how this string will look like in Android's UI, see: https://github.com/mozilla-mobile/focus-android/issues/863#issuecomment-324105723
-    -->
-    <string name="notification_browsing_session_channel_name"></string>
-
-    <!-- The user visible description of the "notification channel" (Android 8+ feature) for the ongoing notification shown while a browsing session is active.
-    The recommended maximum length is 300 characters; the value may be truncated if it is too long. %1$s will be replaced with the name of the app (e.g. Firefox Focus).
-
-    * To understand what notification channels are, see: https://www.androidcentral.com/notification-channels
-    * To see how this string will look like in Android's UI, see: https://github.com/mozilla-mobile/focus-android/issues/863#issuecomment-324105723
-    -->
-    <string name="notification_browsing_session_channel_description"></string>
-
     <!-- Label for a button in the "tabs tray" to erase the browsing history (closes all tabs and removes associated data). -->
     <string name="tabs_tray_action_erase">Shikpupu kan tipashaluj</string>
 
     <!-- If the user decides to open the current page in another browser and if Firefox is not installed then we show this
       item in the list of browsers. Clicking it will open the app store installed on the device (usually that's Google Play). -->
     <string name="download_firefox">Shiktemulti Firefox</string>
-
-    <!-- Text shown in the "Your rights" screen.
-    %1$s will be replaced with the name of the app (e.g. Firefox Focus)-->
-    <string name="your_rights_content1"><![CDATA[]]></string>
-
-    <!-- Text shown in the "Your rights" screen.
-    %1$s will be replaced with the name of the app (e.g. Firefox Focus)
-    %2$s will be replaced with a URL linking to the MPL (e.g. https://www.mozilla.org/en-US/MPL/) -->
-    <string name="your_rights_content2"><![CDATA[]]></string>
-
-    <!-- Text shown in the "Your rights" screen.
-    %1$s will be replaced with the name of the app (e.g. Firefox Focus)
-    %2$s will be replaced with a URL linking to the trademark policy (e.g. https://www.mozilla.org/foundation/trademarks/policy/) -->
-    <string name="your_rights_content3"><![CDATA[]]></string>
-
-    <!-- Text shown in the "Your rights" screen.
-    %1$s will be replaced with the name of the app (e.g. Firefox Focus)
-    %2$s will be replaced with a URL linking to the list of licenses used by the dependencies.-->
-    <string name="your_rights_content4"><![CDATA[]]></string>
-
-    <!-- Text shown in the "Your rights" screen.
-    %1$s will be replaced with the name of the app (e.g. Firefox Focus)
-    %2$s will be replaced with a URL linking to the GPL
-    %3$s will be replaced with a URL linking to the tracking protection wiki page (e.g. https://wiki.mozilla.org/Security/Tracking_protection#Lists) -->
-    <string name="your_rights_content5"><![CDATA[]]></string>
 
     <!-- Text shown in prompts for GeckoView -->
     <string name="gv_prompt_username_hint">Mutukay usuarioj</string>
@@ -538,11 +442,7 @@ Shipashalu. Shitapupulu. Shikchiwa uksenpa.</string>
     <!-- Text to denote secure or insecure connection -->
     <string name="security_popup_secure_connection">Timusalua wan nejmachnemi</string>
     <string name="security_popup_insecure_connection">Timusalua wan tesu nejmachnemi</string>
-    <!-- %1$s will be replaced with organization that granted the SSL certificate -->
-    <string name="security_popup_security_verified"></string>
 
-    <!-- Content Description of Security Icon in toolbar -->
-    <string name="site_security_icon_content_description"></string>
     <string name="preference_autocomplete_duplicate_url_error">URL nemia</string>
 
     <!-- Label for the Find in page button -->
@@ -572,51 +472,12 @@ Shipashalu. Shitapupulu. Shikchiwa uksenpa.</string>
     <!-- Http Authentication Popup: Password -->
     <string name="http_auth_dialog_password">Constraseñaj</string>
 
-    <!-- Checkbox menu item text to request desktop site -->
-    <string name="preference_performance_request_desktop_site"></string>
-
     <!-- Displayed after a user long presses on the URL in a custom tab to copy the URL -->
     <string name="custom_tab_copy_url_action">URL kupintuk</string>
-
-    <!-- Description of what a user may find in the Advanced Setting category, used for debugging -->
-    <string name="preference_advanced_summary"></string>
-
-    <!-- Title of Advanced Setting category -->
-    <string name="preference_category_advanced"></string>
-
-    <!-- Preference to enable remote debugging of the app via USB or Wi-Fi -->
-    <string name="preference_remote_debugging"></string>
 
     <!-- Title for the fingerprint authentication dialog box that is shown to the user when opening the app.
      %1$s is replaced with the app name -->
     <string name="biometric_auth_title">Shikmakishti %1$s</string>
-
-    <!-- Description for the fingerprint authentication dialog box that is shown to the user when opening the app -->
-    <string name="biometric_auth_description"></string>
-
-    <!-- New session button for the fingerprint authentication dialog box that is shown to the user when opening the app.
-     When pressed, the user's previous session is cleared, and authentication is not required. -->
-    <string name="biometric_auth_new_session"></string>
-
-    <!-- Description for the fingerprint authentication image. Used for accessibility purposes. -->
-    <string name="biometric_auth_image_description"></string>
-
-    <!-- Error text displayed when the user's fingerprint cannot be recognized upon re-entering the app.
-     This is displayed during the authentication flow as the app launches. -->
-    <string name="biometric_auth_not_recognized_error"></string>
-
-    <!-- Error text displayed when the user's fingerprint moved too quickly upon re-entering the app
-    This is displayed during the authentication flow as the app launches.-->
-    <string name="biometric_auth_moved_too_quickly"></string>
-
-    <!-- Title for the prompt to enable search suggestions -->
-    <string name="enable_search_suggestion_title"></string>
-
-    <!-- Description for the prompt to enable search suggestions
-        %1$s will be replaced by the app name (e.g. Firefox Focus)
-        %2$s will be replaced with "Learn more" which will be a tappable link
-        using the string: "enable_search_suggestion_subtitle_learnmore" -->
-    <string name="enable_search_suggestion_subtitle"></string>
 
     <!-- String to be placed inside the string: enable_search_suggestion_subtitle,
         which will be a "Learn More" link. -->
@@ -628,17 +489,10 @@ Shipashalu. Shitapupulu. Shikchiwa uksenpa.</string>
     <!-- Label used for the "YES button" for the prompt to enable search suggestions -->
     <string name="enable_search_suggestions_yes">Eje</string>
 
-    <!-- Message displayed when using a search engine that doesn't provide suggestions -->
-    <string name="no_suggestions_message"></string>
-
     <!-- Button to dismiss the message displayed  when using a search engine that doesn't provide suggestions-->
     <string name="dismiss_no_suggestions_prompt_button">Shikishti</string>
 
     <!-- Tips displayed on the home view -->
-
-    <!-- Tip displayed on home view explaining how to disable tracking protection
-    The new line here must be kept as the second half of the string is clickable for the user. -->
-    <string name="tip_disable_tracking_protection"></string>
 
     <!-- Tip displayed on home view explaining how to add sites to homescreen
     Argument 1 will be replaced with a line break in the application.-->
@@ -649,12 +503,6 @@ Shipashalu. Shitapupulu. Shikchiwa uksenpa.</string>
     The new line here must be kept as the second half of the string is clickable for the user. -->
     <string name="tip_set_default_browser">Shiktapu sejse ilpika tik %1$s</string>
 
-    <!-- Tip displayed on home view explaining how to add a custom autocomplete URL
-    The new line here must be kept as the second half of the string is clickable for the user. -->
-    <string name="tip_autocomplete_url"></string>
-
-    <!-- Tip displayed on home view explaining how to add a custom autocomplete URL
-    The new line here must be kept as the second half of the string is clickable for the user. -->
     <string name="tip_open_in_new_tab">Shiktapu se ilpika tik se yankwik pestañaj
  Shikpajpachu yek ne ilpika taja tikneki tik se iswat</string>
 
@@ -662,8 +510,6 @@ Shipashalu. Shitapupulu. Shikchiwa uksenpa.</string>
      Argument 1 will be replaced with a line break in the application. -->
     <string name="tip_request_desktop"><![CDATA[Tiknekiskia nikita muchi ne escritorioj?%1$s Menu > Shiktajtani ne iswat ipal ne escritorioj]]></string>
 
-    <!-- deprecated strings -->
-    <string name="tip_disable_tips"></string>
     <string name="preference_switch_autocomplete">Temi isel</string>
     <string name="preference_category_autocomplete_preinstalled">Listaj achtutalijtuk URL</string>
     <string name="preference_autocomplete_preinstalled_summary">Shiktimaka pal ma %1$s temi isel tik 450 URLs muishmattuk tik ne barraj direccion.</string>
