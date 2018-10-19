@@ -441,7 +441,6 @@
 
     <!-- Label used in the contextmenu shown when long-pressing on a link -->
     <string name="contextmenu_link_share">Miyurakwani kwankurhini</string>
-    <!-- Label used in the contextmenu shown when long-pressing on a link -->
     <string name="contextmenu_link_copy">Miyurakwani p\'itani</string>
     <!-- Label used in the contextmenu shown when long-pressing on an image -->
     <string name="contextmenu_image_share">P\'itakatani kwankurhini</string>
@@ -449,6 +448,7 @@
     <string name="contextmenu_image_copy">P\'itakataeri miyurakwani p\'itani</string>
     <!-- Label used in the contextmenu shown when long-pressing on an image -->
     <string name="contextmenu_image_save">P\'itakatani patsani</string>
+    <!-- Label used in the contextmenu shown when long-pressing on a link -->
     <string name="contextmenu_open_in_new_tab">Máteru erarhukwarhu mítani</string>
 
     <!-- This is a warning shown in the browser's context menu (when long pressing an image). %1$s will be replaced with the long name of the app (e.g. Firefox Focus). -->
@@ -651,6 +651,8 @@ Tsek\'u Kwatakwa Estakwaeri p\'atani</string>
     <string name="tip_set_default_browser">Yámu miyukwaechani mítani %1$s rhu
  %1$s Pékurhintsï</string>
 
+    <!-- Tip displayed on home view explaining how to add a custom autocomplete URL
+    The new line here must be kept as the second half of the string is clickable for the user. -->
     <string name="tip_open_in_new_tab">Miyukwani jimpanhi eranharhikwarhu mítani 
  Nákintaru ma miyukwani puchanharhiku</string>
 

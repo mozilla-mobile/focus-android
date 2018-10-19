@@ -448,7 +448,6 @@ vika voi olla väliaikainen. Yritä tällöin myöhemmin uudestaan.</li>
 
     <!-- Label used in the contextmenu shown when long-pressing on a link -->
     <string name="contextmenu_link_share">Jaa linkki</string>
-    <!-- Label used in the contextmenu shown when long-pressing on a link -->
     <string name="contextmenu_link_copy">Kopioi linkin osoite</string>
     <!-- Label used in the contextmenu shown when long-pressing on an image -->
     <string name="contextmenu_image_share">Jaa kuva</string>
@@ -456,6 +455,7 @@ vika voi olla väliaikainen. Yritä tällöin myöhemmin uudestaan.</li>
     <string name="contextmenu_image_copy">Kopioi kuvan osoite</string>
     <!-- Label used in the contextmenu shown when long-pressing on an image -->
     <string name="contextmenu_image_save">Tallenna kuva</string>
+    <!-- Label used in the contextmenu shown when long-pressing on a link -->
     <string name="contextmenu_open_in_new_tab">Avaa linkki uuteen välilehteen</string>
 
     <!-- This is a warning shown in the browser's context menu (when long pressing an image). %1$s will be replaced with the long name of the app (e.g. Firefox Focus). -->

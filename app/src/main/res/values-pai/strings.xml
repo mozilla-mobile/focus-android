@@ -404,11 +404,10 @@
 
     <string name="error_generic_title">Ups</string>
 
-    <!-- Label used in the contextmenu shown when long-pressing on a link -->
-
     <string name="contextmenu_link_share">Jabchu paa maat eecha</string>
     <!-- Label used in the contextmenu shown when long-pressing on an image -->
     <string name="contextmenu_image_share">Tñurch paa eem</string>
+    <!-- Label used in the contextmenu shown when long-pressing on an image -->
     <string name="contextmenu_image_save">Tñurch chgo</string>
 
     <string name="firstrun_next_button">Nulkpeeb</string>

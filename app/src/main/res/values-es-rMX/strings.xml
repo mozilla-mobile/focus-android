@@ -446,7 +446,6 @@ Navega. Limpia. Repite.</string>
 
     <!-- Label used in the contextmenu shown when long-pressing on a link -->
     <string name="contextmenu_link_share">Compartir enlace</string>
-    <!-- Label used in the contextmenu shown when long-pressing on a link -->
     <string name="contextmenu_link_copy">Copiar la dirección del enlace</string>
     <!-- Label used in the contextmenu shown when long-pressing on an image -->
     <string name="contextmenu_image_share">Compartir imagen</string>
@@ -454,6 +453,7 @@ Navega. Limpia. Repite.</string>
     <string name="contextmenu_image_copy">Copiar la dirección de la imagen</string>
     <!-- Label used in the contextmenu shown when long-pressing on an image -->
     <string name="contextmenu_image_save">Guardar imagen</string>
+    <!-- Label used in the contextmenu shown when long-pressing on a link -->
     <string name="contextmenu_open_in_new_tab">Abrir enlace en una nueva pestaña</string>
 
     <!-- This is a warning shown in the browser's context menu (when long pressing an image). %1$s will be replaced with the long name of the app (e.g. Firefox Focus). -->

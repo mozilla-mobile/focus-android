@@ -446,7 +446,6 @@ Surf. Slett. Gjenta.</string>
 
     <!-- Label used in the contextmenu shown when long-pressing on a link -->
     <string name="contextmenu_link_share">Del lenke</string>
-    <!-- Label used in the contextmenu shown when long-pressing on a link -->
     <string name="contextmenu_link_copy">Kopier lenkeadresse</string>
     <!-- Label used in the contextmenu shown when long-pressing on an image -->
     <string name="contextmenu_image_share">Del bilde</string>
@@ -454,6 +453,7 @@ Surf. Slett. Gjenta.</string>
     <string name="contextmenu_image_copy">Kopier bildeadresse</string>
     <!-- Label used in the contextmenu shown when long-pressing on an image -->
     <string name="contextmenu_image_save">Lagre bilde</string>
+    <!-- Label used in the contextmenu shown when long-pressing on a link -->
     <string name="contextmenu_open_in_new_tab">Åpne lenke i ny fane</string>
 
     <!-- This is a warning shown in the browser's context menu (when long pressing an image). %1$s will be replaced with the long name of the app (e.g. Firefox Focus). -->

@@ -348,7 +348,6 @@
 
     <!-- Label used in the contextmenu shown when long-pressing on a link -->
     <string name="contextmenu_link_share">Tă~làz nêt (n̆eza)</string>
-    <!-- Label used in the contextmenu shown when long-pressing on a link -->
     <string name="contextmenu_link_copy">Lí chop nêt (n̆eza)</string>
     <!-- Label used in the contextmenu shown when long-pressing on an image -->
     <string name="contextmenu_image_share">Tă~làz xá nie mbòl</string>
@@ -356,6 +355,7 @@
     <string name="contextmenu_image_copy">Lí chop nêt (n̆eza) nà mòn</string>
     <!-- Label used in the contextmenu shown when long-pressing on an image -->
     <string name="contextmenu_image_save">Mb-lòɁ sóg lô mòn</string>
+    <!-- Label used in the contextmenu shown when long-pressing on a link -->
     <string name="contextmenu_open_in_new_tab">Mb-šàlɁ lô (lawo) kúb</string>
 
     <!-- First run tour (Default browser): Title -->

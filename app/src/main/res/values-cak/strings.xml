@@ -445,7 +445,6 @@
 
     <!-- Label used in the contextmenu shown when long-pressing on a link -->
     <string name="contextmenu_link_share">Tikomonïx ri ximöy</string>
-    <!-- Label used in the contextmenu shown when long-pressing on a link -->
     <string name="contextmenu_link_copy">Tiwachib\'ëx ri rochochib\'al ximonel</string>
     <!-- Label used in the contextmenu shown when long-pressing on an image -->
     <string name="contextmenu_image_share">Tikomonïx wachib\'äl</string>
@@ -453,6 +452,7 @@
     <string name="contextmenu_image_copy">Tiwachib\'ëx ruwachib\'al ochochib\'äl </string>
     <!-- Label used in the contextmenu shown when long-pressing on an image -->
     <string name="contextmenu_image_save">Tiyak wachib\'äl</string>
+    <!-- Label used in the contextmenu shown when long-pressing on a link -->
     <string name="contextmenu_open_in_new_tab">Tijaq ri ximonel pa jun k\'ak\'a\' ruwi\'</string>
 
     <!-- This is a warning shown in the browser's context menu (when long pressing an image). %1$s will be replaced with the long name of the app (e.g. Firefox Focus). -->

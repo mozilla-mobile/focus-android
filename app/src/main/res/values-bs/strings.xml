@@ -423,7 +423,6 @@ Pretražujte. Izbrišite. Ponovite.</string>
 
     <!-- Label used in the contextmenu shown when long-pressing on a link -->
     <string name="contextmenu_link_share">Podijeli vezu</string>
-    <!-- Label used in the contextmenu shown when long-pressing on a link -->
     <string name="contextmenu_link_copy">Kopiraj adresu veze</string>
     <!-- Label used in the contextmenu shown when long-pressing on an image -->
     <string name="contextmenu_image_share">Podijeli sliku</string>
@@ -431,6 +430,7 @@ Pretražujte. Izbrišite. Ponovite.</string>
     <string name="contextmenu_image_copy">Kopiraj adresu slike</string>
     <!-- Label used in the contextmenu shown when long-pressing on an image -->
     <string name="contextmenu_image_save">Sačuvaj sliku</string>
+    <!-- Label used in the contextmenu shown when long-pressing on a link -->
     <string name="contextmenu_open_in_new_tab">Otvori vezu u novom tabu</string>
 
     <!-- This is a warning shown in the browser's context menu (when long pressing an image). %1$s will be replaced with the long name of the app (e.g. Firefox Focus). -->

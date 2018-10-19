@@ -247,7 +247,6 @@
 
     <!-- Label used in the contextmenu shown when long-pressing on a link -->
     <string name="contextmenu_link_share">Dijeli poveznicu</string>
-    <!-- Label used in the contextmenu shown when long-pressing on a link -->
     <string name="contextmenu_link_copy">Kopiraj adresu poveznice</string>
     <!-- Label used in the contextmenu shown when long-pressing on an image -->
     <string name="contextmenu_image_share">Dijeli sliku</string>
@@ -255,6 +254,7 @@
     <string name="contextmenu_image_copy">Kopiraj adresu slike</string>
     <!-- Label used in the contextmenu shown when long-pressing on an image -->
     <string name="contextmenu_image_save">Spremi sliku</string>
+    <!-- Label used in the contextmenu shown when long-pressing on a link -->
     <string name="contextmenu_open_in_new_tab">Otvori poveznicu u novoj kartici</string>
 
     <string name="firstrun_close_button">U redu, razumijem!</string>

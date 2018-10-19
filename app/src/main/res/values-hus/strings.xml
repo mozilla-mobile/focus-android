@@ -103,7 +103,7 @@
   </ul>
 </p>
 <p>%1$s ts\'ejkadh k\'al Mozilla. I le\' abal ka wa\'tsin jun i ebtsolóm lubach ani japidh.<br/>
-<a href=""%2$s"">Xa exla\'yej</a></p>]]></string>
+<a href="%2$s">Xa exla\'yej</a></p>]]></string>
 
     <!-- Header for the Privacy and Security settings menu -->
     <string name="preference_privacy_and_security_header">Tsinataláb ani belkadhtaláb</string>
@@ -447,7 +447,6 @@
 
     <!-- Label used in the contextmenu shown when long-pressing on a link -->
     <string name="contextmenu_link_share">Ka buk\'uw an ts\'aj</string>
-    <!-- Label used in the contextmenu shown when long-pressing on a link -->
     <string name="contextmenu_link_copy">Ka k\'ot\'biy an ts\'aj</string>
     <!-- Label used in the contextmenu shown when long-pressing on an image -->
     <string name="contextmenu_image_share">Ka buk\'uw an k\'ot\'biláb</string>
@@ -455,6 +454,7 @@
     <string name="contextmenu_image_copy">Ka buk\'uw in ts\'ajil an k\'otbiláb</string>
     <!-- Label used in the contextmenu shown when long-pressing on an image -->
     <string name="contextmenu_image_save">Ka dheya\' an k\'ot\'biláb</string>
+    <!-- Label used in the contextmenu shown when long-pressing on a link -->
     <string name="contextmenu_open_in_new_tab">Ka japiy an ts\'aj al pil i xeklek</string>
 
     <!-- This is a warning shown in the browser's context menu (when long pressing an image). %1$s will be replaced with the long name of the app (e.g. Firefox Focus). -->

@@ -448,7 +448,6 @@ temporară și poți încerca din nou mai târziu.</li>
 
     <!-- Label used in the contextmenu shown when long-pressing on a link -->
     <string name="contextmenu_link_share">Partajează linkul</string>
-    <!-- Label used in the contextmenu shown when long-pressing on a link -->
     <string name="contextmenu_link_copy">Copiază adresa linkului</string>
     <!-- Label used in the contextmenu shown when long-pressing on an image -->
     <string name="contextmenu_image_share">Partajează imaginea</string>
@@ -456,6 +455,7 @@ temporară și poți încerca din nou mai târziu.</li>
     <string name="contextmenu_image_copy">Copiază adresa imaginii</string>
     <!-- Label used in the contextmenu shown when long-pressing on an image -->
     <string name="contextmenu_image_save">Salvează imaginea</string>
+    <!-- Label used in the contextmenu shown when long-pressing on a link -->
     <string name="contextmenu_open_in_new_tab">Deschide într-o filă nouă</string>
 
     <!-- This is a warning shown in the browser's context menu (when long pressing an image). %1$s will be replaced with the long name of the app (e.g. Firefox Focus). -->

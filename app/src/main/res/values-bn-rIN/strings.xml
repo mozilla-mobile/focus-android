@@ -302,7 +302,6 @@
 
     <!-- Label used in the contextmenu shown when long-pressing on a link -->
     <string name="contextmenu_link_share">লিংক শেয়ার করুন</string>
-    <!-- Label used in the contextmenu shown when long-pressing on a link -->
     <string name="contextmenu_link_copy">লিংকের ঠিকানা অনুলিপি করুন</string>
     <!-- Label used in the contextmenu shown when long-pressing on an image -->
     <string name="contextmenu_image_share">ছবি শেয়ার করুন</string>
@@ -310,6 +309,7 @@
     <string name="contextmenu_image_copy">ছবির ঠিকানা অনুলিপি করুন</string>
     <!-- Label used in the contextmenu shown when long-pressing on an image -->
     <string name="contextmenu_image_save">ছবি সংরক্ষণ করুন</string>
+    <!-- Label used in the contextmenu shown when long-pressing on a link -->
     <string name="contextmenu_open_in_new_tab">নতুন ট্যাবে লিঙ্ক খুলুন</string>
 
     <!-- This is a warning shown in the browser's context menu (when long pressing an image). %1$s will be replaced with the long name of the app (e.g. Firefox Focus). -->

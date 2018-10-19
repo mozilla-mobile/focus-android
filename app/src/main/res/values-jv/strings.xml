@@ -154,11 +154,12 @@ Dlajah. Busak. Balèni.</string>
      <string name="download_dialog_action_download">Undhuh</string>
 
 
-    <!-- Label used in the contextmenu shown when long-pressing on a link -->
     <string name="contextmenu_link_share">Dumké pranala</string>
     <!-- Label used in the contextmenu shown when long-pressing on an image -->
     <string name="contextmenu_image_share">Dumké gambar</string>
+    <!-- Label used in the contextmenu shown when long-pressing on an image -->
     <string name="contextmenu_image_save">Simpen gambar</string>
+    <!-- Label used in the contextmenu shown when long-pressing on a link -->
     <string name="contextmenu_open_in_new_tab">Bukak pranala ing tab anyar</string>
 
     <string name="firstrun_close_button">Oké, mudheng!</string>

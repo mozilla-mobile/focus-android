@@ -425,7 +425,6 @@ d\'una error temporal, torna a intentar-lo dimpués.</li>
 
     <!-- Label used in the contextmenu shown when long-pressing on a link -->
     <string name="contextmenu_link_share">Compartir lo vinclo</string>
-    <!-- Label used in the contextmenu shown when long-pressing on a link -->
     <string name="contextmenu_link_copy">Copiar l\'adreza d\'o vinclo</string>
     <!-- Label used in the contextmenu shown when long-pressing on an image -->
     <string name="contextmenu_image_share">Compartir la imachen</string>
@@ -433,6 +432,7 @@ d\'una error temporal, torna a intentar-lo dimpués.</li>
     <string name="contextmenu_image_copy">Copiar l\'adreza d\'a imachen</string>
     <!-- Label used in the contextmenu shown when long-pressing on an image -->
     <string name="contextmenu_image_save">Alzar la imachen</string>
+    <!-- Label used in the contextmenu shown when long-pressing on a link -->
     <string name="contextmenu_open_in_new_tab">Ubrir lo vinclo en una nueva pestanya</string>
 
     <!-- This is a warning shown in the browser's context menu (when long pressing an image). %1$s will be replaced with the long name of the app (e.g. Firefox Focus). -->

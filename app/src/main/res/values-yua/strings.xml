@@ -409,7 +409,6 @@ Maanen. Púustej. Tu ka\'aten.</string>
 
     <!-- Label used in the contextmenu shown when long-pressing on a link -->
     <string name="contextmenu_link_share">Túuxta’ak le nuupankila’</string>
-    <!-- Label used in the contextmenu shown when long-pressing on a link -->
     <string name="contextmenu_link_copy">Ka’a ts’íibta’ak le k’áaba’ ti’ le nuupankila’</string>
     <!-- Label used in the contextmenu shown when long-pressing on an image -->
     <string name="contextmenu_image_share">Túuxta’ak le oochela’</string>
@@ -417,6 +416,7 @@ Maanen. Púustej. Tu ka\'aten.</string>
     <string name="contextmenu_image_copy">Ka’a ts’íibta’ak le k’áaba’ ti’ le oochela’</string>
     <!-- Label used in the contextmenu shown when long-pressing on an image -->
     <string name="contextmenu_image_save">Táabsa’ak oochelil</string>
+    <!-- Label used in the contextmenu shown when long-pressing on a link -->
     <string name="contextmenu_open_in_new_tab">Je’ebek le nuupankila’ ich jun túumben nu’ukbesaj</string>
 
     <!-- First run tour (Default browser): Title -->

@@ -238,7 +238,9 @@ Lees. Vergeet. Herhaal.</string>
 
     <!-- Label used in the contextmenu shown when long-pressing on an image -->
     <string name="contextmenu_image_share">Deel beeld</string>
+    <!-- Label used in the contextmenu shown when long-pressing on an image -->
     <string name="contextmenu_image_save">Stoor beeld</string>
+    <!-- Label used in the contextmenu shown when long-pressing on a link -->
     <string name="contextmenu_open_in_new_tab">Maak skakel oop in \'n nuwe oortjie</string>
 
     <!-- First run tour (Search): Title -->

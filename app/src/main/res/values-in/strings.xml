@@ -445,7 +445,6 @@ Jelajahi. Hapus. Ulangi.</string>
 
     <!-- Label used in the contextmenu shown when long-pressing on a link -->
     <string name="contextmenu_link_share">Bagikan tautan</string>
-    <!-- Label used in the contextmenu shown when long-pressing on a link -->
     <string name="contextmenu_link_copy">Salin alamat tautan</string>
     <!-- Label used in the contextmenu shown when long-pressing on an image -->
     <string name="contextmenu_image_share">Bagikan gambar</string>
@@ -453,6 +452,7 @@ Jelajahi. Hapus. Ulangi.</string>
     <string name="contextmenu_image_copy">Salin alamat gambar</string>
     <!-- Label used in the contextmenu shown when long-pressing on an image -->
     <string name="contextmenu_image_save">Simpan gambar</string>
+    <!-- Label used in the contextmenu shown when long-pressing on a link -->
     <string name="contextmenu_open_in_new_tab">Buka tautan di tab baru</string>
 
     <!-- This is a warning shown in the browser's context menu (when long pressing an image). %1$s will be replaced with the long name of the app (e.g. Firefox Focus). -->

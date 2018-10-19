@@ -446,7 +446,6 @@ Navegatz. Escafatz. Tornatz-i.</string>
 
     <!-- Label used in the contextmenu shown when long-pressing on a link -->
     <string name="contextmenu_link_share">Partejar lo ligam</string>
-    <!-- Label used in the contextmenu shown when long-pressing on a link -->
     <string name="contextmenu_link_copy">Copiar l\'adreça del ligam</string>
     <!-- Label used in the contextmenu shown when long-pressing on an image -->
     <string name="contextmenu_image_share">Partejar l’imatge</string>
@@ -454,6 +453,7 @@ Navegatz. Escafatz. Tornatz-i.</string>
     <string name="contextmenu_image_copy">Copiar l\'adreça de l’imatge</string>
     <!-- Label used in the contextmenu shown when long-pressing on an image -->
     <string name="contextmenu_image_save">Enregistrar l’imatge</string>
+    <!-- Label used in the contextmenu shown when long-pressing on a link -->
     <string name="contextmenu_open_in_new_tab">Dobrir dins un onglet novèl</string>
 
     <!-- This is a warning shown in the browser's context menu (when long pressing an image). %1$s will be replaced with the long name of the app (e.g. Firefox Focus). -->

@@ -364,7 +364,6 @@
 
     <!-- Label used in the contextmenu shown when long-pressing on a link -->
     <string name="contextmenu_link_share">लिङ्क साझा गर्नुहोस्</string>
-    <!-- Label used in the contextmenu shown when long-pressing on a link -->
     <string name="contextmenu_link_copy">लिङ्क ठेगाना प्रतिलिपि गर्नुहोस्</string>
     <!-- Label used in the contextmenu shown when long-pressing on an image -->
     <string name="contextmenu_image_share">तस्बिर साझेदारी गर्नुहोस</string>
@@ -372,6 +371,7 @@
     <string name="contextmenu_image_copy">तस्बिर ठेगाना प्रतिलिपि गर्नुहोस्</string>
     <!-- Label used in the contextmenu shown when long-pressing on an image -->
     <string name="contextmenu_image_save">तस्विर सङ्ग्रह गर्नुहोस्</string>
+    <!-- Label used in the contextmenu shown when long-pressing on a link -->
     <string name="contextmenu_open_in_new_tab">लिङ्कलाई नयाँ ट्याबमा खोल्नुहोस्</string>
 
     <!-- First run tour (Default browser): Title -->

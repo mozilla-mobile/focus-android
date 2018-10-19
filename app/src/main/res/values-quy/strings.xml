@@ -420,7 +420,6 @@
 
     <!-- Label used in the contextmenu shown when long-pressing on a link -->
     <string name="contextmenu_link_share">T\'inkiyta qunakuy</string>
-    <!-- Label used in the contextmenu shown when long-pressing on a link -->
     <string name="contextmenu_link_copy">T\'inkiypata direccioninta kikinchay</string>
     <!-- Label used in the contextmenu shown when long-pressing on an image -->
     <string name="contextmenu_image_share">Rikch\'ayta qunakuy</string>
@@ -428,6 +427,7 @@
     <string name="contextmenu_image_copy">Rikch\'aypata direccioninta kikinchay</string>
     <!-- Label used in the contextmenu shown when long-pressing on an image -->
     <string name="contextmenu_image_save">Rikch\'ayta jallich\'ay</string>
+    <!-- Label used in the contextmenu shown when long-pressing on a link -->
     <string name="contextmenu_open_in_new_tab">T\'inkiyta kichariy juk musuq tikllapi</string>
 
     <!-- This is a warning shown in the browser's context menu (when long pressing an image). %1$s will be replaced with the long name of the app (e.g. Firefox Focus). -->

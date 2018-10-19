@@ -448,7 +448,6 @@ Prehliadajte. Vymažte históriu. Opakujte.</string>
 
     <!-- Label used in the contextmenu shown when long-pressing on a link -->
     <string name="contextmenu_link_share">Zdieľať odkaz</string>
-    <!-- Label used in the contextmenu shown when long-pressing on a link -->
     <string name="contextmenu_link_copy">Kopírovať adresu odkazu</string>
     <!-- Label used in the contextmenu shown when long-pressing on an image -->
     <string name="contextmenu_image_share">Zdieľať obrázok</string>
@@ -456,6 +455,7 @@ Prehliadajte. Vymažte históriu. Opakujte.</string>
     <string name="contextmenu_image_copy">Kopírovať adresu obrázku</string>
     <!-- Label used in the contextmenu shown when long-pressing on an image -->
     <string name="contextmenu_image_save">Uložiť obrázok</string>
+    <!-- Label used in the contextmenu shown when long-pressing on a link -->
     <string name="contextmenu_open_in_new_tab">Otvoriť odkaz na novej karte</string>
 
     <!-- This is a warning shown in the browser's context menu (when long pressing an image). %1$s will be replaced with the long name of the app (e.g. Firefox Focus). -->

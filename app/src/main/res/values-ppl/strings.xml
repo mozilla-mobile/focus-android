@@ -391,7 +391,6 @@ Shipashalu. Shitapupulu. Shikchiwa uksenpa.</string>
 
     <!-- Label used in the contextmenu shown when long-pressing on a link -->
     <string name="contextmenu_link_share">Shiktakuli ne ilpika</string>
-    <!-- Label used in the contextmenu shown when long-pressing on a link -->
     <string name="contextmenu_link_copy">Shikupina ne idirección ne ilpika</string>
     <!-- Label used in the contextmenu shown when long-pressing on an image -->
     <string name="contextmenu_image_share">Shiktakuli ne kwikwil</string>
@@ -399,6 +398,7 @@ Shipashalu. Shitapupulu. Shikchiwa uksenpa.</string>
     <string name="contextmenu_image_copy">Shikupina ne idirección ne kwikwil</string>
     <!-- Label used in the contextmenu shown when long-pressing on an image -->
     <string name="contextmenu_image_save">Shikana ne kwikwil</string>
+    <!-- Label used in the contextmenu shown when long-pressing on a link -->
     <string name="contextmenu_open_in_new_tab">Shiktapu ne ilpika tik se yankwik pestañaj</string>
 
     <!-- First run tour (Default browser): Title -->
@@ -503,6 +503,8 @@ Shipashalu. Shitapupulu. Shikchiwa uksenpa.</string>
     The new line here must be kept as the second half of the string is clickable for the user. -->
     <string name="tip_set_default_browser">Shiktapu sejse ilpika tik %1$s</string>
 
+    <!-- Tip displayed on home view explaining how to add a custom autocomplete URL
+    The new line here must be kept as the second half of the string is clickable for the user. -->
     <string name="tip_open_in_new_tab">Shiktapu se ilpika tik se yankwik pestañaj
  Shikpajpachu yek ne ilpika taja tikneki tik se iswat</string>
 

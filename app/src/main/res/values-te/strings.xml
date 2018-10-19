@@ -414,7 +414,6 @@
 
     <!-- Label used in the contextmenu shown when long-pressing on a link -->
     <string name="contextmenu_link_share">లింక్ ను పంచు</string>
-    <!-- Label used in the contextmenu shown when long-pressing on a link -->
     <string name="contextmenu_link_copy">లింకు చిరునామాను కాపీచేయి</string>
     <!-- Label used in the contextmenu shown when long-pressing on an image -->
     <string name="contextmenu_image_share">బొమ్మని పంచుకో</string>
@@ -422,6 +421,7 @@
     <string name="contextmenu_image_copy">చిత్ర చిరునామాను కాపీచేయి</string>
     <!-- Label used in the contextmenu shown when long-pressing on an image -->
     <string name="contextmenu_image_save">చిత్రాన్ని భద్రపరచు</string>
+    <!-- Label used in the contextmenu shown when long-pressing on a link -->
     <string name="contextmenu_open_in_new_tab">లంకెను కొత్త ట్యాబులో తెరువు</string>
 
     <!-- This is a warning shown in the browser's context menu (when long pressing an image). %1$s will be replaced with the long name of the app (e.g. Firefox Focus). -->

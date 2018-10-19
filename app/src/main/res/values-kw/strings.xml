@@ -448,7 +448,6 @@ passyes, an error a allsa bos rag pols, ha hwi a yll assaya arta termyn aral.</l
 
     <!-- Label used in the contextmenu shown when long-pressing on a link -->
     <string name="contextmenu_link_share">Ranna an gevren</string>
-    <!-- Label used in the contextmenu shown when long-pressing on a link -->
     <string name="contextmenu_link_copy">Kopia trigva an gevren</string>
     <!-- Label used in the contextmenu shown when long-pressing on an image -->
     <string name="contextmenu_image_share">Ranna an imach</string>
@@ -456,6 +455,7 @@ passyes, an error a allsa bos rag pols, ha hwi a yll assaya arta termyn aral.</l
     <string name="contextmenu_image_copy">Kopia trigva an imach</string>
     <!-- Label used in the contextmenu shown when long-pressing on an image -->
     <string name="contextmenu_image_save">Gwitha an imach</string>
+    <!-- Label used in the contextmenu shown when long-pressing on a link -->
     <string name="contextmenu_open_in_new_tab">Ygeri an gevren yn tabb nowydh</string>
 
     <!-- This is a warning shown in the browser's context menu (when long pressing an image). %1$s will be replaced with the long name of the app (e.g. Firefox Focus). -->

@@ -442,7 +442,6 @@ Snirem. Kkes. Sniles.</string>
 
     <!-- Label used in the contextmenu shown when long-pressing on a link -->
     <string name="contextmenu_link_share">Bḍu aseγwen</string>
-    <!-- Label used in the contextmenu shown when long-pressing on a link -->
     <string name="contextmenu_link_copy">Nγel tansa n useγwen</string>
     <!-- Label used in the contextmenu shown when long-pressing on an image -->
     <string name="contextmenu_image_share">Bḍu tugna</string>
@@ -450,6 +449,7 @@ Snirem. Kkes. Sniles.</string>
     <string name="contextmenu_image_copy">Nγel tansa n tugna</string>
     <!-- Label used in the contextmenu shown when long-pressing on an image -->
     <string name="contextmenu_image_save">Sekles tugna</string>
+    <!-- Label used in the contextmenu shown when long-pressing on a link -->
     <string name="contextmenu_open_in_new_tab">Ldi aseɣwen deg iccer amaynut</string>
 
     <!-- This is a warning shown in the browser's context menu (when long pressing an image). %1$s will be replaced with the long name of the app (e.g. Firefox Focus). -->
