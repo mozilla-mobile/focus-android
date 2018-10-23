@@ -2,16 +2,14 @@
 <!-- This Source Code Form is subject to the terms of the Mozilla Public
    - License, v. 2.0. If a copy of the MPL was not distributed with this
    - file, You can obtain one at http://mozilla.org/MPL/2.0/. -->
-<CheckBox xmlns:android="http://schemas.android.com/apk/res/android"
+<Switch xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/check_menu_item_checkbox"
     style="@android:style/TextAppearance.Material.Menu"
     android:layout_width="match_parent"
     android:layout_height="48dp"
-    android:background="?android:attr/selectableItemBackground"
     android:button="@null"
     android:clickable="true"
     android:drawableStart="@drawable/ic_device_desktop"
-    android:drawableEnd="?android:attr/listChoiceIndicatorMultiple"
     android:drawablePadding="16dp"
     android:ellipsize="end"
     android:focusable="true"
