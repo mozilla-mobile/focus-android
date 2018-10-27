@@ -65,6 +65,7 @@ public class LocaleListPreference extends ListPreference {
         languageCodeToNameMap.put("jv", "Basa Jawa");
         languageCodeToNameMap.put("ppl", "Náhuat Pipil");
         languageCodeToNameMap.put("su", "Basa Sunda");
+        languageCodeToNameMap.put("hus", "Tének");
     }
     static {
         // Override the native name for certain locale regions based on language community needs.
@@ -149,6 +150,20 @@ public class LocaleListPreference extends ListPreference {
 
     }
 
+    interface EntriesListener {
+        void onEntriesSet();
+    }
+
+    private EntriesListener entriesListener = null;
+
+    public void setEntriesListener(EntriesListener entriesListener) {
+        if (getEntryValues() != null) {
+            entriesListener.onEntriesSet();
+        } else {
+            this.entriesListener = entriesListener;
+        }
+    }
+
     @Override
     public void onAttached() {
         super.onAttached();
@@ -182,6 +197,9 @@ public class LocaleListPreference extends ListPreference {
         if (buildLocaleListTask != null) {
             buildLocaleListTask.cancel(true);
         }
+        if (entriesListener != null) {
+            entriesListener = null;
+        }
     }
 
     private static final class LocaleDescriptor implements Comparable<LocaleDescriptor> {
@@ -202,8 +220,8 @@ public class LocaleListPreference extends ListPreference {
 
             if (languageCodeToNameMap.containsKey(locale.getLanguage())) {
                 displayName = languageCodeToNameMap.get(locale.getLanguage());
-            } else if (localeToNameMap.containsKey(locale.getCountry())) {
-                displayName = localeToNameMap.get(locale.getCountry());
+            } else if (localeToNameMap.containsKey(locale.toLanguageTag())) {
+                displayName = localeToNameMap.get(locale.toLanguageTag());
             } else {
                 displayName = locale.getDisplayName(locale);
             }
@@ -250,11 +268,7 @@ public class LocaleListPreference extends ListPreference {
 
         @Override
         public boolean equals(Object obj) {
-            if (obj instanceof LocaleDescriptor) {
-                return compareTo((LocaleDescriptor) obj) == 0;
-            } else {
-                return false;
-            }
+            return obj instanceof LocaleDescriptor && compareTo((LocaleDescriptor) obj) == 0;
         }
 
         @Override
@@ -295,17 +309,12 @@ public class LocaleListPreference extends ListPreference {
             // on common Android devices. Make sure we can show them.
             // See documentation for CharacterValidator.
             // Note that bn-IN is checked here even if it passed above.
-            if (this.tag.equals("or") ||
-                    this.tag.equals("my") ||
-                    this.tag.equals("pa-IN") ||
-                    this.tag.equals("gu-IN") ||
-                    this.tag.equals("bn-IN")) {
-                if (validator.characterIsMissingInFont(this.nativeName.substring(0, 1))) {
-                    return false;
-                }
-            }
+            return !this.tag.equals("or") &&
+                    !this.tag.equals("my") &&
+                    !this.tag.equals("pa-IN") &&
+                    !this.tag.equals("gu-IN") &&
+                    !this.tag.equals("bn-IN") || !validator.characterIsMissingInFont(this.nativeName.substring(0, 1));
 
-            return true;
         }
     }
 
@@ -344,12 +353,12 @@ public class LocaleListPreference extends ListPreference {
 
     static final class BuildLocaleListTask extends AsyncTask<Void, Void, Pair<String[], String[]>> {
 
-        private final WeakReference<ListPreference> weakListPreference;
+        private final WeakReference<LocaleListPreference> weakListPreference;
         private final CharacterValidator characterValidator;
         private final Collection<String> shippingLocales;
         private final String systemDefaultLanguage;
 
-        BuildLocaleListTask(ListPreference listPreference, String systemDefaultLanguage,
+        BuildLocaleListTask(LocaleListPreference listPreference, String systemDefaultLanguage,
                             CharacterValidator characterValidator, Collection<String> shippingLocales) {
             this.characterValidator = characterValidator;
             this.shippingLocales = shippingLocales;
@@ -409,10 +418,13 @@ public class LocaleListPreference extends ListPreference {
                 return;
             }
 
-            final ListPreference preference = weakListPreference.get();
+            final LocaleListPreference preference = weakListPreference.get();
             if (preference != null) {
                 preference.setEntries(pair.getFirst());
                 preference.setEntryValues(pair.getSecond());
+                if (preference.entriesListener != null) {
+                    preference.entriesListener.onEntriesSet();
+                }
             }
         }
     }

@@ -74,6 +74,8 @@ import org.mozilla.focus.observer.LoadTimeObserver
 import org.mozilla.focus.open.OpenWithFragment
 import org.mozilla.focus.popup.PopupUtils
 import org.mozilla.focus.session.SessionCallbackProxy
+import org.mozilla.focus.session.removeAndCloseAllSessions
+import org.mozilla.focus.session.removeAndCloseSession
 import org.mozilla.focus.session.ui.SessionsSheetFragment
 import org.mozilla.focus.telemetry.TelemetryWrapper
 import org.mozilla.focus.utils.AppConstants
@@ -633,7 +635,7 @@ class BrowserFragment : WebFragment(), LifecycleObserver, View.OnClickListener,
             return
         }
 
-        if (grantResults.size <= 0 || grantResults[0] != PackageManager.PERMISSION_GRANTED) {
+        if (grantResults.isEmpty() || grantResults[0] != PackageManager.PERMISSION_GRANTED) {
             // We didn't get the storage permission: We are not able to start this download.
             pendingDownload = null
         }
@@ -704,7 +706,7 @@ class BrowserFragment : WebFragment(), LifecycleObserver, View.OnClickListener,
     }
 
     override fun onCreateNewSession() {
-        requireComponents.sessionManager.removeSessions()
+        requireComponents.sessionManager.removeAndCloseAllSessions()
     }
 
     override fun onAuthSuccess() {
@@ -883,11 +885,7 @@ class BrowserFragment : WebFragment(), LifecycleObserver, View.OnClickListener,
 
         webView?.cleanup()
 
-        if (session.isCustomTabSession()) {
-            requireComponents.sessionManager.remove(session)
-        } else {
-            requireComponents.sessionManager.remove()
-        }
+        requireComponents.sessionManager.removeAndCloseSession(session)
     }
 
     private fun shareCurrentUrl() {
@@ -977,7 +975,7 @@ class BrowserFragment : WebFragment(), LifecycleObserver, View.OnClickListener,
 
                 val intent = Intent(context, MainActivity::class.java)
                 intent.action = Intent.ACTION_MAIN
-                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
                 startActivity(intent)
 
                 TelemetryWrapper.openFullBrowser()

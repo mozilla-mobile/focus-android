@@ -11,22 +11,44 @@ import android.support.v7.preference.SwitchPreferenceCompat
 import org.mozilla.focus.R
 import org.mozilla.focus.biometrics.Biometrics
 import org.mozilla.focus.telemetry.TelemetryWrapper
+import org.mozilla.focus.utils.AppConstants
+import org.mozilla.focus.widget.CookiesPreference
 
 class PrivacySecuritySettingsFragment : BaseSettingsFragment(),
     SharedPreferences.OnSharedPreferenceChangeListener {
     override fun onCreatePreferences(p0: Bundle?, p1: String?) {
         addPreferencesFromResource(R.xml.privacy_security_settings)
 
-        val preference = findPreference(getString(R.string.pref_key_biometric))
-        val appName = resources.getString(R.string.app_name)
-        preference.summary = resources.getString(R.string.preference_security_biometric_summary, appName)
+        val biometricPreference = findPreference(getString(R.string.pref_key_biometric))
 
         // Remove the biometric toggle if the software or hardware do not support it
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M || !Biometrics.hasFingerprintHardware(
                 context!!
             )
         ) {
-            preferenceScreen.removePreference(preference)
+            preferenceScreen.removePreference(biometricPreference)
+        } else {
+            val appName = resources.getString(R.string.app_name)
+            biometricPreference.summary =
+                    resources.getString(R.string.preference_security_biometric_summary, appName)
+        }
+
+        if (!AppConstants.isGeckoBuild) {
+            val safeBrowsingPreference =
+                findPreference(getString(R.string.pref_key_category_safe_browsing))
+            preferenceScreen.removePreference(safeBrowsingPreference)
+            val cookiesPreference =
+                findPreference(getString(R.string.pref_key_performance_enable_cookies)) as CookiesPreference
+
+            val cookiesStringsWV =
+                requireContext().resources.getStringArray(R.array.preference_privacy_cookies_options)
+                    .filter {
+                        it != getString(
+                            R.string.preference_privacy_should_block_cookies_third_party_tracker_cookies_option
+                        )
+                    }
+            cookiesPreference.entries = cookiesStringsWV.toTypedArray()
+            cookiesPreference.entryValues = cookiesStringsWV.toTypedArray()
         }
     }
 

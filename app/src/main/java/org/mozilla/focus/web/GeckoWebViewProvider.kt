@@ -23,6 +23,7 @@ import mozilla.components.browser.errorpages.ErrorPages
 import mozilla.components.browser.errorpages.ErrorType
 import mozilla.components.browser.session.Session
 import mozilla.components.support.ktx.android.util.Base64
+import mozilla.components.support.utils.ThreadUtils
 import org.json.JSONException
 import org.mozilla.focus.IO
 import org.mozilla.focus.R
@@ -33,6 +34,7 @@ import org.mozilla.focus.gecko.NestedGeckoView
 import org.mozilla.focus.telemetry.SentryWrapper
 import org.mozilla.focus.telemetry.TelemetryWrapper
 import org.mozilla.focus.utils.AppConstants
+import org.mozilla.focus.utils.FileUtils
 import org.mozilla.focus.utils.IntentUtils
 import org.mozilla.focus.utils.MobileMetricsPingStorage
 import org.mozilla.focus.utils.Settings
@@ -51,7 +53,6 @@ import org.mozilla.geckoview.SessionFinder
  */
 @Suppress("TooManyFunctions")
 class GeckoWebViewProvider : IWebViewProvider {
-
     override fun preload(context: Context) {
         sendTelemetryEventOnSwitchToGecko(context)
         createGeckoRuntime(context)
@@ -72,7 +73,9 @@ class GeckoWebViewProvider : IWebViewProvider {
     }
 
     override fun performCleanup(context: Context) {
-        // Nothing: does Gecko need extra private mode cleanup?
+        ThreadUtils.postToBackgroundThread(Runnable {
+            FileUtils.truncateCacheDirectory(context)
+        })
     }
 
     override fun performNewBrowserSessionCleanup() {
@@ -83,9 +86,8 @@ class GeckoWebViewProvider : IWebViewProvider {
         if (geckoRuntime == null) {
             val runtimeSettingsBuilder = GeckoRuntimeSettings.Builder()
             runtimeSettingsBuilder.useContentProcessHint(true)
-            // Safe browsing is not ready #3309
-            runtimeSettingsBuilder.blockMalware(true)
-            runtimeSettingsBuilder.blockPhishing(true)
+            runtimeSettingsBuilder.blockMalware(Settings.getInstance(context).shouldUseSafeBrowsing())
+            runtimeSettingsBuilder.blockPhishing(Settings.getInstance(context).shouldUseSafeBrowsing())
             runtimeSettingsBuilder.nativeCrashReportingEnabled(false)
             runtimeSettingsBuilder.javaCrashReportingEnabled(false)
             geckoRuntime =
@@ -201,7 +203,9 @@ class GeckoWebViewProvider : IWebViewProvider {
         }
 
         override fun cleanup() {
-            geckoSession.close()
+            if (geckoSession.isOpen) {
+                geckoSession.close()
+            }
         }
 
         override fun setBlockingEnabled(enabled: Boolean) {
@@ -246,16 +250,13 @@ class GeckoWebViewProvider : IWebViewProvider {
                     geckoRuntime!!.settings.remoteDebuggingEnabled =
                             Settings.getInstance(context).shouldEnableRemoteDebugging()
                 context.getString(R.string.pref_key_performance_enable_cookies) -> {
-                    val cookiesValue = if (Settings.getInstance(context).shouldBlockCookies() &&
-                        Settings.getInstance(context).shouldBlockThirdPartyCookies()
-                    ) {
-                        GeckoRuntimeSettings.COOKIE_ACCEPT_NONE
-                    } else if (Settings.getInstance(context).shouldBlockThirdPartyCookies()) {
-                        GeckoRuntimeSettings.COOKIE_ACCEPT_FIRST_PARTY
-                    } else {
-                        GeckoRuntimeSettings.COOKIE_ACCEPT_ALL
-                    }
-                    geckoRuntime!!.settings.cookieBehavior = cookiesValue
+                    updateCookieSettings()
+                }
+                context.getString(R.string.pref_key_safe_browsing) -> {
+                    val shouldUseSafeBrowsing =
+                        Settings.getInstance(context).shouldUseSafeBrowsing()
+                    geckoRuntime!!.settings.blockMalware = shouldUseSafeBrowsing
+                    geckoRuntime!!.settings.blockPhishing = shouldUseSafeBrowsing
                 }
                 else -> return
             }
@@ -268,16 +269,26 @@ class GeckoWebViewProvider : IWebViewProvider {
             geckoRuntime!!.settings.webFontsEnabled =
                     !Settings.getInstance(context).shouldBlockWebFonts()
             geckoRuntime!!.settings.remoteDebuggingEnabled = false
-            val cookiesValue = if (Settings.getInstance(context).shouldBlockCookies() &&
-                Settings.getInstance(context).shouldBlockThirdPartyCookies()
-            ) {
-                GeckoRuntimeSettings.COOKIE_ACCEPT_NONE
-            } else if (Settings.getInstance(context).shouldBlockThirdPartyCookies()) {
-                GeckoRuntimeSettings.COOKIE_ACCEPT_FIRST_PARTY
-            } else {
-                GeckoRuntimeSettings.COOKIE_ACCEPT_ALL
-            }
-            geckoRuntime!!.settings.cookieBehavior = cookiesValue
+            updateCookieSettings()
+        }
+
+        private fun updateCookieSettings() {
+            geckoRuntime!!.settings.cookieBehavior =
+                    when (Settings.getInstance(context).shouldBlockCookiesValue()) {
+                        context.getString(
+                            R.string.preference_privacy_should_block_cookies_yes_option
+                        ) ->
+                            GeckoRuntimeSettings.COOKIE_ACCEPT_NONE
+                        context.getString(
+                            R.string.preference_privacy_should_block_cookies_third_party_tracker_cookies_option
+                        ) ->
+                            GeckoRuntimeSettings.COOKIE_ACCEPT_NON_TRACKERS
+                        context.getString(
+                            R.string.preference_privacy_should_block_cookies_third_party_only_option
+                        ) ->
+                            GeckoRuntimeSettings.COOKIE_ACCEPT_FIRST_PARTY
+                        else -> GeckoRuntimeSettings.COOKIE_ACCEPT_ALL
+                    }
         }
 
         private fun updateBlocking() {
@@ -442,7 +453,8 @@ class GeckoWebViewProvider : IWebViewProvider {
                 ): GeckoResult<String> {
                     ErrorPages.createErrorPage(
                         context,
-                        geckoErrorToErrorType(error)
+                        geckoErrorToErrorType(error),
+                        uri
                     ).apply {
                         return GeckoResult.fromValue(Base64.encodeToUriString(this))
                     }
@@ -545,33 +557,31 @@ class GeckoWebViewProvider : IWebViewProvider {
             val stateData = session.savedWebViewState!!
             val savedSession = stateData.getParcelable<GeckoSession>(GECKO_SESSION)!!
 
-            if (geckoSession != savedSession) {
-                if (!restored) {
-                    // Tab changed, we need to close the default session and restore our saved session
-                    geckoSession.close()
+            if (geckoSession != savedSession && !restored) {
+                // Tab changed, we need to close the default session and restore our saved session
+                geckoSession.close()
 
-                    geckoSession = savedSession
-                    canGoBack = stateData.getBoolean(CAN_GO_BACK, false)
-                    canGoForward = stateData.getBoolean(CAN_GO_FORWARD, false)
-                    isSecure = stateData.getBoolean(IS_SECURE, false)
-                    webViewTitle = stateData.getString(WEBVIEW_TITLE, null)
-                    currentUrl = stateData.getString(CURRENT_URL, ABOUT_BLANK)
-                    applySettingsAndSetDelegates()
-                    if (!geckoSession.isOpen) {
-                        geckoSession.open(geckoRuntime!!)
-                    }
-                    setSession(geckoSession)
-                } else {
-                    // App was backgrounded and restored;
-                    // GV restored the GeckoSession itself, but we need to restore our variables
-                    canGoBack = stateData.getBoolean(CAN_GO_BACK, false)
-                    canGoForward = stateData.getBoolean(CAN_GO_FORWARD, false)
-                    isSecure = stateData.getBoolean(IS_SECURE, false)
-                    webViewTitle = stateData.getString(WEBVIEW_TITLE, null)
-                    currentUrl = stateData.getString(CURRENT_URL, ABOUT_BLANK)
-                    applySettingsAndSetDelegates()
-                    restored = false
+                geckoSession = savedSession
+                canGoBack = stateData.getBoolean(CAN_GO_BACK, false)
+                canGoForward = stateData.getBoolean(CAN_GO_FORWARD, false)
+                isSecure = stateData.getBoolean(IS_SECURE, false)
+                webViewTitle = stateData.getString(WEBVIEW_TITLE, null)
+                currentUrl = stateData.getString(CURRENT_URL, ABOUT_BLANK)
+                applySettingsAndSetDelegates()
+                if (!geckoSession.isOpen) {
+                    geckoSession.open(geckoRuntime!!)
                 }
+                setSession(geckoSession)
+            } else {
+                // App was backgrounded and restored;
+                // GV restored the GeckoSession itself, but we need to restore our variables
+                canGoBack = stateData.getBoolean(CAN_GO_BACK, false)
+                canGoForward = stateData.getBoolean(CAN_GO_FORWARD, false)
+                isSecure = stateData.getBoolean(IS_SECURE, false)
+                webViewTitle = stateData.getString(WEBVIEW_TITLE, null)
+                currentUrl = stateData.getString(CURRENT_URL, ABOUT_BLANK)
+                applySettingsAndSetDelegates()
+                restored = false
             }
         }
 

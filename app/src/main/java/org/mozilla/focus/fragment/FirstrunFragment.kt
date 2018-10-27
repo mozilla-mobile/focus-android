@@ -103,7 +103,7 @@ class FirstrunFragment : Fragment(), View.OnClickListener {
     }
 
     private fun finishFirstrun() {
-        val fragmentManager = activity!!.supportFragmentManager
+        val fragmentManager = requireActivity().supportFragmentManager
 
         PreferenceManager.getDefaultSharedPreferences(requireContext())
             .edit()
@@ -114,17 +114,19 @@ class FirstrunFragment : Fragment(), View.OnClickListener {
         val sessionManager = requireContext().components.sessionManager
 
         val fragment: Fragment
-        if (sessionUUID == null) {
-            fragment = UrlInputFragment.createWithoutSession()
+        fragment = if (sessionUUID == null) {
+            UrlInputFragment.createWithoutSession()
         } else {
             val session = sessionManager.findSessionById(sessionUUID)
-
-            fragment = BrowserFragment.createForSession(session!!)
+            BrowserFragment.createForSession(session!!)
         }
+
+        val fragmentTag =
+            if (fragment is BrowserFragment) BrowserFragment.FRAGMENT_TAG else UrlInputFragment.FRAGMENT_TAG
 
         fragmentManager
             .beginTransaction()
-            .replace(R.id.container, fragment, UrlInputFragment.FRAGMENT_TAG)
+            .replace(R.id.container, fragment, fragmentTag)
             .commit()
     }
 
