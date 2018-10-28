@@ -4,15 +4,10 @@
 
 package org.mozilla.focus.autocomplete
 
-import android.support.v4.app.Fragment
 import android.content.Context
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.Menu
-import android.view.MenuInflater
-import android.view.MenuItem
-import android.view.View
-import android.view.ViewGroup
+import android.support.v4.app.Fragment
+import android.view.*
 import kotlinx.android.synthetic.main.fragment_autocomplete_add_domain.*
 import kotlinx.coroutines.experimental.android.UI
 import kotlinx.coroutines.experimental.launch
@@ -92,8 +87,8 @@ class AutocompleteAddFragment : Fragment() {
 
             TelemetryWrapper.saveAutocompleteDomainEvent(TelemetryWrapper.AutoCompleteEventSource.SETTINGS)
         }
-
-        ViewUtils.showBrandedSnackbar(view, R.string.preference_autocomplete_add_confirmation, 0)
+//        Not showing the snack bar as it is hiding the newly added FAB
+//        ViewUtils.showBrandedSnackbar(view, R.string.preference_autocomplete_add_confirmation, 0)
 
         fragmentManager?.popBackStack()
     }
