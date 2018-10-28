@@ -110,14 +110,12 @@ public class BrowserScreenScreenshots extends ScreenshotTest {
                 .check(matches(hasFocus()))
                 .perform(click(), replaceText(webServer.url("/").toString()));
 
+        Screengrab.screenshot("Suggestion_accept_dialog");
 
         // click yes, then go into search dialog and change to twitter
-        try {
-            onView(withId(R.id.enable_search_suggestions_button))
-                    .check(matches(isDisplayed()))
-                    .perform(click());
-            Screengrab.screenshot("Suggestion_accept_dialog");
-        } catch (AssertionError ignored) { }
+        onView(withId(R.id.enable_search_suggestions_button))
+                .check(matches(isDisplayed()))
+                .perform(click());
 
         onView(withId(R.id.clearView))
                 .check(matches(isDisplayed()))
@@ -126,7 +124,7 @@ public class BrowserScreenScreenshots extends ScreenshotTest {
         openSettings();
         onView(withText(R.string.preference_category_search))
                 .perform(click());
-        onView(withText(R.string.preference_search_engine_label))
+        onView(withText(R.string.preference_search_engine_default))
                 .perform(click());
         onView(withText(R.string.preference_search_installed_search_engines))
                 .check(matches(isDisplayed()));
@@ -145,12 +143,13 @@ public class BrowserScreenScreenshots extends ScreenshotTest {
                 .check(matches(hasFocus()))
                 .perform(click(), replaceText(webServer.url("/").toString()));
 
-        try {
-            ViewInteraction dismissbutton = onView(withId(R.id.dismiss_no_suggestions_message));
-            dismissbutton.check(matches(isDisplayed()));
-            Screengrab.screenshot("Suggestion_unavailable_dialog");
-            dismissbutton.perform(click());
-        } catch (AssertionError ignored) { }
+        ViewInteraction dismissbutton = onView(withId(R.id.dismiss_no_suggestions_message));
+
+        dismissbutton.check(matches(isDisplayed()));
+
+        Screengrab.screenshot("Suggestion_unavailable_dialog");
+
+        dismissbutton.perform(click());
 
         onView(withId(R.id.urlView))
                 .check(matches(isDisplayed()))
@@ -215,7 +214,7 @@ public class BrowserScreenScreenshots extends ScreenshotTest {
 
     private void takeScreenshotOfTabsTrayAndErase() throws Exception {
         final UiObject mozillaImage = device.findObject(new UiSelector()
-                .descriptionContains("download icon")
+                .resourceId("download")
                 .enabled(true));
 
         UiObject imageMenuTitle = device.findObject(new UiSelector()
@@ -223,7 +222,7 @@ public class BrowserScreenScreenshots extends ScreenshotTest {
                 .enabled(true));
         UiObject openNewTabTitle = device.findObject(new UiSelector()
                 .resourceId(TestHelper.getAppName() + ":id/design_menu_item_text")
-                .text(getString(R.string.contextmenu_open_in_new_tab))
+                .index(0)
                 .enabled(true));
         UiObject multiTabBtn = device.findObject(new UiSelector()
                 .resourceId(TestHelper.getAppName() + ":id/tabs")
@@ -232,19 +231,14 @@ public class BrowserScreenScreenshots extends ScreenshotTest {
                 .text(getString(R.string.tabs_tray_action_erase))
                 .enabled(true));
 
-        assertTrue(mozillaImage.waitForExists(waitingTime));
+        Assert.assertTrue(mozillaImage.waitForExists(waitingTime));
         mozillaImage.dragTo(mozillaImage, 7);
         assertTrue(imageMenuTitle.waitForExists(waitingTime));
-        assertTrue(imageMenuTitle.exists());
+        Assert.assertTrue(imageMenuTitle.exists());
         Screengrab.screenshot("Image_Context_Menu");
 
         //Open a new tab
         openNewTabTitle.click();
-        TestHelper.mDevice.wait(Until.findObject(
-                By.res(TestHelper.getAppName(), "snackbar_text")), 5000);
-        Screengrab.screenshot("New_Tab_Popup");
-        TestHelper.mDevice.wait(Until.gone(
-                By.res(TestHelper.getAppName(), "snackbar_text")), 5000);
 
         assertTrue(multiTabBtn.waitForExists(waitingTime));
         multiTabBtn.click();
@@ -253,8 +247,7 @@ public class BrowserScreenScreenshots extends ScreenshotTest {
 
         eraseHistoryBtn.click();
 
-        device.wait(Until.findObject(
-                By.res(TestHelper.getAppName(), "snackbar_text")), waitingTime);
+        device.wait(Until.findObject(By.res(TestHelper.getAppName(), "snackbar_text")), waitingTime);
 
         Screengrab.screenshot("YourBrowsingHistoryHasBeenErased");
     }

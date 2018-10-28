@@ -19,7 +19,6 @@ import org.junit.ClassRule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mozilla.focus.R;
-import org.mozilla.focus.helpers.TestHelper;
 
 import java.util.Collections;
 
@@ -59,7 +58,7 @@ public class SettingsScreenshots extends ScreenshotTest {
                 .apply();
         CustomDomains.INSTANCE.save(
                 InstrumentationRegistry.getInstrumentation().getTargetContext(),
-                Collections.emptyList());
+                Collections.<String>emptyList());
 
         final Context appContext = InstrumentationRegistry.getInstrumentation()
                 .getTargetContext()
@@ -77,13 +76,6 @@ public class SettingsScreenshots extends ScreenshotTest {
 
         Screengrab.screenshot("Settings_View_Top");
 
-        /* General Settings */
-        UiObject generalHeading = TestHelper.mDevice.findObject(new UiSelector()
-                .text("General")
-                .resourceId("android:id/title"));
-        generalHeading.waitForExists(waitingTime);
-        generalHeading.click();
-
         /* Language List (First page only */
         onView(withText(R.string.preference_language))
                 .perform(click());
@@ -100,13 +92,11 @@ public class SettingsScreenshots extends ScreenshotTest {
         onView(withText(R.string.preference_language))
                 .check(matches(isDisplayed()));
 
-        Espresso.pressBack();
-
         /* Search Engine List */
         onView(withText(R.string.preference_category_search))
                 .perform(click());
         Screengrab.screenshot("Search_Submenu");
-        onView(withText(R.string.preference_search_engine_label))
+        onView(withText(R.string.preference_search_engine_default))
                 .perform(click());
         onView(withText(R.string.preference_search_installed_search_engines))
                 .check(matches(isDisplayed()));
@@ -146,7 +136,7 @@ public class SettingsScreenshots extends ScreenshotTest {
         device.waitForIdle();
         Espresso.pressBack();
         device.waitForIdle();
-        onView(withText(R.string.preference_search_engine_label))
+        onView(withText(R.string.preference_search_engine_default))
                 .check(matches(isDisplayed()));
 
         /* Tap autocomplete menu */
@@ -223,7 +213,7 @@ public class SettingsScreenshots extends ScreenshotTest {
                 .check(matches(isDisplayed()))
                 .perform(click());
 
-        onView(withText(R.string.menu_about))
+        onView(withId(R.id.infofragment))
                 .check(matches(isDisplayed()));
         Screengrab.screenshot("About_Page");
 
@@ -237,8 +227,9 @@ public class SettingsScreenshots extends ScreenshotTest {
                 .check(matches(isDisplayed()))
                 .perform(click());
 
-        onView(withText(R.string.your_rights))
+        onView(withId(R.id.infofragment))
                 .check(matches(isDisplayed()));
+
         Screengrab.screenshot("YourRights_Page");
         device.pressBack();
         device.pressBack();
