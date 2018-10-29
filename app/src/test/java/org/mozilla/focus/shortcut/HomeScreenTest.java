@@ -14,7 +14,7 @@ import static org.junit.Assert.assertEquals;
 public class HomeScreenTest {
     @Test
     public void testGenerateTitleFromUrl() {
-        assertEquals("mozilla.org", HomeScreen.generateTitleFromUrl("https://www.mozilla.org"));
-        assertEquals("facebook.com", HomeScreen.generateTitleFromUrl("http://m.facebook.com/home"));
+        assertEquals("mozilla.org", HomeScreen.INSTANCE.generateTitleFromUrl("https://www.mozilla.org"));
+        assertEquals("facebook.com", HomeScreen.INSTANCE.generateTitleFromUrl("http://m.facebook.com/home"));
     }
 }

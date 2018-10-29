@@ -96,7 +96,7 @@ public class AddToHomescreenDialogFragment extends DialogFragment {
         addToHomescreenDialogConfirmButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                HomeScreen.installShortCut(getContext(), IconGenerator.generateLauncherIcon(getContext(), url), url,
+                HomeScreen.INSTANCE.installShortCut(getContext(), IconGenerator.generateLauncherIcon(getContext(), url), url,
                         editableTitle.getText().toString().trim(), blockingEnabled, requestDesktop);
                 TelemetryWrapper.addToHomescreenShortcutEvent();
                 PreferenceManager.getDefaultSharedPreferences(getContext()).edit()
