@@ -120,10 +120,7 @@ open class ExceptionsListFragment : Fragment(), CoroutineScope {
             val domains = ExceptionDomains.load(context!!)
             TelemetryWrapper.removeAllExceptionDomains(domains.size)
             ExceptionDomains.remove(context!!, domains)
-            fragmentManager!!.beginTransaction()
-                .replace(R.id.container, PrivacySecuritySettingsFragment())
-                .addToBackStack(null)
-                .commit()
+            fragmentManager!!.popBackStack()
         }
     }
 
