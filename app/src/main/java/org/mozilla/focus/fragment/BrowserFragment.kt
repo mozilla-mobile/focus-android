@@ -69,6 +69,7 @@ import org.mozilla.focus.biometrics.BiometricAuthenticationHandler
 import org.mozilla.focus.biometrics.Biometrics
 import org.mozilla.focus.broadcastreceiver.DownloadBroadcastReceiver
 import org.mozilla.focus.exceptions.ExceptionDomains
+import org.mozilla.focus.ext.components
 import org.mozilla.focus.ext.isSearch
 import org.mozilla.focus.ext.requireComponents
 import org.mozilla.focus.ext.shouldRequestDesktopSite
@@ -1079,6 +1080,22 @@ class BrowserFragment : WebFragment(), LifecycleObserver, View.OnClickListener,
 
                 val activity = activity
                 activity?.finish()
+            }
+
+            R.id.open_new_tab -> {
+                Log.d("New tab", "Clicked")
+                val newSession = Session("about:blank")
+                requireActivity().components.sessionManager.add(
+                        newSession,
+                        selected = true
+                )
+
+                TelemetryWrapper.openLinkInNewTabEvent()
+                PreferenceManager.getDefaultSharedPreferences(context).edit()
+                        .putBoolean(
+                                getString(R.string.has_opened_new_tab),
+                                true
+                        ).apply()
             }
 
             R.id.share -> {

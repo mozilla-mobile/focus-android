@@ -71,6 +71,14 @@ class BrowserMenuAdapter(
             items.add(MenuItem.Navigation)
         }
 
+        items.add(
+                MenuItem.Default(
+                        R.id.open_new_tab,
+                        resources.getString(R.string.menu_open_new_tab),
+                        R.drawable.ic_tab_new
+                )
+        )
+
         items.add(MenuItem.BlockingSwitch)
 
         if (customTabConfig == null || customTabConfig.showShareMenuItem) {

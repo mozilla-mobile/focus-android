@@ -29,6 +29,9 @@
     <!-- This label is shown below the URL bar as soon as the user enters text. Clicking the label will perform a search -->
     <string name="search_hint">Search for %1$s</string>
 
+    <!-- Menu item: Open a new tab -->
+    <string name="menu_open_new_tab">New tab</string>
+
     <!-- Menu item: Share the currently visible page -->
     <string name="menu_share">Share…</string>
 

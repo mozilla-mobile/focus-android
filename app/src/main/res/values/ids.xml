@@ -16,4 +16,5 @@
     <item name="whats_new" type="id" />
     <item name="open_in_firefox_focus" type="id" />
     <item name="report_site_issue" type="id"/>
+    <item name="open_new_tab" type="id"/>
 </resources>
