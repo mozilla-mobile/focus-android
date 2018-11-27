@@ -46,7 +46,7 @@ import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
 import static org.mozilla.focus.fragment.FirstrunFragment.FIRSTRUN_PREF;
 import static org.mozilla.focus.helpers.EspressoHelper.navigateToMockWebServer;
-import static org.mozilla.focus.helpers.EspressoHelper.onFloatingEraseButton;
+import static org.mozilla.focus.helpers.EspressoHelper.onEraseButton;
 import static org.mozilla.focus.helpers.EspressoHelper.onFloatingTabsButton;
 import static org.mozilla.focus.helpers.TestHelper.createMockResponseFromAsset;
 import static org.mozilla.focus.helpers.WebViewFakeLongPress.injectHitTarget;
@@ -114,7 +114,7 @@ public class MultitaskingTest {
 
             checkTabIsLoaded("Tab 1");
 
-            onFloatingEraseButton()
+            onEraseButton()
                     .check(matches(isDisplayed()));
             onFloatingTabsButton()
                     .check(matches(not(isDisplayed())));
@@ -127,8 +127,6 @@ public class MultitaskingTest {
 
             // verify Tab 1 is still on foreground
             checkTabIsLoaded("Tab 1");
-            onFloatingEraseButton()
-                    .check(matches(not(isDisplayed())));
             onFloatingTabsButton()
                     .check(matches(isDisplayed()))
                     .check(matches(withContentDescription(is("Tabs open: 2"))));
@@ -142,8 +140,6 @@ public class MultitaskingTest {
 
             // verify Tab 1 is still on foreground
             checkTabIsLoaded("Tab 1");
-            onFloatingEraseButton()
-                    .check(matches(not(isDisplayed())));
             onFloatingTabsButton()
                     .check(matches(isDisplayed()))
                     .check(matches(withContentDescription(is("Tabs open: 3"))));

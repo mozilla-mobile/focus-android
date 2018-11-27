@@ -69,7 +69,7 @@ public class EspressoHelper {
         navigateToWebsite(webServer.url(path).toString());
     }
 
-    public static ViewInteraction onFloatingEraseButton() {
+    public static ViewInteraction onEraseButton() {
         return onView(withId(R.id.erase));
     }
 

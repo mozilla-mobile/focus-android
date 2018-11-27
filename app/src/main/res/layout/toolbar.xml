@@ -65,6 +65,15 @@
         android:layout_gravity="center_vertical"
         android:background="?android:attr/selectableItemBackgroundBorderless"/>
 
+    <ImageButton
+        android:id="@+id/erase"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_gravity="center_vertical"
+        android:background="?android:attr/selectableItemBackgroundBorderless"
+        android:contentDescription="@string/content_description_erase"
+        android:src="@drawable/ic_delete" />
+
     <FrameLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
