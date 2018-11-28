@@ -91,6 +91,7 @@ class SessionCallbackProxy(private val session: Session, private val delegate: I
 
     override fun resetBlockedTrackers() {
         session.trackersBlocked = emptyList()
+        delegate.resetBlockedTrackers()
     }
 
     override fun onBlockingStateChanged(isBlockingEnabled: Boolean) {

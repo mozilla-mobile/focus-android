@@ -124,12 +124,8 @@ public class ToggleBlockTest {
         TestHelper.waitForWebContent();
         TestHelper.progressBar.waitUntilGone(TestHelper.waitingTime);
 
-        // The blocking badge is not disabled
-        onView(withId(R.id.block))
-                .check(matches(not(isDisplayed())));
-
         // Open the menu
-        onView(withId(R.id.menuView))
+        onView(withId(R.id.tracking_protection_info))
                 .perform(click());
         onView(withId(R.id.trackers_count))
                 .check(matches(not(withText("-"))));
@@ -142,14 +138,10 @@ public class ToggleBlockTest {
                 .perform(click());
         TestHelper.waitForWebContent();
 
-        // Now the blocking badge is visible
-        onView(withId(R.id.block))
-                .check(matches(isDisplayed()));
-
         onView(withId(R.id.webview)).perform(click());
 
         // Open the menu again. Now the switch is disabled and the tracker count should be disabled.
-        onView(withId(R.id.menuView))
+        onView(withId(R.id.tracking_protection_info))
                 .perform(click());
         onView(withId(R.id.blocking_switch))
                 .check(matches(not(isChecked())));
@@ -184,12 +176,8 @@ public class ToggleBlockTest {
         TestHelper.waitForWebContent();
         TestHelper.progressBar.waitUntilGone(TestHelper.waitingTime);
 
-        // The blocking badge is disabled
-        onView(withId(R.id.block))
-                .check(matches(isDisplayed()));
-
         // Open the menu again. Now the switch is disabled and the tracker count should be disabled.
-        onView(withId(R.id.menuView))
+        onView(withId(R.id.tracking_protection_info))
                 .perform(click());
         onView(withId(R.id.blocking_switch))
                 .check(matches(not(isChecked())));
