@@ -6,6 +6,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:animateLayoutChanges="false"
     android:orientation="horizontal"
     android:paddingStart="8dp"
@@ -50,18 +51,55 @@
         android:contentDescription="@string/content_description_forward"
         android:src="@drawable/ic_forward" />
 
-    <ImageView
-        android:id="@+id/security_info"
-        android:layout_width="24dp"
-        android:layout_height="24dp"
-        android:layout_gravity="center_vertical"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="10dp"
-        android:layout_marginBottom="8dp"
-        android:clickable="true"
-        android:contentDescription="@string/site_security_icon_content_description"
-        android:focusable="true"
-        android:scaleType="fitCenter" />
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_gravity="center_vertical">
+
+        <ImageButton
+            android:id="@+id/tracking_protection_info"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:background="?android:attr/selectableItemBackgroundBorderless"
+            android:clickable="true"
+            android:focusable="true"
+            android:scaleType="centerInside"
+            android:src="@drawable/ic_tracking_protection_cutout"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tracking_protection_count"
+            android:layout_width="22dp"
+            android:layout_height="wrap_content"
+            android:maxLines="1"
+            android:text="0"
+            android:textColor="@color/photonWhite"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="@+id/tracking_protection_info"
+            app:layout_constraintEnd_toEndOf="@+id/tracking_protection_info"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toEndOf="@+id/guideline"
+            app:layout_constraintTop_toBottomOf="@id/guideline2"
+            app:layout_constraintVertical_bias="0.0" />
+
+        <android.support.constraint.Guideline
+            android:id="@+id/guideline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="26dp" />
+
+        <android.support.constraint.Guideline
+            android:id="@+id/guideline2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_begin="22dp" />
+
+    </android.support.constraint.ConstraintLayout>
 
     <!-- lint: We need to use singleLine=true for the fading edge to work (which is officially deprecated,
          but still needed), hence we ignore deprecated warnings here.. -->

@@ -134,12 +134,8 @@ public class URLExceptionTest {
         TestHelper.waitForWebContent();
         TestHelper.progressBar.waitUntilGone(TestHelper.waitingTime);
 
-        // The blocking badge is not disabled
-        onView(withId(R.id.block))
-                .check(matches(not(isDisplayed())));
-
         // Open the menu
-        onView(withId(R.id.menuView))
+        onView(withId(R.id.tracking_protection_info))
                 .perform(click());
         onView(withId(R.id.trackers_count))
                 .check(matches(not(withText("-"))));
