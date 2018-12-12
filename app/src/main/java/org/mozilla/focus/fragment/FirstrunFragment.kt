@@ -15,6 +15,8 @@ import android.transition.TransitionInflater
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import kotlinx.android.synthetic.main.firstrun_page.*
+import kotlinx.android.synthetic.main.fragment_urlinput.*
 import mozilla.components.browser.session.Session
 import org.mozilla.focus.R
 import org.mozilla.focus.ext.components
@@ -81,6 +83,15 @@ class FirstrunFragment : Fragment(), View.OnClickListener {
         val tabLayout = view.findViewById<TabLayout>(R.id.tabs)
         tabLayout.setupWithViewPager(viewPager, true)
 
+
+        blockAdsSwitch.setOnCheckedChangeListener { _, isChecked ->
+            if (isChecked) {
+                // TODO: Make pink blockAdsSwitch.trackTintList =
+                // TODO: Handle preference change
+            } else {
+                // TODO: Make grey
+            }
+        }
         return view
     }
 

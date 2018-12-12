@@ -540,7 +540,7 @@ be temporary, and you can try again later.</li>
     <!-- First run tour (Default browser): Title -->
     <string name="firstrun_defaultbrowser_title">Power up your privacy</string>
     <!-- First run tour (Default browser): Text. -->
-    <string name="firstrun_defaultbrowser_text2">Take private browsing to the next level. Block ads and other content that can track you across sites and bog down page load times.</string>
+    <string name="firstrun_defaultbrowser_text2">Block content like ads and code that follow you around the web and slow you down. Turn on ad blocking to browse faster without annoying ads.</string>
 
     <!-- First run tour (Search): Title -->
     <string name="firstrun_search_title">Your search, your way</string>

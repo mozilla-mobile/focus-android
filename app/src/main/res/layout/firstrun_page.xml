@@ -3,6 +3,7 @@
    - file, You can obtain one at http://mozilla.org/MPL/2.0/. -->
 
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:cardview="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -70,6 +71,19 @@
                         android:textColor="#ff737373"
                         android:textSize="14sp"
                         tools:text="@string/firstrun_tracking_text" />
+
+                    <android.support.v7.widget.SwitchCompat
+                        android:id="@+id/blockAdsSwitch"
+                        android:text="@string/block_ads_title"
+                        android:textColor="#ff737373"
+                        android:layout_gravity="center"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginBottom="20dp"
+                        app:thumbTint="#EDEDF0"
+                        app:trackTint="@color/photonMagenta70"
+                        app:switchPadding="20dp"/>
 
                     <View
                         android:layout_width="match_parent"
