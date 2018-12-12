@@ -19,6 +19,8 @@ import org.mozilla.focus.R.string.tip_explain_allowlist
 import org.mozilla.focus.R.string.tip_open_in_new_tab
 import org.mozilla.focus.R.string.tip_request_desktop
 import org.mozilla.focus.R.string.tip_set_default_browser
+import org.mozilla.focus.R.string.tip_block_ads
+import org.mozilla.focus.R.string.preference_privacy_block_ads
 import org.mozilla.focus.exceptions.ExceptionDomains
 import org.mozilla.focus.ext.components
 import org.mozilla.focus.locale.LocaleAwareAppCompatActivity
@@ -30,7 +32,8 @@ import org.mozilla.focus.utils.isInExperiment
 import org.mozilla.focus.utils.Browsers
 import java.util.Random
 
-class Tip(val id: Int, val text: String, val shouldDisplay: () -> Boolean, val deepLink: (() -> Unit)? = null) {
+class Tip(val id: Int, val text: String, val shouldDisplay: () -> Boolean, val deepLink: (() -> Unit)? = null,
+          val preferenceKey: Int? = null) {
     companion object {
         private const val FORCE_SHOW_DISABLE_TIPS_LAUNCH_COUNT = 2
         private const val FORCE_SHOW_DISABLE_TIPS_INTERVAL = 30
@@ -191,6 +194,19 @@ class Tip(val id: Int, val text: String, val shouldDisplay: () -> Boolean, val d
 
             return Tip(id, name, shouldDisplayDisableTips, deepLinkDisableTips)
         }
+
+        fun createBlockAdsTip(context: Context): Tip {
+            val id = tip_block_ads
+            val name = context.resources.getString(id)
+
+            val shouldDisplayBlockAdsTip = {
+                // TODO: Check ad block toggle
+                //!Settings.getInstance(context).hasToggledAdBlocking()
+                true
+            }
+
+            return Tip(id, name, shouldDisplayBlockAdsTip, null, preference_privacy_block_ads)
+        }
     }
 }
 
@@ -205,6 +221,7 @@ object TipManager {
     private var tipsShown = 0
 
     private fun populateListOfTips(context: Context) {
+        /*
         addAllowlistTip(context)
         addTrackingProtectionTip(context)
         addHomescreenTip(context)
@@ -213,12 +230,14 @@ object TipManager {
         addOpenInNewTabTip(context)
         addRequestDesktopTip(context)
         addDisableTipsTip(context)
+        */
+        addBlockAdsTip(context)
     }
 
     // Will not return a tip if tips are disabled or if MAX TIPS have already been shown.
     @Suppress("ReturnCount") // Using early returns
     fun getNextTipIfAvailable(context: Context): Tip? {
-        if (!context.isInExperiment(homeScreenTipsExperimentDescriptor)) return null
+        //if (!context.isInExperiment(homeScreenTipsExperimentDescriptor)) return null
         if (!Settings.getInstance(context).shouldDisplayHomescreenTips()) return null
 
         if (!listInitialized) {
@@ -295,6 +314,11 @@ object TipManager {
 
     private fun addDisableTipsTip(context: Context) {
         val tip = Tip.createDisableTipsTip(context)
+        listOfTips.add(tip)
+    }
+
+    private fun addBlockAdsTip(context: Context) {
+        val tip = Tip.createBlockAdsTip(context)
         listOfTips.add(tip)
     }
 }
