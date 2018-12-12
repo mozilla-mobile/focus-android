@@ -18,6 +18,7 @@ import android.text.SpannableString
 import android.text.method.LinkMovementMethod
 import android.text.style.ClickableSpan
 import android.text.style.ForegroundColorSpan
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -221,6 +222,7 @@ class UrlInputFragment :
         val context = context ?: return
         val tip = TipManager.getNextTipIfAvailable(context)
         updateSubtitle(tip)
+        updateSwitch(tip)
     }
 
     private fun updateSubtitle(tip: Tip?) {
@@ -259,6 +261,19 @@ class UrlInputFragment :
         }
 
         homeViewTipsLabel.text = textWithDeepLink
+    }
+
+    private fun updateSwitch(tip: Tip?) {
+        if (tip == null || tip.preferenceKey == null) {
+            homeViewTipSwitch.visibility = View.INVISIBLE
+            return
+        }
+
+        homeViewTipSwitch.visibility = View.VISIBLE
+        homeViewTipSwitch.setOnCheckedChangeListener { _, isChecked ->
+            //TODO: Set the preference identified in tip.preferenceKey
+            Log.d("homeViewTip", "isChecked: " + isChecked)
+        }
     }
 
     private fun showFocusSubtitle() {

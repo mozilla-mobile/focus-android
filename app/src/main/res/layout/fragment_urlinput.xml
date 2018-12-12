@@ -39,6 +39,14 @@
             android:textSize="14sp"
             android:focusable="false" />
 
+        <Switch
+            android:id="@+id/homeViewTipSwitch"
+            android:text="@string/block_ads_title"
+            android:switchPadding="20dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"/>
+
     </org.mozilla.focus.widget.ResizableKeyboardLinearLayout>
 
     <FrameLayout android:id="@+id/urlInputLayout"

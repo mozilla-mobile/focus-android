@@ -774,6 +774,12 @@ be temporary, and you can try again later.</li>
         Allowlist disables Tracking Protection for sites you know and trust.
     </string>
 
+    <!-- Tip displayed on home view explaining ad blocking -->
+    <string name="tip_block_ads">Browse faster by stopping ads and code that follows you around the web.</string>
+
+    <!-- Title for a switch that enables or disables ads -->
+    <string name="block_ads_title">Ad blocking</string>
+
     <!-- Label for the snackbar when a user opens a new tab -->
     <string name="new_tab_opened_snackbar">New tab opened</string>
 
