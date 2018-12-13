@@ -31,13 +31,12 @@ class FirstrunPagerAdapter(
 
     init {
         val appName = context.getString(R.string.app_name)
+        val shortAppName = appName.replaceBefore(" ", "")
 
         if (isUpdateRun) {
-            // TODO: Don't show skip button
-            // TODO:
             this.pages = arrayOf(FirstrunPage(
-                    context.getString(R.string.firstrun_defaultbrowser_title),
-                    context.getString(R.string.firstrun_defaultbrowser_text2),
+                    context.getString(R.string.block_ads_card_title, shortAppName),
+                    context.getString(R.string.block_ads_card_description),
                     R.drawable.onboarding_img1))
         } else {
             this.pages = arrayOf(
@@ -76,8 +75,10 @@ class FirstrunPagerAdapter(
 
         val buttonView: Button = view.findViewById(R.id.button)
         buttonView.setOnClickListener(listener)
-        if (position == pages.size - 1) {
-            buttonView.setText(R.string.firstrun_close_button)
+
+        if (position == pages.size - 1 ) {
+            if (isUpdateRun) buttonView.setText(R.string.action_ok) else
+                buttonView.setText(R.string.firstrun_close_button)
             buttonView.id = R.id.finish
             buttonView.contentDescription = buttonView.text.toString().toLowerCase()
         } else {

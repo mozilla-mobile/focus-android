@@ -16,7 +16,9 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import kotlinx.android.synthetic.main.firstrun_page.*
+import kotlinx.android.synthetic.main.fragment_firstrun.*
 import kotlinx.android.synthetic.main.fragment_urlinput.*
 import mozilla.components.browser.session.Session
 import org.mozilla.focus.R
@@ -28,7 +30,6 @@ import org.mozilla.focus.utils.StatusBarUtils
 class FirstrunFragment : Fragment(), View.OnClickListener {
 
     private var viewPager: ViewPager? = null
-    private val isUpdateRun: Boolean? = null
     private var background: View? = null
 
     override fun onAttach(context: Context?) {
@@ -52,15 +53,10 @@ class FirstrunFragment : Fragment(), View.OnClickListener {
         background = view.findViewById(R.id.background)
 
         val isUpdateRun = arguments!!.getBoolean(IS_UPDATE_RUN)
+        val adapter = FirstrunPagerAdapter(container!!.context, this, isUpdateRun)
 
-        val adapter: FirstrunPagerAdapter?
-
-        if (isUpdateRun) {
-            // Set the custom pages:
-            adapter = FirstrunPagerAdapter(container!!.context, this, true)
-        } else {
-            adapter = FirstrunPagerAdapter(container!!.context, this, false)
-        }
+        val skipButton = view.findViewById<Button>(R.id.skip)
+        if (isUpdateRun) skipButton.visibility = View.INVISIBLE else View.VISIBLE
 
         viewPager = view.findViewById(R.id.pager)
         viewPager!!.contentDescription = adapter.getPageAccessibilityDescription(0)
