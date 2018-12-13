@@ -8,6 +8,7 @@ package org.mozilla.focus.firstrun
 import android.content.Context
 import android.content.res.ColorStateList
 import android.graphics.Color
+import android.support.v4.content.ContextCompat
 import android.support.v4.view.PagerAdapter
 import android.support.v4.view.ViewPager
 import android.support.v7.widget.SwitchCompat
@@ -73,8 +74,7 @@ class FirstrunPagerAdapter(
 
         val blockAdsSwitch: SwitchCompat = view.findViewById(R.id.blockAdsSwitch)
         blockAdsSwitch.visibility = View.INVISIBLE
-
-        blockAdsSwitch.trackTintList = R.color.test
+        blockAdsSwitch.trackTintList = ContextCompat.getColorStateList(context, R.color.switch_color_state)
 
         blockAdsSwitch.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
