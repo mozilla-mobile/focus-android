@@ -6,9 +6,12 @@
 package org.mozilla.focus.firstrun
 
 import android.content.Context
+import android.content.res.ColorStateList
+import android.graphics.Color
 import android.support.v4.view.PagerAdapter
 import android.support.v4.view.ViewPager
 import android.support.v7.widget.SwitchCompat
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -77,13 +80,22 @@ class FirstrunPagerAdapter(
                 // TODO: Handle preference change
             } else {
                 // TODO: Make grey
+                // #ADADAF
             }
         }
 
+
+/*
+        val states = arrayOf(intArrayOf(android.R.attr.state_enabled), intArrayOf((android.R.attr.state_checked)), intArrayOf())
+        val colors = intArrayOf(R.color.photonGrey10, R.color.photonMagenta80, R.color.photonGrey10)
+
+        blockAdsSwitch.trackTintList = ColorStateList(states, colors)
+        */
+
+       // blockAdsSwitch.trackTintList = R.color.switch_color_list
+
+
         when (position) {
-            0 -> {
-                blockAdsSwitch.visibility = View.INVISIBLE
-            }
             pages.size - 1 -> {
                 buttonView.setText(R.string.firstrun_close_button)
                 buttonView.id = R.id.finish
@@ -92,6 +104,11 @@ class FirstrunPagerAdapter(
             else ->  {
                 buttonView.setText(R.string.firstrun_next_button)
                 buttonView.id = R.id.next
+
+                if (position == 0) {
+                    Log.d("position", "position: " + position)
+                    blockAdsSwitch.visibility = View.VISIBLE
+                }
             }
 
         }

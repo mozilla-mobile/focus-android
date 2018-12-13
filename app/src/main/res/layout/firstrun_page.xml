@@ -81,8 +81,8 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="20dp"
                         android:layout_marginBottom="20dp"
+                        app:trackTint="#ADADAF"
                         app:thumbTint="#EDEDF0"
-                        app:trackTint="@color/photonMagenta70"
                         app:switchPadding="20dp"/>
 
                     <View
