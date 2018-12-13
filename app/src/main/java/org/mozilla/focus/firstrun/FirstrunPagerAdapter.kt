@@ -77,25 +77,8 @@ class FirstrunPagerAdapter(
         blockAdsSwitch.trackTintList = ContextCompat.getColorStateList(context, R.color.switch_color_state)
 
         blockAdsSwitch.setOnCheckedChangeListener { _, isChecked ->
-            if (isChecked) {
-                // TODO: Make pink blockAdsSwitch.trackTintList =
-                // TODO: Handle preference change
-            } else {
-                // TODO: Make grey
-                // #ADADAF
-            }
+            // TODO: Handle preference change
         }
-
-
-/*
-        val states = arrayOf(intArrayOf(android.R.attr.state_enabled), intArrayOf((android.R.attr.state_checked)), intArrayOf())
-        val colors = intArrayOf(R.color.photonGrey10, R.color.photonMagenta80, R.color.photonGrey10)
-
-        blockAdsSwitch.trackTintList = ColorStateList(states, colors)
-        */
-
-       // blockAdsSwitch.trackTintList = R.color.switch_color_list
-
 
         when (position) {
             pages.size - 1 -> {
