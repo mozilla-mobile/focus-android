@@ -174,12 +174,12 @@ class UrlInputFragment :
         }
 
         if (arguments?.getString(ARGUMENT_SESSION_UUID) == null) {
-            if (Settings.getInstance(context!!).shouldShowFirstRunUpdateCard()) {
+            //if (Settings.getInstance(context!!).shouldShowFirstRunUpdateCard()) {
                 fragmentManager
                         ?.beginTransaction()
                         ?.add(R.id.container, FirstrunFragment.create(session, true), FirstrunFragment.FRAGMENT_TAG)
                         ?.commit()
-            }
+            //}
         }
     }
 
