@@ -35,7 +35,7 @@
             android:gravity="center"
             android:lineSpacingExtra="7sp"
             android:text="@string/teaser"
-            android:textColor="#eeeeee"
+            android:textColor="#f9f9fa"
             android:textSize="14sp"
             android:focusable="false" />
 

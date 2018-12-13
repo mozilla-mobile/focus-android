@@ -93,7 +93,6 @@ class UrlInputFragment :
         private val ANIMATION_BROWSER_SCREEN = "browser_screen"
 
         private val ANIMATION_DURATION = 200
-        private val TIPS_ALPHA = 0.65f
 
         private lateinit var searchSuggestionsViewModel: SearchSuggestionsViewModel
 
@@ -230,7 +229,6 @@ class UrlInputFragment :
         }
 
         val tipText = String.format(tip.text, System.getProperty("line.separator"))
-        keyboardLinearLayout.homeViewTipsLabel.alpha = TIPS_ALPHA
 
         if (tip.deepLink == null) {
             homeViewTipsLabel.text = tipText
@@ -263,7 +261,6 @@ class UrlInputFragment :
 
     private fun showFocusSubtitle() {
         keyboardLinearLayout.homeViewTipsLabel.text = getString(teaser)
-        keyboardLinearLayout.homeViewTipsLabel.alpha = 1f
         keyboardLinearLayout.homeViewTipsLabel.setOnClickListener(null)
     }
 
