@@ -74,6 +74,8 @@ class FirstrunPagerAdapter(
         val blockAdsSwitch: SwitchCompat = view.findViewById(R.id.blockAdsSwitch)
         blockAdsSwitch.visibility = View.INVISIBLE
 
+        blockAdsSwitch.trackTintList = R.color.test
+
         blockAdsSwitch.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
                 // TODO: Make pink blockAdsSwitch.trackTintList =

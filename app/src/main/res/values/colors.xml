@@ -108,4 +108,12 @@
     <color name="home_screen_dialog_warning_text">#96f9f9fa</color>
     
     <color name="settings_summary_text">#ffbbbcc5</color>
+
+    <selector name="testing" xmlns:android="http://schemas.android.com/apk/res/android">
+        <item android:state_pressed="true"
+            android:color="#ffff0000"/> <!-- pressed -->
+        <item android:state_focused="true"
+            android:color="#ff0000ff"/> <!-- focused -->
+        <item android:color="#ff000000"/> <!-- default -->
+    </selector>
 </resources>
