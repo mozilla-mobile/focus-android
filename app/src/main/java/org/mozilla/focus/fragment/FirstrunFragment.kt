@@ -83,15 +83,6 @@ class FirstrunFragment : Fragment(), View.OnClickListener {
         val tabLayout = view.findViewById<TabLayout>(R.id.tabs)
         tabLayout.setupWithViewPager(viewPager, true)
 
-
-        blockAdsSwitch.setOnCheckedChangeListener { _, isChecked ->
-            if (isChecked) {
-                // TODO: Make pink blockAdsSwitch.trackTintList =
-                // TODO: Handle preference change
-            } else {
-                // TODO: Make grey
-            }
-        }
         return view
     }
 
