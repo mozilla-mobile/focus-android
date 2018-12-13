@@ -561,6 +561,12 @@ be temporary, and you can try again later.</li>
     <string name="firstrun_skip_button">Skip</string>
     <string name="firstrun_next_button">Next</string>
 
+    <!-- Title for intro card shown to users after updating. %1$s will be replaced with the name of the app (e.g. Firefox Focus) -->
+    <string name="block_ads_card_title">%1$s is ready to block ads</string>
+
+    <!-- Description for intro card shown to users after updating. -->
+    <string name="block_ads_card_description">New feature! Browse faster by stopping ads and code that follow you around the web.</string>
+
     <!-- Indicator that no trackers are being blocked because content blocking is disabled; normally shows the number of blocked trackers -->
     <string name="content_blocking_disabled">-</string>
 
