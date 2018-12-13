@@ -75,6 +75,7 @@ class FirstrunPagerAdapter(
 
         blockAdsSwitch.setOnCheckedChangeListener { _, isChecked ->
             // TODO: Handle preference change
+            Log.d("firstRun", "isChecked: " + isChecked)
         }
 
         when (position) {
@@ -83,16 +84,14 @@ class FirstrunPagerAdapter(
                 buttonView.id = R.id.finish
                 buttonView.contentDescription = buttonView.text.toString().toLowerCase()
             }
-            else ->  {
+            else -> {
                 buttonView.setText(R.string.firstrun_next_button)
                 buttonView.id = R.id.next
 
                 if (position == 0) {
-                    Log.d("position", "position: " + position)
                     blockAdsSwitch.visibility = View.VISIBLE
                 }
             }
-
         }
 
         return view

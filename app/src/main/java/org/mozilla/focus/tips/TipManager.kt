@@ -32,8 +32,13 @@ import org.mozilla.focus.utils.isInExperiment
 import org.mozilla.focus.utils.Browsers
 import java.util.Random
 
-class Tip(val id: Int, val text: String, val shouldDisplay: () -> Boolean, val deepLink: (() -> Unit)? = null,
-          val preferenceKey: Int? = null) {
+class Tip(
+    val id: Int,
+    val text: String,
+    val shouldDisplay: () -> Boolean,
+    val deepLink: (() -> Unit)? = null,
+    val preferenceKey: Int? = null
+) {
     companion object {
         private const val FORCE_SHOW_DISABLE_TIPS_LAUNCH_COUNT = 2
         private const val FORCE_SHOW_DISABLE_TIPS_INTERVAL = 30
@@ -201,7 +206,7 @@ class Tip(val id: Int, val text: String, val shouldDisplay: () -> Boolean, val d
 
             val shouldDisplayBlockAdsTip = {
                 // TODO: Check ad block toggle
-                //!Settings.getInstance(context).hasToggledAdBlocking()
+                // !Settings.getInstance(context).hasToggledAdBlocking()
                 true
             }
 
@@ -221,7 +226,6 @@ object TipManager {
     private var tipsShown = 0
 
     private fun populateListOfTips(context: Context) {
-        /*
         addAllowlistTip(context)
         addTrackingProtectionTip(context)
         addHomescreenTip(context)
@@ -230,14 +234,13 @@ object TipManager {
         addOpenInNewTabTip(context)
         addRequestDesktopTip(context)
         addDisableTipsTip(context)
-        */
         addBlockAdsTip(context)
     }
 
     // Will not return a tip if tips are disabled or if MAX TIPS have already been shown.
     @Suppress("ReturnCount") // Using early returns
     fun getNextTipIfAvailable(context: Context): Tip? {
-        //if (!context.isInExperiment(homeScreenTipsExperimentDescriptor)) return null
+        if (!context.isInExperiment(homeScreenTipsExperimentDescriptor)) return null
         if (!Settings.getInstance(context).shouldDisplayHomescreenTips()) return null
 
         if (!listInitialized) {
