@@ -70,28 +70,20 @@ class FirstrunPagerAdapter(
         buttonView.setOnClickListener(listener)
 
         val blockAdsSwitch: SwitchCompat = view.findViewById(R.id.blockAdsSwitch)
-        blockAdsSwitch.visibility = View.INVISIBLE
+        if (position == 0) blockAdsSwitch.visibility = View.VISIBLE else View.INVISIBLE
         blockAdsSwitch.trackTintList = ContextCompat.getColorStateList(context, R.color.switch_color_state)
-
         blockAdsSwitch.setOnCheckedChangeListener { _, isChecked ->
             // TODO: Handle preference change
             Log.d("firstRun", "isChecked: " + isChecked)
         }
 
-        when (position) {
-            pages.size - 1 -> {
-                buttonView.setText(R.string.firstrun_close_button)
-                buttonView.id = R.id.finish
-                buttonView.contentDescription = buttonView.text.toString().toLowerCase()
-            }
-            else -> {
-                buttonView.setText(R.string.firstrun_next_button)
-                buttonView.id = R.id.next
-
-                if (position == 0) {
-                    blockAdsSwitch.visibility = View.VISIBLE
-                }
-            }
+        if (position == pages.size - 1) {
+            buttonView.setText(R.string.firstrun_close_button)
+            buttonView.id = R.id.finish
+            buttonView.contentDescription = buttonView.text.toString().toLowerCase()
+        } else {
+            buttonView.setText(R.string.firstrun_next_button)
+            buttonView.id = R.id.next
         }
 
         return view
