@@ -19,7 +19,8 @@ import org.mozilla.focus.R
 
 class FirstrunPagerAdapter(
     private val context: Context,
-    private val listener: View.OnClickListener
+    private val listener: View.OnClickListener,
+    private val isUpdateRun: Boolean
 ) : PagerAdapter() {
 
     private data class FirstrunPage(val title: String, val text: String, val imageResource: Int) {
@@ -30,23 +31,33 @@ class FirstrunPagerAdapter(
 
     init {
         val appName = context.getString(R.string.app_name)
-        this.pages = arrayOf(
-                FirstrunPage(
-                        context.getString(R.string.firstrun_defaultbrowser_title),
-                        context.getString(R.string.firstrun_defaultbrowser_text2),
-                        R.drawable.onboarding_img1),
-                FirstrunPage(
-                        context.getString(R.string.firstrun_search_title),
-                        context.getString(R.string.firstrun_search_text),
-                        R.drawable.onboarding_img4),
-                FirstrunPage(
-                        context.getString(R.string.firstrun_shortcut_title),
-                        context.getString(R.string.firstrun_shortcut_text, appName),
-                        R.drawable.onboarding_img3),
-                FirstrunPage(
-                        context.getString(R.string.firstrun_privacy_title),
-                        context.getString(R.string.firstrun_privacy_text, appName),
-                        R.drawable.onboarding_img2))
+
+        if (isUpdateRun) {
+            // TODO: Don't show skip button
+            // TODO:
+            this.pages = arrayOf(FirstrunPage(
+                    context.getString(R.string.firstrun_defaultbrowser_title),
+                    context.getString(R.string.firstrun_defaultbrowser_text2),
+                    R.drawable.onboarding_img1))
+        } else {
+            this.pages = arrayOf(
+                    FirstrunPage(
+                            context.getString(R.string.firstrun_defaultbrowser_title),
+                            context.getString(R.string.firstrun_defaultbrowser_text2),
+                            R.drawable.onboarding_img1),
+                    FirstrunPage(
+                            context.getString(R.string.firstrun_search_title),
+                            context.getString(R.string.firstrun_search_text),
+                            R.drawable.onboarding_img4),
+                    FirstrunPage(
+                            context.getString(R.string.firstrun_shortcut_title),
+                            context.getString(R.string.firstrun_shortcut_text, appName),
+                            R.drawable.onboarding_img3),
+                    FirstrunPage(
+                            context.getString(R.string.firstrun_privacy_title),
+                            context.getString(R.string.firstrun_privacy_text, appName),
+                            R.drawable.onboarding_img2))
+        }
     }
 
     private fun getView(position: Int, pager: ViewPager): View {

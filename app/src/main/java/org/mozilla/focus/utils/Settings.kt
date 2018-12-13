@@ -103,6 +103,9 @@ class Settings private constructor(context: Context) {
     fun shouldShowFirstrun(): Boolean =
             !preferences.getBoolean(FirstrunFragment.FIRSTRUN_PREF, false)
 
+    fun shouldShowFirstRunUpdateCard(): Boolean =
+            !preferences.getBoolean(FirstrunFragment.FIRSTRUNUPDATE_PREF, false)
+
     fun isFirstGeckoRun(): Boolean =
             preferences.getBoolean(GeckoWebViewProvider.PREF_FIRST_GECKO_RUN, true)
 

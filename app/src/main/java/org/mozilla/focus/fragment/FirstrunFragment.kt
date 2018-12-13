@@ -12,6 +12,7 @@ import android.support.design.widget.TabLayout
 import android.support.v4.app.Fragment
 import android.support.v4.view.ViewPager
 import android.transition.TransitionInflater
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -27,7 +28,7 @@ import org.mozilla.focus.utils.StatusBarUtils
 class FirstrunFragment : Fragment(), View.OnClickListener {
 
     private var viewPager: ViewPager? = null
-
+    private val isUpdateRun: Boolean? = null
     private var background: View? = null
 
     override fun onAttach(context: Context?) {
@@ -50,7 +51,16 @@ class FirstrunFragment : Fragment(), View.OnClickListener {
 
         background = view.findViewById(R.id.background)
 
-        val adapter = FirstrunPagerAdapter(container!!.context, this)
+        val isUpdateRun = arguments!!.getBoolean(IS_UPDATE_RUN)
+
+        val adapter: FirstrunPagerAdapter?
+
+        if (isUpdateRun) {
+            // Set the custom pages:
+            adapter = FirstrunPagerAdapter(container!!.context, this, true)
+        } else {
+            adapter = FirstrunPagerAdapter(container!!.context, this, false)
+        }
 
         viewPager = view.findViewById(R.id.pager)
         viewPager!!.contentDescription = adapter.getPageAccessibilityDescription(0)
@@ -111,6 +121,10 @@ class FirstrunFragment : Fragment(), View.OnClickListener {
             .edit()
             .putBoolean(FIRSTRUN_PREF, true)
             .apply()
+        PreferenceManager.getDefaultSharedPreferences(requireContext())
+                .edit()
+                .putBoolean(FIRSTRUNUPDATE_PREF, true)
+                .apply()
 
         val sessionUUID = arguments!!.getString(ARGUMENT_SESSION_UUID)
         val sessionManager = requireContext().components.sessionManager
@@ -147,14 +161,17 @@ class FirstrunFragment : Fragment(), View.OnClickListener {
     companion object {
         const val FRAGMENT_TAG = "firstrun"
         const val FIRSTRUN_PREF = "firstrun_shown"
+        const val FIRSTRUNUPDATE_PREF = "firstrunupdate_show"
 
+        private const val IS_UPDATE_RUN = "isUpdateRun"
         private const val ARGUMENT_SESSION_UUID = "sessionUUID"
 
-        fun create(currentSession: Session?): FirstrunFragment {
+        fun create(currentSession: Session?, isUpdateRun: Boolean = false): FirstrunFragment {
             val uuid = currentSession?.id
 
             val arguments = Bundle()
             arguments.putString(ARGUMENT_SESSION_UUID, uuid)
+            arguments.putBoolean(IS_UPDATE_RUN, isUpdateRun)
 
             val fragment = FirstrunFragment()
             fragment.arguments = arguments
