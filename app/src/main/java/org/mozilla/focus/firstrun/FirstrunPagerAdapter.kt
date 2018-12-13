@@ -6,8 +6,6 @@
 package org.mozilla.focus.firstrun
 
 import android.content.Context
-import android.content.res.ColorStateList
-import android.graphics.Color
 import android.support.v4.content.ContextCompat
 import android.support.v4.view.PagerAdapter
 import android.support.v4.view.ViewPager
@@ -19,7 +17,6 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
-import kotlinx.android.synthetic.main.firstrun_page.*
 
 import org.mozilla.focus.R
 
