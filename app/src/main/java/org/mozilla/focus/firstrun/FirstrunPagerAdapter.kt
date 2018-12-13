@@ -8,12 +8,14 @@ package org.mozilla.focus.firstrun
 import android.content.Context
 import android.support.v4.view.PagerAdapter
 import android.support.v4.view.ViewPager
+import android.support.v7.widget.SwitchCompat
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import kotlinx.android.synthetic.main.firstrun_page.*
 
 import org.mozilla.focus.R
 
@@ -65,13 +67,33 @@ class FirstrunPagerAdapter(
 
         val buttonView: Button = view.findViewById(R.id.button)
         buttonView.setOnClickListener(listener)
-        if (position == pages.size - 1) {
-            buttonView.setText(R.string.firstrun_close_button)
-            buttonView.id = R.id.finish
-            buttonView.contentDescription = buttonView.text.toString().toLowerCase()
-        } else {
-            buttonView.setText(R.string.firstrun_next_button)
-            buttonView.id = R.id.next
+
+        val blockAdsSwitch: SwitchCompat = view.findViewById(R.id.blockAdsSwitch)
+        blockAdsSwitch.visibility = View.INVISIBLE
+
+        blockAdsSwitch.setOnCheckedChangeListener { _, isChecked ->
+            if (isChecked) {
+                // TODO: Make pink blockAdsSwitch.trackTintList =
+                // TODO: Handle preference change
+            } else {
+                // TODO: Make grey
+            }
+        }
+
+        when (position) {
+            0 -> {
+                blockAdsSwitch.visibility = View.INVISIBLE
+            }
+            pages.size - 1 -> {
+                buttonView.setText(R.string.firstrun_close_button)
+                buttonView.id = R.id.finish
+                buttonView.contentDescription = buttonView.text.toString().toLowerCase()
+            }
+            else ->  {
+                buttonView.setText(R.string.firstrun_next_button)
+                buttonView.id = R.id.next
+            }
+
         }
 
         return view
