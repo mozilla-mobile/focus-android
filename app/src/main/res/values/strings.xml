@@ -149,6 +149,9 @@
     <!-- %1$s will be replaced by the app name (e.g. Firefox Focus) -->
     <string name="preference_mozilla_summary">About %1$s, help</string>
 
+    <!-- Preference category for ad blocking -->
+    <string name="preference_category_ad_blocking">Ad Blocking</string>
+
     <!-- Preference category for ad blocking and tracking protection settings -->
     <string name="preference_category_tracking_protection">Tracking Protection</string>
 
@@ -265,9 +268,14 @@
     <string name="preference_language_systemdefault">System default</string>
 
     <string name="preference_category_privacy">Privacy</string>
+
+    <string name="preference_privacy_ads_block_ads">Block ads and other annoyances</string>
+    <string name="preference_privacy_ads_block_ads_summary">Stops ads and other annoyances using block lists from Easylist, EasyPrivacy, Fanboy\'s Annoyance, and AdGuard Mobile Ad Filter</string>
+
+    
+    <string name="preference_privacy_block_analytics">Block analytic trackers</string>
     <string name="preference_privacy_block_ads">Block ad trackers</string>
     <string name="preference_privacy_block_ads_summary">Some ads track site visits, even if you don’t click the ads</string>
-    <string name="preference_privacy_block_analytics">Block analytic trackers</string>
     <string name="preference_privacy_block_analytics_summary">Used to collect, analyze and measure activities like tapping and scrolling</string>
     <string name="preference_privacy_block_social">Block social trackers</string>
     <string name="preference_privacy_block_social_summary">Embedded on sites to track your visits and to display functionality like share buttons</string>
