@@ -29,6 +29,7 @@
   <string name="shortcut_erase_short_label">Busak</string>
   <string name="shortcut_erase_long_label">Busak riwayat dlajahan</string>
   <string name="shortcut_erase_and_open_short_label">Busak &amp; bukak</string>
+  <string name="shortcut_erase_and_open_long_label">Busak lan bukak %1$s</string>
   <string name="preference_mozilla_summary">Ngenani %1$s, pitulung</string>
   <string name="preference_category_web_content">Kontèn Wèb</string>
   <string name="preference_category_switching_apps">Ganti aplikasi</string>
@@ -51,6 +52,7 @@
   <string name="preference_privacy_should_block_cookies_yes_option">Ya</string>
   <string name="preference_performance_block_javascript">Blokir JavaScript</string>
   <string name="preference_category_mozilla">Mozilla</string>
+  <string name="preference_privacy_notice">Wewara Privasi</string>
   <string name="preference_about">Ngenani %1$s</string>
   <string name="preference_search_installed_search_engines">Mesin panggolèk sing wis dipasang</string>
   <string name="preference_search_restore">Mulihaké mesin panggolèk standar</string>
@@ -63,6 +65,7 @@
   <string name="search_add_manually_save">Simpen</string>
   <string name="content_description_dismiss_input">Singkirké</string>
   <string name="accessibility_announcement_loading">Ngamot</string>
+  <string name="download_snackbar_open">Bukak</string>
   <string name="download_dialog_action_cancel">Mbatalake</string>
   <string name="download_dialog_action_download">Undhuh</string>
   <string name="contextmenu_link_share">Dumké pranala</string>
@@ -83,6 +86,10 @@
   <string name="find_in_page_input">Golekì ing kaca</string>
   <string name="find_in_page_result">%1$d / %2$d</string>
   <string name="accessibility_find_in_page_result">%1$d saka %2$d</string>
+  <string name="accessibility_dismiss_find_in_page">Singkirké panggolèkan ing kaca</string>
   <string name="http_auth_dialog_username">Jeneng Panganggo</string>
   <string name="http_auth_dialog_password">Tembung wadi</string>
+  <string name="enable_search_suggestions_no">Ora</string>
+  <string name="enable_search_suggestions_yes">Ya</string>
+  <string name="dismiss_no_suggestions_prompt_button">Singkirké</string>
 </resources>
