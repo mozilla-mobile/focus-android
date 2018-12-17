@@ -1339,6 +1339,7 @@ class BrowserFragment : WebFragment(), LifecycleObserver, View.OnClickListener,
     }
 
     override fun applyLocale() {
+        super.applyLocale()
         activity?.supportFragmentManager
             ?.beginTransaction()
             ?.replace(

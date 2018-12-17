@@ -34,6 +34,8 @@ import org.mozilla.focus.browser.LocalizedContent
 import org.mozilla.focus.ext.savedWebViewState
 import org.mozilla.focus.gecko.GeckoViewPrompt
 import org.mozilla.focus.gecko.NestedGeckoView
+import org.mozilla.focus.locale.LocaleManager
+import org.mozilla.focus.locale.Locales
 import org.mozilla.focus.telemetry.TelemetryWrapper
 import org.mozilla.focus.utils.AppConstants
 import org.mozilla.focus.utils.IntentUtils
@@ -49,6 +51,7 @@ import org.mozilla.geckoview.GeckoSession
 import org.mozilla.geckoview.GeckoSession.NavigationDelegate
 import org.mozilla.geckoview.GeckoSessionSettings
 import org.mozilla.geckoview.SessionFinder
+import java.util.Locale
 import kotlin.coroutines.CoroutineContext
 
 /**
@@ -90,9 +93,19 @@ class GeckoWebViewProvider : IWebViewProvider {
             runtimeSettingsBuilder.blockMalware(Settings.getInstance(context).shouldUseSafeBrowsing())
             runtimeSettingsBuilder.blockPhishing(Settings.getInstance(context).shouldUseSafeBrowsing())
             runtimeSettingsBuilder.crashHandler(CrashHandlerService::class.java)
+            runtimeSettingsBuilder.locale(getLocale(context))
 
             geckoRuntime =
                     GeckoRuntime.create(context.applicationContext, runtimeSettingsBuilder.build())
+        }
+    }
+
+    private fun getLocale(context: Context): String {
+        val currentLocale = LocaleManager.getInstance().getCurrentLocale(context)
+        return if (currentLocale != null) {
+            Locales.getLanguageTag(currentLocale)
+        } else {
+            Locales.getLanguageTag(Locale.getDefault())
         }
     }
 
@@ -216,6 +229,10 @@ class GeckoWebViewProvider : IWebViewProvider {
             if (geckoSession.isOpen) {
                 geckoSession.close()
             }
+        }
+
+        override fun updateLocale(currentLocale: Locale?) {
+            geckoRuntime!!.settings.locale = Locales.getLanguageTag(currentLocale)
         }
 
         override fun setBlockingEnabled(enabled: Boolean) {
