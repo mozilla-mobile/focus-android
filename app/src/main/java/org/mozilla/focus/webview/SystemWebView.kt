@@ -39,6 +39,7 @@ import org.mozilla.focus.web.IFindListener
 import org.mozilla.focus.web.IWebView
 import org.mozilla.focus.web.WebViewProvider
 import java.util.HashMap
+import java.util.Locale
 
 @Suppress("TooManyFunctions")
 class SystemWebView(context: Context, attrs: AttributeSet) : NestedWebView(context, attrs), IWebView,
@@ -87,6 +88,11 @@ class SystemWebView(context: Context, attrs: AttributeSet) : NestedWebView(conte
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             TelemetryAutofillCallback.unregister(context)
         }
+    }
+
+    override fun updateLocale(currentLocale: Locale?) {
+        // See issue #666. Do nothing here.
+        // We destroy the current WebView in WebFragment for WV to know about the locale change
     }
 
     override fun onCreateInputConnection(outAttrs: EditorInfo): InputConnection? {
