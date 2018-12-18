@@ -202,8 +202,11 @@
     <!-- Title of "switch" preference that enables/disables autocomplete for the user-defined list -->
     <string name="preference_switch_autocomplete_user_list">For Sites You Add</string>
 
-    <!-- Summary for the toggle to enable autocomplete for the user-defined list -->
+    <!-- *Deprecated summary* for the toggle to enable autocomplete for the user-defined list -->
     <string name="preference_autocomplete_user_list_summary">Enable to autocomplete more than 450 popular URLs in the address bar.</string>
+
+    <!-- Summary for the toggle to enable autocomplete for the user-defined list -->
+    <string name="preference_autocomplete_user_list_description">Enable to autocomplete sites you add here.</string>
 
     <!-- Preference category: Manage (user-defined) sites -->
     <string name="preference_category_autocomplete_manage_sites">Manage sites</string>
