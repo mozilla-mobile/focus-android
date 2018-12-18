@@ -52,6 +52,7 @@
   <string name="preference_privacy_should_block_cookies_yes_option">Ya</string>
   <string name="preference_performance_block_javascript">Blokir JavaScript</string>
   <string name="preference_category_mozilla">Mozilla</string>
+  <string name="preference_mozilla_telemetry_summary">Sinaoni manèh</string>
   <string name="preference_privacy_notice">Wewara Privasi</string>
   <string name="preference_about">Ngenani %1$s</string>
   <string name="preference_search_installed_search_engines">Mesin panggolèk sing wis dipasang</string>
@@ -65,6 +66,9 @@
   <string name="search_add_manually_save">Simpen</string>
   <string name="content_description_dismiss_input">Singkirké</string>
   <string name="accessibility_announcement_loading">Ngamot</string>
+  <string name="content_description_reload">Balèni amot situs wèb</string>
+  <string name="content_description_customtab_exit">Balik menyang aplikasi kepungkur</string>
+  <string name="external_multiple_apps_matched_exit">Metu saka Dlajahan Pribadi?</string>
   <string name="download_snackbar_open">Bukak</string>
   <string name="download_dialog_action_cancel">Mbatalake</string>
   <string name="download_dialog_action_download">Undhuh</string>
@@ -72,9 +76,12 @@
   <string name="contextmenu_image_share">Dumké gambar</string>
   <string name="contextmenu_image_save">Simpen gambar</string>
   <string name="contextmenu_open_in_new_tab">Bukak pranala ing tab anyar</string>
+  <string name="firstrun_shortcut_title">Tambah trabasan menyang layar utama</string>
   <string name="firstrun_close_button">Oké, mudheng!</string>
   <string name="content_blocking_disabled">-</string>
   <string name="dialog_addtohomescreen_action_cancel">Mbatalake</string>
+  <string name="notification_browsing_session_channel_name">Sèsi dlajahan pribadi</string>
+  <string name="tabs_tray_action_erase">Busak riwayat dlajahan</string>
   <string name="download_firefox">Undhuh Firefox</string>
   <string name="gv_prompt_username_hint">Jeneng Panganggo</string>
   <string name="gv_prompt_password_hint">Tembung wadi</string>
@@ -89,7 +96,12 @@
   <string name="accessibility_dismiss_find_in_page">Singkirké panggolèkan ing kaca</string>
   <string name="http_auth_dialog_username">Jeneng Panganggo</string>
   <string name="http_auth_dialog_password">Tembung wadi</string>
+  <string name="biometric_auth_new_session">Sèsi Anyar</string>
+  <string name="enable_search_suggestion_subtitle_learnmore">Sinaoni manèh</string>
   <string name="enable_search_suggestions_no">Ora</string>
   <string name="enable_search_suggestions_yes">Ya</string>
   <string name="dismiss_no_suggestions_prompt_button">Singkirké</string>
+  <string name="preference_exceptions_menu_remove">Buwang</string>
+  <string name="tab_crash_report_close_tab_button_label">Tutup Tab</string>
+  <string name="fatal_crash_report_close_button_label">Tutup</string>
 </resources>
