@@ -244,6 +244,7 @@
   <string name="preference_exceptions_menu_remove">Xitaá</string>
   <string name="preference_exceptions_remove_all_button_label">Atoo ntii pagina web</string>
   <string name="tab_crash_report_title">Vaa Xikua</string>
+  <string name="tab_crash_report_headline">Ku kanu inu. kue vaà xikua yo.</string>
   <string name="tab_crash_report_description">Ña Ntukú sèè, kue nchikavai ña ntsinu tsi xikua ntsinu sata.</string>
   <string name="tab_crash_report_close_tab_button_label">Kasi xikua</string>
   <string name="fatal_crash_report_title">Kunchatu. %1$s ye ña vaá.</string>
