@@ -32,7 +32,6 @@ import org.mozilla.focus.telemetry.TelemetryWrapper
 import org.mozilla.focus.utils.AppConstants
 import org.mozilla.focus.utils.ExperimentsSyncService
 import org.mozilla.focus.utils.Settings
-import org.mozilla.focus.utils.SupportUtils
 import org.mozilla.focus.utils.ViewUtils
 import org.mozilla.focus.viewmodel.MainViewModel
 import org.mozilla.focus.web.IWebView
@@ -184,11 +183,6 @@ open class MainActivity : LocaleAwareAppCompatActivity() {
         }
 
         val intent = SafeIntent(unsafeIntent)
-
-        if (intent.dataString.equals(SupportUtils.OPEN_WITH_DEFAULT_BROWSER_URL)) {
-            openGeneralSettings()
-            return
-        }
 
         val action = intent.action
 
