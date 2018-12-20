@@ -49,6 +49,7 @@ tasks:
 # Task: Builds on branches of the main repo
 #
 # Triggered whenever something is pushed/merged to the mozilla-mobile repo.
+# Tags (which are considered to be pushes) are ignored.
 #
 # Creates the following task pipeline:
 #
@@ -58,7 +59,7 @@ tasks:
 ###############################################################################
   - $if: 'tasks_for == "github-push"'
     then:
-      $if: 'event.repository.fork == false'
+      $if: 'event.repository.fork == false && event.ref[:10] != "refs/tags/"'
       then:
         taskId: {$eval: as_slugid("decision_task")}
         # The next line won't be needed anymore after https://github.com/taskcluster/taskcluster-github/pull/273
@@ -107,7 +108,7 @@ tasks:
 ###############################################################################
 # Task: Release builds
 #
-# Triggered when a new tag or release is published (in any branch)
+# Triggered when a new GitHub release is created (in any branch)
 #
 # - Builds release versions of Focus and Klar
 # - Signs the builds with the release key
