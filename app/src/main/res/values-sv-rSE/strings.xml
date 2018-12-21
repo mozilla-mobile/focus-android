@@ -87,8 +87,8 @@
   <string name="preference_privacy_block_content_summary2">Aktivering kan leda till att vissa sidor uppträder oväntat</string>
   <string name="preference_privacy_category_cookies">Blockera kakor</string>
   <string name="preference_privacy_should_block_cookies_no_option">Nej</string>
-  <string name="preference_privacy_should_block_cookies_third_party_tracker_cookies_option">Blockera endast tredjepartspårarkakor</string>
-  <string name="preference_privacy_should_block_cookies_third_party_only_option">Blockera endast tredjepartskakor</string>
+  <string name="preference_privacy_should_block_cookies_third_party_tracker_cookies_option">Blockera endast spårningskakor från tredje part</string>
+  <string name="preference_privacy_should_block_cookies_third_party_only_option">Blockera endast kakor från tredje part</string>
   <string name="preference_privacy_should_block_cookies_yes_option">Ja</string>
   <string name="preference_security_biometric">Använd fingeravtryck för att låsa upp appen</string>
   <string name="preference_security_biometric_summary">Ditt fingeravtryck kan låsa upp %1$s om en webbadress redan har öppnats i appen. Dolt läge kommer att slås på.</string>
