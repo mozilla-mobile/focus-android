@@ -60,7 +60,7 @@
   <string name="preference_autocomplete_action_add">+ Ajouter une adresse personnalisée</string>
   <string name="preference_autocomplete_title_add">Ajouter une adresse personnalisée</string>
   <string name="custom_autocomplete_quick_add">Ajouter une adresse personnalisée</string>
-  <string name="add_custom_autocomplete_label">Ajouter un lien à la saisie semi-automatique</string>
+  <string name="add_custom_autocomplete_label">Ajouter le lien à la saisie semi-automatique</string>
   <string name="preference_category_cookies">Cookies et données de sites</string>
   <string name="preference_category_data_choices">Données collectées</string>
   <string name="preference_autocomplete_title_remove">Supprimer des adresses personnalisées</string>
@@ -85,10 +85,10 @@
   <string name="preference_privacy_block_social_summary">Ils sont insérés sur certains sites pour pister vos visites et afficher des fonctionnalités comme des boutons de partage</string>
   <string name="preference_privacy_block_content">Bloquer les autres traqueurs de contenu</string>
   <string name="preference_privacy_block_content_summary2">Activer cette option peut provoquer des problèmes sur certaines pages</string>
-  <string name="preference_privacy_category_cookies">Interdire les cookies</string>
+  <string name="preference_privacy_category_cookies">Bloquer les cookies</string>
   <string name="preference_privacy_should_block_cookies_no_option">Non</string>
   <string name="preference_privacy_should_block_cookies_third_party_tracker_cookies_option">Bloquer uniquement les cookies tiers utilisés pour le pistage</string>
-  <string name="preference_privacy_should_block_cookies_third_party_only_option">Interdire les cookies tiers uniquement</string>
+  <string name="preference_privacy_should_block_cookies_third_party_only_option">Bloquer les cookies tiers uniquement</string>
   <string name="preference_privacy_should_block_cookies_yes_option">Oui</string>
   <string name="preference_security_biometric">Utiliser une empreinte digitale pour déverrouiller l’application</string>
   <string name="preference_security_biometric_summary">Votre empreinte digitale peut déverrouiller %1$s si une URL est déjà ouverte au sein de l’application. Le mode furtif sera activé.</string>
