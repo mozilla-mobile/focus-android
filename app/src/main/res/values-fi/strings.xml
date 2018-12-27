@@ -18,6 +18,7 @@
   <string name="menu_help">Ohje</string>
   <string name="menu_rights">Oikeutesi</string>
   <string name="menu_trackers_blocked_title">Seuraimia estetty</string>
+  <string name="menu_content_blocking">Sisällön esto</string>
   <string name="menu_custom_tab_branding">Toiminnon tarjoaa %1$s</string>
   <string name="share_dialog_title">Jaa palvelulla</string>
   <string name="notification_erase_text">Tyhjennä selaushistoria</string>
@@ -35,11 +36,13 @@
   <string name="preference_category_web_content">Verkkosisältö</string>
   <string name="preference_category_switching_apps">Sovellusten vaihto</string>
   <string name="preference_category_general">Yleiset</string>
+  <string name="preference_general_summary">Oletusselain, välilehdet, kieli</string>
   <string name="preference_category_data_collection_use">Tietojen kerääminen &amp; käyttö</string>
   <string name="preference_category_search">Haku</string>
   <string name="preference_show_search_suggestions">Nouda hakuehdotuksia</string>
   <string name="preference_show_search_suggestions_summary">%1$s lähettää osoiteriville kirjoittamasi tiedot hakukoneelle</string>
   <string name="preference_search_engine_default">Oletus</string>
+  <string name="preference_search_engine_label">Hakukone</string>
   <string name="preference_state_on">Päällä</string>
   <string name="preference_state_off">Pois päältä</string>
   <string name="preference_subitem_autocomplete">Osoitteen automaattinen täydennys</string>
@@ -224,4 +227,17 @@
   <string name="tip_autocomplete_url">Täydennä osoitteet sivustoille, joita käytät eniten\n Paina pitkään osoitekentässä olevia osoitteita</string>
   <string name="tip_open_in_new_tab">Avaa linkki uuteen välilehteen\n Paina pitkään mitä tahansa linkkiä sivulla</string>
   <string name="tip_request_desktop">Haluatko mieluummin nähdä sivuston täyden työpöytäversion?%1$s Valikko &gt; Sivuston työpöytäversio</string>
+  <string name="new_tab_opened_snackbar">Uusi välilehti avattu</string>
+  <string name="open_new_tab_snackbar">Vaihda</string>
+  <string name="preference_exceptions">Poikkeukset</string>
+  <string name="preference_exceptions_description">Olet poistanut sisällön eston käytöstä näiden sivustojen kohdalla.</string>
+  <string name="tab_crash_report_title">Välilehti kaatui</string>
+  <string name="tab_crash_report_headline">Valitettavasti tämän välilehden kanssa on ongelmia.</string>
+  <string name="tab_crash_report_description">Koska kyseessä on yksityinen selain, emme tallenna välilehtiä, eikä tätä välilehteä voi siksi palauttaa.</string>
+  <string name="tab_crash_report_close_tab_button_label">Sulje välilehti</string>
+  <string name="fatal_crash_report_title">Valitettavasti %1$s kohtasi ongelman ja kaatui.</string>
+  <string name="fatal_crash_report_description">Koska kyseessä on yksityinen selain, emme tallenna selausistuntoja, eikä viimeisintä istuntoa voi siksi palauttaa.</string>
+  <string name="fatal_crash_report_close_button_label">Sulje</string>
+  <string name="fatal_crash_report_restart_firefox_label">Käynnistä %1$s uudelleen</string>
+  <string name="crash_report_send_crash_label">Lähetä kaatumisilmoitus Mozillalle</string>
 </resources>
