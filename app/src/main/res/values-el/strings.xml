@@ -6,6 +6,7 @@
   <string name="urlbar_hint">Αναζήτηση ή πληκτρολόγηση διεύθυνσης</string>
   <string name="teaser">Αυτόματη ιδιωτική περιήγηση.\nΠεριήγηση. Διαγραφή. Επανάληψη.</string>
   <string name="feedback_erase">Το ιστορικό περιήγησής έχει εκκαθαριστεί.</string>
+  <string name="feedback_erase_custom_tab">Το ιστορικό περιήγησης καρτέλας έχει διαγραφεί.</string>
   <string name="search_hint">Αναζήτηση για %1$s</string>
   <string name="menu_share">Κοινή χρήση…</string>
   <string name="menu_report_site_issue">Αναφορά ζητήματος ιστοσελίδας</string>
@@ -18,7 +19,9 @@
   <string name="menu_help">Βοήθεια</string>
   <string name="menu_rights">Τα δικαιώματά σας</string>
   <string name="menu_trackers_blocked_title">Αποκλεισμένοι ιχνηλάτες</string>
+  <string name="menu_trackers_blocked_subtitle">Η απενεργοποίηση αυτού ενδέχεται να διορθώσει μερικά προβλήματα ιστοσελίδων</string>
   <string name="menu_content_blocking">Φραγή περιεχομένου</string>
+  <string name="menu_content_blocking_subtitle">Απενεργοποιήστε για διόρθωση μερικών ιστοσελίδων</string>
   <string name="menu_custom_tab_branding">Με την υποστήριξη του %1$s</string>
   <string name="share_dialog_title">Κοινοποίηση μέσω</string>
   <string name="notification_erase_text">Διαγραφή ιστορικού περιήγησης</string>
@@ -38,6 +41,7 @@
   <string name="preference_category_web_content">Διαδικτυακό περιεχόμενο</string>
   <string name="preference_category_switching_apps">Εναλλαγή εφαρμογών</string>
   <string name="preference_category_general">Γενικά</string>
+  <string name="preference_general_summary">Προεπιλεγμένο πρόγραμμα περιήγησης, καρτέλες, γλώσσα</string>
   <string name="preference_category_data_collection_use">Συλλογή &amp; χρήση δεδομένων</string>
   <string name="preference_category_search">Αναζήτηση</string>
   <string name="preference_show_search_suggestions">Λήψη προτάσεων αναζήτησης</string>
@@ -48,11 +52,15 @@
   <string name="preference_state_off">Ανενεργό</string>
   <string name="preference_subitem_autocomplete">Αυτόματη συμπλήρωση URL</string>
   <string name="preference_switch_autocomplete_topsites">Για κορυφαίες ιστοσελίδες</string>
+  <string name="preference_autocomplete_topsite_summary">Ενεργοποιήστε για αυτόματη συμπλήρωση περισσότερων από 450 δημοφιλών URLs στη γραμμή διευθύνσεων.</string>
+  <string name="preference_switch_autocomplete_user_list">Για ιστοσελίδες που προσθέτετε</string>
+  <string name="preference_autocomplete_user_list_summary">Ενεργοποιήστε για αυτόματη συμπλήρωση περισσότερων από 450 δημοφιλών URLs στη γραμμή διευθύνσεων.</string>
   <string name="preference_category_autocomplete_manage_sites">Διαχείριση ιστοσελίδων</string>
   <string name="preference_autocomplete_subitem_manage_sites">Διαχείριση ιστοσελίδων</string>
   <string name="preference_autocomplete_action_add">+ Προσθήκη προσαρμοσμένου URL</string>
   <string name="preference_autocomplete_title_add">Προσθήκη προσαρμοσμένου URL</string>
   <string name="custom_autocomplete_quick_add">Προσθήκη προσαρμοσμένου URL</string>
+  <string name="add_custom_autocomplete_label">Προσθήκη συνδέσμου για αυτόματη συμπλήρωση</string>
   <string name="preference_category_cookies">Cookies και δεδομένα ιστοσελίδων</string>
   <string name="preference_category_data_choices">Επιλογές δεδομένων</string>
   <string name="preference_autocomplete_title_remove">Αφαίρεση προσαρμοσμένων URLs</string>
@@ -79,6 +87,7 @@
   <string name="preference_privacy_block_content_summary2">Η ενεργοποίηση ενδέχεται να προκαλέσει απροσδόκητη συμπεριφορά ορισμένων σελίδων</string>
   <string name="preference_privacy_category_cookies">Αποκλεισμός cookies</string>
   <string name="preference_privacy_should_block_cookies_no_option">Όχι</string>
+  <string name="preference_privacy_should_block_cookies_third_party_tracker_cookies_option">Φραγή μόνο των cookies ιχνηλάτη τρίτων</string>
   <string name="preference_privacy_should_block_cookies_third_party_only_option">Φραγή μόνο cookies τρίτων</string>
   <string name="preference_privacy_should_block_cookies_yes_option">Ναι</string>
   <string name="preference_security_biometric">Χρήση αποτυπώματος για ξεκλείδωμα εφαρμογής</string>
@@ -122,6 +131,7 @@
   <string name="accessibility_announcement_loading">Φόρτωση</string>
   <string name="accessibility_announcement_loading_finished">Η ιστοσελίδα φορτώθηκε</string>
   <string name="content_description_menu">Περισσότερες επιλογές</string>
+  <string name="indicator_content_description_menu">Κουμπί περισσότερων επιλογών</string>
   <string name="content_description_forward">Πλοήγηση προς τα εμπρός</string>
   <string name="content_description_reload">Επαναφόρτωση ιστοσελίδας</string>
   <string name="content_description_back">Πλοήγηση προς τα πίσω</string>
@@ -232,12 +242,25 @@
   <string name="tip_autocomplete_url">Αυτόματη συμπλήρωση URLs για τις ιστοσελίδες συχνής χρήσης\n Πατήστε παρατεταμένα οποιοδήποτε URL στη γραμμή διευθύνσεων</string>
   <string name="tip_open_in_new_tab">Άνοιγμα συνδέσμου σε νέα καρτέλα\n Πατήστε παρατεταμένα οποιοδήποτε σύνδεσμο σε μια σελίδα</string>
   <string name="tip_request_desktop">Προτιμάτε την πλήρη έκδοση για υπολογιστές;%1$s Μενού &gt; Απαίτηση ιστοσελίδας για υπολογιστές</string>
+  <string name="tip_disable_tips2">Απενεργοποίηση συμβουλών στην αρχική οθόνη</string>
+  <string name="tip_explain_allowlist">Αξιόπιστη ιστοσελίδα;\n Το Allowlist απενεργοποιεί την Προστασία από καταγραφή για ιστοσελίδες που ξέρετε και εμπιστεύεστε.</string>
+  <string name="new_tab_opened_snackbar">Άνοιξε νέα καρτέλα</string>
   <string name="open_new_tab_snackbar">Εναλλαγή</string>
+  <string name="preference_open_new_tab">Άμεση εναλλαγή στο σύνδεσμο σε νέα καρτέλα</string>
   <string name="preference_category_safe_browsing">Ασφαλής περιήγηση</string>
+  <string name="preference_safe_browsing_title">Φραγή πιθανώς επικίνδυνων και παραπλανητικών ιστοσελίδων</string>
+  <string name="preference_safe_browsing_summary">Φραγή παραπλανητικών ιστοσελίδων και ιστοσελίδων επιθέσεων, κακόβουλων ιστοσελίδων και ιστοσελίδων ανεπιθύμητου λογισμικού.</string>
   <string name="preference_exceptions">Εξαιρέσεις</string>
+  <string name="preference_exceptions_description">Έχετε απενεργοποιήσει Φραγή περιεχομένου για αυτές τις ιστοσελίδες.</string>
   <string name="preference_exceptions_menu_remove">Αφαίρεση</string>
   <string name="preference_exceptions_remove_all_button_label">Αφαίρεση όλων των ιστοσελίδων</string>
+  <string name="tab_crash_report_title">Η καρτέλα κατέρρευσε</string>
+  <string name="tab_crash_report_headline">Συγγνώμη. Αντιμετωπίζουμε πρόβλημα με αυτή την καρτέλα.</string>
+  <string name="tab_crash_report_description">Ως πρόγραμμα ιδιωτικής περιήγησης, δεν αποθηκεύουμε ποτέ και δεν μπορούμε να ανακτήσουμε αυτή την καρτέλα.</string>
   <string name="tab_crash_report_close_tab_button_label">Κλείσιμο καρτέλας</string>
+  <string name="fatal_crash_report_title">Συγγνώμη. Το %1$s αντιμετώπισε πρόβλημα και κατέρρευσε.</string>
+  <string name="fatal_crash_report_description">Ως πρόγραμμα ιδιωτικής περιήγησης, δεν αποθηκεύουμε ποτέ και δεν μπορούμε να ανακτήσουμε την τελευταία συνεδρία περιήγησής σας.</string>
   <string name="fatal_crash_report_close_button_label">Κλείσιμο</string>
   <string name="fatal_crash_report_restart_firefox_label">Επανεκκίνηση του %1$s</string>
+  <string name="crash_report_send_crash_label">Αποστολή αναφοράς κατάρρευσης στη Mozilla</string>
 </resources>
