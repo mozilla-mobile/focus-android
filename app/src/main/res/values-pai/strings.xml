@@ -197,21 +197,39 @@
   <string name="download_firefox">Firefox munaal</string>
   <string name="your_rights_content1">%1$s software kos codig wiiytem solkyoha Mozilla ha ee jkay kubtar cyobchya.</string>
   <string name="your_rights_content2"><![CDATA["%1$s hay ch`chyaach yakyakyam ich um yak "<a xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2" href="%2$s">Mozilla ch`chyabch paa paytum wichum nyaamch</a>" ñwak jkay solrab kyom sam nyamik."]]></string>
+  <string name="your_rights_content3"><![CDATA["Kos mir mir o ch´chyaabch chpayt Mozilla Fundation ŕumuul chkwiichkyaawha ñikee ñyakuham, sal Firefox ha sal yaki o %1$s logotiip o mulya, Capayt knawch jkaay m´uhik kyawa yak yak "<a xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2" href="%2$s">yak</a>.]]></string>
+  <string name="your_rights_content5"><![CDATA["%1$s hay list ŕ´amchu ha kwiyik ya Disconect, Inc. kwii trchech buuk yak o yemik wii yak ntpachka "<a xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2" href="%2$s">GNU ch&#180;chyaabchu paa katee payt v3</a>", yal yaki "<a xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2" href="%3$s">yakya</a>.]]></string>
   <string name="gv_prompt_username_hint">M´mulha myoka</string>
   <string name="gv_prompt_password_hint">Ŕ\' amu</string>
   <string name="gv_prompt_clear">Tkryee</string>
   <string name="security_popup_secure_connection">Tublich chu jan</string>
   <string name="security_popup_insecure_connection">Tublich chu kos jaan tpaay</string>
   <string name="security_popup_security_verified">Say uu: %1$s</string>
+  <string name="preference_autocomplete_duplicate_url_error">URL kuryak</string>
   <string name="find_in_page">Chŕmeechu myook</string>
   <string name="find_in_page_input">Chŕmeechu myook</string>
   <string name="find_in_page_result">%1$d/%2$d</string>
+  <string name="accessibility_find_in_page_result">%1$d ya wi %2$d</string>
+  <string name="accessibility_next_result">Chapayt kjkech mib kyuw</string>
+  <string name="accessibility_previous_result">Chpayt kjkech jibo kjkech</string>
+  <string name="accessibility_dismiss_find_in_page">Sal am chŕmeechu ŕ`amch</string>
+  <string name="http_auth_dialog_title">Paychakjanuk ich piich</string>
   <string name="http_auth_dialog_username">M´mulha myoka</string>
   <string name="http_auth_dialog_password">Ŕ\' amu</string>
   <string name="preference_performance_request_desktop_site">Trchechu mk\' kaab</string>
   <string name="custom_tab_copy_url_action">URL tñurch</string>
+  <string name="preference_advanced_summary">Trechu sam nyaamch</string>
+  <string name="preference_category_advanced">Jiboom</string>
   <string name="preference_remote_debugging">Ñulyomuk tkryeechu USB/Wi-Fi nyaam</string>
   <string name="biometric_auth_title">Soolch %1$s</string>
+  <string name="enable_search_suggestions_no">Pem</string>
+  <string name="enable_search_suggestions_yes">E\'e</string>
+  <string name="tip_disable_tracking_protection">¿Amchuhay chyuwu mŕbootemha wi`e?\n Kŕbo sam kwamha mujiñ m`uu</string>
+  <string name="tip_add_to_homescreen">Wachu ñum mtrchechurabu hak mtawin ŕisum msol hikyaw myok %1$s jabchu wiham &gt; Pantall namanchuhal chmiich</string>
+  <string name="tip_set_default_browser">Sal jabchu paytum yak myo %1$s\n Chyunku %1$s sal amchu kajan mika</string>
+  <string name="new_tab_opened_snackbar">Yuŕumee jkaar sol</string>
+  <string name="open_new_tab_snackbar">Jkaayum tyak</string>
+  <string name="preference_category_safe_browsing">Chapayt mŕmee mnamaan</string>
   <string name="preference_safe_browsing_title">Waachu klyeeb´e paa wakyaw mŕ´am</string>
   <string name="preference_safe_browsing_summary">Amchu chknarp ee paa jwakyaa ŕ ´amcha, amchu malware ee amchu software kos yaŕaalch tpaay mtket.</string>
   <string name="preference_exceptions">Kos ñul´ebchtpaay</string>
