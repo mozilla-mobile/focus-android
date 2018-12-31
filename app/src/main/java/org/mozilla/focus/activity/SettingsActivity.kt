@@ -33,25 +33,17 @@ class SettingsActivity : LocaleAwareAppCompatActivity(), BaseSettingsFragment.Ac
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        if (intent.extras != null) {
-            if (intent?.extras?.getBoolean(SHOULD_OPEN_PRIVACY_EXTRA) == true) {
-                supportFragmentManager.beginTransaction()
-                    .replace(R.id.container, PrivacySecuritySettingsFragment())
-                    .commit()
-            } else if (intent?.extras?.getBoolean(SHOULD_OPEN_MOZILLA_EXTRA) == true) {
-                supportFragmentManager.beginTransaction()
-                        .replace(R.id.container, MozillaSettingsFragment())
-                        .commit()
-            } else if (intent?.extras?.getBoolean(SHOULD_OPEN_GENERAL_EXTRA) == true) {
-                supportFragmentManager.beginTransaction()
-                        .replace(R.id.container, GeneralSettingsFragment())
-                        .commit()
+        supportFragmentManager.beginTransaction().apply {
+            when {
+                intent?.extras?.getBoolean(SHOULD_OPEN_PRIVACY_EXTRA) == true ->
+                    replace(R.id.container, PrivacySecuritySettingsFragment())
+                intent?.extras?.getBoolean(SHOULD_OPEN_MOZILLA_EXTRA) == true ->
+                    replace(R.id.container, MozillaSettingsFragment())
+                intent?.extras?.getBoolean(SHOULD_OPEN_GENERAL_EXTRA) == true ->
+                    replace(R.id.container, GeneralSettingsFragment())
+                savedInstanceState == null -> add(R.id.container, SettingsFragment.newInstance())
             }
-        } else if (savedInstanceState == null) {
-            supportFragmentManager.beginTransaction()
-                .add(R.id.container, SettingsFragment.newInstance())
-                .commit()
-        }
+        }.commit()
 
         // Ensure all locale specific Strings are initialised on first run, we don't set the title
         // anywhere before now (the title can only be set via AndroidManifest, and ensuring
