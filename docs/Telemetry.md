@@ -308,6 +308,14 @@ The event ping contains a list of events ([see event format on readthedocs.io](h
 | Autocomplete URL tip tapped | action   | click | tip | add_autocomplete_url_tip    |        |
 | Homescreen tips enabled/disabled | action   | click | tip | add_to_homescreen_tip    |        |
 
+### Homescreen Tips
+| Event               | category | method | object         | extra         |
+|---------------------|----------|--------|----------------|---------------|
+| Open Crash Reporter | action   | show   | crash_reporter |               |
+| Close Tab           | action   | click  | crash_reporter | submit_crash  |
+
+(*) `submit_crash` contains a Boolean to show whether a crash was submitted.
+
 ### SSL Errors
 
 | Event                                      | category | method   | object  | extras  |
