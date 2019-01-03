@@ -78,7 +78,7 @@ class Settings private constructor(context: Context) {
                     R.string
                         .pref_key_performance_enable_cookies
                 ),
-                resources.getString(R.string.preference_privacy_should_block_cookies_third_party_tracker_cookies_option)
+                resources.getString(R.string.preference_privacy_block_cookies_third_party_tracker)
             )!!
         } else {
             preferences.getString(
@@ -86,7 +86,7 @@ class Settings private constructor(context: Context) {
                     R.string
                         .pref_key_performance_enable_cookies
                 ),
-                resources.getString(R.string.preference_privacy_should_block_cookies_no_option)
+                resources.getString(R.string.preference_privacy_block_cookies_no)
             )!!
         }
 
