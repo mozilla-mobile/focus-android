@@ -108,7 +108,6 @@
          This is the label for this shortcut. Android recommends a maximum length of 10 characters. -->
     <string name="shortcut_erase_and_open_short_label">Erase &amp; open</string>
 
-
     <!-- This is the label of an action we offer when the user selects text in other third-party apps.
          Clicking this action will launch Focus and perform a search in the default search engine. -->
     <string name="text_selection_search_action">Search Privately</string>
@@ -827,4 +826,8 @@ be temporary, and you can try again later.</li>
 
     <!-- Label for the checkbox to send the tab crash report to Mozilla -->
     <string name="crash_report_send_crash_label">Send crash report to Mozilla</string>
+
+
+    <!-- Deprecated strings -->
+    <string name="shortcut_erase_and_open_long_label">Erase and open %1$s</string>
 </resources>
