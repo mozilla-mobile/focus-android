@@ -43,6 +43,7 @@ RELEASE_LOCALES = [
 	"dsb",
 	"el",
 	"en-CA",
+	"en-GB",
 	"eo",
 	"es-AR",
 	"es-CL",
