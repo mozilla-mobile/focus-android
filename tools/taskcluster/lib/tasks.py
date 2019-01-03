@@ -18,7 +18,7 @@ class TaskBuilder(object):
         self.source = source
         self.scheduler_id = scheduler_id
 
-    def build_task(self, name, description, command, dependencies = [], artifacts = {}, scopes = [], routes = [], features = {}, worker_type = 'github-worker'):
+    def build_task(self, name, description, command, dependencies = [], artifacts = {}, scopes = [], features = {}, worker_type = 'github-worker'):
         created = datetime.datetime.now()
         expires = taskcluster.fromNow('1 year')
         deadline = taskcluster.fromNow('1 day')
@@ -39,13 +39,13 @@ class TaskBuilder(object):
             "priority": "lowest",
             "deadline": taskcluster.stringDate(deadline),
             "dependencies": [ self.task_id ] + dependencies,
-            "routes": routes,
+            "routes": [],
             "scopes": scopes,
             "requires": "all-completed",
             "payload": {
                 "features": features,
                 "maxRunTime": 7200,
-                "image": "mozillamobile/focus-android:1.2",
+                "image": "mozillamobile/focus-android:1.3",
                 "command": [
                     "/bin/bash",
                     "--login",
@@ -65,13 +65,13 @@ class TaskBuilder(object):
         }
 
 
-    def build_signing_task(self, build_task_id, name, description, signing_format, apks=[], scopes=[], routes=[]):
+    def build_signing_task(self, build_task_id, name, description, signing_format, is_staging, apks=[], scopes=[], routes=[]):
         created = datetime.datetime.now()
         expires = taskcluster.fromNow('1 year')
         deadline = taskcluster.fromNow('1 day')
 
         return {
-            "workerType": 'mobile-signing-v1',
+            "workerType": 'mobile-signing-dep-v1' if is_staging else 'mobile-signing-v1',
             "taskGroupId": self.task_id,
             "schedulerId": self.scheduler_id,
             "expires": taskcluster.stringDate(expires),
@@ -104,13 +104,13 @@ class TaskBuilder(object):
             }
         }
 
-    def build_push_task(self, signing_task_id, name, description, apks=[], scopes=[], track='internal', commit=False):
+    def build_push_task(self, signing_task_id, name, description, is_staging, apks=[], scopes=[], track='internal', commit=False):
         created = datetime.datetime.now()
         expires = taskcluster.fromNow('1 year')
         deadline = taskcluster.fromNow('1 day')
 
         return {
-            "workerType": 'mobile-pushapk-v1',
+            "workerType": 'mobile-pushapk-dep-v1' if is_staging else 'mobile-pushapk-v1',
             "taskGroupId": self.task_id,
             "schedulerId": self.scheduler_id,
             "expires": taskcluster.stringDate(expires),
@@ -138,8 +138,8 @@ class TaskBuilder(object):
             "metadata": {
                 "name": name,
                 "description": description,
-                "owner": "skaspari@mozilla.com",
-                "source": "https://github.com/mozilla-mobile/focus-android/tree/master/tools/taskcluster"
+                "owner": self.owner,
+                "source": self.source
             }
         }
 

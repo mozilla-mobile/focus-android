@@ -5,6 +5,7 @@
 
 from __future__ import absolute_import, print_function, unicode_literals
 
+import argparse
 import datetime
 import jsone
 import pipes
@@ -19,10 +20,20 @@ from lib.tasks import schedule_task
 ROOT = os.path.join(os.path.dirname(__file__), '../..')
 
 
-def calculate_branch_and_head_rev(root):
+class InvalidGithubRepositoryError(Exception):
+    pass
+
+
+def calculate_git_references(root):
     repo = Repo(root)
+    remote = repo.remote()
     branch = repo.head.reference
-    return str(branch), str(branch.commit)
+
+    if not remote.url.startswith('https://github.com'):
+        raise InvalidGithubRepositoryError('expected remote to be a GitHub repository (accessed via HTTPs)')
+
+    url = remote.url[:-4] if remote.url.endswith('.git') else remote.url
+    return url, str(branch), str(branch.commit)
 
 
 def make_decision_task(params):
@@ -47,7 +58,7 @@ def make_decision_task(params):
         'as_slugid': as_slugid,
         'event': {
             'repository': {
-                'clone_url': params['repository_url'],
+                'clone_url': params['repository_github_http_url'],
             },
             'release': {
                 'tag_name': params['head_rev'],
@@ -68,13 +79,13 @@ def make_decision_task(params):
     return (task_id, task)
 
 
-if __name__ == "__main__":
+def schedule(is_staging):
     queue = taskcluster.Queue({ 'baseUrl': 'http://taskcluster/queue/v1' })
 
-    branch, head_rev = calculate_branch_and_head_rev(ROOT)
-
+    repository_github_http_url, branch, head_rev = calculate_git_references(ROOT)
     params = {
-        'repository_url': 'https://github.com/mozilla-mobile/focus-android',
+        'is_staging': is_staging,
+        'repository_github_http_url': repository_github_http_url,
         'head_rev': head_rev,
         'branch': branch,
         'cron_task_id': os.environ.get('CRON_TASK_ID', '<cron_task_id>')
@@ -82,3 +93,12 @@ if __name__ == "__main__":
     decisionTaskId, decisionTask = make_decision_task(params)
     schedule_task(queue, decisionTaskId, decisionTask)
     print('All scheduled!')
+
+
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description='Schedule a nightly release pipeline')
+    parser.add_argument('--staging', action='store_true',
+                        help="Perform a staging build (use dep workers, don't communicate with Google Play)")
+
+    result = parser.parse_args()
+    schedule(result.staging)

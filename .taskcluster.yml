@@ -21,7 +21,7 @@ tasks:
       routes: []
       payload:
         maxRunTime: 7200
-        image: mozillamobile/focus-android:1.2
+        image: mozillamobile/focus-android:1.3
         command:
           - /bin/bash
           - --login
@@ -78,7 +78,7 @@ tasks:
           - queue:route:notify.irc-channel.#android-ci.on-any
         payload:
           maxRunTime: 7200
-          image: mozillamobile/focus-android:1.2
+          image: mozillamobile/focus-android:1.3
           features:
             taskclusterProxy: true
           env:
@@ -147,7 +147,7 @@ tasks:
           - statuses  # Automatically added by taskcluster-github. It must be explicit because of Chain of Trust
         payload:
           maxRunTime: 600   # Decision should remain fast enough to schedule a handful of tasks
-          image: mozillamobile/focus-android:1.2
+          image: mozillamobile/focus-android:1.3
           features:
             taskclusterProxy: true
             chainOfTrust: true
@@ -174,7 +174,8 @@ tasks:
                 --apk focusX86/release/app-focus-x86-release-unsigned.apk \
                 --apk klarX86/release/app-klar-x86-release-unsigned.apk \
                 --apk focusArm/release/app-focus-arm-release-unsigned.apk \
-                --apk klarArm/release/app-klar-arm-release-unsigned.apk
+                --apk klarArm/release/app-klar-arm-release-unsigned.apk \
+                --date ${now}
           artifacts:
             public/task-graph.json:
               type: file
@@ -201,8 +202,14 @@ tasks:
       $let:
         decision_task_id: {$eval: as_slugid("decision_task")}
         expires_in: {$fromNow: '1 year'}
-        repository: https://github.com/mozilla-mobile/focus-android
+        repository: ${event.repository.clone_url}
         scheduler_id: focus-nightly-sched
+        is_mozilla_mobile_repo:
+          $eval: event.repository.clone_url == 'https://github.com/mozilla-mobile/focus-android'
+        track:
+          $if: event.repository.clone_url == 'https://github.com/mozilla-mobile/focus-android'
+          then: 'nightly'
+          else: 'staging-nightly'
       in:
         taskId: ${decision_task_id}
         taskGroupId: ${decision_task_id}  # Must be explicit because of Chain of Trust
@@ -216,20 +223,30 @@ tasks:
         priority: medium
         retries: 5
         scopes:
-          - queue:scheduler-id:${scheduler_id}
-          - queue:create-task:highest:aws-provisioner-v1/gecko-focus
-          - queue:create-task:highest:scriptworker-prov-v1/mobile-signing-v1
-          - queue:create-task:highest:scriptworker-prov-v1/mobile-pushapk-v1
-          - project:mobile:focus:releng:signing:cert:release-signing
-          - project:mobile:focus:releng:signing:format:autograph_focus
-          - project:mobile:focus:releng:googleplay:product:focus
-          - secrets:get:project/focus/tokens
-          - queue:route:index.project.mobile.focus.nightly.latest
+          $flatten:
+            - queue:scheduler-id:${scheduler_id}
+            - queue:create-task:highest:aws-provisioner-v1/gecko-focus
+            - project:mobile:focus:releng:signing:format:autograph_focus
+            - $if: is_mozilla_mobile_repo
+              then:
+                - queue:create-task:highest:scriptworker-prov-v1/mobile-signing-v1
+                - queue:create-task:highest:scriptworker-prov-v1/mobile-pushapk-v1
+                - project:mobile:focus:releng:signing:cert:release-signing
+                - project:mobile:focus:releng:googleplay:product:focus
+                - secrets:get:project/focus/tokens
+                - queue:route:index.project.mobile.focus.signed-nightly.*
+              else:
+                - queue:create-task:highest:scriptworker-prov-v1/mobile-signing-dep-v1
+                - queue:create-task:highest:scriptworker-prov-v1/mobile-pushapk-dep-v1
+                - project:mobile:focus:releng:signing:cert:dep-signing
+                - project:mobile:focus:releng:googleplay:product:focus:dep
+                - secrets:get:garbage/staging/project/focus/tokens
+                - queue:route:index.project.mobile.focus.staging-signed-nightly.*
         routes:
           - statuses  # Automatically added by taskcluster-github. It must be explicit because of Chain of Trust
         payload:
           maxRunTime: 600   # Decision should remain fast enough to schedule a handful of tasks
-          image: mozillamobile/focus-android:1.2
+          image: mozillamobile/focus-android:1.3
           features:
             taskclusterProxy: true
             chainOfTrust: true
@@ -245,28 +262,31 @@ tasks:
             - --login
             - -cx
             - >-
-              git fetch origin
-              && git reset --hard origin/master
+              cd ..
+              && git clone ${repository} repository
+              && cd repository
+              && pip install arrow
               && python tools/taskcluster/release.py \
-                --track nightly \
+                --track ${track} \
                 --commit \
-                --output /opt/focus-android/app/build/outputs/apk \
+                --output /opt/repository/app/build/outputs/apk \
                 --apk klarArm/nightly/app-klar-arm-nightly-unsigned.apk \
                 --apk klarX86/nightly/app-klar-x86-nightly-unsigned.apk \
                 --apk focusArm/nightly/app-focus-arm-nightly-unsigned.apk \
-                --apk focusX86/nightly/app-focus-x86-nightly-unsigned.apk
+                --apk focusX86/nightly/app-focus-x86-nightly-unsigned.apk \
+                --date ${now}
           artifacts:
             public/task-graph.json:
               type: file
-              path: /opt/focus-android/task-graph.json
+              path: /opt/repository/task-graph.json
               expires: ${expires_in}
             public/actions.json:
               type: file
-              path: /opt/focus-android/actions.json
+              path: /opt/repository/actions.json
               expires: ${expires_in}
             public/parameters.yml:
               type: file
-              path: /opt/focus-android/parameters.yml
+              path: /opt/repository/parameters.yml
               expires: ${expires_in}
         extra:
           cron: {$json: {$eval: 'cron'}}
