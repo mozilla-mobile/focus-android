@@ -45,18 +45,18 @@ class PrivacySecuritySettingsFragment : BaseSettingsFragment(),
                 requireContext().resources.getStringArray(R.array.preference_privacy_cookies_options)
                     .filter {
                         it != getString(
-                            R.string.preference_privacy_should_block_cookies_third_party_tracker_cookies_option
+                            R.string.preference_privacy_block_cookies_third_party_tracker
                         )
                     }
             cookiesPreference.entries = cookiesStringsWV.toTypedArray()
             cookiesPreference.entryValues = cookiesStringsWV.toTypedArray()
 
             cookiesPreference.setDefaultValue(
-                getString(R.string.preference_privacy_should_block_cookies_no_option)
+                getString(R.string.preference_privacy_block_cookies_no)
             )
         } else {
             cookiesPreference.setDefaultValue(
-                getString(R.string.preference_privacy_should_block_cookies_third_party_tracker_cookies_option)
+                getString(R.string.preference_privacy_block_cookies_third_party_tracker)
             )
         }
         cookiesPreference.updateSummary()

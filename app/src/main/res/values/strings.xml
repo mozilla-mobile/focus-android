@@ -287,6 +287,12 @@
     <string name="preference_privacy_should_block_cookies_third_party_only_option">Block 3rd-party cookies only</string>
     <string name="preference_privacy_should_block_cookies_yes_option">Yes</string>
 
+    <!-- New four options for Cookie blocking -->
+    <string name="preference_privacy_block_cookies_no">No (allow all cookies)</string>
+    <string name="preference_privacy_block_cookies_third_party_tracker">Block third-party trackers cookies (recommended)</string>
+    <string name="preference_privacy_block_cookies_third_party_only">Block all third-party cookies \n(may cause websites to break)</string>
+    <string name="preference_privacy_block_cookies_yes">Block all cookies (will cause websites to break)</string>
+
     <!-- Preference Title: Biometrics can be used to unlock Focus if the previous session's data was not erased by the user. -->
     <string name="preference_security_biometric">Use fingerprint to unlock app</string>
     <!-- Preference Summary: Biometrics (iris scan, fingerprint, or facial scan) can be used to unlock Focus if the app had a URL
