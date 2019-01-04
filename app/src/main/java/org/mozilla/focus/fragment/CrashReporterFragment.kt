@@ -15,6 +15,7 @@ import org.mozilla.focus.telemetry.TelemetryWrapper
 
 class CrashReporterFragment : Fragment() {
     var onCloseTabPressed: ((sendCrashReport: Boolean) -> Unit)? = null
+    private var wantsSubmitCrashReport = false
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -28,11 +29,15 @@ class CrashReporterFragment : Fragment() {
         TelemetryWrapper.crashReporterOpened()
 
         closeTabButton.setOnClickListener {
-            val wantsSubmitCrashReport = sendCrashCheckbox.isChecked
-            TelemetryWrapper.closeTabButtonTapped(wantsSubmitCrashReport)
+            wantsSubmitCrashReport = sendCrashCheckbox.isChecked
+            TelemetryWrapper.crashReporterClosed(wantsSubmitCrashReport)
 
             onCloseTabPressed?.invoke(wantsSubmitCrashReport)
         }
+    }
+
+    fun onBackPressed() {
+        TelemetryWrapper.crashReporterClosed(false)
     }
 
     companion object {
