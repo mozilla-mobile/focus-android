@@ -933,6 +933,16 @@ class BrowserFragment : WebFragment(), LifecycleObserver, View.OnClickListener,
             // Go back in web history
             goBack()
         } else {
+            if (crashReporterIsVisible()) {
+                requireActivity()
+                        .supportFragmentManager
+                        .findFragmentByTag(CrashReporterFragment.FRAGMENT_TAG)
+                        .let { it as? CrashReporterFragment }
+                        ?.apply {
+                            onBackPressed()
+                        }
+            }
+
             if (session.source == Session.Source.ACTION_VIEW || session.isCustomTabSession()) {
                 TelemetryWrapper.eraseBackToAppEvent()
 

@@ -309,10 +309,10 @@ The event ping contains a list of events ([see event format on readthedocs.io](h
 | Homescreen tips enabled/disabled | action   | click | tip | add_to_homescreen_tip    |        |
 
 ### Homescreen Tips
-| Event               | category | method | object         | extra         |
-|---------------------|----------|--------|----------------|---------------|
-| Open Crash Reporter | action   | show   | crash_reporter |               |
-| Close Tab           | action   | click  | crash_reporter | submit_crash  |
+| Event                | category | method | object         | extra         |
+|----------------------|----------|--------|----------------|---------------|
+| Open Crash Reporter  | action   | show   | crash_reporter |               |
+| Close Crash Reporter | action   | hide   | crash_reporter | submit_crash* |
 
 (*) `submit_crash` contains a Boolean to show whether a crash was submitted.
 

@@ -553,12 +553,11 @@ object TelemetryWrapper {
     }
 
     @JvmStatic
-    fun closeTabButtonTapped(crashSubmitted: Boolean) {
+    fun crashReporterClosed(crashSubmitted: Boolean) {
         TelemetryEvent.create(
                 Category.ACTION,
-                Method.CLICK,
-                Object.CRASH_REPORTER,
-                Value.CLOSE_TAB)
+                Method.HIDE,
+                Object.CRASH_REPORTER)
                 .extra(Extra.SUBMIT_CRASH, crashSubmitted.toString()).queue()
     }
 
