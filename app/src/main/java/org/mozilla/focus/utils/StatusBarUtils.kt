@@ -6,7 +6,6 @@ package org.mozilla.focus.utils
 
 import android.view.View
 
-
 class StatusBarUtils {
 
     companion object {
