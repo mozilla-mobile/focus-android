@@ -106,6 +106,7 @@ RUN pip install -r tools/l10n/android2po/requirements.txt
 # to schedule the rest of the Taskcluster tasks. Please upgrade to taskcluster>=5 once
 # https://bugzilla.mozilla.org/show_bug.cgi?id=1460015 is fixed
 RUN pip install 'taskcluster>=4,<5'
+RUN pip install arrow
 
 # Install Google Cloud SDK for using Firebase Device Lab
 RUN curl https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/google-cloud-sdk-184.0.0-linux-x86_64.tar.gz --output /gcloud.tar.gz
