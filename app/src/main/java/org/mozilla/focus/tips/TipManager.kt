@@ -20,12 +20,14 @@ import org.mozilla.focus.R.string.tip_set_default_browser
 import org.mozilla.focus.exceptions.ExceptionDomains
 import org.mozilla.focus.ext.components
 import org.mozilla.focus.locale.LocaleAwareAppCompatActivity
+import org.mozilla.focus.locale.LocaleManager
 import org.mozilla.focus.telemetry.TelemetryWrapper
 import org.mozilla.focus.utils.Settings
 import org.mozilla.focus.utils.SupportUtils
 import org.mozilla.focus.utils.homeScreenTipsExperimentDescriptor
 import org.mozilla.focus.utils.isInExperiment
 import org.mozilla.focus.utils.Browsers
+import java.util.Locale
 import java.util.Random
 
 class Tip(val id: Int, val text: String, val shouldDisplay: () -> Boolean, val deepLink: (() -> Unit)? = null) {
@@ -196,6 +198,7 @@ object TipManager {
     private val random = Random()
     private var listInitialized = false
     private var tipsShown = 0
+    private var locale: Locale? = null
 
     private fun populateListOfTips(context: Context) {
         addAllowlistTip(context)
@@ -213,8 +216,10 @@ object TipManager {
     fun getNextTipIfAvailable(context: Context): Tip? {
         if (!context.isInExperiment(homeScreenTipsExperimentDescriptor)) return null
         if (!Settings.getInstance(context).shouldDisplayHomescreenTips()) return null
+        val currentLocale = LocaleManager.getInstance().getCurrentLocale(context)
 
-        if (!listInitialized) {
+        if (!listInitialized || currentLocale != locale) {
+            locale = currentLocale
             populateListOfTips(context)
             listInitialized = true
         }
