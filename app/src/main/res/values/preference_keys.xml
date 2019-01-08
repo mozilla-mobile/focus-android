@@ -16,6 +16,12 @@
     <string name="pref_key_performance_block_webfonts" translatable="false"><xliff:g id="preference_key">pref_performance_block_webfonts</xliff:g></string>
     <string name="pref_key_performance_block_javascript" translatable="false"><xliff:g id="preference_key">pref_performance_block_javascript</xliff:g></string>
     <string name="pref_key_performance_enable_cookies" translatable="false"><xliff:g id="preference_key">pref_performance_enable_cookies</xliff:g></string>
+    
+    <string name="pref_key_should_block_cookies_yes_option" translatable="false"><xliff:g id="preference_key">pref_cookies_yes</xliff:g></string>
+    <string name="pref_key_should_block_cookies_third_party_trackers_only" translatable="false"><xliff:g id="preference_key">pref_cookies_third_party_tracker</xliff:g></string>
+    <string name="pref_key_should_block_cookies_third_party_only" translatable="false"><xliff:g id="preference_key">pref_cookies_third_party</xliff:g></string>
+    <string name="pref_key_should_block_cookies_no" translatable="false"><xliff:g id="preference_key">pref_cookies_no</xliff:g></string>
+
     <string name="pref_key_performance_block_images" translatable="false"><xliff:g id="preference_key">pref_performance_block_images</xliff:g></string>
 
     <string name="pref_key_default_browser" translatable="false"><xliff:g id="preference_key">pref_default_browser</xliff:g></string>
