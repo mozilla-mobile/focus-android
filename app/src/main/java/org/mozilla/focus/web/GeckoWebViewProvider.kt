@@ -301,19 +301,16 @@ class GeckoWebViewProvider : IWebViewProvider {
 
         private fun updateCookieSettings() {
             geckoRuntime!!.settings.cookieBehavior =
-                    when (Settings.getInstance(context).shouldBlockCookiesValue()) {
+                    when (Settings.getInstance(context).getCookiesPrefValue()) {
                         context.getString(
-                            R.string.preference_privacy_should_block_cookies_yes_option
-                        ) ->
-                            GeckoRuntimeSettings.COOKIE_ACCEPT_NONE
+                            R.string.pref_key_should_block_cookies_yes_option
+                        ) -> GeckoRuntimeSettings.COOKIE_ACCEPT_NONE
                         context.getString(
-                            R.string.preference_privacy_should_block_cookies_third_party_tracker_cookies_option
-                        ) ->
-                            GeckoRuntimeSettings.COOKIE_ACCEPT_NON_TRACKERS
+                            R.string.pref_key_should_block_cookies_third_party_trackers_only
+                        ) -> GeckoRuntimeSettings.COOKIE_ACCEPT_NON_TRACKERS
                         context.getString(
-                            R.string.preference_privacy_should_block_cookies_third_party_only_option
-                        ) ->
-                            GeckoRuntimeSettings.COOKIE_ACCEPT_FIRST_PARTY
+                            R.string.pref_key_should_block_cookies_third_party_only
+                        ) -> GeckoRuntimeSettings.COOKIE_ACCEPT_FIRST_PARTY
                         else -> GeckoRuntimeSettings.COOKIE_ACCEPT_ALL
                     }
         }

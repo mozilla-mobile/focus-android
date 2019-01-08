@@ -48,15 +48,22 @@ class PrivacySecuritySettingsFragment : BaseSettingsFragment(),
                             R.string.preference_privacy_block_cookies_third_party_tracker
                         )
                     }
+            val cookiesValuesWV =
+                requireContext().resources.getStringArray(R.array.preference_privacy_cookies_options)
+                    .filter {
+                        it != getString(
+                            R.string.pref_key_should_block_cookies_third_party_trackers_only
+                        )
+                    }
             cookiesPreference.entries = cookiesStringsWV.toTypedArray()
-            cookiesPreference.entryValues = cookiesStringsWV.toTypedArray()
+            cookiesPreference.entryValues = cookiesValuesWV.toTypedArray()
 
             cookiesPreference.setDefaultValue(
-                getString(R.string.preference_privacy_block_cookies_no)
+                getString(R.string.pref_key_should_block_cookies_no)
             )
         } else {
             cookiesPreference.setDefaultValue(
-                getString(R.string.preference_privacy_block_cookies_third_party_tracker)
+                getString(R.string.pref_key_should_block_cookies_third_party_trackers_only)
             )
         }
         cookiesPreference.updateSummary()
