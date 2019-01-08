@@ -63,7 +63,7 @@ import static android.view.View.IMPORTANT_FOR_ACCESSIBILITY_YES;
             // so by moving towards the start we'll always process all previously unprocessed items -
             // moving in the other direction we'd need to remember to process a given index
             // again which is more complicated).
-            "  for (i = nRules - 1; i >= 0; i--) {" +
+            "  for (let i = nRules - 1; i >= 0; i--) {" +
             "    var cssRule = stylesheet.cssRules[i];" +
             // Depending on style type, there might be no selector
             "    if (cssRule.selectorText && cssRule.selectorText.includes(':visited')) {" +
