@@ -14,8 +14,10 @@ import mozilla.components.browser.session.SessionManager
 import mozilla.components.concept.engine.DefaultSettings
 import mozilla.components.concept.engine.Engine
 import mozilla.components.concept.engine.EngineSession
+import mozilla.components.concept.engine.EngineSessionState
 import mozilla.components.concept.engine.EngineView
 import mozilla.components.concept.engine.Settings
+import org.json.JSONObject
 import org.mozilla.focus.search.BingSearchEngineFilter
 import org.mozilla.focus.search.CustomSearchEngineProvider
 import org.mozilla.focus.search.HiddenSearchEngineFilter
@@ -48,6 +50,14 @@ class Components {
  */
 private class DummyEngine : Engine {
     override val settings: Settings = DefaultSettings()
+
+    override fun speculativeConnect(url: String) {
+        TODO("not implemented")
+    }
+
+    override fun createSessionState(json: JSONObject): EngineSessionState {
+        TODO("not implemented")
+    }
 
     override fun createSession(private: Boolean): EngineSession {
         throw NotImplementedError()

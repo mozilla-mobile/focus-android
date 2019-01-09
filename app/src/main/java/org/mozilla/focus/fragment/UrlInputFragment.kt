@@ -32,7 +32,8 @@ import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import mozilla.components.browser.domains.CustomDomains
-import mozilla.components.browser.domains.DomainAutoCompleteProvider
+import mozilla.components.browser.domains.autocomplete.CustomDomainsProvider
+import mozilla.components.browser.domains.autocomplete.ShippedDomainsProvider
 import mozilla.components.browser.session.Session
 import mozilla.components.support.utils.ThreadUtils
 import mozilla.components.ui.autocomplete.InlineAutocompleteEditText
@@ -145,7 +146,8 @@ class UrlInputFragment :
     private var job = Job()
     override val coroutineContext: CoroutineContext
         get() = job + Dispatchers.Main
-    private val autoCompleteProvider: DomainAutoCompleteProvider = DomainAutoCompleteProvider()
+    private val customAutoCompleteProvider: CustomDomainsProvider = CustomDomainsProvider()
+    private val shippedAutoCompleteProvider: ShippedDomainsProvider = ShippedDomainsProvider()
     private var displayedPopupMenu: HomeMenu? = null
 
     @Volatile
@@ -200,10 +202,13 @@ class UrlInputFragment :
 
         activity?.let {
             val settings = Settings.getInstance(it.applicationContext)
-            val useCustomDomains = settings.shouldAutocompleteFromCustomDomainList()
-            val useShippedDomains = settings.shouldAutocompleteFromShippedDomainList()
-            autoCompleteProvider.initialize(it.applicationContext, useShippedDomains,
-                useCustomDomains)
+            if (settings.shouldAutocompleteFromCustomDomainList()) {
+                customAutoCompleteProvider.initialize(it.applicationContext)
+            }
+
+            if (settings.shouldAutocompleteFromShippedDomainList()) {
+                shippedAutoCompleteProvider.initialize(it.applicationContext)
+            }
         }
 
         StatusBarUtils.getStatusBarHeight(keyboardLinearLayout) {
@@ -290,7 +295,8 @@ class UrlInputFragment :
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         listOf(dismissView, clearView).forEach { it.setOnClickListener(this) }
 
-        urlView?.setOnFilterListener(::onFilter)
+        urlView.setOnFilterListener { onFilter(urlView.nonAutocompleteText, urlView) }
+        urlView.setOnTextChangeListener(::onTextChange)
         urlView?.imeOptions = urlView.imeOptions or ViewUtils.IME_FLAG_NO_PERSONALIZED_LEARNING
         urlView?.inputType = urlView.inputType or InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS
 
@@ -650,8 +656,8 @@ class UrlInputFragment :
     }
 
     private fun onCommit() {
-        val input = urlView.autocompleteResult.formattedText.let {
-            if (it.isEmpty() || !URLUtil.isValidUrl(urlView?.text.toString())) {
+        val input = urlView.autocompleteResult?.text.let {
+            if (it!!.isEmpty() || !URLUtil.isValidUrl(urlView?.text.toString())) {
                 urlView?.text.toString()
             } else it
         }
@@ -668,7 +674,7 @@ class UrlInputFragment :
 
             openUrl(url, searchTerms)
 
-            TelemetryWrapper.urlBarEvent(isUrl, urlView.autocompleteResult)
+            TelemetryWrapper.urlBarEvent(isUrl, urlView.autocompleteResult!!)
         }
     }
 
@@ -769,6 +775,11 @@ class UrlInputFragment :
         }
     }
 
+    private fun onTextChange(oldText: String, @Suppress("UNUSED_PARAMETER") autoCompleteText: String) {
+        searchSuggestionsViewModel.setSearchQuery(oldText)
+        updateVisibility()
+    }
+
     private fun onFilter(searchText: String, view: InlineAutocompleteEditText?) {
         // If the UrlInputFragment has already been hidden, don't bother with filtering. Because of the text
         // input architecture on Android it's possible for onFilter() to be called after we've already
@@ -779,13 +790,30 @@ class UrlInputFragment :
         }
 
         view?.let {
-            val result = autoCompleteProvider.autocomplete(searchText)
-            view.applyAutocompleteResult(AutocompleteResult(result.text, result.source, result.size, { result.url }))
+            var result = shippedAutoCompleteProvider.getAutocompleteSuggestion(searchText)
+
+            // Fall back on custom domain completion if shipped list fails to autocomplete
+            val settings = Settings.getInstance(context!!)
+            if (settings.shouldAutocompleteFromCustomDomainList() && result == null) {
+                result = customAutoCompleteProvider.getAutocompleteSuggestion(searchText)
+            }
+
+            // If result is still null, don't autocomplete
+            if (result == null) {
+                view.applyAutocompleteResult(AutocompleteResult(searchText, "", 0, { "" }))
+            } else {
+                view.applyAutocompleteResult(AutocompleteResult(result.text,
+                        result.source, result.totalItems, { result.url }))
+            }
         }
 
         searchSuggestionsViewModel.setSearchQuery(searchText)
 
-        if (searchText.trim { it <= ' ' }.isEmpty()) {
+        updateVisibility()
+    }
+
+    private fun updateVisibility() {
+        if (urlView?.text?.trim { it <= ' ' }!!.isEmpty()) {
             clearView?.visibility = View.GONE
             searchViewContainer?.visibility = View.GONE
             addToAutoComplete?.visibility = View.GONE

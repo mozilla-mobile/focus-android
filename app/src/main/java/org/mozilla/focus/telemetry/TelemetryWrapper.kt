@@ -16,6 +16,7 @@ import android.preference.PreferenceManager
 import android.support.annotation.CheckResult
 import android.support.annotation.VisibleForTesting
 import kotlinx.coroutines.runBlocking
+import mozilla.components.lib.fetch.okhttp.OkHttpClient
 import mozilla.components.ui.autocomplete.InlineAutocompleteEditText
 import org.json.JSONObject
 import org.mozilla.focus.BuildConfig
@@ -33,7 +34,7 @@ import org.mozilla.telemetry.config.TelemetryConfiguration
 import org.mozilla.telemetry.event.TelemetryEvent
 import org.mozilla.telemetry.measurement.DefaultSearchMeasurement
 import org.mozilla.telemetry.measurement.SearchesMeasurement
-import org.mozilla.telemetry.net.HttpURLConnectionTelemetryClient
+import org.mozilla.telemetry.net.TelemetryClient
 import org.mozilla.telemetry.ping.TelemetryCorePingBuilder
 import org.mozilla.telemetry.ping.TelemetryEventPingBuilder
 import org.mozilla.telemetry.ping.TelemetryMobileMetricsPingBuilder
@@ -261,7 +262,8 @@ object TelemetryWrapper {
 
             val serializer = JSONPingSerializer()
             val storage = FileTelemetryStorage(configuration, serializer)
-            val client = HttpURLConnectionTelemetryClient()
+            val client = TelemetryClient(OkHttpClient())
+
             val scheduler = JobSchedulerTelemetryScheduler()
 
             TelemetryHolder.set(Telemetry(configuration, storage, client, scheduler)
@@ -400,9 +402,9 @@ object TelemetryWrapper {
 
     private fun browseEvent(autocompleteResult: InlineAutocompleteEditText.AutocompleteResult) {
         val event = TelemetryEvent.create(Category.ACTION, Method.TYPE_URL, Object.SEARCH_BAR)
-                .extra(Extra.AUTOCOMPLETE, (!autocompleteResult.isEmpty).toString())
+                .extra(Extra.AUTOCOMPLETE, (autocompleteResult.totalItems > 0).toString())
 
-        if (!autocompleteResult.isEmpty) {
+        if (autocompleteResult.totalItems > 0) {
             event.extra(Extra.TOTAL, autocompleteResult.totalItems.toString())
             event.extra(Extra.SOURCE, autocompleteResult.source)
         }
