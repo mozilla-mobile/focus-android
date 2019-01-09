@@ -83,6 +83,7 @@ import org.mozilla.focus.open.OpenWithFragment
 import org.mozilla.focus.popup.PopupUtils
 import org.mozilla.focus.session.SessionCallbackProxy
 import org.mozilla.focus.session.removeAndCloseAllSessions
+import org.mozilla.focus.session.removeAndCloseSession
 import org.mozilla.focus.session.ui.SessionsSheetFragment
 import org.mozilla.focus.telemetry.CrashReporterWrapper
 import org.mozilla.focus.telemetry.TelemetryWrapper
@@ -988,6 +989,27 @@ class BrowserFragment : WebFragment(), LifecycleObserver, View.OnClickListener,
 
         webView?.cleanup()
 
+        requireComponents.sessionManager.removeAndCloseSession(session)
+    }
+
+    fun eraseAll() {
+        val webView = getWebView()
+        val context = context
+
+        // Notify the user their session has been erased if Talk Back is enabled:
+        if (context != null) {
+            val manager = context.getSystemService(Context.ACCESSIBILITY_SERVICE) as AccessibilityManager
+            if (manager.isEnabled) {
+                val event = AccessibilityEvent.obtain()
+                event.eventType = AccessibilityEvent.TYPE_ANNOUNCEMENT
+                event.className = javaClass.name
+                event.packageName = getContext()!!.packageName
+                event.text.add(getString(R.string.feedback_erase))
+            }
+        }
+
+        webView?.cleanup()
+
         requireComponents.sessionManager.removeAndCloseAllSessions()
     }
 
@@ -1038,7 +1060,7 @@ class BrowserFragment : WebFragment(), LifecycleObserver, View.OnClickListener,
             R.id.erase -> {
                 TelemetryWrapper.eraseEvent()
 
-                erase()
+                eraseAll()
             }
 
             R.id.tabs -> {
