@@ -5,6 +5,7 @@
 package org.mozilla.focus.menu.browser
 
 import android.view.View
+import android.view.ViewGroup
 import android.widget.CheckBox
 import android.widget.CompoundButton
 
@@ -25,6 +26,7 @@ internal class RequestDesktopCheckItemViewHolder/* package */(
     init {
         checkbox.isChecked = fragment.session.shouldRequestDesktopSite
         checkbox.setOnCheckedChangeListener(this)
+        checkbox.height = ViewGroup.LayoutParams.WRAP_CONTENT
     }
 
     override fun onCheckedChanged(buttonView: CompoundButton, isChecked: Boolean) {

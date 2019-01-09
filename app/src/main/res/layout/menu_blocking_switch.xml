@@ -6,7 +6,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/menu_blocking_switch_container_height"
+    android:layout_height="wrap_content"
+    android:minHeight="@dimen/menu_blocking_switch_container_height"
     android:background="@color/browser_menu_blocking_switch_bg"
     android:paddingStart="12dp"
     android:paddingEnd="0dp">
