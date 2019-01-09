@@ -32,7 +32,7 @@ abstract class LearnMoreSwitchPreference(context: Context?, attrs: AttributeSet?
 
         val learnMoreLink = holder!!.findViewById(R.id.link) as TextView
         learnMoreLink.paintFlags = learnMoreLink.paintFlags or Paint.UNDERLINE_TEXT_FLAG
-        learnMoreLink.setTextColor(ContextCompat.getColor(context, R.color.colorAction))
+        learnMoreLink.setTextColor(ContextCompat.getColor(context, R.color.focusContrastPink))
         learnMoreLink.setOnClickListener {
             // This is a hardcoded link: if we ever end up needing more of these links, we should
             // move the link into an xml parameter, but there's no advantage to making it configurable now.
