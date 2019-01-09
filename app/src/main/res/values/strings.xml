@@ -271,12 +271,13 @@
     
     <string name="preference_privacy_block_analytics">Block analytic trackers</string>
     <string name="preference_privacy_block_ads">Block ad trackers</string>
-    <string name="preference_privacy_block_ads_summary">Some ads track site visits, even if you don’t click the ads</string>
-    <string name="preference_privacy_block_analytics_summary">Used to collect, analyze and measure activities like tapping and scrolling</string>
+    <string name="preference_privacy_block_ads_new_summary">Removes ads designed to track site visits even if you don\'t tap them</string>
+    <string name="preference_privacy_block_analytics_new_summary">Blocks trackers that analyze and measure interactions like tapping and scrolling</string>
     <string name="preference_privacy_block_social">Block social trackers</string>
-    <string name="preference_privacy_block_social_summary">Embedded on sites to track your visits and to display functionality like share buttons</string>
+    <string name="preference_privacy_block_social_new_summary">Stops social-media related trackers embedded on websites, including social share buttons</string>
     <string name="preference_privacy_block_content">Block other content trackers</string>
-    <string name="preference_privacy_block_content_summary2">Enabling may cause some pages to behave unexpectedly</string>
+    <string name="preference_privacy_block_content_new_summary">Blocks tracking activity, but may cause some sites and pages to behave unexpectedly</string>
+
     <string name="preference_privacy_category_cookies">Block cookies</string>
 
     <!-- Three options for Cookie blocking. Yes (All cookies Blocked), Block 3rd-party cookies
@@ -830,4 +831,9 @@ be temporary, and you can try again later.</li>
 
     <!-- Deprecated strings -->
     <string name="shortcut_erase_and_open_long_label">Erase and open %1$s</string>
+    <string name="preference_privacy_block_ads_summary">Some ads track site visits, even if you don’t click the ads</string>
+    <string name="preference_privacy_block_analytics_summary">Used to collect, analyze and measure activities like tapping and scrolling</string>
+    <string name="preference_privacy_block_content_summary2">Enabling may cause some pages to behave unexpectedly</string>
+    <string name="preference_privacy_block_social_summary">Embedded on sites to track your visits and to display functionality like share buttons</string>
+
 </resources>
