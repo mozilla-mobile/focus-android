@@ -57,8 +57,8 @@ internal class BlockingItemViewHolder(itemView: View, private val fragment: Brow
         ThreadUtils.postToMainThread(Runnable { view.setText(R.string.content_blocking_disabled) })
     }
 
-    override fun onCheckedChanged(buttonView: CompoundButton, isChecked: Boolean) {
-        fragment.setBlockingUI(isChecked)
+    fun addOrRemoveURL(isBlockingEnabled: Boolean) {
+        fragment.setBlockingUI(isBlockingEnabled)
 
         val url = fragment.url
         val host = try {
@@ -67,21 +67,24 @@ internal class BlockingItemViewHolder(itemView: View, private val fragment: Brow
             url
         } ?: url
 
-        if (!isChecked) {
+        if (!isBlockingEnabled) {
             addUrlToExceptionsList(host = host)
         } else {
             removeUrlFromExceptionsList(host = host)
         }
 
-        TelemetryWrapper.blockingSwitchEvent(isChecked)
+        TelemetryWrapper.blockingSwitchEvent(isBlockingEnabled)
 
         // Delay closing the menu and reloading the website a bit so that the user can actually see
         // the switch change its state.
         ThreadUtils.postToMainThreadDelayed(Runnable {
             menu.dismiss()
-
-            fragment.reload()
+            fragment.reloadWithNewBlockingState()
         }, Switch_THUMB_ANIMATION_DURATION)
+    }
+
+    override fun onCheckedChanged(buttonView: CompoundButton, isChecked: Boolean) {
+        addOrRemoveURL(isChecked)
     }
 
     private fun addUrlToExceptionsList(host: String) {

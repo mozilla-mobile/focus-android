@@ -64,6 +64,10 @@ public class BrowserMenu extends PopupWindow {
         adapter.updateLoading(loading);
     }
 
+    public void updateBlocking(boolean isBlockingEnabled) {
+        adapter.updateBlocking(isBlockingEnabled);
+    }
+
     public void show(View anchor) {
         final int xOffset = ViewUtils.INSTANCE.isRTL(anchor) ? -anchor.getWidth() : 0;
 
