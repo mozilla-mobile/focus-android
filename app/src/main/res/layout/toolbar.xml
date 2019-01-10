@@ -27,7 +27,7 @@
         android:layout_gravity="center_vertical">
 
         <ImageButton
-            android:id="@+id/tracking_protection_info"
+            android:id="@+id/tracking_protection_menu"
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:background="?android:attr/selectableItemBackgroundBorderless"
@@ -48,8 +48,8 @@
             android:text="0"
             android:textColor="@color/photonWhite"
             android:textSize="12sp"
-            app:layout_constraintBottom_toBottomOf="@+id/tracking_protection_info"
-            app:layout_constraintEnd_toEndOf="@+id/tracking_protection_info"
+            app:layout_constraintBottom_toBottomOf="@+id/tracking_protection_menu"
+            app:layout_constraintEnd_toEndOf="@+id/tracking_protection_menu"
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toEndOf="@+id/guideline"
             app:layout_constraintTop_toBottomOf="@id/guideline2"

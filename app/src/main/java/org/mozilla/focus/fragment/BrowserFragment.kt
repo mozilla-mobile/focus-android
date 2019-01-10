@@ -314,7 +314,7 @@ class BrowserFragment : WebFragment(), LifecycleObserver, View.OnClickListener,
         backButton = view.findViewById(R.id.back)
         backButton?.let { it.setOnClickListener(this) }
 
-        trackingProtectionView = view.findViewById(R.id.tracking_protection_info)
+        trackingProtectionView = view.findViewById(R.id.tracking_protection_menu)
         trackingProtectionView!!.setOnClickListener(this)
         updateTrackingProtectionView(session)
 
@@ -1166,7 +1166,10 @@ class BrowserFragment : WebFragment(), LifecycleObserver, View.OnClickListener,
                 showAddToHomescreenDialog(url, title)
             }
 
-            R.id.tracking_protection_info -> if (!crashReporterIsVisible()) { showTrackingProtectionMenu() }
+            R.id.tracking_protection_menu -> if (!crashReporterIsVisible()) {
+                TelemetryWrapper.contentBlockingMenuEvent()
+                showTrackingProtectionMenu()
+            }
 
             R.id.report_site_issue -> {
                 val reportUrl = String.format(SupportUtils.REPORT_SITE_ISSUE_URL, url)
