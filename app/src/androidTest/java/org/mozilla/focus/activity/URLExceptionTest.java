@@ -135,7 +135,7 @@ public class URLExceptionTest {
         TestHelper.progressBar.waitUntilGone(TestHelper.waitingTime);
 
         // Open the menu
-        onView(withId(R.id.tracking_protection_info))
+        onView(withId(R.id.tracking_protection_menu))
                 .perform(click());
         onView(withId(R.id.trackers_count))
                 .check(matches(not(withText("-"))));
