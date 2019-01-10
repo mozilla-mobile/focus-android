@@ -71,6 +71,11 @@ class Settings private constructor(context: Context) {
                 getPreferenceKey(R.string.pref_key_performance_block_javascript),
                 false)
 
+    fun shouldRequestSaveData(): Boolean =
+            preferences.getBoolean(
+                    getPreferenceKey(R.string.pref_key_performance_save_data),
+                    false)
+
     fun shouldBlockCookiesValue(): String =
         if (AppConstants.isGeckoBuild) {
             preferences.getString(

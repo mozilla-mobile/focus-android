@@ -20,11 +20,13 @@ import android.webkit.WebViewClient;
 import org.mozilla.focus.browser.LocalizedContent;
 import org.mozilla.focus.telemetry.TelemetryWrapper;
 import org.mozilla.focus.utils.IntentUtils;
+import org.mozilla.focus.utils.Settings;
 import org.mozilla.focus.utils.UrlUtils;
 import org.mozilla.focus.web.IWebView;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.HashMap;
 
 import static android.view.View.IMPORTANT_FOR_ACCESSIBILITY_NO;
 import static android.view.View.IMPORTANT_FOR_ACCESSIBILITY_YES;
@@ -273,8 +275,17 @@ import static android.view.View.IMPORTANT_FOR_ACCESSIBILITY_YES;
         // the request is for the main frame, and if it's not we could then completely
         // skip the external URL handling.)
         final Uri uri = Uri.parse(url);
-        return !UrlUtils.isSupportedProtocol(uri.getScheme()) && callback != null && IntentUtils.INSTANCE.handleExternalUri(view.getContext(), (IWebView) view, url) || super.shouldOverrideUrlLoading(view, url);
-
+        if(!UrlUtils.isSupportedProtocol(uri.getScheme()) && callback != null && IntentUtils.INSTANCE.handleExternalUri(view.getContext(), (IWebView) view, url)) {
+            //skip
+        } else {
+            HashMap<String, String> requestHeaders = new HashMap<>();
+            requestHeaders.put("X-Requested-With", "");
+            if(Settings.getInstance(view.getContext()).shouldRequestSaveData()) {
+                requestHeaders.put("Save-Data", "on");
+            }
+            view.loadUrl(url, requestHeaders);
+        }
+        return true;
     }
 
     @Override

@@ -32,6 +32,7 @@ import org.mozilla.focus.ext.savedWebViewState
 import org.mozilla.focus.telemetry.TelemetryWrapper
 import org.mozilla.focus.utils.AppConstants
 import org.mozilla.focus.utils.FileUtils
+import org.mozilla.focus.utils.Settings
 import org.mozilla.focus.utils.UrlUtils
 import org.mozilla.focus.utils.ViewUtils
 import org.mozilla.focus.web.Download
@@ -202,6 +203,9 @@ class SystemWebView(context: Context, attrs: AttributeSet) : NestedWebView(conte
         if (!client.shouldOverrideUrlLoading(this, url)) {
             val additionalHeaders = HashMap<String, String>()
             additionalHeaders["X-Requested-With"] = ""
+            if(Settings.getInstance(context).shouldRequestSaveData()) {
+                additionalHeaders["Save-Data"] = "on"
+            }
 
             super.loadUrl(url, additionalHeaders)
         }

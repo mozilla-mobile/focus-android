@@ -35,6 +35,11 @@ class PrivacySecuritySettingsFragment : BaseSettingsFragment(),
             preferenceScreen.removePreference(biometricPreference)
         }
 
+        val saveDataPreference = findPreference(getString(R.string.pref_key_performance_save_data))
+        if(AppConstants.isGeckoBuild) {
+            preferenceScreen.removePreference(saveDataPreference)
+        }
+
         val safeBrowsingPreference =
             findPreference(getString(R.string.pref_key_category_safe_browsing))
         preferenceScreen.removePreference(safeBrowsingPreference)
