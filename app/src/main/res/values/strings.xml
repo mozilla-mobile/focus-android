@@ -266,7 +266,7 @@
     <string name="preference_category_privacy">Privacy</string>
 
     <string name="preference_privacy_ads_block_ads">Block ads and other annoyances</string>
-    <string name="preference_privacy_ads_block_ads_summary">Stops ads and other annoyances using block lists from Easylist, EasyPrivacy, Fanboy\'s Annoyance, and AdGuard Mobile Ad Filter</string>
+    <string name="preference_privacy_ads_block_ads_summary">Stops ads and other annoyances using block lists from Easylist, EasyPrivacy, Fanboy\'s Annoyance, and 777Guard Mobile Ad Filter</string>
 
     
     <string name="preference_privacy_block_analytics">Block analytic trackers</string>
@@ -544,8 +544,10 @@ be temporary, and you can try again later.</li>
 
     <!-- First run tour (Default browser): Title -->
     <string name="firstrun_defaultbrowser_title">Power up your privacy</string>
+
     <!-- First run tour (Default browser): Text. -->
-    <string name="firstrun_defaultbrowser_text2">Take private browsing to the next level. Block ads and other content that can track you across sites and bog down page load times.</string>
+    <string name="firstrun_defaultbrowser_text_new">Block content like ads and code that follow you around the web and slow you down. Turn on ad blocking to browse faster without annoying ads.</string>
+
 
     <!-- First run tour (Search): Title -->
     <string name="firstrun_search_title">Your search, your way</string>
@@ -565,6 +567,12 @@ be temporary, and you can try again later.</li>
     <string name="firstrun_close_button">OK, got it!</string>
     <string name="firstrun_skip_button">Skip</string>
     <string name="firstrun_next_button">Next</string>
+
+    <!-- Title for intro card shown to users after updating. %1$s will be replaced with the name of the app (e.g. Firefox Focus) -->
+    <string name="block_ads_card_title">%1$s is ready to block ads</string>
+
+    <!-- Description for intro card shown to users after updating. -->
+    <string name="block_ads_card_description">New feature! Browse faster by stopping ads and code that follow you around the web.</string>
 
     <!-- Indicator that no trackers are being blocked because content blocking is disabled; normally shows the number of blocked trackers -->
     <string name="content_blocking_disabled">-</string>
@@ -773,6 +781,12 @@ be temporary, and you can try again later.</li>
     <!-- Tip displayed on home view explaining how to add a custom autocomplete URL -->
     <string name="tip_disable_tips2">Turn off tips on the start screen</string>
 
+    <!-- Tip displayed on home view explaining ad blocking -->
+    <string name="tip_block_ads">Browse faster by stopping ads and code that follows you around the web.</string>
+
+    <!-- Title for a switch that enables or disables ads -->
+    <string name="block_ads_title">Ad blocking</string>
+
     <!-- Tip displayed on the home view explaining how to use the Allowlist feature.
      "Allowlist" is a replacement for the word whitelist. -->
     <string name="tip_explain_allowlist">Trusted site?\n
@@ -843,5 +857,5 @@ be temporary, and you can try again later.</li>
     <string name="preference_privacy_block_analytics_summary">Used to collect, analyze and measure activities like tapping and scrolling</string>
     <string name="preference_privacy_block_content_summary2">Enabling may cause some pages to behave unexpectedly</string>
     <string name="preference_privacy_block_social_summary">Embedded on sites to track your visits and to display functionality like share buttons</string>
-
+    <string name="firstrun_defaultbrowser_text2">Take private browsing to the next level. Block ads and other content that can track you across sites and bog down page load times.</string>
 </resources>
