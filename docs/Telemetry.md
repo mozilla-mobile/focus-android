@@ -136,6 +136,7 @@ The event ping contains a list of events ([see event format on readthedocs.io](h
 | Event                                       | category | method   | object          | value        | extras  |
 |---------------------------------------------|----------|----------|-----------------|--------------|----------|
 | Enable/Disable content blocking for session | action   | click    | blocking_switch | true/false   |          |
+| Click and open Content Blocking Menu        | action   | click    | content_blocking_menu|         |          |
 | Share URL with third-party app              | action   | share    | menu            |              |          |
 | Open default app for URL                    | action   | open     | menu            | default      |          |
 | Open Firefox                                | action   | open     | menu            | firefox      |          |
