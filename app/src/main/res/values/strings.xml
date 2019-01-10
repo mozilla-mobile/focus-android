@@ -827,6 +827,14 @@ be temporary, and you can try again later.</li>
     <!-- Label for the checkbox to send the tab crash report to Mozilla -->
     <string name="crash_report_send_crash_label">Send crash report to Mozilla</string>
 
+    <!-- Pop-up message to inform users they have enabled content blocking -->
+    <string name="content_blocking_enabled_snackbar_message">Content Blocking is enabled</string>
+    <!-- Pop-up message to inform users they have disabled content blocking -->
+    <string name="content_blocking_disabled_snackbar_message">Content Blocking is disabled</string>
+    <!-- Snackbar action button that users can press to enable content blocking -->
+    <string name="content_blocking_snackbar_enable_action">Enable</string>
+    <!-- Snackbar action button that users can press to disable content blocking -->
+    <string name="content_blocking_snackbar_disable_action">Disable</string>
 
     <!-- Deprecated strings -->
     <string name="shortcut_erase_and_open_long_label">Erase and open %1$s</string>

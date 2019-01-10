@@ -27,6 +27,7 @@ import android.preference.PreferenceManager
 import android.support.annotation.RequiresApi
 import android.support.design.widget.AppBarLayout
 import android.support.design.widget.CoordinatorLayout
+import android.support.design.widget.Snackbar
 import android.support.v4.app.ActivityCompat
 import android.support.v4.content.ContextCompat
 import android.support.v4.widget.SwipeRefreshLayout
@@ -149,6 +150,8 @@ class BrowserFragment : WebFragment(), LifecycleObserver, View.OnClickListener,
     private var findInPageNext: ImageButton? = null
     private var findInPagePrevious: ImageButton? = null
     private var closeFindInPage: ImageButton? = null
+
+    private var showContentBlockingSnackbar = false
 
     private var fullscreenCallback: IWebView.FullscreenCallback? = null
 
@@ -1237,6 +1240,11 @@ class BrowserFragment : WebFragment(), LifecycleObserver, View.OnClickListener,
 
     fun reload() = getWebView()?.reload()
 
+    fun reloadWithNewBlockingState() {
+        reload()
+        showContentBlockingSnackbar = true
+    }
+
     fun setBlockingUI(enabled: Boolean) {
         val webView = getWebView()
         webView?.setBlockingEnabled(enabled)
@@ -1430,6 +1438,8 @@ class BrowserFragment : WebFragment(), LifecycleObserver, View.OnClickListener,
                 swipeRefresh!!.isRefreshing = false
 
                 updateSecurityIcon(session)
+
+                showContentBlockingSnackbarIfChanged()
             }
 
             updateBlockingBadging(loading || session.trackerBlockingEnabled)
@@ -1483,6 +1493,29 @@ class BrowserFragment : WebFragment(), LifecycleObserver, View.OnClickListener,
 
     fun handleTabCrash(crash: Crash) {
         showCrashReporter(crash)
+    }
+
+    private fun showContentBlockingSnackbarIfChanged() {
+        if (showContentBlockingSnackbar) {
+            // Show Snackbar to inform users and allow them to undo their choice
+            val snackbar = Snackbar.make(
+                activity!!.findViewById(android.R.id.content),
+                if (!session.trackerBlockingEnabled)
+                    R.string.content_blocking_disabled_snackbar_message else
+                    R.string.content_blocking_enabled_snackbar_message,
+                Snackbar.LENGTH_SHORT
+            )
+            snackbar.setAction(
+                if (!session.trackerBlockingEnabled)
+                    R.string.content_blocking_snackbar_enable_action else
+                    R.string.content_blocking_snackbar_disable_action
+            ) {
+                val menu = menuWeakReference!!.get()
+                menu?.updateBlocking(!session.trackerBlockingEnabled)
+            }
+            snackbar.show()
+            showContentBlockingSnackbar = false
+        }
     }
 
     companion object {

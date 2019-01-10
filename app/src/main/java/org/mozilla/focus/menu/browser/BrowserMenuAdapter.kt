@@ -165,6 +165,11 @@ class BrowserMenuAdapter(
         navigationItemViewHolder.updateTrackers(trackers)
     }
 
+    fun updateBlocking(isBlockingEnabled: Boolean) {
+        val navigationItemViewHolder = blockingItemViewHolderReference.get() ?: return
+        navigationItemViewHolder.addOrRemoveURL(isBlockingEnabled)
+    }
+
     fun updateLoading(loading: Boolean) {
         val navigationItemViewHolder = navigationItemViewHolderReference.get() ?: return
         navigationItemViewHolder.updateLoading(loading)
