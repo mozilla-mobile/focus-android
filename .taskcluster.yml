@@ -202,12 +202,12 @@ tasks:
       $let:
         decision_task_id: {$eval: as_slugid("decision_task")}
         expires_in: {$fromNow: '1 year'}
-        repository: ${event.repository.clone_url}
+        repository: ${event.repository.html_url}
         scheduler_id: focus-nightly-sched
         is_mozilla_mobile_repo:
-          $eval: event.repository.clone_url == 'https://github.com/mozilla-mobile/focus-android'
+          $eval: event.repository.html_url == 'https://github.com/mozilla-mobile/focus-android'
         track:
-          $if: event.repository.clone_url == 'https://github.com/mozilla-mobile/focus-android'
+          $if: event.repository.html_url == 'https://github.com/mozilla-mobile/focus-android'
           then: 'nightly'
           else: 'staging-nightly'
       in:
@@ -265,7 +265,6 @@ tasks:
               cd ..
               && git clone ${repository} repository
               && cd repository
-              && pip install arrow
               && python tools/taskcluster/release.py \
                 --track ${track} \
                 --commit \
