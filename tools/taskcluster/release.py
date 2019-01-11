@@ -87,7 +87,7 @@ def generate_signing_task(build_task_id, apks, tag):
         routes.append(index)
         scopes.append("queue:route:" + index)
 
-    return taskcluster.slugId(), BUILDER.build_signing_task(
+    return taskcluster.slugId(), BUILDER.craft_signing_task(
         build_task_id,
         name="(Focus for Android) Signing task",
         description="Sign release builds of Focus/Klar",
@@ -104,7 +104,7 @@ def generate_push_task(signing_task_id, apks, track, commit):
 
     print artifacts
 
-    return taskcluster.slugId(), BUILDER.build_push_task(
+    return taskcluster.slugId(), BUILDER.craft_push_task(
         signing_task_id,
         name="(Focus for Android) Push task",
         description="Upload signed release builds of Focus/Klar to Google Play",

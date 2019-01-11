@@ -65,7 +65,7 @@ class TaskBuilder(object):
         }
 
 
-    def build_signing_task(self, build_task_id, name, description, signing_format, apks=[], scopes=[], routes=[]):
+    def craft_signing_task(self, build_task_id, name, description, signing_format, apks=[], scopes=[], routes=[]):
         created = datetime.datetime.now()
         expires = taskcluster.fromNow('1 year')
         deadline = taskcluster.fromNow('1 day')
@@ -104,7 +104,7 @@ class TaskBuilder(object):
             }
         }
 
-    def build_push_task(self, signing_task_id, name, description, apks=[], scopes=[], track='internal', commit=False):
+    def craft_push_task(self, signing_task_id, name, description, apks=[], scopes=[], track='internal', commit=False):
         created = datetime.datetime.now()
         expires = taskcluster.fromNow('1 year')
         deadline = taskcluster.fromNow('1 day')
