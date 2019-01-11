@@ -33,6 +33,7 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import mozilla.components.browser.domains.CustomDomains
 import mozilla.components.browser.domains.autocomplete.CustomDomainsProvider
+import mozilla.components.browser.domains.autocomplete.DomainAutocompleteResult
 import mozilla.components.browser.domains.autocomplete.ShippedDomainsProvider
 import mozilla.components.browser.session.Session
 import mozilla.components.support.utils.ThreadUtils
@@ -790,12 +791,16 @@ class UrlInputFragment :
         }
 
         view?.let {
-            var result = shippedAutoCompleteProvider.getAutocompleteSuggestion(searchText)
-
-            // Fall back on custom domain completion if shipped list fails to autocomplete
+            var result: DomainAutocompleteResult? = null
             val settings = Settings.getInstance(context!!)
-            if (settings.shouldAutocompleteFromCustomDomainList() && result == null) {
+
+            if (settings.shouldAutocompleteFromCustomDomainList()) {
                 result = customAutoCompleteProvider.getAutocompleteSuggestion(searchText)
+            }
+
+            // Fall back on shipped domain completion if custom list fails to autocomplete
+            if (result == null) {
+                result = shippedAutoCompleteProvider.getAutocompleteSuggestion(searchText)
             }
 
             // If result is still null, don't autocomplete
