@@ -195,9 +195,6 @@
     <!-- Title of "switch" preference that enables/disables autocomplete for the user-defined list -->
     <string name="preference_switch_autocomplete_user_list">For Sites You Add</string>
 
-    <!-- *Deprecated summary* for the toggle to enable autocomplete for the user-defined list -->
-    <string name="preference_autocomplete_user_list_summary">Enable to autocomplete more than 450 popular URLs in the address bar.</string>
-
     <!-- Summary for the toggle to enable autocomplete for the user-defined list -->
     <string name="preference_autocomplete_user_list_description">Enable to autocomplete sites you add here.</string>
 
@@ -266,16 +263,23 @@
     <string name="preference_category_privacy">Privacy</string>
 
     <string name="preference_privacy_ads_block_ads">Block ads and other annoyances</string>
-    <string name="preference_privacy_ads_block_ads_summary">Stops ads and other annoyances using block lists from Easylist, EasyPrivacy, Fanboy\'s Annoyance, and 777Guard Mobile Ad Filter</string>
+
+    <!-- Description for the toggle to block ads and some other annoyances on the web.
+        Do not translate: "Easylist", "EasyPrivacy", "Fanboy's Annoyance" or "777Guard Mobile Ad Filter" -->
+    <string name="preference_privacy_ads_block_ads_summary">Stops ads and other annoyances using block lists from Easylist, EasyPrivacy, Fanboy’s Annoyance, and 777Guard Mobile Ad Filter</string>
 
     
     <string name="preference_privacy_block_analytics">Block analytic trackers</string>
     <string name="preference_privacy_block_ads">Block ad trackers</string>
-    <string name="preference_privacy_block_ads_new_summary">Removes ads designed to track site visits even if you don\'t tap them</string>
+    <!-- Description for the toggle that blocks and remove ads from webpages that are designed to track your visiting behavior -->
+    <string name="preference_privacy_block_ads_new_summary">Removes ads designed to track site visits even if you don’t tap them</string>
+    <!-- Description for the toggle that Blocks trackers (scripts) that are designed to analyze and measure user interaction-->
     <string name="preference_privacy_block_analytics_new_summary">Blocks trackers that analyze and measure interactions like tapping and scrolling</string>
     <string name="preference_privacy_block_social">Block social trackers</string>
+    <!-- Description for the toggle that Blocks social-media related trackers (scripts), including the ones that embed share buttons -->
     <string name="preference_privacy_block_social_new_summary">Stops social-media related trackers embedded on websites, including social share buttons</string>
     <string name="preference_privacy_block_content">Block other content trackers</string>
+    <!-- Description for the toggle that blocks other trackers -->
     <string name="preference_privacy_block_content_new_summary">Blocks tracking activity, but may cause some sites and pages to behave unexpectedly</string>
 
     <string name="preference_privacy_category_cookies">Block cookies</string>
@@ -856,12 +860,4 @@ be temporary, and you can try again later.</li>
     <string name="content_blocking_snackbar_enable_action">Enable</string>
     <!-- Snackbar action button that users can press to disable content blocking -->
     <string name="content_blocking_snackbar_disable_action">Disable</string>
-
-    <!-- Deprecated strings -->
-    <string name="shortcut_erase_and_open_long_label">Erase and open %1$s</string>
-    <string name="preference_privacy_block_ads_summary">Some ads track site visits, even if you don’t click the ads</string>
-    <string name="preference_privacy_block_analytics_summary">Used to collect, analyze and measure activities like tapping and scrolling</string>
-    <string name="preference_privacy_block_content_summary2">Enabling may cause some pages to behave unexpectedly</string>
-    <string name="preference_privacy_block_social_summary">Embedded on sites to track your visits and to display functionality like share buttons</string>
-    <string name="firstrun_defaultbrowser_text2">Take private browsing to the next level. Block ads and other content that can track you across sites and bog down page load times.</string>
 </resources>
