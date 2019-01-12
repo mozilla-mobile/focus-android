@@ -41,7 +41,7 @@ def generate_build_task(apks, tag, is_staging):
         }
         artifacts["public/%s" % os.path.basename(apk)] = artifact
 
-    checkout = "git clone {} repository && cd repository".format(GITHUB_HTTP_REPOSITORY)
+    checkout = "cd .. && git clone {} repository && cd repository".format(GITHUB_HTTP_REPOSITORY)
     if tag is not None:
         checkout += " && git checkout {}".format(tag)
     assemble_task = 'assembleNightly'
