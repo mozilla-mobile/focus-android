@@ -30,13 +30,13 @@
   <string name="shortcut_erase_short_label">Valyti</string>
   <string name="shortcut_erase_long_label">Valyti naršymo žurnalą</string>
   <string name="shortcut_erase_and_open_short_label">Išvalyti ir atverti</string>
-  <string name="shortcut_erase_and_open_long_label">Išvalyti ir atverti „%1$s“</string>
   <string name="text_selection_search_action">Ieškoti privačiai</string>
   <string name="about_content"><![CDATA[<p xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">&#8222;%1$s&#8220; suteikia jums kontrol&#281;.</p>\n<p xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">"Naudokite j&#261; kaip priva&#269;i&#261; nar&#353;ykl&#281;:\n  "<ul>"\n    "<li>Ie&#353;kokite ir nar&#353;ykite pa&#269;ioje programoje</li>"\n    "<li>Blokuokite steb&#279;jimo elementus (arba atnaujinkite nustatymus, jeigu norite juos leisti)</li>"\n    "<li>I&#353;valykite, nor&#279;dami pa&#353;alinti slapukus, paie&#353;kos ir nar&#353;ymo &#382;urnalus</li>"\n  "</ul>\n</p>\n<p xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">&#8222;%1$s&#8220; yra &#8222;Mozillos&#8220; k&#363;rinys. M&#363;s&#371; misija yra skatinti sveik&#261;, atvir&#261; internet&#261;.<br/>\n<a href="%2$s">Su&#382;inoti daugiau</a></p>]]></string>
   <string name="preference_privacy_and_security_header">Privatumas ir saugumas</string>
   <string name="preference_privacy_and_security_summary">Stebėjimas, slapukai, duomenų siuntimas</string>
   <string name="preference_search_summary">Parinkite numatytąją, automatinio užbaigimo</string>
   <string name="preference_mozilla_summary">Apie „%1$s“, žinynas</string>
+  <string name="preference_category_ad_blocking">Reklamų blokavimas</string>
   <string name="preference_category_tracking_protection">Apsauga nuo stebėjimo</string>
   <string name="preference_category_web_content">Saityno turinys</string>
   <string name="preference_category_switching_apps">Programų perjungimas</string>
@@ -54,7 +54,7 @@
   <string name="preference_switch_autocomplete_topsites">Lankomiausioms svetainėms</string>
   <string name="preference_autocomplete_topsite_summary">Įjungus, adreso lauke bus automatiškai užbaigiama virš 450 populiarių URL adresų.</string>
   <string name="preference_switch_autocomplete_user_list">Svetainėms, kurias pridedate</string>
-  <string name="preference_autocomplete_user_list_summary">Įjungus, adreso lauke bus automatiškai užbaigiama virš 450 populiarių URL adresų.</string>
+  <string name="preference_autocomplete_user_list_description">Įjungus bus automatiškai užbaigiamos jūsų čia pridėtos svetainės.</string>
   <string name="preference_category_autocomplete_manage_sites">Tvarkyti svetaines</string>
   <string name="preference_autocomplete_subitem_manage_sites">Tvarkyti svetaines</string>
   <string name="preference_autocomplete_action_add">+ Pridėti savą adresą</string>
@@ -77,19 +77,25 @@
   <string name="preference_language">Kalba</string>
   <string name="preference_language_systemdefault">Sistemos numatytoji</string>
   <string name="preference_category_privacy">Privatumas</string>
-  <string name="preference_privacy_block_ads">Blokuoti reklaminius stebėjimo elementus</string>
-  <string name="preference_privacy_block_ads_summary">Kai kurios reklamos stebi svetainių aplankymus, net jeigu ir nespustelite jų.</string>
+  <string name="preference_privacy_ads_block_ads">Blokuokite reklamas ir kitus trikdžius</string>
+  <string name="preference_privacy_ads_block_ads_summary">Blokuoja reklamas ir kitus trikdžius naudojant „Easylist“, „EasyPrivacy“, „Fanboy’s Annoyance“, ir „777Guard Mobile Ad Filter“ blokavimo sąrašus.</string>
   <string name="preference_privacy_block_analytics">Blokuoti analizės stebėjimo elementus</string>
-  <string name="preference_privacy_block_analytics_summary">Naudojama rinkti, analizuoti ir matuoti tokias veiklas, kaip bakstelėjimai ir slinkimas</string>
+  <string name="preference_privacy_block_ads">Blokuoti reklaminius stebėjimo elementus</string>
+  <string name="preference_privacy_block_ads_new_summary">Pašalina reklamas, stebinčias svetainių aplankymus net ir jų nespustelėjus</string>
+  <string name="preference_privacy_block_analytics_new_summary">Blokuoja stebėjimo elementus, renkančius, analizuojančius ir matuojančius tokias veiklas, kaip bakstelėjimai ar slinkimas</string>
   <string name="preference_privacy_block_social">Blokuoti socialinius stebėjimo elementus</string>
-  <string name="preference_privacy_block_social_summary">Įterpiama svetainėse, norint stebėti jūsų apsilankymus ir rodyti tokį funkcionalumą, kaip dalinimosi mygtukai</string>
+  <string name="preference_privacy_block_social_new_summary">Blokuoja svetainėse įterptus su socialiniais tinklais susijusius stebėjimo elementus, įskaitant dalinimosi mygtukus</string>
   <string name="preference_privacy_block_content">Blokuoti kitus turinio stebėjimo elementus</string>
-  <string name="preference_privacy_block_content_summary2">Įjungus gali sutrikti kai kurių tinklalapių veikimas</string>
+  <string name="preference_privacy_block_content_new_summary">Blokuoja stebėjimo veiklą, tačiau kai kurios svetainės ir tinklalapiai gali veikti netinkamai</string>
   <string name="preference_privacy_category_cookies">Blokuoti slapukus</string>
   <string name="preference_privacy_should_block_cookies_no_option">Ne</string>
   <string name="preference_privacy_should_block_cookies_third_party_tracker_cookies_option">Blokuoti tik trečiųjų šalių stebėjimo slapukus</string>
   <string name="preference_privacy_should_block_cookies_third_party_only_option">Blokuoti tik trečiųjų šalių slapukus</string>
   <string name="preference_privacy_should_block_cookies_yes_option">Taip</string>
+  <string name="preference_privacy_block_cookies_no">Ne (leisti visus slapukus)</string>
+  <string name="preference_privacy_block_cookies_third_party_tracker">Blokuoti trečiųjų šalių stebėjimo elementų slapukus (rekomenduojama)</string>
+  <string name="preference_privacy_block_cookies_third_party_only">Blokuoti visus trečiųjų šalių slapukus\n(kai kurios svetainės gali neveikti)</string>
+  <string name="preference_privacy_block_cookies_yes">Blokuoti visus slapukus (kai kurios svetainės neveiks)</string>
   <string name="preference_security_biometric">Atrakinti programą piršto atspaudu</string>
   <string name="preference_security_biometric_summary">Naudojant jūsų piršto antspaudą, galima atrakinti „%1$s“ programą, kai joje jau yra atvertas tinklalapis. Bus įjungtas slaptumas.</string>
   <string name="preference_privacy_secure_mode">Slaptumas</string>
@@ -177,7 +183,7 @@
   <string name="contextmenu_open_in_new_tab">Atverti naujoje kortelėje</string>
   <string name="contextmenu_image_warning"><![CDATA["Įrašyti ir pasidalinti paveikslai "<b xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">nebus pa&#353;alinti</b>" jums išvalius „%1$s“ naršymo žurnalą."]]></string>
   <string name="firstrun_defaultbrowser_title">Pagerinkite savo privatumą</string>
-  <string name="firstrun_defaultbrowser_text2">Pereikite į aukštesnį privačiojo naršymo lygį. Blokuokite reklamas ir kitą jūsų naršymą galintį stebėti turinį, tuo pačiu sutrumpindami svetainių įkėlimo laiką.</string>
+  <string name="firstrun_defaultbrowser_text_new">Blokuokite tokį turinį, kaip reklamas ir kodą, sekantį jus internete ir lėtinantį naršymą. Įjungę reklamų blokavimą, be jų naršysite sparčiau.</string>
   <string name="firstrun_search_title">Jūsų paieška, jūsų skoniui</string>
   <string name="firstrun_search_text">Ieškote kažko kito? Pasirinkite kitą numatytąją ieškyklę nustatymuose.</string>
   <string name="firstrun_shortcut_title">Pridėkite leistukų į savo pradžios ekraną</string>
@@ -187,6 +193,8 @@
   <string name="firstrun_close_button">Gerai, supratau!</string>
   <string name="firstrun_skip_button">Praleisti</string>
   <string name="firstrun_next_button">Toliau</string>
+  <string name="block_ads_card_title">„%1$s“ pasiruošus blokuoti reklamas</string>
+  <string name="block_ads_card_description">Nauja funkcija! Naršykite sparčiau užblokuodami reklamas ir jus internete sekantį kodą.</string>
   <string name="content_blocking_disabled">–</string>
   <string name="dialog_addtohomescreen_action_add">Pridėti</string>
   <string name="dialog_addtohomescreen_action_cancel">Atsisakyti</string>
@@ -226,6 +234,7 @@
   <string name="biometric_auth_title">Atrakinti „%1$s“</string>
   <string name="biometric_auth_description">Palieskite piršto atspaudo jutiklį.</string>
   <string name="biometric_auth_new_session">Naujas seansas</string>
+  <string name="biometric_auth_open_link_new_session">Atverti saitą naujame seanse</string>
   <string name="biometric_auth_image_description">Piršto atspaudo piktograma</string>
   <string name="biometric_auth_not_recognized_error">Neatpažintas piršto atspaudas. Bandykite dar kartą.</string>
   <string name="biometric_auth_moved_too_quickly">Pirštas sujudėjo per greitai. Bandykite dar kartą.</string>
@@ -243,6 +252,8 @@
   <string name="tip_open_in_new_tab">Atverkite saitą naujoje kortelėje\n Spustelėkite ir palaikykite bet kurį saitą tinklalapyje</string>
   <string name="tip_request_desktop">Norite tradicinės svetainės versijos?%1$s Meniu &gt; Prašyti ne mob. svetainės</string>
   <string name="tip_disable_tips2">Išjungti patarimus pradžios ekrane</string>
+  <string name="tip_block_ads">Naršykite sparčiau užblokuodami reklamas ir jus internete sekantį kodą.</string>
+  <string name="block_ads_title">Reklamų blokavimas</string>
   <string name="tip_explain_allowlist">Patikima svetainė?\n Leidimų sąrašas išjungia apsaugą nuo stebėjimo tose svetainėse, kurias žinote ir pasitikite.</string>
   <string name="new_tab_opened_snackbar">Atverta nauja kortelė</string>
   <string name="open_new_tab_snackbar">Pereiti</string>
@@ -263,4 +274,8 @@
   <string name="fatal_crash_report_close_button_label">Užverti</string>
   <string name="fatal_crash_report_restart_firefox_label">Paleisti „%1$s“ iš naujo</string>
   <string name="crash_report_send_crash_label">Pranešti apie strigtį „Mozillai“</string>
+  <string name="content_blocking_enabled_snackbar_message">Turinio blokavimas įjungtas</string>
+  <string name="content_blocking_disabled_snackbar_message">Turinio blokavimas išjungtas</string>
+  <string name="content_blocking_snackbar_enable_action">Įjungti</string>
+  <string name="content_blocking_snackbar_disable_action">Išjungti</string>
 </resources>

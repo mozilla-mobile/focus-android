@@ -30,13 +30,13 @@
   <string name="shortcut_erase_short_label">Zhašeć</string>
   <string name="shortcut_erase_long_label">Přehladowansku historiju zhašeć</string>
   <string name="shortcut_erase_and_open_short_label">Zhašeć a wočinić</string>
-  <string name="shortcut_erase_and_open_long_label">%1$s zhašeć a wočinić</string>
   <string name="text_selection_search_action">Priwatnje pytać</string>
   <string name="about_content"><![CDATA[<p xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">%1$s da was kontrolu wobchowa&#263;.</p>\n<p xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">"Wu&#382;iwaj&#263;e j&#243;n jako priwatny wobhladowak:\n  "<ul>"\n    "<li>Pytaj&#263;e a p&#345;ehladuj&#263;e direktnje w na&#322;o&#382;enju</li>"\n    "<li>Blokuj&#263;e p&#345;es&#263;&#283;howaki (abo aktualizuj&#263;e nastajenja, zo by&#353;&#263;e p&#345;es&#263;&#283;howaki dowoli&#322;)</li>"\n    "<li>Zha&#353;ej&#263;e placki a pytansku a p&#345;ehladowansku historiju</li>"\n  "</ul>\n</p>\n<p xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">%1$s so wot Mozilla wuwiwa. Na&#353;a misija je sp&#283;chowanje stroweho, wotewrjeneho interneta.<br/>\n<a href="%2$s">Dal&#353;e informacije</a></p>]]></string>
   <string name="preference_privacy_and_security_header">Priwatnosć a wěstota</string>
   <string name="preference_privacy_and_security_summary">Slědowanje, placki, datowe wuběry</string>
   <string name="preference_search_summary">Standard nastajić, awtomatiske wudospołnjenje</string>
   <string name="preference_mozilla_summary">Wo %1$s, pomoc</string>
+  <string name="preference_category_ad_blocking">Blokowanje wabjenja</string>
   <string name="preference_category_tracking_protection">Slědowanski škit</string>
   <string name="preference_category_web_content">Webwobsah</string>
   <string name="preference_category_switching_apps">Přešaltowanje nałoženjow</string>
@@ -54,7 +54,6 @@
   <string name="preference_switch_autocomplete_topsites">Za najlubše sydła</string>
   <string name="preference_autocomplete_topsite_summary">Zmóžnić, zo by so wjace hač 450 woblubowanych adresow w adresowym polu wudospołniło.</string>
   <string name="preference_switch_autocomplete_user_list">Za sydła, kotrež přidawaće</string>
-  <string name="preference_autocomplete_user_list_summary">Zmóžnić, zo by so wjace hač 450 woblubowanych adresow w adresowym polu wudospołniło.</string>
   <string name="preference_category_autocomplete_manage_sites">Sydła rjadować</string>
   <string name="preference_autocomplete_subitem_manage_sites">Sydła rjadować</string>
   <string name="preference_autocomplete_action_add">+ Swójsku adresu přidać</string>
@@ -77,19 +76,17 @@
   <string name="preference_language">Rěč</string>
   <string name="preference_language_systemdefault">Systemowy standard</string>
   <string name="preference_category_privacy">Priwatnosć</string>
-  <string name="preference_privacy_block_ads">Wabjenske přesćěhowaki blokować</string>
-  <string name="preference_privacy_block_ads_summary">Někotre wbajenje sydłowe wopyty slěduje, samo hdyž na wabjenje njekliknjeće</string>
   <string name="preference_privacy_block_analytics">Analyzowe přesćěhowaki blokować</string>
-  <string name="preference_privacy_block_analytics_summary">Z tym so aktiwity kaž dótkanje a kulenje přez strony hromadźa, analyzuja a měrja</string>
+  <string name="preference_privacy_block_ads">Wabjenske přesćěhowaki blokować</string>
   <string name="preference_privacy_block_social">Socialne přesćěhowaki blokować</string>
-  <string name="preference_privacy_block_social_summary">Na sydłach zasadźene, zo bychu waše wopyty slědowali a funkcije kaž tłóčatka za dźělenje zwobraznili</string>
   <string name="preference_privacy_block_content">Druhe wobsahowe přesćěhowaki blokować</string>
-  <string name="preference_privacy_block_content_summary2">To móže wjesć k tomu, zo so někotre strony njewšědnje zadźerža</string>
   <string name="preference_privacy_category_cookies">Placki blokować</string>
   <string name="preference_privacy_should_block_cookies_no_option">Ně</string>
   <string name="preference_privacy_should_block_cookies_third_party_tracker_cookies_option">Jenož slědowace placki třećich poskićowarjow blokować</string>
   <string name="preference_privacy_should_block_cookies_third_party_only_option">Jenož placki třećich poskićowarjow</string>
   <string name="preference_privacy_should_block_cookies_yes_option">Haj</string>
+  <string name="preference_privacy_block_cookies_no">Ně (wšě placki dowolić)</string>
+  <string name="preference_privacy_block_cookies_third_party_tracker">Slědowace placki třećich poskićowarjow blokować (doporučene)</string>
   <string name="preference_security_biometric">Wužiwajće porstowy wotćišć, zo byšće nałoženje wotewrěł</string>
   <string name="preference_security_biometric_summary">Waš porstowy wotćišć móže %1$s wotewrěć, jeli URL je hižo w nałoženju wočinjeny. Tarnowanski modus so zapinje.</string>
   <string name="preference_privacy_secure_mode">Tarnowanje</string>
@@ -177,7 +174,6 @@
   <string name="contextmenu_open_in_new_tab">Wotkaz w nowym rajtarku wočinić</string>
   <string name="contextmenu_image_warning"><![CDATA["Składowane a dźělene wobrazy "<b xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">so njezha&#353;eja</b>, hdyž historiju %1$s zhašeće.]]></string>
   <string name="firstrun_defaultbrowser_title">Zesylńće swoju priwatnosć</string>
-  <string name="firstrun_defaultbrowser_text2">Zběhńće priwatne přehladowanje na přichodnu wyšu runinu. Blokujće wabjenje a hinaši wobsah, kotryž móžeće přez sydła slědować a začitanske časy stronow podlěšić.</string>
   <string name="firstrun_search_title">Waše pytanje kaž wy jo chceće</string>
   <string name="firstrun_search_text">Pytaće za něčim druhim? Wubjerće druhu stndardnu pytawu w nastajenjach.</string>
   <string name="firstrun_shortcut_title">Přidajće swojej startowej wobrazowce tastowe skrótšenki</string>
@@ -187,6 +183,7 @@
   <string name="firstrun_close_button">W porjadku, sym zrozumił!</string>
   <string name="firstrun_skip_button">Přeskočić</string>
   <string name="firstrun_next_button">Dale</string>
+  <string name="block_ads_card_title">%1$s je hotowy, wabjenje blokować</string>
   <string name="content_blocking_disabled">-</string>
   <string name="dialog_addtohomescreen_action_add">Přidać</string>
   <string name="dialog_addtohomescreen_action_cancel">Přetorhnyć</string>
@@ -226,6 +223,7 @@
   <string name="biometric_auth_title">%1$s hižo njeblokować</string>
   <string name="biometric_auth_description">Dótkńće so sensora porstoweho wotćišća, zo byšće pokročował.</string>
   <string name="biometric_auth_new_session">Nowe posedźenje</string>
+  <string name="biometric_auth_open_link_new_session">Wotkaz w nowym posedźenju wočinić</string>
   <string name="biometric_auth_image_description">Symbol porstoweho wotćišća</string>
   <string name="biometric_auth_not_recognized_error">Porstowy wotćišće njeje so spóznał. Spytajće hišće raz.</string>
   <string name="biometric_auth_moved_too_quickly">Porst je so přespěšnje pohibnył. Spytajće hišće raz.</string>
@@ -243,6 +241,7 @@
   <string name="tip_open_in_new_tab">Wotkaz w nowym rajtarku wočinić\nTłóčće dołho na wotkaz na stronje</string>
   <string name="tip_request_desktop">Chceće radšo dospołne desktopowe sydło widźeć?%1$s Meni &gt; Desktopowe sydło požadać</string>
   <string name="tip_disable_tips2">Pokiwy na starrtowej wobrazowce znjemóžnić</string>
+  <string name="block_ads_title">Blokowanje wabjenja</string>
   <string name="tip_explain_allowlist">Dowěry hódne sydło?\nZ dowolenskej lisćinje móžeće slědowanski škit za sydła, kotrež znajeće a kotrymž dowěrjeće, znjemóžnić.</string>
   <string name="new_tab_opened_snackbar">Nowy rajtark je so wočinił</string>
   <string name="open_new_tab_snackbar">Přepinać</string>
@@ -263,4 +262,8 @@
   <string name="fatal_crash_report_close_button_label">Začinić</string>
   <string name="fatal_crash_report_restart_firefox_label">%1$s znowa startować</string>
   <string name="crash_report_send_crash_label">Mozilla spadowu rozprawu pósłać</string>
+  <string name="content_blocking_enabled_snackbar_message">Blokowanje wabjenja je zmóžnjene</string>
+  <string name="content_blocking_disabled_snackbar_message">Blokowanje wabjenja je znjemóžnjene</string>
+  <string name="content_blocking_snackbar_enable_action">Zmóžnić</string>
+  <string name="content_blocking_snackbar_disable_action">Znjemóžnić</string>
 </resources>

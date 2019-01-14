@@ -30,7 +30,6 @@
   <string name="shortcut_erase_short_label">Stoo</string>
   <string name="shortcut_erase_long_label">Stòo ña ndukuku sata</string>
   <string name="shortcut_erase_and_open_short_label">Stoo ra kuna</string>
-  <string name="shortcut_erase_and_open_long_label">Stoo tsi kuna %1$s</string>
   <string name="text_selection_search_action">Nduku Sèè</string>
   <string name="about_content"><![CDATA[<p xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">%1$s Kuu kuachu\'un&#241;a.</p>\n<p xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">"Kuu nduku seu &#241;a\'a:\n  "<ul>"\n    "<li>Nduku &#241;a kunu nu kaa ndusu\'ku</li>"\n    "<li>Kasi &#241;a kuni kunche\'e &#241;a sau)</li>"\n    "<li>Stoo cookies tsi &#241;a ndukuku sata</li>"\n  "</ul>\n</p>\n<p xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">%1$s Mozilla sai. Kunikue iin Internet nuna &#241;a kuu kuchu\'un ntina yivi.<br/>\n<a href="%2$s">kavi cha kutua</a></p>]]></string>
   <string name="preference_privacy_and_security_header">Ña i\'í tsi Ña kunka vai</string>
@@ -75,14 +74,10 @@
   <string name="preference_language">Tu\'un</string>
   <string name="preference_language_systemdefault">Nkoi ta xi’na</string>
   <string name="preference_category_privacy">Sèè</string>
-  <string name="preference_privacy_block_ads">Kasi ña ndukuyo</string>
-  <string name="preference_privacy_block_ads_summary">Yee tu\'un nduku ña tsinu, vasu ma katavu ña</string>
   <string name="preference_privacy_block_analytics">Kasi ña ndukuyo</string>
-  <string name="preference_privacy_block_analytics_summary">Kuachu\'un ña tava satutuku tsi chikuau ña sau tana katavu tsi samu</string>
+  <string name="preference_privacy_block_ads">Kasi ña ndukuyo</string>
   <string name="preference_privacy_block_social">Kasi ña ndukuyo</string>
-  <string name="preference_privacy_block_social_summary">Ntachiiaña nu ke sitiotava ntanii ña ntsinu cha snai boton tana kua\'á</string>
   <string name="preference_privacy_block_content">Kasi ña ndukuyo inka tsio</string>
-  <string name="preference_privacy_block_content_summary2">Tatu na Kuachu\'un ña ku kueva\'a nuna pàguina</string>
   <string name="preference_privacy_category_cookies">Kasi cookies</string>
   <string name="preference_privacy_should_block_cookies_no_option">No</string>
   <string name="preference_privacy_should_block_cookies_third_party_only_option">Kasi cookies ña inkana</string>
@@ -174,7 +169,6 @@
   <string name="contextmenu_open_in_new_tab">Kuna ña kunu kuncheu nu inka xikua</string>
   <string name="contextmenu_image_warning"><![CDATA["Tutu ndatavana ña nchikavau tsi ña ndakuaku "<b xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">" ma ntoi"</b>ta kuu stuu ña\'a ntsinu sata %1$s.]]></string>
   <string name="firstrun_defaultbrowser_title">Saa kanu ña sèè</string>
-  <string name="firstrun_defaultbrowser_text2">Nduku sèè ña kunu. Kasi tu\'un va\'a tsi siin ñaa va\'a sa\'a kue pagina.</string>
   <string name="firstrun_search_title">Nduku ña kunu, nixi kunu</string>
   <string name="firstrun_search_text">¿Nudukuku si\'in ña\'a? katsi inka tsiña ndukuku inka nu sama ntii ñaa yo.</string>
   <string name="firstrun_shortcut_title">Chikaa nixi kitsau nu pantalla xinaa</string>

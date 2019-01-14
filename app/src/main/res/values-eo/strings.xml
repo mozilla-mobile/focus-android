@@ -30,13 +30,13 @@
   <string name="shortcut_erase_short_label">Forviŝi</string>
   <string name="shortcut_erase_long_label">Forviŝi retuman historion</string>
   <string name="shortcut_erase_and_open_short_label">Forigi kaj malfermi</string>
-  <string name="shortcut_erase_and_open_long_label">Forigi kaj malfermi %1$s</string>
   <string name="text_selection_search_action">Serĉi private</string>
   <string name="about_content"><![CDATA[<p xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">%1$s igas vin reganto.</p>\n<p xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">"Uzu &#285;in kiel privatan retumilon:\n  "<ul>"\n    "<li>Ser&#265;i kaj retumi rekte en la programo</li>"\n    "<li>Bloki spurilojn (a&#365; &#349;an&#285;i agordojn por permesi spurilojn)</li>"\n    "<li>Forigi kuketojn kaj anka&#365; retuman kaj ser&#265;an historion</li>"\n  "</ul>\n</p>\n<p xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">%1$s estas farita de Mozilla. Nia misio estas stimuli sanan kaj malfermitan interreton.<br/>\n<a href="%2$s">Pli da informo</a></p>]]></string>
   <string name="preference_privacy_and_security_header">Privateco kaj sekureco</string>
   <string name="preference_privacy_and_security_summary">Spurado, kuketoj, elekto de datumoj</string>
   <string name="preference_search_summary">Difini kiel norman, aŭtomata kompletigo</string>
   <string name="preference_mozilla_summary">Pri %1$s, helpo</string>
+  <string name="preference_category_ad_blocking">Blokado de reklamoj</string>
   <string name="preference_category_tracking_protection">Protekto kontraŭ spurado</string>
   <string name="preference_category_web_content">Teksaĵa enhavo</string>
   <string name="preference_category_switching_apps">Ŝanĝo de programoj</string>
@@ -54,7 +54,7 @@
   <string name="preference_switch_autocomplete_topsites">Por la plej vizititaj retejoj</string>
   <string name="preference_autocomplete_topsite_summary">Aktivigu por aŭtomate plenigi en la adresa strio pli da 450 popularaj retadresoj.</string>
   <string name="preference_switch_autocomplete_user_list">Por retejoj, kiujn vi aldonas</string>
-  <string name="preference_autocomplete_user_list_summary">Aktivigu por aŭtomate plenigi en la adresa strio pli da 450 popularaj retadresoj.</string>
+  <string name="preference_autocomplete_user_list_description">Aktivigu por aŭtomate kompletigi retejojn, kiujn vi aldonas ĉi tie.</string>
   <string name="preference_category_autocomplete_manage_sites">Administri retejojn</string>
   <string name="preference_autocomplete_subitem_manage_sites">Administri retejojn</string>
   <string name="preference_autocomplete_action_add">+ Aldoni personecigitan adreson</string>
@@ -77,19 +77,25 @@
   <string name="preference_language">Lingvo</string>
   <string name="preference_language_systemdefault">Sistema normo</string>
   <string name="preference_category_privacy">Privateco</string>
-  <string name="preference_privacy_block_ads">Bloki reklamajn spurilojn</string>
-  <string name="preference_privacy_block_ads_summary">Kelkaj reklamoj spuras viajn vizitojn, eĉ se vi ne alklakas ilin</string>
+  <string name="preference_privacy_ads_block_ads">Bloki reklamojn kaj aliajn ĝenojn</string>
+  <string name="preference_privacy_ads_block_ads_summary">Blokado de reklamoj kaj aliaj ĝenoj per la jenaj listoj de blokado: EasyList, EasyPrivacy, Fanboy\'s Annoyance kaj 777Guard Mobile Ad Filter</string>
   <string name="preference_privacy_block_analytics">Bloki analizajn spurilojn</string>
-  <string name="preference_privacy_block_analytics_summary">Ili estas uzataj por kolekti, analizi kaj mezuri agojn, kiel tuŝetojn kaj ŝovojn</string>
+  <string name="preference_privacy_block_ads">Bloki reklamajn spurilojn</string>
+  <string name="preference_privacy_block_ads_new_summary">Forigo de reklamoj, kiuj povas spuri vin eĉ se vi ne tuŝetas ilin</string>
+  <string name="preference_privacy_block_analytics_new_summary">Forigo de spuriloj, kiuj analizas kaj mezuras interagojn kiel tuŝetojn kaj ŝovadon</string>
   <string name="preference_privacy_block_social">Bloki sociajn spurilojn</string>
-  <string name="preference_privacy_block_social_summary">Inkluzivitaj en retejoj por spuri viajn vizitojn kaj montri funkciojn, kiel dividajn butonojn</string>
+  <string name="preference_privacy_block_social_new_summary">Blokado de sociaj spuriloj, kiuj estas enmetitaj en retejoj. Tio inkluzivas la kundividajn butonojn.</string>
   <string name="preference_privacy_block_content">Bloki spurilojn en aliaj enhavoj</string>
-  <string name="preference_privacy_block_content_summary2">Se vi ŝaltas tion ĉi, kelkaj paĝoj povus neatendite konduti</string>
+  <string name="preference_privacy_block_content_new_summary">Blokado de spuranta agado, sed tio povas neatendite misfunkciigi kelkajn retejojn</string>
   <string name="preference_privacy_category_cookies">Bloki kuketojn</string>
   <string name="preference_privacy_should_block_cookies_no_option">Ne</string>
   <string name="preference_privacy_should_block_cookies_third_party_tracker_cookies_option">Bloki nur nerektajn spurajn kuketojn</string>
   <string name="preference_privacy_should_block_cookies_third_party_only_option">Bloki nur nerektajn kuketojn</string>
   <string name="preference_privacy_should_block_cookies_yes_option">Jes</string>
+  <string name="preference_privacy_block_cookies_no">Ne (permesi ĉiujn kuketojn)</string>
+  <string name="preference_privacy_block_cookies_third_party_tracker">Bloki nerektajn spurantajn kuketojn (rekomendita)</string>
+  <string name="preference_privacy_block_cookies_third_party_only">Bloki ĉiujn nerektajn kuketojn\n(tio povus misfunkciigi retejojn)</string>
+  <string name="preference_privacy_block_cookies_yes">Bloki ĉiujn kuketojn (tio misfunkciigos retejojn)</string>
   <string name="preference_security_biometric">Uzi fingrospuron por malbloki programon</string>
   <string name="preference_security_biometric_summary">Via fingrospuro povas malbloki %1$s se readreso jam estas malfermita en la programo. La kaŝreĝimo estos ŝaltita.</string>
   <string name="preference_privacy_secure_mode">Kaŝreĝimo</string>
@@ -177,7 +183,7 @@
   <string name="contextmenu_open_in_new_tab">Malfermi ligilon en nova langeto</string>
   <string name="contextmenu_image_warning"><![CDATA["Konservitaj kaj dividitaj bildoj "<b xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">ne estos forigitaj</b>" kiam vi viŝas la historion de %1$s."]]></string>
   <string name="firstrun_defaultbrowser_title">Plibonigi vian privatecon</string>
-  <string name="firstrun_defaultbrowser_text2">Privata retumo pli altnivela, kun blokado de reklamoj kaj aliaj enhavoj, kiuj povas spuri vin trans retejoj kaj malrapidigi la ŝargon de paĝoj.</string>
+  <string name="firstrun_defaultbrowser_text_new">Bloki enhavon, ekzemple reklamojn kaj kodon kiuj sekvas vin tra la reto kaj malrapidigas vin. Ŝaltu blokadon de reklamoj por retumi pli rapide sen ĝenaj reklamoj.</string>
   <string name="firstrun_search_title">Via serĉo laŭ via maniero</string>
   <string name="firstrun_search_text">Ĉu vi serĉas ion alian, malsaman? Elektu alian norman serĉilon en la agordoj.</string>
   <string name="firstrun_shortcut_title">Aldoni rektajn alirojn al via hejmekrano</string>
@@ -187,6 +193,8 @@
   <string name="firstrun_close_button">En ordo, mi komprenis!</string>
   <string name="firstrun_skip_button">Ignori</string>
   <string name="firstrun_next_button">Sekva</string>
+  <string name="block_ads_card_title">%1$s pretas bloki reklamojn</string>
+  <string name="block_ads_card_description">Nova trajto! Retumu pli rapide per blokado de reklamoj kaj kodo, kiuj sekvas vin tra la reto.</string>
   <string name="content_blocking_disabled">-</string>
   <string name="dialog_addtohomescreen_action_add">Aldoni</string>
   <string name="dialog_addtohomescreen_action_cancel">Nuligi</string>
@@ -226,6 +234,7 @@
   <string name="biometric_auth_title">Malbloki %1$s</string>
   <string name="biometric_auth_description">Tuŝu la fingrospuran sensilon por daŭrigi.</string>
   <string name="biometric_auth_new_session">Nova seanco</string>
+  <string name="biometric_auth_open_link_new_session">Malfermi ligilon en nova seanco</string>
   <string name="biometric_auth_image_description">Emblemo de fingrospuro</string>
   <string name="biometric_auth_not_recognized_error">Fingrospuro nerekonita. Provu denove.</string>
   <string name="biometric_auth_moved_too_quickly">La fingro moviĝis tro rapide. Provu denove.</string>
@@ -243,6 +252,8 @@
   <string name="tip_open_in_new_tab">Malfermu ligilon en nova langeto\n Longe premu iun ajn ligilon en paĝo</string>
   <string name="tip_request_desktop">Ĉu vi preferus vidi la version de la retejo por komputiloj?%1$s Menuo &gt; Peti version por komputiloj</string>
   <string name="tip_disable_tips2">Malŝalti konsilojn en la komenca ekrano</string>
+  <string name="tip_block_ads">Retumu pli rapide per blokado de reklamoj kaj kodo, kiuj sekvas vin tra la reto.</string>
+  <string name="block_ads_title">Bloki reklamojn</string>
   <string name="tip_explain_allowlist">Ĉu fidinda retejo?\n La listo de permesataj retejoj malŝaltas la protekton kontraŭ spurado en viaj konataj kaj fidataj retejoj.</string>
   <string name="new_tab_opened_snackbar">Nova langeto malfermita</string>
   <string name="open_new_tab_snackbar">Ŝanĝi</string>
@@ -263,4 +274,8 @@
   <string name="fatal_crash_report_close_button_label">Fermi</string>
   <string name="fatal_crash_report_restart_firefox_label">Restartigi %1$s</string>
   <string name="crash_report_send_crash_label">Sendi raporton pri paneo al Mozilla</string>
+  <string name="content_blocking_enabled_snackbar_message">Blokado de enhavo aktiva</string>
+  <string name="content_blocking_disabled_snackbar_message">Blokado de enhavo malaktiva</string>
+  <string name="content_blocking_snackbar_enable_action">Aktivigi</string>
+  <string name="content_blocking_snackbar_disable_action">Malaktivigi</string>
 </resources>

@@ -30,7 +30,6 @@
   <string name="shortcut_erase_short_label">Dzima</string>
   <string name="shortcut_erase_long_label">Dzima zvawaita paindaneti</string>
   <string name="shortcut_erase_and_open_short_label">Dzima wovhura</string>
-  <string name="shortcut_erase_and_open_long_label">Dzima wovhura %1$s</string>
   <string name="text_selection_search_action">Tsvaga pachivande</string>
   <string name="about_content"><![CDATA[<p xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">" %1$s inokuisa mukutonga."</p>\n<p xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">Kushandise sevhisi yega yega: \n<ul><li>Tsvaga uye tenderera mberi pari purogiramu</li>" \n    "<li>Chengeta vateereri (kana kuti zvirongwa zvekugadzirisa kuti zvibvumire vateereri)</li>"\n    "<li>Dzima kuti ubvise makuki pamwe nhoroondo yekutsvaga</li>"\n  "</ul>\n</p>\n<p xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">%1$s inobudiswa neMozilla. Chinangwa chedu ndechekusimudzira Indaneti, yakashama.<br/>" "<a href="%2$s">Dzidza ZVIMWE</a></p>]]></string>
   <string name="preference_privacy_and_security_header">Kuchengeteka ne Puraivhesi</string>
@@ -54,7 +53,6 @@
   <string name="preference_switch_autocomplete_topsites">Masaiti anoendwa zvakanyanya</string>
   <string name="preference_autocomplete_topsite_summary">Batidza kuti otokombuliti iitike pamanzwi anosvika 450 akakurumbira URLs mu adhiresi bha.</string>
   <string name="preference_switch_autocomplete_user_list">Pema Saitsi awa isa woga</string>
-  <string name="preference_autocomplete_user_list_summary">Batidza kuti otokombuliti iitike pamanzwi anosvika 450 akakurumbira URLs mu adhiresi bha.</string>
   <string name="preference_category_autocomplete_manage_sites">Ronga masaitsi</string>
   <string name="preference_autocomplete_subitem_manage_sites">Ronga masaitsi</string>
   <string name="preference_autocomplete_action_add">+ Wedzera yaunodao URL</string>
@@ -77,14 +75,10 @@
   <string name="preference_language">Mutauro</string>
   <string name="preference_language_systemdefault">Magariro azvo musisitimu</string>
   <string name="preference_category_privacy">Vanza</string>
-  <string name="preference_privacy_block_ads">Vharira tunotsvaka kwauri twemaadhivhetsi</string>
-  <string name="preference_privacy_block_ads_summary">Zvimwe zvinoshambadzirwa zvinotengeswa nzvimbo yekushanyira nzvimbo, kunyange kana iwe usingadi kubaya adhivheti racho</string>
   <string name="preference_privacy_block_analytics">Vharira tunotsvaka kwauri twemaadhivhetsi</string>
-  <string name="preference_privacy_block_analytics_summary">Inoshandiswa kuunganidza, kuongorora uye kuenzanisa zvinhu zvakadai sokubaya uye kudzika</string>
+  <string name="preference_privacy_block_ads">Vharira tunotsvaka kwauri twemaadhivhetsi</string>
   <string name="preference_privacy_block_social">Vharira tunotsvaka twehupenyu</string>
-  <string name="preference_privacy_block_social_summary">Yakabudiswa panzvimbo dzekutsvaga kutarisa kushanyira kwako uye kuratidza kushanda sezvikwata zvekugovera</string>
   <string name="preference_privacy_block_content">Vharira vamwe vateereri vezvinhu</string>
-  <string name="preference_privacy_block_content_summary2">Ukabatidza mamwe mapeji anogona kushanda neutowo usiri iwo</string>
   <string name="preference_privacy_category_cookies">Vhara makuki</string>
   <string name="preference_privacy_should_block_cookies_no_option">Kwete</string>
   <string name="preference_privacy_should_block_cookies_third_party_tracker_cookies_option">Vharira 3-party tracker cookies chete</string>
@@ -177,7 +171,6 @@
   <string name="contextmenu_open_in_new_tab">Vhura link mu tebhu nyowani</string>
   <string name="contextmenu_image_warning"><![CDATA["Mifananidzo yakachengetwa "<b xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">neyakagoverwa haibviswe</b>" paunodzima %1$s nhoroondo."]]></string>
   <string name="firstrun_defaultbrowser_title">Shandisa simba rako rechivande</string>
-  <string name="firstrun_defaultbrowser_text2">Tora browsing pachedu kune imwe inotevera. Chengetedza zvikwereti nezvimwe zvinhu zvinogona kukutevera pazvikwata uye kuvhara pasi peji kutengesa nguva.</string>
   <string name="firstrun_search_title">Kutsvaga kwako, inzira yako</string>
   <string name="firstrun_search_text">Kutsvaka chimwe chinhu chakasiyana? Sarudza imwe shandiso yekutsvaga injini muZvirevo.</string>
   <string name="firstrun_shortcut_title">Wedzera zvidzitiro pamba peimba yako</string>

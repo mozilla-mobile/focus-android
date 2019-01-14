@@ -30,7 +30,6 @@
   <string name="shortcut_erase_short_label">Lašowaś</string>
   <string name="shortcut_erase_long_label">Pśeglědowańsku historiju lašowaś</string>
   <string name="shortcut_erase_and_open_short_label">Wulašowaś a wócyniś</string>
-  <string name="shortcut_erase_and_open_long_label">%1$s lašowaś a wócyniś</string>
   <string name="text_selection_search_action">Priwatnje pytaś</string>
   <string name="about_content"><![CDATA[<p xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">%1$s dajo was kontrolu wobchowa&#347;.</p>\n<p xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">"Wu&#382;ywaj&#347;o jen ako priwatny wobgl&#283;dowak:\n  "<ul>"\n    "<li>Pytaj&#347;o a p&#347;egl&#283;duj&#347;o direktnje w na&#322;o&#382;enju</li>"\n    "<li>Blok&#283;ruj&#347;o p&#347;esl&#283;dowaki (abo aktualiz&#283;ruj&#347;o nastajenja, aby p&#347;esl&#283;dowaki dow&#243;li&#322;)</li>"\n    "<li>La&#353;uj&#347;o cookieje a pyta&#324;sku a p&#347;egl&#283;dowa&#324;sku historiju</li>"\n  "</ul>\n</p>\n<p xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">%1$s se w&#243;t Mozilla wuwija. Na&#353;a misija jo sp&#283;chowanje strowego, w&#243;tw&#243;rjonego interneta.<br/>\n<a href="%2$s">Dal&#353;ne informacije</a></p>]]></string>
   <string name="preference_privacy_and_security_header">Priwatnosć a wěstota</string>
@@ -54,7 +53,6 @@
   <string name="preference_switch_autocomplete_topsites">Za nejlubše sedła</string>
   <string name="preference_autocomplete_topsite_summary">Zmóžniś, aby se wěcej ako 450 woblubowanych adresow w adresowem pólu wudopołniło.</string>
   <string name="preference_switch_autocomplete_user_list">Za sedła, kótarež pśidawaśo</string>
-  <string name="preference_autocomplete_user_list_summary">Zmóžniś, aby se wěcej ako 450 woblubowanych adresow w adresowem pólu wudopołniło.</string>
   <string name="preference_category_autocomplete_manage_sites">Sedła zastojaś</string>
   <string name="preference_autocomplete_subitem_manage_sites">Sedła zastojaś</string>
   <string name="preference_autocomplete_action_add">+ Swójsku adresu pśidaś</string>
@@ -77,14 +75,10 @@
   <string name="preference_language">Rěc</string>
   <string name="preference_language_systemdefault">Systemowy standard</string>
   <string name="preference_category_privacy">Priwatnosć</string>
-  <string name="preference_privacy_block_ads">Wabjeńske pśeslědowaki blokěrowaś</string>
-  <string name="preference_privacy_block_ads_summary">Někotare wabjeńske anonse woglědy sedłow slěduju, samo gaby wy na anonse njekliknuł</string>
   <string name="preference_privacy_block_analytics">Analyzowe pśeslědowaki blokěrowaś</string>
-  <string name="preference_privacy_block_analytics_summary">Z tym se aktiwity ako pótuskowanje a kulanje pśez boki gromaźe, analyzěruju a měrje</string>
+  <string name="preference_privacy_block_ads">Wabjeńske pśeslědowaki blokěrowaś</string>
   <string name="preference_privacy_block_social">Socialne pśeslědowaki blokěrowaś</string>
-  <string name="preference_privacy_block_social_summary">Na sedłach zasajźone, aby wóne waše woglědy slědowali a funkcije ako tłocaški za źělenje zwobraznili</string>
   <string name="preference_privacy_block_content">Druge wopśimjeśowe pśeslědowaki blokěrowaś</string>
-  <string name="preference_privacy_block_content_summary2">To móžo wjasć k tomu, až se někotare boki njewšednje zaźarže</string>
   <string name="preference_privacy_category_cookies">Cookieje blokěrowaś</string>
   <string name="preference_privacy_should_block_cookies_no_option">Ně</string>
   <string name="preference_privacy_should_block_cookies_third_party_tracker_cookies_option">Jano slědujuce cookieje tśeśich póbitowarjow blokěrowaś</string>
@@ -177,7 +171,6 @@
   <string name="contextmenu_open_in_new_tab">Wótkaz w nowem rejtarku wócyniś</string>
   <string name="contextmenu_image_warning"><![CDATA["Skłaźone a źělone wobraze "<b xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">se njewula&#353;uju</b>, gaž historiju %1$s lašujośo.]]></string>
   <string name="firstrun_defaultbrowser_title">Zmocniśo swóju priwatnosć</string>
-  <string name="firstrun_defaultbrowser_text2">Zwigniśo priwatne pśeglědowanje na pśiducu wušu rowninu. Blokěrujśo wabjenje a hynakše wopśimjeśe, kótarež móžośo pśez sedła slědowaś a zacyitańske case bokow pódlejšyś.</string>
   <string name="firstrun_search_title">Wašo pytanje ako wy jo cośo</string>
   <string name="firstrun_search_text">Pytaśo za něcym drugim? Wubjeŕśo drugu standardnu pytnicu w nastajenjach.</string>
   <string name="firstrun_shortcut_title">Pśidajśo swójej startowej wobrazowce tastowe skrotconki</string>

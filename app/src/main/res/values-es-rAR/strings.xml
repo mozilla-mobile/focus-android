@@ -30,13 +30,13 @@
   <string name="shortcut_erase_short_label">Borrar</string>
   <string name="shortcut_erase_long_label">Borrar historial de navegación</string>
   <string name="shortcut_erase_and_open_short_label">Eliminar y abrir</string>
-  <string name="shortcut_erase_and_open_long_label">Eliminar y abrir %1$s</string>
   <string name="text_selection_search_action">Buscar en privado</string>
   <string name="about_content"><![CDATA[<p xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">%1$s le da el control.</p>\n<p xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">"&#218;selo como un navegador privado:\n  "<ul>"\n    "<li>Buscar y navegar en la aplicaci&#243;n</li>"\n    "<li>Bloquear rastreadores (o actualizar opciones para permitir rastreadores)</li>"\n    "<li>Borrar para eliminar cookies e historial de b&#250;squeda y navegaci&#243;n</li>"\n  "</ul>\n</p>\n<p xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">%1$s es producido por Mozilla. Nuestra misi&#243;n es promover una internet abierta y saludable.<br/>\n<a href="%2$s">Conocer m&#225;s</a></p>]]></string>
   <string name="preference_privacy_and_security_header">Privacidad y seguridad</string>
   <string name="preference_privacy_and_security_summary">Rastreo, cookies, opciones de datos</string>
   <string name="preference_search_summary">Predeterminados, autocompletar</string>
   <string name="preference_mozilla_summary">Acerca de %1$s, ayuda</string>
+  <string name="preference_category_ad_blocking">Bloqueo de anuncios</string>
   <string name="preference_category_tracking_protection">Protección de rastreo</string>
   <string name="preference_category_web_content">Contenido web</string>
   <string name="preference_category_switching_apps">Intercambio de aplicaciones</string>
@@ -54,7 +54,7 @@
   <string name="preference_switch_autocomplete_topsites">Para los sitios más visitados</string>
   <string name="preference_autocomplete_topsite_summary">Habilitar para autocompletar más de 450 URLs populares en la barra de direcciones.</string>
   <string name="preference_switch_autocomplete_user_list">Para los sitios que agrega</string>
-  <string name="preference_autocomplete_user_list_summary">Habilitar para autocompletar más de 450 URLs populares en la barra de direcciones.</string>
+  <string name="preference_autocomplete_user_list_description">Habilitar para autocompletar los sitios que agregue aquí.</string>
   <string name="preference_category_autocomplete_manage_sites">Administrar sitios</string>
   <string name="preference_autocomplete_subitem_manage_sites">Administrar sitios</string>
   <string name="preference_autocomplete_action_add">+ Agregar URL personalizada</string>
@@ -77,19 +77,25 @@
   <string name="preference_language">Idioma</string>
   <string name="preference_language_systemdefault">Predeterminado del sistema</string>
   <string name="preference_category_privacy">Privacidad</string>
-  <string name="preference_privacy_block_ads">Bloquear rastreadores de publicidad</string>
-  <string name="preference_privacy_block_ads_summary">Algunas publicidades rastrean visitas a los sitios aunque no se haga clic en los anuncios</string>
+  <string name="preference_privacy_ads_block_ads">Bloquear anuncios y otras molestias</string>
+  <string name="preference_privacy_ads_block_ads_summary">Detiene los anuncios y otras molestias usando listas de bloqueo de Easylist, EasyPrivacy, Fanboy\'s Annoyance y 777Guard Mobile Ad Filter</string>
   <string name="preference_privacy_block_analytics">Bloquear rastreadores analíticos</string>
-  <string name="preference_privacy_block_analytics_summary">Se usan para recolectar, analizar y medir actividades como tocar y desplazar</string>
+  <string name="preference_privacy_block_ads">Bloquear rastreadores de publicidad</string>
+  <string name="preference_privacy_block_ads_new_summary">Elimina los anuncios diseñados para rastrear las visitas al sitio, incluso si no los pulsa</string>
+  <string name="preference_privacy_block_analytics_new_summary">Bloquea los rastreadores que analizan y miden interacciones como pulsar y desplazarse</string>
   <string name="preference_privacy_block_social">Bloquear rastreadores sociales</string>
-  <string name="preference_privacy_block_social_summary">Incrustados en sitios para rastrear visitas y mostrar funcionalidades como los botones de compartir</string>
+  <string name="preference_privacy_block_social_new_summary">Detiene los rastreadores relacionados con las redes sociales integrados en los sitios web, incluidos los botones de compartir en redes sociales</string>
   <string name="preference_privacy_block_content">Bloquear otros rastreadores de contenidos</string>
-  <string name="preference_privacy_block_content_summary2">Habilitarlos puede causar que algunas páginas se comporten de forma inesperada</string>
+  <string name="preference_privacy_block_content_new_summary">Bloquea la actividad de rastreo, pero puede causar que algunos sitios y páginas se comporten de forma inesperada</string>
   <string name="preference_privacy_category_cookies">Bloquear las cookies</string>
   <string name="preference_privacy_should_block_cookies_no_option">No</string>
   <string name="preference_privacy_should_block_cookies_third_party_tracker_cookies_option">Bloquear solo cookies de rastreo de terceros</string>
   <string name="preference_privacy_should_block_cookies_third_party_only_option">Bloquear sólo cookies de terceros</string>
   <string name="preference_privacy_should_block_cookies_yes_option">Sí</string>
+  <string name="preference_privacy_block_cookies_no">No (permitir todas las cookies)</string>
+  <string name="preference_privacy_block_cookies_third_party_tracker">Bloquear cookies de rastreadores de terceros (recomendado)</string>
+  <string name="preference_privacy_block_cookies_third_party_only">Bloquear todas las cookies de terceros\n(puede causar que los sitios web no se vean correctamente)</string>
+  <string name="preference_privacy_block_cookies_yes">Bloquear todas las cookies (causará que los sitios web no se vean correctamente)</string>
   <string name="preference_security_biometric">Usar la huella digital de para desbloquear la aplicación</string>
   <string name="preference_security_biometric_summary">Su huella digital puede liberar %1$s si ya hay una URL abierta. Se activará el modo invisible.</string>
   <string name="preference_privacy_secure_mode">Invisible</string>
@@ -177,7 +183,7 @@
   <string name="contextmenu_open_in_new_tab">Abrir enlace en nueva pestaña</string>
   <string name="contextmenu_image_warning"><![CDATA["La imágenes que guardó y compartió "<b xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">no ser&#225;n borradas</b>" cuando borre el historial de %1$s."]]></string>
   <string name="firstrun_defaultbrowser_title">Potencie su privacidad</string>
-  <string name="firstrun_defaultbrowser_text2">Lleve la navegación privada al siguiente nivel. Bloquee publicidades y otro contenido que puede rastrearlo en todos los sitios y lentificar los tiempos de carga de las páginas.</string>
+  <string name="firstrun_defaultbrowser_text_new">Bloquee el contenido tal como los anuncios y el código que lo sigue en la web y disminuye la velocidad. Active el bloqueo de anuncios para navegar más rápido sin anuncios molestos.</string>
   <string name="firstrun_search_title">Su búsqueda, a su manera</string>
   <string name="firstrun_search_text">¿Busca algo diferente? Elija otro buscador predeterminado en la configuración.</string>
   <string name="firstrun_shortcut_title">Agregar accesos directos a la pantalla principal</string>
@@ -187,6 +193,8 @@
   <string name="firstrun_close_button">Genial, ¡lo tengo!</string>
   <string name="firstrun_skip_button">Saltar</string>
   <string name="firstrun_next_button">Siguiente</string>
+  <string name="block_ads_card_title">%1$s está listo para bloquear anuncios</string>
+  <string name="block_ads_card_description">¡Nueva característica! Navegue más rápido deteniendo los anuncios y el código que lo sigue por la web.</string>
   <string name="content_blocking_disabled">-</string>
   <string name="dialog_addtohomescreen_action_add">Agregar</string>
   <string name="dialog_addtohomescreen_action_cancel">Cancelar</string>
@@ -226,6 +234,7 @@
   <string name="biometric_auth_title">Desbloquear %1$s</string>
   <string name="biometric_auth_description">Toque el sensor de huella digital para continuar.</string>
   <string name="biometric_auth_new_session">Nueva sesión</string>
+  <string name="biometric_auth_open_link_new_session">Abrir el enlace en una nueva pestaña</string>
   <string name="biometric_auth_image_description">Icono de la huella digital</string>
   <string name="biometric_auth_not_recognized_error">Huella digital no reconocida. Pruebe de nuevo.</string>
   <string name="biometric_auth_moved_too_quickly">El dedo se movió muy rápido. Pruebe de nuevo.</string>
@@ -243,6 +252,8 @@
   <string name="tip_open_in_new_tab">Abra un enlace en una nueva pestaña\n Mantenga presionado cualquier enlace en una página</string>
   <string name="tip_request_desktop">¿Prefiere ver el sitio de escritorio?%1$s Menú &gt; Solicitar sitio de escritorio</string>
   <string name="tip_disable_tips2">Desactivar los consejos en la pantalla de inicio</string>
+  <string name="tip_block_ads">Navegue más rápido deteniendo los anuncios y el código que lo sigue por la web.</string>
+  <string name="block_ads_title">Bloqueo de anuncios</string>
   <string name="tip_explain_allowlist">¿Es un sitio de confianza?\n Allowlist deshabilita la Protección de Rastreo para sitios que conoce y en los que confía.</string>
   <string name="new_tab_opened_snackbar">Nueva pestaña abierta</string>
   <string name="open_new_tab_snackbar">Cambiar</string>
@@ -263,4 +274,8 @@
   <string name="fatal_crash_report_close_button_label">Cerrar</string>
   <string name="fatal_crash_report_restart_firefox_label">Reiniciar %1$s</string>
   <string name="crash_report_send_crash_label">Enviar informe de fallo a Mozilla</string>
+  <string name="content_blocking_enabled_snackbar_message">El Bloqueo de contenido está habilitado</string>
+  <string name="content_blocking_disabled_snackbar_message">El Bloqueo de contenido está deshabilitado</string>
+  <string name="content_blocking_snackbar_enable_action">Habilitar</string>
+  <string name="content_blocking_snackbar_disable_action">Deshabilitar</string>
 </resources>

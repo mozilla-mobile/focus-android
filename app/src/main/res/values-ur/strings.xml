@@ -28,7 +28,6 @@
   <string name="shortcut_erase_short_label">مٹائيں</string>
   <string name="shortcut_erase_long_label">برائوزنگ سابقات مٹائیں</string>
   <string name="shortcut_erase_and_open_short_label">مٹائیں اور کھولیں</string>
-  <string name="shortcut_erase_and_open_long_label">مٹائیں اور %1$s کھولیں</string>
   <string name="text_selection_search_action">نجی طور پر طلاش کرے</string>
   <string name="about_content"><![CDATA[<p xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">"%1$s &#1570;&#1662; &#1705;&#1608; &#1705;&#1606;&#1657;&#1585;&#1608;&#1604; &#1583;&#1740;&#1578;&#1740; &#1729;&#1746; "</p>\n<p xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">" &#1575;&#1587;&#1705;&#1608; &#1606;&#1580;&#1740; &#1576;&#1585;&#1575;&#1574;&#1608;&#1586;&#1585; &#1705;&#1740; &#1591;&#1585;&#1581; &#1575;&#1587;&#1578;&#1593;&#1605;&#1575;&#1604; &#1705;&#1585;&#1740;&#1722;:\n  "<ul>" \n    "<li>" &#1575;&#1662;&#1604;&#1740; &#1705;&#1740;&#1588;&#1606; &#1605;&#1740;&#1722; &#1729;&#1740; &#1578;&#1604;&#1575;&#1588; &#1575;&#1608;&#1585; &#1576;&#1585;&#1575;&#1572;&#1586; &#1705;&#1585;&#1740;&#1722; "</li>"\n    "<li>"&#1657;&#1585;&#1740;&#1705;&#1585;&#1585;&#1648; &#1705;&#1608; &#1576;&#1604;&#1575;&#1705; &#1705;&#1585;&#1740;&#1722; (&#1740;&#1575; &#1587;&#1657;&#1740;&#1606;&#1711;&#1608;&#1722; &#1705;&#1740; &#1578;&#1575;&#1586;&#1729; &#1705;&#1575;&#1585;&#1740; &#1705;&#1585; &#1705;&#1746; &#1657;&#1585;&#1740;&#1705;&#1585;&#1585;&#1648; &#1705;&#1608; &#1575;&#1580;&#1575;&#1586;&#1578; &#1583;&#1740;&#1722;)&#1748; "</li>"\n    "<li>" &#1705;&#1608;&#1705;&#1740;&#1586; &#1705;&#1746; &#1587;&#1575;&#1578;&#1726; &#1578;&#1604;&#1575;&#1588; &#1575;&#1608;&#1585; &#1576;&#1585;&#1575;&#1572;&#1586;&#1606;&#1711; &#1587;&#1575;&#1576;&#1602;&#1575;&#1578; &#1705;&#1608; &#1576;&#1726;&#1740; &#1581;&#1584;&#1601; &#1705;&#1585;&#1606;&#1746; &#1705;&#1740;&#1604;&#1740;&#1746; &#1605;&#1657;&#1575;&#1574;&#1740;&#1722; "</li>"\n  "</ul>\n</p>\n<p xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">%1$s &#1705;&#1740; &#1662;&#1740;&#1583;&#1575;&#1608;&#1575;&#1585; &#1729;&#1746;&#1748; &#1726;&#1605;&#1575;&#1585;&#1740; &#1605;&#1729;&#1605; &#1575;&#1740;&#1705; &#1589;&#1581;&#1578; &#1605;&#1606;&#1583; &#1705;&#1726;&#1604;&#1746; &#1575;&#1606;&#1657;&#1585;&#1606;&#1740;&#1657; &#1705;&#1608; &#1601;&#1585;&#1608;&#1593;&#1648; &#1583;&#1740;&#1606;&#1575; &#1729;&#1746;&#1748; Mozilla<br/>\n<a href="%2$s">" &#1605;&#1586;&#1740;&#1583; &#1580;&#1575;&#1606;&#1740;&#1746; "</a></p>]]></string>
   <string name="preference_privacy_and_security_header">رازداری اور سلامتی</string>
@@ -69,13 +68,10 @@
   <string name="preference_language">زبان</string>
   <string name="preference_language_systemdefault">نظام طے شدہ</string>
   <string name="preference_category_privacy">رازداری</string>
-  <string name="preference_privacy_block_ads">اشتھار ٹریکرز کو بلاک کریں</string>
-  <string name="preference_privacy_block_ads_summary">چند اشتہاری ٹریکر سائَٹ دورہ کرتی ہیں حب کہ آپ نے اشتتہارات پر کلک بھی نہ کیا ہو</string>
   <string name="preference_privacy_block_analytics">تجزیاتی ٹریکرز کو بلاک کریں</string>
-  <string name="preference_privacy_block_analytics_summary">سرگرمی جیسے کہ تھپتپانا اور طورمار کرنا کی پہمائش اور تجزیہ کرنے کے لیئے استعمال ہوتا ہے</string>
+  <string name="preference_privacy_block_ads">اشتھار ٹریکرز کو بلاک کریں</string>
   <string name="preference_privacy_block_social">سماجی ٹریکرز بلاک کریں</string>
   <string name="preference_privacy_block_content">دیگر مواد کے ٹڑیکرز بلاک کریں</string>
-  <string name="preference_privacy_block_content_summary2">اہل بنانے کی وجہ سے شاید چند صفحات غیر متوقع برتائو کر سکتے ہیں</string>
   <string name="preference_privacy_category_cookies">کوکیز بلاک کری٘ں</string>
   <string name="preference_privacy_should_block_cookies_no_option">نہیں</string>
   <string name="preference_privacy_should_block_cookies_third_party_only_option">صرف 3-فریق کی کوکیاں بلاک کریں</string>
@@ -162,7 +158,6 @@
   <string name="contextmenu_open_in_new_tab">ربط نئی ٹیب میں کھولیں</string>
   <string name="contextmenu_image_warning"><![CDATA["محفوظ اور شیئر کردہ تصاویر "<b xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">&#1581;&#1592;&#1601; &#1606;&#1729;&#1740;&#1722; &#1705;&#1740; &#1580;&#1575;&#1574;&#1746;&#1711;&#1740;</b>" جب آپ اپنی %1$s تاریخ مٹاتے ہے۔"]]></string>
   <string name="firstrun_defaultbrowser_title">آپ کی نجی نوعیت کو پاور اپ کرے</string>
-  <string name="firstrun_defaultbrowser_text2">نجی برائوزنگ کو اگلی سطح پر لے کر جائیں۔ اشتہارات اور دیگر مواد جو آپ کی مختلف سائٹ پر سراغ راہ کاری کر کے صفحہ کہ لوڈ ہوبے کے وقت کو سست کر سکتا ہے۔</string>
   <string name="firstrun_search_title">آپ کی تلاش، آپ کی طرز پر</string>
   <string name="firstrun_search_text">کچھ مختلف ڈھونڈ رہے ہیں؟ سیٹنگوں سے دوسرے تلاش انجن کا انتخاب کریں۔</string>
   <string name="firstrun_shortcut_title">اپنی ابتدائی اسکرین پر تیز راہ کا ا ضافہ کریں</string>

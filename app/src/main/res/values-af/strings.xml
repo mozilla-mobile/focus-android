@@ -48,7 +48,6 @@
   <string name="preference_autocomplete_action_remove_content_description">Verwyder</string>
   <string name="preference_language">Taal</string>
   <string name="preference_category_privacy">Privaatheid</string>
-  <string name="preference_privacy_block_ads_summary">Sommige advertensies hou rekord van jou webwerfbesoeke, selfs al kliek jy nie op hulle nie</string>
   <string name="preference_privacy_block_social">Blokkeer sosiale speurders</string>
   <string name="preference_privacy_should_block_cookies_no_option">Nee</string>
   <string name="preference_privacy_should_block_cookies_yes_option">Ja</string>

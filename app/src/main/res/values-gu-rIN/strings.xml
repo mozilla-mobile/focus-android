@@ -30,7 +30,6 @@
   <string name="shortcut_erase_short_label">કાઢી નાખો</string>
   <string name="shortcut_erase_long_label">બ્રાઉઝિંગ ઇતિહાસને કાઢી નાખો</string>
   <string name="shortcut_erase_and_open_short_label">કાઢી નાખો અને ખોલો</string>
-  <string name="shortcut_erase_and_open_long_label">કાઢી નાખો અને %1$s ને ખોલો</string>
   <string name="text_selection_search_action">ખાનગી શોધ</string>
   <string name="about_content"><![CDATA[<p xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">%1$s &#2724;&#2734;&#2728;&#2759; &#2728;&#2751;&#2735;&#2690;&#2724;&#2765;&#2736;&#2723;&#2734;&#2750;&#2690; &#2734;&#2754;&#2709;&#2759; &#2715;&#2759;.</p>\n<p xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">"&#2724;&#2759;&#2728;&#2759; &#2703;&#2709; &#2710;&#2750;&#2728;&#2711;&#2752; &#2732;&#2765;&#2736;&#2750;&#2697;&#2717;&#2736; &#2724;&#2736;&#2752;&#2709;&#2759; &#2697;&#2730;&#2735;&#2763;&#2711; &#2709;&#2736;&#2763;: \n  "<ul>"\n     "<li>&#2703;&#2730;&#2765;&#2738;&#2751;&#2709;&#2759;&#2742;&#2728;&#2734;&#2750;&#2690; &#2716; &#2742;&#2763;&#2727;&#2763; &#2693;&#2728;&#2759; &#2732;&#2765;&#2736;&#2750;&#2697;&#2717; &#2709;&#2736;&#2763;</li>"\n     "<li>&#2719;&#2765;&#2736;&#2759;&#2709;&#2736;&#2765;&#2744;&#2728;&#2759; &#2693;&#2741;&#2736;&#2763;&#2727;&#2751;&#2724; &#2709;&#2736;&#2763; (&#2693;&#2725;&#2741;&#2750; &#2719;&#2765;&#2736;&#2759;&#2709;&#2736;&#2765;&#2744;&#2728;&#2759; &#2734;&#2690;&#2716;&#2754;&#2736;&#2752; &#2694;&#2730;&#2741;&#2750; &#2734;&#2750;&#2719;&#2759; &#2744;&#2759;&#2719;&#2751;&#2690;&#2711;&#2765;&#2744; &#2693;&#2730;&#2721;&#2759;&#2719; &#2709;&#2736;&#2763;)</li>"\n     "<li>&#2709;&#2754;&#2709;&#2752;&#2717; &#2724;&#2759;&#2734;&#2716; &#2742;&#2763;&#2727; &#2693;&#2728;&#2759; &#2732;&#2765;&#2736;&#2750;&#2697;&#2717;&#2751;&#2690;&#2711; &#2695;&#2724;&#2751;&#2745;&#2750;&#2744;&#2728;&#2759; &#2709;&#2750;&#2722;&#2752; &#2728;&#2750;&#2710;&#2741;&#2750; &#2734;&#2750;&#2719;&#2759; &#2709;&#2750;&#2722;&#2752; &#2728;&#2750;&#2710;&#2763;</li>"\n  "</ul>\n</p>\n<p xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">%1$s Mozilla &#2726;&#2765;&#2741;&#2750;&#2736;&#2750; &#2732;&#2728;&#2750;&#2741;&#2741;&#2750;&#2734;&#2750;&#2690; &#2694;&#2741;&#2759; &#2715;&#2759;. &#2693;&#2734;&#2750;&#2736;&#2763; &#2727;&#2765;&#2735;&#2759;&#2735; &#2724;&#2690;&#2726;&#2753;&#2736;&#2744;&#2765;&#2724;, &#2710;&#2753;&#2738;&#2765;&#2738;&#2750; &#2696;&#2728;&#2765;&#2719;&#2736;&#2728;&#2759;&#2719;&#2728;&#2759; &#2730;&#2765;&#2736;&#2763;&#2724;&#2765;&#2744;&#2750;&#2745;&#2728; &#2694;&#2730;&#2741;&#2763; &#2715;&#2759;.<br/>\n<a href="%2$s">&#2741;&#2727;&#2753; &#2716;&#2750;&#2723;&#2763;</a></p>]]></string>
   <string name="preference_privacy_and_security_header">ગોપનીયતા અને સુરક્ષા</string>
@@ -54,7 +53,6 @@
   <string name="preference_switch_autocomplete_topsites">ટોચની સાઇટ્સ માટે</string>
   <string name="preference_autocomplete_topsite_summary">સરનામાં બારમાં 450 કરતાં વધુ લોકપ્રિય URLs ને સ્વતઃપૂર્ણ કરવા માટે સક્રીય કરો.</string>
   <string name="preference_switch_autocomplete_user_list">તમે ઉમેરો છો તે સાઇટ્સ માટે</string>
-  <string name="preference_autocomplete_user_list_summary">સરનામાં બારમાં 450 કરતાં વધુ લોકપ્રિય URLs ને સ્વતઃપૂર્ણ કરવા માટે સક્રીય કરો.</string>
   <string name="preference_category_autocomplete_manage_sites">સાઇટ્સની ગોઠવણ કરો</string>
   <string name="preference_autocomplete_subitem_manage_sites">સાઇટ્સની ગોઠવણ કરો</string>
   <string name="preference_autocomplete_action_add">+ પોતાનું URL ઉમેરો</string>
@@ -77,14 +75,10 @@
   <string name="preference_language">ભાષા</string>
   <string name="preference_language_systemdefault">સિસ્ટમ મૂળભૂત</string>
   <string name="preference_category_privacy">ખાનગીપણું</string>
-  <string name="preference_privacy_block_ads">જાહેરાત ટ્રેકર્સને અવરોધિત કરો</string>
-  <string name="preference_privacy_block_ads_summary">કેટલાક જાહેરાતો સાઇટની મુલાકાત લે છે, પછી ભલે તમે જાહેરાતો પર ક્લિક ન કરો</string>
   <string name="preference_privacy_block_analytics">વિશ્લેષણાત્મક ટ્રેકર્સને અવરોધિત કરો</string>
-  <string name="preference_privacy_block_analytics_summary">ટેપીંગ અને સ્ક્રોલિંગ જેવી પ્રવૃત્તિઓ એકત્રિત કરવા, પૃથ્થકરણ અને માપવા માટે વપરાય છે</string>
+  <string name="preference_privacy_block_ads">જાહેરાત ટ્રેકર્સને અવરોધિત કરો</string>
   <string name="preference_privacy_block_social">સામાજિક ટ્રેકર્સને અવરોધિત કરો</string>
-  <string name="preference_privacy_block_social_summary">સાઇટ્સ પર એમ્બેડ કરેલા તમારી મુલાકાતોને ટ્રૅક કરવા અને શેર કરો બટનો જેવી કાર્યક્ષમતા દર્શાવવા માટે</string>
   <string name="preference_privacy_block_content">અન્ય સામગ્રી ટ્રેકર્સને અવરોધિત કરો</string>
-  <string name="preference_privacy_block_content_summary2">સક્રિય કરવાથી કેટલાક પૃષ્ઠો અનપેક્ષિત રૂપે વર્તન કરી શકે છે</string>
   <string name="preference_privacy_category_cookies">કૂકીઝને અવરોધિત કરો</string>
   <string name="preference_privacy_should_block_cookies_no_option">ના</string>
   <string name="preference_privacy_should_block_cookies_third_party_tracker_cookies_option">માત્ર તૃતીય-પક્ષ ટ્રેકર કૂકીઝને અવરોધિત કરો</string>
@@ -177,7 +171,6 @@
   <string name="contextmenu_open_in_new_tab">નવી ટેબમાં લિંક ખોલો</string>
   <string name="contextmenu_image_warning"><![CDATA["જ્યારે તમે %1$s ઇતિહાસને કાઢી નાખો ત્યારે સાચવેલા અને વહેંચાયેલ છબીઓ "<b xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">&#2709;&#2750;&#2722;&#2752; &#2728;&#2750;&#2710;&#2741;&#2750;&#2734;&#2750;&#2690; &#2694;&#2741;&#2742;&#2759; &#2728;&#2745;&#2752;&#2690;</b>.]]></string>
   <string name="firstrun_defaultbrowser_title">તમારી ગોપનીયતા વધારો</string>
-  <string name="firstrun_defaultbrowser_text2">ખાનગી બ્રાઉઝિંગ આગલા સ્તર પર લો. જાહેરાતો અને અન્ય સામગ્રીને અવરોધિત કરો કે જે તમને સાઇટ્સ પર ટ્રૅક કરી શકે છે અને પૃષ્ઠ લોડ વખતને નીચે કરી શકે છે.</string>
   <string name="firstrun_search_title">તમારી શોધ, તમારી રીત</string>
   <string name="firstrun_search_text">કંઈક અલગ શોધી રહ્યાં છો? સેટિંગ્સમાં બીજુ મૂળભૂત શોધ એંજિન પસંદ કરો.</string>
   <string name="firstrun_shortcut_title">તમારી મુખ્ય સ્ક્રીન પર શૉર્ટકટ્સ ઉમેરો</string>

@@ -55,8 +55,8 @@
   <string name="preference_language">Dìzh</string>
   <string name="preference_language_systemdefault">Kó díed lenɁ</string>
   <string name="preference_category_privacy">Ngyé-n cho wiɁ</string>
-  <string name="preference_privacy_block_ads">TòɁw-ná lô men dè-kè</string>
   <string name="preference_privacy_block_analytics">TòɁw-ná lô men dè-kè</string>
+  <string name="preference_privacy_block_ads">TòɁw-ná lô men dè-kè</string>
   <string name="preference_privacy_block_social">TòɁw-ná lô men dè-kè</string>
   <string name="preference_privacy_block_content">TòɁw-ná lô men dè-kè</string>
   <string name="preference_privacy_category_cookies">TòɁw cookies</string>
@@ -129,7 +129,6 @@
   <string name="contextmenu_image_save">Mb-lòɁ sóg lô mòn</string>
   <string name="contextmenu_open_in_new_tab">Mb-šàlɁ lô (lawo) kúb</string>
   <string name="firstrun_defaultbrowser_title">M-tób kì ko lùt ta wí</string>
-  <string name="firstrun_defaultbrowser_text2">Lleva la navegación privada a otro nivel. Bloquea anuncios publicitarios y otro tipo de contenido que puede rastrearte a través de los sitios y ralentizar el tiempo de descarga de las páginas.</string>
   <string name="firstrun_search_title">Kò kwàʔn lû, nêb lû</string>
   <string name="firstrun_search_text">¿Buscas algo diferente? Elige otro motor de búsqueda predeterminado en Ajustes.</string>
   <string name="firstrun_shortcut_title">Agrega atajos a la pantalla principal</string>

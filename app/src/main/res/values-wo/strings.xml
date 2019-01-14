@@ -43,14 +43,10 @@
   <string name="preference_language">Làkk</string>
   <string name="preference_language_systemdefault">Wàccaaleeg noste gi</string>
   <string name="preference_category_privacy">Sutura</string>
-  <string name="preference_privacy_block_ads">Téye toppkati siiwal</string>
-  <string name="preference_privacy_block_ads_summary">Yenn siiwal yi, donte bësoo ci, man nañoo topp dal yi ngay ubbi</string>
   <string name="preference_privacy_block_analytics">Téye toppkati xayma</string>
-  <string name="preference_privacy_block_analytics_summary">Dees leen di jëfandikoo ngir dajale, saytu ak natt yëngu-yëngu yu mel ni bës walla yéegal-wàcce aw xët</string>
+  <string name="preference_privacy_block_ads">Téye toppkati siiwal</string>
   <string name="preference_privacy_block_social">Téye toppkati mbaali mboolaay</string>
-  <string name="preference_privacy_block_social_summary">Dees leen di dugalaale ci dali web yi ngir topp sag njoow ak di wone ay solo niki bësu ngir séddoo</string>
   <string name="preference_privacy_block_content">Téye yaneen toppkati ëmbéef</string>
-  <string name="preference_privacy_block_content_summary2">Doxal gi man naa jur yenn xëti web yi am doxaliin gees foogulwoon</string>
   <string name="preference_privacy_secure_mode">Nëbbu</string>
   <string name="preference_privacy_stealth_summary">Nëbb xëti web yi sooy jàll ci beneen jëfekaay</string>
   <string name="preference_category_performance">Gaawaay</string>
@@ -128,7 +124,6 @@
   <string name="contextmenu_open_in_new_tab">Ubbi lëkkalekaay bi ci làcc wu wees</string>
   <string name="contextmenu_image_warning"><![CDATA["Péeñ yiñ nga séddoo ak yi nga denc "<b xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">deesu leen far</b>" soo fare jaar-jaaru %1$s."]]></string>
   <string name="firstrun_defaultbrowser_title">Dooleel sa sutura</string>
-  <string name="firstrun_defaultbrowser_text2">Yóbbul njoow ci sutura ci geneen tolluwaay. Téyeel siiwal yeek yeneen ëmbeef yi lay man topp ci yeneen dal yi te di yeexal yebug xët yi.</string>
   <string name="firstrun_search_title">Seet ak noo ko bëggee</string>
   <string name="firstrun_search_text">Leneen ngay seet? Tànnal beneen seetukaay ci jekk-jekkal yi.</string>
   <string name="firstrun_shortcut_title">Yokki lëkkalekaay ci njëlbeenu sa xoolu</string>

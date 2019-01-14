@@ -30,13 +30,13 @@
   <string name="shortcut_erase_short_label">Dileu</string>
   <string name="shortcut_erase_long_label">Dileu\'r hanes pori</string>
   <string name="shortcut_erase_and_open_short_label">Dileu ac agor</string>
-  <string name="shortcut_erase_and_open_long_label">Dileu ac agor %1$s</string>
   <string name="text_selection_search_action">Chwilio\'n Breifat</string>
   <string name="about_content"><![CDATA[<p xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">Gyda %1$s chi sy\'n rheoli.</p>\n<p xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">"Ei ddefnyddio fel porwr preifat:\n  "<ul>"\n    "<li>Chwilio a phori o fewn yr ap</li>"\n    "<li>Rhwystro tracwyr (neu ddiweddaru\'r gosodiadau i ganiat&#225;u tracwyr)</li>"\n    "<li>Dileu cwcis, yn ogystal &#226; hanes chwilio a phori</li>"\n  "</ul>\n</p>\n<p xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">Mae %1$s wedi ei gynhyrchu gan Mozilla. Ein amcan yw i hybu Rhyngrwyd iach ac agored.<br/>\n<a href="%2$s">Dysgu rhagor</a></p>]]></string>
   <string name="preference_privacy_and_security_header">Preifatrwydd a Diogelwch</string>
   <string name="preference_privacy_and_security_summary">Tracio, mewngofnodion, dewisiadau data</string>
   <string name="preference_search_summary">Gosod y rhagosodiad, awtogwblhau</string>
   <string name="preference_mozilla_summary">Ynghylch %1$s, cymorth</string>
+  <string name="preference_category_ad_blocking">Rhwystro Hysbysebion</string>
   <string name="preference_category_tracking_protection">Diogelwch rhag Tracio</string>
   <string name="preference_category_web_content">Cynnwys Gwe</string>
   <string name="preference_category_switching_apps">Newid Apiau</string>
@@ -54,7 +54,7 @@
   <string name="preference_switch_autocomplete_topsites">Am Hoff Wefannau</string>
   <string name="preference_autocomplete_topsite_summary">Galluogi i awtogwblhau dros 450 URL poblogaidd yn y bar cyfeiriad.</string>
   <string name="preference_switch_autocomplete_user_list">Eich Gwefannau Chi</string>
-  <string name="preference_autocomplete_user_list_summary">Galluogi i awtogwblhau dros 450 URL poblogaidd yn y bar cyfeiriad.</string>
+  <string name="preference_autocomplete_user_list_description">Galluogi awtogwblhau gwefannau sy\'n cael eu hychwanegu yma.</string>
   <string name="preference_category_autocomplete_manage_sites">Rheoli gwefannau</string>
   <string name="preference_autocomplete_subitem_manage_sites">Rheoli gwefannau</string>
   <string name="preference_autocomplete_action_add">+ Ychwanegu URL cyfaddas</string>
@@ -77,19 +77,25 @@
   <string name="preference_language">Iaith</string>
   <string name="preference_language_systemdefault">Rhagosodiad y system</string>
   <string name="preference_category_privacy">Preifatrwydd</string>
-  <string name="preference_privacy_block_ads">Rhwystro tracwyr hysbysebion</string>
-  <string name="preference_privacy_block_ads_summary">Mae rhai hysbysebion yn tracio ymweliadau â gwefannau, hyd yn oed heb i chi eu clicio</string>
+  <string name="preference_privacy_ads_block_ads">Rhwystro hysbysebion ac annifyrrwch eraill</string>
+  <string name="preference_privacy_ads_block_ads_summary">Yn rhwystro hysbysebion ac annifyrrwch eraill gan ddefnyddio rhestrau rhwystro gan Easylist, EasyPrivacy, Fanboy’s Annoyance, a 777Guard Mobile Ad Filter</string>
   <string name="preference_privacy_block_analytics">Rhwystro tracwyr dadansoddi</string>
-  <string name="preference_privacy_block_analytics_summary">Yn cael eu defnyddio i gasglu, dadansoddi a mesur gweithgareddau fel tapio a sgrolio</string>
+  <string name="preference_privacy_block_ads">Rhwystro tracwyr hysbysebion</string>
+  <string name="preference_privacy_block_ads_new_summary">Yn tynnu hysbysebion wedi eu cynllunio i dracio ymweliadau gwefannau hyd yn oed os nad ydych yn tapio arnyn nhw</string>
+  <string name="preference_privacy_block_analytics_new_summary">Yn rhwystro tracwyr sy\'n dadansoddi a mesur rhyngweithio fel tapio a sgrolio</string>
   <string name="preference_privacy_block_social">Rhwystro tracwyr cymdeithasol</string>
-  <string name="preference_privacy_block_social_summary">Wedi eu mewnblannu ar wefannau er mwyn tracio eich ymweliadau ac i ddangos swyddogaethau fel botymau rhannu</string>
+  <string name="preference_privacy_block_social_new_summary">Yn rhwystro tracwyr cyfryngau cymdeithasol sydd wedi eu mewnblannu ar wefannau, gan gynnwys botymau rhannu cymdeithasol</string>
   <string name="preference_privacy_block_content">Rhwystro tracwyr cynnwys eraill</string>
-  <string name="preference_privacy_block_content_summary2">Gall ei alluogi achosi i rai tudalennau i ymddwyn yn rhyfedd</string>
+  <string name="preference_privacy_block_content_new_summary">Yn rhwystro gweithgaredd tracio ond gall achosi i rai gwefannau a thudalennau i ymddwyn yn annisgwyl</string>
   <string name="preference_privacy_category_cookies">Rhwystro cwcis</string>
   <string name="preference_privacy_should_block_cookies_no_option">Na</string>
   <string name="preference_privacy_should_block_cookies_third_party_tracker_cookies_option">Rhwystro cwcis trydydd parti\'n unig</string>
   <string name="preference_privacy_should_block_cookies_third_party_only_option">Rhwystro cwcis trydydd parti\'n unig</string>
   <string name="preference_privacy_should_block_cookies_yes_option">Iawn</string>
+  <string name="preference_privacy_block_cookies_no">Na (caniatáu cwcis)</string>
+  <string name="preference_privacy_block_cookies_third_party_tracker">Rhwystro cwcis trydydd parti\'n unig (argymell)</string>
+  <string name="preference_privacy_block_cookies_third_party_only">Rhwystro pob cwci trydydd parti\n(gall achosi i wefannau dorri)</string>
+  <string name="preference_privacy_block_cookies_yes">Rhwystro pob cwci (bydd yn achosi i wefannau dorri)</string>
   <string name="preference_security_biometric">Defnyddio ôl bys i ddatgloi ap</string>
   <string name="preference_security_biometric_summary">Gall eich ôl bys ddatgloi %1$s os oes URL ar agor yn barod yn yr ap. Bydd y modd Dirgel ymlaen.</string>
   <string name="preference_privacy_secure_mode">Dirgel</string>
@@ -177,7 +183,7 @@
   <string name="contextmenu_open_in_new_tab">Agor dolen mewn tab newydd</string>
   <string name="contextmenu_image_warning"><![CDATA["Ni fydd delweddau sydd wedi eu cadw a\'u rhannu "<b xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">yn cael eu dileu</b>" pan fyddwch yn dileu hanes %1$s."]]></string>
   <string name="firstrun_defaultbrowser_title">Cryfhewch eich preifatrwydd</string>
-  <string name="firstrun_defaultbrowser_text2">Cymrwch bori preifat i\'r lefel nesaf. Rhwystrwch hysbysebion a chynnwys arall sy\'n gallu\'ch tracio ar draws wefannau ac arafu amserau llwytho tudalennau.</string>
+  <string name="firstrun_defaultbrowser_text_new">Rhwystro cynnwys fel hysbysebion a chod sy\'n eich dilyn o amgylch y we ac yn eich arafu. Defnyddiwch rhwystro hysbysebion i bori\'n gynt heb hysbysebion annifyr.</string>
   <string name="firstrun_search_title">Chwilio, cynhwysfawr</string>
   <string name="firstrun_search_text">Chwilio am rywbeth gwahanol? Dewiswch beiriant chwilio arall yn y Gosodiadau.</string>
   <string name="firstrun_shortcut_title">Ychwanegu llwybrau byr i\'ch sgrin cartref</string>
@@ -187,6 +193,8 @@
   <string name="firstrun_close_button">Iawn!</string>
   <string name="firstrun_skip_button">Hepgor</string>
   <string name="firstrun_next_button">Nesaf</string>
+  <string name="block_ads_card_title">Mae %1$s yn barod i rwystro hysbysebion</string>
+  <string name="block_ads_card_description">Nodwedd newydd! Porwch yn gynt drwy atal hysbysebion a chod sy\'n eich dilyn chi o amgylch y we.</string>
   <string name="content_blocking_disabled">-</string>
   <string name="dialog_addtohomescreen_action_add">Ychwanegu</string>
   <string name="dialog_addtohomescreen_action_cancel">Diddymu</string>
@@ -226,6 +234,7 @@
   <string name="biometric_auth_title">Datgloi %1$s</string>
   <string name="biometric_auth_description">Cyffwrdd a\'r synhwyrydd ôl bys i barhau.</string>
   <string name="biometric_auth_new_session">Sesiwn Newydd</string>
+  <string name="biometric_auth_open_link_new_session">Agor Dolen mewn Sesiwn Newydd</string>
   <string name="biometric_auth_image_description">Eicon ôl bys</string>
   <string name="biometric_auth_not_recognized_error">Ôl bys heb ei adnabod. Ceisiwch eto.</string>
   <string name="biometric_auth_moved_too_quickly">Symudodd y bys yn rhy gyflym. Ceisiwch eto.</string>
@@ -243,6 +252,8 @@
   <string name="tip_open_in_new_tab">Agor dolen mewn tab newydd\n Pwyso\'n hir ar unrhyw ddolen ar dudalen</string>
   <string name="tip_request_desktop">Gwell gweld gwefan bwrdd gwaith lawn?%1$s Dewislen &gt; Gwefan bwrdd gwaith</string>
   <string name="tip_disable_tips2">Diffodd awgrymiadau ar y sgrin cychwyn</string>
+  <string name="tip_block_ads">Pori\'n gynt drwy atal hysbysebion a chod sy\'n eich dilyn chi o amgylch y we.</string>
+  <string name="block_ads_title">Rhwystro hysbysebion</string>
   <string name="tip_explain_allowlist">Ymddiried yn y wefan?\nMae\'r rhestr caniatáu yn analluogi Diogelu rhag Tracio ar wefannau rydych yn ymddiried ynddyn nhw.</string>
   <string name="new_tab_opened_snackbar">Tab newydd wedi\'i agor</string>
   <string name="open_new_tab_snackbar">Newid</string>
@@ -263,4 +274,8 @@
   <string name="fatal_crash_report_close_button_label">Cau</string>
   <string name="fatal_crash_report_restart_firefox_label">Ailgychwyn %1$s</string>
   <string name="crash_report_send_crash_label">Anfon adroddiad chwalu at Mozilla</string>
+  <string name="content_blocking_enabled_snackbar_message">Mae Rhwystro Cynnwys wedi\'i alluogi</string>
+  <string name="content_blocking_disabled_snackbar_message">Mae Rhwystro Cynnwys wedi\'i analluogi</string>
+  <string name="content_blocking_snackbar_enable_action">Galluogi</string>
+  <string name="content_blocking_snackbar_disable_action">Analluogi</string>
 </resources>

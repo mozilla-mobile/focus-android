@@ -30,7 +30,6 @@
   <string name="shortcut_erase_short_label">Eliminar</string>
   <string name="shortcut_erase_long_label">Eliminar historial de navegación</string>
   <string name="shortcut_erase_and_open_short_label">Borrar y abrir</string>
-  <string name="shortcut_erase_and_open_long_label">Borrar y abrir %1$s</string>
   <string name="text_selection_search_action">Búsqueda privada</string>
   <string name="about_content"><![CDATA[<p xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">%1$s te da el control.</p>\n<p xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">"&#218;salo como navegador privado:\n  "<ul>"\n    "<li>Busca y navega en la propia aplicaci&#243;n</li>"\n    "<li>Bloquea a los rastreadores (o cambia los ajustes para permitirlos)</li>"\n    "<li>Limpia para borrar cookies y los historiales de b&#250;squeda y navegaci&#243;n</li>"\n  "</ul>\n</p>\n<p xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">Mozilla es la autora de %1$s. Nuestra misi&#243;n es promover un Internet saludable y abierto.<br/>\n<a href="%2$s">Descubre m&#225;s</a></p>]]></string>
   <string name="preference_privacy_and_security_header">Privacidad y seguridad</string>
@@ -54,7 +53,6 @@
   <string name="preference_switch_autocomplete_topsites">Para los sitios frecuentes</string>
   <string name="preference_autocomplete_topsite_summary">Activar para completar automáticamente más de 450 URLs populares en la barra de direcciones.</string>
   <string name="preference_switch_autocomplete_user_list">Para los sitios que añades</string>
-  <string name="preference_autocomplete_user_list_summary">Activar para completar automáticamente más de 450 URLs populares en la barra de direcciones.</string>
   <string name="preference_category_autocomplete_manage_sites">Administrar sitios</string>
   <string name="preference_autocomplete_subitem_manage_sites">Administrar sitios</string>
   <string name="preference_autocomplete_action_add">+ Agregar URL personalizada</string>
@@ -77,14 +75,10 @@
   <string name="preference_language">Idioma</string>
   <string name="preference_language_systemdefault">Predeterminado del sistema</string>
   <string name="preference_category_privacy">Privacidad</string>
-  <string name="preference_privacy_block_ads">Bloquear rastreadores de publicidad</string>
-  <string name="preference_privacy_block_ads_summary">Algunos anuncios, aunque no accedas a ellos, rastrean tus visitas a páginas web</string>
   <string name="preference_privacy_block_analytics">Bloquear rastreadores analíticos</string>
-  <string name="preference_privacy_block_analytics_summary">Se utilizan para recopilar, analizar y medir tus actividades, como cuándo seleccionas algo o te deslizas por la página</string>
+  <string name="preference_privacy_block_ads">Bloquear rastreadores de publicidad</string>
   <string name="preference_privacy_block_social">Bloquear rastreadores sociales</string>
-  <string name="preference_privacy_block_social_summary">Incorporados en las páginas para rastrear tus visitas y mostrar funcionalidad, como botones para compartir</string>
   <string name="preference_privacy_block_content">Bloquear rastreadores de otros contenidos</string>
-  <string name="preference_privacy_block_content_summary2">Si lo activas, puede que algunas páginas no funcionen correctamente</string>
   <string name="preference_privacy_category_cookies">Bloquear cookies</string>
   <string name="preference_privacy_should_block_cookies_no_option">No</string>
   <string name="preference_privacy_should_block_cookies_third_party_tracker_cookies_option">Bloquear solo cookies de rastreo de terceros</string>
@@ -177,7 +171,6 @@
   <string name="contextmenu_open_in_new_tab">Abrir enlace en una pestaña nueva</string>
   <string name="contextmenu_image_warning"><![CDATA["Las imágenes guardadas y compartidas "<b xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">no se borrar&#225;n</b>" cuando elimines el historial de %1$s."]]></string>
   <string name="firstrun_defaultbrowser_title">Potencia tu privacidad</string>
-  <string name="firstrun_defaultbrowser_text2">Lleva la navegación privada al siguiente nivel. Bloquea anuncios y otros contenidos que puedan rastrearte a través de los sitios y ralentizar la carga de las páginas.</string>
   <string name="firstrun_search_title">Tu búsqueda, a tu manera</string>
   <string name="firstrun_search_text">¿Buscas algo diferente? Elige otro motor de búsqueda predeterminado en Ajustes.</string>
   <string name="firstrun_shortcut_title">Añade accesos directos a tu pantalla de inicio</string>

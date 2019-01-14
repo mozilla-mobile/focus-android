@@ -30,7 +30,6 @@
   <string name="shortcut_erase_short_label">Vymazat</string>
   <string name="shortcut_erase_long_label">Vymazat historii prohlížení</string>
   <string name="shortcut_erase_and_open_short_label">Vymazat a otevřít</string>
-  <string name="shortcut_erase_and_open_long_label">Vymazat a otevřít %1$s</string>
   <string name="text_selection_search_action">Vyhledávejte soukromě</string>
   <string name="about_content"><![CDATA[<p xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">%1$s v&#225;m d&#225;v&#225; kontrolu.</p>\n<p xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">"Pou&#382;&#237;vejte ho jako soukrom&#253; prohl&#237;&#382;e&#269;:\n  "<ul>"\n    "<li>Vyhled&#225;vejte a prohl&#237;&#382;ejte p&#345;&#237;mo v aplikaci</li>"\n    "<li>Blokujte sledovac&#237; prvky (nebo aktualizujte nastaven&#237; pro povolen&#237; sledovac&#237;ch prvk&#367;)</li>"\n    "<li>Tla&#269;&#237;tkem sma&#382;te cookies a historii vyhled&#225;v&#225;n&#237; a prohl&#237;&#382;en&#237;</li>"\n  "</ul>\n</p>\n<p xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">%1$s je vyv&#237;jen Mozillou. Na&#353;&#237; mis&#237; je podporovat zdrav&#253; a otev&#345;en&#253; internet.<br/>\n<a href="%2$s">Zjist&#283;te v&#237;ce</a></p>]]></string>
   <string name="preference_privacy_and_security_header">Soukromí a zabezpečení</string>
@@ -54,7 +53,6 @@
   <string name="preference_switch_autocomplete_topsites">Našeptávat top stránky</string>
   <string name="preference_autocomplete_topsite_summary">Zapne našeptávání více než 450 adres oblíbených stránek.</string>
   <string name="preference_switch_autocomplete_user_list">Našeptávat vlastní stránky</string>
-  <string name="preference_autocomplete_user_list_summary">Povolí našeptávání adres stránek, které si sami vyberete.</string>
   <string name="preference_category_autocomplete_manage_sites">Spravovat stránky</string>
   <string name="preference_autocomplete_subitem_manage_sites">Spravovat stránky</string>
   <string name="preference_autocomplete_action_add">+ Přidat vlastní stránku</string>
@@ -77,14 +75,10 @@
   <string name="preference_language">Jazyk</string>
   <string name="preference_language_systemdefault">Systémové nastavení</string>
   <string name="preference_category_privacy">Soukromí</string>
-  <string name="preference_privacy_block_ads">Blokovat sledující reklamy</string>
-  <string name="preference_privacy_block_ads_summary">Některé reklamy sledují návštěvy stránek i v případě, že na reklamy nekliknete</string>
   <string name="preference_privacy_block_analytics">Blokovat analytické prvky</string>
-  <string name="preference_privacy_block_analytics_summary">Slouží k shromážďování, analýze a měření aktivit jako je klepnutí nebo posouvání</string>
+  <string name="preference_privacy_block_ads">Blokovat sledující reklamy</string>
   <string name="preference_privacy_block_social">Blokovat sledovací prvky sociálních sítí</string>
-  <string name="preference_privacy_block_social_summary">Vloženo do stránek pro sledování vašich návštěv a zobrazování funkcí jako tlačítka pro sdílení</string>
   <string name="preference_privacy_block_content">Blokovat ostatní sledovací prvky</string>
-  <string name="preference_privacy_block_content_summary2">Zapnutí může způsobit, že se některé stránky budou chovat neočekávaně</string>
   <string name="preference_privacy_category_cookies">Blokovat cookies</string>
   <string name="preference_privacy_should_block_cookies_no_option">Ne</string>
   <string name="preference_privacy_should_block_cookies_third_party_tracker_cookies_option">Blokovat pouze sledovací cookies třetích stran</string>
@@ -154,10 +148,10 @@
   <string name="errorpage_title">Chyba při načítání stránky</string>
   <string name="errorpage_refresh">Zkusit znovu</string>
   <string name="error_connectionfailure_title">Nepodařilo se připojit</string>
-  <string name="error_connectionfailure_message"><![CDATA[<ul xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">"\n        "<li>Str&#225;nka m&#367;&#382;e b&#253;t do&#269;asn&#283; nedostupn&#225; nebo zanepr&#225;zdn&#283;n&#225;. Zkuste to znovu za p&#225;r okam&#382;ik&#367;.</li>"\n        "<li>Pokud nem&#367;&#382;ete na&#269;&#237;st &#382;&#225;dnou str&#225;nku, zkontrolujte va&#353;e mobiln&#237; data nebo Wi-Fi p&#345;ipojen&#237;.</li>"\n      "</ul>]]></string>
+  <string name="error_connectionfailure_message"><![CDATA[<ul xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">"\n        "<li>Str&#225;nka m&#367;&#382;e b&#253;t do&#269;asn&#283; nedostupn&#225; nebo zanepr&#225;zdn&#283;n&#225;. Zkuste to znovu za p&#225;r okam&#382;ik&#367;.</li>"\n        "<li>Pokud nem&#367;&#382;ete na&#269;&#237;st &#382;&#225;dnou str&#225;nku, zkontrolujte sv&#225; mobiln&#237; data nebo Wi-Fi p&#345;ipojen&#237;.</li>"\n      "</ul>]]></string>
   <string name="error_timeout_title">Časový limit spojení vypršel</string>
   <string name="error_hostLookup_title">Server nebyl nalezen</string>
-  <string name="error_hostLookup_message"><![CDATA[<ul xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">"\n        "<li>"Zkontrolujte adresu pro p&#345;eklepy, jako nap&#345;&#237;klad\n          "<strong>ww</strong>".example.com m&#237;sto\n          "<strong>www</strong>.example.com</li>"\n        "<li>Pokud nem&#367;&#382;ete na&#269;&#237;st &#382;&#225;dnou str&#225;nku, zkontrolujte va&#353;e mobiln&#237; data nebo Wi-Fi p&#345;ipojen&#237;.</li>"\n      "</ul>]]></string>
+  <string name="error_hostLookup_message"><![CDATA[<ul xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">"\n        "<li>"Zkontrolujte adresu pro p&#345;eklepy, jako nap&#345;&#237;klad\n          "<strong>ww</strong>".example.com m&#237;sto\n          "<strong>www</strong>.example.com</li>"\n        "<li>Pokud nem&#367;&#382;ete na&#269;&#237;st &#382;&#225;dnou str&#225;nku, zkontrolujte sv&#225; mobiln&#237; data nebo Wi-Fi p&#345;ipojen&#237;.</li>"\n      "</ul>]]></string>
   <string name="error_malformedURI_title">Neplatná adresa</string>
   <string name="error_malformedURI_message"><![CDATA[<ul xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">"\n  "<li>"Webov&#233; adresy jsou obvykle ps&#225;ny jako "<strong>http://www.example.com/</strong></li>"\n  "<li>"Ujist&#283;te se, &#382;e pou&#382;&#237;v&#225;te b&#283;&#382;n&#225; lom&#237;tka (tj. "<strong>/</strong>).</li>\n</ul>]]></string>
   <string name="error_redirectLoop_title">Smyčka při přesměrování</string>
@@ -177,7 +171,6 @@
   <string name="contextmenu_open_in_new_tab">Otevřít odkaz v novém panelu</string>
   <string name="contextmenu_image_warning"><![CDATA["Uložené a sdílené obrázky "<b xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">nebudou smaz&#225;ny</b>" když smažete historii aplikace %1$s."]]></string>
   <string name="firstrun_defaultbrowser_title">Posuňte své soukromí na vyšší úroveň</string>
-  <string name="firstrun_defaultbrowser_text2">Anonymní prohlížení dostalo nový rozměr. Blokuje reklamy a další obsah, který vás sleduje napříč stránkami a zpomaluje načítání.</string>
   <string name="firstrun_search_title">Vyhledávání jak vy chcete</string>
   <string name="firstrun_search_text">Hledáte něco jiného? Zvolte si v nastavení jiný výchozí vyhledávač.</string>
   <string name="firstrun_shortcut_title">Přidejte si zkratky na vaši domovskou obrazovku</string>

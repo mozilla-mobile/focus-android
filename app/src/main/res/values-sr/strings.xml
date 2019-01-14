@@ -62,14 +62,10 @@
   <string name="preference_language">Језик</string>
   <string name="preference_language_systemdefault">Системски подразумеван</string>
   <string name="preference_category_privacy">Приватност</string>
-  <string name="preference_privacy_block_ads">Блокирај оглашиваче</string>
-  <string name="preference_privacy_block_ads_summary">Неке рекламе прате посете сајтова чак и када не кликнете на њих</string>
   <string name="preference_privacy_block_analytics">Блокирај аналитичке пратиоце</string>
-  <string name="preference_privacy_block_analytics_summary">Користи се за сакупљање, анализирање и мерење активности као што су кликтање и скроловање</string>
+  <string name="preference_privacy_block_ads">Блокирај оглашиваче</string>
   <string name="preference_privacy_block_social">Блокирај друштвене пратиоце</string>
-  <string name="preference_privacy_block_social_summary">Уграђене у сајтове како би пратиле ваше посете и приказивале дугмиће за дељење</string>
   <string name="preference_privacy_block_content">Блокирај пратиоце осталог садржаја</string>
-  <string name="preference_privacy_block_content_summary2">Омогућавање може утицати лоше на неке странице</string>
   <string name="preference_privacy_category_cookies">Блокирај колачиће</string>
   <string name="preference_privacy_should_block_cookies_no_option">Не</string>
   <string name="preference_privacy_should_block_cookies_third_party_only_option">Само колачиће од трећих лица</string>
@@ -159,7 +155,6 @@
   <string name="contextmenu_open_in_new_tab">Отвори везу у новом језичку</string>
   <string name="contextmenu_image_warning"><![CDATA["Сачуване и дељене слике "<b xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">&#1085;&#1077;&#1115;&#1077; &#1073;&#1080;&#1090;&#1080; &#1086;&#1073;&#1088;&#1080;&#1089;&#1072;&#1085;&#1077;</b>" када обришете %1$s историјат."]]></string>
   <string name="firstrun_defaultbrowser_title">Ојачајте вашу приватност</string>
-  <string name="firstrun_defaultbrowser_text2">Побољшајте приватност током сурфовања. Блокирајте рекламе и друге саржаје који вас прати путем сајтова и убрзајте учитавање страница.</string>
   <string name="firstrun_search_title">Ваше претраге, ваш начин</string>
   <string name="firstrun_search_text">Тражите нешто другачије? Изаберите други подразумевани претраживач у поставкама.</string>
   <string name="firstrun_shortcut_title">Додајте пречице на вашем почетном екрану</string>

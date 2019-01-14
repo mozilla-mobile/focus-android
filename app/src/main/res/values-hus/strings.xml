@@ -26,7 +26,6 @@
   <string name="notification_action_erase_and_open">Ka pakuw ani ka japiy</string>
   <string name="shortcut_erase_short_label">Ka pakuw</string>
   <string name="shortcut_erase_long_label">Ka pakuw an dhuchlab xi in olnál jant\'oj a aliyamal</string>
-  <string name="shortcut_erase_and_open_long_label">Ka pakuw ani ka japiy %1$s</string>
   <string name="text_selection_search_action">Kit alim tsinat</string>
   <string name="about_content"><![CDATA[<p xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">%1$s ti pidh&#225;l a awiltal.</p>\n<p xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">"Ka eyendha\' an eyendhan&#233;l abal kit tsinat tsa\'bixin:\n  "<ul>"\n    "<li>Ka aliy ani ka tsa\'biy an xeklek, ti eyendhan&#233;l</li>"\n    "<li>Ka mapchij in belil an alim (o ka t\'ojojoy max a le\' ka jila\' ka otsits)</li>"\n    "<li>Ka pakuw abal ka tixk\'a\' an tsakam tsi\'madh bok\'&#243;l ani patal axi a aliyamal ani a tsa\'biyamal</li>"\n  "</ul>\n</p>\n<p xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">%1$s ts\'ejkadh k\'al Mozilla. I le\' abal ka wa\'tsin jun i ebtsol&#243;m lubach ani japidh.<br/>\n<a href="%2$s">Xa exla\'yej</a></p>]]></string>
   <string name="preference_privacy_and_security_header">Tsinataláb ani belkadhtaláb</string>
@@ -47,7 +46,6 @@
   <string name="preference_state_off">Ka tepdha\'</string>
   <string name="preference_subitem_autocomplete">Ka kwetém kidhban an URL</string>
   <string name="preference_autocomplete_topsite_summary">ka lek\'wtsiy abal kin kwetém kidhbay 450 i URLs abal ebál, axi lej exladh, ti jolataláb ju\'taj it alim.</string>
-  <string name="preference_autocomplete_user_list_summary">ka lek\'wtsiy abal kin kwetém kidhbay 450 i URLs abal ebál, axi lej exladh, ti jolataláb ju\'taj it alim.</string>
   <string name="preference_autocomplete_action_add">+ Ka punuw an URL axi tsab bijidh</string>
   <string name="preference_autocomplete_title_add">Ka punuw an URL axi tsab bijidh</string>
   <string name="custom_autocomplete_quick_add">Ka punuw an URL axi tsab bijidh</string>
@@ -67,14 +65,10 @@
   <string name="preference_language">Káwintaláb</string>
   <string name="preference_language_systemdefault">Jant\'ini\' ok\'ox punudh an sistema</string>
   <string name="preference_category_privacy">Tsinataláb</string>
-  <string name="preference_privacy_block_ads">Yab ka jila\' kit olchin axi nujuwáb</string>
-  <string name="preference_privacy_block_ads_summary">Wa\'ats axi in olnál an nujnél, ani in tsu\'tal jant\'oj a met\'al al an xeklek axi a tsa\'biyal, aba\' ij ka ni\'a\' eblim al an olchixtaláb</string>
   <string name="preference_privacy_block_analytics">Ka kuba\' an alim axi u tsalpax</string>
-  <string name="preference_privacy_block_analytics_summary">Eynal abal kin tamkuy, kin met\'a\' ani kin lejbay an t\'ajbiláb, ejtil ka ni\'a\' ani ka tadhiy</string>
+  <string name="preference_privacy_block_ads">Yab ka jila\' kit olchin axi nujuwáb</string>
   <string name="preference_privacy_block_social">Ka kuba\' an alim in k\'al an buk\'ul káwchik</string>
-  <string name="preference_privacy_block_social_summary">Punudh al an xeklek abal ka exláj jawa\' a tsa\'biyamal ani in tejwa\'medhal ejtil an ni\'omtaláb ka buk\'uw</string>
   <string name="preference_privacy_block_content">Ka kuba\' an alim xi in aliyal jant\'o in kwa\'al an xeklek</string>
-  <string name="preference_privacy_block_content_summary2">Max ka lek\'wtsiy, wa\'ats i xeklek axi yab ne\'ets ka alwa\' tejwa\'mej</string>
   <string name="preference_privacy_category_cookies">Ka kuba\' an cookies</string>
   <string name="preference_privacy_should_block_cookies_no_option">Ibaj</string>
   <string name="preference_privacy_should_block_cookies_third_party_tracker_cookies_option">Ka kuba\' an cookies xi in k\'al pil jita\'</string>
@@ -165,7 +159,6 @@
   <string name="contextmenu_open_in_new_tab">Ka japiy an ts\'aj al pil i xeklek</string>
   <string name="contextmenu_image_warning"><![CDATA["An k\'ot\'biláb axi a dheyamal, ani axi a buk\'umal "<b xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">yab ne\'ets ka pakuwat</b>" tam ka pakuw an dhuchlab axi in ulal jawa\' a tsa\'biyamal %1$s."]]></string>
   <string name="firstrun_defaultbrowser_title">Ka k\'adhbanchij in tsapik an tsinataláb</string>
-  <string name="firstrun_defaultbrowser_text2">Ka ne\'dha\' ebál an tsinat tsa\'bixtaláb. Ka kuba\' an olnom ani pilchik i tejwa\'medhomtaláb axi u awil ti tsinat met\'a\' al an xeklek, ani kin t\'aja\' abal an xeklekchik yab ka dhubat tejwa\'mej.</string>
   <string name="firstrun_search_title">A alimtal jant\'in tat a le\'</string>
   <string name="firstrun_search_text">¿A aliyal jant\'oj pil? Ka t\'ojojoy pil i alim.</string>
   <string name="firstrun_shortcut_title">Ka punuw tin ok\'ox wal a pat\'alil, an bél xi kin taja\' kit ulits dhubat</string>

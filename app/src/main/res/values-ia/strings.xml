@@ -30,7 +30,6 @@
   <string name="shortcut_erase_short_label">Eliminar</string>
   <string name="shortcut_erase_long_label">Eliminar le chronologia de navigation</string>
   <string name="shortcut_erase_and_open_short_label">Eliminar e aperir</string>
-  <string name="shortcut_erase_and_open_long_label">Eliminar e aperir %1$s</string>
   <string name="text_selection_search_action">Cercar privatemente</string>
   <string name="about_content"><![CDATA[<p xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">Usante %1$s, tu es al commando.</p>\n<p xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">"Usa lo como un navigator private&#160;:\n  "<ul>"\n    "<li>Cerca e naviga directemente in le application</li>"\n    "<li>Bloca le traciatores (o actualisa le parametros pro permitter traciatores)</li>"\n    "<li>" &#8220;Eliminar&#8221; pro deler le cookies e tamben le chronologia de recercas e de navigation"</li>\n</ul>\n</p>\n<p xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">%1$s es producite per Mozilla. Nostre mission es promover un Internet san e aperite.<br/>\n<a href="%2$s">Saper plus</a></p>]]></string>
   <string name="preference_privacy_and_security_header">Confidentialitate &amp; securitate</string>
@@ -54,7 +53,6 @@
   <string name="preference_switch_autocomplete_topsites">Pro le sitos le plus visitate</string>
   <string name="preference_autocomplete_topsite_summary">Activa pro auto-completar plus de 450 URLs popular in le barra de adresses.</string>
   <string name="preference_switch_autocomplete_user_list">Pro le sitos que tu adde</string>
-  <string name="preference_autocomplete_user_list_summary">Activa pro auto-completar plus de 450 URLs popular in le barra de adresses.</string>
   <string name="preference_category_autocomplete_manage_sites">Gerer le sitos</string>
   <string name="preference_autocomplete_subitem_manage_sites">Gerer le sitos</string>
   <string name="preference_autocomplete_action_add">+ Adder URL personalisate</string>
@@ -77,14 +75,10 @@
   <string name="preference_language">Lingua</string>
   <string name="preference_language_systemdefault">Valor predefinite per le systema</string>
   <string name="preference_category_privacy">Confidentialitate</string>
-  <string name="preference_privacy_block_ads">Blocar le traciatores de publicitate</string>
-  <string name="preference_privacy_block_ads_summary">Alcun publicitates tracia le visitas al sitos, anque si tu non los clicca</string>
   <string name="preference_privacy_block_analytics">Blocar le traciatores analytic</string>
-  <string name="preference_privacy_block_analytics_summary">Usate pro colliger, analysar e mensurar activitates como toccar e rolar</string>
+  <string name="preference_privacy_block_ads">Blocar le traciatores de publicitate</string>
   <string name="preference_privacy_block_social">Blocar le traciatores social</string>
-  <string name="preference_privacy_block_social_summary">Integrate al sitos pro traciar tu visitas e monstrar functionalitates como buttones de compartir</string>
   <string name="preference_privacy_block_content">Blocar le altere traciatores de contento</string>
-  <string name="preference_privacy_block_content_summary2">Activar isto pote facer le paginas se comportar de maniera inexpectate</string>
   <string name="preference_privacy_category_cookies">Blocar le cookies</string>
   <string name="preference_privacy_should_block_cookies_no_option">No</string>
   <string name="preference_privacy_should_block_cookies_third_party_tracker_cookies_option">Blocar solo le cookies traciator de tertie partes</string>
@@ -177,7 +171,6 @@
   <string name="contextmenu_open_in_new_tab">Aperir le ligamine in un nove scheda</string>
   <string name="contextmenu_image_warning"><![CDATA["Le imagines salvate e compartite "<b xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">non essera delite</b>" quando tu elimina le chronologia de %1$s."]]></string>
   <string name="firstrun_defaultbrowser_title">Reinfortia tu confidentialitate</string>
-  <string name="firstrun_defaultbrowser_text2">Porta le navigation private al nivello superior. Bloca publicitates e altere contentos que pote traciar te per le sitos e relentar le tempore de carga del paginas.</string>
   <string name="firstrun_search_title">Le recerca a tu gusto</string>
   <string name="firstrun_search_text">Cerca tu qualcosa differente? Elige un altere motor de recerca in le parametros.</string>
   <string name="firstrun_shortcut_title">Adde accessos directe a tu schermo initial</string>

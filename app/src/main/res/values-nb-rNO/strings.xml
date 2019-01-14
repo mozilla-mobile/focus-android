@@ -30,7 +30,6 @@
   <string name="shortcut_erase_short_label">Slett</string>
   <string name="shortcut_erase_long_label">Slett nettleserhistorikk</string>
   <string name="shortcut_erase_and_open_short_label">Slett og åpne</string>
-  <string name="shortcut_erase_and_open_long_label">Slett og åpne %1$s</string>
   <string name="text_selection_search_action">Søk privat</string>
   <string name="about_content"><![CDATA[<p xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">%1$s gir deg kontroll.</p>\n<p xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">"Bruk den som en privat nettleser:\n  "<ul>"\n    "<li>S&#248;k og surf rett i appen</li>"\n    "<li>Blokker sporere (eller oppdater innstillingene for &#229; tillate sporere)</li>"\n    "<li>Slett for &#229; fjerne infokapsler samt s&#248;k- og nettleserhistorikk</li>"\n  "</ul>\n</p>\n<p xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">%1$s er produsert av Mozilla. V&#229;r misjon er &#229; fremme et sunt, &#229;pent Internett.<br/>\n<a href="%2$s">Les mer</a></p>]]></string>
   <string name="preference_privacy_and_security_header">Personvern og sikkerhet</string>
@@ -54,7 +53,6 @@
   <string name="preference_switch_autocomplete_topsites">For toppnettsteder</string>
   <string name="preference_autocomplete_topsite_summary">Aktiver for å autofullføre mer enn 450 populære nettadresser i adressefeltet.</string>
   <string name="preference_switch_autocomplete_user_list">For nettsteder du legger til</string>
-  <string name="preference_autocomplete_user_list_summary">Aktiver for å autofullføre mer enn 450 populære nettadresser i adressefeltet.</string>
   <string name="preference_category_autocomplete_manage_sites">Behandle nettsteder</string>
   <string name="preference_autocomplete_subitem_manage_sites">Behandle nettsteder</string>
   <string name="preference_autocomplete_action_add">+ Legg til tilpasset nettadresse</string>
@@ -77,14 +75,10 @@
   <string name="preference_language">Språk</string>
   <string name="preference_language_systemdefault">Systemstandard</string>
   <string name="preference_category_privacy">Personvern</string>
-  <string name="preference_privacy_block_ads">Blokker reklamesporere</string>
-  <string name="preference_privacy_block_ads_summary">Noen annonser sporer nettstedbesøk, selv om du ikke klikker på annonsene</string>
   <string name="preference_privacy_block_analytics">Blokker analysesporere</string>
-  <string name="preference_privacy_block_analytics_summary">Brukt for å samle inn, analysere og måle aktiviteter som tastetrykk og rulling</string>
+  <string name="preference_privacy_block_ads">Blokker reklamesporere</string>
   <string name="preference_privacy_block_social">Blokker sosiale media-sporere</string>
-  <string name="preference_privacy_block_social_summary">Innebygd på nettsteder for å spore besøkene dine og å vise funksjonalitet som dele-knapper</string>
   <string name="preference_privacy_block_content">Blokker andre innholdssporere</string>
-  <string name="preference_privacy_block_content_summary2">Aktivering kan føre til at noen sider oppfører seg uventet</string>
   <string name="preference_privacy_category_cookies">Blokker infokapsler</string>
   <string name="preference_privacy_should_block_cookies_no_option">Nei</string>
   <string name="preference_privacy_should_block_cookies_third_party_tracker_cookies_option">Blokker bare tredjepartssporingsinfokapsler</string>
@@ -177,7 +171,6 @@
   <string name="contextmenu_open_in_new_tab">Åpne lenke i ny fane</string>
   <string name="contextmenu_image_warning"><![CDATA["Lagrede og delte bilder "<b xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">vil ikke bli fjernet</b>" når du sletter %1$s-historikken."]]></string>
   <string name="firstrun_defaultbrowser_title">Styrk personvernet ditt</string>
-  <string name="firstrun_defaultbrowser_text2">Ta privat nettlesing til neste nivå. Blokker annonser og annet innhold som kan spore deg på tvers av nettsteder og som kan gjøre nedlasting av nettsider tregere.</string>
   <string name="firstrun_search_title">Ditt søk på din måte</string>
   <string name="firstrun_search_text">Søker du etter noe annet? Velg en annen standard søkemotor i innstillinger.</string>
   <string name="firstrun_shortcut_title">Legg til snarveier på startskjermen</string>
@@ -263,4 +256,6 @@
   <string name="fatal_crash_report_close_button_label">Lukk</string>
   <string name="fatal_crash_report_restart_firefox_label">Start %1$s på nytt</string>
   <string name="crash_report_send_crash_label">Send krasjrapport til Mozilla</string>
+  <string name="content_blocking_snackbar_enable_action">Slå på</string>
+  <string name="content_blocking_snackbar_disable_action">Slå av</string>
 </resources>
