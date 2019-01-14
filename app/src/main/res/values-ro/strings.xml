@@ -30,7 +30,6 @@
   <string name="shortcut_erase_short_label">Șterge</string>
   <string name="shortcut_erase_long_label">Șterge istoricul de navigare</string>
   <string name="shortcut_erase_and_open_short_label">Șterge și deschide</string>
-  <string name="shortcut_erase_and_open_long_label">Șterge și deschide %1$s</string>
   <string name="text_selection_search_action">Caută într-un mod privat</string>
   <string name="about_content"><![CDATA[<p xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">%1$s te pune &#238;n control.</p>\n<p xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">"Folose&#537;te-l ca browser privat:\n  "<ul>"\n    "<li>Caut&#259; &#537;i navigheaz&#259; chiar &#238;n aplica&#539;ie</li>"\n    "<li>Blocheaz&#259; elementele de urm&#259;rire (sau actualizeaz&#259; set&#259;rile pentru a le permite)</li>"\n    "<li>&#536;terge pentru eliminarea cookie-urilor &#537;i a istoricului de c&#259;utare &#537;i de navigare</li>"\n  "</ul>\n</p>\n<p xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">%1$s este produs de Mozilla. Misiunea noastr&#259; este s&#259; promov&#259;m un internet deschis &#537;i s&#259;n&#259;tos.<br/>\n<a href="%2$s">Afl&#259; mai multe</a></p>]]></string>
   <string name="preference_privacy_and_security_header">Confidențialitate și securitate</string>
@@ -54,7 +53,6 @@
   <string name="preference_switch_autocomplete_topsites">Pentru site-uri de top</string>
   <string name="preference_autocomplete_topsite_summary">Activează pentru a completa automat peste 450 de URL-uri populare în bara de adresă.</string>
   <string name="preference_switch_autocomplete_user_list">Pentru site-uri pe care le adaugi</string>
-  <string name="preference_autocomplete_user_list_summary">Activează pentru a completa automat peste 450 de URL-uri populare în bara de adresă.</string>
   <string name="preference_category_autocomplete_manage_sites">Gestionează site-urile</string>
   <string name="preference_autocomplete_subitem_manage_sites">Gestionează site-urile</string>
   <string name="preference_autocomplete_action_add">+ Adaugă URL personalizat</string>
@@ -77,14 +75,10 @@
   <string name="preference_language">Limbă</string>
   <string name="preference_language_systemdefault">Setarea implicită a sistemului</string>
   <string name="preference_category_privacy">Confidențialitate</string>
-  <string name="preference_privacy_block_ads">Blochează elementele de urmărire publicitare</string>
-  <string name="preference_privacy_block_ads_summary">Anumite reclame urmăresc vizitele pe site, chiar dacă nu dai clic pe reclame</string>
   <string name="preference_privacy_block_analytics">Blochează elementele de urmărire analitice</string>
-  <string name="preference_privacy_block_analytics_summary">Folosite pentru a colecta, a analiza și a măsura activități precum atingerea și derularea</string>
+  <string name="preference_privacy_block_ads">Blochează elementele de urmărire publicitare</string>
   <string name="preference_privacy_block_social">Blochează elementele de urmărire ale rețelelor sociale</string>
-  <string name="preference_privacy_block_social_summary">Încorporate în site-uri pentru a-ți urmări vizitele și a afișa funcții precum butoanele de distribuire</string>
   <string name="preference_privacy_block_content">Blochează alte elemente de urmărire de conținut</string>
-  <string name="preference_privacy_block_content_summary2">Activarea poate cauza un comportament neașteptat al unor pagini</string>
   <string name="preference_privacy_category_cookies">Blochează cookie-urile</string>
   <string name="preference_privacy_should_block_cookies_no_option">Nu</string>
   <string name="preference_privacy_should_block_cookies_third_party_tracker_cookies_option">Blochează numai cookie-urile de urmărire de la terți</string>
@@ -177,7 +171,6 @@
   <string name="contextmenu_open_in_new_tab">Deschide într-o filă nouă</string>
   <string name="contextmenu_image_warning"><![CDATA["Imaginile salvate și partajate "<b xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">nu vor fi &#238;ndep&#259;rtate</b>" când ștergi istoricul %1$s."]]></string>
   <string name="firstrun_defaultbrowser_title">Consolidează-ți confidențialitatea</string>
-  <string name="firstrun_defaultbrowser_text2">Du navigarea privată la nivelul următor. Blochează reclamele și alte tipuri de conținut care te pot urmări pe site-uri și care îngreunează timpii de încărcare.</string>
   <string name="firstrun_search_title">Caută în felul tău</string>
   <string name="firstrun_search_text">Cauți ceva diferit? Alege un alt motor de căutare implicit din Setări.</string>
   <string name="firstrun_shortcut_title">Adaugă scurtături la ecranul principal</string>

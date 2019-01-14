@@ -62,14 +62,10 @@
   <string name="preference_language">Yolb\'al</string>
   <string name="preference_language_systemdefault">Iyak\'ib\'al u taq\'onb\'ale\' uve\' at kan chitu\'</string>
   <string name="preference_category_privacy">Tetz kuxhtu\'</string>
-  <string name="preference_privacy_block_ads">Maj ivatz unq\'a tiinsan tetz unq\'a vee\' ni tal tziile\'</string>
-  <string name="preference_privacy_block_ads_summary">At jununil unq\'a vee\' ni taltziile\' uve\' ni tiinsan unq\'a kame\' uve\' napich\'u\', kuxh ye\'xh kam nalaae\'</string>
   <string name="preference_privacy_block_analytics">Maj ivatz unq\'a tiinsab\' tetze\' uve\' ni pich\'un</string>
-  <string name="preference_privacy_block_analytics_summary">Ni b\'anb\'ele\' ti\' imolpe\', ipich\'ule\', isajil aq\'on Kam ikaape\' as iyikule\'</string>
+  <string name="preference_privacy_block_ads">Maj ivatz unq\'a tiinsan tetz unq\'a vee\' ni tal tziile\'</string>
   <string name="preference_privacy_block_social">Maj ivatz unq\'a tiinsan tetz tenam</string>
-  <string name="preference_privacy_block_social_summary">Atje\' stiib\'a tulaj ti\'aj unq\'a vee\' aq\' al uva\' la tiinsal uve\' kat apich\'u as la ik\'uch unq\'a lak\'b\'ale\' ti\' ijatxpe\'</string>
   <string name="preference_privacy_block_content">Maj ivatz unq\'a tiinsan tetze\' tetz ka\'taj yol</string>
-  <string name="preference_privacy_block_content_summary2">Asoj la ooypisa la ib\'ane\' uva\' vale\'n kuxh la ib\'an ka\'t unq\'a ivatze\'</string>
   <string name="preference_privacy_category_cookies">Maj ivatz unq\'a cookies</string>
   <string name="preference_privacy_should_block_cookies_no_option">Ye\'le</string>
   <string name="preference_privacy_should_block_cookies_third_party_only_option">Maj ivatz unq\'a cookies tetz va\'len xaaol</string>
@@ -159,7 +155,6 @@
   <string name="contextmenu_open_in_new_tab">La jaj u vaa\' tu uma\'t tilpe\'</string>
   <string name="contextmenu_image_warning"><![CDATA["Jank\'al unq\'a vatzib\'ale\' uve\' kolel as uve\' jatxel b\'en "<b xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">ye\'xh kam la sotzi</b>" tul uve\' la sotzsaj unq\'a vee\' chukel tu %1$se\'."]]></string>
   <string name="firstrun_defaultbrowser_title">B\'an ooksat uyak\'il u eetze\'</string>
-  <string name="firstrun_defaultbrowser_text2">Eq\'o u tiinsab\' tetze\' tu uma\'t tanul. Maj ivatz unq\'a altziinaj kame\' as ka\'taj kam uve\' ye\' ni eq\'on ku\'tzan u vee\' nasa\' apich\'uta\'.</string>
   <string name="firstrun_search_title">Achukune\', uve\' nasa\'</string>
   <string name="firstrun_search_text">Umaj kam nachuke\' uva\' va\'len? Txaa uma\'t ch\'ich\' tetz chuku\'m uva\' nib\'anax kat tuch.</string>
   <string name="firstrun_shortcut_title">Aq\'kan unq\'a kame\' vatz va ch\'ich\'e\' uva\' palchit itxakone\' see</string>

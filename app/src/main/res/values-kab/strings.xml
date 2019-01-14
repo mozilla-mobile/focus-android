@@ -30,13 +30,13 @@
   <string name="shortcut_erase_short_label">Sfeḍ</string>
   <string name="shortcut_erase_long_label">Sfeḍ amazray n tunigin</string>
   <string name="shortcut_erase_and_open_short_label">Sfeḍ &amp; Ldi</string>
-  <string name="shortcut_erase_and_open_long_label">Sfeḍ sakin ldi %1$s</string>
   <string name="text_selection_search_action">Anadi uslig</string>
   <string name="about_content"><![CDATA[<p xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">%1$s ad k-d-yefk afus ad teqqime&#7693; d aqe&#7771;&#7771;u.</p>\n<p xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">"Seqdec-it d iminig uslig:\n  "<ul>"\n    "<li>Nadi sakin snirem akken iwata deg usnas</li>"\n    "<li>Sew&#7717;el imesfu&#611;al (ne&#947; snifel i&#947;ewwa&#7771;en akken ad tsirge&#7693; imesfu&#947;al)</li>"\n    "<li>Sfe&#7693; inagan n tuqna akked amazray n tunigin d unadi</li>"\n  "</ul>\n</p>\n<p xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">%1$s yesnulfa-t-id Mozilla. Tu&#947;da&#7789;-nne&#947; ad n&#7717;areb &#947;ef internet yeldin d tezmert-is.<br/>\n<a href="%2$s">Issin ugar</a></p>]]></string>
   <string name="preference_privacy_and_security_header">"Tabaḍnit  &amp; Taɣellist"</string>
   <string name="preference_privacy_and_security_summary">Aḍfaṛ, inagan n tuqqna, isefka yettwaleqḍen</string>
   <string name="preference_search_summary">Amsedday amezwer, tira tawurmant</string>
   <string name="preference_mozilla_summary">Ɣef %1$s, tallelt</string>
+  <string name="preference_category_ad_blocking">Asewḥel n udellel</string>
   <string name="preference_category_tracking_protection">Ammesten mgal adfaṛ</string>
   <string name="preference_category_web_content">Agbur Web</string>
   <string name="preference_category_switching_apps">Tunigin gar yisnasen</string>
@@ -54,7 +54,7 @@
   <string name="preference_switch_autocomplete_topsites">I yismal ifazen</string>
   <string name="preference_autocomplete_topsite_summary">Rmed t teččart tawurmant ugar n 450 URLs ittwasnen deg ufeggag n tansiwin.</string>
   <string name="preference_switch_autocomplete_user_list">I yismal ad ternuḍ</string>
-  <string name="preference_autocomplete_user_list_summary">Ur yizmir ara ad yesεu taččart tawurmant i ugar n 450 n URLs deg ufeggag n tansiwin.</string>
+  <string name="preference_autocomplete_user_list_description">Ur izmir ara ad yaččar s wudem awurman ismal i t-rennuḍ da.</string>
   <string name="preference_category_autocomplete_manage_sites">Sefrerk ismal</string>
   <string name="preference_autocomplete_subitem_manage_sites">Sefrerk ismal</string>
   <string name="preference_autocomplete_action_add">+ Rnu URL aganan</string>
@@ -77,19 +77,17 @@
   <string name="preference_language">Tutlayt</string>
   <string name="preference_language_systemdefault">Amezwer n unagraw</string>
   <string name="preference_category_privacy">Tabaḍnit</string>
-  <string name="preference_privacy_block_ads">Sewḥel ineḍfaṛen</string>
-  <string name="preference_privacy_block_ads_summary">Kra n udellel iṭṭafaṛ tirza inek γer izmal web, Γas ur tsit ara γef udellel</string>
+  <string name="preference_privacy_ads_block_ads">Sewḥel adellel akked wuguren-nniḍen</string>
   <string name="preference_privacy_block_analytics">Sewḥel ineḍfaṛen usliḍen</string>
-  <string name="preference_privacy_block_analytics_summary">Ittwaseqdec i welqqaḍ , Aslaḍ d uktili n wamud am usekcem n isekillen akked usenned</string>
+  <string name="preference_privacy_block_ads">Sewḥel ineḍfaṛen</string>
   <string name="preference_privacy_block_social">Sewḥel ineḍfaṛen n tmetti</string>
-  <string name="preference_privacy_block_social_summary">Ittwarna deg kra n ismal akken ad isfuγel tirziwin inek , akken daγen ad d-yesken timahaltin am tqefalt n beṭṭu</string>
   <string name="preference_privacy_block_content">Sewḥel ineḍfaṛen-nniḍen n ugbur</string>
-  <string name="preference_privacy_block_content_summary2">Armad n uγwwaṛèagi izmer ad yeglu s kra n wuguren di kra n isebtar</string>
   <string name="preference_privacy_category_cookies">Sewḥel inagan n tuqna</string>
   <string name="preference_privacy_should_block_cookies_no_option">Ala</string>
   <string name="preference_privacy_should_block_cookies_third_party_tracker_cookies_option">Sewḥel kan inagan n tuqqna n ufecku wis 3</string>
   <string name="preference_privacy_should_block_cookies_third_party_only_option">Sewḥel kan inagan n tuqqna n ufecku wis 3</string>
   <string name="preference_privacy_should_block_cookies_yes_option">Ih</string>
+  <string name="preference_privacy_block_cookies_no">Alla (sireg akk inagan n tuqqna)</string>
   <string name="preference_security_biometric">Seqdec adsil umḍin akken ad tserḥeḍ i usnas</string>
   <string name="preference_security_biometric_summary">Aḍaḍ-ik izmer ad ikkes asewḥel i %1$s ma URL yeldin yakan deg usnas. Askar uffir ad ittwarmed.</string>
   <string name="preference_privacy_secure_mode">Tusligt</string>
@@ -177,7 +175,6 @@
   <string name="contextmenu_open_in_new_tab">Ldi aseɣwen deg iccer amaynut</string>
   <string name="contextmenu_image_warning"><![CDATA[Tugniwin ittwaskelsen akked ittwabḍan<b xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">"ur ttwaksent ara "</b>" m\'ara ad tekseḍ %1$samazray."]]></string>
   <string name="firstrun_defaultbrowser_title">Rmed tabaḍnit inek</string>
-  <string name="firstrun_defaultbrowser_text2">Iminig uslig ad yali deg uswir.Dayen ur tuγaleḍ ad twaliḍ adellel neγ imsfuγal i k-ṭṭafaren u saẓayen tulya n isemal web.</string>
   <string name="firstrun_search_title">Anadi-ik, abrid-ik</string>
   <string name="firstrun_search_text">Tettnadiḍ ayen-nniḍen? Fren amsadday-nniḍen n unadi amezwer deg iɣewwaṛen.</string>
   <string name="firstrun_shortcut_title">Rnu anegzum ar ugdil-ik agejdan</string>
@@ -263,4 +260,6 @@
   <string name="fatal_crash_report_close_button_label">Mdel</string>
   <string name="fatal_crash_report_restart_firefox_label">Ales asenker n %1$s</string>
   <string name="crash_report_send_crash_label">Azen aneqqis n uɣelluy i Mozilla</string>
+  <string name="content_blocking_snackbar_enable_action">Rmed</string>
+  <string name="content_blocking_snackbar_disable_action">Sens</string>
 </resources>

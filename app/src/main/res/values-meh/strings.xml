@@ -30,7 +30,6 @@
   <string name="shortcut_erase_short_label">Xiná</string>
   <string name="shortcut_erase_long_label">Xiná daa nnánukunu</string>
   <string name="shortcut_erase_and_open_short_label">Xita jee síne</string>
-  <string name="shortcut_erase_and_open_long_label">Xita jee síne %1$s</string>
   <string name="text_selection_search_action">Nánuku yɨ´ɨ yu´u</string>
   <string name="about_content"><![CDATA[<p xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">%1$s taji kajinu.</p>\n<p xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">"Ni&#180;ima kua iin nuu n&#225;nuku privado:\n  "<ul>"\n    "<li>N&#225;nuku jee kaka nuu ka&#225; ya&#180;a</li>"\n    "<li>Chiyu&#180;u daa a nita no&#180;o (a xiin kaji kuvi kuntadaja no&#180;o)</li>"\n    "<li>Xina saa kuvi na&#225; cokies jii daa tu&#180;un nn&#225;nukunu</li>"\n  "</ul>\n</p>\n<p xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">%1$s kuviji iin nsa&#180;a Mozilla. Nuku-ani iin internet vii jee va&#180;a<br/>\n<a href="%2$s">Learn more</a></p>]]></string>
   <string name="preference_privacy_and_security_header">Privacidad jii seguridad</string>
@@ -54,7 +53,6 @@
   <string name="preference_switch_autocomplete_topsites">Daa sitios tuvika</string>
   <string name="preference_autocomplete_topsite_summary">Tee saa kuvi nánukunu 450 URLs nuu chu´un daa direcciones.</string>
   <string name="preference_switch_autocomplete_user_list">Nuu daa sitios chisonu</string>
-  <string name="preference_autocomplete_user_list_summary">Tee saa kuvi nánukunu 450 URLs nuu chu´un daa direcciones.</string>
   <string name="preference_category_autocomplete_manage_sites">Tetiñu daa sitios</string>
   <string name="preference_autocomplete_subitem_manage_sites">Tetiñu daa sitios</string>
   <string name="preference_autocomplete_action_add">+Tee a sá´á vii URL</string>
@@ -77,14 +75,10 @@
   <string name="preference_language">Tu´un</string>
   <string name="preference_language_systemdefault">Kua vaji ka̱a̱</string>
   <string name="preference_category_privacy">Yɨ´ɨ yu´u</string>
-  <string name="preference_privacy_block_ads">Chiyu´u daa tutu xiko nantiñu</string>
-  <string name="preference_privacy_block_ads_summary">Daa tutu xiko, sunika ntu sinenuma, nitada noo´o daa nnánukunu nuu web</string>
   <string name="preference_privacy_block_analytics">Chiyu´u daa ka̱a̱ nita noo´o</string>
-  <string name="preference_privacy_block_analytics_summary">Ni´idama jee xitutuda, jee chunku´va a sá´á jii a ke´i</string>
+  <string name="preference_privacy_block_ads">Chiyu´u daa tutu xiko nantiñu</string>
   <string name="preference_privacy_block_social">Chiyu´u daa ka̱a̱ sociales</string>
-  <string name="preference_privacy_block_social_summary">Yɨ´ɨ nuu daa web saa kuvi kuntada noo´o jee kutuvi daa botones kuvi kua´a</string>
   <string name="preference_privacy_block_content">Chiyu´u daa ka̱a̱ nita daa inka contenido</string>
-  <string name="preference_privacy_block_content_summary2">Dee tee ya´a kuvi sá´á daa web nsatiñu vii</string>
   <string name="preference_privacy_category_cookies">Kasɨ cookies</string>
   <string name="preference_privacy_should_block_cookies_no_option">Nkuvi</string>
   <string name="preference_privacy_should_block_cookies_third_party_tracker_cookies_option">Nakasɨ 3 cookies daa inka kuvi kuntada noo´o</string>
@@ -177,7 +171,6 @@
   <string name="contextmenu_open_in_new_tab">Síne link nuu iin pestaña jíía</string>
   <string name="contextmenu_image_warning"><![CDATA["Daa tutu nátava "<b xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">Nn&#225;</b>" dee náxitá-nu %1$s daa tu´un nnánukunu."]]></string>
   <string name="firstrun_defaultbrowser_title">Sika privacidad noo´o</string>
-  <string name="firstrun_defaultbrowser_text2">Ni´i nánuku yu´u inka nivel. Xita daa tutu kuvi xiko a xíín daa nita noo´o, saa´a ntu jika ñama ka̱a̱ nánuku.</string>
   <string name="firstrun_search_title">Nánuku, kua kachi noo´o</string>
   <string name="firstrun_search_text">Nánukunu inka tu´un? Kaji inka ka̱a̱ nánuku nuu daa ke´í.</string>
   <string name="firstrun_shortcut_title">Tee a kivu ñama nuu kajie´e</string>

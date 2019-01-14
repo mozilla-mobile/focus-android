@@ -30,7 +30,6 @@
   <string name="shortcut_erase_short_label">消去</string>
   <string name="shortcut_erase_long_label">閲覧履歴を消去</string>
   <string name="shortcut_erase_and_open_short_label">消去して開く</string>
-  <string name="shortcut_erase_and_open_long_label">消去して %1$s を開く</string>
   <string name="text_selection_search_action">プライベートに検索</string>
   <string name="about_content"><![CDATA[<p xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">%1$s &#12391;&#12399;&#12354;&#12394;&#12383;&#12364;&#12377;&#12409;&#12390;&#12434;&#12467;&#12531;&#12488;&#12525;&#12540;&#12523;&#12391;&#12365;&#12414;&#12377;&#12290;</p>\n<p xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">"&#27425;&#12398;&#12424;&#12358;&#12395;&#12503;&#12521;&#12452;&#12505;&#12540;&#12488;&#12502;&#12521;&#12454;&#12470;&#12540;&#12392;&#12375;&#12390;&#20351;&#12360;&#12414;&#12377;&#12290;\n  "<ul>"\n    "<li>&#12450;&#12503;&#12522;&#20869;&#12391;&#30452;&#25509;&#12469;&#12452;&#12488;&#12434;&#26908;&#32034;&#12289;&#38322;&#35239;&#12290;</li>"\n    "<li>&#36861;&#36321;&#32773;&#12434;&#12502;&#12525;&#12483;&#12463; (&#12354;&#12427;&#12356;&#12399;&#35373;&#23450;&#12434;&#26356;&#26032;&#12375;&#12390;&#35377;&#21487;)</li>"\n    "<li>Cookie&#12289;&#26908;&#32034;&#23653;&#27508;&#12289;&#38322;&#35239;&#23653;&#27508;&#12434;&#28040;&#21435;</li>"\n  "</ul>\n</p>\n<p xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">%1$s &#12399; Mozilla &#12364;&#38283;&#30330;&#12375;&#12390;&#12356;&#12414;&#12377;&#12290;&#31169;&#12383;&#12385;&#12398;&#12511;&#12483;&#12471;&#12519;&#12531;&#12399;&#20581;&#20840;&#12391;&#38283;&#12363;&#12428;&#12383;&#12452;&#12531;&#12479;&#12540;&#12493;&#12483;&#12488;&#12434;&#30330;&#23637;&#12373;&#12379;&#12427;&#12371;&#12392;&#12391;&#12377;&#12290;<br/>\n<a href="%2$s">&#35443;&#12375;&#12367;&#12399;&#12371;&#12385;&#12425;</a></p>]]></string>
   <string name="preference_privacy_and_security_header">プライバシーとセキュリティ</string>
@@ -54,7 +53,6 @@
   <string name="preference_switch_autocomplete_topsites">よく見るサイト</string>
   <string name="preference_autocomplete_topsite_summary">アドレスバーで 450 以上の人気サイトの URL の自動補完を有効にします。</string>
   <string name="preference_switch_autocomplete_user_list">追加したサイト</string>
-  <string name="preference_autocomplete_user_list_summary">アドレスバーで 450 以上の人気サイトの URL の自動補完を有効にします。</string>
   <string name="preference_category_autocomplete_manage_sites">サイトの管理</string>
   <string name="preference_autocomplete_subitem_manage_sites">サイトの管理</string>
   <string name="preference_autocomplete_action_add">+ カスタム URL を追加</string>
@@ -77,14 +75,10 @@
   <string name="preference_language">言語</string>
   <string name="preference_language_systemdefault">システム標準</string>
   <string name="preference_category_privacy">プライバシー</string>
-  <string name="preference_privacy_block_ads">追跡広告をブロック</string>
-  <string name="preference_privacy_block_ads_summary">一部の広告は、あなたがその広告をクリックしなくても訪れたサイトを追跡します</string>
   <string name="preference_privacy_block_analytics">アクセス解析をブロック</string>
-  <string name="preference_privacy_block_analytics_summary">タップやスクロールなどの操作統計を収集、解析、計測するために利用されます</string>
+  <string name="preference_privacy_block_ads">追跡広告をブロック</string>
   <string name="preference_privacy_block_social">ソーシャル追跡をブロック</string>
-  <string name="preference_privacy_block_social_summary">ユーザーの訪問を追跡するためサイトに埋め込まれ、共有ボタンのように表示されます</string>
   <string name="preference_privacy_block_content">他の追跡コンテンツをブロック</string>
-  <string name="preference_privacy_block_content_summary2">有効にすると、ページによっては予期せぬ動作をする原因になります</string>
   <string name="preference_privacy_category_cookies">Cookie をブロック</string>
   <string name="preference_privacy_should_block_cookies_no_option">いいえ</string>
   <string name="preference_privacy_should_block_cookies_third_party_tracker_cookies_option">サードバーティの追跡 Cookie のみブロック</string>
@@ -177,7 +171,6 @@
   <string name="contextmenu_open_in_new_tab">リンクを新しいタブで開く</string>
   <string name="contextmenu_image_warning"><![CDATA["保存、共有された画像は %1$s の履歴を消去しても "<b xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">&#21066;&#38500;&#12373;&#12428;&#12414;&#12379;&#12435;</b>。]]></string>
   <string name="firstrun_defaultbrowser_title">プライバシーを強化</string>
-  <string name="firstrun_defaultbrowser_text2">プライベートブラウジングを次のレベルへと進めましょう。サイトを越えてあなたを追跡したり、ページの読み込みを遅くしたりする可能性のある広告その他のコンテンツを自動的にブロック。</string>
   <string name="firstrun_search_title">好きな方法で検索</string>
   <string name="firstrun_search_text">何か違ったものを探していますか？ 設定で別の検索エンジンを既定として選んでみましょう。</string>
   <string name="firstrun_shortcut_title">ホーム画面にショートカットを追加</string>

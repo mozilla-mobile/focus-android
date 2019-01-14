@@ -60,14 +60,10 @@
   <string name="preference_language">மொழி</string>
   <string name="preference_language_systemdefault">கைப்பேசி முன்னிருப்பு</string>
   <string name="preference_category_privacy">தனியுரிமை</string>
-  <string name="preference_privacy_block_ads">விளம்பர பின்தொடரிகளைத் தடு</string>
-  <string name="preference_privacy_block_ads_summary">சில விளம்பரங்கள், நீங்கள் அதனை சொடுக்காவிட்டாலும் தள பார்வைகளைப் பின்தொடரும்</string>
   <string name="preference_privacy_block_analytics">பகுப்பாய்வு பின்தொடரிகளைத் தடு</string>
-  <string name="preference_privacy_block_analytics_summary">தட்டல், உருட்டுதல் போன்ற செயல்களைச் சேகரிக்கும், ஆய்வுசெய்யும் அளவிடும்</string>
+  <string name="preference_privacy_block_ads">விளம்பர பின்தொடரிகளைத் தடு</string>
   <string name="preference_privacy_block_social">சமூக பின்தொடரிகளைத் தடு</string>
-  <string name="preference_privacy_block_social_summary">உங்கள் பார்வைகளைப் பின்தொடரவும் பகிர்தல் பொத்தான் போன்றவற்றைக் காட்டவும் தளத்தில் உட்பொதியப்பட்டிருக்கும்</string>
   <string name="preference_privacy_block_content">உள்ளடக்க பின்தொடரிகளைத் தடு</string>
-  <string name="preference_privacy_block_content_summary2">செயற்படுத்துவது சில பக்கங்கள் எதிர்பாராமல் தவறாகச் செயல்பட காரணமாகலாம்</string>
   <string name="preference_privacy_category_cookies">நினைவிகளை முடக்கு</string>
   <string name="preference_privacy_should_block_cookies_no_option">இல்லை</string>
   <string name="preference_privacy_should_block_cookies_third_party_only_option">3 ஆம் தரப்பு நினைவிகளை மட்டும் முடக்கு</string>
@@ -152,7 +148,6 @@
   <string name="contextmenu_open_in_new_tab">இணைப்பைப் புதிய கீற்றில் திற</string>
   <string name="contextmenu_image_warning"><![CDATA["%1$s வரலாற்றை அகற்றும் போது சேமித்த பகிர்ந்த படங்கள் "<b xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">&#2949;&#2996;&#3007;&#2965;&#3021;&#2965;&#2986;&#3021;&#2986;&#2975;&#3006;&#2980;&#3009;</b>.]]></string>
   <string name="firstrun_defaultbrowser_title">தனியுரிமையைத் துரிதப்படுத்துங்கள்</string>
-  <string name="firstrun_defaultbrowser_text2">தனிப்பட்ட உலாவலை அடுத்த நிலைக்கு எடுத்துச் செல்லவும். தளங்கள் எங்கும் உங்களைப் பின்தொடரக்கூடிய மற்றும் பக்க ஏற்று நேரத்தைக் கூட்டும் விளம்பரம் மற்றும் மற்ற உள்ளடக்கங்களை முடக்கு.</string>
   <string name="firstrun_search_title">உங்களின் தேடல் உங்கள் வழி</string>
   <string name="firstrun_search_text">வித்தியாசமானதைத் தேடுகிறீர்களா? அமைப்புகளில் வேறொரு இயல்புநிலை தேடியியந்திரத்தைத் தேர்ந்தெடுக்கவும்.</string>
   <string name="firstrun_shortcut_title">உங்கள் முகப்பு திரையில் சுருக்கு வழிகளைச் சேர்க்கவும்</string>

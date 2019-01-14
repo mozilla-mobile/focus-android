@@ -28,7 +28,6 @@
   <string name="shortcut_erase_short_label">מחיקה</string>
   <string name="shortcut_erase_long_label">מחיקת היסטורית גלישה</string>
   <string name="shortcut_erase_and_open_short_label">מחיקה ופתיחה</string>
-  <string name="shortcut_erase_and_open_long_label">מחיקה ופתיחה של %1$s</string>
   <string name="text_selection_search_action">חיפוש פרטי</string>
   <string name="about_content"><![CDATA[<p xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">&#1492;&#1513;&#1500;&#1497;&#1496;&#1492; &#1495;&#1493;&#1494;&#1512;&#1514; &#1500;&#1497;&#1491;&#1497;&#1498; &#1506;&#1501; %1$s.</p>\n<p xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">"&#1502;&#1497;&#1493;&#1506;&#1491; &#1500;&#1513;&#1497;&#1502;&#1493;&#1513; &#1499;&#1491;&#1508;&#1491;&#1508;&#1503; &#1508;&#1512;&#1496;&#1497;:\n  "<ul>"\n    "<li>&#1504;&#1497;&#1514;&#1503; &#1500;&#1495;&#1508;&#1513; &#1493;&#1500;&#1490;&#1500;&#1493;&#1513; &#1497;&#1513;&#1497;&#1512;&#1493;&#1514; &#1502;&#1492;&#1497;&#1497;&#1513;&#1493;&#1502;&#1493;&#1503;</li>"\n    "<li>&#1495;&#1505;&#1497;&#1502;&#1514; &#1502;&#1504;&#1490;&#1504;&#1493;&#1504;&#1497; &#1502;&#1506;&#1511;&#1489; (&#1488;&#1493; &#1500;&#1513;&#1504;&#1493;&#1514; &#1492;&#1490;&#1491;&#1512;&#1493;&#1514; &#1499;&#1491;&#1497; &#1500;&#1488;&#1508;&#1513;&#1512; &#1488;&#1493;&#1514;&#1501;)</li>"\n    "<li>&#1504;&#1497;&#1514;&#1503; &#1500;&#1488;&#1508;&#1505; &#1499;&#1491;&#1497; &#1500;&#1502;&#1495;&#1493;&#1511; &#1506;&#1493;&#1490;&#1497;&#1493;&#1514; &#1499;&#1502;&#1493; &#1490;&#1501; &#1488;&#1514; &#1492;&#1497;&#1505;&#1496;&#1493;&#1512;&#1497;&#1497;&#1514; &#1492;&#1495;&#1497;&#1508;&#1493;&#1513;</li>"\n  "</ul>\n</p>\n<p xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">%1$s &#1502;&#1489;&#1497;&#1514; &#1502;&#1493;&#1494;&#1497;&#1500;&#1492; Mozilla. &#1492;&#1502;&#1496;&#1512;&#1492; &#1513;&#1500;&#1504;&#1493; &#1492;&#1497;&#1488; &#1500;&#1496;&#1508;&#1495; &#1488;&#1497;&#1504;&#1496;&#1512;&#1504;&#1496; &#1489;&#1512;&#1497;&#1488; &#1493;&#1508;&#1514;&#1493;&#1495;.<br/>\n<a href="%2$s">&#1502;&#1497;&#1491;&#1506; &#1504;&#1493;&#1505;&#1507;</a></p>]]></string>
   <string name="preference_privacy_and_security_header">אבטחה ופרטיות</string>
@@ -52,7 +51,6 @@
   <string name="preference_switch_autocomplete_topsites">לאתרים המובילים</string>
   <string name="preference_autocomplete_topsite_summary">יש להפעיל כדי לקבל השלמה אוטומטית ליותר מ־450 כתובות נפוצות בסרגל הכתובות.</string>
   <string name="preference_switch_autocomplete_user_list">לאתרים שהוספת</string>
-  <string name="preference_autocomplete_user_list_summary">יש להפעיל כדי לקבל השלמה אוטומטית ליותר מ־450 כתובות נפוצות בסרגל הכתובות.</string>
   <string name="preference_category_autocomplete_manage_sites">ניהול אתרים</string>
   <string name="preference_autocomplete_subitem_manage_sites">ניהול אתרים</string>
   <string name="preference_autocomplete_action_add">+ הוספת כתובת מותאמת אישית</string>
@@ -75,14 +73,10 @@
   <string name="preference_language">שפה</string>
   <string name="preference_language_systemdefault">ברירת מחדל של המערכת</string>
   <string name="preference_category_privacy">פרטיות</string>
-  <string name="preference_privacy_block_ads">חסימת רכיבי מעקב</string>
-  <string name="preference_privacy_block_ads_summary">חלק מהפרסומות עוקבות אחר הביקורים באתרים, אפילו אם לא לחצת על הפרסומות</string>
   <string name="preference_privacy_block_analytics">חסימת מעקב של כלי ניתוח</string>
-  <string name="preference_privacy_block_analytics_summary">משמשות לאיסוף ניתוח ומדידת פעילויות כגון לחיצה וגלילה</string>
+  <string name="preference_privacy_block_ads">חסימת רכיבי מעקב</string>
   <string name="preference_privacy_block_social">חסימת רכיבי מעקב חברתיים</string>
-  <string name="preference_privacy_block_social_summary">מוטמעות באתרים לצורך מעקב אחר הביקורים שלך והצגת רכיבים כגון כפתורי שיתוף</string>
   <string name="preference_privacy_block_content">חסימת כלי מעקב אחרים</string>
-  <string name="preference_privacy_block_content_summary2">הפעלת התכונה עשויה לגרום לחלק מהאתרים להתנהג שלא כצפוי</string>
   <string name="preference_privacy_category_cookies">חסימת עוגיות</string>
   <string name="preference_privacy_should_block_cookies_no_option">לא</string>
   <string name="preference_privacy_should_block_cookies_third_party_tracker_cookies_option">חסימת עוגיות מעקב צד־שלישי בלבד</string>
@@ -175,7 +169,6 @@
   <string name="contextmenu_open_in_new_tab">פתיחת קישור בלשונית חדשה</string>
   <string name="contextmenu_image_warning"><![CDATA["תמונות שמורות ומשותפות "<b xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">&#1500;&#1488; &#1497;&#1497;&#1502;&#1495;&#1511;&#1493;</b>" בעת מחיקת ההיסטוריה של %1$s."]]></string>
   <string name="firstrun_defaultbrowser_title">חיזוק הפרטיות שלך</string>
-  <string name="firstrun_defaultbrowser_text2">לקחת את הגלישה המאובטחת לרמה הבאה. ניתן לחסום פרסומות ותוכן אחר שעשוי לסייע במעקב אחריך בין אתרים שונים ולהפריע לזמני טעינת עמודים.</string>
   <string name="firstrun_search_title">החיפוש שלך, בדרך שלך</string>
   <string name="firstrun_search_text">לא מה שחיפשת? ניתן לבחור במנוע חיפוש אחר כברירת מחדל בהגדרות.</string>
   <string name="firstrun_shortcut_title">הוספת קיצורי דרך למסך הבית שלך</string>

@@ -30,7 +30,6 @@
   <string name="shortcut_erase_short_label">Dilea</string>
   <string name="shortcut_erase_long_label">Dilea an istori peuri</string>
   <string name="shortcut_erase_and_open_short_label">Dilea &amp; ygeri</string>
-  <string name="shortcut_erase_and_open_long_label">Dilea hag ygeri %1$s</string>
   <string name="text_selection_search_action">Hwilas yn privedh</string>
   <string name="about_content"><![CDATA[<p xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">Gans %1$s yth esowgh hwi ow kul maystri.</p>\n<p xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">"Gwrewgh hy usya avel peurell brivedh:\n  "<ul>"\n    "<li>Hwilas ha peuri a-berth y\'n dowlen</li>"\n    "<li>Lettya helerghellow (po ri kummyas dhedha y\'n settyansow)</li>"\n    "<li>Dilea cookies, keffrys ha istori hwilas ha peuri</li>"\n  "</ul>\n</p>\n<p xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">Askorrys gans Mozilla yw %1$s. Agan amkan yw maga kesrosweyth yagh hag ygor.<br/>\n<a href="%2$s">Dyski moy</a></p>]]></string>
   <string name="preference_privacy_and_security_header">Privetter ha sekerder</string>
@@ -54,7 +53,6 @@
   <string name="preference_switch_autocomplete_topsites">Rag an gwiasvaow an moyha visityes</string>
   <string name="preference_autocomplete_topsite_summary">Gallosegi rag awto-kollenwel moy es 450 URL meurgerys y\'n barr trigva.</string>
   <string name="preference_switch_autocomplete_user_list">Rag gwiasvaow a geworrowgh</string>
-  <string name="preference_autocomplete_user_list_summary">Gallosegi rag awto-kollenwel moy es 450 URL meurgerys y\'n barr trigva.</string>
   <string name="preference_category_autocomplete_manage_sites">Dyghtya gwiasvaow</string>
   <string name="preference_autocomplete_subitem_manage_sites">Dyghtya gwiasvaow</string>
   <string name="preference_autocomplete_action_add">+ Keworra URL personelhes</string>
@@ -77,14 +75,10 @@
   <string name="preference_language">Yeth</string>
   <string name="preference_language_systemdefault">Defowt an system</string>
   <string name="preference_category_privacy">Privetter</string>
-  <string name="preference_privacy_block_ads">Lettya helerghellow argemynnow</string>
-  <string name="preference_privacy_block_ads_summary">Neb argemynnow a helergh vysytyansow dhe wiasvaow, kyn na glyckyowgh warnedha</string>
   <string name="preference_privacy_block_analytics">Lettya helerghellow dielvenna</string>
-  <string name="preference_privacy_block_analytics_summary">Usyes rag kuntel, dielvenna ha musura gwriansow kepar ha tappya ha skrollya</string>
+  <string name="preference_privacy_block_ads">Lettya helerghellow argemynnow</string>
   <string name="preference_privacy_block_social">Lettya helerghellow kowethasek</string>
-  <string name="preference_privacy_block_social_summary">Keworrys war wiasvaow rag helerghi agas vysytyansow ha rag diskwedhes taklow kepar ha botonyow kevranna</string>
   <string name="preference_privacy_block_content">Lettya helerghellow dalgh erel</string>
-  <string name="preference_privacy_block_content_summary2">Gallosegi a allsa kawsya kudynnow war neb folennow</string>
   <string name="preference_privacy_category_cookies">Lettya cookies</string>
   <string name="preference_privacy_should_block_cookies_no_option">Sevel orth lettya</string>
   <string name="preference_privacy_should_block_cookies_third_party_tracker_cookies_option">Lettya cookies helerghi 3a-parti yn unnik</string>
@@ -177,7 +171,6 @@
   <string name="contextmenu_open_in_new_tab">Ygeri an gevren yn tabb nowydh</string>
   <string name="contextmenu_image_warning"><![CDATA[<b xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">Ny vydh diles</b>" imajys gwithys ha rynnys pan wrellowgh hwi dilea istori %1$s."]]></string>
   <string name="firstrun_defaultbrowser_title">Kenerthowgh agas privetter</string>
-  <string name="firstrun_defaultbrowser_text2">Kemerowgh peuri privedh dhe\'n nivel nessa. Lettyowgh argemynnow ha dalgh aral a yll agas helerghi a-dreus dhe wiasvaow ha lenthe karga folennow.</string>
   <string name="firstrun_search_title">Hwilas y\'gas fordh hwi</string>
   <string name="firstrun_search_text">Ow hwilas neppyth dyffrans? Dewisewgh jynn-hwilas defowt aral y\'n settyansow.</string>
   <string name="firstrun_shortcut_title">Keworra skochfordh dhe\'gas skrin dre</string>

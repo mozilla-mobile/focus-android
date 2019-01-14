@@ -42,14 +42,10 @@
   <string name="preference_language">ቋንቋ</string>
   <string name="preference_language_systemdefault">የስርዓት ነባሪ</string>
   <string name="preference_category_privacy">የግል መብት መጠበቅ</string>
-  <string name="preference_privacy_block_ads">የማስታወቂያ መከታተያዎችን አግድ</string>
-  <string name="preference_privacy_block_ads_summary">"ማስታወቂያዎች ባይጫኑ እንኳን አንዳንድ የማስታወቂያ መከታተያዎች የጣቢያ ጉብኝቶችን ይከታተላሉ "</string>
   <string name="preference_privacy_block_analytics">መተንተኛ ተቆጣጣሪዎች ያግዱ</string>
-  <string name="preference_privacy_block_analytics_summary">እንደ ማሸብለል እና መታ በማድረግ ያሉ እንቅስቃሴዎችን ለመተንተን እና ለመለካት ጥቅም ላይ የዋለ</string>
+  <string name="preference_privacy_block_ads">የማስታወቂያ መከታተያዎችን አግድ</string>
   <string name="preference_privacy_block_social">ማህበራዊ ሚዲያ መከታተያዎችን አግድ\n</string>
-  <string name="preference_privacy_block_social_summary">የእርስዎን ጉብኝቶች ለመከታተል እና እንደ የአጋራ አዝራሮች ያሉ ተግባሮችን ለማሳየት በጣቢያዎች ላይ የተካተተ</string>
   <string name="preference_privacy_block_content">ሌሎች የይዘት መከታተያዎችን ያግዱ\n</string>
-  <string name="preference_privacy_block_content_summary2">ማስቻል አንዳንድ ገፆችን ያልታሰበ ፀባይ እንዲፈጽሙ ሊያደርጋቸው ይችላል</string>
   <string name="preference_privacy_category_cookies">ኩኪዎችን አግድ</string>
   <string name="preference_privacy_should_block_cookies_no_option">አይ</string>
   <string name="preference_privacy_secure_mode">ስውር</string>
@@ -129,7 +125,6 @@
   <string name="contextmenu_open_in_new_tab">አገናኙን በአዲስ ትር ውስጥ ይክፈቱ</string>
   <string name="contextmenu_image_warning"><![CDATA[የተቀመጡ እና የተጋሩ ምስሎች<b xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">&#4768;&#4845;&#4656;&#4653;&#4829;&#4637;</b>ሲደመስሱ%1$sታሪክ]]></string>
   <string name="firstrun_defaultbrowser_title">ግላዊነትዎን ያስፉ</string>
-  <string name="firstrun_defaultbrowser_text2">የግል ፍለጋን ወደ ቀጣዩ ደረጃ ይወስዳል::በጣቢያዎች ውስጥ እርስዎን ሊከታተል የሚችል እና የገፅ ጭነት ጊዜዎችን ማደንዘዝ ማስታወቂያዎችን እና ሌላ ይዘትን አግድ</string>
   <string name="firstrun_search_title">የእርስዎ ፍለጋ, የእርስዎ መንገድ</string>
   <string name="firstrun_search_text">የሆነ የተለየ ነገር በመፈለግ ላይ? በቅንብሮች ውስጥ ሌላ ነባሪ የፍለጋ ፕሮግራም ይምረጡ</string>
   <string name="firstrun_shortcut_title">ወደ መነሻ ማያ ገጽዎ አቋራጮችን ያክሉ</string>

@@ -30,7 +30,6 @@
   <string name="shortcut_erase_short_label">Shikpupu</string>
   <string name="shortcut_erase_long_label">Shikpupu kan nipashaluj yewa</string>
   <string name="shortcut_erase_and_open_short_label">Shikpupu wan shiktapu</string>
-  <string name="shortcut_erase_and_open_long_label">Shikpupu wan shiktapu %1$s</string>
   <string name="text_selection_search_action">Shitatejtemu ichtaka</string>
   <string name="about_content"><![CDATA[<p xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">%1$s metztekipanultia.</p>\n<p xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">"Shikwi kenha ken se ichtaka tajtachialis:\n  "<ul>"\n    "<li>Shitatejtemu wan shipashalu tik ne aplicaci&#243;n</li>"\n    "<li>Shiktentzakwa ne tapachiwiani (ush shitajshitia uksenpa pal tikajkawa tekiti ne tapachiwiani)</li>"\n    "<li>Shikpupu pal tikpupua cookies wan tay tiktemuj wan kan tipashaluj yewa</li>"\n  "</ul>\n</p>\n<p xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">Mozilla kichiwtuk ne %1$s. Tiknekit tikajsit tikpiat ne Wey Matat yek wan tapujtuk.<br/>\n<a href="%2$s">Shikmatiuk</a></p>]]></string>
   <string name="preference_privacy_and_security_header">Ichtakachiwalis wan tamanawilis</string>
@@ -54,7 +53,6 @@
   <string name="preference_switch_autocomplete_topsites">Kan tipajpashalua sejsenpa</string>
   <string name="preference_autocomplete_topsite_summary">Shiktimaka su tikneki ma temi isel wan nemit 450 ush ukchupi URLs tik ne barraj ipal direccion.</string>
   <string name="preference_switch_autocomplete_user_list">Pal ne sijsitioj tiktalia</string>
-  <string name="preference_autocomplete_user_list_summary">Shiktimaka su tikneki ma temi isel wan nemit 450 ush ukchupi URLs tik ne barraj ipal direccion.</string>
   <string name="preference_category_autocomplete_manage_sites">Shiktekimaka ne sijsitioj</string>
   <string name="preference_autocomplete_subitem_manage_sites">Shiktekimaka ne sijsitioj</string>
   <string name="preference_autocomplete_action_add">+ Shiktali ne mu-URL</string>
@@ -77,21 +75,17 @@
   <string name="preference_language">Taketzalis</string>
   <string name="preference_language_systemdefault">Achtutalijtuk sistemaj</string>
   <string name="preference_category_privacy">Tay nemi ichtaka</string>
-  <string name="preference_privacy_block_ads">Shiktentzakwa ne tapachiwiani ipal tanawatilis</string>
-  <string name="preference_privacy_block_ads_summary">Sejse tanawatilis kishpelwiat kan tipashalua, melka tesu tikpachua</string>
   <string name="preference_privacy_block_analytics">Shiktentzakwa ne tapachiwiani tapepeta</string>
-  <string name="preference_privacy_block_analytics_summary">Mukwi pal mukululua, muishpepeta wan mutamachiwa tay tikchiwa keman titatasa wan titamatilua</string>
+  <string name="preference_privacy_block_ads">Shiktentzakwa ne tapachiwiani ipal tanawatilis</string>
   <string name="preference_privacy_block_social">Shiktentzakwa ne tapachiwiani kimati kan tinejnemi</string>
-  <string name="preference_privacy_block_social_summary">Muishtukatuk kan tipashalua pal metzishpelwia wan pal kineshtia ken yaja tekiti kenha ken ne bojbotón pal tiktakulia</string>
   <string name="preference_privacy_block_content">Shiktentzakwa ujukseuk tapachiwiani ipal tay kipia kalijtik</string>
-  <string name="preference_privacy_block_content_summary2">Asu tiktimaka, sejseuk iswat welit tekitit ken te tikchia</string>
   <string name="preference_privacy_category_cookies">Shiktentzakwa cookies</string>
   <string name="preference_privacy_should_block_cookies_no_option">Tesu</string>
   <string name="preference_privacy_should_block_cookies_third_party_tracker_cookies_option">Shiktentzakwa semaya ne cookies tapachiwiani ipal sejseuk</string>
   <string name="preference_privacy_should_block_cookies_third_party_only_option">Shiktentzakwa semaya ne cookies ipal sejseuk</string>
   <string name="preference_privacy_should_block_cookies_yes_option">Eje</string>
   <string name="preference_security_biometric">Shiktali ne itashkalchin mumapipil pal tikalaki tik ne aplicación</string>
-  <string name="preference_security_biometric_summary">Ne itashkalchin mumapipil weli kimakishtia %1$s su se URL nemia tapujtuk tik ne aplicación. Yawi nemi tik modoj ichtaka.</string>
+  <string name="preference_security_biometric_summary">Ne itashkalchin mumapipil weli kisutuma %1$s su se URL nemia tapujtuk tik ne aplicación. Yawi nemi tik modoj ichtaka.</string>
   <string name="preference_privacy_secure_mode">Tay ichtaka</string>
   <string name="preference_privacy_stealth_summary">Shikinaya ijiswat kwak tikpata aplicación wan maka shikajkawa ma muishkupina ne pantallaj.</string>
   <string name="preference_category_security">Tetajpialis</string>
@@ -177,7 +171,6 @@
   <string name="contextmenu_open_in_new_tab">Shiktapu ne ilpika tik ukse itzun</string>
   <string name="contextmenu_image_warning"><![CDATA["Ne kwijkwil muantuk wan mutakulijtuk "<b xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">tesu yawi mupuluat</b>" keman tikpupua ne tay tikitak yewa %1$s."]]></string>
   <string name="firstrun_defaultbrowser_title">Shikchikawa ne muichtakanemilis</string>
-  <string name="firstrun_defaultbrowser_text2">Tiweli tipashalua ichtaka te kenha ken ne sejseuk. Shiktentzakwa muchi ne tanawatilis ush muchi tay weliskia metzpachiwia keman tikita ne sitioj wan tay kichiwa yujyulik kan mukimiltiat ne ijiswat.</string>
   <string name="firstrun_search_title">Ken tikneki titatemua</string>
   <string name="firstrun_search_text">Tiktemua seuk? Shikajshiti ukse achtutalijtuk tepusyulu tatemua.</string>
   <string name="firstrun_shortcut_title">Shiktali tamelawka tik ne achtu iswat</string>
@@ -223,7 +216,7 @@
   <string name="preference_advanced_summary">Tajtaiwan pal titakejketza</string>
   <string name="preference_category_advanced">Tapanawilis</string>
   <string name="preference_remote_debugging">Shitayekchiwa wejka ipanpa ne USB/Wi-Fi</string>
-  <string name="biometric_auth_title">Shikmakishti %1$s</string>
+  <string name="biometric_auth_title">Shiksutuma %1$s</string>
   <string name="biometric_auth_description">Shikchijchimi ne sensor ipal ne mapipiltashkal pal tikalaki.</string>
   <string name="biometric_auth_new_session">Yankwik Sesion</string>
   <string name="biometric_auth_image_description">Mapipiltashkal</string>

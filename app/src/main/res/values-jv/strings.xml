@@ -29,7 +29,6 @@
   <string name="shortcut_erase_short_label">Busak</string>
   <string name="shortcut_erase_long_label">Busak riwayat dlajahan</string>
   <string name="shortcut_erase_and_open_short_label">Busak &amp; bukak</string>
-  <string name="shortcut_erase_and_open_long_label">Busak lan bukak %1$s</string>
   <string name="preference_privacy_and_security_header">Privasi &amp; Kaamanan</string>
   <string name="preference_mozilla_summary">Ngenani %1$s, pitulung</string>
   <string name="preference_category_web_content">Kontèn Wèb</string>

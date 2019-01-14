@@ -30,7 +30,6 @@
   <string name="shortcut_erase_short_label">Kéntitani</string>
   <string name="shortcut_erase_long_label">Jirinhantskwani kéntita</string>
   <string name="shortcut_erase_and_open_short_label">Kéntitani &amp; mítani</string>
-  <string name="shortcut_erase_and_open_long_label">Kéntitani ka mítani %1$s</string>
   <string name="text_selection_search_action">Jirinhakuari</string>
   <string name="about_content"><![CDATA[<p xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">%1$s T\'uri xanhatatakurhis&#239;nka.</p>\n<p xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">"Eska jirikurhiparini &#250;ra:\n  "<ul>"\n    "<li>Jirinhants&#239; &#237;ni &#250;ratarakwarhu</li>"\n    "<li>Estakutiechani kwarhukua (o jimpanhiranta p&#233;kurhintskwaechani ks jiankua estakutiechani)</li>"\n    "<li>K&#233;ntita exepakwa jirinhantskwa ka miantskwa ampe</li>"\n  "</ul>\n</p>\n<p xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">%1$s Mozilla &#250;s&#239;nti. Eska k\'&#233;ri xurukwa s&#233;simintu &#225;nchikurhini jawaka juchaeri &#250;kwaesti.<br/>\n<a href="%2$s">S&#225;nteru jorhenani</a></p>]]></string>
   <string name="preference_privacy_and_security_header">Kwatakwa &amp; Jískakwa</string>
@@ -74,14 +73,10 @@
   <string name="preference_language">Wantakwa</string>
   <string name="preference_language_systemdefault">Ánchitakwa</string>
   <string name="preference_category_privacy">Jískakata</string>
-  <string name="preference_privacy_block_ads">Ayankpekwaechani kwarhukuani</string>
-  <string name="preference_privacy_block_ads_summary">Máru eranharhikwaecha inchatiksï ayankperakwaecharu, najkuru áamkuri puchanharhiku</string>
   <string name="preference_privacy_block_analytics">Jatakwaeri estakutichani kwarhukuani</string>
-  <string name="preference_privacy_block_analytics_summary">Í úratarakwa, estakusïnti ampe mánkari eranharhikunka</string>
+  <string name="preference_privacy_block_ads">Ayankpekwaechani kwarhukuani</string>
   <string name="preference_privacy_block_social">Wantap\'etarakwaechani kwarhukuani</string>
-  <string name="preference_privacy_block_social_summary">Inchanharhikutanhasti jimpoka estakuatikini ka exeratikini máteru úratarakwaechani</string>
   <string name="preference_privacy_block_content">Jatakwaeri ampe estakutichani kwarhukuani</string>
-  <string name="preference_privacy_block_content_summary2">Máru eranharhikwaecha nantarkuni úati énkari ampakeraka</string>
   <string name="preference_privacy_category_cookies">Exepakwani kwarhukuani</string>
   <string name="preference_privacy_should_block_cookies_no_option">Áamku</string>
   <string name="preference_privacy_should_block_cookies_third_party_only_option">Exepakwaechani 3rd kwarhukuani</string>
@@ -173,7 +168,6 @@
   <string name="contextmenu_open_in_new_tab">Máteru erarhukwarhu mítani</string>
   <string name="contextmenu_image_warning"><![CDATA["Eranharhikukwaecha énkari kwánkurhika ka patsakurhiani "<b xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">"&#225;amkus&#239; k&#233;ntitanhaa "</b>" énkari kéntitaka%1$smiantskwani."]]></string>
   <string name="firstrun_defaultbrowser_title">Jískakwa ampe winhaskuntsï</string>
-  <string name="firstrun_defaultbrowser_text2">Jirikurhiparini jankwani winhaskukurhintsï. kúparhakwaechani ka máteru jatakwaechani énkaksïni estakuni ka yóntachipanka kwarhukua.</string>
   <string name="firstrun_search_title">Ch\'éeti jirinhanstkwa, ch\'éeti jánkwa</string>
   <string name="firstrun_search_text">Ampema jirinhantaxakiri? Máteru jirinhatarantskwani eraku pékurhintskwaecharhu.</string>
   <string name="firstrun_shortcut_title">Wenakwarhu jurhikutakwaechani kuparhataa</string>
