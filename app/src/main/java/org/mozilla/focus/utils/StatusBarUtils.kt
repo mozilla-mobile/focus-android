@@ -16,12 +16,10 @@ class StatusBarUtils {
                 listener(STATUS_BAR_HEIGHT)
             }
 
-            view?.let {
-                view.setOnApplyWindowInsetsListener { _, insets ->
-                    STATUS_BAR_HEIGHT = insets.systemWindowInsetTop
-                    listener(STATUS_BAR_HEIGHT)
-                    insets
-                }
+            view?.setOnApplyWindowInsetsListener { _, insets ->
+                STATUS_BAR_HEIGHT = insets.systemWindowInsetTop
+                listener(STATUS_BAR_HEIGHT)
+                insets
             }
         }
     }
