@@ -87,6 +87,8 @@
   <string name="preference_privacy_should_block_cookies_yes_option">Haj</string>
   <string name="preference_privacy_block_cookies_no">Ně (wšě placki dowolić)</string>
   <string name="preference_privacy_block_cookies_third_party_tracker">Slědowace placki třećich poskićowarjow blokować (doporučene)</string>
+  <string name="preference_privacy_block_cookies_third_party_only">Wšě placki třećich blokować\n(móže zawinować, zo websydła hižo njefunguja)</string>
+  <string name="preference_privacy_block_cookies_yes">Wšě placki blokować (móže zawinować, zo websydła hižo njefunguja)</string>
   <string name="preference_security_biometric">Wužiwajće porstowy wotćišć, zo byšće nałoženje wotewrěł</string>
   <string name="preference_security_biometric_summary">Waš porstowy wotćišć móže %1$s wotewrěć, jeli URL je hižo w nałoženju wočinjeny. Tarnowanski modus so zapinje.</string>
   <string name="preference_privacy_secure_mode">Tarnowanje</string>

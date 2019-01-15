@@ -54,6 +54,7 @@
   <string name="preference_switch_autocomplete_topsites">Za glavne strani</string>
   <string name="preference_autocomplete_topsite_summary">Omogočite samodejno dopolnjevanje preko 450 priljubljenih URL-jev v naslovni vrstici.</string>
   <string name="preference_switch_autocomplete_user_list">Za strani, ki jih dodate</string>
+  <string name="preference_autocomplete_user_list_description">Omogočite samodejno dopolnjevanje strani, ki jih dodate tukaj.</string>
   <string name="preference_category_autocomplete_manage_sites">Upravljanje strani</string>
   <string name="preference_autocomplete_subitem_manage_sites">Upravljanje strani</string>
   <string name="preference_autocomplete_action_add">+ Dodaj URL po meri</string>
@@ -76,12 +77,16 @@
   <string name="preference_language">Jezik</string>
   <string name="preference_language_systemdefault">Privzet v sistemu</string>
   <string name="preference_category_privacy">Zasebnost</string>
+  <string name="preference_privacy_ads_block_ads">Zavračaj oglase in druge nadloge</string>
+  <string name="preference_privacy_ads_block_ads_summary">Zaustavi oglase in druge nadloge z uporabo seznamov zavračanja Easylist, EasyPrivacy, Fanboy\'s Annoyance in 777 Guard Mobile Ad Filter</string>
   <string name="preference_privacy_block_analytics">Zavračaj sledilce analitike</string>
   <string name="preference_privacy_block_ads">Zavračaj sledilce oglasov</string>
   <string name="preference_privacy_block_ads_new_summary">Odstrani oglase, namenjene sledenju obiskov spletnih mest, tudi če ne tapnete nanje</string>
   <string name="preference_privacy_block_analytics_new_summary">Zavrača sledilce, ki analizirajo in merijo dejanja, kot je pritiskanje in drsenje po strani</string>
   <string name="preference_privacy_block_social">Zavračaj sledilce družbenih omrežij</string>
+  <string name="preference_privacy_block_social_new_summary">Zaustavi sledilnike družbenih medijev, vgrajene v spletne strani, vključno z gumbi za skupno rabo</string>
   <string name="preference_privacy_block_content">Zavračaj druge vsebinske sledilce</string>
+  <string name="preference_privacy_block_content_new_summary">Zavrača sledenje dejavnosti, vendar lahko povzroči nepričakovano obnašanje nekaterih spletnih mest in strani</string>
   <string name="preference_privacy_category_cookies">Zavračaj piškotke</string>
   <string name="preference_privacy_should_block_cookies_no_option">Ne</string>
   <string name="preference_privacy_should_block_cookies_third_party_tracker_cookies_option">Zavračaj samo sledilne piškotke tretjih strani</string>
