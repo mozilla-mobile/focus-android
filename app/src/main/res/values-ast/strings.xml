@@ -62,14 +62,10 @@
   <string name="preference_language">Llingua</string>
   <string name="preference_language_systemdefault">Predeterminada del sistema</string>
   <string name="preference_category_privacy">Privacidá</string>
-  <string name="preference_privacy_block_ads">Bloquiar rastrexadores publicitarios</string>
-  <string name="preference_privacy_block_ads_summary">Dellos anuncios rastrexen los sitios qu\'andes, incluso si nun faes clic nellos</string>
   <string name="preference_privacy_block_analytics">Bloquiar rastrexadores d\'analítiques</string>
-  <string name="preference_privacy_block_analytics_summary">Úsase pa recoyer, analizar y midir actividaes como calcos y desplazamientos</string>
+  <string name="preference_privacy_block_ads">Bloquiar rastrexadores publicitarios</string>
   <string name="preference_privacy_block_social">Bloquiar rastrexadores sociales</string>
-  <string name="preference_privacy_block_social_summary">Intégrase en sitios pa rastrexar les tos visites y amosar funcionalidaes como botones de compartición</string>
   <string name="preference_privacy_block_content">Bloquiar otros rastrexadores</string>
-  <string name="preference_privacy_block_content_summary2">Activalo quiciabes faiga que delles páxines se comporten de mou inesperáu</string>
   <string name="preference_privacy_category_cookies">Bloquéu de cookies</string>
   <string name="preference_privacy_should_block_cookies_no_option">Non</string>
   <string name="preference_privacy_should_block_cookies_third_party_only_option">Bloquiar namái cookies de terceros</string>
@@ -158,7 +154,6 @@
   <string name="contextmenu_open_in_new_tab">Abrir enllaz en llingüeta nueva</string>
   <string name="contextmenu_image_warning"><![CDATA["Les imáxenes guardaes y compartíes "<b xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">nun se desaniciar&#225;n</b>" cuando baleres l\'historial de %1$s."]]></string>
   <string name="firstrun_defaultbrowser_title">Potencia la to privacidá</string>
-  <string name="firstrun_defaultbrowser_text2">Lleva\'l restolar en privao a un nivel meyor. Bloquia anuncios y otru conteníu que pue rastrexate nes páxines y faen lentos los tiempos de carga.</string>
   <string name="firstrun_search_title">Guetes al to xeitu</string>
   <string name="firstrun_search_text">¿Guetes daqué diferente? Escueyi otru motor de gueta predetermináu nos axustes.</string>
   <string name="firstrun_shortcut_title">Amiesta atayos a la to pantalla d\'aniciu</string>

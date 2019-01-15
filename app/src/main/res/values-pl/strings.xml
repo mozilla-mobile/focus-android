@@ -30,13 +30,13 @@
   <string name="shortcut_erase_short_label">Usuń historię</string>
   <string name="shortcut_erase_long_label">Usuń historię przeglądania</string>
   <string name="shortcut_erase_and_open_short_label">Usuń i otwórz</string>
-  <string name="shortcut_erase_and_open_long_label">Usuń i otwórz %1$s</string>
   <string name="text_selection_search_action">Wyszukaj prywatnie</string>
   <string name="about_content"><![CDATA[<p xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">%1$s daje wi&#281;ksz&#261; kontrol&#281;.</p>\n<p xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">"Jako prywatna przegl&#261;darka umo&#380;liwia:\n  "<ul>"\n    "<li>wyszukiwanie i&#160;przegl&#261;danie prosto z&#160;aplikacji</li>"\n    "<li>blokowanie &#347;ledzenia (mo&#380;na to zmieni&#263; w&#160;ustawieniach)</li>"\n    "<li>usuwanie ciasteczek oraz ca&#322;ej historii wyszukiwania i&#160;przegl&#261;dania</li>"\n  "</ul>\n</p>\n<p xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">%1$s jest tworzony przez Mozill&#281;. Naszym celem jest wspieranie zdrowego i&#160;otwartego Internetu.<br/>\n<a href="%2$s">Wi&#281;cej informacji</a></p>]]></string>
   <string name="preference_privacy_and_security_header">Prywatność i bezpieczeństwo</string>
   <string name="preference_privacy_and_security_summary">Śledzenie, ciasteczka, udostępniane dane</string>
   <string name="preference_search_summary">Domyślna wyszukiwarka, automatyczne uzupełnianie</string>
   <string name="preference_mozilla_summary">O programie %1$s, pomoc</string>
+  <string name="preference_category_ad_blocking">Blokowanie reklam</string>
   <string name="preference_category_tracking_protection">Ochrona przed śledzeniem</string>
   <string name="preference_category_web_content">Strony</string>
   <string name="preference_category_switching_apps">Przełączanie aplikacji</string>
@@ -54,7 +54,7 @@
   <string name="preference_switch_autocomplete_topsites">Dla popularnych stron</string>
   <string name="preference_autocomplete_topsite_summary">Włącz, aby automatycznie uzupełniać ponad 450 popularnych adresów na pasku adresu.</string>
   <string name="preference_switch_autocomplete_user_list">Dla dodanych stron</string>
-  <string name="preference_autocomplete_user_list_summary">Włącz, aby automatycznie uzupełniać ponad 450 popularnych adresów na pasku adresu.</string>
+  <string name="preference_autocomplete_user_list_description">Włącz, aby automatycznie uzupełniać dodane tutaj strony.</string>
   <string name="preference_category_autocomplete_manage_sites">Zarządzaj stronami</string>
   <string name="preference_autocomplete_subitem_manage_sites">Zarządzaj stronami</string>
   <string name="preference_autocomplete_action_add">+ Dodaj inny adres</string>
@@ -77,19 +77,25 @@
   <string name="preference_language">Język</string>
   <string name="preference_language_systemdefault">Domyślny systemu</string>
   <string name="preference_category_privacy">Prywatność</string>
-  <string name="preference_privacy_block_ads">Blokowanie śledzących reklam</string>
-  <string name="preference_privacy_block_ads_summary">Niektóre reklamy (nawet niekliknięte) śledzą odwiedziny zawierających je stron</string>
+  <string name="preference_privacy_ads_block_ads">Blokowanie reklam i innych irytujących elementów</string>
+  <string name="preference_privacy_ads_block_ads_summary">Usuwa reklamy i inne irytujące elementy za pomocą list blokowania Easylist, EasyPrivacy, Fanboy’s Annoyance i 777Guard Mobile Ad Filter</string>
   <string name="preference_privacy_block_analytics">Blokowanie śledzących statystyk</string>
-  <string name="preference_privacy_block_analytics_summary">Używane do zbierania, analizowania i mierzenia działań użytkownika, takich jak kliknięcia i przewijanie</string>
+  <string name="preference_privacy_block_ads">Blokowanie śledzących reklam</string>
+  <string name="preference_privacy_block_ads_new_summary">Usuwa reklamy zaprojektowane do śledzenia wizyt na stronie nawet bez ich stuknięcia</string>
+  <string name="preference_privacy_block_analytics_new_summary">Blokuje elementy śledzące, które analizują i mierzą działania użytkownika, takie jak stuknięcia i przewijanie</string>
   <string name="preference_privacy_block_social">Blokowanie śledzących społecznościowych</string>
-  <string name="preference_privacy_block_social_summary">Osadzane na stronach, aby śledzić ich odwiedziny i dodawać np. przyciski udostępniania</string>
+  <string name="preference_privacy_block_social_new_summary">Usuwa elementy śledzące związane z serwisami społecznościowymi osadzone na stronach, w tym przyciski udostępniania</string>
   <string name="preference_privacy_block_content">Blokowanie pozostałych śledzących</string>
-  <string name="preference_privacy_block_content_summary2">Włączenie może spowodować nieoczekiwane zachowanie niektórych stron</string>
+  <string name="preference_privacy_block_content_new_summary">Blokuje śledzenie, ale może powodować niepoprawne działanie niektórych stron</string>
   <string name="preference_privacy_category_cookies">Blokowanie ciasteczek</string>
   <string name="preference_privacy_should_block_cookies_no_option">Nie</string>
   <string name="preference_privacy_should_block_cookies_third_party_tracker_cookies_option">Blokowanie tylko śledzących ciasteczek zewnętrznych witryn</string>
   <string name="preference_privacy_should_block_cookies_third_party_only_option">Blokowanie tylko ciasteczek zewnętrznych witryn</string>
   <string name="preference_privacy_should_block_cookies_yes_option">Tak</string>
+  <string name="preference_privacy_block_cookies_no">Nie (zezwolenie na wszystkie ciasteczka)</string>
+  <string name="preference_privacy_block_cookies_third_party_tracker">Śledzące ciasteczka zewnętrznych witryn (zalecane)</string>
+  <string name="preference_privacy_block_cookies_third_party_only">Wszystkie ciasteczka zewnętrznych witryn \n(może powodować niepoprawne działanie stron)</string>
+  <string name="preference_privacy_block_cookies_yes">Wszystkie ciasteczka (spowoduje niepoprawne działanie stron)</string>
   <string name="preference_security_biometric">Odblokowywanie aplikacji odciskiem palca</string>
   <string name="preference_security_biometric_summary">Można odblokować %1$s za pomocą odcisku palca, jeśli w aplikacji jest już otwarty adres. Tryb ukryty będzie włączony.</string>
   <string name="preference_privacy_secure_mode">Tryb ukryty</string>
@@ -177,7 +183,7 @@
   <string name="contextmenu_open_in_new_tab">Otwórz odnośnik w nowej karcie</string>
   <string name="contextmenu_image_warning"><![CDATA["Zapisane i udostępnione obrazy "<b xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">nie zostan&#261; usuni&#281;te</b>" po wyczyszczeniu historii %1$s."]]></string>
   <string name="firstrun_defaultbrowser_title">Nowy poziom prywatności</string>
-  <string name="firstrun_defaultbrowser_text2">Przejdź na wyższy poziom prywatności. Blokuj reklamy i inne elementy mogące Cię śledzić między stronami i wydłużające wczytywanie się stron.</string>
+  <string name="firstrun_defaultbrowser_text_new">Blokuj takie treści, jak reklamy i kod śledzący Cię w sieci i spowalniający pracę. Włącz blokowanie reklam, aby przeglądać szybciej bez irytujących reklam.</string>
   <string name="firstrun_search_title">Wyszukuj po swojemu</string>
   <string name="firstrun_search_text">Szukasz czegoś innego? Wybierz inną domyślną wyszukiwarkę w ustawieniach.</string>
   <string name="firstrun_shortcut_title">Dodawaj skróty do ekranu głównego</string>
@@ -187,6 +193,8 @@
   <string name="firstrun_close_button">OK!</string>
   <string name="firstrun_skip_button">Pomiń</string>
   <string name="firstrun_next_button">Dalej</string>
+  <string name="block_ads_card_title">%1$s jest gotowy blokować reklamy</string>
+  <string name="block_ads_card_description">Nowa funkcja! Przeglądaj szybciej dzięki blokowaniu reklam i kodu śledzącego Cię w sieci.</string>
   <string name="content_blocking_disabled">—</string>
   <string name="dialog_addtohomescreen_action_add">Dodaj</string>
   <string name="dialog_addtohomescreen_action_cancel">Anuluj</string>
@@ -226,6 +234,7 @@
   <string name="biometric_auth_title">Odblokuj %1$s</string>
   <string name="biometric_auth_description">Dotknij czujnika odcisków palców, aby kontynuować.</string>
   <string name="biometric_auth_new_session">Nowa sesja</string>
+  <string name="biometric_auth_open_link_new_session">Otwórz odnośnik w nowej sesji</string>
   <string name="biometric_auth_image_description">Ikona odcisku palca</string>
   <string name="biometric_auth_not_recognized_error">Nie rozpoznano odcisku palca. Spróbuj ponownie.</string>
   <string name="biometric_auth_moved_too_quickly">Palec ruszył się za szybko. Spróbuj ponownie.</string>
@@ -243,6 +252,8 @@
   <string name="tip_open_in_new_tab">Otwórz odnośnik w nowej karcie\n Przytrzymaj dowolny odnośnik na stronie</string>
   <string name="tip_request_desktop">Wolisz pełną wersję strony jak na komputerze?%1$s Menu → Wersja na komputery</string>
   <string name="tip_disable_tips2">Wyłącz wskazówki na ekranie głównym</string>
+  <string name="tip_block_ads">Przeglądaj szybciej dzięki blokowaniu reklam i kodu śledzącego Cię w sieci.</string>
+  <string name="block_ads_title">Blokowanie reklam</string>
   <string name="tip_explain_allowlist">Zaufana strona?\n Lista dozwolonych wyłącza ochronę przed śledzeniem dla znanych i zaufanych stron.</string>
   <string name="new_tab_opened_snackbar">Otwarto nową kartę</string>
   <string name="open_new_tab_snackbar">Przejdź</string>
@@ -263,4 +274,8 @@
   <string name="fatal_crash_report_close_button_label">Zamknij</string>
   <string name="fatal_crash_report_restart_firefox_label">Uruchom %1$s ponownie</string>
   <string name="crash_report_send_crash_label">Zgłoś awarię Mozilli</string>
+  <string name="content_blocking_enabled_snackbar_message">Blokowanie treści jest włączone</string>
+  <string name="content_blocking_disabled_snackbar_message">Blokowanie treści jest wyłączone</string>
+  <string name="content_blocking_snackbar_enable_action">Włącz</string>
+  <string name="content_blocking_snackbar_disable_action">Wyłącz</string>
 </resources>

@@ -30,13 +30,13 @@
   <string name="shortcut_erase_short_label">Löschen</string>
   <string name="shortcut_erase_long_label">Browser-Chronik löschen</string>
   <string name="shortcut_erase_and_open_short_label">Löschen &amp; Öffnen</string>
-  <string name="shortcut_erase_and_open_long_label">Löschen und %1$s öffnen</string>
   <string name="text_selection_search_action">Privat Suchen</string>
   <string name="about_content"><![CDATA[<p xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">%1$s gibt Ihnen die Kontrolle.</p>\n<p xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">"Verwenden Sie ihn als privaten Browser:\n  "<ul>"\n    "<li>Suchen und bl&#228;ttern Sie in der App</li>"\n    "<li>Blockieren Sie Tracker (oder aktualisieren Sie die Einstellungen, um Tracker zu erlauben)</li>"\n    "<li>Entfernen Sie Cookies, um Such- und Browserverlauf zu l&#246;schen</li>"\n  "</ul>\n</p>\n<p xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">%1$s wird von Mozilla entwickelt. Unsere Mission ist es, ein gesundes, offenes Internet zu f&#246;rdern.<br/>\n<a href="%2$s">Erfahren Sie mehr</a></p>]]></string>
   <string name="preference_privacy_and_security_header">Datenschutz &amp; Sicherheit</string>
   <string name="preference_privacy_and_security_summary">Aktivitätenverfolgung, Cookies, Datenübermittlung</string>
   <string name="preference_search_summary">Als Standard setzen, automatisch vervollständigen</string>
   <string name="preference_mozilla_summary">Über %1$s, Hilfe</string>
+  <string name="preference_category_ad_blocking">Werbeblocker</string>
   <string name="preference_category_tracking_protection">Schutz vor Aktivitätenverfolgung</string>
   <string name="preference_category_web_content">Web-Inhalt</string>
   <string name="preference_category_switching_apps">Apps wechseln</string>
@@ -54,7 +54,7 @@
   <string name="preference_switch_autocomplete_topsites">Für meistbesuchte Seiten</string>
   <string name="preference_autocomplete_topsite_summary">Aktivieren, damit über 450 beliebte Adressen in der Adressleiste automatisch vervollständigt werden.</string>
   <string name="preference_switch_autocomplete_user_list">Für Websites, die Sie hinzufügen</string>
-  <string name="preference_autocomplete_user_list_summary">Aktivieren, damit über 450 beliebte Adressen in der Adressleiste automatisch vervollständigt werden.</string>
+  <string name="preference_autocomplete_user_list_description">Aktivieren Sie diese Option, um hier eingetragene Websites automatisch zu vervollständigen.</string>
   <string name="preference_category_autocomplete_manage_sites">Websites verwalten</string>
   <string name="preference_autocomplete_subitem_manage_sites">Websites verwalten</string>
   <string name="preference_autocomplete_action_add">+ Benutzerdefinierte Adresse hinzufügen</string>
@@ -77,19 +77,25 @@
   <string name="preference_language">Sprache</string>
   <string name="preference_language_systemdefault">Systemstandard</string>
   <string name="preference_category_privacy">Datenschutz</string>
-  <string name="preference_privacy_block_ads">Werbeverfolgung blockieren</string>
-  <string name="preference_privacy_block_ads_summary">Manche Werbeanzeigen verfolgen Ihre Seitenbesuche, auch wenn Sie nicht auf die Anzeigen klicken</string>
+  <string name="preference_privacy_ads_block_ads">Blockiert Werbung und andere störende Inhalte</string>
+  <string name="preference_privacy_ads_block_ads_summary">Blockiert Werbung und andere störende Inhalte mit Blocklisten von Easylist, EasyPrivacy, Fanboy’s Annoyance und 777Guard Mobile Ad Filter.</string>
   <string name="preference_privacy_block_analytics">Analyseverfolgung blockieren</string>
-  <string name="preference_privacy_block_analytics_summary">Damit werden Aktivitäten wie Tippen und Blättern gesammelt, analysiert und ausgewertet</string>
+  <string name="preference_privacy_block_ads">Werbeverfolgung blockieren</string>
+  <string name="preference_privacy_block_ads_new_summary">Entfernt Werbung, die Besuche von Websites aufzeichnet, auch wenn Sie diese nicht aufgerufen haben</string>
+  <string name="preference_privacy_block_analytics_new_summary">Blockiert Tracker, die Interaktionen wie Tippen und Blättern sammeln, analysieren und auswerten</string>
   <string name="preference_privacy_block_social">Verfolgung durch soziale Netzwerke blockieren</string>
-  <string name="preference_privacy_block_social_summary">Auf Websites eingebettet, um Ihre Besuche zu verfolgen und Funktionen wie Links zum Teilen anzuzeigen</string>
+  <string name="preference_privacy_block_social_new_summary">Stoppt Social-Media-Tracker, die in Websites eingebettet sind, einschließlich Schaltflächen zum Teilen in sozialen Netzwerken</string>
   <string name="preference_privacy_block_content">Andere Inhaltsverfolgung blockieren</string>
-  <string name="preference_privacy_block_content_summary2">Dies kann dazu führen, dass manche Seiten sich ungewöhnlich verhalten</string>
+  <string name="preference_privacy_block_content_new_summary">Blockiert Tracking-Aktivitäten, kann aber dazu führen, dass manche Websites und Seiten sich unerwartet verhalten</string>
   <string name="preference_privacy_category_cookies">Cookies blockieren</string>
   <string name="preference_privacy_should_block_cookies_no_option">Nein</string>
   <string name="preference_privacy_should_block_cookies_third_party_tracker_cookies_option">Nur Tracker-Cookies von Drittanbietern blockieren</string>
   <string name="preference_privacy_should_block_cookies_third_party_only_option">Nur Cookies von Drittanbietern blockieren</string>
   <string name="preference_privacy_should_block_cookies_yes_option">Ja</string>
+  <string name="preference_privacy_block_cookies_no">Nein (alle Cookies zulassen)</string>
+  <string name="preference_privacy_block_cookies_third_party_tracker">Tracker-Cookies von Drittanbietern blockieren (empfohlen)</string>
+  <string name="preference_privacy_block_cookies_third_party_only">Alle Cookies von Drittanbietern blockieren\n(kann die Funktionsweise von Websites stören)</string>
+  <string name="preference_privacy_block_cookies_yes">Alle Cookies blockieren (stört die Funktionsweise von Websites)</string>
   <string name="preference_security_biometric">Fingerabdruck zum Entsperren der App verwenden</string>
   <string name="preference_security_biometric_summary">Ihr Fingerabdruck kann %1$s entsperren, wenn in der App bereits eine URL geöffnet ist. Tarnung wird aktiviert.</string>
   <string name="preference_privacy_secure_mode">Tarnung</string>
@@ -177,7 +183,7 @@
   <string name="contextmenu_open_in_new_tab">Link in neuem Tab öffnen</string>
   <string name="contextmenu_image_warning"><![CDATA["Gespeicherte und geteilte Grafiken "<b xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">werden nicht gel&#246;scht</b>, wenn Sie die Chronik von %1$s löschen.]]></string>
   <string name="firstrun_defaultbrowser_title">Stärken Sie Ihre Privatsphäre</string>
-  <string name="firstrun_defaultbrowser_text2">Privates Surfen auf einer höheren Stufe. Blockieren Sie Werbung und andere Inhalte, die Sie über Websites hinweg verfolgen können und Seitenladezeiten verlängern.</string>
+  <string name="firstrun_defaultbrowser_text_new">Blockieren Sie Inhalte wie Werbung und Quelltext, der Sie im Internet verfolgt und ausbremst. Aktivieren Sie den Werbeblocker, um schneller und ohne störende Werbung zu surfen.</string>
   <string name="firstrun_search_title">Ihre Suche, wie Sie möchten</string>
   <string name="firstrun_search_text">Suchen Sie etwas anderes? Wählen Sie in den Einstellungen eine andere Standardsuchmaschine.</string>
   <string name="firstrun_shortcut_title">Fügen Sie Verknüpfungen auf Ihrem Startbildschirm hinzu</string>
@@ -187,6 +193,8 @@
   <string name="firstrun_close_button">Ok, verstanden!</string>
   <string name="firstrun_skip_button">Überspringen</string>
   <string name="firstrun_next_button">Weiter</string>
+  <string name="block_ads_card_title">%1$s kann jetzt Werbung blockieren</string>
+  <string name="block_ads_card_description">Neue Funktion! Surfen Sie schneller, indem Sie Werbung und Quelltext, der Sie im Internet verfolgt, blockieren.</string>
   <string name="content_blocking_disabled">–</string>
   <string name="dialog_addtohomescreen_action_add">Hinzufügen</string>
   <string name="dialog_addtohomescreen_action_cancel">Abbrechen</string>
@@ -226,6 +234,7 @@
   <string name="biometric_auth_title">%1$s entsperren</string>
   <string name="biometric_auth_description">Berühren Sie den Fingerabdrucksensor, um fortzufahren.</string>
   <string name="biometric_auth_new_session">Neue Sitzung</string>
+  <string name="biometric_auth_open_link_new_session">Link in neuer Sitzung öffnen</string>
   <string name="biometric_auth_image_description">Grafik: Fingerabdruck</string>
   <string name="biometric_auth_not_recognized_error">Fingerabdruck nicht erkannt. Versuchen Sie es erneut.</string>
   <string name="biometric_auth_moved_too_quickly">Finger wurde zu schnell bewegt. Versuchen Sie es erneut.</string>
@@ -243,6 +252,8 @@
   <string name="tip_open_in_new_tab">Einen Link in einem neuen Tab öffnen\n Drücken Sie lange auf einen Link in einer Seite</string>
   <string name="tip_request_desktop">Lieber die gesamte Desktop-Website ansehen?%1$s Menü → Desktop-Seite anfordern</string>
   <string name="tip_disable_tips2">Tipps im Startbildschirm abschalten</string>
+  <string name="tip_block_ads">Surfen Sie schneller, indem Sie Werbung und Quelltext, der Sie im Internet verfolgt, blockieren.</string>
+  <string name="block_ads_title">Werbeblocker</string>
   <string name="tip_explain_allowlist">Vertrauenswürdige Website?\n Mit der Positivliste können Sie den Schutz vor Aktivitätenverfolgung für bekannte und vertrauenswürdige Websites deaktivieren.</string>
   <string name="new_tab_opened_snackbar">Neuer Tab geöffnet</string>
   <string name="open_new_tab_snackbar">Umschalten</string>
@@ -263,4 +274,8 @@
   <string name="fatal_crash_report_close_button_label">Schließen</string>
   <string name="fatal_crash_report_restart_firefox_label">%1$s neu starten</string>
   <string name="crash_report_send_crash_label">Absturzbericht an Mozilla senden</string>
+  <string name="content_blocking_enabled_snackbar_message">Inhaltsblockierung ist aktiviert</string>
+  <string name="content_blocking_disabled_snackbar_message">Inhaltsblockierung ist deaktiviert</string>
+  <string name="content_blocking_snackbar_enable_action">Aktivieren</string>
+  <string name="content_blocking_snackbar_disable_action">Deaktivieren</string>
 </resources>

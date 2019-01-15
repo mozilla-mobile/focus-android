@@ -30,13 +30,13 @@
   <string name="shortcut_erase_short_label">Ezabatu</string>
   <string name="shortcut_erase_long_label">Ezabatu nabigatze-historia</string>
   <string name="shortcut_erase_and_open_short_label">Ezabatu eta ireki</string>
-  <string name="shortcut_erase_and_open_long_label">Ezabatu eta ireki %1$s</string>
   <string name="text_selection_search_action">Bilatu modu pribatuan</string>
   <string name="about_content"><![CDATA[<p xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">%1$s(e)k agintea ematen dizu.</p>\n<p xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">"Erabili nabigatzaile pribatu gisa:\n  "<ul>"\n    "<li>Bilatu eta nabigatu aplikaziotik zuzenean</li>"\n    "<li>Blokeatu jarraipena (edo eguneratu ezarpenak jarraipena onartzeko)</li>"\n    "<li>Ezabatu cookieak eta bilaketa- eta nabigatze-historia</li>"\n  "</ul>\n</p>\n<p xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">Mozillak egina da %1$s. Internet osasuntsu eta irekia sustatzea da gure misioa.<br/>\n<a href="%2$s">Argibide gehiago</a></p>]]></string>
   <string name="preference_privacy_and_security_header">Pribatutasuna eta segurtasuna</string>
   <string name="preference_privacy_and_security_summary">Jarraipena, cookieak, datu-aukerak</string>
   <string name="preference_search_summary">Ezarri lehenespenak, osatze automatikoa</string>
   <string name="preference_mozilla_summary">%1$s(r)i buruz, laguntza</string>
+  <string name="preference_category_ad_blocking">Iragarkiak blokeatzea</string>
   <string name="preference_category_tracking_protection">Jarraipenaren babesa</string>
   <string name="preference_category_web_content">Web edukia</string>
   <string name="preference_category_switching_apps">Aplikazioak aldatzea</string>
@@ -54,7 +54,7 @@
   <string name="preference_switch_autocomplete_topsites">Gune erabilienetarako</string>
   <string name="preference_autocomplete_topsite_summary">Gaituz gero, helbide-barran automatikoki osatuko dira 450 URL ezagun baino gehiago.</string>
   <string name="preference_switch_autocomplete_user_list">Gehitzen dituzun guneetarako</string>
-  <string name="preference_autocomplete_user_list_summary">Gaituz gero, helbide-barran automatikoki osatuko dira 450 URL ezagun baino gehiago.</string>
+  <string name="preference_autocomplete_user_list_description">Gaitu osatze automatikoa hemen gehitzen dituzun guneetarako.</string>
   <string name="preference_category_autocomplete_manage_sites">Kudeatu guneak</string>
   <string name="preference_autocomplete_subitem_manage_sites">Kudeatu guneak</string>
   <string name="preference_autocomplete_action_add">+ Gehitu URL perstonalizatua</string>
@@ -77,19 +77,25 @@
   <string name="preference_language">Hizkuntza</string>
   <string name="preference_language_systemdefault">Sistemaren lehenetsia</string>
   <string name="preference_category_privacy">Pribatutasuna</string>
-  <string name="preference_privacy_block_ads">Blokeatu publizitatearen jarraipena</string>
-  <string name="preference_privacy_block_ads_summary">Zenbait iragarkik guneen bisiten jarraipena egiten dute, iragarkietan klik egiteko beharrik gabe ere</string>
+  <string name="preference_privacy_ads_block_ads">Iragarkiak eta bestelako eragozpenak blokeatzen ditu</string>
+  <string name="preference_privacy_ads_block_ads_summary">Iragarkiak eta bestelako eragozpenak blokeatzen ditu Easylist, EasyPrivacy, Fanboy’s Annoyance eta 777Guard Mobile Ad Filter-eko blokeo-zerrendak erabiliz</string>
   <string name="preference_privacy_block_analytics">Blokeatu analitiken jarraipena</string>
-  <string name="preference_privacy_block_analytics_summary">Sakatzea edo korritzea bezalako jarduerak bildu, analizatu eta neurtzeko erabiltzen da</string>
+  <string name="preference_privacy_block_ads">Blokeatu publizitatearen jarraipena</string>
+  <string name="preference_privacy_block_ads_new_summary">Guneen bisiten jarraipena egiteko diseinatutako iragarkiak kentzen ditu, nahiz eta zuk hauetan sakatu ez</string>
+  <string name="preference_privacy_block_analytics_new_summary">Sakatzea eta korritzea bezalako interakzioak analizatu eta neurtzen dituzten jarraipen-elementuak blokeatzen ditu</string>
   <string name="preference_privacy_block_social">Blokeatu sare sozialetako jarraipena</string>
-  <string name="preference_privacy_block_social_summary">Guneetan txertatuta zure bisiten jarraipena egin eta partekatzeko botoien tankerako eginbideak bistaratzeko</string>
+  <string name="preference_privacy_block_social_new_summary">Webguneetan txertatutako eta sare sozialekin lotutako jarraipen-elementuak gelditzen ditu, sare sozialetako partekatze-botoiak barne</string>
   <string name="preference_privacy_block_content">Blokeatu bestelako edukien jarraipena</string>
-  <string name="preference_privacy_block_content_summary2">Gaituz gero, zenbait orrik espero gabeko portaera izan lezakete</string>
+  <string name="preference_privacy_block_content_new_summary">Jardueraren jarraipena blokeatzen du baina gune eta orrietako portaera espero gabekoa izatea eragin lezake</string>
   <string name="preference_privacy_category_cookies">Blokeatu cookieak</string>
   <string name="preference_privacy_should_block_cookies_no_option">Ez</string>
   <string name="preference_privacy_should_block_cookies_third_party_tracker_cookies_option">Blokeatu soilik hirugarrenen jarraipen-cookieak</string>
   <string name="preference_privacy_should_block_cookies_third_party_only_option">Blokeatu soilik hirugarrenen cookieak</string>
   <string name="preference_privacy_should_block_cookies_yes_option">Bai</string>
+  <string name="preference_privacy_block_cookies_no">Ez (baimendu cookie guztiak)</string>
+  <string name="preference_privacy_block_cookies_third_party_tracker">Blokeatu hirugarrenen jarraipen-cookieak (gomendatua)</string>
+  <string name="preference_privacy_block_cookies_third_party_only">Blokeatu hirugarrenen cookie guztiak\n(webguneak apur litzake)</string>
+  <string name="preference_privacy_block_cookies_yes">Blokeatu cookie guztiak (webguneak apurtuko ditu)</string>
   <string name="preference_security_biometric">Erabili hatz-marka aplikazioa desblokeatzeko</string>
   <string name="preference_security_biometric_summary">Zure hatz-markak %1$s desblokea dezake URL bat dagoeneko aplikazioan irekita badago. Modu isil-gordea aktibatu egingo da.</string>
   <string name="preference_privacy_secure_mode">Modu isil-gordea</string>
@@ -177,7 +183,7 @@
   <string name="contextmenu_open_in_new_tab">Ireki lotura fitxa berrian</string>
   <string name="contextmenu_image_warning"><![CDATA["Deskargatutako eta partekatutako irudiak "<b xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">ez dira ezabatuko</b>" %1$s(r)en historia ezabatzean."]]></string>
   <string name="firstrun_defaultbrowser_title">Indartu zure pribatutasuna</string>
-  <string name="firstrun_defaultbrowser_text2">Eraman nabigatze pribatua hurrengo mailara. Blokeatu iragarkiak eta webguneetan zehar zure jarraipena egin edo orrien karga-denbora makal dezaketen edukiak.</string>
+  <string name="firstrun_defaultbrowser_text_new">Blokeatu iragarkiak eta webean zure jarraipena egiten duen eta mantsotzen zaituen kodea. Gaitu iragarkiak blokeatzea azkarrago nabigatzeko eragozpenak sortzen dituzten iragarkirik gabe.</string>
   <string name="firstrun_search_title">Bilaketa, zure erara</string>
   <string name="firstrun_search_text">Zerbait desberdinaren bila? Aukeratu beste bilaketa-motor lehenetsi bat ezarpenetan.</string>
   <string name="firstrun_shortcut_title">Gehitu lasterbideak zure hasierako pantailan</string>
@@ -187,6 +193,8 @@
   <string name="firstrun_close_button">Ulertuta!</string>
   <string name="firstrun_skip_button">Saltatu</string>
   <string name="firstrun_next_button">Hurrengoa</string>
+  <string name="block_ads_card_title">%1$s iragarkiak blokeatzeko prest dago</string>
+  <string name="block_ads_card_description">Eginbide berria! Nabigatu azkarrago iragarkiak eta webean zure jarraipena egiten duen kodea blokeatuz.</string>
   <string name="content_blocking_disabled">-</string>
   <string name="dialog_addtohomescreen_action_add">Gehitu</string>
   <string name="dialog_addtohomescreen_action_cancel">Utzi</string>
@@ -226,6 +234,7 @@
   <string name="biometric_auth_title">Desblokeatu %1$s</string>
   <string name="biometric_auth_description">Jarraitzeko, ukitu hatz-marka sentsorea.</string>
   <string name="biometric_auth_new_session">Saio berria</string>
+  <string name="biometric_auth_open_link_new_session">Ireki lotura saio berrian</string>
   <string name="biometric_auth_image_description">Hatz-markaren ikonoa</string>
   <string name="biometric_auth_not_recognized_error">Ez da hatz-marka ezagutu. Saiatu berriro.</string>
   <string name="biometric_auth_moved_too_quickly">Hatza azkarregi mugitu da. Saiatu berriro.</string>
@@ -243,6 +252,8 @@
   <string name="tip_open_in_new_tab">Ireki lotura fitxa berri batean\n Mantendu sakatuta orri bateko edozein lotura</string>
   <string name="tip_request_desktop">Nahiago duzu mahaigaineko gune osoa ikusi?%1$s Menua &gt; Mahaigaineko gunea</string>
   <string name="tip_disable_tips2">Desgaitu hasierako pantailako aholkuak</string>
+  <string name="tip_block_ads">Nabigatu azkarrago iragarkiak eta webean zure jarraipena egiten duen kodea blokeatuz.</string>
+  <string name="block_ads_title">Iragarkiak blokeatzea</string>
   <string name="tip_explain_allowlist">Gune fidagarria?\nBaimentze-zerrendak jarraipenaren babesa desgaitzen du ezagutzen dituzun eta fidagarriak zaizkizun guneetarako.</string>
   <string name="new_tab_opened_snackbar">Fitxa berria irekita</string>
   <string name="open_new_tab_snackbar">Aldatu</string>
@@ -263,4 +274,8 @@
   <string name="fatal_crash_report_close_button_label">Itxi</string>
   <string name="fatal_crash_report_restart_firefox_label">Berrabiarazi %1$s</string>
   <string name="crash_report_send_crash_label">Bidali hutsegite-txostena Mozillara</string>
+  <string name="content_blocking_enabled_snackbar_message">Edukia blokeatzea gaituta dago</string>
+  <string name="content_blocking_disabled_snackbar_message">Edukia blokeatzea desgaituta dago</string>
+  <string name="content_blocking_snackbar_enable_action">Gaitu</string>
+  <string name="content_blocking_snackbar_disable_action">Desgaitu</string>
 </resources>

@@ -30,7 +30,6 @@
   <string name="shortcut_erase_short_label">지우기</string>
   <string name="shortcut_erase_long_label">방문 기록 지우기</string>
   <string name="shortcut_erase_and_open_short_label">지우고 열기</string>
-  <string name="shortcut_erase_and_open_long_label">%1$s 지우고 열기</string>
   <string name="text_selection_search_action">사생활 보호 검색</string>
   <string name="about_content"><![CDATA[<p xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">%1$s&#47484; &#50668;&#47084; &#44592;&#45733;&#51004;&#47196; &#49324;&#50857;&#54624; &#49688; &#51080;&#49845;&#45768;&#45796;.</p>\n<p xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">"&#44060;&#51064; &#51221;&#48372; &#48372;&#54840; &#48652;&#46972;&#50864;&#51200;&#47196; &#49324;&#50857;:\n  "<ul>"\n    "<li>&#50545;&#50640;&#49436; &#44160;&#49353; &#48143; &#48652;&#46972;&#50864;&#51669;&#54616;&#44592;</li>"\n    "<li>&#52628;&#51201;&#44592; &#52264;&#45800;(&#49444;&#51221;&#51012; &#48320;&#44221;&#54644; &#54728;&#50857;&#54624; &#49688; &#51080;&#51020;)</li>"\n    "<li>&#51064;&#53552;&#45367; &#44592;&#47197;&#51060;&#45208; &#44160;&#49353; &#44592;&#47197;, &#53216;&#53412; &#49325;&#51228;</li>"\n  "</ul>\n</p>\n<p xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">%1$s&#45716; Mozilla&#51032; &#51228;&#54408;&#51077;&#45768;&#45796;. Mozilla&#51032; &#49324;&#47749;&#51008; &#44148;&#44053;&#54616;&#44256; &#44060;&#48169;&#51201;&#51064; &#51064;&#53552;&#45367;&#51012; &#51312;&#49457;&#54616;&#45716; &#44163;&#51077;&#45768;&#45796;.<br/><a href="%2$s">&#45908; &#50508;&#50500;&#48372;&#44592;</a></p>]]></string>
   <string name="preference_privacy_and_security_header">개인정보 보호 및 보안</string>
@@ -54,7 +53,6 @@
   <string name="preference_switch_autocomplete_topsites">자주 가는 사이트</string>
   <string name="preference_autocomplete_topsite_summary">자동 완성 기능을 활성화해서 450개가 넘는 자주 찾는 URL을 주소창에서 사용해 보세요.</string>
   <string name="preference_switch_autocomplete_user_list">내가 추가한 사이트</string>
-  <string name="preference_autocomplete_user_list_summary">자동 완성 기능을 활성화해서 450개가 넘는 자주 찾는 URL을 주소창에서 사용해 보세요.</string>
   <string name="preference_category_autocomplete_manage_sites">사이트 관리</string>
   <string name="preference_autocomplete_subitem_manage_sites">사이트 관리</string>
   <string name="preference_autocomplete_action_add">+ 사용자 정의 URL 추가</string>
@@ -77,14 +75,10 @@
   <string name="preference_language">언어</string>
   <string name="preference_language_systemdefault">시스템 기본값</string>
   <string name="preference_category_privacy">개인 정보</string>
-  <string name="preference_privacy_block_ads">광고 추적기 차단</string>
-  <string name="preference_privacy_block_ads_summary">특정 광고의 경우, 광고를 클릭하지 않은 경우에도 방문 기록을 추적합니다</string>
   <string name="preference_privacy_block_analytics">분석용 추적기 차단</string>
-  <string name="preference_privacy_block_analytics_summary">탭한 기록이나 스크롤과 같은 사용자 활동 내역을 수집하고 분석하는데 사용됩니다</string>
+  <string name="preference_privacy_block_ads">광고 추적기 차단</string>
   <string name="preference_privacy_block_social">소셜 추적기 차단</string>
-  <string name="preference_privacy_block_social_summary">사용자의 방문 기록을 추적하거나 공유 버튼과 같은 기능을 표시하기 위해 사이트에 내장되어 있습니다</string>
   <string name="preference_privacy_block_content">기타 콘텐츠 추적기 차단</string>
-  <string name="preference_privacy_block_content_summary2">설정 시 웹 페이지가 제대로 표시되지 않을 수 있습니다</string>
   <string name="preference_privacy_category_cookies">쿠키 차단</string>
   <string name="preference_privacy_should_block_cookies_no_option">아니오</string>
   <string name="preference_privacy_should_block_cookies_third_party_tracker_cookies_option">제 3자 추적기 쿠키 만 차단</string>
@@ -177,7 +171,6 @@
   <string name="contextmenu_open_in_new_tab">새 탭으로 링크 열기</string>
   <string name="contextmenu_image_warning"><![CDATA["%1$s 기록을 지울 때 "<b xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">&#51200;&#51109; &#48143; &#44277;&#50976;&#46108; &#51060;&#48120;&#51648;</b>는 삭제되지 않습니다.]]></string>
   <string name="firstrun_defaultbrowser_title">개인정보 보호 강화하기</string>
-  <string name="firstrun_defaultbrowser_text2">한 단계 높은 개인 정보 보호 브라우징을 즐겨보세요. 사이트의 경계를 넘어 개인정보를 추적하거나, 페이지 로딩 속도를 늦추는 원인이 되는 광고 및 기타 콘텐츠를 자동으로 차단해 줍니다.</string>
   <string name="firstrun_search_title">검색을 내 입맛대로</string>
   <string name="firstrun_search_text">다른 방식으로 검색을 원하세요? 설정에서 다른 검색 엔진을 기본값으로 선택할 수 있습니다.</string>
   <string name="firstrun_shortcut_title">초기 화면에 바로 가기 추가</string>

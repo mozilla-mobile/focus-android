@@ -30,13 +30,13 @@
   <string name="shortcut_erase_short_label">Escafar</string>
   <string name="shortcut_erase_long_label">Escafar l\'istoric de navegacion</string>
   <string name="shortcut_erase_and_open_short_label">Escafar e dobrir</string>
-  <string name="shortcut_erase_and_open_long_label">Escafar e dobrir %1$s</string>
   <string name="text_selection_search_action">Recèrca privada</string>
   <string name="about_content"><![CDATA[<p xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">%1$s vos d&#242;na lo contr&#242;la.</p>\n<p xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">"Utiliza-lo coma un navegador privat&#8239;:\n  "<ul>"\n    "<li>Recercatz e navegatz dins l&#8217;aplicacion</li>"\n    "<li>Blocatz los tra&#231;adors (se cambiatz pas lo param&#232;tre)</li>"\n    "<li>Escafatz los cookies e los istorics de rec&#232;rcas e navegacion</li>"\n  "</ul>\n</p>\n<p xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">%1$s produch per Mozilla. N&#242;stra mission es d&#8217;encoratjar un Internet dob&#232;rt e en bona santat.<br/>\n<a href="%2$s">Ne saber mai</a></p>]]></string>
   <string name="preference_privacy_and_security_header">Vida privada e seguretat</string>
   <string name="preference_privacy_and_security_summary">Seguiment, cookies, donadas reculhidas</string>
   <string name="preference_search_summary">Motor per defaut, autocompletacion</string>
   <string name="preference_mozilla_summary">A prepaus de %1$s, ajuda</string>
+  <string name="preference_category_ad_blocking">Blocatge de publicitat</string>
   <string name="preference_category_tracking_protection">Proteccion contra lo seguiment</string>
   <string name="preference_category_web_content">Contengut web</string>
   <string name="preference_category_switching_apps">Bascula entre las aplicacions</string>
@@ -54,7 +54,6 @@
   <string name="preference_switch_autocomplete_topsites">Pels sites favorits</string>
   <string name="preference_autocomplete_topsite_summary">Activar per completar automaticament mai de 450 adreças populara dins la barra d’adreça.</string>
   <string name="preference_switch_autocomplete_user_list">Pels sites qu’apondètz</string>
-  <string name="preference_autocomplete_user_list_summary">Activar per completar automaticament mai de 450 adreças populara dins la barra d’adreça.</string>
   <string name="preference_category_autocomplete_manage_sites">Gerir los sites</string>
   <string name="preference_autocomplete_subitem_manage_sites">Gerir los sites</string>
   <string name="preference_autocomplete_action_add">+ Ajustar una adreça personalizada</string>
@@ -77,19 +76,16 @@
   <string name="preference_language">Lenga</string>
   <string name="preference_language_systemdefault">Valors per defaut del sistèma</string>
   <string name="preference_category_privacy">Vida privada</string>
-  <string name="preference_privacy_block_ads">"Blocar los traçadors publicitaris "</string>
-  <string name="preference_privacy_block_ads_summary">De publicitats vos seguèsson, amai las cliquetz pas</string>
   <string name="preference_privacy_block_analytics">Blocar los traçadors d’estatisticas</string>
-  <string name="preference_privacy_block_analytics_summary">Servisson a reculhir, analisar e mesurar las activitats coma la tòca o desfilament</string>
+  <string name="preference_privacy_block_ads">"Blocar los traçadors publicitaris "</string>
   <string name="preference_privacy_block_social">Blocar los traçadors de malhums socials</string>
-  <string name="preference_privacy_block_social_summary">Son embarcats dins de sites per traçar vòstras visitas e mostrar de foncionalitat coma los botons de partatge</string>
   <string name="preference_privacy_block_content">Blocar los autres traçadors de contengut</string>
-  <string name="preference_privacy_block_content_summary2">Activar aquesta opcion pòt provocar de problèmas sus de paginas</string>
   <string name="preference_privacy_category_cookies">Blocar los cookies</string>
   <string name="preference_privacy_should_block_cookies_no_option">Non</string>
   <string name="preference_privacy_should_block_cookies_third_party_tracker_cookies_option">Blocar solament los traçadors tèrces</string>
   <string name="preference_privacy_should_block_cookies_third_party_only_option">Blocar solament los cookies tèrces</string>
   <string name="preference_privacy_should_block_cookies_yes_option">Òc</string>
+  <string name="preference_privacy_block_cookies_no">Non (autorizar totes los cookies)</string>
   <string name="preference_security_biometric">Utilizar una emprenta digitala per desblocar l’aplicacion</string>
   <string name="preference_security_biometric_summary">Vòstras detadas pòdon desblocar %1$s s’una URL es ja dobèrta dins l’aplicacion. S’activarà en mòde invisible.</string>
   <string name="preference_privacy_secure_mode">Invisible</string>
@@ -177,7 +173,6 @@
   <string name="contextmenu_open_in_new_tab">Dobrir dins un onglet novèl</string>
   <string name="contextmenu_image_warning"><![CDATA["Los imatges salvagardats o partejats "<b xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">ser&#224;n pas suprimits</b>" en netejar vòstre istoric %1$s."]]></string>
   <string name="firstrun_defaultbrowser_title">Refortissètz vòstra vida privada</string>
-  <string name="firstrun_defaultbrowser_text2">Passatz a un nivèl mai naut de navegacion privada. Oblidetz las reclamas e los autres contenguts que pòdon vos traçar de sites en sites e rendon pesucas las paginas.</string>
   <string name="firstrun_search_title">Recercatz de vòstre biais</string>
   <string name="firstrun_search_text">Cercatz quicòm de diferent ? Causissètz un autre motor de recèrca per defaut als Paramètres.</string>
   <string name="firstrun_shortcut_title">Apondre d’acorchis a vòstre ecran d’acuèlh</string>
@@ -187,6 +182,8 @@
   <string name="firstrun_close_button">Comprés !</string>
   <string name="firstrun_skip_button">Passar</string>
   <string name="firstrun_next_button">Seguent</string>
+  <string name="block_ads_card_title">%1$s es ja a blocar las publicitats</string>
+  <string name="block_ads_card_description">Novetat ! Navegatz mai rapidament en blocar las publicitats e los còdis que vos seguisson pel web.</string>
   <string name="content_blocking_disabled">-</string>
   <string name="dialog_addtohomescreen_action_add">Apondre</string>
   <string name="dialog_addtohomescreen_action_cancel">Anullar</string>
@@ -226,6 +223,7 @@
   <string name="biometric_auth_title">Desblocar %1$s</string>
   <string name="biometric_auth_description">Tocatz lo captaire d’emprentas digitalas per contunhar.</string>
   <string name="biometric_auth_new_session">Session novèla</string>
+  <string name="biometric_auth_open_link_new_session">Dobrir lo ligam dins una nòva session</string>
   <string name="biometric_auth_image_description">Icòna d’emprentas digitalas</string>
   <string name="biometric_auth_not_recognized_error">Detadas pas reconegudas. Tornatz ensajar.</string>
   <string name="biometric_auth_moved_too_quickly">Lo det a bolegat tròp rapidament. Tornatz ensajar.</string>
@@ -243,6 +241,8 @@
   <string name="tip_open_in_new_tab">Dobrir un ligam dins un onglet novèl\n Mantenètz quichat quin que siá ligam de la pagina</string>
   <string name="tip_request_desktop">Vos estimatz mai lo site en version ordenador ? Menú %1$s &gt; Veire version ordenador</string>
   <string name="tip_disable_tips2">Quitar de mostrar las astúcias a l’ecran de començament</string>
+  <string name="tip_block_ads">Navegatz mai rapidament en blocar las publicitats e los còdis que vos seguisson pel web.</string>
+  <string name="block_ads_title">Blocatge de publicitat</string>
   <string name="tip_explain_allowlist">Site de confisança ?\n La liste d’autorizacion desactiva la proteccion contra lo seguiment pels sites que coneissètz e que vos fisatz.</string>
   <string name="new_tab_opened_snackbar">Novèl onglet dobèrt</string>
   <string name="open_new_tab_snackbar">Mostrar</string>
@@ -263,4 +263,8 @@
   <string name="fatal_crash_report_close_button_label">Tampar</string>
   <string name="fatal_crash_report_restart_firefox_label">Reaviar %1$s</string>
   <string name="crash_report_send_crash_label">Enviar un senhalament de bug a Mozilla</string>
+  <string name="content_blocking_enabled_snackbar_message">Lo blocatge de contengut es activat</string>
+  <string name="content_blocking_disabled_snackbar_message">Lo blocatge de contengut es desactivat</string>
+  <string name="content_blocking_snackbar_enable_action">Activar</string>
+  <string name="content_blocking_snackbar_disable_action">Desactivar</string>
 </resources>

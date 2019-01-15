@@ -30,7 +30,6 @@
   <string name="shortcut_erase_short_label">Hapus</string>
   <string name="shortcut_erase_long_label">Hapus riwayat penjelajahan</string>
   <string name="shortcut_erase_and_open_short_label">Hapus &amp; buka</string>
-  <string name="shortcut_erase_and_open_long_label">Hapus dan buka %1$s</string>
   <string name="text_selection_search_action">Mencari Secara Pribadi</string>
   <string name="about_content"><![CDATA[<p xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">%1$s menempatkan Anda dalam kendali.</p>\n<p xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">"Gunakan sebagai peramban privat:\n  "<ul>"\n    "<li>Cari dan menjelajah langsung di dalam aplikasi</li>"\n    "<li>Memblokir pelacak (atau ubah di setelan untuk izinkan pelacak)</li>"\n    "<li>Hapus untuk menghilangkan kuki termasuk juga riwayat pencarian dan penjelajahan</li>"\n  "</ul>"\n "</p>\n<p xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">%1$s diproduksi oleh Mozilla. Misi kami adalah untuk memelihara Internet yang sehat dan terbuka.<br/>" "<a href="%2$s">Pelajari lebih lanjut</a></p>]]></string>
   <string name="preference_privacy_and_security_header">Privasi &amp; Keamanan</string>
@@ -54,7 +53,6 @@
   <string name="preference_switch_autocomplete_topsites">Untuk Situs teratas</string>
   <string name="preference_autocomplete_topsite_summary">Aktifkan untuk melengkapi secara otomatis lebih dari 450 URL populer di bilah alamat.</string>
   <string name="preference_switch_autocomplete_user_list">Untuk Situs yang Anda Tambahkan</string>
-  <string name="preference_autocomplete_user_list_summary">Aktikan lengkapi otomatis untuk lebih dari 450 URL populer di bilah alamat.</string>
   <string name="preference_category_autocomplete_manage_sites">Kelola situs</string>
   <string name="preference_autocomplete_subitem_manage_sites">Kelola situs</string>
   <string name="preference_autocomplete_action_add">+ Tambah URL ubahsuai</string>
@@ -77,14 +75,10 @@
   <string name="preference_language">Bahasa</string>
   <string name="preference_language_systemdefault">Bawaan sistem</string>
   <string name="preference_category_privacy">Privasi</string>
-  <string name="preference_privacy_block_ads">Blokir pelacak iklan</string>
-  <string name="preference_privacy_block_ads_summary">Beberapa iklan melacak kunjungan situs, meski Anda tidak mengklik iklan</string>
   <string name="preference_privacy_block_analytics">Blokir pelacak analitik</string>
-  <string name="preference_privacy_block_analytics_summary">Digunakan untuk mengumpulkan, menganalisis, dan mengukur kegiatan seperti mengetuk dan menggulir</string>
+  <string name="preference_privacy_block_ads">Blokir pelacak iklan</string>
   <string name="preference_privacy_block_social">Blokir pelacak sosial</string>
-  <string name="preference_privacy_block_social_summary">Disematkan pada situs untuk melacak kunjungan Anda dan menampilkan fungsi seperti tombol berbagi</string>
   <string name="preference_privacy_block_content">Blokir pelacak konten lainnya</string>
-  <string name="preference_privacy_block_content_summary2">Mengaktifkan fitur ini mungkin menyebabkan beberapa laman bertindak tidak terduga</string>
   <string name="preference_privacy_category_cookies">Blokir kuki</string>
   <string name="preference_privacy_should_block_cookies_no_option">Tidak</string>
   <string name="preference_privacy_should_block_cookies_third_party_tracker_cookies_option">Hanya blokir kuki pelacak pihak ke-3</string>
@@ -177,7 +171,6 @@
   <string name="contextmenu_open_in_new_tab">Buka tautan di tab baru</string>
   <string name="contextmenu_image_warning"><![CDATA["Gambar yang disimpan dan dibagikan "<b xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">tidak akan dihapus</b>" ketika Anda menghapus riwayat %1$s."]]></string>
   <string name="firstrun_defaultbrowser_title">Perkuat privasi Anda</string>
-  <string name="firstrun_defaultbrowser_text2">Bawa penjelajahan pribadi ke tingkat berikutnya. Blokir iklan dan konten lainnya yang dapat melacak Anda di seluruh situs dan memperlambat waktu buka halaman.</string>
   <string name="firstrun_search_title">Pencarian Anda, cara Anda</string>
   <string name="firstrun_search_text">Mencari sesuatu yang berbeda? Pilih mesin pencari baku lainnya di Setelan.</string>
   <string name="firstrun_shortcut_title">Tambahkan pintasan ke layar Beranda</string>

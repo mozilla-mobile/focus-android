@@ -30,7 +30,6 @@
   <string name="shortcut_erase_short_label">ລຶບ</string>
   <string name="shortcut_erase_long_label">ລຶບປະຫວັດການທ່ອງເວັບ</string>
   <string name="shortcut_erase_and_open_short_label">ລຶບແລ້ວເປີດ</string>
-  <string name="shortcut_erase_and_open_long_label">ລຶບ ແລະ ເປີດ %1$s</string>
   <string name="text_selection_search_action">ຄົ້ນຫາຢ່າງເປັນສ່ວນຕົວ</string>
   <string name="about_content"><![CDATA[<p xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">%1$s &#3776;&#3758;&#3761;&#3732;&#3779;&#3755;&#3785;&#3735;&#3784;&#3762;&#3737;&#3754;&#3762;&#3745;&#3762;&#3732;&#3716;&#3751;&#3738;&#3716;&#3769;&#3745;&#3780;&#3732;&#3785;.</p>\n<p xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">"&#3779;&#3722;&#3785;&#3776;&#3739;&#3761;&#3737;&#3777;&#3738;&#3738;&#3738;&#3747;&#3762;&#3751;&#3776;&#3722;&#3765;&#3754;&#3784;&#3751;&#3737;&#3733;&#3771;&#3751;:\n  "<ul>"\n    "<li>&#3716;&#3771;&#3785;&#3737;&#3755;&#3762; &#3777;&#3749;&#3760; &#3735;&#3784;&#3757;&#3719;&#3776;&#3751;&#3761;&#3738;&#3742;&#3762;&#3725;&#3779;&#3737;&#3777;&#3757;&#3761;&#3738;</li>"\n    "<li>&#3738;&#3761;&#3757;&#3713;&#3733;&#3771;&#3751;&#3733;&#3764;&#3732;&#3733;&#3762;&#3745; (&#3755;&#3749;&#3767; &#3757;&#3761;&#3738;&#3776;&#3732;&#3732;&#3713;&#3762;&#3737;&#3733;&#3761;&#3785;&#3719;&#3716;&#3784;&#3762;&#3776;&#3742;&#3767;&#3784;&#3757;&#3757;&#3760;&#3737;&#3768;&#3725;&#3762;&#3732;&#3733;&#3771;&#3751;&#3733;&#3764;&#3732;&#3733;&#3762;&#3745;)</li>"\n    "<li>&#3749;&#3766;&#3738;&#3716;&#3768;&#3713;&#3713;&#3765;&#3785;&#3749;&#3751;&#3745;&#3735;&#3761;&#3719;&#3739;&#3760;&#3755;&#3751;&#3761;&#3732;&#3713;&#3762;&#3737;&#3716;&#3771;&#3785;&#3737;&#3755;&#3762; &#3777;&#3749;&#3760; &#3713;&#3762;&#3737;&#3735;&#3784;&#3757;&#3719;&#3776;&#3751;&#3761;&#3738;&#3757;&#3757;&#3713;</li>"\n  "</ul>\n</p>\n<p xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">%1$s &#3780;&#3732;&#3785;&#3758;&#3761;&#3738;&#3713;&#3762;&#3737;&#3754;&#3785;&#3762;&#3719;&#3714;&#3767;&#3785;&#3737;&#3745;&#3762;&#3720;&#3762;&#3713; Mozilla. &#3742;&#3762;&#3749;&#3760;&#3713;&#3764;&#3732;&#3714;&#3757;&#3719;&#3742;&#3751;&#3713;&#3776;&#3758;&#3771;&#3762;&#3777;&#3745;&#3784;&#3737;&#3754;&#3771;&#3784;&#3719;&#3776;&#3754;&#3765;&#3745;&#3713;&#3762;&#3737;&#3737;&#3763;&#3779;&#3722;&#3785;&#3757;&#3764;&#3737;&#3776;&#3733;&#3765;&#3776;&#3737;&#3761;&#3732;&#3735;&#3765;&#3784;&#3754;&#3771;&#3745;&#3738;&#3769;&#3737; &#3777;&#3749;&#3760; &#3776;&#3739;&#3765;&#3732;&#3713;&#3785;&#3751;&#3762;&#3719;<br/>\n<a href="%2$s">&#3758;&#3773;&#3737;&#3758;&#3769;&#3785;&#3776;&#3742;&#3765;&#3784;&#3745;&#3776;&#3733;&#3765;&#3784;&#3745;</a></p>]]></string>
   <string name="preference_privacy_and_security_header">ຄວາມເປັນສ່ວນຕົວ ແລະ ຄວາມປອດໄພ</string>
@@ -54,7 +53,6 @@
   <string name="preference_switch_autocomplete_topsites">ສໍາລັບເວັບໄຊທຍອດນິຍົມ</string>
   <string name="preference_autocomplete_topsite_summary">ເປີດນຳໃຊ້ autocomplete ທີ່ມີຫລາຍກ່ວາ 450 URLs ຍອດນິຍົມໃນແຖບທີ່ຢູ່.</string>
   <string name="preference_switch_autocomplete_user_list">ສຳລັບເວັບໄຊທທີ່ທ່ານເພີ່ມ</string>
-  <string name="preference_autocomplete_user_list_summary">ເປີດນຳໃຊ້ autocomplete ທີ່ມີຫລາຍກ່ວາ 450 URLs ຍອດນິຍົມໃນແຖບທີ່ຢູ່.</string>
   <string name="preference_category_autocomplete_manage_sites">ຄຸ້ມຄອງເວັບໄຊທ</string>
   <string name="preference_autocomplete_subitem_manage_sites">ຄຸ້ມຄອງເວັບໄຊທ</string>
   <string name="preference_autocomplete_action_add">+ ເພີ່ມ URL ທີ່ກຳນົດເອງ</string>
@@ -77,14 +75,10 @@
   <string name="preference_language">ພາສາ</string>
   <string name="preference_language_systemdefault">ຄ່າເລີ່ມຕົ້ນຂອງລະບົບ</string>
   <string name="preference_category_privacy">ຄວາມເປັນສ່ວນຕົວ</string>
-  <string name="preference_privacy_block_ads">ບັອກຕົວຕິດຕາມຂອງການໂຄສະນາ</string>
-  <string name="preference_privacy_block_ads_summary">ມີໂຄສະນາບາງໂຕສາມາດຕິດຕາມການເຂົ້າໄປເວັບຕ່າງໆ ເຖິງແມ່ນວ່າທ່ານຈະບໍ່ໄດ້ຄິກໃສ່ໂຄສະນານັ້ນເລີຍ</string>
   <string name="preference_privacy_block_analytics">ບັອກຕົວຕິດຕາມຂອງການວິເຄາະ</string>
-  <string name="preference_privacy_block_analytics_summary">ໃຊ້ເພື່ອເກັບກຳຮວບຮ່ວມ, ວິເຄາະ ແລະ ວັດແທກກິດຈະກຳເຊັນວ່າການແຕະ ແລະ ການເລື່ອນ</string>
+  <string name="preference_privacy_block_ads">ບັອກຕົວຕິດຕາມຂອງການໂຄສະນາ</string>
   <string name="preference_privacy_block_social">ບັອກຕົວຕິດຕາມຂອງສືສັງຄົມອອນໄລນ໌</string>
-  <string name="preference_privacy_block_social_summary">ຝັງໄວ້ຢູ່ໃນເວັບໄຊທ໌ເພື່ອຕິດຕາມເບິງການເຂົ້າມາເບິງຂອງທ່ານ ແລະ ເພື່ອສະແດງຟັງຊັນເຊັ່ນວ່າປຸ່ມແບ່ງປັນ</string>
   <string name="preference_privacy_block_content">ບັອກຕົວຕິດຕາມຂອງເນື້ອຫາຕ່າງໆ</string>
-  <string name="preference_privacy_block_content_summary2">ການເປີດໃຊ້ງານອາດຈະເຮັດໃຫ້ບາງຫນ້າເຮັດວຽກຜຶດປົກກະຕິ</string>
   <string name="preference_privacy_category_cookies">ລະງັບຄຸກກີ້</string>
   <string name="preference_privacy_should_block_cookies_no_option">ບໍ່</string>
   <string name="preference_privacy_should_block_cookies_third_party_tracker_cookies_option">ບັອກຕົວຕິດຕາມຄຸກກີ້ຈາກບຸກຄົນທີ່ສາມເທົ່ານັ້ນ</string>
@@ -177,7 +171,6 @@
   <string name="contextmenu_open_in_new_tab">ເປີດລີ້ງໃນແທັບໃຫມ່</string>
   <string name="contextmenu_image_warning"><![CDATA["ບັນທຶກໄວ້ ແລະ ໄດ້ແບ່ງປັນຮູບພາບ "<b xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">&#3720;&#3760;&#3738;&#3789;&#3784;&#3734;&#3767;&#3713;&#3749;&#3771;&#3738;</b>" ເມື່ອທ່ານລຶບປະຫວັດການນຳໃຊ້ຂອງ %1$s"]]></string>
   <string name="firstrun_defaultbrowser_title">ເພີ່ມຄວາມເປັນສ່ວນໂຕຂອງທ່ານ</string>
-  <string name="firstrun_defaultbrowser_text2">ນຳການທ່ອງເວັບແບບສ່ວນຕົວໄປສູ້ລະດັບຖັດໄປ. ປິດກັ້ນໂຄສະນາແລະເນື້ອຫາອື່ນໆ ທີ່ສາມາດຕິດຕາມທ່ານລະຫວ່າງເວັບໄຊທ໌ແລະຫລຸດເວລາໃນການໂຫລດຫນ້າ,</string>
   <string name="firstrun_search_title">ການຄົ້ນຫາໃນແບບຂອງທ່ານເອງ</string>
   <string name="firstrun_search_text">ກຳລັງຊອກຫາບາງສິ່ງບາງຢ່າງທີ່ແຕກຕ່າງບໍ່? ເລືອກເອົາຕົວຄົ້ນຫາພື້ນຖານອື່ນໆໃນການຕັ້ງຄ່າ.</string>
   <string name="firstrun_shortcut_title">ເພີ່ມທາງລັດໃນໜ້າຈໍຫຼັກຂອງທ່ານ</string>

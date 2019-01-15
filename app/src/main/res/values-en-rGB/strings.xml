@@ -30,7 +30,6 @@
   <string name="shortcut_erase_short_label">Erase</string>
   <string name="shortcut_erase_long_label">Clear browsing history</string>
   <string name="shortcut_erase_and_open_short_label">Erase &amp; open</string>
-  <string name="shortcut_erase_and_open_long_label">Erase and open %1$s</string>
   <string name="text_selection_search_action">Search Privately</string>
   <string name="about_content"><![CDATA[<p xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">%1$s puts you in control.</p>\n<p xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">"Use it as a private browser:\n  "<ul>"\n    "<li>Search and browse right in the app</li>"\n    "<li>Block trackers (or update settings to allow trackers)</li>"\n    "<li>Erase to delete cookies as well as search and browsing history</li>"\n  "</ul>\n</p>\n<p xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">%1$s is produced by Mozilla. Our mission is to foster a healthy, open Internet.<br/>\n<a href="%2$s">Learn more</a></p>]]></string>
   <string name="preference_privacy_and_security_header">Privacy &amp; Security</string>
@@ -54,7 +53,6 @@
   <string name="preference_switch_autocomplete_topsites">For Top sites</string>
   <string name="preference_autocomplete_topsite_summary">Enable to autocomplete more than 450 popular URLs in the address bar.</string>
   <string name="preference_switch_autocomplete_user_list">For Sites You Add</string>
-  <string name="preference_autocomplete_user_list_summary">Enable to autocomplete more than 450 popular URLs in the address bar.</string>
   <string name="preference_category_autocomplete_manage_sites">Manage sites</string>
   <string name="preference_autocomplete_subitem_manage_sites">Manage sites</string>
   <string name="preference_autocomplete_action_add">+ Add custom URL</string>
@@ -77,14 +75,10 @@
   <string name="preference_language">Language</string>
   <string name="preference_language_systemdefault">System default</string>
   <string name="preference_category_privacy">Privacy</string>
-  <string name="preference_privacy_block_ads">Block ad trackers</string>
-  <string name="preference_privacy_block_ads_summary">Some ads track site visits, even if you don’t click the ads</string>
   <string name="preference_privacy_block_analytics">Block analytic trackers</string>
-  <string name="preference_privacy_block_analytics_summary">Used to collect, analyse and measure activities like tapping and scrolling</string>
+  <string name="preference_privacy_block_ads">Block ad trackers</string>
   <string name="preference_privacy_block_social">Block social trackers</string>
-  <string name="preference_privacy_block_social_summary">Embedded on sites to track your visits and to display functionality like share buttons</string>
   <string name="preference_privacy_block_content">Block other content trackers</string>
-  <string name="preference_privacy_block_content_summary2">Enabling may cause some pages to behave unexpectedly</string>
   <string name="preference_privacy_category_cookies">Block cookies</string>
   <string name="preference_privacy_should_block_cookies_no_option">No</string>
   <string name="preference_privacy_should_block_cookies_third_party_tracker_cookies_option">Block 3rd-party tracker cookies only</string>
@@ -177,7 +171,6 @@
   <string name="contextmenu_open_in_new_tab">Open link in new tab</string>
   <string name="contextmenu_image_warning"><![CDATA["Saved and shared images "<b xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">will not be deleted</b>" when you erase %1$s history."]]></string>
   <string name="firstrun_defaultbrowser_title">Power up your privacy</string>
-  <string name="firstrun_defaultbrowser_text2">Take private browsing to the next level. Block ads and other content that can track you across sites and bog down page load times.</string>
   <string name="firstrun_search_title">Your search, your way</string>
   <string name="firstrun_search_text">Searching for something different? Choose another default search engine in Settings.</string>
   <string name="firstrun_shortcut_title">Add shortcuts to your home screen</string>

@@ -30,7 +30,6 @@
   <string name="shortcut_erase_short_label">Стерти</string>
   <string name="shortcut_erase_long_label">Стерти історію перегляду</string>
   <string name="shortcut_erase_and_open_short_label">Стерти і відкрити</string>
-  <string name="shortcut_erase_and_open_long_label">Стерти і відкрити %1$s</string>
   <string name="text_selection_search_action">Приватний пошук</string>
   <string name="about_content"><![CDATA[<p xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">%1$s &#1085;&#1072;&#1076;&#1072;&#1108; &#1074;&#1072;&#1084; &#1082;&#1086;&#1085;&#1090;&#1088;&#1086;&#1083;&#1100;.</p>\n<p xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">"&#1042;&#1080;&#1082;&#1086;&#1088;&#1080;&#1089;&#1090;&#1086;&#1074;&#1091;&#1081;&#1090;&#1077; &#1081;&#1086;&#1075;&#1086; &#1074; &#1103;&#1082;&#1086;&#1089;&#1090;&#1110; &#1087;&#1088;&#1080;&#1074;&#1072;&#1090;&#1085;&#1086;&#1075;&#1086; &#1073;&#1088;&#1072;&#1091;&#1079;&#1077;&#1088;&#1072;:\n  "<ul>"\n    "<li>&#1047;&#1076;&#1110;&#1081;&#1089;&#1085;&#1102;&#1081;&#1090;&#1077; &#1087;&#1086;&#1096;&#1091;&#1082; &#1110; &#1087;&#1077;&#1088;&#1077;&#1075;&#1083;&#1103;&#1076; &#1073;&#1077;&#1079;&#1087;&#1086;&#1089;&#1077;&#1088;&#1077;&#1076;&#1085;&#1100;&#1086; &#1074; &#1087;&#1088;&#1086;&#1075;&#1088;&#1072;&#1084;&#1110;</li>"\n    "<li>&#1041;&#1083;&#1086;&#1082;&#1091;&#1081;&#1090;&#1077; &#1089;&#1090;&#1077;&#1078;&#1077;&#1085;&#1085;&#1103; (&#1072;&#1073;&#1086; &#1079;&#1084;&#1110;&#1085;&#1110;&#1090;&#1100; &#1085;&#1072;&#1083;&#1072;&#1096;&#1090;&#1091;&#1074;&#1072;&#1085;&#1085;&#1103;, &#1097;&#1086;&#1073; &#1076;&#1086;&#1079;&#1074;&#1086;&#1083;&#1080;&#1090;&#1080; &#1081;&#1086;&#1075;&#1086;)</li>"\n    "<li>&#1042;&#1080;&#1076;&#1072;&#1083;&#1103;&#1081;&#1090;&#1077; &#1082;&#1091;&#1082;&#1080;, &#1072; &#1090;&#1072;&#1082;&#1086;&#1078; &#1110;&#1089;&#1090;&#1086;&#1088;&#1110;&#1102; &#1087;&#1086;&#1096;&#1091;&#1082;&#1091; &#1090;&#1072; &#1087;&#1077;&#1088;&#1077;&#1075;&#1083;&#1103;&#1076;&#1091;</li>"\n  "</ul>\n</p>\n<p xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">%1$s &#1089;&#1090;&#1074;&#1086;&#1088;&#1077;&#1085;&#1086; &#1074; Mozilla. &#1053;&#1072;&#1096;&#1086;&#1102; &#1084;&#1110;&#1089;&#1110;&#1108;&#1102; &#1108; &#1089;&#1087;&#1088;&#1080;&#1103;&#1085;&#1085;&#1103; &#1088;&#1086;&#1079;&#1074;&#1080;&#1090;&#1082;&#1091; &#1079;&#1076;&#1086;&#1088;&#1086;&#1074;&#1086;&#1075;&#1086; &#1090;&#1072; &#1074;&#1110;&#1076;&#1082;&#1088;&#1080;&#1090;&#1086;&#1075;&#1086; &#1030;&#1085;&#1090;&#1077;&#1088;&#1085;&#1077;&#1090;&#1091;.<br/>\n<a href="%2$s">&#1044;&#1086;&#1082;&#1083;&#1072;&#1076;&#1085;&#1110;&#1096;&#1077;</a></p>]]></string>
   <string name="preference_privacy_and_security_header">Приватність і безпека</string>
@@ -54,7 +53,6 @@
   <string name="preference_switch_autocomplete_topsites">Для популярних сайтів</string>
   <string name="preference_autocomplete_topsite_summary">Увімкнути для автозавершення понад 450 популярних URL в панелі адреси.</string>
   <string name="preference_switch_autocomplete_user_list">Для доданих вами сайтів</string>
-  <string name="preference_autocomplete_user_list_summary">Увімкнути для автозавершення понад 450 популярних URL в панелі адреси.</string>
   <string name="preference_category_autocomplete_manage_sites">Керувати сайтами</string>
   <string name="preference_autocomplete_subitem_manage_sites">Керувати сайтами</string>
   <string name="preference_autocomplete_action_add">+ Додати власну URL-адресу</string>
@@ -77,14 +75,10 @@
   <string name="preference_language">Мова</string>
   <string name="preference_language_systemdefault">Типова системна</string>
   <string name="preference_category_privacy">Приватність</string>
-  <string name="preference_privacy_block_ads">Блокувати рекламу зі стеженням</string>
-  <string name="preference_privacy_block_ads_summary">Деяка реклама відстежує відвідування сайтів, навіть якщо ви на неї не натискали</string>
   <string name="preference_privacy_block_analytics">Блокувати аналітику зі стеженням</string>
-  <string name="preference_privacy_block_analytics_summary">Використовуються для збору, аналізу та вимірювання активності, наприклад, дотики і прокручування</string>
+  <string name="preference_privacy_block_ads">Блокувати рекламу зі стеженням</string>
   <string name="preference_privacy_block_social">Блокувати стеження соціальних мереж</string>
-  <string name="preference_privacy_block_social_summary">Вбудовуються в сайти для відстеження ваших відвідувань та показу додаткових функцій, наприклад, кнопки \"Поділитися\"</string>
   <string name="preference_privacy_block_content">Блокувати інші елементи стеження</string>
-  <string name="preference_privacy_block_content_summary2">Увімкнення цієї функції може викликати непередбачувану поведінку деяких сторінок</string>
   <string name="preference_privacy_category_cookies">Блокувати куки</string>
   <string name="preference_privacy_should_block_cookies_no_option">Так</string>
   <string name="preference_privacy_should_block_cookies_third_party_tracker_cookies_option">Блокувати лише сторонні куки стеження</string>
@@ -177,7 +171,6 @@
   <string name="contextmenu_open_in_new_tab">Відкрити посилання в новій вкладці</string>
   <string name="contextmenu_image_warning"><![CDATA["Збережені та поширені зображення "<b xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">&#1085;&#1077; &#1074;&#1080;&#1076;&#1072;&#1083;&#1103;&#1102;&#1090;&#1100;&#1089;&#1103;</b>" при стиранні історії %1$s."]]></string>
   <string name="firstrun_defaultbrowser_title">Прокачайте вашу приватність</string>
-  <string name="firstrun_defaultbrowser_text2">Перейдіть на вищий рівень приватного перегляду. Блокуйте рекламу та інший вміст, що може стежити за вами на сайтах і сповільнювати завантаження сторінок.</string>
   <string name="firstrun_search_title">Ваш пошук, ваш шлях</string>
   <string name="firstrun_search_text">Шукаєте щось інше? Оберіть інший пошуковий засіб в налаштуваннях.</string>
   <string name="firstrun_shortcut_title">Додавайте ярлики на головний екран</string>

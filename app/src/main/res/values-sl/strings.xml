@@ -30,13 +30,13 @@
   <string name="shortcut_erase_short_label">Izbriši</string>
   <string name="shortcut_erase_long_label">Počisti zgodovino brskanja</string>
   <string name="shortcut_erase_and_open_short_label">Izbriši in odpri</string>
-  <string name="shortcut_erase_and_open_long_label">Izbriši in odpri %1$s</string>
   <string name="text_selection_search_action">Iščite zasebno</string>
   <string name="about_content"><![CDATA[<p xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">%1$s daje nadzor v va&#353;e roke.</p>\n<p xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">"Uporabljajte ga kot zaseben brskalnik:\n  "<ul>"\n    "<li>I&#353;&#269;ite in brskajte naravnost iz aplikacije</li>"\n    "<li>Zavra&#269;ajte sledilce (ali spremenite nastavitve zavra&#269;anja sledilcev)</li>"\n    "<li>Bri&#353;ite pi&#353;kotke ter zgodovino strani in iskanja</li>"\n  "</ul>\n</p>\n<p xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">%1$s razvija Mozilla. Na&#353;e poslanstvo je spodbujati zdrav in odprt internet.<br/>\n<a href="%2$s">Ve&#269; o tem</a></p>]]></string>
   <string name="preference_privacy_and_security_header">Zasebnost in varnost</string>
   <string name="preference_privacy_and_security_summary">Sledenje, piškotki, podatkovne možnosti</string>
   <string name="preference_search_summary">Nastavi kot privzeto, samodejno dopolni</string>
   <string name="preference_mozilla_summary">O %1$su, pomoč</string>
+  <string name="preference_category_ad_blocking">Zavračanje oglasov</string>
   <string name="preference_category_tracking_protection">Zaščita pred sledenjem</string>
   <string name="preference_category_web_content">Spletna vsebina</string>
   <string name="preference_category_switching_apps">Preklapljanje aplikacij</string>
@@ -54,7 +54,6 @@
   <string name="preference_switch_autocomplete_topsites">Za glavne strani</string>
   <string name="preference_autocomplete_topsite_summary">Omogočite samodejno dopolnjevanje preko 450 priljubljenih URL-jev v naslovni vrstici.</string>
   <string name="preference_switch_autocomplete_user_list">Za strani, ki jih dodate</string>
-  <string name="preference_autocomplete_user_list_summary">Omogočite samodejno dopolnjevanje preko 450 priljubljenih URL-jev v naslovni vrstici.</string>
   <string name="preference_category_autocomplete_manage_sites">Upravljanje strani</string>
   <string name="preference_autocomplete_subitem_manage_sites">Upravljanje strani</string>
   <string name="preference_autocomplete_action_add">+ Dodaj URL po meri</string>
@@ -77,19 +76,21 @@
   <string name="preference_language">Jezik</string>
   <string name="preference_language_systemdefault">Privzet v sistemu</string>
   <string name="preference_category_privacy">Zasebnost</string>
-  <string name="preference_privacy_block_ads">Zavračaj sledilce oglasov</string>
-  <string name="preference_privacy_block_ads_summary">Nekateri oglasi beležijo obiske strani, tudi če ne klikate nanje</string>
   <string name="preference_privacy_block_analytics">Zavračaj sledilce analitike</string>
-  <string name="preference_privacy_block_analytics_summary">V uporabi za zbiranje, analiziranje in merjenje dejanj, kot je pritiskanje in drsenje po strani</string>
+  <string name="preference_privacy_block_ads">Zavračaj sledilce oglasov</string>
+  <string name="preference_privacy_block_ads_new_summary">Odstrani oglase, namenjene sledenju obiskov spletnih mest, tudi če ne tapnete nanje</string>
+  <string name="preference_privacy_block_analytics_new_summary">Zavrača sledilce, ki analizirajo in merijo dejanja, kot je pritiskanje in drsenje po strani</string>
   <string name="preference_privacy_block_social">Zavračaj sledilce družbenih omrežij</string>
-  <string name="preference_privacy_block_social_summary">Vgrajeni na straneh za sledenje vašim obiskom in za prikaz možnosti, kot so gumbi za deljenje</string>
   <string name="preference_privacy_block_content">Zavračaj druge vsebinske sledilce</string>
-  <string name="preference_privacy_block_content_summary2">Nastavitev lahko povzroči nepravilno delovanje nekaterih strani</string>
   <string name="preference_privacy_category_cookies">Zavračaj piškotke</string>
   <string name="preference_privacy_should_block_cookies_no_option">Ne</string>
   <string name="preference_privacy_should_block_cookies_third_party_tracker_cookies_option">Zavračaj samo sledilne piškotke tretjih strani</string>
   <string name="preference_privacy_should_block_cookies_third_party_only_option">Zavračaj samo piškotke tretjih strani</string>
   <string name="preference_privacy_should_block_cookies_yes_option">Da</string>
+  <string name="preference_privacy_block_cookies_no">Ne (dovoli vse piškotke)</string>
+  <string name="preference_privacy_block_cookies_third_party_tracker">Zavračaj sledilne piškotke tretjih strani (priporočeno)</string>
+  <string name="preference_privacy_block_cookies_third_party_only">Zavračaj vse piškotke tretjih strani\n(lahko povzroči nedelovanje spletnih strani)</string>
+  <string name="preference_privacy_block_cookies_yes">Zavračaj vse piškotke (povzroči nedelovanje spletnih strani)</string>
   <string name="preference_security_biometric">Uporabljaj prstni odtis za odklepanje aplikacije</string>
   <string name="preference_security_biometric_summary">Če je v %1$su odprt spletni naslov, lahko aplikacijo odklenete s prstnim odtisom. Skrivni način bo vključen.</string>
   <string name="preference_privacy_secure_mode">Skrivni način</string>
@@ -177,7 +178,7 @@
   <string name="contextmenu_open_in_new_tab">Odpri povezavo v novem zavihku</string>
   <string name="contextmenu_image_warning"><![CDATA["Ob izbrisu zgodovine %1$sa shranjene in deljene slike "<b xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">ne bodo izbrisane</b>.]]></string>
   <string name="firstrun_defaultbrowser_title">Okrepite svojo zasebnost</string>
-  <string name="firstrun_defaultbrowser_text2">Zasebno brskanje na višjem nivoju. Zavračajte oglase in drugo vsebino, ki vam lahko sledi prek strani, in pohitrite svoje brskanje.</string>
+  <string name="firstrun_defaultbrowser_text_new">Zavračajte vsebino, kot so oglasi in koda, ki vas spremlja po spletu in upočasni brskanje. Vklopite zavračanje oglasov za hitrejše brskanje brez nadležnih oglasov.</string>
   <string name="firstrun_search_title">Vaše iskanje, na vaš način</string>
   <string name="firstrun_search_text">Iščete nekaj drugačnega? V nastavitvah izberite drug privzeti iskalnik.</string>
   <string name="firstrun_shortcut_title">Dodajte bližnjice na domač zaslon</string>
@@ -187,6 +188,8 @@
   <string name="firstrun_close_button">V redu, razumem!</string>
   <string name="firstrun_skip_button">Preskoči</string>
   <string name="firstrun_next_button">Naprej</string>
+  <string name="block_ads_card_title">%1$s je pripravljen na zavračanje oglasov</string>
+  <string name="block_ads_card_description">Nova možnost! Brskajte hitreje, tako da ustavite oglase in kodo, ki vas spremlja po spletu.</string>
   <string name="content_blocking_disabled">-</string>
   <string name="dialog_addtohomescreen_action_add">Dodaj</string>
   <string name="dialog_addtohomescreen_action_cancel">Prekliči</string>
@@ -226,6 +229,7 @@
   <string name="biometric_auth_title">Odkleni %1$s</string>
   <string name="biometric_auth_description">Za nadaljevanje se dotaknite čitalnika prstnih odtisov.</string>
   <string name="biometric_auth_new_session">Nova seja</string>
+  <string name="biometric_auth_open_link_new_session">Odpri povezavo v novi seji</string>
   <string name="biometric_auth_image_description">Ikona prstnega odtisa</string>
   <string name="biometric_auth_not_recognized_error">Prstni odtis ni prepoznan. Poskusite ponovno.</string>
   <string name="biometric_auth_moved_too_quickly">Prst se je premaknil prehitro. Poskusite znova.</string>
@@ -243,6 +247,8 @@
   <string name="tip_open_in_new_tab">Odprite povezavo v novem zavihku\n Pridržite prst na katerikoli povezavi na strani</string>
   <string name="tip_request_desktop">Želite uporabljati polno različico strani?%1$s Meni &gt; Zahtevaj stran za namizja</string>
   <string name="tip_disable_tips2">Izključi namige na začetnem zaslonu</string>
+  <string name="tip_block_ads">Brskajte hitreje, tako da ustavite oglase in kodo, ki vas spremlja po spletu.</string>
+  <string name="block_ads_title">Zavračaj oglase</string>
   <string name="tip_explain_allowlist">Zaupanja vredna stran?\n Seznam dovoljenih onemogoči zaščito pred sledenjem za strani, ki jih poznate in jim zaupate.</string>
   <string name="new_tab_opened_snackbar">Odprt nov zavihek</string>
   <string name="open_new_tab_snackbar">Preklopi</string>
@@ -263,4 +269,8 @@
   <string name="fatal_crash_report_close_button_label">Zapri</string>
   <string name="fatal_crash_report_restart_firefox_label">Ponovno zaženi %1$s</string>
   <string name="crash_report_send_crash_label">Pošlji poročilo o sesutju Mozilli</string>
+  <string name="content_blocking_enabled_snackbar_message">Zavračanje vsebine je omogočeno</string>
+  <string name="content_blocking_disabled_snackbar_message">Zavračanje vsebine je onemogočeno</string>
+  <string name="content_blocking_snackbar_enable_action">Omogoči</string>
+  <string name="content_blocking_snackbar_disable_action">Onemogoči</string>
 </resources>

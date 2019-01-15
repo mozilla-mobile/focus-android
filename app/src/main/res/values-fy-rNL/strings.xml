@@ -30,13 +30,13 @@
   <string name="shortcut_erase_short_label">Wiskje</string>
   <string name="shortcut_erase_long_label">Navigaasjeskiednis wiskje</string>
   <string name="shortcut_erase_and_open_short_label">Wiskje &amp; iepenje</string>
-  <string name="shortcut_erase_and_open_long_label">Wiskje en %1$s iepenje</string>
   <string name="text_selection_search_action">Privee sykje</string>
   <string name="about_content"><![CDATA[<p xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">%1$s jout jo de kontr&#244;le.</p>\n<p xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">"Br&#251;k as in priveebrowser:\n  "<ul>"\n    "<li>Streekrjocht fan de app &#250;t sykje en browse</li>"\n    "<li>Trackers blokkearje (of ynstellingen bywurkje om se ta te stean)</li>"\n    "<li>Wiskjen smyt sawol cookies as syk- en navigaasjeskiednis fuort</li>"\n  "</ul>\n</p>\n<p xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">%1$s wurdt makke troch Mozilla. Us misje is it fersoargjen fan in s&#251;n en iepen ynternet.<br/>\n<a href="%2$s">Mear ynfo</a></p>]]></string>
   <string name="preference_privacy_and_security_header">Privacy en befeiliging</string>
   <string name="preference_privacy_and_security_summary">Folgjen, cookies, gegevenskarren</string>
   <string name="preference_search_summary">As standert ynstelle, auto-oanfolje</string>
   <string name="preference_mozilla_summary">Oer %1$s, help</string>
+  <string name="preference_category_ad_blocking">Advertinsjeblokkearring</string>
   <string name="preference_category_tracking_protection">Beskerming tsjin folgjen</string>
   <string name="preference_category_web_content">Webynhâld</string>
   <string name="preference_category_switching_apps">Apps wikselje</string>
@@ -54,7 +54,7 @@
   <string name="preference_switch_autocomplete_topsites">Foar topwebsites</string>
   <string name="preference_autocomplete_topsite_summary">Skeakel dit yn om automatysk mear as 450 populêre URL’s yn de adresbalke oanfolje te litten.</string>
   <string name="preference_switch_autocomplete_user_list">Foar websites dy\'t jo tafoegje</string>
-  <string name="preference_autocomplete_user_list_summary">Skeakel dit yn om automatysk mear as 450 populêre URL’s yn de adresbalke oanfolje te litten.</string>
+  <string name="preference_autocomplete_user_list_description">Skeakel dit yn om hjir tafoege websites automatysk oan te foljen.</string>
   <string name="preference_category_autocomplete_manage_sites">Websites beheare</string>
   <string name="preference_autocomplete_subitem_manage_sites">Websites beheare</string>
   <string name="preference_autocomplete_action_add">+ Oanpaste URL tafoegje</string>
@@ -77,19 +77,25 @@
   <string name="preference_language">Taal</string>
   <string name="preference_language_systemdefault">Systeemstandert</string>
   <string name="preference_category_privacy">Privacy</string>
-  <string name="preference_privacy_block_ads">Advertinsjetrackers blokkearje</string>
-  <string name="preference_privacy_block_ads_summary">Guon advertinsjes folgje websitebesiten, sels as jo net op de advertinsjes klikke</string>
+  <string name="preference_privacy_ads_block_ads">Advertinsjes en oare steurende eleminten blokkearje</string>
+  <string name="preference_privacy_ads_block_ads_summary">Stoppet advertinsjes en oare steurende eleminten fia blokkearlisten fan Easylist, EasyPrivacy, Fanboy’s Annoyance en 777Guard Mobile Ad Filter</string>
   <string name="preference_privacy_block_analytics">Analysetrackers blokkearje</string>
-  <string name="preference_privacy_block_analytics_summary">Brûkt foar it sammeljen, analysearjen en mjitten fan aktiviteiten lykas tikken en skowen</string>
+  <string name="preference_privacy_block_ads">Advertinsjetrackers blokkearje</string>
+  <string name="preference_privacy_block_ads_new_summary">Smyt advertinsjes foar it folgjen fan websitebesykjen fuort, sels as jo der net op tikke</string>
+  <string name="preference_privacy_block_analytics_new_summary">Blokkearret trackers dy\'t ynteraksjes lykas tikken en skowen analysearje en mjitte</string>
   <string name="preference_privacy_block_social">Sosjale trackers blokkearje</string>
-  <string name="preference_privacy_block_social_summary">Ynboud op websites om jo besiken te folgjen en funksjonaliteit as dielknoppen te toanen</string>
+  <string name="preference_privacy_block_social_new_summary">Stoppet op websites ynbedde sosjale-mediarelatearre trackers, wêrûnder knoppen foar sosjaal diele</string>
   <string name="preference_privacy_block_content">Oare ynhâldstrackers blokkearje</string>
-  <string name="preference_privacy_block_content_summary2">Ynskeakeljen kin feroarsaakje dat guon siden ûnferwachts wurkje</string>
+  <string name="preference_privacy_block_content_new_summary">Blokkearret tracking-aktiviteit, mar kin derfoar soargje dat bepaalde websites en -siden harren ûnferwachte wurkje</string>
   <string name="preference_privacy_category_cookies">Cookies blokkearje</string>
   <string name="preference_privacy_should_block_cookies_no_option">Nee</string>
   <string name="preference_privacy_should_block_cookies_third_party_tracker_cookies_option">Allinnich tracker-cookies fan tredden blokkearje</string>
   <string name="preference_privacy_should_block_cookies_third_party_only_option">Allinnich cookies fan tredden</string>
   <string name="preference_privacy_should_block_cookies_yes_option">Ja</string>
+  <string name="preference_privacy_block_cookies_no">Nee (alle cookies tastean)</string>
+  <string name="preference_privacy_block_cookies_third_party_tracker">Tracking-cookies fan tredden blokkearje (oanrekommandearre)</string>
+  <string name="preference_privacy_block_cookies_third_party_only">Alle cookies fan tredden blokkearje \n(websites wurkje mooglik net goed)</string>
+  <string name="preference_privacy_block_cookies_yes">Alle cookies blokkearje (websites sille net goed wurkje)</string>
   <string name="preference_security_biometric">Fingerôfdruk foar ûntskoatteljen fan app brûke</string>
   <string name="preference_security_biometric_summary">Jo fingerôfdruk kin %1$s ûntskoattelje as der al in URL yn de app iepene is. Stealth wurdt ynskeakele.</string>
   <string name="preference_privacy_secure_mode">Stealth</string>
@@ -177,7 +183,7 @@
   <string name="contextmenu_open_in_new_tab">Keppeling iepenje yn nij ljepblêd</string>
   <string name="contextmenu_image_warning"><![CDATA["Bewarre en dielde ôfbyldingen "<b xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">wurde net fuortsmiten</b>" as jo skiednis fan %1$s wiskje."]]></string>
   <string name="firstrun_defaultbrowser_title">Fergrutsje jo privacy</string>
-  <string name="firstrun_defaultbrowser_text2">Bring priveenavigaasje nei in heger nivo. Blokkearje advertinsjes en oare ynhâld dy\'t jo op websites folgje kinne en laadtiden fan siden ferlingje.</string>
+  <string name="firstrun_defaultbrowser_text_new">Blokkearje ynhâld lykas advertinsjes en koade dy\'t jo op it web folget en jo fertraget. Skeakel advertinsjeblokkearring yn om flugger te sneupen sûnder ferfelende advertinsjes.</string>
   <string name="firstrun_search_title">Sykje op jo manier</string>
   <string name="firstrun_search_text">Op syk nei wat oars? Kies in oare standertsykmasine yn Ynstellingen.</string>
   <string name="firstrun_shortcut_title">Foegje keppelingen ta oan jo startskerm</string>
@@ -187,6 +193,8 @@
   <string name="firstrun_close_button">OK, begrepen!</string>
   <string name="firstrun_skip_button">Oerslaan</string>
   <string name="firstrun_next_button">Folgjende</string>
+  <string name="block_ads_card_title">%1$s kin no advertinsjes blokkearje</string>
+  <string name="block_ads_card_description">Nije funksje! Sneup flugger troch advertinsjes en koade dy\'t jo op it web folget te blokkearjen.</string>
   <string name="content_blocking_disabled">-</string>
   <string name="dialog_addtohomescreen_action_add">Tafoegje</string>
   <string name="dialog_addtohomescreen_action_cancel">Annulearje</string>
@@ -226,6 +234,7 @@
   <string name="biometric_auth_title">%1$s ûntskoattelje</string>
   <string name="biometric_auth_description">Reitsje de fingerôfdruksensor oan om troch te gean.</string>
   <string name="biometric_auth_new_session">Nije sesje</string>
+  <string name="biometric_auth_open_link_new_session">Keppeling iepenje yn nije sesje</string>
   <string name="biometric_auth_image_description">Fingerôfdrukpiktogram</string>
   <string name="biometric_auth_not_recognized_error">Fingerôfdruk net werkend. Probearje it opnij.</string>
   <string name="biometric_auth_moved_too_quickly">Finger te fluch beweegd. Probearje it opnij.</string>
@@ -243,6 +252,8 @@
   <string name="tip_open_in_new_tab">In keppeling yn in nij ljepblêd iepenje\n Hâld jo finger op in keppeling op in side</string>
   <string name="tip_request_desktop">Leaver de folsleine Desktop-website besjen?%1$s Menu &gt; Desktopwebsite opfreegje</string>
   <string name="tip_disable_tips2">Tips op startscherm útskeakelje</string>
+  <string name="tip_block_ads">Sneup flugger troch advertinsjes en koade dy\'t jo op it web folget te blokkearjen.</string>
+  <string name="block_ads_title">Advertinsjeblokkearring</string>
   <string name="tip_explain_allowlist">Fertroude website?\n De wite list skeakelet Beskerming tsjin folgjen út foar bekende en fertroude websites.</string>
   <string name="new_tab_opened_snackbar">Nij ljepblêd iepene</string>
   <string name="open_new_tab_snackbar">Wikselje</string>
@@ -263,4 +274,8 @@
   <string name="fatal_crash_report_close_button_label">Slute</string>
   <string name="fatal_crash_report_restart_firefox_label">%1$s opnij starte</string>
   <string name="crash_report_send_crash_label">Ungelokrapport nei Mozilla ferstjoere</string>
+  <string name="content_blocking_enabled_snackbar_message">Ynhâldsblokkearring is ynskeakele</string>
+  <string name="content_blocking_disabled_snackbar_message">Ynhâldsblokkearring is útskeakele</string>
+  <string name="content_blocking_snackbar_enable_action">Ynskeakelje</string>
+  <string name="content_blocking_snackbar_disable_action">Utskeakelje</string>
 </resources>

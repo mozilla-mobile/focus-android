@@ -62,8 +62,8 @@
   <string name="preference_language">భాష</string>
   <string name="preference_language_systemdefault">వ్యవస్థ అప్రమేయం</string>
   <string name="preference_category_privacy">అంతరంగికత</string>
-  <string name="preference_privacy_block_ads">యాడ్ ట్రాకర్లను నిరోధించు</string>
   <string name="preference_privacy_block_analytics">వైశ్లేషిక ట్రాకర్లను నిరోధించు</string>
+  <string name="preference_privacy_block_ads">యాడ్ ట్రాకర్లను నిరోధించు</string>
   <string name="preference_privacy_block_social">సామాజిక ట్రాకర్లను నిరోధించు</string>
   <string name="preference_privacy_block_content">ఇతర ట్రాకర్లను నిరోధించు</string>
   <string name="preference_privacy_category_cookies">కుకీలను నిరోధించాలా</string>

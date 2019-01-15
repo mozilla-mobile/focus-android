@@ -30,7 +30,6 @@
   <string name="shortcut_erase_short_label">Nadure\'</string>
   <string name="shortcut_erase_long_label">Narè\' nej nuguan\' garajsunt nga ganana\'uî\'t</string>
   <string name="shortcut_erase_and_open_short_label">Dure\' ni na\'nint</string>
-  <string name="shortcut_erase_and_open_long_label">Nadure\' ni na\'nïnt %1$s</string>
   <string name="text_selection_search_action">Nana\'uì\' riña hua huìi</string>
   <string name="about_content"><![CDATA[<p xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">%1$s narikij kontrol ri&#241;at.</p>" \n"<p xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">garasun da\' gache nu hu&#236;t: \n<ul>" \n"<li>Nana\'u&#236;\' ni gache nunt ne\' hu&#224;\'t ng&#224; app</li>" \n"<li>Narr&#224;n ri&#241;a blokeador (si nitaj ni guij nagi\'iaj da\' ga\'ue ga\'n&#239;nt gi\'iaj sun man)</li>" "<li>nadure\' da\' nar&#232;\' cookies danj nanj nej nuguan\' gachr&#251;nt nga gach&#233; nunt</li>" \n"</ul>"\n "</p>" \n"<p xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">"%1$s Sa giri Mozilla huin.  Chrej nik&#242;\' &#241;&#251;nj huin sisi ga ni\'n&#239;nj ni dugumin internet s&#242;\'."<br/>" \n"<a href="%2$s">Gini\'in doj rayi\'&#238; nuguan\' na</a></p>]]></string>
   <string name="preference_privacy_and_security_header">Sa huìi nī sa dugumin</string>
@@ -54,7 +53,6 @@
   <string name="preference_switch_autocomplete_topsites">Guendâ nej sitiô hua hue\'ê doj</string>
   <string name="preference_autocomplete_topsite_summary">Nachrun da\' nuta\' ma\'ān ma 450 URLs sa nià\' doj ruhua guìi ni\'iaj ni.</string>
   <string name="preference_switch_autocomplete_user_list">Guendâ nej sitiô nuta\'t huajt</string>
-  <string name="preference_autocomplete_user_list_summary">Nachrun da\' nuta\' ma\'ān ma 450 URLs sa nià\' doj ruhua guìi ni\'iaj ni.</string>
   <string name="preference_category_autocomplete_manage_sites">Dugumî nej sîtio</string>
   <string name="preference_autocomplete_subitem_manage_sites">Dugumî nej sîtio</string>
   <string name="preference_autocomplete_action_add">+ Nùto\' sa nagi\'iaj ma\'ān URL</string>
@@ -77,14 +75,10 @@
   <string name="preference_language">Nânj (Nânj a\'mi\')</string>
   <string name="preference_language_systemdefault">Sistema ngà hua niñaa</string>
   <string name="preference_category_privacy">Nitaj à\'go ni\'iaj sò\'</string>
-  <string name="preference_privacy_block_ads">Si gâ\'nïnjt nej anûnsio</string>
-  <string name="preference_privacy_block_ads_summary">Hua dà\'aj nej sa dugune\' sitiô nan ni ga\'ue gini\'ìn nej si, si sô atuj</string>
   <string name="preference_privacy_block_analytics">Si gâ\'nïnjt nej blokeador analítiko</string>
-  <string name="preference_privacy_block_analytics_summary">Si sunj huin nagi\'iaj chrej, nadigi\'ñunj daj unanj ma</string>
+  <string name="preference_privacy_block_ads">Si gâ\'nïnjt nej anûnsio</string>
   <string name="preference_privacy_block_social">Si gâ\'nïnjt nej blokeador sosial</string>
-  <string name="preference_privacy_block_social_summary">Hua ni\'inj riña sitiô na da\' gini\'in si so\' àtuj ni digàn botûn da\' duyi\'ngo\'</string>
   <string name="preference_privacy_block_content">Si gâ\'nïnt a\'ngô nej sa ni\'iaj sa \'iát</string>
-  <string name="preference_privacy_block_content_summary2">Si ganachunt man, ni gahuin ni si gi\'iaj sun hue\'e da\'aj pagina</string>
   <string name="preference_privacy_category_cookies">Garun\' kookies</string>
   <string name="preference_privacy_should_block_cookies_no_option">Si ga\'ue</string>
   <string name="preference_privacy_should_block_cookies_third_party_tracker_cookies_option">Garuun\' 3rd-party ma kookies nikò\' a\'ngô nej si</string>
@@ -177,7 +171,6 @@
   <string name="contextmenu_open_in_new_tab">Na\'nïn\' riña a\'ngô rakïj ñanj nakàa</string>
   <string name="contextmenu_image_warning"><![CDATA["Nej ñadu\'ua nadunïnjt "<b xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">" Se si nare\'&#232;j"</b>" nga nadurê\'t %1$s nej sa gi\'iát nga gaché nunt."]]></string>
   <string name="firstrun_defaultbrowser_title">Nagi\'iaj nukuaj riña gache nun \'ngorïnt</string>
-  <string name="firstrun_defaultbrowser_text2">Ga’ue gan’ānj ñānt doj ngà riña aché nu huìt. Dure’ asi narán riña nej sa ga’ue gatū naga’nāj nej sa ahī màn ‘iát nī natsij nej diû huin ràn nej pâjina ngà nayi’nïn.</string>
   <string name="firstrun_search_title">Sa nana’uî’t, si chrējt</string>
   <string name="firstrun_search_text">Huā a’ngô sa nana’uî’ raj. Naguī a’ngô sa rugûñu’ūnj da’ nana’uì’t sa huin ruhuât riña configuración.</string>
   <string name="firstrun_shortcut_title">Gachrūn nej acceso directo riña aga’ ayi’ì sinïnt</string>

@@ -30,7 +30,6 @@
   <string name="shortcut_erase_short_label">Slett</string>
   <string name="shortcut_erase_long_label">Slett nettlesarhistorikken</string>
   <string name="shortcut_erase_and_open_short_label">Slett og opne</string>
-  <string name="shortcut_erase_and_open_long_label">Slett og opne %1$s</string>
   <string name="text_selection_search_action">Søk privat</string>
   <string name="about_content"><![CDATA[<p xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">%1$s gjev deg kontroll.</p>\n<p xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">"Bruk han som ein privat nettlesar:\n  "<ul>"\n    "<li>S&#248;k og surf rett i appen</li>"\n    "<li>Blokker sporf&#248;lgjarar (eller oppdater innstillingane for &#229; tillate sporf&#248;lgjarar)</li>"\n    "<li>Slett for &#229; fjerne infokapslar samt s&#248;k- og nettlesarhistorikk</li>"\n  "</ul>\n</p>\n<p xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">%1$s er produsert av Mozilla. V&#229;r misjon er &#229; fremme eit sunt, ope Internett.<br/>\n<a href="%2$s">Les meir</a></p>]]></string>
   <string name="preference_privacy_and_security_header">Personvern og sikkerheit</string>
@@ -54,7 +53,6 @@
   <string name="preference_switch_autocomplete_topsites">For toppnettsider</string>
   <string name="preference_autocomplete_topsite_summary">Aktiver for å autofullføre meir enn 450 populære nettadresser i adressefeltet.</string>
   <string name="preference_switch_autocomplete_user_list">For nettsider du legg til</string>
-  <string name="preference_autocomplete_user_list_summary">Aktiver for å autofullføre meir enn 450 populære nettadresser i adressefeltet.</string>
   <string name="preference_category_autocomplete_manage_sites">Handter sider</string>
   <string name="preference_autocomplete_subitem_manage_sites">Handter sider</string>
   <string name="preference_autocomplete_action_add">+ Legg til ei tilpassa nettadresse</string>
@@ -77,14 +75,10 @@
   <string name="preference_language">Språk</string>
   <string name="preference_language_systemdefault">Systemstandard</string>
   <string name="preference_category_privacy">Personvern</string>
-  <string name="preference_privacy_block_ads">Blokker reklamesporfølgjarar</string>
-  <string name="preference_privacy_block_ads_summary">Nokre annonsar sporfølgjarar nettstadbesøk, sjølv om du ikkje klikkar på annonsane</string>
   <string name="preference_privacy_block_analytics">Blokker analysesporfølgjarar</string>
-  <string name="preference_privacy_block_analytics_summary">Brukt for å samla inn, analysera og måla aktivitetar som tastetrykk og rulling</string>
+  <string name="preference_privacy_block_ads">Blokker reklamesporfølgjarar</string>
   <string name="preference_privacy_block_social">Blokker sosiale media-sporfølgjarar</string>
-  <string name="preference_privacy_block_social_summary">Innebygd på nettstader for å spora besøka dine og å visa funksjonalitet som dele-knappar</string>
   <string name="preference_privacy_block_content">Blokker andre innhaldssporfølgjarar</string>
-  <string name="preference_privacy_block_content_summary2">Aktivering kan føre til at nokre sider oppfører seg uventa</string>
   <string name="preference_privacy_category_cookies">Blokker infokapslar</string>
   <string name="preference_privacy_should_block_cookies_no_option">Nei</string>
   <string name="preference_privacy_should_block_cookies_third_party_tracker_cookies_option">Blokker berre tredjepartssporings-infokapslar</string>
@@ -177,7 +171,6 @@
   <string name="contextmenu_open_in_new_tab">Opna lenke i ny fane</string>
   <string name="contextmenu_image_warning"><![CDATA["Lagra og delte bilde "<b xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">vil ikkje bli fjerna</b>" når du slettar %1$s-historikken."]]></string>
   <string name="firstrun_defaultbrowser_title">Styrk personvernet ditt</string>
-  <string name="firstrun_defaultbrowser_text2">Ta privat nettlesing til neste nivå. Blokker annonsar og anna innhald som kan spora deg på tvers av nettstadar og som kan gjera nedlasting av nettsider tregare.</string>
   <string name="firstrun_search_title">Ditt søk på din måte</string>
   <string name="firstrun_search_text">Søkjer du etter noko anna? Vel ein annan standard-søkjemotor i Innstillingar.</string>
   <string name="firstrun_shortcut_title">Legg til snarvegar på startskjermen</string>

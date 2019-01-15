@@ -4,7 +4,7 @@
   <string name="action_ok">Vai</string>
   <string name="action_save">Arregistrà</string>
   <string name="urlbar_hint">Ricerca o indirizzu</string>
-  <string name="teaser">Navigazione privata autumatica.\nNavigà. Squassà. Ripete.</string>
+  <string name="teaser">Navigazione privata autumatica.\nNavigate. Squassate. Ripitite.</string>
   <string name="feedback_erase">A vostra crunulogia di navigazione hè stata squassata.</string>
   <string name="feedback_erase_custom_tab">A crunulogia di navigazione di l’unghjetta hè stata squassata.</string>
   <string name="search_hint">Ricercà %1$s</string>
@@ -30,13 +30,13 @@
   <string name="shortcut_erase_short_label">Squassà</string>
   <string name="shortcut_erase_long_label">Squassà a crunulogia di navigazione</string>
   <string name="shortcut_erase_and_open_short_label">Squassà &amp; apre</string>
-  <string name="shortcut_erase_and_open_long_label">Squassà è apre %1$s</string>
   <string name="text_selection_search_action">Fà una ricerca privata</string>
-  <string name="about_content"><![CDATA[<p xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">%1$s vi aiuta &#224; gard&#224; u cuntrollu.</p>\n<p xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">"Impiegatelu cum&#8217;&#232; un navigatore privatu :\n  "<ul>"\n    "<li>Fate ricerche &#232; navigate dapoi l&#8217;appiecazione</li>"\n    "<li>Bluccate i perseguitatori (o mudific&#224; e preferenze per auturizalli)</li>"\n    "<li>Squass&#224; i canistrelli &#232; ancu e crunulogie di navigazione &#232; di ricerca</li>"\n  "</ul>\n</p>\n<p xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">%1$s h&#232; sviluppatu da Mozilla. A nostra missione h&#232; d&#8217;incuragisce un Internet apertu &#232; in bella saluta.<br/>\n<a href="%2$s">Per sapene di pi&#249;</a></p>]]></string>
+  <string name="about_content"><![CDATA[<p xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">%1$s vi aiuta &#224; st&#224; &#224; e cumande.</p>\n<p xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">"Impiegatelu cum&#8217;&#232; un navigatore privatu :\n  "<ul>"\n    "<li>Fate ricerche &#232; navigate dapoi l&#8217;appiecazione</li>"\n    "<li>Bluccate i perseguitatori (o mudific&#224; e preferenze per auturizalli)</li>"\n    "<li>Squass&#224; i canistrelli &#232; ancu e crunulogie di navigazione &#232; di ricerca</li>"\n  "</ul>\n</p>\n<p xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">%1$s h&#232; sviluppatu da Mozilla. A nostra missione h&#232; d&#8217;incuragisce un Internet apertu &#232; in bella saluta.<br/>\n<a href="%2$s">Per sapene di pi&#249;</a></p>]]></string>
   <string name="preference_privacy_and_security_header">Vita privata &amp; sicurità</string>
   <string name="preference_privacy_and_security_summary">Traccie, canistrelli, scelta di dati cullettati</string>
   <string name="preference_search_summary">Mutore predefinitu, scrittura mezu-autumatica</string>
   <string name="preference_mozilla_summary">Apprupositu di %1$s, aiutu</string>
+  <string name="preference_category_ad_blocking">Blucchime di publicità</string>
   <string name="preference_category_tracking_protection">Prutezzione contr’à u spiunagiu</string>
   <string name="preference_category_web_content">Cuntenutu di u Web</string>
   <string name="preference_category_switching_apps">Navigazione trà l’appiecazioni</string>
@@ -54,7 +54,7 @@
   <string name="preference_switch_autocomplete_topsites">Per i siti i più populari</string>
   <string name="preference_autocomplete_topsite_summary">Attivà per compie autumaticamente più di 450 indirizzi populari in a barra d’indirizzu.</string>
   <string name="preference_switch_autocomplete_user_list">Per i siti chì voi aghjunghjite</string>
-  <string name="preference_autocomplete_user_list_summary">Attivà per compie autumaticamente più di 450 indirizzi populari in a barra d’indirizzu.</string>
+  <string name="preference_autocomplete_user_list_description">Attivà per compie autumaticamente i siti chì voi aghjunghjite quì.</string>
   <string name="preference_category_autocomplete_manage_sites">Urganizà i siti</string>
   <string name="preference_autocomplete_subitem_manage_sites">Urganizà i siti</string>
   <string name="preference_autocomplete_action_add">+ Aghjunghje un indirizzu persunalizatu</string>
@@ -77,19 +77,23 @@
   <string name="preference_language">Lingua</string>
   <string name="preference_language_systemdefault">Valore predefinitu di u sistema</string>
   <string name="preference_category_privacy">Vita privata</string>
-  <string name="preference_privacy_block_ads">Bluccà i perseguitatori publicitarii</string>
-  <string name="preference_privacy_block_ads_summary">Parechje publicità spiunanu e vostre visite nant’à i siti, ancu senza cliccà nant’à e publicità</string>
+  <string name="preference_privacy_ads_block_ads">Bluccà e publicità è altri scomudi</string>
+  <string name="preference_privacy_ads_block_ads_summary">Bluccheghja e publicità è altri scomudi impieghendu liste di blucchime cum\'è Easylist, EasyPrivacy, Fanboy’s Annoyance, è 777Guard Mobile Ad Filter</string>
   <string name="preference_privacy_block_analytics">Bluccà i perseguitatori di statistiche</string>
-  <string name="preference_privacy_block_analytics_summary">Ghjovanu à cullettà, analizà è misurà e vostre attività cum’è picchichjà nant’à u screnu o fà sfilà e pagine</string>
+  <string name="preference_privacy_block_ads">Bluccà i perseguitatori publicitarii</string>
+  <string name="preference_privacy_block_ads_new_summary">Caccia e publicità cuncepite per spiunà e vostre visite nant’à i siti ancu s’è voi ùn picchichjate micca nant’à i liami</string>
+  <string name="preference_privacy_block_analytics_new_summary">Bluccheghja i perseguitatori chì analizanu è misuranu l’interazzioni cum’è picchichjà è sfilà</string>
   <string name="preference_privacy_block_social">Bluccà i perseguitatori di rete suciale</string>
-  <string name="preference_privacy_block_social_summary">Sò framessi in qualchì situ per spiunà e vostre visite o affissà funzioni cum’è buttoni di spartera</string>
   <string name="preference_privacy_block_content">Bluccà l’altri perseguitatori di cuntenutu</string>
-  <string name="preference_privacy_block_content_summary2">Attivà st’ozzione pò cagiunà penseri cù certe pagine</string>
   <string name="preference_privacy_category_cookies">Bluccà i canistrelli</string>
   <string name="preference_privacy_should_block_cookies_no_option">Innò</string>
   <string name="preference_privacy_should_block_cookies_third_party_tracker_cookies_option">Bluccà solu i canistrelli terzi impiegati per u spiunagiu</string>
   <string name="preference_privacy_should_block_cookies_third_party_only_option">Bluccà solu i canistrelli terzi</string>
   <string name="preference_privacy_should_block_cookies_yes_option">Iè</string>
+  <string name="preference_privacy_block_cookies_no">Innò (permette tutti canistrelli)</string>
+  <string name="preference_privacy_block_cookies_third_party_tracker">Bluccà i canistrelli terzi di spiunagiu (ricumandatu)</string>
+  <string name="preference_privacy_block_cookies_third_party_only">Bluccà tutti i canistrelli terzi\n(pò impedisce i siti web di funziunà)</string>
+  <string name="preference_privacy_block_cookies_yes">Bluccà tutti i canistrelli (impediscerà siti web di funziunà)</string>
   <string name="preference_security_biometric">Impiegà un’impronta digitale per spalancà l’appiecazione</string>
   <string name="preference_security_biometric_summary">A vostra impronta digitale pò spalancà %1$s s’è un URL hè dighjà aperta dentru l’appiecazione. U modu furtivu serà attivatu.</string>
   <string name="preference_privacy_secure_mode">Modu furtivu</string>
@@ -175,18 +179,19 @@
   <string name="contextmenu_image_copy">Cupià l’indirizzu di a fiura</string>
   <string name="contextmenu_image_save">Arregistrà a fiura</string>
   <string name="contextmenu_open_in_new_tab">Apre a leia in una nova unghjetta</string>
-  <string name="contextmenu_image_warning"><![CDATA[E fiure sparte o arregistrate<b xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">&#249;n seranu micca squassate</b>" quandu a crunulogia di %1$s hè squassata."]]></string>
-  <string name="firstrun_defaultbrowser_title">Rinfurzà a vostra vita privata</string>
-  <string name="firstrun_defaultbrowser_text2">A navigazione privata passa à u livellu insù. Bluccate e publicità è altri perseguitatori chì vi spiunanu è rallentanu u caricamentu di e pagine web.</string>
+  <string name="contextmenu_image_warning"><![CDATA["E fiure sparte o arregistrate "<b xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">"&#249;n s&#242; micca squassate "</b>quandu a crunulogia di %1$s hè squassata.]]></string>
+  <string name="firstrun_defaultbrowser_title">Rinfurzate a vostra vita privata</string>
   <string name="firstrun_search_title">Ricercate à a vostra manera</string>
   <string name="firstrun_search_text">Ricercate qualcosa di sfarente ? Sciglite un altru mutore di ricerca predefinitu in e Preferenze.</string>
   <string name="firstrun_shortcut_title">Aghjunghjite accurtatoghji à u vostru screnu d’accolta</string>
-  <string name="firstrun_shortcut_text">Rivultate à i vostri siti favuriti in %1$s prestu prestu. Selezziunate puru \"Fissà à u screnu d’accolta\" da u listinu di %1$s.</string>
+  <string name="firstrun_shortcut_text">Rivultate à i vostri siti favuriti in %1$s prestu prestu. Selezziunate puru « Fissà à u screnu d’accolta » da u listinu di %1$s.</string>
   <string name="firstrun_privacy_title">Ripigliate in manu a vostra vita privata</string>
   <string name="firstrun_privacy_text">Sciglite %1$s cum’è u vostru navigatore predefinitu è cusì a navigazione serà privata quandu e pagine web s’apreranu da d’altre appiecazioni.</string>
   <string name="firstrun_close_button">Iè, aghju capitu !</string>
   <string name="firstrun_skip_button">Ignurà</string>
   <string name="firstrun_next_button">Seguente</string>
+  <string name="block_ads_card_title">%1$s hè prontu à bluccà e publicità</string>
+  <string name="block_ads_card_description">Nova funzione ! Navigà più in furia blucchendu è publicità è u codice chì voi seguitanu da tutti i scorni di u Web.</string>
   <string name="content_blocking_disabled">-</string>
   <string name="dialog_addtohomescreen_action_add">Aghjunghje</string>
   <string name="dialog_addtohomescreen_action_cancel">Abbandunà</string>
@@ -226,6 +231,7 @@
   <string name="biometric_auth_title">Spalancà %1$s</string>
   <string name="biometric_auth_description">Tuccate u lettore d’impronta digitale per cuntinuà.</string>
   <string name="biometric_auth_new_session">Nova sessione</string>
+  <string name="biometric_auth_open_link_new_session">Apre a leia in nova sessione</string>
   <string name="biometric_auth_image_description">Icona d’impronta digitale</string>
   <string name="biometric_auth_not_recognized_error">Impronta digitale micca ricunnisciuta. Pruvà torna.</string>
   <string name="biometric_auth_moved_too_quickly">U ditu hà mossu troppu prestu. Pruvà torna.</string>
@@ -243,6 +249,8 @@
   <string name="tip_open_in_new_tab">Apre una leia in una nova unghjetta\n Effettuate una longa incalcata nant’à una leia in una pagina</string>
   <string name="tip_request_desktop">Preferite fighjà a versione per urdinatore di u situ ?%1$s Listinu &gt; Fighjà versione urdinatore</string>
   <string name="tip_disable_tips2">Disattivà e minichichje nant’à u screnu d’avviu</string>
+  <string name="tip_block_ads">Navigà più in furia blucchendu è publicità è u codice chì voi seguitanu da tutti i scorni di u Web.</string>
+  <string name="block_ads_title">Blucchime di publicità</string>
   <string name="tip_explain_allowlist">Un situ di cunfidenza ?\n Allowlist disattiveghja a prutezzione contr’à u spiunagiu per i siti di cunfidenza chì voi cunniscite.</string>
   <string name="new_tab_opened_snackbar">Nova unghjetta aperta</string>
   <string name="open_new_tab_snackbar">Affissà</string>
@@ -263,4 +271,8 @@
   <string name="fatal_crash_report_close_button_label">Chjode</string>
   <string name="fatal_crash_report_restart_firefox_label">Rilancià %1$s</string>
   <string name="crash_report_send_crash_label">Mandà un raportu di penseri à Mozilla</string>
+  <string name="content_blocking_enabled_snackbar_message">U blucchime di cuntenutu hè attivatu</string>
+  <string name="content_blocking_disabled_snackbar_message">U blucchime di cuntenutu hè disattivatu</string>
+  <string name="content_blocking_snackbar_enable_action">Attivà</string>
+  <string name="content_blocking_snackbar_disable_action">Disattivà</string>
 </resources>

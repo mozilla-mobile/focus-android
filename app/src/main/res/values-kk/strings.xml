@@ -30,13 +30,13 @@
   <string name="shortcut_erase_short_label">Өшіру</string>
   <string name="shortcut_erase_long_label">Шолу тарихын өшіру</string>
   <string name="shortcut_erase_and_open_short_label">Өшіру және ашу</string>
-  <string name="shortcut_erase_and_open_long_label">Өшіру және %1$s ашу</string>
   <string name="text_selection_search_action">Жеке шолыңыз</string>
   <string name="about_content"><![CDATA[<p xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">%1$s &#1073;&#1072;&#1089;&#1179;&#1072;&#1088;&#1091;&#1076;&#1099; &#1179;&#1086;&#1083;&#1099;&#1187;&#1099;&#1079;&#1171;&#1072; &#1073;&#1077;&#1088;&#1077;&#1076;&#1110;.</p>\n<p xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">"&#1054;&#1085;&#1099; &#1078;&#1077;&#1082;&#1077;&#1083;&#1110;&#1082; &#1073;&#1088;&#1072;&#1091;&#1079;&#1077;&#1088;&#1110; &#1088;&#1077;&#1090;&#1110;&#1085;&#1076;&#1077; &#1179;&#1086;&#1083;&#1076;&#1072;&#1085;&#1099;&#1187;&#1099;&#1079;:\n  "<ul>"\n    "<li>&#1178;&#1086;&#1083;&#1076;&#1072;&#1085;&#1073;&#1072; &#1110;&#1096;&#1110;&#1085;&#1077;&#1085; &#1090;&#1110;&#1082;&#1077;&#1083;&#1077;&#1081; &#1110;&#1079;&#1076;&#1077;&#1091; &#1078;&#1241;&#1085;&#1077; &#1096;&#1086;&#1083;&#1091;</li>"\n    "<li>&#1058;&#1088;&#1077;&#1082;&#1077;&#1088;&#1083;&#1077;&#1088;&#1076;&#1110; &#1073;&#1083;&#1086;&#1082;&#1090;&#1072;&#1187;&#1099;&#1079; (&#1085;&#1077;&#1084;&#1077;&#1089;&#1077;, &#1086;&#1083;&#1072;&#1088;&#1076;&#1099; &#1088;&#1201;&#1179;&#1089;&#1072;&#1090; &#1077;&#1090;&#1091; &#1199;&#1096;&#1110;&#1085;, &#1073;&#1072;&#1087;&#1090;&#1072;&#1091;&#1083;&#1072;&#1088;&#1076;&#1099; &#1078;&#1072;&#1187;&#1072;&#1088;&#1090;&#1099;&#1187;&#1099;&#1079;)</li>"\n    "<li>Cookies &#1078;&#1241;&#1085;&#1077; &#1110;&#1079;&#1076;&#1077;&#1091; &#1084;&#1077;&#1085; &#1096;&#1086;&#1083;&#1091; &#1090;&#1072;&#1088;&#1080;&#1093;&#1099;&#1085; &#1082;&#1077;&#1090;&#1110;&#1088;&#1091; &#1199;&#1096;&#1110;&#1085; &#1257;&#1096;&#1110;&#1088;&#1110;&#1187;&#1110;&#1079;</li>"\n  "</ul>\n</p>\n<p xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">%1$s &#1078;&#1072;&#1089;&#1072;&#1171;&#1072;&#1085; Mozilla. &#1052;&#1072;&#1179;&#1089;&#1072;&#1090;&#1099;&#1084;&#1099;&#1079; - &#1080;&#1085;&#1090;&#1077;&#1088;&#1085;&#1077;&#1090; &#1076;&#1077;&#1085;&#1089;&#1072;&#1091;&#1083;&#1099;&#1171;&#1099;&#1085; &#1078;&#1241;&#1085;&#1077; &#1072;&#1096;&#1099;&#1179;&#1090;&#1099;&#1171;&#1099;&#1085; &#1089;&#1072;&#1179;&#1090;&#1072;&#1091;.<br/>\n<a href="%2$s">&#1050;&#1257;&#1073;&#1110;&#1088;&#1077;&#1082; &#1073;&#1110;&#1083;&#1091;</a></p>]]></string>
   <string name="preference_privacy_and_security_header">Жекелік және қауіпсіздік</string>
   <string name="preference_privacy_and_security_summary">Бақылау, cookies файлдары, деректер таңдауы</string>
   <string name="preference_search_summary">Бастапқы мәні, автотолықтыру</string>
   <string name="preference_mozilla_summary">%1$s туралы, көмек</string>
+  <string name="preference_category_ad_blocking">Жарнаманы бұғаттау</string>
   <string name="preference_category_tracking_protection">Бақылаудан қорғаныс</string>
   <string name="preference_category_web_content">Веб құрамасы</string>
   <string name="preference_category_switching_apps">Қолданбаларды ауыстыру</string>
@@ -54,7 +54,6 @@
   <string name="preference_switch_autocomplete_topsites">Үздік сайттар үшін</string>
   <string name="preference_autocomplete_topsite_summary">Адрестік жолақта 450-ден астам әйгілі URL-ды автотолықтыру үшін іске қосыңыз.</string>
   <string name="preference_switch_autocomplete_user_list">Қосылатын сайттар үшін</string>
-  <string name="preference_autocomplete_user_list_summary">Адрестік жолақта 450-ден астам әйгілі URL-ды автотолықтыру үшін іске қосыңыз.</string>
   <string name="preference_category_autocomplete_manage_sites">Сайттарды басқару</string>
   <string name="preference_autocomplete_subitem_manage_sites">Сайттарды басқару</string>
   <string name="preference_autocomplete_action_add">+ Таңдауыңызша URL қосу</string>
@@ -77,14 +76,10 @@
   <string name="preference_language">Тіл</string>
   <string name="preference_language_systemdefault">Жүйелік</string>
   <string name="preference_category_privacy">Жекелік</string>
-  <string name="preference_privacy_block_ads">Жарнама трекерлерін блоктау</string>
-  <string name="preference_privacy_block_ads_summary">Кейбір жарналамалар сайт шолуды бақылайды, жарнамаларға шертпесеңіз де</string>
   <string name="preference_privacy_block_analytics">Аналитикалық трекерлерді блоктау</string>
-  <string name="preference_privacy_block_analytics_summary">Шерту және айналдыру әрекеттерін жинау, зерттеу және өлшеуге пайдаланылады</string>
+  <string name="preference_privacy_block_ads">Жарнама трекерлерін блоктау</string>
   <string name="preference_privacy_block_social">Әлеуметтік желілер трекерлерін блоктау</string>
-  <string name="preference_privacy_block_social_summary">Шолуыңызды бақылау және бөлісу батырмалары сияқты мүмкіндіктерді көрсету мақсатымен сайттарға ендірілген</string>
   <string name="preference_privacy_block_content">Басқа құрама трекерлерін блоктау</string>
-  <string name="preference_privacy_block_content_summary2">Бұны іске қосу кейбір сайттардың мінез-құлығын күтпегендей өзгертеді</string>
   <string name="preference_privacy_category_cookies">Cookies файлдарын бұғаттау</string>
   <string name="preference_privacy_should_block_cookies_no_option">Жоқ</string>
   <string name="preference_privacy_should_block_cookies_third_party_tracker_cookies_option">Тек үшінші жақты cookies файлдарын бұғаттау</string>
@@ -177,7 +172,6 @@
   <string name="contextmenu_open_in_new_tab">Сілтемені жаңа бетте ашу</string>
   <string name="contextmenu_image_warning"><![CDATA["%1$s тарихы өшірілген кезде сақталған және бөліскен суреттер "<b xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">&#1257;&#1096;&#1110;&#1088;&#1110;&#1083;&#1084;&#1077;&#1081;&#1076;&#1110;</b>.]]></string>
   <string name="firstrun_defaultbrowser_title">Жекелігіңізді күшейтіңіз</string>
-  <string name="firstrun_defaultbrowser_text2">Жекелік шолудың келесі деңгейіне өтіңіз. Сайттар арасында сізді бақылайтын және парақтардың жүктелу уақытын арттыратын жарнама және басқа құраманы блоктаңыз.</string>
   <string name="firstrun_search_title">Сіздің іздеулеріңіз, сіздің жолыңызбен</string>
   <string name="firstrun_search_text">Басқа бірнәрсе іздедіңіз бе? Баптаулардан басқа негізгі іздеу жүйесін таңдаңыз.</string>
   <string name="firstrun_shortcut_title">Үй экранына жарлықтарды қосыңыз</string>
@@ -226,6 +220,7 @@
   <string name="biometric_auth_title">%1$s босату</string>
   <string name="biometric_auth_description">Жалғастыру үшін саусақ баспасын оқу құрылғысын тиіңіз.</string>
   <string name="biometric_auth_new_session">Жаңа сессия</string>
+  <string name="biometric_auth_open_link_new_session">Сілтемені жаңа сессияда ашу</string>
   <string name="biometric_auth_image_description">Саусақ баспасы таңбашасы</string>
   <string name="biometric_auth_not_recognized_error">Саусақ баспасы танылмады. Қайталап көріңіз.</string>
   <string name="biometric_auth_moved_too_quickly">Саусақ тым жылдам өткізілді. Қайталап көріңіз.</string>
@@ -243,6 +238,7 @@
   <string name="tip_open_in_new_tab">Сілтемені жаңа бетте ашу\n Беттегі кез келген сілтемеге ұзақ шертіңіз</string>
   <string name="tip_request_desktop">Жұмыс үстелге арналған толық өлшемді көргіңіз келе ме?%1$s Мәзір &gt; Сайттың толық нұсқасы</string>
   <string name="tip_disable_tips2">Іске қосу экранында кеңестерді сөндіру</string>
+  <string name="block_ads_title">Жарнаманы бұғаттау</string>
   <string name="tip_explain_allowlist">Сенімді сайт па?\n Рұқсат тізімі өзіңіз білетін және сенетін сайттар үшін бақылаудан қорғанысты сөндіреді.</string>
   <string name="new_tab_opened_snackbar">Жаңа бет ашылды</string>
   <string name="open_new_tab_snackbar">Ауысу</string>
@@ -263,4 +259,8 @@
   <string name="fatal_crash_report_close_button_label">Жабу</string>
   <string name="fatal_crash_report_restart_firefox_label">%1$s қайта қосу</string>
   <string name="crash_report_send_crash_label">Mozilla-ға құлау хабарламасын жіберу</string>
+  <string name="content_blocking_enabled_snackbar_message">Құраманы бұғаттау іске қосылған</string>
+  <string name="content_blocking_disabled_snackbar_message">Құраманы бұғаттау сөндірілген</string>
+  <string name="content_blocking_snackbar_enable_action">Іске қосу</string>
+  <string name="content_blocking_snackbar_disable_action">Сөндіру</string>
 </resources>

@@ -30,7 +30,6 @@
   <string name="shortcut_erase_short_label">Sil</string>
   <string name="shortcut_erase_long_label">Gezinti geçmişini sil</string>
   <string name="shortcut_erase_and_open_short_label">Sil ve aç</string>
-  <string name="shortcut_erase_and_open_long_label">Sil ve %1$s’u aç</string>
   <string name="text_selection_search_action">Gizli arama</string>
   <string name="about_content"><![CDATA[<p xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">%1$s kontrol&#252; size verir.</p>\n<p xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">"Onu gizlilik odakl&#305; bir taray&#305;c&#305; olarak kullanabilirsiniz:\n  "<ul>"\n    "<li>Do&#287;rudan uygulamada arama yapabilir ve web&#8217;de gezinebilirsiniz</li>"\n    "<li>Takip&#231;ileri engelleyebilirsiniz (veya belli takip&#231;ilere izin verebilirsiniz)</li>"\n    "<li>Tek d&#252;&#287;meyle &#231;erezleri, arama ve gezinti ge&#231;mi&#351;inizi silebilirsiniz</li>"\n  "</ul>\n</p>\n<p xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">%1$s Mozilla taraf&#305;ndan geli&#351;tirilmi&#351;tir. Misyonumuz daha sa&#287;l&#305;kl&#305; ve a&#231;&#305;k bir internet yaratmakt&#305;r.<br/>\n<a href="%2$s">Daha fazla bilgi al&#305;n</a></p>]]></string>
   <string name="preference_privacy_and_security_header">Gizlilik ve Güvenlik</string>
@@ -54,7 +53,6 @@
   <string name="preference_switch_autocomplete_topsites">Popüler sitelerde</string>
   <string name="preference_autocomplete_topsite_summary">450’den fazla popüler adresi adres çubuğunda otomatik tamamlamak için bunu etkinleştirin.</string>
   <string name="preference_switch_autocomplete_user_list">Eklediğim sitelerde</string>
-  <string name="preference_autocomplete_user_list_summary">450’den fazla popüler adresi adres çubuğunda otomatik tamamlamak için bunu etkinleştirin.</string>
   <string name="preference_category_autocomplete_manage_sites">Siteleri yönet</string>
   <string name="preference_autocomplete_subitem_manage_sites">Siteleri yönet</string>
   <string name="preference_autocomplete_action_add">+ Özel adres ekle</string>
@@ -77,14 +75,10 @@
   <string name="preference_language">Dil</string>
   <string name="preference_language_systemdefault">Sistem varsayılanı</string>
   <string name="preference_category_privacy">Gizlilik</string>
-  <string name="preference_privacy_block_ads">Reklam takipçilerini engelle</string>
-  <string name="preference_privacy_block_ads_summary">Bazı reklamlar, siz onlara tıklamasanız bile ziyaret ettiğiniz siteleri takip eder</string>
   <string name="preference_privacy_block_analytics">Analitik takipçilerini engelle</string>
-  <string name="preference_privacy_block_analytics_summary">Dokunma ve kaydırma gibi etkinlikleri kaydetmek, çözümlemek ve ölçmek için kullanılır</string>
+  <string name="preference_privacy_block_ads">Reklam takipçilerini engelle</string>
   <string name="preference_privacy_block_social">Sosyal takipçileri engelle</string>
-  <string name="preference_privacy_block_social_summary">Sosyal medyada paylaşım düğmeleri, ziyaret ettiğiniz siteleri de takip eder</string>
   <string name="preference_privacy_block_content">Diğer içerik takipçilerini engelle</string>
-  <string name="preference_privacy_block_content_summary2">Bunu açarsanız bazı sayfalar olması gerektiği gibi çalışmayabilir</string>
   <string name="preference_privacy_category_cookies">Çerezleri engelle</string>
   <string name="preference_privacy_should_block_cookies_no_option">Hayır</string>
   <string name="preference_privacy_should_block_cookies_third_party_tracker_cookies_option">Yalnızca üçüncü taraf takipçi çerezlerini engelle</string>
@@ -177,7 +171,6 @@
   <string name="contextmenu_open_in_new_tab">Bağlantıyı yeni sekmede aç</string>
   <string name="contextmenu_image_warning"><![CDATA["%1$s geçmişini sildiğinizde, kaydettiğiniz ve paylaştığınız resimler "<b xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">silinmeyecektir</b>.]]></string>
   <string name="firstrun_defaultbrowser_title">Gizliliğini güçlendir</string>
-  <string name="firstrun_defaultbrowser_text2">Gizli gezintiyi daha da geliştirdik. Gezdiğiniz siteleri takip eden ve sayfaların yüklenmesini yavaşlatan reklamları ve diğer içerikleri engelleyebilirsiniz.</string>
   <string name="firstrun_search_title">Senin araman, senin kararın</string>
   <string name="firstrun_search_text">Başka bir şey mi arıyorsunuz? Ayarlar menüsünden varsayılan arama motorunuzu değiştirebilirsiniz.</string>
   <string name="firstrun_shortcut_title">Kısayolları ana ekranına ekle</string>

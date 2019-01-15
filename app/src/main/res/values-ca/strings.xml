@@ -30,7 +30,6 @@
   <string name="shortcut_erase_short_label">Esborra</string>
   <string name="shortcut_erase_long_label">Esborra l\'historial de navegació</string>
   <string name="shortcut_erase_and_open_short_label">Esborra i obre</string>
-  <string name="shortcut_erase_and_open_long_label">Esborra i obre el %1$s</string>
   <string name="text_selection_search_action">Cerca privada</string>
   <string name="about_content"><![CDATA[<p xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">El %1$s us d&#243;na el control.</p>\n<p xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">"Com a navegador privat, us permet:\n  "<ul>"\n    "<li>Cercar i navegar directament des de l\'aplicaci&#243;</li>"\n    "<li>Blocar els elements de seguiment (o canviar els par&#224;metres per permetre\'ls)</li>"\n    "<li>Esborrar les galetes i l\'historial de cerques i de navegaci&#243;</li>"\n  "</ul>\n</p>\n<p xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">El %1$s est&#224; creat per Mozilla. La nostra missi&#243; &#233;s fomentar un Internet obert i saludable.<br/>\n<a href="%2$s">M&#233;s informaci&#243;</a></p>]]></string>
   <string name="preference_privacy_and_security_header">Privadesa i seguretat</string>
@@ -54,7 +53,6 @@
   <string name="preference_switch_autocomplete_topsites">Per als llocs principals</string>
   <string name="preference_autocomplete_topsite_summary">Activeu-ho per permetre l\'emplenament automàtic més de 450 URL populars a la barra d\'adreces.</string>
   <string name="preference_switch_autocomplete_user_list">Per als llocs que afegiu</string>
-  <string name="preference_autocomplete_user_list_summary">Activeu-ho per permetre l\'emplenament automàtic més de 450 URL populars a la barra d\'adreces.</string>
   <string name="preference_category_autocomplete_manage_sites">Gestiona els llocs</string>
   <string name="preference_autocomplete_subitem_manage_sites">Gestiona els llocs</string>
   <string name="preference_autocomplete_action_add">+ Afegeix un URL personalitzat</string>
@@ -77,14 +75,10 @@
   <string name="preference_language">Llengua</string>
   <string name="preference_language_systemdefault">Valor per defecte del sistema</string>
   <string name="preference_category_privacy">Privadesa</string>
-  <string name="preference_privacy_block_ads">Bloca els elements de seguiment de publicitat</string>
-  <string name="preference_privacy_block_ads_summary">Alguns anuncis fan el seguiment de les visites als llocs, fins i tot si no feu clic als anuncis</string>
   <string name="preference_privacy_block_analytics">Bloca els elements de seguiment d\'anàlisi</string>
-  <string name="preference_privacy_block_analytics_summary">S\'utilitzen per recollir, analitzar i mesurar activitats com ara els tocs i el desplaçament</string>
+  <string name="preference_privacy_block_ads">Bloca els elements de seguiment de publicitat</string>
   <string name="preference_privacy_block_social">Bloca els elements de seguiment social</string>
-  <string name="preference_privacy_block_social_summary">Està incrustat en els llocs per fer el seguiment de les vostres visites i per mostrar alguns elements com els botons de compartició</string>
   <string name="preference_privacy_block_content">Bloca altres elements de seguiment de contingut</string>
-  <string name="preference_privacy_block_content_summary2">Si s\'activa, algunes pàgines podrien comportar-se de forma inesperada</string>
   <string name="preference_privacy_category_cookies">Bloca les galetes</string>
   <string name="preference_privacy_should_block_cookies_no_option">No</string>
   <string name="preference_privacy_should_block_cookies_third_party_tracker_cookies_option">Bloca només les galetes de seguiment de tercers</string>
@@ -177,7 +171,6 @@
   <string name="contextmenu_open_in_new_tab">Obre l\'enllaç en una pestanya nova</string>
   <string name="contextmenu_image_warning"><![CDATA["Les imatges que deseu i compartiu "<b xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">no s\'eliminaran</b>" quan esborreu l\'historial del %1$s."]]></string>
   <string name="firstrun_defaultbrowser_title">Potencieu la privadesa</string>
-  <string name="firstrun_defaultbrowser_text2">Porteu la navegació privada a un altre nivell. Bloqueu anuncis i altre contingut que us fan el seguiment i alenteixen la càrrega de les pàgines.</string>
   <string name="firstrun_search_title">Cerqueu com vulgueu</string>
   <string name="firstrun_search_text">Busqueu una altra cosa? Trieu un altre motor de cerca per defecte als Paràmetres.</string>
   <string name="firstrun_shortcut_title">Afegiu dreceres a la pantalla d\'inici</string>

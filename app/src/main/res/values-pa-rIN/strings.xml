@@ -30,7 +30,6 @@
   <string name="shortcut_erase_short_label">ਮਿਟਾਓ</string>
   <string name="shortcut_erase_long_label">ਬਰਾਊਜ਼ ਕਰਨ ਦੇ ਅਤੀਤ ਨੂੰ ਮਿਟਾਓ</string>
   <string name="shortcut_erase_and_open_short_label">ਮਿਟਾਓ ਤੇ ਖੋਲ੍ਹੋ</string>
-  <string name="shortcut_erase_and_open_long_label">ਮਿਟਾਓ ਅਤੇ %1$s ਖੋਲ੍ਹੋ</string>
   <string name="text_selection_search_action">ਨਿੱਜੀ ਤੌਰ \'ਤੇ ਖੋਜੋ</string>
   <string name="about_content"><![CDATA[<p xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">%1$s &#2596;&#2625;&#2617;&#2622;&#2593;&#2631; &#2581;&#2622;&#2604;&#2626; &#2617;&#2631;&#2592; &#2581;&#2608;&#2600; &#2610;&#2568; &#2596;&#2625;&#2622;&#2617;&#2600;&#2626;&#2672; &#2607;&#2635;&#2583; &#2581;&#2608;&#2598;&#2622; &#2617;&#2632;&#2404;</p>\n<p xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">"&#2567;&#2616; &#2600;&#2626;&#2672; &#2600;&#2623;&#2673;&#2588;&#2624; &#2604;&#2608;&#2622;&#2570;&#2588;&#2620;&#2608; &#2598;&#2624; &#2596;&#2608;&#2637;&#2617;&#2622;&#2562; &#2613;&#2608;&#2596;&#2635;:\n  "<ul>"\n    "<li>&#2616;&#2623;&#2673;&#2599;&#2622; &#2576;&#2602; &#2613;&#2623;&#2673;&#2586;&#2635;&#2562; &#2617;&#2624; &#2610;&#2673;&#2605;&#2635; &#2596;&#2631; &#2604;&#2608;&#2622;&#2570;&#2588;&#2620; &#2581;&#2608;&#2635;</li>"\n    "<li>&#2602;&#2632;&#2652;&#2637;&#2617; &#2600;&#2673;&#2602;&#2595; &#2613;&#2622;&#2610;&#2623;&#2566;&#2562; &#2596;&#2631; &#2602;&#2622;&#2604;&#2672;&#2598;&#2624; &#2610;&#2622;&#2569; (&#2588;&#2622;&#2562; &#2602;&#2632;&#2652;&#2637;&#2617; &#2600;&#2673;&#2602;&#2595; &#2613;&#2622;&#2610;&#2623;&#2566;&#2562; &#2600;&#2626;&#2672; &#2606;&#2600;&#2588;&#2626;&#2608;&#2624; &#2598;&#2631;&#2595; &#2610;&#2568; &#2616;&#2632;&#2591;&#2623;&#2672;&#2583;&#2622;&#2562; &#2604;&#2598;&#2610;&#2635;)</li>"\n    "<li>&#2581;&#2625;&#2581;&#2624;&#2588;&#2620; &#2598;&#2631; &#2600;&#2622;&#2610; &#2600;&#2622;&#2610; &#2610;&#2673;&#2605;&#2631; &#2583;&#2575; &#2565;&#2596;&#2631; &#2604;&#2608;&#2622;&#2570;&#2588;&#2620; &#2581;&#2624;&#2596;&#2631; &#2583;&#2623;&#2566;&#2562; &#2600;&#2626;&#2672; &#2613;&#2624; &#2606;&#2623;&#2591;&#2622;&#2569;</li>"\n  "</ul>\n</p>\n<p xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">%1$s &#2600;&#2626;&#2672; &#2606;&#2636;&#2588;&#2620;&#2623;&#2610;&#2622; &#2613;&#2673;&#2610;&#2635;&#2562; &#2604;&#2595;&#2622;&#2567;&#2566; &#2583;&#2623;&#2566; &#2617;&#2632;&#2404; &#2616;&#2622;&#2593;&#2622; &#2591;&#2624;&#2586;&#2622; &#2567;&#2673;&#2581; &#2616;&#2623;&#2617;&#2596;&#2606;&#2672;&#2598; &#2565;&#2596;&#2631; &#2582;&#2625;&#2673;&#2610;&#2637;&#2617;&#2631; &#2593;&#2625;&#2673;&#2610;&#2637;&#2617;&#2631; &#2567;&#2672;&#2591;&#2608;&#2600;&#2632;&#2673;&#2591; &#2600;&#2626;&#2672; &#2613;&#2599;&#2622;&#2569;&#2595;&#2622; &#2617;&#2632;&#2404;<br/>\n<a href="%2$s">&#2617;&#2635;&#2608; &#2616;&#2623;&#2673;&#2582;&#2635;</a></p>]]></string>
   <string name="preference_privacy_and_security_header">ਨਿੱਜੀ ਤੇ ਸੁਰੱਖਿਆ</string>
@@ -54,7 +53,6 @@
   <string name="preference_switch_autocomplete_topsites">ਚੋਟੀ ਦੀਆਂ ਸਾਈਟਾਂ ਲਈ</string>
   <string name="preference_autocomplete_topsite_summary">ਸਿਰਨਾਵਾਂ ਪੱਟੀ ਵਿੱਚ 450 ਤੋਂ ਹਰਮਨਪਿਆਰੇ URLs ਨੂੰ ਆਪਣੇ-ਆਪ ਪੂਰਾ ਕਰਨਾ ਸਮਰੱਥ ਕਰੋ।</string>
   <string name="preference_switch_autocomplete_user_list">ਤੁਹਾਡੇ ਵਲੋਂ ਜੋੜਨ ਲਈ ਸਾਈਟਾਂ ਵਾਸਤੇ</string>
-  <string name="preference_autocomplete_user_list_summary">ਸਿਰਨਾਵਾਂ ਪੱਟੀ ਵਿੱਚ 450 ਤੋਂ ਹਰਮਨਪਿਆਰੇ URLs ਨੂੰ ਆਪਣੇ-ਆਪ ਪੂਰਾ ਕਰਨਾ ਸਮਰੱਥ ਕਰੋ।</string>
   <string name="preference_category_autocomplete_manage_sites">ਸਾਈਟਾਂ ਦਾ ਬੰਦੋਬਸਤ ਕਰੋ</string>
   <string name="preference_autocomplete_subitem_manage_sites">ਸਾਈਟਾਂ ਦਾ ਬੰਦੋਬਸਤ ਕਰੋ</string>
   <string name="preference_autocomplete_action_add">+ ਕਸਟਮ URL ਜੋੜੋ</string>
@@ -77,14 +75,10 @@
   <string name="preference_language">ਭਾਸ਼ਾ</string>
   <string name="preference_language_systemdefault">ਸਿਸਟਮ ਮੂਲ</string>
   <string name="preference_category_privacy">ਪਰਦੇਦਾਰੀ</string>
-  <string name="preference_privacy_block_ads">ਇਸ਼ਤਿਹਾਰ ਟਰੈਕਰਾਂ \'ਤੇ ਪਾਬੰਦੀ ਲਗਾਓ</string>
-  <string name="preference_privacy_block_ads_summary">ਕੁਝ ਇਸ਼ਤਿਹਾਰ ਸਾਈਟ ਦੇ ਦੌਰੇ ਨੂੰ ਟਰੈਕ ਕਰਦੇ ਹਨ, ਭਾਵੇਂ ਤੁਸੀਂ ਇਸ਼ਤਿਹਾਰਾਂ ਤੇ ਨਹੀਂ ਕਲਿਕ ਕਰਦੇ</string>
   <string name="preference_privacy_block_analytics">ਵਿਸ਼ਲੇਸ਼ਣ ਟਰੈਕਰਾਂ ਤੇ ਪਾਬੰਦੀ ਲਗਾਓ</string>
-  <string name="preference_privacy_block_analytics_summary">ਟੇਪਿੰਗ ਅਤੇ ਸਕ੍ਰੌਲਿੰਗ ਵਰਗੀਆਂ ਗਤੀਵਿਧੀਆਂ ਇਕੱਤਰ ਕਰਨ, ਵਿਸ਼ਲੇਸ਼ਣ ਕਰਨ ਅਤੇ ਮਾਪਣ ਲਈ ਵਰਤਿਆ ਜਾਂਦਾ ਹੈ</string>
+  <string name="preference_privacy_block_ads">ਇਸ਼ਤਿਹਾਰ ਟਰੈਕਰਾਂ \'ਤੇ ਪਾਬੰਦੀ ਲਗਾਓ</string>
   <string name="preference_privacy_block_social">ਸਮਾਜਿਕ ਟਰੈਕਰਾਂ \'ਤੇ ਪਾਬੰਦੀ ਲਗਾਓ</string>
-  <string name="preference_privacy_block_social_summary">ਸਾਈਟਾਂ ਉੱਤੇ ਤੁਹਾਡੇ ਵਲੋਂ ਖੋਲ੍ਹਣ ਨੂੰ ਟਰੈਕ ਕਰਨ ਅਤੇ ਸਾਂਝਾ ਕਰਨ ਵਾਲੇ ਬਟਨਾਂ ਵਾਗੂੰ ਕੰਮ ਕਰਨ ਲਈ ਜੋੜਿਆ ਗਿਆ</string>
   <string name="preference_privacy_block_content">ਹੋਰ ਸਮੱਗਰੀ ਟਰੈਕਰਾਂ \'ਤੇ ਪਾਬੰਦੀ ਲਗਾਓ</string>
-  <string name="preference_privacy_block_content_summary2">ਸਮਰੱਥ ਬਣਾਉਣ ਨਾਲ ਕੁਝ ਪੰਨੇ ਅਚਾਨਕ ਵਿਹਾਰ ਕਰ ਸਕਦੇ ਹਨ</string>
   <string name="preference_privacy_category_cookies">ਕੂਕੀਜ਼ \'ਤੇ ਪਾਬੰਦੀ ਲਗਾਓ</string>
   <string name="preference_privacy_should_block_cookies_no_option">ਨਹੀਂ</string>
   <string name="preference_privacy_should_block_cookies_third_party_tracker_cookies_option">ਸਿਰਫ਼ 3ਜੀ ਧਿਰ ਦੇ ਟਰੈਕਰ ਕੂਕੀਜ਼ ਉੱਤੇ ਪਾਬੰਦੀ ਲਗਾਓ</string>
@@ -170,12 +164,13 @@
   <string name="contextmenu_image_copy">ਚਿੱਤਰ ਦਾ ਪਤਾ ਕਾਪੀ ਕਰੋ</string>
   <string name="contextmenu_image_save">ਚਿੱਤਰ ਨੂੰ ਸੰਭਾਲੋ</string>
   <string name="contextmenu_open_in_new_tab">ਨਵੀਂ ਟੈਬ ਚ ਖੋਲ੍ਹੋ</string>
+  <string name="contextmenu_image_warning"><![CDATA["ਜਦੋਂ ਤੁਸੀਂ %1$s ਅਤੀਤ ਮਿਟਾਉਂਦੇ ਹੋ ਤਾਂ ਸੰਭਾਲੇ ਅਤੇ ਸਾਂਝੇ ਕੀਤੇ ਚਿੱਤਰ "<b xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">&#2617;&#2591;&#2622; &#2598;&#2623;&#2673;&#2596;&#2631; &#2588;&#2622;&#2595;&#2583;&#2631;</b>।]]></string>
   <string name="firstrun_defaultbrowser_title">ਆਪਣੀ ਪਰਦੇਦਾਰੀ ਨੂੰ ਕੰਟਰੋਲ ਕਰੋ</string>
-  <string name="firstrun_defaultbrowser_text2">ਪ੍ਰਾਈਵੇਟ ਬਰਾਊਜ਼ਿੰਗ ਨੂੰ ਅਗਲੇ ਪੱਧਰ ਤੇ ਲੈ ਜਾਓ। ਇਸ਼ਤਿਹਾਰ ਅਤੇ ਹੋਰ ਸਮੱਗਰੀ, ਜੋ ਕਿ ਤੁਹਾਨੂੰ ਸਾਈਟਾਂ ਉੱਤੇ ਟਰੈਕ ਕਰ ਅਤੇ ਸਫ਼ਾ ਲੋਡ ਕਰਨ ਨੂੰ ਹੌਲੀ ਕਰ ਸਕਦੀ ਹੈ, ਉੱਤੇ ਪਾਬੰਦੀ ਲਗਾਓ।</string>
   <string name="firstrun_search_title">ਤੁਹਾਡੀ ਖੋਜ, ਤੁਹਾਡਾ ਢੰਗ</string>
   <string name="firstrun_search_text">ਕੁਝ ਵੱਖਰਾ ਲੱਭ ਰਹੇ ਹੋ? ਸੈਟਿੰਗਾਂ ਵਿੱਚੋ ਹੋਰ ਮੂਲ ਖੋਜ ਇੰਜਣ ਨੂੰ ਚੁਣੋ।</string>
   <string name="firstrun_shortcut_title">ਆਪਣੀ ਮੁੱਖ ਸਕਰੀਨ ਲਈ ਸ਼ਾਰਟਕਟ ਜੋੜੋ</string>
   <string name="firstrun_privacy_title">ਪਰਦੇਦਾਰੀ ਨੂੰ ਆਦਤ ਬਣਾਓ</string>
+  <string name="firstrun_privacy_text">%1$s ਨੂੰ ਆਪਣਾ ਮੂਲ ਬਰਾਊਜ਼ਰ ਬਣਾਓ ਅਤੇ ਜਦੋਂ ਹੋਰ ਐਪਾਂ ਤੋਂ ਵੈੱਬ-ਸਫ਼ੇ ਖੋਲ੍ਹਦੇ ਹੋ ਤਾਂ ਪ੍ਰਾਈਵੇਟ ਬਰਾਊਜ਼ ਕਰਨ ਦੇ ਫਾਇਦੇ ਲਵੋ।</string>
   <string name="firstrun_close_button">ਠੀਕ ਹੈ, ਸਮਝ ਗਏ!</string>
   <string name="firstrun_skip_button">ਛੱਡੋ</string>
   <string name="firstrun_next_button">ਅੱਗੇ</string>
@@ -189,6 +184,7 @@
   <string name="download_firefox">ਫਾਇਰਫਾਕਸ ਡਾਊਨਲੋਡ ਕਰੋ</string>
   <string name="your_rights_content1">ਮੋਜ਼ੀਲਾ ਅਤੇ ਹੋਰ ਯੋਗਦਾਨੀਆਂ ਦੁਆਰਾ ਬਣਾਏ ਗਏ %1$s ਮੁਫ਼ਤ ਅਤੇ ਓਪਨ ਸੋਰਸ ਸਾਫਟਵੇਅਰ ਹੈ।</string>
   <string name="your_rights_content2"><![CDATA["%1$s ਤੁਹਾਨੂੰ "<a xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2" href="%2$s">&#2606;&#2636;&#2588;&#2620;&#2624;&#2610;&#2622; &#2588;&#2600;&#2596;&#2581; &#2610;&#2616;&#2672;&#2616;</a>" ਅਤੇ ਹੋਰ ਖੁੱਲ੍ਹੇ ਵਸੀਲਿਆਂ ਦੇ ਲਸੰਸਾਂ ਦੀਆਂ ਸ਼ਰਤਾਂ ਹੇਠ ਮੁਹੱਈਆ ਕਰਵਾਇਆ ਗਿਆ ਹੈ।"]]></string>
+  <string name="your_rights_content5"><![CDATA["%1$s Disconnect, Inc. ਵਲੋਂ ਪਾਬੰਦੀਸ਼ੁਦਾ-ਸੂਚੀਆਂ ਦੀ ਵਰਤੋਂ ਵੱਖਰੇ ਅਤੇ ਆਜ਼ਾਦਾਨਾ ਤੌਰ \'ਤੇ "<a xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2" href="%2$s">&#2583;&#2600;&#2626; &#2588;&#2608;&#2600;&#2610; &#2602;&#2604;&#2610;&#2623;&#2581; &#2610;&#2616;&#2672;&#2616; v3</a>" ਦੇ ਤਹਿਤ ਕਰਦਾ ਹੈ ਅਤੇ ਇਹ "<a xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2" href="%3$s">&#2567;&#2673;&#2597;&#2631;</a>" ਮੌਜੂਦ ਹੈ।"]]></string>
   <string name="gv_prompt_username_hint">ਵਰਤੋਂਕਾਰ-ਨਾਂ</string>
   <string name="gv_prompt_password_hint">ਪਾਸਵਰਡ</string>
   <string name="gv_prompt_clear">ਸਾਫ ਕਰੋ</string>
@@ -226,6 +222,10 @@
   <string name="dismiss_no_suggestions_prompt_button">ਰੱਦ ਕਰੋ</string>
   <string name="tip_disable_tracking_protection">ਸਾਈਟ ਅਜੀਬ ਵਿਹਾਰ ਕਰ ਰਹੀ ਹੈ?\n ਟਰੈਕਿੰਗ ਸੁਰੱਖਿਆ ਨੂੰ ਬੰਦ ਕਰਕੇ ਕੋਸ਼ਿਸ਼ ਕਰੋ</string>
   <string name="tip_set_default_browser">ਹਰ ਲਿੰਕ ਨੂੰ %1$s ਵਿੱਚ ਖੋਲ੍ਹੋ\n %1$s ਨੂੰ ਮੂਲ ਬਰਾਊਜ਼ਰ ਬਣਾਓ</string>
+  <string name="tip_open_in_new_tab">ਲਿੰਕ ਨੂੰ ਨਵੀਂ ਟੈਬ \'ਚ ਖੋਲ੍ਹੋ\n ਸਫ਼ੇ \'ਤੇ ਕਿਸੇ ਵੀ ਲਿੰਕ ਨੂੰ ਲੰਮਾ ਸਮਾਂ ਦਬਾਓ</string>
+  <string name="tip_request_desktop">ਇਸ ਦੀ ਬਜਾਏ ਪੂਰੀ ਡੈਸਕਟਾਪ ਸਾਈਟ ਨੂੰ ਵੇਖਣਾ ਹੈ? %1$s ਮੀਨੂ&gt; ਡੈਸਕਟਾਪ ਸਾਈਟ ਦੀ ਮੰਗ ਕਰੋ</string>
+  <string name="tip_disable_tips2">ਸ਼ੁਰੂ ਵਾਲੀ ਸਕਰੀਨ ਉੱਤੇ ਸੁਝਾਅ ਬੰਦ ਕਰੋ</string>
+  <string name="tip_explain_allowlist">ਭਰੋਸੇਯੋਗ ਸਾਈਟ ਹੈ?\n ਮਨਜ਼ੂਰ-ਸੂਚੀ ਤੁਹਾਡੇ ਵਲੋਂ ਪਛਾਣੀਆਂ ਤੇ ਭਰੋਸਾ ਕੀਤੀਆਂ ਸਾਈਟਾਂ ਲਈ ਟਰੈਕ ਸੁਰੱਖਿਆ ਨੂੰ ਬੰਦ ਕਰਦੀ ਹੈ।</string>
   <string name="new_tab_opened_snackbar">ਨਵੀਂ ਟੈਬ ਖੋਲ੍ਹੀ ਗਈ</string>
   <string name="open_new_tab_snackbar">ਬਦਲੋ</string>
   <string name="preference_open_new_tab">ਲਿੰਕ ਨੂੰ ਤੁਰੰਤ ਨੂੰ ਨਵੀਂ ਟੈਬ ਵਿੱਚ ਬਦਲੋ</string>

@@ -30,13 +30,13 @@
   <string name="shortcut_erase_short_label">Slet</string>
   <string name="shortcut_erase_long_label">Slet browser-historik</string>
   <string name="shortcut_erase_and_open_short_label">Slet og åbn</string>
-  <string name="shortcut_erase_and_open_long_label">Slet og åbn %1$s</string>
   <string name="text_selection_search_action">Søg privat</string>
   <string name="about_content"><![CDATA[<p xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">%1$s giver dig fuld kontrol.</p>\n<p xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">"Anvend den som privat browser:\n  "<ul>"\n    "<li>S&#248;g og surf direkte i appen</li>"\n    "<li>Bloker sporing (eller opdater indstillingerne og tillad sporing)</li>"\n    "<li>Slet fjerner cookies samt s&#248;ge- og browser-historik</li>"\n  "</ul>\n</p>\n<p xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">%1$s er udviklet af Mozilla. Vores form&#229;l er at fremme et sundt, &#229;bent internet.<br/>\n<a href="%2$s">L&#230;s mere</a></p>]]></string>
   <string name="preference_privacy_and_security_header">Privatliv og sikkerhed</string>
   <string name="preference_privacy_and_security_summary">Sporing, cookies, datadeling</string>
   <string name="preference_search_summary">Angiv standard, autofuldførelse</string>
   <string name="preference_mozilla_summary">Om %1$s, hjælp</string>
+  <string name="preference_category_ad_blocking">Blokering af annoncer</string>
   <string name="preference_category_tracking_protection">Beskyttelse mod sporing</string>
   <string name="preference_category_web_content">Webindhold</string>
   <string name="preference_category_switching_apps">Skifte mellem apps</string>
@@ -54,7 +54,7 @@
   <string name="preference_switch_autocomplete_topsites">For populære websteder</string>
   <string name="preference_autocomplete_topsite_summary">Aktiver for at autofuldføre over 450 populære URL\'er i adresselinjen.</string>
   <string name="preference_switch_autocomplete_user_list">For websteder du tilføjer</string>
-  <string name="preference_autocomplete_user_list_summary">Aktiver for at autofuldføre over 450 populære URL\'er i adresselinjen.</string>
+  <string name="preference_autocomplete_user_list_description">Aktivér for at autofuldføre websteder, du tilføjer her.</string>
   <string name="preference_category_autocomplete_manage_sites">Administrer websteder</string>
   <string name="preference_autocomplete_subitem_manage_sites">Administrer websteder</string>
   <string name="preference_autocomplete_action_add">+ Tilføj brugerdefineret URL</string>
@@ -77,19 +77,25 @@
   <string name="preference_language">Sprog</string>
   <string name="preference_language_systemdefault">Systemstandard</string>
   <string name="preference_category_privacy">Privatliv</string>
-  <string name="preference_privacy_block_ads">Bloker sporing via reklamer</string>
-  <string name="preference_privacy_block_ads_summary">Nogle reklamer sporer dine besøg på websteder, selvom du ikke klikker på dem</string>
+  <string name="preference_privacy_ads_block_ads">Bloker annoncer og andet forstyrrende indhold</string>
+  <string name="preference_privacy_ads_block_ads_summary">Bloker annoncer og andet forstyrrende indhold ved hjælp af lister fra Easylist, EasyPrivacy, Fanboy’s Annoyance og 777Guard Mobile Ad Filter</string>
   <string name="preference_privacy_block_analytics">Bloker analytisk sporing</string>
-  <string name="preference_privacy_block_analytics_summary">Bruges til at indsamle, analysere og måle aktiviteter som tryk og scrolling</string>
+  <string name="preference_privacy_block_ads">Bloker sporing via reklamer</string>
+  <string name="preference_privacy_block_ads_new_summary">Fjerner annoncer der er designet til at spore besøg på et websted, selvom du ikke trykker på dem</string>
+  <string name="preference_privacy_block_analytics_new_summary">Blokerer sporings-elementer, der analyserer og måler interaktioner som tryk og scrolling</string>
   <string name="preference_privacy_block_social">Bloker sporing via sociale medier</string>
-  <string name="preference_privacy_block_social_summary">Indlejret på websteder for at spore dine besøg og vise funktionalitet som dele-knapper</string>
+  <string name="preference_privacy_block_social_new_summary">Stopper sporings-elementer fra sociale medier, der er indlejret på websteder, herunder delingsknapper</string>
   <string name="preference_privacy_block_content">Bloker andre former for indholdssporing</string>
-  <string name="preference_privacy_block_content_summary2">Aktivering kan medføre, at visse sider opfører sig uventet</string>
+  <string name="preference_privacy_block_content_new_summary">Blokerer sporingsaktivitet, men kan forårsage, at nogle websteder og sider opfører sig uventet</string>
   <string name="preference_privacy_category_cookies">Bloker cookies</string>
   <string name="preference_privacy_should_block_cookies_no_option">Nej</string>
   <string name="preference_privacy_should_block_cookies_third_party_tracker_cookies_option">Bloker kun sporings-cookies fra tredjepart</string>
   <string name="preference_privacy_should_block_cookies_third_party_only_option">Bloker kun cookies fra tredjepart</string>
   <string name="preference_privacy_should_block_cookies_yes_option">Ja</string>
+  <string name="preference_privacy_block_cookies_no">Nej (tillad alle cookies)</string>
+  <string name="preference_privacy_block_cookies_third_party_tracker">Bloker sporings-cookies fra tredjepart (anbefales)</string>
+  <string name="preference_privacy_block_cookies_third_party_only">Bloker alle cookies fra tredjepart\n(kan medføre at visse websteder ikke virker)</string>
+  <string name="preference_privacy_block_cookies_yes">Bloker alle cookies (vil medføre at nogle websteder ikke virker)</string>
   <string name="preference_security_biometric">Brug fingeraftryk til at låse appen op</string>
   <string name="preference_security_biometric_summary">Dit fingeraftryk kan låse %1$s op, hvis en URL allerede er åben i appen. Usynlig tilstand vil blive aktiveret.</string>
   <string name="preference_privacy_secure_mode">Usynlig</string>
@@ -177,7 +183,7 @@
   <string name="contextmenu_open_in_new_tab">Åbn link i nyt faneblad</string>
   <string name="contextmenu_image_warning"><![CDATA["Gemte og delte billeder "<b xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">vil ikke blive slettet,</b>" når du sletter historikken i %1$s."]]></string>
   <string name="firstrun_defaultbrowser_title">Styrk dit privatliv</string>
-  <string name="firstrun_defaultbrowser_text2">Tag privat browsing til næste niveau. Bloker reklamer og andet indhold, der kan spore din færden på nettet og gøre det langsommere at hente sider.</string>
+  <string name="firstrun_defaultbrowser_text_new">Bloker indhold som annoncer og kode, der følger dig rundt på nettet og sænker farten. Aktivér blokering af annoncer for at søge hurtigere uden irriterende annoncer.</string>
   <string name="firstrun_search_title">Søgning på dine præmisser</string>
   <string name="firstrun_search_text">Leder du efter noget andet? Vælg en ny standard-søgetjeneste i Indstillinger.</string>
   <string name="firstrun_shortcut_title">Tilføj genveje til din startskærm</string>
@@ -187,6 +193,8 @@
   <string name="firstrun_close_button">OK, forstået!</string>
   <string name="firstrun_skip_button">Spring over</string>
   <string name="firstrun_next_button">Næste</string>
+  <string name="block_ads_card_title">%1$s er klar til at blokere annoncer</string>
+  <string name="block_ads_card_description">Ny funktion! Surf hurtigere ved at stoppe annoncer og kode, der følger dig rundt på nettet.</string>
   <string name="content_blocking_disabled">-</string>
   <string name="dialog_addtohomescreen_action_add">Tilføj</string>
   <string name="dialog_addtohomescreen_action_cancel">Annuller</string>
@@ -226,6 +234,7 @@
   <string name="biometric_auth_title">Lås %1$s op</string>
   <string name="biometric_auth_description">Tryk på fingeraftryks-sensoren for at fortsætte.</string>
   <string name="biometric_auth_new_session">Ny session</string>
+  <string name="biometric_auth_open_link_new_session">Åbn link i ny session</string>
   <string name="biometric_auth_image_description">Fingeraftryks-ikon</string>
   <string name="biometric_auth_not_recognized_error">Fingeraftryk ikke genkendt. Prøv igen.</string>
   <string name="biometric_auth_moved_too_quickly">Fingeren bevægede sig for hurtigt. Prøv igen.</string>
@@ -243,6 +252,8 @@
   <string name="tip_open_in_new_tab">Åbn link i et nyt faneblad\n Tryk og hold links på en side</string>
   <string name="tip_request_desktop">Foretrækker du at se desktop-versionen?%1$s Menu &gt; Bed om desktop-version</string>
   <string name="tip_disable_tips2">Slå tips på startskærmen fra</string>
+  <string name="tip_block_ads">Surf hurtigere ved at stoppe annoncer og kode, der følger dig rundt på nettet.</string>
+  <string name="block_ads_title">Blokering af annoncer</string>
   <string name="tip_explain_allowlist">Troværdigt websted?\n Tilladelseslisten deaktiverer sporingsbeskyttelse på sider, du kender og stoler på.</string>
   <string name="new_tab_opened_snackbar">Nyt faneblad er åbnet</string>
   <string name="open_new_tab_snackbar">Skift</string>
@@ -263,4 +274,8 @@
   <string name="fatal_crash_report_close_button_label">Luk</string>
   <string name="fatal_crash_report_restart_firefox_label">Genstart %1$s</string>
   <string name="crash_report_send_crash_label">Send fejlrapport til Mozilla</string>
+  <string name="content_blocking_enabled_snackbar_message">Blokering af annoncer er aktiveret</string>
+  <string name="content_blocking_disabled_snackbar_message">Blokering af indhold er deaktiveret</string>
+  <string name="content_blocking_snackbar_enable_action">Aktiver</string>
+  <string name="content_blocking_snackbar_disable_action">Deaktiver</string>
 </resources>

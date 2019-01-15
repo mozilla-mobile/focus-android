@@ -28,7 +28,6 @@
   <string name="shortcut_erase_short_label">སུབ་པ།</string>
   <string name="shortcut_erase_long_label">ཁྱོད་ཀྱི་འཚོལ་རབས་འདོར་སུབ་བྱས་ཟིན།</string>
   <string name="shortcut_erase_and_open_short_label">སུབ་པ་དང་ཁ་འབྱེད་པ།</string>
-  <string name="shortcut_erase_and_open_long_label">སུབ་ནས་%1$sཁ་འབྱེད་པ།</string>
   <string name="text_selection_search_action">ཕྱིར་མི་བསྒྲགས་པའི་ཐོག་འཚོལ་བཤེར།</string>
   <string name="preference_privacy_and_security_header">གསང་དོན་དང་བདེ་འཇགས།</string>
   <string name="preference_privacy_and_security_summary">"རྗེས་འདེད།  cookies གཞི་གྲངས་འདེམས་པ།"</string>
@@ -142,7 +141,6 @@
   <string name="contextmenu_image_save">པར་ཉར་གསོག</string>
   <string name="contextmenu_image_warning"><![CDATA[%1$s འཚོལ་རབས་འདོར་སུབ་བྱེད་སྐབས་འགྲེམ་སྤེལ་དང་ཉར་ཟིན་པའི་ཡིག་ཆ་རྣམས་<b xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">&#3936;&#3921;&#3964;&#3938;&#3851;&#3942;&#3956;&#3926;&#3851;&#3928;&#3954;&#3851;&#3926;&#4017;&#3853;</b>]]></string>
   <string name="firstrun_defaultbrowser_title">སྒེར་དབང་ཆེ་རུ་གཏོང་།</string>
-  <string name="firstrun_defaultbrowser_text2">སྒེར་རྒྱ་རིམ་པ་རྗེས་མ་འཁྱེར་བ། ཁྱབ་བསྒྲགས་དང་རྗེས་འདེད་དེ་བཞིན་དྲ་ངོས་སྣོན་འགོག་གནད་ཆས་བཀག་འགོག་བྱེད།</string>
   <string name="firstrun_search_title">ཁྱོད་ཀྱི་འཚོལ་བཤེར། ཁྱོད་ཀྱི་ལམ།</string>
   <string name="firstrun_search_text">འཚོལ་བྱའི་ནང་དོན་གཞན་དག་ཡིན་ནམ། འཚོལ་བཤེར་གཞན་ཞིག་སྒྲིག་འགོད་ནས་ངོས་གཙོར་འཇོག་རོགས།</string>
   <string name="firstrun_shortcut_title">མྱུར་ལམ་བརྙན་ཡོལ་གཙོ་བོ་ཐོག་འཇོག</string>

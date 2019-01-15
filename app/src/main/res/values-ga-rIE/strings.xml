@@ -58,8 +58,8 @@
   <string name="preference_language">Teanga</string>
   <string name="preference_language_systemdefault">Réamhshocrú an chórais</string>
   <string name="preference_category_privacy">Príobháideachas</string>
-  <string name="preference_privacy_block_ads">Cuir cosc ar lorgairí fógraíochta</string>
   <string name="preference_privacy_block_analytics">Cuir cosc ar lorgairí anailísíochta</string>
+  <string name="preference_privacy_block_ads">Cuir cosc ar lorgairí fógraíochta</string>
   <string name="preference_privacy_block_social">Cuir cosc ar lorgairí sóisialta</string>
   <string name="preference_privacy_block_content">Cuir cosc ar lorgairí ábhair eile</string>
   <string name="preference_privacy_category_cookies">Cuir cosc ar fhianáin</string>

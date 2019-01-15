@@ -65,14 +65,10 @@
   <string name="preference_language">Kieli</string>
   <string name="preference_language_systemdefault">Järjestelmän oletus</string>
   <string name="preference_category_privacy">Tietosuoja</string>
-  <string name="preference_privacy_block_ads">Estä mainosseuraimet</string>
-  <string name="preference_privacy_block_ads_summary">Jotkin mainokset seuraavat sivustokäyntejä, vaikka et painaisi mainoksia</string>
   <string name="preference_privacy_block_analytics">Estä analytiikkaseuraimet</string>
-  <string name="preference_privacy_block_analytics_summary">Käytetään keräämään, analysoimaan ja mittaamaan toimintoja, kuten napautuksia ja vierityksiä</string>
+  <string name="preference_privacy_block_ads">Estä mainosseuraimet</string>
   <string name="preference_privacy_block_social">Estä sosiaalisen median seuraimet</string>
-  <string name="preference_privacy_block_social_summary">Upotettu sivustoihin vierailujen seuraamiseksi ja toimintojen, kuten jakopainikkeiden, näyttämiseksi</string>
   <string name="preference_privacy_block_content">Estä muut sisältöseuraimet</string>
-  <string name="preference_privacy_block_content_summary2">Tämän käyttöönotto saattaa johtaa joidenkin sivustojen odottamattomaan käytökseen</string>
   <string name="preference_privacy_category_cookies">Estä kaikki evästeet</string>
   <string name="preference_privacy_should_block_cookies_no_option">Ei</string>
   <string name="preference_privacy_should_block_cookies_third_party_only_option">Estä vain kolmannen osapuolen evästeet</string>
@@ -162,7 +158,6 @@
   <string name="contextmenu_open_in_new_tab">Avaa linkki uuteen välilehteen</string>
   <string name="contextmenu_image_warning"><![CDATA["Tallennettuja ja jaettuja kuvia "<b xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">ei poisteta</b>" kun %1$sen selaushistoria tyhjennetään."]]></string>
   <string name="firstrun_defaultbrowser_title">Tehosta yksityisyyttäsi</string>
-  <string name="firstrun_defaultbrowser_text2">Vie yksityinen selaus uudelle tasolle. Estä mainoksia ja muuta sisältöä, jotka voivat seurata sinua eri sivustoilla ja hidastaa sivujen latausaikoja.</string>
   <string name="firstrun_search_title">Hakusi haluamallasi tavalla</string>
   <string name="firstrun_search_text">Haetko jotain erilaista? Valitse asetuksista toinen oletushakukone.</string>
   <string name="firstrun_shortcut_title">Lisää linkki aloitusnäyttöön</string>

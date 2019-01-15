@@ -30,7 +30,6 @@
   <string name="shortcut_erase_short_label">Vymazať</string>
   <string name="shortcut_erase_long_label">Vymazať históriu</string>
   <string name="shortcut_erase_and_open_short_label">Vymazať a otvoriť</string>
-  <string name="shortcut_erase_and_open_long_label">Vymazať a otvoriť %1$s</string>
   <string name="text_selection_search_action">Súkromné vyhľadávanie</string>
   <string name="about_content"><![CDATA[<p xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">%1$s v&#225;m d&#225;va kontrolu.</p>\n<p xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">"Pou&#382;&#237;vajte ho ako s&#250;kromn&#253; prehliada&#269;:\n  "<ul>"\n    "<li>Vyh&#318;ad&#225;vajte a prehliadajte priamo prostredn&#237;ctvom aplik&#225;cie</li>"\n    "<li>Blokujte sledovacie prvky (v nastaveniach m&#244;&#382;ete sledovacie prvky povoli&#357;)</li>"\n    "<li>Vyma&#382;te cookies, hist&#243;riu vyh&#318;ad&#225;vania a prehliadania</li>"\n  "</ul>\n</p>\n<p xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">%1$s vyv&#237;ja Mozilla. Na&#353;a misia je podporova&#357; zdrav&#253; a otvoren&#253; internet.<br/>\n<a href="%2$s">&#270;al&#353;ie inform&#225;cie</a></p>]]></string>
   <string name="preference_privacy_and_security_header">Súkromie a bezpečnosť</string>
@@ -54,7 +53,6 @@
   <string name="preference_switch_autocomplete_topsites">Pre top stránky</string>
   <string name="preference_autocomplete_topsite_summary">Povolením tejto možnosti umožníte aplikácii automaticky dokončovať viac než 450 populárnych URL adries.</string>
   <string name="preference_switch_autocomplete_user_list">Pre vami pridané stránky</string>
-  <string name="preference_autocomplete_user_list_summary">Povolením tejto možnosti umožníte aplikácii automaticky dokončovať viac než 450 populárnych URL adries.</string>
   <string name="preference_category_autocomplete_manage_sites">Spravovať stránky</string>
   <string name="preference_autocomplete_subitem_manage_sites">Spravovať stránky</string>
   <string name="preference_autocomplete_action_add">+ Pridať vlastnú URL</string>
@@ -77,14 +75,10 @@
   <string name="preference_language">Jazyk</string>
   <string name="preference_language_systemdefault">Jazyk zariadenia</string>
   <string name="preference_category_privacy">Súkromie</string>
-  <string name="preference_privacy_block_ads">Blokovať reklamné sledovacie prvky</string>
-  <string name="preference_privacy_block_ads_summary">Niektoré reklamy vás sledujú aj keď na ne nekliknete</string>
   <string name="preference_privacy_block_analytics">Blokovať analytické sledovacie prvky</string>
-  <string name="preference_privacy_block_analytics_summary">Tieto sa používajú na zbieranie a analýzu údajov o aktivitách, napríklad o posúvaní sa na stránke</string>
+  <string name="preference_privacy_block_ads">Blokovať reklamné sledovacie prvky</string>
   <string name="preference_privacy_block_social">Blokovať sledovacie prvky sociálnych sietí</string>
-  <string name="preference_privacy_block_social_summary">Tieto sa používajú na sledovanie vašich návštev a na zobrazovanie špecifických funkcií, napríklad tlačidla na zdieľanie</string>
   <string name="preference_privacy_block_content">Blokovať ostatné sledovacie prvky</string>
-  <string name="preference_privacy_block_content_summary2">Niektoré stránky sa môžu chovať neočakávane</string>
   <string name="preference_privacy_category_cookies">Blokovať cookies</string>
   <string name="preference_privacy_should_block_cookies_no_option">Nie</string>
   <string name="preference_privacy_should_block_cookies_third_party_tracker_cookies_option">Len sledovacie cookies tretích strán</string>
@@ -177,7 +171,6 @@
   <string name="contextmenu_open_in_new_tab">Otvoriť odkaz na novej karte</string>
   <string name="contextmenu_image_warning"><![CDATA["Uložené a zdieľané obrázky "<b xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">nebud&#250; vymazan&#233;</b>" pri vymazaní histórie aplikácie %1$s."]]></string>
   <string name="firstrun_defaultbrowser_title">Posuňte svoje súkromie na vyššiu úroveň</string>
-  <string name="firstrun_defaultbrowser_text2">Súkromné prehliadanie na úplne inej úrovni. Blokujte reklamy a ostatný obsah, ktorý vás môže sledovať naprieč stránkami.</string>
   <string name="firstrun_search_title">Prehliadanie podľa vás</string>
   <string name="firstrun_search_text">Hľadáte niečo iné? Vyberte si iný predvolený vyhľadávací modul v nastaveniach.</string>
   <string name="firstrun_shortcut_title">Pridajte si na svoju úvodnú obrazovku skratky</string>
