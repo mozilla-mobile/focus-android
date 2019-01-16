@@ -4,7 +4,7 @@ buildscript {
     ext.architecture_components_version = '1.1.1'
     ext.support_libraries_version = '28.0.0'
     ext.espresso_version = '3.0.1'
-    ext.kotlin_version = '1.3.0'
+    ext.kotlin_version = '1.3.11'
     ext.coroutines_version = '1.0.1'
     ext.geckoview_revision = 'f9045f8090c7578c1d92d145b3eb64efe459a25c'
     ext.geckoview_version = '64.0.20190111134233' // GV 64 Rel Branch 1.11.2019
@@ -17,11 +17,11 @@ buildscript {
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.2.1'
+        classpath 'com.android.tools.build:gradle:3.3.0'
         classpath 'de.mannodermaus.gradle.plugins:android-junit5:1.3.1.1'
         classpath 'org.ajoberstar:grgit:1.5.0'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
-        classpath "gradle.plugin.com.github.spotbugs:spotbugs-gradle-plugin:1.6.1"
+        classpath "gradle.plugin.com.github.spotbugs:spotbugs-gradle-plugin:1.6.9"
 
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
