@@ -110,6 +110,7 @@ object TelemetryWrapper {
         val SETTING = "setting"
         val APP = "app"
         val MENU = "menu"
+        val CONTENT_BLOCKING_MENU = "content_blocking_menu"
         val BACK_BUTTON = "back_button"
         val NOTIFICATION = "notification"
         val NOTIFICATION_ACTION = "notification_action"
@@ -452,6 +453,11 @@ object TelemetryWrapper {
         } else {
             TelemetryEvent.create(Category.ACTION, Method.CLICK, Object.DOWNLOAD_DIALOG, Value.CANCEL).queue()
         }
+    }
+
+    @JvmStatic
+    fun contentBlockingMenuEvent() {
+        TelemetryEvent.create(Category.ACTION, Method.CLICK, Object.CONTENT_BLOCKING_MENU).queue()
     }
 
     @JvmStatic

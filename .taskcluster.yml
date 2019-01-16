@@ -21,7 +21,7 @@ tasks:
       routes: []
       payload:
         maxRunTime: 7200
-        image: mozillamobile/focus-android:1.3
+        image: mozillamobile/focus-android:1.4
         command:
           - /bin/bash
           - --login
@@ -78,7 +78,7 @@ tasks:
           - queue:route:notify.irc-channel.#android-ci.on-any
         payload:
           maxRunTime: 7200
-          image: mozillamobile/focus-android:1.3
+          image: mozillamobile/focus-android:1.4
           features:
             taskclusterProxy: true
           env:
@@ -147,7 +147,7 @@ tasks:
           - statuses  # Automatically added by taskcluster-github. It must be explicit because of Chain of Trust
         payload:
           maxRunTime: 600   # Decision should remain fast enough to schedule a handful of tasks
-          image: mozillamobile/focus-android:1.3
+          image: mozillamobile/focus-android:1.4
           features:
             taskclusterProxy: true
             chainOfTrust: true
@@ -246,7 +246,7 @@ tasks:
           - statuses  # Automatically added by taskcluster-github. It must be explicit because of Chain of Trust
         payload:
           maxRunTime: 600   # Decision should remain fast enough to schedule a handful of tasks
-          image: mozillamobile/focus-android:1.3
+          image: mozillamobile/focus-android:1.4
           features:
             taskclusterProxy: true
             chainOfTrust: true

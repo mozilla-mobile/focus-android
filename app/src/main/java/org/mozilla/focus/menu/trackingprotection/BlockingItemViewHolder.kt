@@ -3,7 +3,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
-package org.mozilla.focus.menu.browser
+package org.mozilla.focus.menu.trackingprotection
 
 import android.view.View
 import android.widget.CompoundButton
@@ -20,7 +20,7 @@ import java.net.MalformedURLException
 import java.net.URL
 
 internal class BlockingItemViewHolder(itemView: View, private val fragment: BrowserFragment) :
-    BrowserMenuViewHolder(itemView), CompoundButton.OnCheckedChangeListener {
+    TrackingProtectionMenuViewHolder(itemView), CompoundButton.OnCheckedChangeListener {
 
     private val trackerCounter: TextView
 
@@ -32,7 +32,7 @@ internal class BlockingItemViewHolder(itemView: View, private val fragment: Brow
         val helpView = itemView.findViewById<View>(R.id.help_trackers)
         helpView.setOnClickListener { view ->
             if (browserFragment != null) {
-                browserFragment.onClick(view)
+                browserFragment!!.onClick(view)
             }
         }
 
@@ -78,7 +78,7 @@ internal class BlockingItemViewHolder(itemView: View, private val fragment: Brow
         // Delay closing the menu and reloading the website a bit so that the user can actually see
         // the switch change its state.
         ThreadUtils.postToMainThreadDelayed(Runnable {
-            menu.dismiss()
+            menu?.dismiss()
             fragment.reloadWithNewBlockingState()
         }, Switch_THUMB_ANIMATION_DURATION)
     }

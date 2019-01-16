@@ -45,7 +45,7 @@ class TaskBuilder(object):
             "payload": {
                 "features": features,
                 "maxRunTime": 7200,
-                "image": "mozillamobile/focus-android:1.3",
+                "image": "mozillamobile/focus-android:1.4",
                 "command": [
                     "/bin/bash",
                     "--login",
@@ -65,7 +65,7 @@ class TaskBuilder(object):
         }
 
 
-    def build_signing_task(self, build_task_id, name, description, signing_format, is_staging, apks=[], scopes=[], routes=[]):
+    def craft_signing_task(self, build_task_id, name, description, signing_format, is_staging, apks=[], scopes=[], routes=[]):
         created = datetime.datetime.now()
         expires = taskcluster.fromNow('1 year')
         deadline = taskcluster.fromNow('1 day')
@@ -104,7 +104,7 @@ class TaskBuilder(object):
             }
         }
 
-    def build_push_task(self, signing_task_id, name, description, is_staging, apks=[], scopes=[], track='internal', commit=False):
+    def craft_push_task(self, signing_task_id, name, description, is_staging, apks=[], scopes=[], track='internal', commit=False):
         created = datetime.datetime.now()
         expires = taskcluster.fromNow('1 year')
         deadline = taskcluster.fromNow('1 day')

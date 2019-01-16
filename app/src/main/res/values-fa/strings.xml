@@ -36,6 +36,7 @@
   <string name="preference_privacy_and_security_summary">ردیابی، کوکی‌ها، انتخاب‌های داده</string>
   <string name="preference_search_summary">تنظیم پیش‌فرض، پرکردن خودکار</string>
   <string name="preference_mozilla_summary">درباره‌ی %1$s، راهنما</string>
+  <string name="preference_category_ad_blocking">مسدود کردن تبلیغات</string>
   <string name="preference_category_tracking_protection">محافظت در برابر ردگیری</string>
   <string name="preference_category_web_content">محتوای وب</string>
   <string name="preference_category_switching_apps">تعوض برنامه‌ها</string>
@@ -53,6 +54,7 @@
   <string name="preference_switch_autocomplete_topsites">برای سایت‌های برتر</string>
   <string name="preference_autocomplete_topsite_summary">فعال‌ سازی برای پرکردن خودکار بیشتر از 450 URLs محبوب در نوار آدرس.</string>
   <string name="preference_switch_autocomplete_user_list">برای وب‌ سایت هایی که شما اضافه می‌کنید</string>
+  <string name="preference_autocomplete_user_list_description">برای تکمیل خودکار سایت‌هایی که این‌جا اضافه کردید، فعال کنید.</string>
   <string name="preference_category_autocomplete_manage_sites">مدیریت سایت‌ها</string>
   <string name="preference_autocomplete_subitem_manage_sites">مدیریت سایت‌ها</string>
   <string name="preference_autocomplete_action_add">+ اضافه کردن نشانی سفارشی</string>
@@ -75,15 +77,22 @@
   <string name="preference_language">زبان</string>
   <string name="preference_language_systemdefault">پیش‌فرض سیستم</string>
   <string name="preference_category_privacy">حریم‌خصوصی</string>
+  <string name="preference_privacy_ads_block_ads">مسدود کردن تبلیغات و سایر مزاحمان</string>
   <string name="preference_privacy_block_analytics">مسدود کردن ردیاب‌های آماری</string>
   <string name="preference_privacy_block_ads">مسدود کردن ردیاب‌های تبلیغاتی</string>
+  <string name="preference_privacy_block_ads_new_summary">تبلیغاتی را حذف می‌کند که برای ردیابی بازدید‌های سایت‌هایی طراحی شده‌اند که حتی روی آن‌ها کلیک نکرده‌اید</string>
   <string name="preference_privacy_block_social">مسدود کردن ردیاب‌های شبکه‌های اجتماعی</string>
   <string name="preference_privacy_block_content">مسدود کردن سایر ردیاب‌های محتوا</string>
+  <string name="preference_privacy_block_content_new_summary">فعالیت‌های ردیابی را مسدود می‌کند، اما ممکن است بعضی از سایت‌ها و صفحه‌ها به شکل غیر منتظره‌ای رفتار کنند</string>
   <string name="preference_privacy_category_cookies">مسدود کردن کوکی‌ها</string>
   <string name="preference_privacy_should_block_cookies_no_option">خیر</string>
   <string name="preference_privacy_should_block_cookies_third_party_tracker_cookies_option">مسدود کردن دنبال کنندگان شخص ثالث کوکی‌ها</string>
   <string name="preference_privacy_should_block_cookies_third_party_only_option">فقط مسدود کردن کوکی‌های شخص ثالث</string>
   <string name="preference_privacy_should_block_cookies_yes_option">بله</string>
+  <string name="preference_privacy_block_cookies_no">نه (مجاز بودن همه کوکی‌ها)</string>
+  <string name="preference_privacy_block_cookies_third_party_tracker">کوکی‌های ردیابی شخص ثالث را مسدود کنید (توصیه می شود)</string>
+  <string name="preference_privacy_block_cookies_third_party_only">کوکی‌های شخص ثالث را مسدود کنید\n(ممكن است وب‌سایت‌ها درست کار نکنند)</string>
+  <string name="preference_privacy_block_cookies_yes">همه کوکی‌ها را مسدود کنید (باعث می‌شود که وب‌سایت‌ها درست کار نکنند)</string>
   <string name="preference_security_biometric">استفاده از اثرانگشت برای بازکردن برنامه</string>
   <string name="preference_security_biometric_summary">اثرانگشت شما همچنین می‌تواند%1$s را بازکند اگر یکURL در برنامه باز بوده باشد مخفی خواهد ماند تا زمانی که باز شود.</string>
   <string name="preference_privacy_secure_mode">حالت پنهان</string>
@@ -180,6 +189,8 @@
   <string name="firstrun_close_button">باشه، گرفتم!</string>
   <string name="firstrun_skip_button">رد کردن</string>
   <string name="firstrun_next_button">بعدی</string>
+  <string name="block_ads_card_title">%1$s برای مسدود کردن تبلیغات آماده است</string>
+  <string name="block_ads_card_description">ویژگی تازه! با متوقف کردن تبلیغات و کدهایی که در سراسر وب شما دنبال می‌کنند سریع‌تر مرور کنید.</string>
   <string name="content_blocking_disabled">-</string>
   <string name="dialog_addtohomescreen_action_add">افزودن</string>
   <string name="dialog_addtohomescreen_action_cancel">انصراف</string>
@@ -219,6 +230,7 @@
   <string name="biometric_auth_title">بازکردن%1$s</string>
   <string name="biometric_auth_description">سنسور اثرانگشت را برای ادامه لمس کنید.</string>
   <string name="biometric_auth_new_session">جلسه جدید</string>
+  <string name="biometric_auth_open_link_new_session">باز کردن پیوند در یک نشست تازه</string>
   <string name="biometric_auth_image_description">نشانه اثرانگشت</string>
   <string name="biometric_auth_not_recognized_error">اثرانگشت شناسایی نشد. مجددا تلاش کنید.</string>
   <string name="biometric_auth_moved_too_quickly">انگشت خیلی سریع حرکت کرد. مجدد تلاش کنید.</string>
@@ -236,6 +248,8 @@
   <string name="tip_open_in_new_tab">بازکردن یک پیوند در زبانه جدید\n نگاه داشتن بیشتر انگشت برای باز کردن پیوند در صفحه</string>
   <string name="tip_request_desktop">ترجیح به دیدن نسخه رومیزی وب‌سایت؟%1$s فهرست &gt; درخواست نسخه رومیزی وب‌سایت</string>
   <string name="tip_disable_tips2">خاموش کردن نکات راهنما بر روی صفحه آغازین</string>
+  <string name="tip_block_ads">با متوقف کردن تبلیغات و کدهایی که در سراسر وب شما دنبال می‌کنند سریع‌تر مرور کنید.</string>
+  <string name="block_ads_title">مسدود کردن تبلیغات</string>
   <string name="tip_explain_allowlist">این سایت مورد اعتماد است؟\n اجازه‌نامه، محافظت در برابر ردیابی را برای سایت‌هایی که می‌شناسید و اطمینان دارید غیرفعال می‌کند.</string>
   <string name="new_tab_opened_snackbar">زبانه‌ي جدیدی باز شده است</string>
   <string name="open_new_tab_snackbar">تعویض</string>
@@ -256,4 +270,8 @@
   <string name="fatal_crash_report_close_button_label">بستن</string>
   <string name="fatal_crash_report_restart_firefox_label">راه‌اندازی مجدد %1$s</string>
   <string name="crash_report_send_crash_label">ارسال گزارش خرابی ها به موزیلا</string>
+  <string name="content_blocking_enabled_snackbar_message">مسدود کردن محتوا فعال است</string>
+  <string name="content_blocking_disabled_snackbar_message">مسدود کردن محتوا غیرفعال است</string>
+  <string name="content_blocking_snackbar_enable_action">فعال کردن</string>
+  <string name="content_blocking_snackbar_disable_action">غیرفعال کردن</string>
 </resources>

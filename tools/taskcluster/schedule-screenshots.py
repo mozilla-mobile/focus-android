@@ -48,7 +48,7 @@ def generate_screenshot_task(locales):
 	            "taskclusterProxy": True
 	        },
 	        "maxRunTime": 7200,
-	        "image": "mozillamobile/focus-android:1.3",
+	        "image": "mozillamobile/focus-android:1.4",
 	        "command": [
 	            "/bin/bash",
 	            "--login",

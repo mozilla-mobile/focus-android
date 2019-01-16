@@ -8,7 +8,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:minHeight="@dimen/menu_blocking_switch_container_height"
-    android:background="@color/browser_menu_blocking_switch_bg"
+    android:background="?android:attr/selectableItemBackground"
     android:paddingStart="12dp"
     android:paddingEnd="0dp">
 
