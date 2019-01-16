@@ -12,6 +12,7 @@ import android.view.View;
 import java.util.Locale;
 
 import mozilla.components.browser.session.Session;
+import mozilla.components.concept.engine.HitResult;
 
 public interface IWebView {
     class HitTarget {
@@ -54,7 +55,7 @@ public interface IWebView {
 
         void onDownloadStart(Download download);
 
-        void onLongPress(final HitTarget hitTarget);
+        void onLongPress(final HitResult hitResult);
 
         /**
          * Notify the host application that the current page has entered full screen mode.

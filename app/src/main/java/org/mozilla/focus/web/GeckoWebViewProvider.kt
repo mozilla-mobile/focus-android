@@ -26,8 +26,12 @@ import kotlinx.coroutines.launch
 import mozilla.components.browser.errorpages.ErrorPages
 import mozilla.components.browser.errorpages.ErrorType
 import mozilla.components.browser.session.Session
+import mozilla.components.concept.engine.HitResult
 import mozilla.components.lib.crash.handler.CrashHandlerService
 import mozilla.components.support.ktx.android.util.Base64
+import mozilla.components.support.ktx.kotlin.isEmail
+import mozilla.components.support.ktx.kotlin.isGeoLocation
+import mozilla.components.support.ktx.kotlin.isPhone
 import org.json.JSONException
 import org.mozilla.focus.R
 import org.mozilla.focus.browser.LocalizedContent
@@ -51,6 +55,7 @@ import org.mozilla.geckoview.GeckoSession
 import org.mozilla.geckoview.GeckoSession.NavigationDelegate
 import org.mozilla.geckoview.GeckoSessionSettings
 import org.mozilla.geckoview.SessionFinder
+import org.mozilla.geckoview.WebRequestError
 import java.util.Locale
 import kotlin.coroutines.CoroutineContext
 
@@ -93,7 +98,7 @@ class GeckoWebViewProvider : IWebViewProvider {
             runtimeSettingsBuilder.blockMalware(Settings.getInstance(context).shouldUseSafeBrowsing())
             runtimeSettingsBuilder.blockPhishing(Settings.getInstance(context).shouldUseSafeBrowsing())
             runtimeSettingsBuilder.crashHandler(CrashHandlerService::class.java)
-            runtimeSettingsBuilder.locale(getLocale(context))
+            runtimeSettingsBuilder.locales(arrayOf(getLocale(context)))
 
             geckoRuntime =
                     GeckoRuntime.create(context.applicationContext, runtimeSettingsBuilder.build())
@@ -232,7 +237,7 @@ class GeckoWebViewProvider : IWebViewProvider {
         }
 
         override fun updateLocale(currentLocale: Locale?) {
-            geckoRuntime!!.settings.locale = Locales.getLanguageTag(currentLocale)
+            geckoRuntime!!.settings.locales = arrayOf(Locales.getLanguageTag(currentLocale))
         }
 
         override fun setBlockingEnabled(enabled: Boolean) {
@@ -338,6 +343,19 @@ class GeckoWebViewProvider : IWebViewProvider {
         @Suppress("ComplexMethod", "ReturnCount")
         private fun createContentDelegate(): GeckoSession.ContentDelegate {
             return object : GeckoSession.ContentDelegate {
+                override fun onContextMenu(
+                    session: GeckoSession,
+                    screenX: Int,
+                    screenY: Int,
+                    element: GeckoSession.ContentDelegate.ContextElement
+                ) {
+                    val hitResult = handleLongClick(element.srcUri, element.type, element.linkUri)
+                    callback?.onLongPress(hitResult)
+                }
+
+                override fun onFirstComposite(session: GeckoSession?) {
+                }
+
                 override fun onTitleChange(session: GeckoSession, title: String) {
                     webViewTitle = title
                     callback?.onTitleChanged(title)
@@ -348,25 +366,6 @@ class GeckoWebViewProvider : IWebViewProvider {
                         callback?.onEnterFullScreen({ geckoSession.exitFullScreen() }, null)
                     } else {
                         callback?.onExitFullScreen()
-                    }
-                }
-
-                override fun onContextMenu(
-                    session: GeckoSession,
-                    screenX: Int,
-                    screenY: Int,
-                    uri: String?,
-                    elementType: Int,
-                    elementSrc: String?
-                ) {
-                    if (elementSrc != null && uri != null &&
-                        elementType == GeckoSession.ContentDelegate.ELEMENT_TYPE_IMAGE
-                    ) {
-                        callback?.onLongPress(IWebView.HitTarget(true, uri, true, elementSrc))
-                    } else if (elementSrc != null && elementType == GeckoSession.ContentDelegate.ELEMENT_TYPE_IMAGE) {
-                        callback?.onLongPress(IWebView.HitTarget(false, null, true, elementSrc))
-                    } else if (uri != null) {
-                        callback?.onLongPress(IWebView.HitTarget(true, uri, false, null))
                     }
                 }
 
@@ -468,6 +467,20 @@ class GeckoWebViewProvider : IWebViewProvider {
         @Suppress("ComplexMethod")
         private fun createNavigationDelegate(): GeckoSession.NavigationDelegate {
             return object : GeckoSession.NavigationDelegate {
+                override fun onLoadError(
+                    session: GeckoSession?,
+                    uri: String?,
+                    error: WebRequestError?
+                ): GeckoResult<String> {
+                    ErrorPages.createErrorPage(
+                        context,
+                        geckoErrorToErrorType(error),
+                        uri
+                    ).apply {
+                        return GeckoResult.fromValue(Base64.encodeToUriString(this))
+                    }
+                }
+
                 override fun onLoadRequest(
                     session: GeckoSession,
                     request: NavigationDelegate.LoadRequest
@@ -495,27 +508,12 @@ class GeckoWebViewProvider : IWebViewProvider {
                             AllowOrDeny.DENY
                         }
                         else -> {
-                            callback?.onRequest(request.isUserTriggered)
+                            callback?.onRequest(request.isRedirect)
                             AllowOrDeny.ALLOW
                         }
                     }
 
                     return GeckoResult.fromValue(complete)
-                }
-
-                override fun onLoadError(
-                    session: GeckoSession?,
-                    uri: String?,
-                    category: Int,
-                    error: Int
-                ): GeckoResult<String> {
-                    ErrorPages.createErrorPage(
-                        context,
-                        geckoErrorToErrorType(error),
-                        uri
-                    ).apply {
-                        return GeckoResult.fromValue(Base64.encodeToUriString(this))
-                    }
                 }
 
                 override fun onNewSession(
@@ -568,6 +566,42 @@ class GeckoWebViewProvider : IWebViewProvider {
 
         private fun createPromptDelegate(): GeckoSession.PromptDelegate {
             return GeckoViewPrompt(context as Activity)
+        }
+
+        @Suppress("ComplexMethod")
+        fun handleLongClick(elementSrc: String?, elementType: Int, uri: String? = null): HitResult? {
+            return when (elementType) {
+                GeckoSession.ContentDelegate.ContextElement.TYPE_AUDIO ->
+                    elementSrc?.let {
+                        HitResult.AUDIO(it)
+                    }
+                GeckoSession.ContentDelegate.ContextElement.TYPE_VIDEO ->
+                    elementSrc?.let {
+                        HitResult.VIDEO(it)
+                    }
+                GeckoSession.ContentDelegate.ContextElement.TYPE_IMAGE -> {
+                    when {
+                        elementSrc != null && uri != null ->
+                            HitResult.IMAGE_SRC(elementSrc, uri)
+                        elementSrc != null ->
+                            HitResult.IMAGE(elementSrc)
+                        else -> HitResult.UNKNOWN("")
+                    }
+                }
+                GeckoSession.ContentDelegate.ContextElement.TYPE_NONE -> {
+                    elementSrc?.let {
+                        when {
+                            it.isPhone() -> HitResult.PHONE(it)
+                            it.isEmail() -> HitResult.EMAIL(it)
+                            it.isGeoLocation() -> HitResult.GEO(it)
+                            else -> HitResult.UNKNOWN(it)
+                        }
+                    } ?: uri?.let {
+                        HitResult.UNKNOWN(it)
+                    }
+                }
+                else -> HitResult.UNKNOWN("")
+            }
         }
 
         override fun canGoForward(): Boolean {
@@ -736,34 +770,34 @@ class GeckoWebViewProvider : IWebViewProvider {
          * Provides an ErrorType corresponding to the error code provided.
          */
         @Suppress("ComplexMethod")
-        internal fun geckoErrorToErrorType(@GeckoSession.NavigationDelegate.LoadError errorCode: Int) =
-            when (errorCode) {
-                NavigationDelegate.ERROR_UNKNOWN -> ErrorType.UNKNOWN
-                NavigationDelegate.ERROR_SECURITY_SSL -> ErrorType.ERROR_SECURITY_SSL
-                NavigationDelegate.ERROR_SECURITY_BAD_CERT -> ErrorType.ERROR_SECURITY_BAD_CERT
-                NavigationDelegate.ERROR_NET_INTERRUPT -> ErrorType.ERROR_NET_INTERRUPT
-                NavigationDelegate.ERROR_NET_TIMEOUT -> ErrorType.ERROR_NET_TIMEOUT
-                NavigationDelegate.ERROR_CONNECTION_REFUSED -> ErrorType.ERROR_CONNECTION_REFUSED
-                NavigationDelegate.ERROR_UNKNOWN_SOCKET_TYPE -> ErrorType.ERROR_UNKNOWN_SOCKET_TYPE
-                NavigationDelegate.ERROR_REDIRECT_LOOP -> ErrorType.ERROR_REDIRECT_LOOP
-                NavigationDelegate.ERROR_OFFLINE -> ErrorType.ERROR_OFFLINE
-                NavigationDelegate.ERROR_PORT_BLOCKED -> ErrorType.ERROR_PORT_BLOCKED
-                NavigationDelegate.ERROR_NET_RESET -> ErrorType.ERROR_NET_RESET
-                NavigationDelegate.ERROR_UNSAFE_CONTENT_TYPE -> ErrorType.ERROR_UNSAFE_CONTENT_TYPE
-                NavigationDelegate.ERROR_CORRUPTED_CONTENT -> ErrorType.ERROR_CORRUPTED_CONTENT
-                NavigationDelegate.ERROR_CONTENT_CRASHED -> ErrorType.ERROR_CONTENT_CRASHED
-                NavigationDelegate.ERROR_INVALID_CONTENT_ENCODING -> ErrorType.ERROR_INVALID_CONTENT_ENCODING
-                NavigationDelegate.ERROR_UNKNOWN_HOST -> ErrorType.ERROR_UNKNOWN_HOST
-                NavigationDelegate.ERROR_MALFORMED_URI -> ErrorType.ERROR_MALFORMED_URI
-                NavigationDelegate.ERROR_UNKNOWN_PROTOCOL -> ErrorType.ERROR_UNKNOWN_PROTOCOL
-                NavigationDelegate.ERROR_FILE_NOT_FOUND -> ErrorType.ERROR_FILE_NOT_FOUND
-                NavigationDelegate.ERROR_FILE_ACCESS_DENIED -> ErrorType.ERROR_FILE_ACCESS_DENIED
-                NavigationDelegate.ERROR_PROXY_CONNECTION_REFUSED -> ErrorType.ERROR_PROXY_CONNECTION_REFUSED
-                NavigationDelegate.ERROR_UNKNOWN_PROXY_HOST -> ErrorType.ERROR_UNKNOWN_PROXY_HOST
-                NavigationDelegate.ERROR_SAFEBROWSING_MALWARE_URI -> ErrorType.ERROR_SAFEBROWSING_MALWARE_URI
-                NavigationDelegate.ERROR_SAFEBROWSING_UNWANTED_URI -> ErrorType.ERROR_SAFEBROWSING_UNWANTED_URI
-                NavigationDelegate.ERROR_SAFEBROWSING_HARMFUL_URI -> ErrorType.ERROR_SAFEBROWSING_HARMFUL_URI
-                NavigationDelegate.ERROR_SAFEBROWSING_PHISHING_URI -> ErrorType.ERROR_SAFEBROWSING_PHISHING_URI
+        internal fun geckoErrorToErrorType(errorCode: WebRequestError?) =
+            when (errorCode?.code) {
+                WebRequestError.ERROR_UNKNOWN -> ErrorType.UNKNOWN
+                WebRequestError.ERROR_SECURITY_SSL -> ErrorType.ERROR_SECURITY_SSL
+                WebRequestError.ERROR_SECURITY_BAD_CERT -> ErrorType.ERROR_SECURITY_BAD_CERT
+                WebRequestError.ERROR_NET_INTERRUPT -> ErrorType.ERROR_NET_INTERRUPT
+                WebRequestError.ERROR_NET_TIMEOUT -> ErrorType.ERROR_NET_TIMEOUT
+                WebRequestError.ERROR_CONNECTION_REFUSED -> ErrorType.ERROR_CONNECTION_REFUSED
+                WebRequestError.ERROR_UNKNOWN_SOCKET_TYPE -> ErrorType.ERROR_UNKNOWN_SOCKET_TYPE
+                WebRequestError.ERROR_REDIRECT_LOOP -> ErrorType.ERROR_REDIRECT_LOOP
+                WebRequestError.ERROR_OFFLINE -> ErrorType.ERROR_OFFLINE
+                WebRequestError.ERROR_PORT_BLOCKED -> ErrorType.ERROR_PORT_BLOCKED
+                WebRequestError.ERROR_NET_RESET -> ErrorType.ERROR_NET_RESET
+                WebRequestError.ERROR_UNSAFE_CONTENT_TYPE -> ErrorType.ERROR_UNSAFE_CONTENT_TYPE
+                WebRequestError.ERROR_CORRUPTED_CONTENT -> ErrorType.ERROR_CORRUPTED_CONTENT
+                WebRequestError.ERROR_CONTENT_CRASHED -> ErrorType.ERROR_CONTENT_CRASHED
+                WebRequestError.ERROR_INVALID_CONTENT_ENCODING -> ErrorType.ERROR_INVALID_CONTENT_ENCODING
+                WebRequestError.ERROR_UNKNOWN_HOST -> ErrorType.ERROR_UNKNOWN_HOST
+                WebRequestError.ERROR_MALFORMED_URI -> ErrorType.ERROR_MALFORMED_URI
+                WebRequestError.ERROR_UNKNOWN_PROTOCOL -> ErrorType.ERROR_UNKNOWN_PROTOCOL
+                WebRequestError.ERROR_FILE_NOT_FOUND -> ErrorType.ERROR_FILE_NOT_FOUND
+                WebRequestError.ERROR_FILE_ACCESS_DENIED -> ErrorType.ERROR_FILE_ACCESS_DENIED
+                WebRequestError.ERROR_PROXY_CONNECTION_REFUSED -> ErrorType.ERROR_PROXY_CONNECTION_REFUSED
+                WebRequestError.ERROR_UNKNOWN_PROXY_HOST -> ErrorType.ERROR_UNKNOWN_PROXY_HOST
+                WebRequestError.ERROR_SAFEBROWSING_MALWARE_URI -> ErrorType.ERROR_SAFEBROWSING_MALWARE_URI
+                WebRequestError.ERROR_SAFEBROWSING_UNWANTED_URI -> ErrorType.ERROR_SAFEBROWSING_UNWANTED_URI
+                WebRequestError.ERROR_SAFEBROWSING_HARMFUL_URI -> ErrorType.ERROR_SAFEBROWSING_HARMFUL_URI
+                WebRequestError.ERROR_SAFEBROWSING_PHISHING_URI -> ErrorType.ERROR_SAFEBROWSING_PHISHING_URI
                 else -> ErrorType.UNKNOWN
             }
     }
