@@ -10,6 +10,7 @@ import org.mozilla.focus.web.Download
 import org.mozilla.focus.web.IWebView
 
 import mozilla.components.browser.session.Session
+import mozilla.components.concept.engine.HitResult
 import org.mozilla.focus.ext.isSearch
 import org.mozilla.focus.ext.shouldRequestDesktopSite
 import org.mozilla.focus.utils.AppConstants
@@ -112,9 +113,9 @@ class SessionCallbackProxy(private val session: Session, private val delegate: I
         delegate.onDownloadStart(download)
     }
 
-    override fun onLongPress(hitTarget: IWebView.HitTarget) {
+    override fun onLongPress(hitResult: HitResult) {
         // To be replaced with session property
-        delegate.onLongPress(hitTarget)
+        delegate.onLongPress(hitResult)
     }
 
     override fun onEnterFullScreen(callback: IWebView.FullscreenCallback, view: View?) {

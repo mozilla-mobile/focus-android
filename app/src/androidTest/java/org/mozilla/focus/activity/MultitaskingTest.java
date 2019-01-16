@@ -13,8 +13,9 @@ import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 import android.support.test.uiautomator.By;
 import android.support.test.uiautomator.Until;
-
 import mozilla.components.browser.session.SessionManager;
+import mozilla.components.concept.engine.HitResult;
+import okhttp3.mockwebserver.MockWebServer;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
@@ -25,9 +26,6 @@ import org.mozilla.focus.ext.ContextKt;
 import org.mozilla.focus.helpers.SessionLoadedIdlingResource;
 import org.mozilla.focus.helpers.TestHelper;
 import org.mozilla.focus.utils.AppConstants;
-import org.mozilla.focus.web.IWebView;
-
-import okhttp3.mockwebserver.MockWebServer;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
@@ -49,7 +47,7 @@ import static org.mozilla.focus.helpers.EspressoHelper.navigateToMockWebServer;
 import static org.mozilla.focus.helpers.EspressoHelper.onEraseButton;
 import static org.mozilla.focus.helpers.EspressoHelper.onFloatingTabsButton;
 import static org.mozilla.focus.helpers.TestHelper.createMockResponseFromAsset;
-import static org.mozilla.focus.helpers.WebViewFakeLongPress.injectHitTarget;
+import static org.mozilla.focus.helpers.WebViewFakeLongPress.injectHitResult;
 
 /**
  * Open multiple sessions and verify that the UI looks like it should.
@@ -192,8 +190,8 @@ public class MultitaskingTest {
     // Webview only method
     private void simulateLinkLongPress(String path) {
         onView(withId(R.id.webview))
-                .perform(injectHitTarget(
-                        new IWebView.HitTarget(true, webServer.url(path).toString(), false, null)));
+                .perform(injectHitResult(
+                        new HitResult.UNKNOWN(webServer.url(path).toString())));
     }
 
     private void openInNewTab() {

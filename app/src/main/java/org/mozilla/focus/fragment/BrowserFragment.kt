@@ -57,6 +57,7 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import mozilla.components.browser.session.Session
 import mozilla.components.browser.session.SessionManager
+import mozilla.components.concept.engine.HitResult
 import mozilla.components.lib.crash.Crash
 import mozilla.components.support.utils.ColorUtils
 import mozilla.components.support.utils.DownloadUtils
@@ -513,8 +514,8 @@ class BrowserFragment : WebFragment(), LifecycleObserver, View.OnClickListener,
 
             override fun onRequestDesktopStateChanged(shouldRequestDesktop: Boolean) {}
 
-            override fun onLongPress(hitTarget: IWebView.HitTarget) {
-                WebContextMenu.show(requireActivity(), this, hitTarget, session)
+            override fun onLongPress(hitResult: HitResult) {
+                WebContextMenu.show(requireActivity(), this, hitResult, session)
             }
 
             override fun onEnterFullScreen(callback: IWebView.FullscreenCallback, view: View?) {
