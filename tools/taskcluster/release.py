@@ -55,8 +55,8 @@ def generate_build_task(apks, tag, is_staging):
         name="(Focus for Android) Build task",
         description="Build Focus/Klar from source code.",
         command=(checkout +
-                 ' && python tools/taskcluster/get-adjust-token.py ' + '--staging' if is_staging else ''
-                 ' && python tools/taskcluster/get-sentry-token.py ' + '--staging' if is_staging else ''
+                 ' && python tools/taskcluster/get-adjust-token.py {}'.format('--staging' if is_staging else '') +
+                 ' && python tools/taskcluster/get-sentry-token.py {}'.format('--staging' if is_staging else '') +
                  ' && ./gradlew --no-daemon clean test ' + assemble_task),
         features = {
             "chainOfTrust": True
