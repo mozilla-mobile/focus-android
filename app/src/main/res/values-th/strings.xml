@@ -186,6 +186,7 @@
   <string name="firstrun_skip_button">ข้าม</string>
   <string name="firstrun_next_button">ถัดไป</string>
   <string name="block_ads_card_title">%1$s พร้อมที่จะปิดกั้นโฆษณา</string>
+  <string name="block_ads_card_description">คุณลักษณะใหม่! ท่องเว็บได้เร็วขึ้นโดยหยุดโฆษณาและโค้ดที่ติดตามคุณในเว็บต่าง ๆ</string>
   <string name="content_blocking_disabled">-</string>
   <string name="dialog_addtohomescreen_action_add">เพิ่ม</string>
   <string name="dialog_addtohomescreen_action_cancel">ยกเลิก</string>
@@ -243,6 +244,7 @@
   <string name="tip_open_in_new_tab">เปิดลิงก์ในแท็บใหม่\n แตะค้างที่ลิงก์ใด ๆ ในหน้า</string>
   <string name="tip_request_desktop">ต้องการเห็นไซต์สำหรับเดสก์ท็อปแบบเต็ม?%1$s เมนู &gt; ขอไซต์สำหรับเดสก์ท็อป</string>
   <string name="tip_disable_tips2">ปิดเคล็ดลับในหน้าจอเริ่มต้น</string>
+  <string name="tip_block_ads">ท่องเว็บได้เร็วขึ้นโดยหยุดโฆษณาและโค้ดที่ติดตามคุณในเว็บต่าง ๆ</string>
   <string name="block_ads_title">การปิดกั้นโฆษณา</string>
   <string name="tip_explain_allowlist">ไซต์ที่เชื่อถือได้?\n รายการอนุญาตปิดใช้งานการป้องกันการติดตามสำหรับไซต์ที่คุณรู้จักและเชื่อถือ</string>
   <string name="new_tab_opened_snackbar">เปิดแท็บใหม่แล้ว</string>

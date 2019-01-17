@@ -36,6 +36,7 @@
   <string name="preference_privacy_and_security_summary">Sporing, infokapslar, dataval</string>
   <string name="preference_search_summary">Set standard, autofullfør</string>
   <string name="preference_mozilla_summary">Om %1$s, hjelp</string>
+  <string name="preference_category_ad_blocking">Annonseblokkering</string>
   <string name="preference_category_tracking_protection">Sporningsvern</string>
   <string name="preference_category_web_content">Nettinnhald</string>
   <string name="preference_category_switching_apps">Byte mellom appar</string>
@@ -53,6 +54,7 @@
   <string name="preference_switch_autocomplete_topsites">For toppnettsider</string>
   <string name="preference_autocomplete_topsite_summary">Aktiver for å autofullføre meir enn 450 populære nettadresser i adressefeltet.</string>
   <string name="preference_switch_autocomplete_user_list">For nettsider du legg til</string>
+  <string name="preference_autocomplete_user_list_description">Slå på for å autofullføre nettstadar du legg til her.</string>
   <string name="preference_category_autocomplete_manage_sites">Handter sider</string>
   <string name="preference_autocomplete_subitem_manage_sites">Handter sider</string>
   <string name="preference_autocomplete_action_add">+ Legg til ei tilpassa nettadresse</string>
@@ -75,8 +77,10 @@
   <string name="preference_language">Språk</string>
   <string name="preference_language_systemdefault">Systemstandard</string>
   <string name="preference_category_privacy">Personvern</string>
+  <string name="preference_privacy_ads_block_ads">Blokker annonsar og andre irritasjonar</string>
   <string name="preference_privacy_block_analytics">Blokker analysesporfølgjarar</string>
   <string name="preference_privacy_block_ads">Blokker reklamesporfølgjarar</string>
+  <string name="preference_privacy_block_ads_new_summary">Tek bort annonsar som er utforma for å spore besøk på nettsida, sjølv om du ikkje trykkjer på dei</string>
   <string name="preference_privacy_block_social">Blokker sosiale media-sporfølgjarar</string>
   <string name="preference_privacy_block_content">Blokker andre innhaldssporfølgjarar</string>
   <string name="preference_privacy_category_cookies">Blokker infokapslar</string>
@@ -84,6 +88,10 @@
   <string name="preference_privacy_should_block_cookies_third_party_tracker_cookies_option">Blokker berre tredjepartssporings-infokapslar</string>
   <string name="preference_privacy_should_block_cookies_third_party_only_option">Blokker berre tredjepartsinfokapslar</string>
   <string name="preference_privacy_should_block_cookies_yes_option">Ja</string>
+  <string name="preference_privacy_block_cookies_no">Nei (tillat infokapslar)</string>
+  <string name="preference_privacy_block_cookies_third_party_tracker">Blokker sporingsinfokapslar frå tredjepart (tilrådd)</string>
+  <string name="preference_privacy_block_cookies_third_party_only">Bloker alle infokapslar frå tredjepart\n(kan føre til feil på nettsider)</string>
+  <string name="preference_privacy_block_cookies_yes">Blokker alle infokapslar (vil føre til at enkelte nettsider ikkje verkar)</string>
   <string name="preference_security_biometric">Bruk fingeravtrykk for å låse opp appen</string>
   <string name="preference_security_biometric_summary">Fingeravtrykket ditt kan låse opp %1$s, viss ein URL allereie er open i appen. Skjult tilstand vil bli slått på.</string>
   <string name="preference_privacy_secure_mode">Usynleg løyndmodus</string>
@@ -180,6 +188,7 @@
   <string name="firstrun_close_button">OK, eg forstår det!</string>
   <string name="firstrun_skip_button">Hopp over</string>
   <string name="firstrun_next_button">Neste</string>
+  <string name="block_ads_card_title">%1$s er klar for å blokkere annonsar</string>
   <string name="content_blocking_disabled">-</string>
   <string name="dialog_addtohomescreen_action_add">Legg til</string>
   <string name="dialog_addtohomescreen_action_cancel">Avbryt</string>
@@ -219,6 +228,7 @@
   <string name="biometric_auth_title">Lås opp %1$s</string>
   <string name="biometric_auth_description">Trykk på fingeravtrykks-sensoren for å fortsetja.</string>
   <string name="biometric_auth_new_session">Ny økt</string>
+  <string name="biometric_auth_open_link_new_session">Opne lenke i ny økt</string>
   <string name="biometric_auth_image_description">Fingeravtrykkikon</string>
   <string name="biometric_auth_not_recognized_error">Fingeravtrykk ikkje identifisert. Prøv igjen.</string>
   <string name="biometric_auth_moved_too_quickly">Fingeren rørte seg for fort. Prøv igjen.</string>
@@ -236,6 +246,7 @@
   <string name="tip_open_in_new_tab">Opna ei lenke i ei ny fane\n Trykk og hald på ei lenke på ei side</string>
   <string name="tip_request_desktop">Vil du heller sjå full skrivebordsversjon?%1$s Meny &gt; Vis skrivebordversjon</string>
   <string name="tip_disable_tips2">Slå av tips på startskjermen</string>
+  <string name="block_ads_title">Annonseblokkering</string>
   <string name="tip_explain_allowlist">Truverdig nettside?\n Løyvelista deaktiverer sporingsvern for nettsider du kjenner og stolar på.</string>
   <string name="new_tab_opened_snackbar">Ny fane opna</string>
   <string name="open_new_tab_snackbar">Byt</string>
@@ -256,4 +267,8 @@
   <string name="fatal_crash_report_close_button_label">Lat att</string>
   <string name="fatal_crash_report_restart_firefox_label">Start %1$s på nytt</string>
   <string name="crash_report_send_crash_label">Send krasjrapport til Mozilla</string>
+  <string name="content_blocking_enabled_snackbar_message">Innhaldsblokkering er slått på</string>
+  <string name="content_blocking_disabled_snackbar_message">Innhaldsblokkering er slått av</string>
+  <string name="content_blocking_snackbar_enable_action">Slå på</string>
+  <string name="content_blocking_snackbar_disable_action">Slå av</string>
 </resources>

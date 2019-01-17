@@ -36,6 +36,7 @@
   <string name="preference_privacy_and_security_summary">Opciones de rastreo, cookies y datos</string>
   <string name="preference_search_summary">Establecer como predeterminado, autocompletar</string>
   <string name="preference_mozilla_summary">Acerca de %1$s, ayuda</string>
+  <string name="preference_category_ad_blocking">Bloqueo de anuncios</string>
   <string name="preference_category_tracking_protection">Protección de rastreo</string>
   <string name="preference_category_web_content">Contenido web</string>
   <string name="preference_category_switching_apps">Cambiando aplicaciones</string>
@@ -84,6 +85,7 @@
   <string name="preference_privacy_should_block_cookies_third_party_tracker_cookies_option">Bloquear solo cookies de rastreo de terceros</string>
   <string name="preference_privacy_should_block_cookies_third_party_only_option">Bloquear solo cookies de terceros</string>
   <string name="preference_privacy_should_block_cookies_yes_option">Sí</string>
+  <string name="preference_privacy_block_cookies_no">No (permitir todas las cookies)</string>
   <string name="preference_security_biometric">Usar huella digital para desbloquear aplicación</string>
   <string name="preference_security_biometric_summary">Tu huella digital puede desbloquear %1$s si una URL está abierta en la aplicación. Se activará el modo invisible.</string>
   <string name="preference_privacy_secure_mode">Invisible</string>
@@ -180,6 +182,7 @@
   <string name="firstrun_close_button">¡Entendido!</string>
   <string name="firstrun_skip_button">Ignorar</string>
   <string name="firstrun_next_button">Siguiente</string>
+  <string name="block_ads_card_title">%1$s está listo para bloquear anuncios</string>
   <string name="content_blocking_disabled">-</string>
   <string name="dialog_addtohomescreen_action_add">Agregar</string>
   <string name="dialog_addtohomescreen_action_cancel">Cancelar</string>
@@ -219,6 +222,7 @@
   <string name="biometric_auth_title">Desbloquear %1$s</string>
   <string name="biometric_auth_description">Tocar el sensor de huella digital para continuar.</string>
   <string name="biometric_auth_new_session">Nueva sesión</string>
+  <string name="biometric_auth_open_link_new_session">Abrir el enlace en una nueva sesión</string>
   <string name="biometric_auth_image_description">Ícono de huella digital</string>
   <string name="biometric_auth_not_recognized_error">Huella digital no reconocida. Intenta de nuevo.</string>
   <string name="biometric_auth_moved_too_quickly">El dedo se movió muy rápido. Intenta de nuevo.</string>
@@ -236,6 +240,7 @@
   <string name="tip_open_in_new_tab">Abrir enlace en una nueva pestaña\n Mantén presionado cualquier enlace en una página</string>
   <string name="tip_request_desktop">¿Prefieres ver el sitio como en escritorio?%1$s Menú &gt; Solicitar sitio de escritorio</string>
   <string name="tip_disable_tips2">Desactivar los consejos en la pantalla de inicio</string>
+  <string name="block_ads_title">Bloqueo de anuncios</string>
   <string name="tip_explain_allowlist">¿Sitio de confianza?\n Allowlist deshabilita la protección contra rastreo para los sitios que conoces y confías.</string>
   <string name="new_tab_opened_snackbar">Nueva pestaña abierta</string>
   <string name="open_new_tab_snackbar">Cambiar</string>
@@ -256,4 +261,8 @@
   <string name="fatal_crash_report_close_button_label">Cerrar</string>
   <string name="fatal_crash_report_restart_firefox_label">Reiniciar %1$s</string>
   <string name="crash_report_send_crash_label">Enviar reporte de fallos a Mozilla</string>
+  <string name="content_blocking_enabled_snackbar_message">El bloqueo de contenido está habilitado</string>
+  <string name="content_blocking_disabled_snackbar_message">El bloqueo de contenido está deshabilitado</string>
+  <string name="content_blocking_snackbar_enable_action">Habilitar</string>
+  <string name="content_blocking_snackbar_disable_action">Deshabilitar</string>
 </resources>

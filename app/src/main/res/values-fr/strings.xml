@@ -78,16 +78,24 @@
   <string name="preference_language_systemdefault">Valeur par défaut du système</string>
   <string name="preference_category_privacy">Vie privée</string>
   <string name="preference_privacy_ads_block_ads">Bloquer les publicités et autres désagréments</string>
+  <string name="preference_privacy_ads_block_ads_summary">Bloque les publicités et autres désagréments à l’aide de listes de blocage issues d’Easylist, EasyPrivacy, Fanboy’s Annoyance et de 777Guard Mobile Ad Filter</string>
   <string name="preference_privacy_block_analytics">Bloquer les traqueurs de statistiques</string>
   <string name="preference_privacy_block_ads">Bloquer les traqueurs publicitaires</string>
   <string name="preference_privacy_block_ads_new_summary">Supprime les publicités conçues pour suivre les visites sur les sites, même si vous n’appuyez pas sur les liens publicitaires eux-mêmes</string>
+  <string name="preference_privacy_block_analytics_new_summary">Bloque les traqueurs qui analysent et mesurent les interactions telles qu’appuyer sur l’écran ou faire défiler la page</string>
   <string name="preference_privacy_block_social">Bloquer les traqueurs de réseaux sociaux</string>
+  <string name="preference_privacy_block_social_new_summary">Bloque les traqueurs liés aux réseaux sociaux intégrés aux sites web, y compris les boutons de partage</string>
   <string name="preference_privacy_block_content">Bloquer les autres traqueurs de contenu</string>
+  <string name="preference_privacy_block_content_new_summary">Empêche le pistage, mais peut provoquer des problèmes sur certaines pages ou certains sites</string>
   <string name="preference_privacy_category_cookies">Bloquer les cookies</string>
   <string name="preference_privacy_should_block_cookies_no_option">Non</string>
   <string name="preference_privacy_should_block_cookies_third_party_tracker_cookies_option">Bloquer uniquement les cookies tiers utilisés pour le pistage</string>
   <string name="preference_privacy_should_block_cookies_third_party_only_option">Bloquer les cookies tiers uniquement</string>
   <string name="preference_privacy_should_block_cookies_yes_option">Oui</string>
+  <string name="preference_privacy_block_cookies_no">Non (autoriser tous les cookies)</string>
+  <string name="preference_privacy_block_cookies_third_party_tracker">Bloquer les cookies tiers utilisés pour le pistage (recommandé)</string>
+  <string name="preference_privacy_block_cookies_third_party_only">Bloquer tous les cookies tiers (peut empêcher des sites de fonctionner)</string>
+  <string name="preference_privacy_block_cookies_yes">Bloquer tous les cookies (empêchera des sites de fonctionner)</string>
   <string name="preference_security_biometric">Utiliser une empreinte digitale pour déverrouiller l’application</string>
   <string name="preference_security_biometric_summary">Votre empreinte digitale peut déverrouiller %1$s si une URL est déjà ouverte au sein de l’application. Le mode furtif sera activé.</string>
   <string name="preference_privacy_secure_mode">Mode furtif</string>
@@ -97,7 +105,7 @@
   <string name="preference_performance_block_webfonts">Bloquer les polices web</string>
   <string name="preference_performance_block_webfonts_summary">Peut empêcher certaines icônes ou images de s’afficher</string>
   <string name="preference_performance_block_javascript">Bloquer JavaScript</string>
-  <string name="preference_performance_block_javascript_summary">Les pages peuvent se charger plus rapidement, mais peuvent aussi se comporter de manière inattendue</string>
+  <string name="preference_performance_block_javascript_summary">Les pages peuvent se charger plus rapidement, mais des problèmes peuvent apparaître</string>
   <string name="preference_default_browser2">Définir %1$s comme navigateur par défaut</string>
   <string name="preference_category_mozilla">Mozilla</string>
   <string name="preference_mozilla_telemetry2">Envoyer des données d’utilisation</string>
@@ -175,6 +183,7 @@
   <string name="contextmenu_open_in_new_tab">Ouvrir le lien dans un nouvel onglet</string>
   <string name="contextmenu_image_warning"><![CDATA["Les images partagées ou enregistrées "<b xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">ne seront pas supprim&#233;es</b>" lorsque vous effacez l’historique de %1$s."]]></string>
   <string name="firstrun_defaultbrowser_title">Renforcez votre vie privée</string>
+  <string name="firstrun_defaultbrowser_text_new">Bloquez le contenu tel que les annonces et le code qui vous pistent sur le Web et vous ralentissent. Activez le blocage des publicités pour naviguer plus rapidement et sans publicités gênantes.</string>
   <string name="firstrun_search_title">Recherchez à votre manière</string>
   <string name="firstrun_search_text">Vous recherchez quelque chose de différent ? Choisissez un autre moteur de recherche par défaut dans les paramètres.</string>
   <string name="firstrun_shortcut_title">Ajoutez des raccourcis sur votre écran d’accueil</string>
@@ -184,6 +193,8 @@
   <string name="firstrun_close_button">OK</string>
   <string name="firstrun_skip_button">Ignorer</string>
   <string name="firstrun_next_button">Suivant</string>
+  <string name="block_ads_card_title">%1$s est prêt à bloquer les publicités</string>
+  <string name="block_ads_card_description">Nouvelle fonctionnalité : naviguez plus rapidement en bloquant les publicités et le code qui vous pistent sur le Web.</string>
   <string name="content_blocking_disabled">-</string>
   <string name="dialog_addtohomescreen_action_add">Ajouter</string>
   <string name="dialog_addtohomescreen_action_cancel">Annuler</string>
@@ -223,6 +234,7 @@
   <string name="biometric_auth_title">Déverrouiller %1$s</string>
   <string name="biometric_auth_description">Touchez le capteur d’empreinte digitale pour continuer.</string>
   <string name="biometric_auth_new_session">Nouvelle session</string>
+  <string name="biometric_auth_open_link_new_session">Ouvrir le lien dans une nouvelle session</string>
   <string name="biometric_auth_image_description">Icône d’empreinte digitale</string>
   <string name="biometric_auth_not_recognized_error">Empreinte digitale non reconnue. Veuillez réessayer.</string>
   <string name="biometric_auth_moved_too_quickly">Votre doigt a bougé trop rapidement. Veuillez réessayer.</string>
@@ -240,6 +252,8 @@
   <string name="tip_open_in_new_tab">Ouvrir un lien dans un nouvel onglet\n Effectuez un appui long sur un lien dans une page</string>
   <string name="tip_request_desktop">Préférez-vous voir la version pour ordinateur du site ?%1$s Menu &gt; Voir version ordinateur</string>
   <string name="tip_disable_tips2">Désactiver les conseils sur l’écran de démarrage</string>
+  <string name="tip_block_ads">Naviguez plus rapidement en bloquant les publicités et le code qui vous pistent sur le Web.</string>
+  <string name="block_ads_title">Blocage des publicités</string>
   <string name="tip_explain_allowlist">Un site de confiance ?\n Allowlist désactive la protection contre le pistage pour les sites que vous connaissez et auxquels vous faites confiance.</string>
   <string name="new_tab_opened_snackbar">Nouvel onglet ouvert</string>
   <string name="open_new_tab_snackbar">Afficher</string>
@@ -260,4 +274,8 @@
   <string name="fatal_crash_report_close_button_label">Fermer</string>
   <string name="fatal_crash_report_restart_firefox_label">Redémarrer %1$s</string>
   <string name="crash_report_send_crash_label">Envoyer un rapport de plantage à Mozilla</string>
+  <string name="content_blocking_enabled_snackbar_message">Le blocage de contenu est activé</string>
+  <string name="content_blocking_disabled_snackbar_message">Le blocage de contenu est désactivé</string>
+  <string name="content_blocking_snackbar_enable_action">Activer</string>
+  <string name="content_blocking_snackbar_disable_action">Désactiver</string>
 </resources>

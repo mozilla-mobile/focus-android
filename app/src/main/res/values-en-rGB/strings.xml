@@ -36,6 +36,7 @@
   <string name="preference_privacy_and_security_summary">Tracking, cookies, data choices</string>
   <string name="preference_search_summary">Set default, autocomplete</string>
   <string name="preference_mozilla_summary">About %1$s, help</string>
+  <string name="preference_category_ad_blocking">Ad Blocking</string>
   <string name="preference_category_tracking_protection">Tracking Protection</string>
   <string name="preference_category_web_content">Web Content</string>
   <string name="preference_category_switching_apps">Switching Apps</string>
@@ -53,6 +54,7 @@
   <string name="preference_switch_autocomplete_topsites">For Top sites</string>
   <string name="preference_autocomplete_topsite_summary">Enable to autocomplete more than 450 popular URLs in the address bar.</string>
   <string name="preference_switch_autocomplete_user_list">For Sites You Add</string>
+  <string name="preference_autocomplete_user_list_description">Enable to autocomplete sites you add here.</string>
   <string name="preference_category_autocomplete_manage_sites">Manage sites</string>
   <string name="preference_autocomplete_subitem_manage_sites">Manage sites</string>
   <string name="preference_autocomplete_action_add">+ Add custom URL</string>
@@ -75,15 +77,25 @@
   <string name="preference_language">Language</string>
   <string name="preference_language_systemdefault">System default</string>
   <string name="preference_category_privacy">Privacy</string>
+  <string name="preference_privacy_ads_block_ads">Block ads and other annoyances</string>
+  <string name="preference_privacy_ads_block_ads_summary">Stops ads and other annoyances using block lists from Easylist, EasyPrivacy, Fanboy’s Annoyance, and 777Guard Mobile Ad Filter</string>
   <string name="preference_privacy_block_analytics">Block analytic trackers</string>
   <string name="preference_privacy_block_ads">Block ad trackers</string>
+  <string name="preference_privacy_block_ads_new_summary">Removes ads designed to track site visits even if you don’t tap them</string>
+  <string name="preference_privacy_block_analytics_new_summary">Blocks trackers that analyse and measure interactions like tapping and scrolling</string>
   <string name="preference_privacy_block_social">Block social trackers</string>
+  <string name="preference_privacy_block_social_new_summary">Stops social-media related trackers embedded on web sites, including social share buttons</string>
   <string name="preference_privacy_block_content">Block other content trackers</string>
+  <string name="preference_privacy_block_content_new_summary">Blocks tracking activity, but may cause some sites and pages to behave unexpectedly</string>
   <string name="preference_privacy_category_cookies">Block cookies</string>
   <string name="preference_privacy_should_block_cookies_no_option">No</string>
   <string name="preference_privacy_should_block_cookies_third_party_tracker_cookies_option">Block 3rd-party tracker cookies only</string>
   <string name="preference_privacy_should_block_cookies_third_party_only_option">Block 3rd-party cookies only</string>
   <string name="preference_privacy_should_block_cookies_yes_option">Yes</string>
+  <string name="preference_privacy_block_cookies_no">No (allow all cookies)</string>
+  <string name="preference_privacy_block_cookies_third_party_tracker">Block third-party trackers cookies (recommended)</string>
+  <string name="preference_privacy_block_cookies_third_party_only">Block all third-party cookies \n(may cause web sites to break)</string>
+  <string name="preference_privacy_block_cookies_yes">Block all cookies (will cause web sites to break)</string>
   <string name="preference_security_biometric">Use fingerprint to unlock app</string>
   <string name="preference_security_biometric_summary">Your fingerprint can unlock %1$s if a URL is already opened in the app. Stealth will be turned on.</string>
   <string name="preference_privacy_secure_mode">Stealth</string>
@@ -171,6 +183,7 @@
   <string name="contextmenu_open_in_new_tab">Open link in new tab</string>
   <string name="contextmenu_image_warning"><![CDATA["Saved and shared images "<b xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">will not be deleted</b>" when you erase %1$s history."]]></string>
   <string name="firstrun_defaultbrowser_title">Power up your privacy</string>
+  <string name="firstrun_defaultbrowser_text_new">Block content like ads and code that follow you around the web and slow you down. Turn on ad blocking to browse faster without annoying ads.</string>
   <string name="firstrun_search_title">Your search, your way</string>
   <string name="firstrun_search_text">Searching for something different? Choose another default search engine in Settings.</string>
   <string name="firstrun_shortcut_title">Add shortcuts to your home screen</string>
@@ -180,6 +193,8 @@
   <string name="firstrun_close_button">OK, got it!</string>
   <string name="firstrun_skip_button">Skip</string>
   <string name="firstrun_next_button">Next</string>
+  <string name="block_ads_card_title">%1$s is ready to block ads</string>
+  <string name="block_ads_card_description">New feature! Browse faster by stopping ads and code that follow you around the web.</string>
   <string name="content_blocking_disabled">-</string>
   <string name="dialog_addtohomescreen_action_add">Add</string>
   <string name="dialog_addtohomescreen_action_cancel">Cancel</string>
@@ -219,6 +234,7 @@
   <string name="biometric_auth_title">Unlock %1$s</string>
   <string name="biometric_auth_description">Touch the fingerprint sensor to continue.</string>
   <string name="biometric_auth_new_session">New Session</string>
+  <string name="biometric_auth_open_link_new_session">Open Link in New Session</string>
   <string name="biometric_auth_image_description">Fingerprint icon</string>
   <string name="biometric_auth_not_recognized_error">Fingerprint not recognised. Try again.</string>
   <string name="biometric_auth_moved_too_quickly">Finger moved too fast. Try again.</string>
@@ -236,6 +252,8 @@
   <string name="tip_open_in_new_tab">Open a link in a new tab\n Long-press any link on a page</string>
   <string name="tip_request_desktop">Rather see the full desktop site?%1$s Menu &gt; Request desktop site</string>
   <string name="tip_disable_tips2">Turn off tips on the start screen</string>
+  <string name="tip_block_ads">Browse faster by stopping ads and code that follows you around the web.</string>
+  <string name="block_ads_title">Ad blocking</string>
   <string name="tip_explain_allowlist">Trusted site?\n Allowlist disables Tracking Protection for sites you know and trust.</string>
   <string name="new_tab_opened_snackbar">New tab opened</string>
   <string name="open_new_tab_snackbar">Switch</string>
@@ -256,4 +274,8 @@
   <string name="fatal_crash_report_close_button_label">Close</string>
   <string name="fatal_crash_report_restart_firefox_label">Restart %1$s</string>
   <string name="crash_report_send_crash_label">Send crash report to Mozilla</string>
+  <string name="content_blocking_enabled_snackbar_message">Content Blocking is enabled</string>
+  <string name="content_blocking_disabled_snackbar_message">Content Blocking is disabled</string>
+  <string name="content_blocking_snackbar_enable_action">Enable</string>
+  <string name="content_blocking_snackbar_disable_action">Disable</string>
 </resources>

@@ -78,10 +78,13 @@
   <string name="preference_language_systemdefault">پیش‌فرض سیستم</string>
   <string name="preference_category_privacy">حریم‌خصوصی</string>
   <string name="preference_privacy_ads_block_ads">مسدود کردن تبلیغات و سایر مزاحمان</string>
+  <string name="preference_privacy_ads_block_ads_summary">با استفاده از لیست مسدودی Easylist، EasyPrivacy، Fanboy’s Annoyance و فیلتر تبلیغاتی همراه 777Guard تبلیغات و سایر مزاحمان را متوقف می‌کند</string>
   <string name="preference_privacy_block_analytics">مسدود کردن ردیاب‌های آماری</string>
   <string name="preference_privacy_block_ads">مسدود کردن ردیاب‌های تبلیغاتی</string>
   <string name="preference_privacy_block_ads_new_summary">تبلیغاتی را حذف می‌کند که برای ردیابی بازدید‌های سایت‌هایی طراحی شده‌اند که حتی روی آن‌ها کلیک نکرده‌اید</string>
+  <string name="preference_privacy_block_analytics_new_summary">ردیاب‌هایی که فعالیت‌هایی مانند کلیک کردن و پیمایش را تحلیل و اندازه‌گیری می‌کنند را مسدود می‌کند</string>
   <string name="preference_privacy_block_social">مسدود کردن ردیاب‌های شبکه‌های اجتماعی</string>
+  <string name="preference_privacy_block_social_new_summary">ردیاب‌های مرتبط با رسانه‌های اجتماعی که در وب‌سایت‌ها جاسازی شده‌اند، از جمله دکمه‌های به اشتراک‌گذاری اجتماعی را متوقف می‌کند</string>
   <string name="preference_privacy_block_content">مسدود کردن سایر ردیاب‌های محتوا</string>
   <string name="preference_privacy_block_content_new_summary">فعالیت‌های ردیابی را مسدود می‌کند، اما ممکن است بعضی از سایت‌ها و صفحه‌ها به شکل غیر منتظره‌ای رفتار کنند</string>
   <string name="preference_privacy_category_cookies">مسدود کردن کوکی‌ها</string>
@@ -180,6 +183,7 @@
   <string name="contextmenu_open_in_new_tab">بازکردن پیوند در زبانه جدید</string>
   <string name="contextmenu_image_warning"><![CDATA["وقتی شما تاریخ‌جه %1$s را پاک می‌کنید، تصاویر ذخیره یا هم‌رسان شده "<b xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">&#1662;&#1575;&#1705; &#1606;&#1582;&#1608;&#1575;&#1607;&#1606;&#1583; &#1588;&#1583;</b>.]]></string>
   <string name="firstrun_defaultbrowser_title">قدرت حریم‌شخصی خود را افزایش دهید</string>
+  <string name="firstrun_defaultbrowser_text_new">محتوایی مانند تبلیغات و کد‌هایی در اطراف وب شما را دنبال و سرعتتان را کند می‌کنند را مسدود کنید. مسدود سازی تبلیغات را فعال نمایید تا بدون تبلیغات مزاحم، سریع‌تر مرور کنید.</string>
   <string name="firstrun_search_title">جستجوی شما، به روش شما</string>
   <string name="firstrun_search_text">به دنبال چیز متفاوتی هستید؟ موتور جستجوی پیش‌فرض دیگری را در تنظیمات انتخاب کنید.</string>
   <string name="firstrun_shortcut_title">میان‌برها را به صفحه خانگی خود اضافه کنید</string>

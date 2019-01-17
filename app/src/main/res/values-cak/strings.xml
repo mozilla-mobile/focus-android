@@ -54,6 +54,7 @@
   <string name="preference_switch_autocomplete_topsites">Kichin Ütz taq ajk\'amaya\'l ruxaq</string>
   <string name="preference_autocomplete_topsite_summary">Titzij richin ruyonil nunojisaj naqaj chi re 450 ajowan taq URLs pa kikajtz\'ik ochochib\'äl.</string>
   <string name="preference_switch_autocomplete_user_list">Kichin ri taq Ruxaq Ye\'atz\'aqatisaj</string>
+  <string name="preference_autocomplete_user_list_description">Titzij richin ruyonil yerunojisaj ri taq ruxaq xke\'atz\'aqatisaj wawe\'.</string>
   <string name="preference_category_autocomplete_manage_sites">Kenuk\'samajïx taq ruxaq</string>
   <string name="preference_autocomplete_subitem_manage_sites">Kenuk\'samajïx taq ruxaq</string>
   <string name="preference_autocomplete_action_add">+ Titz\'aqatisäx ichinan URL</string>
@@ -76,8 +77,11 @@
   <string name="preference_language">Ch\'ab\'äl</string>
   <string name="preference_language_systemdefault">Q\'inoj k\'o wi</string>
   <string name="preference_category_privacy">Ichinanem</string>
+  <string name="preference_privacy_ads_block_ads">Keq\'at taq eltzijol chuqa\' ch\'aqa\' chik taq k\'ayewal</string>
+  <string name="preference_privacy_ads_block_ads_summary">Ke\'aq\'ata\' taq eltzijol chuqa\' ch\'aqa\' chik taq k\'ayewal rik\'in nawokisaj rucholb\'al q\'atoj Easylist, EasyPrivacy, Fanboy’s Annonyance, chuqa\' 777Guard Mibuke Ad Filter</string>
   <string name="preference_privacy_block_analytics">Keq\'at ch\'ob\'onel taq ojqanela\'</string>
   <string name="preference_privacy_block_ads">Keq\'at ojqanela\'</string>
+  <string name="preference_privacy_block_ads_new_summary">Ke\'ayuju\' ri taq eltzijol enuk\'un richin yekanöx taq kitz\'etoj ruxaq k\'amaya\'l, ke ri\' chuqa\' we man nipitz\' ta pa ruwi\'</string>
   <string name="preference_privacy_block_social">Keq\'at winaqil taq ojqanela\'</string>
   <string name="preference_privacy_block_content">Keq\'at ch\'aqa\' chik ojqanela\' rupam</string>
   <string name="preference_privacy_category_cookies">Keq\'at kaxlanwäy</string>
@@ -220,6 +224,7 @@
   <string name="biometric_auth_title">Timeq\'at %1$s</string>
   <string name="biometric_auth_description">Tachapa\' qa ri na\'onel retal ruwi\' q\'ab\'aj richin yasamäj chik el.</string>
   <string name="biometric_auth_new_session">K\'ak\'a\' Molojri\'ïl</string>
+  <string name="biometric_auth_open_link_new_session">Tijaq ri Ximonel pa jun K\'ak\'a\' Molojri\'ïl</string>
   <string name="biometric_auth_image_description">Ruwachib\'al retal ruwi\' q\'ab\'aj</string>
   <string name="biometric_auth_not_recognized_error">"Man xetamäx ta ruwa ri  rel ruwi\' q\'ab\'aj. Tatojtob\'ej chik."</string>
   <string name="biometric_auth_moved_too_quickly">Aninäq xsilon ri ruwi\' q\'ab\'aj. Tatojtob\'ej chik.</string>
@@ -237,6 +242,7 @@
   <string name="tip_open_in_new_tab">Tijaq jun ximonel pa jun k\'ak\'a\' ruwi\'\n Tapitz\'itz\'ej xab\'achike ximonel pa jun ruxaq</string>
   <string name="tip_request_desktop">"¿La nawajo\' natzu\' ri ruxaq ruk\'amaya\'l ruwa kematz\'ib\'?%1$s\n    K\'utsamajib\'äl &gt; Tik\'utüx jun ruxaq ruk\'amaya\'l ruwa kematz\'ib\'"</string>
   <string name="tip_disable_tips2">Tichup ri taq chilab\'enïk pa ri tikirib\'äl ruwäch</string>
+  <string name="block_ads_title">Kiq\'atik Eltzijol</string>
   <string name="tip_explain_allowlist">¿La qitzij chi ruxaq?\n Allowlist nuchüp ri Chajinïk chuwäch Ojqanem pa ri taq ruxaq retaman ruwäch chuqa\' ri e qitzij.</string>
   <string name="new_tab_opened_snackbar">K\'ak\'a\' ruwi\' jaqon</string>
   <string name="open_new_tab_snackbar">Tiq\'ax pa</string>
