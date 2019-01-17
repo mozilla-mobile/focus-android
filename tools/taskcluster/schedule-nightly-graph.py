@@ -7,7 +7,6 @@ from __future__ import absolute_import, print_function, unicode_literals
 
 import datetime
 import jsone
-import pipes
 import yaml
 import os
 import slugid
@@ -19,10 +18,20 @@ from lib.tasks import schedule_task
 ROOT = os.path.join(os.path.dirname(__file__), '../..')
 
 
-def calculate_branch_and_head_rev(root):
+class InvalidGithubRepositoryError(Exception):
+    pass
+
+
+def calculate_git_references(root):
     repo = Repo(root)
+    remote = repo.remote()
     branch = repo.head.reference
-    return str(branch), str(branch.commit)
+
+    if not remote.url.startswith('https://github.com'):
+        raise InvalidGithubRepositoryError('expected remote to be a GitHub repository (accessed via HTTPs)')
+
+    html_url = remote.url[:-4] if remote.url.endswith('.git') else remote.url
+    return html_url, str(branch), str(branch.commit)
 
 
 def make_decision_task(params):
@@ -47,7 +56,7 @@ def make_decision_task(params):
         'as_slugid': as_slugid,
         'event': {
             'repository': {
-                'clone_url': params['repository_url'],
+                'html_url': params['html_url'],
             },
             'release': {
                 'tag_name': params['head_rev'],
@@ -68,13 +77,12 @@ def make_decision_task(params):
     return (task_id, task)
 
 
-if __name__ == "__main__":
+def schedule():
     queue = taskcluster.Queue({ 'baseUrl': 'http://taskcluster/queue/v1' })
 
-    branch, head_rev = calculate_branch_and_head_rev(ROOT)
-
+    html_url, branch, head_rev = calculate_git_references(ROOT)
     params = {
-        'repository_url': 'https://github.com/mozilla-mobile/focus-android',
+        'html_url': html_url,
         'head_rev': head_rev,
         'branch': branch,
         'cron_task_id': os.environ.get('CRON_TASK_ID', '<cron_task_id>')
@@ -82,3 +90,7 @@ if __name__ == "__main__":
     decisionTaskId, decisionTask = make_decision_task(params)
     schedule_task(queue, decisionTaskId, decisionTask)
     print('All scheduled!')
+
+
+if __name__ == "__main__":
+    schedule()
