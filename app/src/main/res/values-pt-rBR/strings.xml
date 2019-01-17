@@ -36,6 +36,7 @@
   <string name="preference_privacy_and_security_summary">Rastreamento, cookies, escolhas de dados</string>
   <string name="preference_search_summary">Definir como padrão, autocompletar</string>
   <string name="preference_mozilla_summary">Ajuda sobre o %1$s</string>
+  <string name="preference_category_ad_blocking">Bloqueio de propaganda</string>
   <string name="preference_category_tracking_protection">Proteção contra rastreamento</string>
   <string name="preference_category_web_content">Conteúdo da web</string>
   <string name="preference_category_switching_apps">Troca de Apps</string>
@@ -49,21 +50,22 @@
   <string name="preference_search_engine_label">Mecanismo de pesquisa</string>
   <string name="preference_state_on">Ativado</string>
   <string name="preference_state_off">Desativado</string>
-  <string name="preference_subitem_autocomplete">Preenchimento automático de URL</string>
+  <string name="preference_subitem_autocomplete">Completar URLs automaticamente</string>
   <string name="preference_switch_autocomplete_topsites">Para sites principais</string>
-  <string name="preference_autocomplete_topsite_summary">Habilite para preencher, automaticamente, mais de 450 URLs populares na barra de endereços.</string>
+  <string name="preference_autocomplete_topsite_summary">Ative para completar automaticamente mais de 450 URLs populares na barra de endereços.</string>
   <string name="preference_switch_autocomplete_user_list">Para sites que você adiciona</string>
+  <string name="preference_autocomplete_user_list_description">Ative para completar automaticamente os sites que você adicionar aqui.</string>
   <string name="preference_category_autocomplete_manage_sites">Gerenciar sites</string>
   <string name="preference_autocomplete_subitem_manage_sites">Gerenciar sites</string>
   <string name="preference_autocomplete_action_add">+ Adicionar URL personalizada</string>
   <string name="preference_autocomplete_title_add">Adicionar URL personalizada</string>
   <string name="custom_autocomplete_quick_add">Adicionar URL personalizada</string>
-  <string name="add_custom_autocomplete_label">Adicionar link ao preenchimento automático</string>
+  <string name="add_custom_autocomplete_label">Adicionar link para ser completado automaticamente</string>
   <string name="preference_category_cookies">Cookies e Dados de sites</string>
   <string name="preference_category_data_choices">Escolha de dados</string>
   <string name="preference_autocomplete_title_remove">Remover URL personalizada</string>
   <string name="preference_autocomplete_learn_more">Saiba mais</string>
-  <string name="preference_autocomplete_custom_summary">Adicione e gerencie URLs de preenchimento automático personalizados.</string>
+  <string name="preference_autocomplete_custom_summary">Adicione e gerencie URLs personalizados a completar automaticamente.</string>
   <string name="preference_autocomplete_add_title">URL a adicionar</string>
   <string name="preference_autocomplete_add_hint">Cole ou digite o URL</string>
   <string name="preference_autocomplete_add_example2">Exemplo: mozilla.org</string>
@@ -75,15 +77,25 @@
   <string name="preference_language">Idioma</string>
   <string name="preference_language_systemdefault">Padrão do sistema</string>
   <string name="preference_category_privacy">Privacidade</string>
+  <string name="preference_privacy_ads_block_ads">Bloquear anúncios e outros incômodos</string>
+  <string name="preference_privacy_ads_block_ads_summary">Impede anúncios e outros incômodos usando listas de bloqueio do Easylist, EasyPrivacy, Fanboy’s Annoyance e 777Guard Mobile Ad Filter</string>
   <string name="preference_privacy_block_analytics">Bloquear rastreadores analíticos</string>
   <string name="preference_privacy_block_ads">Bloquear rastreadores de anúncio</string>
+  <string name="preference_privacy_block_ads_new_summary">Remove anúncios projetados para rastrear visitas a sites, mesmo que você não toque neles</string>
+  <string name="preference_privacy_block_analytics_new_summary">Bloqueia rastreadores que analisam e medem interações como tocar e deslizar</string>
   <string name="preference_privacy_block_social">Bloquear rastreadores sociais</string>
+  <string name="preference_privacy_block_social_new_summary">Impede rastreadores relacionados a mídias sociais incorporados em sites, incluindo botões de compartilhamento social</string>
   <string name="preference_privacy_block_content">Bloquear outros rastreadores</string>
+  <string name="preference_privacy_block_content_new_summary">Bloqueia atividades de rastreamento, mas pode fazer com que alguns sites e páginas se comportem diferente do esperado</string>
   <string name="preference_privacy_category_cookies">Bloquear cookies</string>
   <string name="preference_privacy_should_block_cookies_no_option">Não</string>
   <string name="preference_privacy_should_block_cookies_third_party_tracker_cookies_option">Bloquear somente cookies rastreadores de terceiros</string>
   <string name="preference_privacy_should_block_cookies_third_party_only_option">Bloquear somente cookies de terceiros</string>
   <string name="preference_privacy_should_block_cookies_yes_option">Sim</string>
+  <string name="preference_privacy_block_cookies_no">Não (permitir todos os cookies)</string>
+  <string name="preference_privacy_block_cookies_third_party_tracker">Bloquear cookies de rastreamento de terceiros (recomendado)</string>
+  <string name="preference_privacy_block_cookies_third_party_only">Bloquear todos os cookies de terceiros \n(pode atrapalhar alguns sites)</string>
+  <string name="preference_privacy_block_cookies_yes">Bloquear todos os cookies (irá atrapalhar alguns sites)</string>
   <string name="preference_security_biometric">Use impressão digital para desbloquear seu aplicativo</string>
   <string name="preference_security_biometric_summary">Sua impressão digital pode desbloquear %1$s se a URL já estiver aberta no aplicativo. O modo invisível será ligado.</string>
   <string name="preference_privacy_secure_mode">Furtividade</string>
@@ -171,6 +183,7 @@
   <string name="contextmenu_open_in_new_tab">Abrir link em nova aba</string>
   <string name="contextmenu_image_warning"><![CDATA["As imagens salvas e compartilhadas "<b xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">n&#227;o ser&#227;o exclu&#237;das</b>" ao apagar o histórico do %1$s."]]></string>
   <string name="firstrun_defaultbrowser_title">Potencialize sua privacidade</string>
+  <string name="firstrun_defaultbrowser_text_new">Bloqueie conteúdo como anúncios e códigos que seguem você através da web e te atrasam. Ative o bloqueio de propaganda para navegar mais rápido sem anúncios chatos.</string>
   <string name="firstrun_search_title">Pesquise à sua maneira</string>
   <string name="firstrun_search_text">Procurando algo diferente? Escolha outro mecanismo de pesquisa padrão em Configurações.</string>
   <string name="firstrun_shortcut_title">Adicione atalhos na sua tela principal</string>
@@ -180,6 +193,8 @@
   <string name="firstrun_close_button">Ok, entendi!</string>
   <string name="firstrun_skip_button">Pular</string>
   <string name="firstrun_next_button">Próximo</string>
+  <string name="block_ads_card_title">%1$s está pronto para bloquear propaganda</string>
+  <string name="block_ads_card_description">Novo recurso! Navegue mais rápido ao impedir anúncios e códigos que seguem você através da web.</string>
   <string name="content_blocking_disabled">-</string>
   <string name="dialog_addtohomescreen_action_add">Adicionar</string>
   <string name="dialog_addtohomescreen_action_cancel">Cancelar</string>
@@ -188,10 +203,10 @@
   <string name="notification_browsing_session_channel_description">As notificações permitem você limpar sua sessão do %1$s com um toque. Você não precisa abrir o app ou ver o que está rodando no seu navegador.</string>
   <string name="tabs_tray_action_erase">Limpar o histórico de navegação</string>
   <string name="download_firefox">Baixar o Firefox</string>
-  <string name="your_rights_content1">O %1$s é um software livre e de código aberto feita pela Mozilla e outros contribuidores.</string>
+  <string name="your_rights_content1">O %1$s é um software livre e de código aberto, feito pela Mozilla e outros colaboradores.</string>
   <string name="your_rights_content2"><![CDATA["O %1$s é disponibilizado de acordo com os termos da "<a xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2" href="%2$s">Mozilla Public License</a>" e outras licenças de código aberto."]]></string>
   <string name="your_rights_content3"><![CDATA["Não lhe são concedidos quaisquer direitos ou licenças sobre marcas registradas da Mozilla Foundation ou de terceiros, incluindo os nomes ou logos da Mozilla, Firefox ou %1$s. Informações adicionais podem ser encontradas "<a xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2" href="%2$s">here</a>.]]></string>
-  <string name="your_rights_content4"><![CDATA["Código fonte adicionais para o %1$s estão disponíveis sobre várias outras "<a xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2" href="%2$s">licen&#231;as</a>" livres e de código aberto."]]></string>
+  <string name="your_rights_content4"><![CDATA["Códigos fonte adicionais do %1$s estão disponíveis sob várias outras "<a xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2" href="%2$s">licen&#231;as</a>" livres e de código aberto."]]></string>
   <string name="your_rights_content5"><![CDATA["O %1$s também utiliza "<em xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">listas de bloqueios</em>" disponibilizadas pela Disconnect, Inc. como um trabalho independente disponibilizado "<a xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2" href="%3$s">aqui</a>", sob a "<a xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2" href="%2$s">GNU General Public License v3</a>.]]></string>
   <string name="gv_prompt_username_hint">Usuário</string>
   <string name="gv_prompt_password_hint">Senha</string>
@@ -219,6 +234,7 @@
   <string name="biometric_auth_title">Desbloquear %1$s</string>
   <string name="biometric_auth_description">Toque no sensor de impressão digital para continuar.</string>
   <string name="biometric_auth_new_session">Nova sessão</string>
+  <string name="biometric_auth_open_link_new_session">Abrir link em nova sessão</string>
   <string name="biometric_auth_image_description">Ícone de impressão digital</string>
   <string name="biometric_auth_not_recognized_error">Impressão digital não reconhecida. Tente novamente.</string>
   <string name="biometric_auth_moved_too_quickly">Seu dedo se moveu muito rápido, tente novamente.</string>
@@ -236,6 +252,8 @@
   <string name="tip_open_in_new_tab">Abrir um link numa nova aba\n Pressione continuamente qualquer link numa página</string>
   <string name="tip_request_desktop">Prefere ver a versão desktop completa do site?%1$s Menu &gt; Solicitar site desktop</string>
   <string name="tip_disable_tips2">Desligar as sugestões na tela inicial</string>
+  <string name="tip_block_ads">Navegue mais rápido impedindo anúncios e códigos que seguem você através da web.</string>
+  <string name="block_ads_title">Bloqueio de propaganda</string>
   <string name="tip_explain_allowlist">É um site de confiança?\n A lista de permissões desativa a proteção contra rastreamento em sites que você conhece e confia.</string>
   <string name="new_tab_opened_snackbar">Nova aba aberta</string>
   <string name="open_new_tab_snackbar">Mudar</string>
@@ -256,4 +274,8 @@
   <string name="fatal_crash_report_close_button_label">Fechar</string>
   <string name="fatal_crash_report_restart_firefox_label">Reiniciar %1$s</string>
   <string name="crash_report_send_crash_label">Enviar relatório de travamento para a Mozilla</string>
+  <string name="content_blocking_enabled_snackbar_message">O bloqueio de conteúdo está ativado</string>
+  <string name="content_blocking_disabled_snackbar_message">O bloqueio de conteúdo está desativado</string>
+  <string name="content_blocking_snackbar_enable_action">Ativar</string>
+  <string name="content_blocking_snackbar_disable_action">Desativar</string>
 </resources>

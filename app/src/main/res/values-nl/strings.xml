@@ -86,7 +86,7 @@
   <string name="preference_privacy_block_social">Sociale trackers blokkeren</string>
   <string name="preference_privacy_block_social_new_summary">Stopt op websites ingebedde sociale-mediagerelateerde trackers, waaronder knoppen voor sociaal delen</string>
   <string name="preference_privacy_block_content">Andere inhoudstrackers blokkeren</string>
-  <string name="preference_privacy_block_content_new_summary">Blokkeert tracking-activiteit, maar kan ervoor zorgen dat bepaalde websites en -pagina’s zich onverwacht gedragen</string>
+  <string name="preference_privacy_block_content_new_summary">Blokkeert tracking-activiteit, maar kan ervoor zorgen dat bepaalde websites en pagina’s zich onverwacht gedragen</string>
   <string name="preference_privacy_category_cookies">Cookies blokkeren</string>
   <string name="preference_privacy_should_block_cookies_no_option">Nee</string>
   <string name="preference_privacy_should_block_cookies_third_party_tracker_cookies_option">Alleen tracking-cookies van derden blokkeren</string>

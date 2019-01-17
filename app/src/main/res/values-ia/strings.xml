@@ -79,11 +79,14 @@
   <string name="preference_privacy_block_ads">Blocar le traciatores de publicitate</string>
   <string name="preference_privacy_block_social">Blocar le traciatores social</string>
   <string name="preference_privacy_block_content">Blocar le altere traciatores de contento</string>
+  <string name="preference_privacy_block_content_new_summary">Bloca le activitate de traciamento, ma pote causar que alcun sitos e paginas ha un comportamento inattendite</string>
   <string name="preference_privacy_category_cookies">Blocar le cookies</string>
   <string name="preference_privacy_should_block_cookies_no_option">No</string>
   <string name="preference_privacy_should_block_cookies_third_party_tracker_cookies_option">Blocar solo le cookies traciator de tertie partes</string>
   <string name="preference_privacy_should_block_cookies_third_party_only_option">Bloca solo le cookies de tertie partes</string>
   <string name="preference_privacy_should_block_cookies_yes_option">Si</string>
+  <string name="preference_privacy_block_cookies_no">No (consentir tote le cookies)</string>
+  <string name="preference_privacy_block_cookies_third_party_tracker">Blocar le cookies traciator de tertie partes (recommendate)</string>
   <string name="preference_security_biometric">Usa le impression digital pro disblocar le application</string>
   <string name="preference_security_biometric_summary">Tu impression digital pote disblocar %1$s si un URL es ja aperte in le application. Le modo furtive sera activate.</string>
   <string name="preference_privacy_secure_mode">Modo furtive</string>
@@ -256,4 +259,6 @@
   <string name="fatal_crash_report_close_button_label">Clauder</string>
   <string name="fatal_crash_report_restart_firefox_label">Reinitiar %1$s</string>
   <string name="crash_report_send_crash_label">Inviar reporto de crash a Mozilla</string>
+  <string name="content_blocking_snackbar_enable_action">Activar</string>
+  <string name="content_blocking_snackbar_disable_action">Disactivar</string>
 </resources>

@@ -36,6 +36,7 @@
   <string name="preference_privacy_and_security_summary">ट्रॅकिंग, कुकीज, डाटा पर्याय</string>
   <string name="preference_search_summary">पूर्वनिर्धारित ठरवा, ऑटोकंप्लिट</string>
   <string name="preference_mozilla_summary">%1$s बद्दल, मदत</string>
+  <string name="preference_category_ad_blocking">जाहिरात अवरोधन</string>
   <string name="preference_category_tracking_protection">मागोवा सुरक्षा</string>
   <string name="preference_category_web_content">वेब मजकूर</string>
   <string name="preference_category_switching_apps">अँप बदलताना</string>
@@ -53,6 +54,7 @@
   <string name="preference_switch_autocomplete_topsites">टॉप साईट करिता</string>
   <string name="preference_autocomplete_topsite_summary">450 हुन अधिक लोकप्रिय URL पत्ता पट्टीमध्ये स्वयंपूर्ण करणे सक्षम करा.</string>
   <string name="preference_switch_autocomplete_user_list">आपण जोडलेल्या साईट करिता</string>
+  <string name="preference_autocomplete_user_list_description">आपण इथे जोडलेल्या साइट स्वयंपूर्ण करणे सक्षम करा.</string>
   <string name="preference_category_autocomplete_manage_sites">साईट व्यवस्थापित करा</string>
   <string name="preference_autocomplete_subitem_manage_sites">साईट व्यवस्थापित करा</string>
   <string name="preference_autocomplete_action_add">+ सानुकूल URL जोडा</string>
@@ -75,6 +77,7 @@
   <string name="preference_language">भाषा</string>
   <string name="preference_language_systemdefault">पूर्वनिर्धारीत प्रणाली</string>
   <string name="preference_category_privacy">गुप्तता</string>
+  <string name="preference_privacy_ads_block_ads">जाहिराती आणि इतर त्रास अवरोधित करा</string>
   <string name="preference_privacy_block_analytics">विश्लेषणात्मक ट्रॅकर्स अवरोधित करा</string>
   <string name="preference_privacy_block_ads">जाहिरात मागोवा यंत्रणा अवरोधित करा</string>
   <string name="preference_privacy_block_social">सामाजिक ट्रॅकर अवरोधित करा</string>

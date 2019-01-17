@@ -36,6 +36,7 @@
   <string name="preference_privacy_and_security_summary">Sledovanie, súbory cookie, údaje o používaní</string>
   <string name="preference_search_summary">Predvolené nastavenia, automatické dopĺňanie</string>
   <string name="preference_mozilla_summary">O aplikácii %1$s, pomocník</string>
+  <string name="preference_category_ad_blocking">Blokovanie reklám</string>
   <string name="preference_category_tracking_protection">Ochrana pred sledovaním</string>
   <string name="preference_category_web_content">Webový obsah</string>
   <string name="preference_category_switching_apps">Prepínanie medzi aplikáciami</string>
@@ -53,6 +54,7 @@
   <string name="preference_switch_autocomplete_topsites">Pre top stránky</string>
   <string name="preference_autocomplete_topsite_summary">Povolením tejto možnosti umožníte aplikácii automaticky dokončovať viac než 450 populárnych URL adries.</string>
   <string name="preference_switch_autocomplete_user_list">Pre vami pridané stránky</string>
+  <string name="preference_autocomplete_user_list_description">Môžete nastaviť automatické dokončovanie stránok, ktoré sem pridáte.</string>
   <string name="preference_category_autocomplete_manage_sites">Spravovať stránky</string>
   <string name="preference_autocomplete_subitem_manage_sites">Spravovať stránky</string>
   <string name="preference_autocomplete_action_add">+ Pridať vlastnú URL</string>
@@ -75,15 +77,25 @@
   <string name="preference_language">Jazyk</string>
   <string name="preference_language_systemdefault">Jazyk zariadenia</string>
   <string name="preference_category_privacy">Súkromie</string>
+  <string name="preference_privacy_ads_block_ads">Blokovať reklamy a ostatné otravné prvky</string>
+  <string name="preference_privacy_ads_block_ads_summary">Toto nastavenie zablokuje reklamy a ostatné otravné prvky pomocou zoznamov blokovania od Easylist, EasyPrivacy, Fanboy’s Annoyance a 777Guard Mobile Ad Filter</string>
   <string name="preference_privacy_block_analytics">Blokovať analytické sledovacie prvky</string>
   <string name="preference_privacy_block_ads">Blokovať reklamné sledovacie prvky</string>
+  <string name="preference_privacy_block_ads_new_summary">Toto nastavenie odstráni reklamy, ktoré vás sledujú aj vtedy, ak na ne nekliknete</string>
+  <string name="preference_privacy_block_analytics_new_summary">Toto nastavenie blokuje sledovacie prvky, ktoré analyzujú a vyhodnocujú interakcie, napríklad ťukanie a posúvanie</string>
   <string name="preference_privacy_block_social">Blokovať sledovacie prvky sociálnych sietí</string>
+  <string name="preference_privacy_block_social_new_summary">Toto nastavenie zablokuje sledovacie prvky sociálnych médií umiestnené na webových stránkach, vrátane tlačidiel na zdieľanie</string>
   <string name="preference_privacy_block_content">Blokovať ostatné sledovacie prvky</string>
+  <string name="preference_privacy_block_content_new_summary">Toto nastavenie blokuje sledovaciu aktivitu, no môže spôsobiť neočakávané správanie niektorých stránok</string>
   <string name="preference_privacy_category_cookies">Blokovať cookies</string>
   <string name="preference_privacy_should_block_cookies_no_option">Nie</string>
   <string name="preference_privacy_should_block_cookies_third_party_tracker_cookies_option">Len sledovacie cookies tretích strán</string>
   <string name="preference_privacy_should_block_cookies_third_party_only_option">Len cookies tretích strán</string>
   <string name="preference_privacy_should_block_cookies_yes_option">Áno</string>
+  <string name="preference_privacy_block_cookies_no">Nie (povoliť všetky cookies)</string>
+  <string name="preference_privacy_block_cookies_third_party_tracker">Blokovať sledovacie cookies tretích strán (odporúča sa)</string>
+  <string name="preference_privacy_block_cookies_third_party_only">Blokovať všetky cookies tretích strán\n(môže spôsobiť nefunkčnosť stránok)</string>
+  <string name="preference_privacy_block_cookies_yes">Blokovať všetky cookies (spôsobí nefunkčnosť niektorých stránok)</string>
   <string name="preference_security_biometric">Na odomknutie aplikácie používať odtlačok prsta</string>
   <string name="preference_security_biometric_summary">Váš odtlačok prsta môže odomknúť %1$s ak je URL v aplikácii už otvorené. Bude zapnutý režim nenápadnosti.</string>
   <string name="preference_privacy_secure_mode">Nenápadnosť</string>
@@ -171,6 +183,7 @@
   <string name="contextmenu_open_in_new_tab">Otvoriť odkaz na novej karte</string>
   <string name="contextmenu_image_warning"><![CDATA["Uložené a zdieľané obrázky "<b xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">nebud&#250; vymazan&#233;</b>" pri vymazaní histórie aplikácie %1$s."]]></string>
   <string name="firstrun_defaultbrowser_title">Posuňte svoje súkromie na vyššiu úroveň</string>
+  <string name="firstrun_defaultbrowser_text_new">Blokujte obsah, ktorý vás sleduje na internete a spomaľuje vás (reklamy a iný kód). Zapnite blokovanie reklám a zrýchlite svoje prehliadanie.</string>
   <string name="firstrun_search_title">Prehliadanie podľa vás</string>
   <string name="firstrun_search_text">Hľadáte niečo iné? Vyberte si iný predvolený vyhľadávací modul v nastaveniach.</string>
   <string name="firstrun_shortcut_title">Pridajte si na svoju úvodnú obrazovku skratky</string>
@@ -180,6 +193,8 @@
   <string name="firstrun_close_button">Ok, rozumiem!</string>
   <string name="firstrun_skip_button">Preskočiť</string>
   <string name="firstrun_next_button">Ďalej</string>
+  <string name="block_ads_card_title">%1$s je pripravený blokovať reklamy</string>
+  <string name="block_ads_card_description">Nová funkcia! Zrýchlite svoje prehliadanie zablokovaním reklám a kódu, ktorý vás sleduje na internete.</string>
   <string name="content_blocking_disabled">-</string>
   <string name="dialog_addtohomescreen_action_add">Pridať</string>
   <string name="dialog_addtohomescreen_action_cancel">Zrušiť</string>
@@ -219,6 +234,7 @@
   <string name="biometric_auth_title">Odomknite %1$s</string>
   <string name="biometric_auth_description">Pre pokračovanie sa dotknite snímača odtlačkov prstov.</string>
   <string name="biometric_auth_new_session">Nová relácia</string>
+  <string name="biometric_auth_open_link_new_session">Otvoriť odkaz v novej relácii</string>
   <string name="biometric_auth_image_description">Ikona odtlačku prsta</string>
   <string name="biometric_auth_not_recognized_error">Odtlačok prsta nebol rozpoznaný. Skúste to znova.</string>
   <string name="biometric_auth_moved_too_quickly">Pohli ste prstom príliš rýchlo. Skúste to znova.</string>
@@ -236,6 +252,8 @@
   <string name="tip_open_in_new_tab">Otvorte odkaz na novej karte\n Podržte prst na akomkoľvek odkaze na stránke</string>
   <string name="tip_request_desktop">Chceli by ste radšej vidieť verziu stránky pre počítače?%1$s Ponuka &gt; Verzia stránky pre počítače</string>
   <string name="tip_disable_tips2">Vypnúť tipy na úvodnej obrazovke aplikácie</string>
+  <string name="tip_block_ads">Zrýchlite svoje prehliadanie zablokovaním reklám a kódu, ktorý vás sleduje na internete.</string>
+  <string name="block_ads_title">Blokovanie reklám</string>
   <string name="tip_explain_allowlist">Dôveryhodná stránka?\n Na stránkach, ktorým dôverujete, môžete vypnúť ochranu pred sledovaním.</string>
   <string name="new_tab_opened_snackbar">Bola otvorená nová karta</string>
   <string name="open_new_tab_snackbar">Prepnúť</string>
@@ -256,4 +274,8 @@
   <string name="fatal_crash_report_close_button_label">Zavrieť</string>
   <string name="fatal_crash_report_restart_firefox_label">Reštartovať %1$s</string>
   <string name="crash_report_send_crash_label">Odoslať správu o zlyhaní Mozille</string>
+  <string name="content_blocking_enabled_snackbar_message">Blokovanie obsahu je zapnuté</string>
+  <string name="content_blocking_disabled_snackbar_message">Blokovanie obsahu je vypnuté</string>
+  <string name="content_blocking_snackbar_enable_action">Zapnúť</string>
+  <string name="content_blocking_snackbar_disable_action">Vypnúť</string>
 </resources>
