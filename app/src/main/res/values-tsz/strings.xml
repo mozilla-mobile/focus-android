@@ -36,6 +36,7 @@
   <string name="preference_privacy_and_security_summary">Estakupani, exepakwa, erakukwaecha</string>
   <string name="preference_search_summary">Pént\'ani, karakurhikwani</string>
   <string name="preference_mozilla_summary">Jarhoap\'ekwa ankueri %1$s,</string>
+  <string name="preference_category_ad_blocking">Ayankpekwaechani kwarhukwaani</string>
   <string name="preference_category_tracking_protection">Estakwa Kwatakwa</string>
   <string name="preference_category_web_content">Eranharhikwaeri Jatakwa</string>
   <string name="preference_category_switching_apps">Úratarakwaechani Móptakuani</string>
@@ -52,6 +53,7 @@
   <string name="preference_subitem_autocomplete">URL Karanharhikuarini</string>
   <string name="preference_switch_autocomplete_topsites">Erakukuhikwaecha</string>
   <string name="preference_autocomplete_topsite_summary">Étskutani karakurhintskwa kari 450 URLs énka sánteru úrakurhijkaksï.</string>
+  <string name="preference_switch_autocomplete_user_list">Eranharhikukwaechani kúparhatani</string>
   <string name="preference_category_autocomplete_manage_sites">Eranharhikwaechani xanhatani</string>
   <string name="preference_autocomplete_subitem_manage_sites">Eranharhikwaechani xanhatani</string>
   <string name="preference_autocomplete_action_add">+ Kúrhuta máteru pékurhintskwa URL</string>

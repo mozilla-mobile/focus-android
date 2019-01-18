@@ -76,6 +76,7 @@
   <string name="preference_language">Idioma</string>
   <string name="preference_language_systemdefault">Valor predeterminado del sistema</string>
   <string name="preference_category_privacy">Privacidad</string>
+  <string name="preference_privacy_ads_block_ads">Bloquear anuncios y otras molestias</string>
   <string name="preference_privacy_block_analytics">Bloquear rastreadores analíticos</string>
   <string name="preference_privacy_block_ads">Bloquear rastreadores de publicidad</string>
   <string name="preference_privacy_block_social">Bloquear rastreadores sociales</string>
@@ -86,6 +87,7 @@
   <string name="preference_privacy_should_block_cookies_third_party_only_option">Bloquear solo cookies de terceros</string>
   <string name="preference_privacy_should_block_cookies_yes_option">Sí</string>
   <string name="preference_privacy_block_cookies_no">No (permitir todas las cookies)</string>
+  <string name="preference_privacy_block_cookies_third_party_tracker">Bloquear cookies de rastreadores de terceros (recomendado)</string>
   <string name="preference_security_biometric">Usar huella digital para desbloquear aplicación</string>
   <string name="preference_security_biometric_summary">Tu huella digital puede desbloquear %1$s si una URL está abierta en la aplicación. Se activará el modo invisible.</string>
   <string name="preference_privacy_secure_mode">Invisible</string>

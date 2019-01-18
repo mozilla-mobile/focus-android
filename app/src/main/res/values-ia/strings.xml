@@ -222,6 +222,7 @@
   <string name="biometric_auth_title">Disblocar %1$s</string>
   <string name="biometric_auth_description">Tocca le sensor del impression digital pro continuar.</string>
   <string name="biometric_auth_new_session">Nove session</string>
+  <string name="biometric_auth_open_link_new_session">Aperir le ligamine in un nove session</string>
   <string name="biometric_auth_image_description">Icone del impression digital</string>
   <string name="biometric_auth_not_recognized_error">Impression digital non recognoscite. Prova de novo.</string>
   <string name="biometric_auth_moved_too_quickly">Digito movite troppo rapide. Prova de novo.</string>

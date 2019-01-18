@@ -36,6 +36,7 @@
   <string name="preference_privacy_and_security_summary">ट्रैकिंग, कुकीज़, डेटा विकल्प</string>
   <string name="preference_search_summary">तयशुदा बनायें, स्वत: पूर्ण</string>
   <string name="preference_mozilla_summary">%1$s परिचय, सहायता</string>
+  <string name="preference_category_ad_blocking">विज्ञापन अवरोधन</string>
   <string name="preference_category_tracking_protection">ट्रैकिंग सुरक्षा</string>
   <string name="preference_category_web_content">वेब सामग्री</string>
   <string name="preference_category_switching_apps">ऐप्स बदलना</string>
@@ -84,6 +85,10 @@
   <string name="preference_privacy_should_block_cookies_third_party_tracker_cookies_option">केवल तृतीय-पक्ष ट्रैकर कूकीज़ ब्लॉक करें</string>
   <string name="preference_privacy_should_block_cookies_third_party_only_option">केवल तीसरे पक्ष की कुकीज़ बाधित करें</string>
   <string name="preference_privacy_should_block_cookies_yes_option">हाँ</string>
+  <string name="preference_privacy_block_cookies_no">नहीं (सभी कुकीज़ की अनुमति दें)</string>
+  <string name="preference_privacy_block_cookies_third_party_tracker">तृतीय-पक्ष ट्रैकर कुकीज़ को अवरोधित करें (अनुशंसित)</string>
+  <string name="preference_privacy_block_cookies_third_party_only">सभी तृतीय-पक्ष कुकीज़ अवरोधित करें\n(वेबसाइटों के टूटने का कारण हो सकता है)</string>
+  <string name="preference_privacy_block_cookies_yes">सभी कुकीज़ अवरोधित करें (वेबसाइटों को तोड़ने का कारण बनेगा)</string>
   <string name="preference_security_biometric">ऐप्प को अनलॉक करने के लिए फिंगरप्रिंट का इस्तेमाल करें</string>
   <string name="preference_security_biometric_summary">यदि ऐप्प में पहले ही कोई URL खुली हो तो आपकी फिंगरप्रिंट %1$s को अनलॉक कर सकती है. गोपनीयता चालू हो जायेगी।</string>
   <string name="preference_privacy_secure_mode">गुप्तता</string>
@@ -219,6 +224,7 @@
   <string name="biometric_auth_title">%1$s को खोलें</string>
   <string name="biometric_auth_description">जारी रखने के लिए फिंगरप्रिंट संवेदक स्पर्श करें।</string>
   <string name="biometric_auth_new_session">नया सत्र</string>
+  <string name="biometric_auth_open_link_new_session">नए सत्र में लिंक खोलें</string>
   <string name="biometric_auth_image_description">फिंगरप्रिंट चिन्ह</string>
   <string name="biometric_auth_not_recognized_error">फिंगरप्रिंट अमान्य। पुनः प्रयास करें।</string>
   <string name="biometric_auth_moved_too_quickly">ऊँगली काफी जल्दी हटा ली गयी। पुनः प्रयास करें।</string>
@@ -236,6 +242,7 @@
   <string name="tip_open_in_new_tab">कोई लिंक एक नये टैब में खोलें\n पृष्ठ पर किसी लिंक पर कुछ देर दबा कर रखें</string>
   <string name="tip_request_desktop">इसके बदले पूर्ण डेस्कटॉप साइट देखें?%1$s मेन्यु &gt; डेस्कटॉप साइट कि अनुरोध करें</string>
   <string name="tip_disable_tips2">प्रारंभ स्क्रीन पर सलाह बंद करें</string>
+  <string name="block_ads_title">विज्ञापन अवरोधन</string>
   <string name="tip_explain_allowlist">भरोसेमंद साइट?\n स्वीकृतिसूची उन साइटों के लिए ट्रैकिंग सुरक्षा अक्षम करता है जिन्हें आप जानते हैं और उन पर भरोसा करते हैं।</string>
   <string name="new_tab_opened_snackbar">नया टैब खोल दिया गया</string>
   <string name="open_new_tab_snackbar">बदलें</string>
@@ -256,4 +263,8 @@
   <string name="fatal_crash_report_close_button_label">बंद करें</string>
   <string name="fatal_crash_report_restart_firefox_label">%1$s पुनः प्रारंभ करें</string>
   <string name="crash_report_send_crash_label">Mozilla को क्रैश रिपोर्ट भेजें</string>
+  <string name="content_blocking_enabled_snackbar_message">सामग्री अवरोधन सक्रिय है</string>
+  <string name="content_blocking_disabled_snackbar_message">सामग्री अवरोधन निष्क्रिय है</string>
+  <string name="content_blocking_snackbar_enable_action">सक्रिय करें</string>
+  <string name="content_blocking_snackbar_disable_action">निष्क्रिय करें</string>
 </resources>

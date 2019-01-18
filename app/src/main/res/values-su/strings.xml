@@ -31,11 +31,11 @@
   <string name="shortcut_erase_long_label">Pupus jujutan langlangan</string>
   <string name="shortcut_erase_and_open_short_label">Pupus &amp; buka</string>
   <string name="text_selection_search_action">Pamaluruhan Nyamuni</string>
-  <string name="about_content"><![CDATA[<p xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">%1$s m&#233;r&#233; anjeun kadali.</p>\n<p xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">"Pak&#233; pikeun panyungsi nyalindung:\n  "<ul>"\n    "<li>Paluruh jeung sungsi langsung dina appna</li>"\n    "<li>Peungpeuk palacak (atawa apd&#233;t set&#233;lan pikeun ngaheugba&#233;keun palacak)</li>"\n    "<li>Pupus pikeun ngaleungitkeun kuki pon kitu og&#233; jujutan pamaluruhan jeung panyungsian</li>"\n  "</ul>\n</p>\n<p xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">%1$s dijieun ku Mozilla. Misina nya &#233;ta pikeun ngamumul&#233; Intern&#233;t nembrak anu s&#233;hat.<br/>\n<a href="%2$s">Lenyepan</a></p>]]></string>
   <string name="preference_privacy_and_security_header">Salindungan &amp; Kaamanan</string>
   <string name="preference_privacy_and_security_summary">Palacakan, kuki, pilihan data</string>
   <string name="preference_search_summary">Setél baku, otokumplit</string>
   <string name="preference_mozilla_summary">Ngeunaan %1$s, pitulung</string>
+  <string name="preference_category_ad_blocking">Peungpeuk Iklan</string>
   <string name="preference_category_tracking_protection">Kilung Palacakan</string>
   <string name="preference_category_web_content">Eusi Raramat</string>
   <string name="preference_category_switching_apps">Pindah Apps</string>
@@ -53,6 +53,7 @@
   <string name="preference_switch_autocomplete_topsites">Pikeun loka Petingan</string>
   <string name="preference_autocomplete_topsite_summary">Aktipkeun pikeun otomatis ngalengkepan leuwih ti 450 URL populér dina palang alamat.</string>
   <string name="preference_switch_autocomplete_user_list">Pikeun Loka anu Anjeun Nambahkeun</string>
+  <string name="preference_autocomplete_user_list_description">Bisakeun otokumplit loka anu diasupkeun di dieu.</string>
   <string name="preference_category_autocomplete_manage_sites">Kokolakeun loka</string>
   <string name="preference_autocomplete_subitem_manage_sites">Kokolakeun loka</string>
   <string name="preference_autocomplete_action_add">+ Tambah URL sakahayang</string>
@@ -75,6 +76,7 @@
   <string name="preference_language">Basa</string>
   <string name="preference_language_systemdefault">Baku sistem</string>
   <string name="preference_category_privacy">Privasi</string>
+  <string name="preference_privacy_ads_block_ads">Peungpeuk iklan jeung rereged lianna</string>
   <string name="preference_privacy_block_analytics">Peungpeuk palacak analitik</string>
   <string name="preference_privacy_block_ads">Peungpeuk palacak iklan</string>
   <string name="preference_privacy_block_social">Peungpeuk palacak sosial</string>
