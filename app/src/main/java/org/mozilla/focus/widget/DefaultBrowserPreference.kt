@@ -19,16 +19,12 @@ class DefaultBrowserPreference : Preference {
     private var switchView: Switch? = null
 
     // Instantiated from XML
-    constructor(context: Context, attrs: AttributeSet, defStyleAttr: Int) : super(context, attrs, defStyleAttr) {
-        init()
-    }
+    constructor(context: Context, attrs: AttributeSet, defStyleAttr: Int) : super(context, attrs, defStyleAttr)
 
     // Instantiated from XML
-    constructor(context: Context, attrs: AttributeSet) : super(context, attrs) {
-        init()
-    }
+    constructor(context: Context, attrs: AttributeSet) : super(context, attrs)
 
-    private fun init() {
+    init {
         widgetLayoutResource = R.layout.preference_default_browser
 
         val appName = context.resources.getString(R.string.app_name)
