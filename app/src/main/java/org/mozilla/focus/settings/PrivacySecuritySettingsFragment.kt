@@ -37,10 +37,10 @@ class PrivacySecuritySettingsFragment : BaseSettingsFragment(),
 
         val safeBrowsingPreference =
             findPreference(getString(R.string.pref_key_category_safe_browsing))
-        preferenceScreen.removePreference(safeBrowsingPreference)
         val cookiesPreference =
             findPreference(getString(R.string.pref_key_performance_enable_cookies)) as CookiesPreference
         if (!AppConstants.isGeckoBuild) {
+            preferenceScreen.removePreference(safeBrowsingPreference)
             val cookiesStringsWV =
                 requireContext().resources.getStringArray(R.array.preference_privacy_cookies_options)
                     .filter {
