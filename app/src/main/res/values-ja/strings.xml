@@ -36,6 +36,7 @@
   <string name="preference_privacy_and_security_summary">トラッキング、Cookie、データの選択</string>
   <string name="preference_search_summary">既定、自動補完を設定</string>
   <string name="preference_mozilla_summary">%1$s について、ヘルプ</string>
+  <string name="preference_category_ad_blocking">広告ブロック</string>
   <string name="preference_category_tracking_protection">トラッキング防止</string>
   <string name="preference_category_web_content">ウェブコンテンツ</string>
   <string name="preference_category_switching_apps">アプリを切り替え</string>
@@ -53,6 +54,7 @@
   <string name="preference_switch_autocomplete_topsites">よく見るサイト</string>
   <string name="preference_autocomplete_topsite_summary">アドレスバーで 450 以上の人気サイトの URL の自動補完を有効にします。</string>
   <string name="preference_switch_autocomplete_user_list">追加したサイト</string>
+  <string name="preference_autocomplete_user_list_description">ここに追加したサイトの自動補完を有効にします。</string>
   <string name="preference_category_autocomplete_manage_sites">サイトの管理</string>
   <string name="preference_autocomplete_subitem_manage_sites">サイトの管理</string>
   <string name="preference_autocomplete_action_add">+ カスタム URL を追加</string>
@@ -75,8 +77,11 @@
   <string name="preference_language">言語</string>
   <string name="preference_language_systemdefault">システム標準</string>
   <string name="preference_category_privacy">プライバシー</string>
+  <string name="preference_privacy_ads_block_ads">広告や他の迷惑なコンテンツをブロック</string>
+  <string name="preference_privacy_ads_block_ads_summary">Easylist や EasyPrivacy, Fanboy’s Annoyance, 777Guard Mobile Ad Filter からのブロックリストを利用して広告と他の迷惑なコンテンツを停止します。</string>
   <string name="preference_privacy_block_analytics">アクセス解析をブロック</string>
   <string name="preference_privacy_block_ads">追跡広告をブロック</string>
+  <string name="preference_privacy_block_ads_new_summary">表示しただけでサイトへの訪問を追跡するように作られた広告を削除します。</string>
   <string name="preference_privacy_block_social">ソーシャル追跡をブロック</string>
   <string name="preference_privacy_block_content">他の追跡コンテンツをブロック</string>
   <string name="preference_privacy_category_cookies">Cookie をブロック</string>
@@ -219,6 +224,7 @@
   <string name="biometric_auth_title">%1$s のロックを解除</string>
   <string name="biometric_auth_description">続けるには指紋センサーにタッチしてください。</string>
   <string name="biometric_auth_new_session">新規セッション</string>
+  <string name="biometric_auth_open_link_new_session">リンクを新しいセッションで開く</string>
   <string name="biometric_auth_image_description">指紋アイコン</string>
   <string name="biometric_auth_not_recognized_error">指紋を認識できませんでした。もう一度試してください。</string>
   <string name="biometric_auth_moved_too_quickly">指の動きが素早すぎます。もう一度試してください。</string>
@@ -256,4 +262,8 @@
   <string name="fatal_crash_report_close_button_label">閉じる</string>
   <string name="fatal_crash_report_restart_firefox_label">%1$s を再起動</string>
   <string name="crash_report_send_crash_label">クラッシュレポートを Mozilla へ送信する</string>
+  <string name="content_blocking_enabled_snackbar_message">コンテンツブロッキングは有効です</string>
+  <string name="content_blocking_disabled_snackbar_message">コンテンツブロッキングは無効です</string>
+  <string name="content_blocking_snackbar_enable_action">有効化</string>
+  <string name="content_blocking_snackbar_disable_action">無効化</string>
 </resources>

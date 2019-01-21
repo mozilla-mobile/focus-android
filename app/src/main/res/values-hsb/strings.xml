@@ -54,6 +54,7 @@
   <string name="preference_switch_autocomplete_topsites">Za najlubše sydła</string>
   <string name="preference_autocomplete_topsite_summary">Zmóžnić, zo by so wjace hač 450 woblubowanych adresow w adresowym polu wudospołniło.</string>
   <string name="preference_switch_autocomplete_user_list">Za sydła, kotrež přidawaće</string>
+  <string name="preference_autocomplete_user_list_description">Zmóžnić, zo bychu so sydła awtomatisce aktualizowali, kotrež tu přidawaće.</string>
   <string name="preference_category_autocomplete_manage_sites">Sydła rjadować</string>
   <string name="preference_autocomplete_subitem_manage_sites">Sydła rjadować</string>
   <string name="preference_autocomplete_action_add">+ Swójsku adresu přidać</string>
@@ -76,10 +77,16 @@
   <string name="preference_language">Rěč</string>
   <string name="preference_language_systemdefault">Systemowy standard</string>
   <string name="preference_category_privacy">Priwatnosć</string>
+  <string name="preference_privacy_ads_block_ads">Wabjenje a druhe wobćežowanja blokować</string>
+  <string name="preference_privacy_ads_block_ads_summary">Blokuje wabjenje a druhe wobćežowanja z blokowanskimi lisćinami wot Easylist, EasyPrivacy, Fanboy\'s Annoyance a 777Guard Mobile Ad Filter</string>
   <string name="preference_privacy_block_analytics">Analyzowe přesćěhowaki blokować</string>
   <string name="preference_privacy_block_ads">Wabjenske přesćěhowaki blokować</string>
+  <string name="preference_privacy_block_ads_new_summary">Wotstronja wabjenje, kotrež ma wopytam sydłow slědować, samo hdyž njejsće jich podótknył</string>
+  <string name="preference_privacy_block_analytics_new_summary">Blokuje přesćěhowaki, kotrež interakcije kaž podótki a kulenje analyzuja a wuhódnoćeja</string>
   <string name="preference_privacy_block_social">Socialne přesćěhowaki blokować</string>
+  <string name="preference_privacy_block_social_new_summary">Blokuje přesćěhowaki socialnych medijow, kotrež su we websydłach zasadźene, inkluziwnje tłóčatka za dźělenje w socialnych syćach</string>
   <string name="preference_privacy_block_content">Druhe wobsahowe přesćěhowaki blokować</string>
+  <string name="preference_privacy_block_content_new_summary">Blokuje slědowansku aktiwitu, ale móže zawinować, zo so někotre sydła a strony na njewočakowane wašnje zadźeržeja</string>
   <string name="preference_privacy_category_cookies">Placki blokować</string>
   <string name="preference_privacy_should_block_cookies_no_option">Ně</string>
   <string name="preference_privacy_should_block_cookies_third_party_tracker_cookies_option">Jenož slědowace placki třećich poskićowarjow blokować</string>
@@ -176,6 +183,7 @@
   <string name="contextmenu_open_in_new_tab">Wotkaz w nowym rajtarku wočinić</string>
   <string name="contextmenu_image_warning"><![CDATA["Składowane a dźělene wobrazy "<b xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">so njezha&#353;eja</b>, hdyž historiju %1$s zhašeće.]]></string>
   <string name="firstrun_defaultbrowser_title">Zesylńće swoju priwatnosć</string>
+  <string name="firstrun_defaultbrowser_text_new">Blokujće wobsah kaž wabjenje a kod, kotrejž wam po webje slědujetej a was borzdźitej. Zmóžńće blokowanje, zo byšće bjez wobćežneho wabjenja spěšnišo přehladował.</string>
   <string name="firstrun_search_title">Waše pytanje kaž wy jo chceće</string>
   <string name="firstrun_search_text">Pytaće za něčim druhim? Wubjerće druhu stndardnu pytawu w nastajenjach.</string>
   <string name="firstrun_shortcut_title">Přidajće swojej startowej wobrazowce tastowe skrótšenki</string>
@@ -186,6 +194,7 @@
   <string name="firstrun_skip_button">Přeskočić</string>
   <string name="firstrun_next_button">Dale</string>
   <string name="block_ads_card_title">%1$s je hotowy, wabjenje blokować</string>
+  <string name="block_ads_card_description">Nowa funkcija! Blokujće wabjenje a kod, kotrejž wam po webje slědujetej, zo byšće spěšnišo přehladował.</string>
   <string name="content_blocking_disabled">-</string>
   <string name="dialog_addtohomescreen_action_add">Přidać</string>
   <string name="dialog_addtohomescreen_action_cancel">Přetorhnyć</string>
@@ -243,6 +252,7 @@
   <string name="tip_open_in_new_tab">Wotkaz w nowym rajtarku wočinić\nTłóčće dołho na wotkaz na stronje</string>
   <string name="tip_request_desktop">Chceće radšo dospołne desktopowe sydło widźeć?%1$s Meni &gt; Desktopowe sydło požadać</string>
   <string name="tip_disable_tips2">Pokiwy na starrtowej wobrazowce znjemóžnić</string>
+  <string name="tip_block_ads">Blokujće wabjenje a kod, kotrejž wam po webje slědujetej, zo byšće spěšnišo přehladował.</string>
   <string name="block_ads_title">Blokowanje wabjenja</string>
   <string name="tip_explain_allowlist">Dowěry hódne sydło?\nZ dowolenskej lisćinje móžeće slědowanski škit za sydła, kotrež znajeće a kotrymž dowěrjeće, znjemóžnić.</string>
   <string name="new_tab_opened_snackbar">Nowy rajtark je so wočinił</string>
