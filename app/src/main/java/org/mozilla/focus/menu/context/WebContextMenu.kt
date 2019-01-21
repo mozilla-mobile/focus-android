@@ -196,7 +196,7 @@ object WebContextMenu {
                     true
                 }
                 R.id.menu_new_tab -> {
-                    val newSession = Session(hitResult.src, source = Session.Source.MENU)
+                    val newSession = Session(hitResult.getLink(), source = Session.Source.MENU)
                     context.components.sessionManager.add(
                         newSession,
                         selected = Settings.getInstance(context).shouldOpenNewTabs()
