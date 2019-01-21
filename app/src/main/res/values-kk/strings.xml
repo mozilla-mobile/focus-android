@@ -54,6 +54,7 @@
   <string name="preference_switch_autocomplete_topsites">Үздік сайттар үшін</string>
   <string name="preference_autocomplete_topsite_summary">Адрестік жолақта 450-ден астам әйгілі URL-ды автотолықтыру үшін іске қосыңыз.</string>
   <string name="preference_switch_autocomplete_user_list">Қосылатын сайттар үшін</string>
+  <string name="preference_autocomplete_user_list_description">Осында қосқан сайттарды автотолықтыру үшін іске қосу.</string>
   <string name="preference_category_autocomplete_manage_sites">Сайттарды басқару</string>
   <string name="preference_autocomplete_subitem_manage_sites">Сайттарды басқару</string>
   <string name="preference_autocomplete_action_add">+ Таңдауыңызша URL қосу</string>
@@ -76,6 +77,7 @@
   <string name="preference_language">Тіл</string>
   <string name="preference_language_systemdefault">Жүйелік</string>
   <string name="preference_category_privacy">Жекелік</string>
+  <string name="preference_privacy_ads_block_ads">Жарнаманы және т.б. мазаны алатындарды бұғаттау</string>
   <string name="preference_privacy_block_analytics">Аналитикалық трекерлерді блоктау</string>
   <string name="preference_privacy_block_ads">Жарнама трекерлерін блоктау</string>
   <string name="preference_privacy_block_social">Әлеуметтік желілер трекерлерін блоктау</string>
@@ -85,6 +87,7 @@
   <string name="preference_privacy_should_block_cookies_third_party_tracker_cookies_option">Тек үшінші жақты cookies файлдарын бұғаттау</string>
   <string name="preference_privacy_should_block_cookies_third_party_only_option">Тек үшінші жақты cookies файлдарын бұғаттау</string>
   <string name="preference_privacy_should_block_cookies_yes_option">Иә</string>
+  <string name="preference_privacy_block_cookies_no">Жоқ (барлық cookie файлдарын рұқсат ету)</string>
   <string name="preference_security_biometric">Қолданбаны босату үшін саусақ баспасын қолдану</string>
   <string name="preference_security_biometric_summary">Сіздің саусақ баспаңыз URL сілтемеде ашық болған кезде %1$s босата алады. Тыңшы іске қосылатын болады.</string>
   <string name="preference_privacy_secure_mode">Жасырын</string>
@@ -181,6 +184,7 @@
   <string name="firstrun_close_button">Жақсы, түсіндім!</string>
   <string name="firstrun_skip_button">Аттап кету</string>
   <string name="firstrun_next_button">Келесі</string>
+  <string name="block_ads_card_title">%1$s жарнаманы бұғаттауға дайын</string>
   <string name="content_blocking_disabled">-</string>
   <string name="dialog_addtohomescreen_action_add">Қосу</string>
   <string name="dialog_addtohomescreen_action_cancel">Бас тарту</string>

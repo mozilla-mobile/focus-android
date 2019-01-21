@@ -36,6 +36,7 @@
   <string name="preference_privacy_and_security_summary">Lista ña rastreo, cookies tsi tutu</string>
   <string name="preference_search_summary">Chikai tana xina, cha ntacha\'a mií ña</string>
   <string name="preference_mozilla_summary">Tu\'un tsa %1$s, ña chinhe\'e yo</string>
+  <string name="preference_category_ad_blocking">Kasi anuncio</string>
   <string name="preference_category_tracking_protection">Protección de rastreo</string>
   <string name="preference_category_web_content">Tutu web</string>
   <string name="preference_category_switching_apps">Sama kue aplicacion</string>
@@ -74,14 +75,17 @@
   <string name="preference_language">Tu\'un</string>
   <string name="preference_language_systemdefault">Nkoi ta xi’na</string>
   <string name="preference_category_privacy">Sèè</string>
+  <string name="preference_privacy_ads_block_ads">Kasi anuncios tsi ña va\'a</string>
   <string name="preference_privacy_block_analytics">Kasi ña ndukuyo</string>
   <string name="preference_privacy_block_ads">Kasi ña ndukuyo</string>
   <string name="preference_privacy_block_social">Kasi ña ndukuyo</string>
   <string name="preference_privacy_block_content">Kasi ña ndukuyo inka tsio</string>
   <string name="preference_privacy_category_cookies">Kasi cookies</string>
   <string name="preference_privacy_should_block_cookies_no_option">No</string>
+  <string name="preference_privacy_should_block_cookies_third_party_tracker_cookies_option">Kasi cookies ña inkana</string>
   <string name="preference_privacy_should_block_cookies_third_party_only_option">Kasi cookies ña inkana</string>
   <string name="preference_privacy_should_block_cookies_yes_option">Va\'a</string>
+  <string name="preference_privacy_block_cookies_no">No(ma kunu ntii kookies)</string>
   <string name="preference_security_biometric">Kuchun huella digital tava kunu aplicación</string>
   <string name="preference_security_biometric_summary">Tsi huella digital ku kunu %1$s tatu nuna iin URL nu aplicación. Ku nchikasii ña ncheu.</string>
   <string name="preference_privacy_secure_mode">Sèè</string>
@@ -231,6 +235,7 @@
   <string name="tip_autocomplete_url">Ntasa URLs ña sitio ña kuaka chichu\'un\n Katavi URL niku nu barra ña direcciones</string>
   <string name="tip_open_in_new_tab">Kuna enlace nu xikua tsaá\n Katavi nchi enlace niku nu página</string>
   <string name="tip_request_desktop">¿A kunu kuncheu sitio nu escritorio?%1$s Menú &gt; Kaka sitio de escritorio</string>
+  <string name="block_ads_title">Kasi anuncio</string>
   <string name="new_tab_opened_snackbar">Ndutsa xikua nuna</string>
   <string name="open_new_tab_snackbar">Sama</string>
   <string name="preference_category_safe_browsing">Kitsaà Ntukú</string>
@@ -246,4 +251,6 @@
   <string name="fatal_crash_report_close_button_label">Kasi</string>
   <string name="fatal_crash_report_restart_firefox_label">Ndakitsa%1$s</string>
   <string name="crash_report_send_crash_label">Tachu\'un tu\'un ña vai nu Mozilla</string>
+  <string name="content_blocking_snackbar_enable_action">Ndatu\'un</string>
+  <string name="content_blocking_snackbar_disable_action">Nta xitaá</string>
 </resources>

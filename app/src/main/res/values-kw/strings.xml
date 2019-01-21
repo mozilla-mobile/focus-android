@@ -36,6 +36,7 @@
   <string name="preference_privacy_and_security_summary">Helerghi, cookies, dewisyow data</string>
   <string name="preference_search_summary">Settya defowt, awto-gowlwul</string>
   <string name="preference_mozilla_summary">A-dro dhe %1$s, gweres</string>
+  <string name="preference_category_ad_blocking">Lettya argemydnow</string>
   <string name="preference_category_tracking_protection">Difresans rag helerghi</string>
   <string name="preference_category_web_content">Dalgh gwias</string>
   <string name="preference_category_switching_apps">Skwychya towlennow</string>
@@ -53,6 +54,7 @@
   <string name="preference_switch_autocomplete_topsites">Rag an gwiasvaow an moyha visityes</string>
   <string name="preference_autocomplete_topsite_summary">Gallosegi rag awto-kollenwel moy es 450 URL meurgerys y\'n barr trigva.</string>
   <string name="preference_switch_autocomplete_user_list">Rag gwiasvaow a geworrowgh</string>
+  <string name="preference_autocomplete_user_list_description">Galosegy rag awto-lenwel gwiasvaow keworrys genowgh obma.</string>
   <string name="preference_category_autocomplete_manage_sites">Dyghtya gwiasvaow</string>
   <string name="preference_autocomplete_subitem_manage_sites">Dyghtya gwiasvaow</string>
   <string name="preference_autocomplete_action_add">+ Keworra URL personelhes</string>
@@ -75,15 +77,25 @@
   <string name="preference_language">Yeth</string>
   <string name="preference_language_systemdefault">Defowt an system</string>
   <string name="preference_category_privacy">Privetter</string>
+  <string name="preference_privacy_ads_block_ads">Lettya argemydnow ha troblow erel</string>
+  <string name="preference_privacy_ads_block_ads_summary">Rag lettya argemydnow ha troblow erel der usya rolyow lettya gen Easylist, EasyPrivacy, Fanboy\'s Annoyance ha 777Guard Mobile Ad Filter</string>
   <string name="preference_privacy_block_analytics">Lettya helerghellow dielvenna</string>
   <string name="preference_privacy_block_ads">Lettya helerghellow argemynnow</string>
+  <string name="preference_privacy_block_ads_new_summary">Rag dilea argemydnow desinys dhe helerhy visityansow dhe wiasvaow ken na wrella why aga thappya</string>
+  <string name="preference_privacy_block_analytics_new_summary">Rag lettya helerhellow a wra dielvedna ha musura gwrianjow kepar ha tappya ha scrollya</string>
   <string name="preference_privacy_block_social">Lettya helerghellow kowethasek</string>
+  <string name="preference_privacy_block_social_new_summary">Rag lettya helerhellow media cowethasek sedhys en gwiasvaow, et aga mesk botons radna cowethasek</string>
   <string name="preference_privacy_block_content">Lettya helerghellow dalgh erel</string>
+  <string name="preference_privacy_block_content_new_summary">Rag lettya gwrians helerhy, mes hemm a alja cawsya neb gwiasvaow ha folednow dhe fara en maner anwortys</string>
   <string name="preference_privacy_category_cookies">Lettya cookies</string>
   <string name="preference_privacy_should_block_cookies_no_option">Sevel orth lettya</string>
   <string name="preference_privacy_should_block_cookies_third_party_tracker_cookies_option">Lettya cookies helerghi 3a-parti yn unnik</string>
   <string name="preference_privacy_should_block_cookies_third_party_only_option">Cookies 3a parti yn unnik</string>
   <string name="preference_privacy_should_block_cookies_yes_option">Pub cookie oll</string>
+  <string name="preference_privacy_block_cookies_no">Na wra (alowa pub cookie)</string>
+  <string name="preference_privacy_block_cookies_third_party_tracker">Lettya cookies helerhellow treja party (comendys)</string>
+  <string name="preference_privacy_block_cookies_third_party_only">Lettya pob cookie treja party\n(gwiasvaow a alja terry)</string>
+  <string name="preference_privacy_block_cookies_yes">Lettya pub cookie (gwiasvaow a vedh cawsys dhe derry)</string>
   <string name="preference_security_biometric">Usya bysprynt rag dialhwedha an app</string>
   <string name="preference_security_biometric_summary">Agas bysprynt a yll dialhwedha %1$s mars eus URL ygerys y\'n app. An modh kel a vydh bywhes.</string>
   <string name="preference_privacy_secure_mode">Modh kel</string>
@@ -171,6 +183,7 @@
   <string name="contextmenu_open_in_new_tab">Ygeri an gevren yn tabb nowydh</string>
   <string name="contextmenu_image_warning"><![CDATA[<b xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">Ny vydh diles</b>" imajys gwithys ha rynnys pan wrellowgh hwi dilea istori %1$s."]]></string>
   <string name="firstrun_defaultbrowser_title">Kenerthowgh agas privetter</string>
+  <string name="firstrun_defaultbrowser_text_new">Lettya dalgh kepar hag argemydnow ha cod a wra agas holya a-dro dhe\'n wias ha\'gas lenthe. Enowowgh lettya argemydnow rag pory moy uskis heb argemydnow fyslek.</string>
   <string name="firstrun_search_title">Hwilas y\'gas fordh hwi</string>
   <string name="firstrun_search_text">Ow hwilas neppyth dyffrans? Dewisewgh jynn-hwilas defowt aral y\'n settyansow.</string>
   <string name="firstrun_shortcut_title">Keworra skochfordh dhe\'gas skrin dre</string>
@@ -180,6 +193,8 @@
   <string name="firstrun_close_button">OK!</string>
   <string name="firstrun_skip_button">Hepkor</string>
   <string name="firstrun_next_button">Nessa</string>
+  <string name="block_ads_card_title">Parys yw %1$s dhe lettya argemydnow</string>
+  <string name="block_ads_card_description">Nas noweth! Porowgh moy uskis dre lettya argemydnow ha cod a wra agas holya a-dro dhe\'n wias.</string>
   <string name="content_blocking_disabled">-</string>
   <string name="dialog_addtohomescreen_action_add">Keworra</string>
   <string name="dialog_addtohomescreen_action_cancel">Hedhi</string>
@@ -219,6 +234,7 @@
   <string name="biometric_auth_title">Dialhwedha %1$s</string>
   <string name="biometric_auth_description">Tochyowgh an sensour bysprynt rag pesya.</string>
   <string name="biometric_auth_new_session">Esedhek nowydh</string>
+  <string name="biometric_auth_open_link_new_session">Egery an gevren en sedhek noweth</string>
   <string name="biometric_auth_image_description">Arwodhik bysprynt</string>
   <string name="biometric_auth_not_recognized_error">Ny veu aswonys an bysprint. Assayowgh arta.</string>
   <string name="biometric_auth_moved_too_quickly">Agas bys a wayas re uskis. Assayowgh arta.</string>
@@ -236,6 +252,8 @@
   <string name="tip_open_in_new_tab">Ygeri kevren yn tabb nowydh\nHirwaskowgh neb kevren folen</string>
   <string name="tip_request_desktop">Gwell gweles an wiasva desktop leun?%1$sRol &gt; Gwiasva desktop</string>
   <string name="tip_disable_tips2">Diallosegi profyansow war an skrin dre</string>
+  <string name="tip_block_ads">Porowgh moy uskis dre lettya argemydnow ha cod a wra agas holya a-dro dhe\'n wias.</string>
+  <string name="block_ads_title">Lettya argemydnow</string>
   <string name="tip_explain_allowlist">Gwiasva trestys?\nAn alowrol a dhiallosek difresans helerghi war wiasvaow a wrewgh hwi aswon ha trestya.</string>
   <string name="new_tab_opened_snackbar">Tabb nowydh ygerys</string>
   <string name="open_new_tab_snackbar">Skwychya</string>
@@ -256,4 +274,8 @@
   <string name="fatal_crash_report_close_button_label">Degea</string>
   <string name="fatal_crash_report_restart_firefox_label">Dastalleth %1$s</string>
   <string name="crash_report_send_crash_label">Danvon derivas bomm dhe Mozilla</string>
+  <string name="content_blocking_enabled_snackbar_message">Galosegys yw lettya dalgh</string>
+  <string name="content_blocking_disabled_snackbar_message">Dialosegys yw lettya dalgh</string>
+  <string name="content_blocking_snackbar_enable_action">Galosegy</string>
+  <string name="content_blocking_snackbar_disable_action">Dialosegy</string>
 </resources>

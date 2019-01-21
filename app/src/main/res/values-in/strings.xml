@@ -36,6 +36,7 @@
   <string name="preference_privacy_and_security_summary">Pelacakan, kuki, pilihan data</string>
   <string name="preference_search_summary">Atur baku, lengkapi otomatis</string>
   <string name="preference_mozilla_summary">Tentang %1$s, bantuan</string>
+  <string name="preference_category_ad_blocking">Pemblokiran Iklan</string>
   <string name="preference_category_tracking_protection">Perlindungan Pelacakan</string>
   <string name="preference_category_web_content">Konten Web</string>
   <string name="preference_category_switching_apps">Mengganti Aplikasi</string>
@@ -53,6 +54,7 @@
   <string name="preference_switch_autocomplete_topsites">Untuk Situs teratas</string>
   <string name="preference_autocomplete_topsite_summary">Aktifkan untuk melengkapi secara otomatis lebih dari 450 URL populer di bilah alamat.</string>
   <string name="preference_switch_autocomplete_user_list">Untuk Situs yang Anda Tambahkan</string>
+  <string name="preference_autocomplete_user_list_description">Aktifkan untuk melengkapi otomatis situs yang Anda tambahkan di sini.</string>
   <string name="preference_category_autocomplete_manage_sites">Kelola situs</string>
   <string name="preference_autocomplete_subitem_manage_sites">Kelola situs</string>
   <string name="preference_autocomplete_action_add">+ Tambah URL ubahsuai</string>
@@ -75,8 +77,10 @@
   <string name="preference_language">Bahasa</string>
   <string name="preference_language_systemdefault">Bawaan sistem</string>
   <string name="preference_category_privacy">Privasi</string>
+  <string name="preference_privacy_ads_block_ads">Blokir iklan dan gangguan lain</string>
   <string name="preference_privacy_block_analytics">Blokir pelacak analitik</string>
   <string name="preference_privacy_block_ads">Blokir pelacak iklan</string>
+  <string name="preference_privacy_block_analytics_new_summary">Blokir pelacak yang menganalisis dan mengukur interaksi seperti mengetuk dan menggulir</string>
   <string name="preference_privacy_block_social">Blokir pelacak sosial</string>
   <string name="preference_privacy_block_content">Blokir pelacak konten lainnya</string>
   <string name="preference_privacy_category_cookies">Blokir kuki</string>
@@ -84,6 +88,8 @@
   <string name="preference_privacy_should_block_cookies_third_party_tracker_cookies_option">Hanya blokir kuki pelacak pihak ke-3</string>
   <string name="preference_privacy_should_block_cookies_third_party_only_option">Hanya blokir kuki pihak ke-3</string>
   <string name="preference_privacy_should_block_cookies_yes_option">Ya</string>
+  <string name="preference_privacy_block_cookies_no">Tidak (izinkan semua kuki)</string>
+  <string name="preference_privacy_block_cookies_third_party_tracker">Memblokir kuki pelacak pihak ketiga (disarankan)</string>
   <string name="preference_security_biometric">Gunakan sidik jari untuk membuka aplikasi</string>
   <string name="preference_security_biometric_summary">Sidik jari Anda dapat membuka %1$s jika URL sudah dibuka di aplikasi. Mode siluman akan aktif.</string>
   <string name="preference_privacy_secure_mode">Mode Siluman</string>
@@ -180,6 +186,8 @@
   <string name="firstrun_close_button">Oke, beres!</string>
   <string name="firstrun_skip_button">Lewati</string>
   <string name="firstrun_next_button">Lanjutkan</string>
+  <string name="block_ads_card_title">%1$s siap untuk memblokir iklan</string>
+  <string name="block_ads_card_description">Fitur baru! Jelajahi lebih cepat dengan menghentikan iklan dan kode yang mengikuti Anda di web.</string>
   <string name="content_blocking_disabled">-</string>
   <string name="dialog_addtohomescreen_action_add">Tambah</string>
   <string name="dialog_addtohomescreen_action_cancel">Batal</string>
@@ -219,6 +227,7 @@
   <string name="biometric_auth_title">Buka %1$s</string>
   <string name="biometric_auth_description">Sentuh sensor sidik jari untuk melanjutkan.</string>
   <string name="biometric_auth_new_session">Sesi Baru</string>
+  <string name="biometric_auth_open_link_new_session">Buka Tautan di Sesi Baru</string>
   <string name="biometric_auth_image_description">Ikon sidik jari</string>
   <string name="biometric_auth_not_recognized_error">Sidik jari tidak dikenali. Coba lagi.</string>
   <string name="biometric_auth_moved_too_quickly">Jari bergerak terlalu cepat. Coba lagi.</string>
@@ -236,6 +245,8 @@
   <string name="tip_open_in_new_tab">Buka tautan di tab baru\n Tekan lama tautan di laman</string>
   <string name="tip_request_desktop">Lebih suka melihat situs desktop?%1$s Menu &gt; Minta situs desktop</string>
   <string name="tip_disable_tips2">Nonaktifkan tips ini pada layar mulai</string>
+  <string name="tip_block_ads">Jelajahi lebih cepat dengan menghentikan iklan dan kode yang mengikuti Anda di web.</string>
+  <string name="block_ads_title">Pemblokiran iklan</string>
   <string name="tip_explain_allowlist">Situs tepercaya?\nSertakan dalam Daftar yang diizinkan yang akan menonaktifkan Perlindungan Pelacakan pada situs yang Anda tahu dan tepercaya.</string>
   <string name="new_tab_opened_snackbar">Tab baru dibuka</string>
   <string name="open_new_tab_snackbar">Tukar</string>
@@ -256,4 +267,8 @@
   <string name="fatal_crash_report_close_button_label">Tutup</string>
   <string name="fatal_crash_report_restart_firefox_label">Mulai Ulang %1$s</string>
   <string name="crash_report_send_crash_label">Kirim laporan kerusakan ke Mozilla</string>
+  <string name="content_blocking_enabled_snackbar_message">Pemblokiran Konten diaktifkan</string>
+  <string name="content_blocking_disabled_snackbar_message">Pemblokiran Konten dinonaktifkan</string>
+  <string name="content_blocking_snackbar_enable_action">Aktifkan</string>
+  <string name="content_blocking_snackbar_disable_action">Nonaktifkan</string>
 </resources>

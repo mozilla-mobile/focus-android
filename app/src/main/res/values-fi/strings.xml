@@ -6,6 +6,7 @@
   <string name="urlbar_hint">Kirjoita osoite tai hakusana</string>
   <string name="teaser">Automaattisesti yksityistä selaamista.\nSelaa. Tyhjennä. Toista.</string>
   <string name="feedback_erase">Selaushistoria tyhjennetty.</string>
+  <string name="feedback_erase_custom_tab">Välilehden selaushistoria on tyhjennetty.</string>
   <string name="search_hint">Hae %1$s</string>
   <string name="menu_share">Jaa…</string>
   <string name="menu_report_site_issue">Ilmoita sivuston ongelmasta</string>
@@ -18,7 +19,9 @@
   <string name="menu_help">Ohje</string>
   <string name="menu_rights">Oikeutesi</string>
   <string name="menu_trackers_blocked_title">Seuraimia estetty</string>
+  <string name="menu_trackers_blocked_subtitle">Tämän poistaminen käytöstä voi korjata joitain sivusto-ongelmia</string>
   <string name="menu_content_blocking">Sisällön esto</string>
+  <string name="menu_content_blocking_subtitle">Poista käytöstä korjataksesi joidenkin sivustojen ongelmia</string>
   <string name="menu_custom_tab_branding">Toiminnon tarjoaa %1$s</string>
   <string name="share_dialog_title">Jaa palvelulla</string>
   <string name="notification_erase_text">Tyhjennä selaushistoria</string>
@@ -26,12 +29,14 @@
   <string name="notification_action_erase_and_open">Tyhjennä ja avaa</string>
   <string name="shortcut_erase_short_label">Tyhjennä</string>
   <string name="shortcut_erase_long_label">Tyhjennä selaushistoria</string>
+  <string name="shortcut_erase_and_open_short_label">Tyhjennä ja avaa</string>
   <string name="text_selection_search_action">Yksityinen haku</string>
   <string name="about_content"><![CDATA[<p xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">%1$s asettaa sinut ohjaimiin.</p>\n<p xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">"K&#228;yt&#228; sit&#228; yksityiseen selaamiseen:\n  "<ul>"\n    "<li>Hae ja selaa suoraan ohjelmassa</li>"\n    "<li>"Est&#228; seuranta (tai muokkaa  asetuksia salliaksesi sen)"</li>"\n    "<li>Poista ev&#228;steet, haku ja selaushistoria napin painalluksella</li>"\n  "</ul>\n</p>\n<p xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">%1$s on Mozillan kehitt&#228;m&#228; ohjelmisto. Teht&#228;v&#228;mme on edesauttaa tervett&#228;, avointa Internetti&#228;.<br/>\n<a href="%2$s">Lue lis&#228;&#228;</a></p>]]></string>
   <string name="preference_privacy_and_security_header">Tietosuoja ja turvallisuus</string>
   <string name="preference_privacy_and_security_summary">Seuranta, evästeet, kerätyt tiedot</string>
   <string name="preference_search_summary">Aseta oletus, automaattinen täydennys</string>
   <string name="preference_mozilla_summary">Tietoja: %1$s, ohje</string>
+  <string name="preference_category_ad_blocking">Mainosten esto</string>
   <string name="preference_category_tracking_protection">Seurannan suojaus</string>
   <string name="preference_category_web_content">Verkkosisältö</string>
   <string name="preference_category_switching_apps">Sovellusten vaihto</string>
@@ -46,9 +51,16 @@
   <string name="preference_state_on">Päällä</string>
   <string name="preference_state_off">Pois päältä</string>
   <string name="preference_subitem_autocomplete">Osoitteen automaattinen täydennys</string>
+  <string name="preference_switch_autocomplete_topsites">Suosituimmille sivustoille</string>
+  <string name="preference_autocomplete_topsite_summary">Ota käyttöön täydentääksesi automaattisesti yli 450 suosittua verkko-osoitetta osoitepalkissa.</string>
+  <string name="preference_switch_autocomplete_user_list">Lisäämillesi sivustoille</string>
+  <string name="preference_autocomplete_user_list_description">Ota käyttöön täydentääksesi automaattisesti tänne lisäämäsi sivustot.</string>
+  <string name="preference_category_autocomplete_manage_sites">Muokkaa sivustoja</string>
+  <string name="preference_autocomplete_subitem_manage_sites">Muokkaa sivustoja</string>
   <string name="preference_autocomplete_action_add">+ Lisää mukautettu osoite</string>
   <string name="preference_autocomplete_title_add">Lisää mukautettu osoite</string>
   <string name="custom_autocomplete_quick_add">Lisää mukautettu osoite</string>
+  <string name="add_custom_autocomplete_label">Lisää linkki automaattisesti täydennettäväksi</string>
   <string name="preference_category_cookies">Evästeet ja sivustotiedot</string>
   <string name="preference_category_data_choices">Kerätyt tiedot</string>
   <string name="preference_autocomplete_title_remove">Poista mukautettu osoite</string>
@@ -65,14 +77,25 @@
   <string name="preference_language">Kieli</string>
   <string name="preference_language_systemdefault">Järjestelmän oletus</string>
   <string name="preference_category_privacy">Tietosuoja</string>
+  <string name="preference_privacy_ads_block_ads">Estä mainokset ja muut häiriötekijät</string>
+  <string name="preference_privacy_ads_block_ads_summary">Estää mainokset ja muut häiriötekijät perustuen estolistoihin Easylist, EasyPrivacy, Fanboy’s Annoyance ja 777Guard Mobile Ad Filter</string>
   <string name="preference_privacy_block_analytics">Estä analytiikkaseuraimet</string>
   <string name="preference_privacy_block_ads">Estä mainosseuraimet</string>
+  <string name="preference_privacy_block_ads_new_summary">Poistaa mainokset, joiden tarkoitus on seurata vierailujasi eri sivustoilla, vaikka et avaakaan mainoksia</string>
+  <string name="preference_privacy_block_analytics_new_summary">Estää seuraimet, jotka mittaavat ja analysoivat käyttäytymistäsi kuten hiiren valintoja ja sivuston selausta</string>
   <string name="preference_privacy_block_social">Estä sosiaalisen median seuraimet</string>
+  <string name="preference_privacy_block_social_new_summary">Estää sosiaaliseen mediaan liittyvät ja sivustoille upotetut seuraimet mukaan lukien sosiaalisen median sisällön jakamispainikkeet</string>
   <string name="preference_privacy_block_content">Estä muut sisältöseuraimet</string>
+  <string name="preference_privacy_block_content_new_summary">Estää käyttäytymisen seurannan, mutta voi aiheuttaa joillain sivustoilla kummallista toiminnallisuutta</string>
   <string name="preference_privacy_category_cookies">Estä kaikki evästeet</string>
   <string name="preference_privacy_should_block_cookies_no_option">Ei</string>
+  <string name="preference_privacy_should_block_cookies_third_party_tracker_cookies_option">Estä vain kolmannen osapuolen seurantaevästeet</string>
   <string name="preference_privacy_should_block_cookies_third_party_only_option">Estä vain kolmannen osapuolen evästeet</string>
   <string name="preference_privacy_should_block_cookies_yes_option">Kyllä</string>
+  <string name="preference_privacy_block_cookies_no">Ei (salli kaikki evästeet)</string>
+  <string name="preference_privacy_block_cookies_third_party_tracker">Estä kolmannen osapuolen seurantaevästeet (suositus)</string>
+  <string name="preference_privacy_block_cookies_third_party_only">Estä kaikki kolmannen osapuolen evästeet\n(voi rikkoa verkkosivustoja)</string>
+  <string name="preference_privacy_block_cookies_yes">Estä kaikki evästeet (rikkoo verkkosivustoja)</string>
   <string name="preference_security_biometric">Avaa sovellus sormenjäljellä</string>
   <string name="preference_security_biometric_summary">Voit avata %1$s-selaimen sormenjäljelläsi, jos URL-osoite on jo avattu sovelluksessa. Häivetila kytketään päälle.</string>
   <string name="preference_privacy_secure_mode">Häivetila</string>
@@ -114,6 +137,7 @@
   <string name="accessibility_announcement_loading">Ladataan</string>
   <string name="accessibility_announcement_loading_finished">Verkkosivu ladattu</string>
   <string name="content_description_menu">Lisää asetuksia</string>
+  <string name="indicator_content_description_menu">Lisää asetuksia -painike</string>
   <string name="content_description_forward">Siirry eteenpäin</string>
   <string name="content_description_reload">Lataa verkkosivu uudelleen</string>
   <string name="content_description_back">Siirry taaksepäin</string>
@@ -150,6 +174,7 @@
   <string name="error_sslhandshake_message"><![CDATA[<ul xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">"\n  "<li>Ongelma voi johtua palvelimen asetuksista tai jonkin toisen\npalvelimen vilpillisest&#228; yrityksest&#228; tekeyty&#228; palvelimeksi.</li>"\n  "<li>Jos yhteyden muodostuminen palvelimeen on aiemmin onnistunut, \nvika voi olla v&#228;liaikainen. Yrit&#228; t&#228;ll&#246;in my&#246;hemmin uudestaan.</li>\n</ul>]]></string>
   <string name="error_generic_title">Hups</string>
   <string name="error_generic_message">Verkkopyyntöä ei kyetä toteuttamaan.</string>
+  <string name="contextmenu_open_in_app">Avaa sovelluksessa</string>
   <string name="contextmenu_link_share">Jaa linkki</string>
   <string name="contextmenu_link_copy">Kopioi linkin osoite</string>
   <string name="contextmenu_image_share">Jaa kuva</string>
@@ -158,6 +183,7 @@
   <string name="contextmenu_open_in_new_tab">Avaa linkki uuteen välilehteen</string>
   <string name="contextmenu_image_warning"><![CDATA["Tallennettuja ja jaettuja kuvia "<b xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">ei poisteta</b>" kun %1$sen selaushistoria tyhjennetään."]]></string>
   <string name="firstrun_defaultbrowser_title">Tehosta yksityisyyttäsi</string>
+  <string name="firstrun_defaultbrowser_text_new">Estä sisältöä kuten mainoksia tai koodia joka seuraa sinua verkossa ja hidastaa selaamista. Ota mainonnan esto käyttöön selataksesi nopeammin ja ilman ärsyttäviä mainoksia.</string>
   <string name="firstrun_search_title">Hakusi haluamallasi tavalla</string>
   <string name="firstrun_search_text">Haetko jotain erilaista? Valitse asetuksista toinen oletushakukone.</string>
   <string name="firstrun_shortcut_title">Lisää linkki aloitusnäyttöön</string>
@@ -167,6 +193,8 @@
   <string name="firstrun_close_button">OK, selvä!</string>
   <string name="firstrun_skip_button">Ohita</string>
   <string name="firstrun_next_button">Seuraava</string>
+  <string name="block_ads_card_title">%1$s on valmis estämään mainoksia</string>
+  <string name="block_ads_card_description">Uusi ominaisuus! Selaa nopeammin estämällä mainokset ja koodinpätkät, jotka seuraavat sinua verkossa.</string>
   <string name="content_blocking_disabled">-</string>
   <string name="dialog_addtohomescreen_action_add">Lisää</string>
   <string name="dialog_addtohomescreen_action_cancel">Peruuta</string>
@@ -206,6 +234,7 @@
   <string name="biometric_auth_title">Avaa %1$s</string>
   <string name="biometric_auth_description">Jatka koskettamalla sormenjälkilukijaa.</string>
   <string name="biometric_auth_new_session">Uusi istunto</string>
+  <string name="biometric_auth_open_link_new_session">Avaa linkki uudessa istunnossa</string>
   <string name="biometric_auth_image_description">Sormenjäljen kuvake</string>
   <string name="biometric_auth_not_recognized_error">Sormenjälkeä ei tunnistettu. Yritä uudelleen.</string>
   <string name="biometric_auth_moved_too_quickly">Sormi liikkui liian nopeasti. Yritä uudelleen.</string>
@@ -222,10 +251,19 @@
   <string name="tip_autocomplete_url">Täydennä osoitteet sivustoille, joita käytät eniten\n Paina pitkään osoitekentässä olevia osoitteita</string>
   <string name="tip_open_in_new_tab">Avaa linkki uuteen välilehteen\n Paina pitkään mitä tahansa linkkiä sivulla</string>
   <string name="tip_request_desktop">Haluatko mieluummin nähdä sivuston täyden työpöytäversion?%1$s Valikko &gt; Sivuston työpöytäversio</string>
+  <string name="tip_disable_tips2">Älä näytä vinkkejä aloitusnäytössä</string>
+  <string name="tip_block_ads">Selaa nopeammin estämällä mainokset ja koodit, jotka seuraavat sinua verkossa.</string>
+  <string name="block_ads_title">Mainosten esto</string>
   <string name="new_tab_opened_snackbar">Uusi välilehti avattu</string>
   <string name="open_new_tab_snackbar">Vaihda</string>
+  <string name="preference_open_new_tab">Siirry välilehteen heti linkin avaamisen jälkeen</string>
+  <string name="preference_category_safe_browsing">Turvallinen selaaminen</string>
+  <string name="preference_safe_browsing_title">Estä mahdollisesti vaaralliset ja petolliset sivustot</string>
+  <string name="preference_safe_browsing_summary">Estä ilmoitetut petolliset ja hyökkäävät sivustot, haittaohjelmasivustot ja ei-toivotut ohjelmistosivustot.</string>
   <string name="preference_exceptions">Poikkeukset</string>
   <string name="preference_exceptions_description">Olet poistanut sisällön eston käytöstä näiden sivustojen kohdalla.</string>
+  <string name="preference_exceptions_menu_remove">Poista</string>
+  <string name="preference_exceptions_remove_all_button_label">Poista kaikki sivustot</string>
   <string name="tab_crash_report_title">Välilehti kaatui</string>
   <string name="tab_crash_report_headline">Valitettavasti tämän välilehden kanssa on ongelmia.</string>
   <string name="tab_crash_report_description">Koska kyseessä on yksityinen selain, emme tallenna välilehtiä, eikä tätä välilehteä voi siksi palauttaa.</string>
@@ -235,4 +273,8 @@
   <string name="fatal_crash_report_close_button_label">Sulje</string>
   <string name="fatal_crash_report_restart_firefox_label">Käynnistä %1$s uudelleen</string>
   <string name="crash_report_send_crash_label">Lähetä kaatumisilmoitus Mozillalle</string>
+  <string name="content_blocking_enabled_snackbar_message">Sisällön esto on käytössä</string>
+  <string name="content_blocking_disabled_snackbar_message">Sisällön esto on poistettu käytöstä</string>
+  <string name="content_blocking_snackbar_enable_action">Ota käyttöön</string>
+  <string name="content_blocking_snackbar_disable_action">Poista käytöstä</string>
 </resources>

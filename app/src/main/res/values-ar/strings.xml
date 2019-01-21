@@ -36,6 +36,7 @@
   <string name="preference_privacy_and_security_summary">التّعقّب، و الكعكات، و اختيار البيانات</string>
   <string name="preference_search_summary">الضبط كمبدئي والإكمال التلقائي</string>
   <string name="preference_mozilla_summary">عن %1$s والمساعدة</string>
+  <string name="preference_category_ad_blocking">حجب الإعلانات</string>
   <string name="preference_category_tracking_protection">الحماية من التعقّب</string>
   <string name="preference_category_web_content">محتوى الوب</string>
   <string name="preference_category_switching_apps">التبديل بين التطبيقات</string>
@@ -53,6 +54,7 @@
   <string name="preference_switch_autocomplete_topsites">لأكثر المواقع زيارة</string>
   <string name="preference_autocomplete_topsite_summary">فعّله لإكمال أكثر 450 مسار تلقائيا في شريط العناوين.</string>
   <string name="preference_switch_autocomplete_user_list">للمواقع التي تُضيفها</string>
+  <string name="preference_autocomplete_user_list_description">فعّله لإكمال المواقع التي تُضيفها هنا تلقائيا.</string>
   <string name="preference_category_autocomplete_manage_sites">أدِر المواقع</string>
   <string name="preference_autocomplete_subitem_manage_sites">أدِر المواقع</string>
   <string name="preference_autocomplete_action_add">+ أضِف مسارا مخصصا</string>
@@ -75,15 +77,25 @@
   <string name="preference_language">اللغة</string>
   <string name="preference_language_systemdefault">المبدئية للنظام</string>
   <string name="preference_category_privacy">الخصوصية</string>
+  <string name="preference_privacy_ads_block_ads">احجب الإعلانات وغيرها من الإزعاجات</string>
+  <string name="preference_privacy_ads_block_ads_summary">يوقف الإعلانات وغيرها من الإزعاجات مستخدمًا قوائم الحجب من EasyList وEasyPrivacy وFanboy’s Annoyance و ‪777‏ Guard Mobile Ad Filter</string>
   <string name="preference_privacy_block_analytics">احجب متعقبات التحليلات</string>
   <string name="preference_privacy_block_ads">احجب متعقبات الإعلانات</string>
+  <string name="preference_privacy_block_ads_new_summary">يُزيل الإعلانات المصمّمة لتعقب المواقع التي تزورها حتى لو لم تنقر عليها</string>
+  <string name="preference_privacy_block_analytics_new_summary">يحجب المتعقّبات التي تحلّل التفاعل وتقيسه (مثل النقر وتمرير الصفحة)</string>
   <string name="preference_privacy_block_social">احجب المتعقبات الاجتماعية</string>
+  <string name="preference_privacy_block_social_new_summary">يوقف المتعقّبات المتعلقة بوسائل التواصل المضمّنة في المواقع، بما في ذلك أزرار المشاركة الاجتماعية</string>
   <string name="preference_privacy_block_content">احجب متعقبات المحتوى الأخرى</string>
+  <string name="preference_privacy_block_content_new_summary">يحجب نشاط التعقّب إلّا أنه قد يتسبب بسلوك غير متوقّع لبعض المواقع والصفحات</string>
   <string name="preference_privacy_category_cookies">احجب الكعكات</string>
   <string name="preference_privacy_should_block_cookies_no_option">لا</string>
   <string name="preference_privacy_should_block_cookies_third_party_tracker_cookies_option">احجب كعكات المتعقّبات من الأطراف الثالثة فحسب</string>
   <string name="preference_privacy_should_block_cookies_third_party_only_option">احجب الكعكات من الأطراف الثالثة فحسب</string>
   <string name="preference_privacy_should_block_cookies_yes_option">نعم</string>
+  <string name="preference_privacy_block_cookies_no">بلا (اسمح بكل الكعكات)</string>
+  <string name="preference_privacy_block_cookies_third_party_tracker">احجب كعكات المتعقّبات من الأطراف الثالثة (مستحسن)</string>
+  <string name="preference_privacy_block_cookies_third_party_only">احجب كل الكعكات من الأطراف الثالثة\n(قد يتسبب بعطب بعض المواقع)</string>
+  <string name="preference_privacy_block_cookies_yes">احجب كل الكعكات (قد يتسبب بعطب المواقع)</string>
   <string name="preference_security_biometric">استخدم البصمة لإلغاء قفل التطبيق</string>
   <string name="preference_security_biometric_summary">يمكن للبصمة إلغاء قفل %1$s إن كان مفتوحًا في التطبيق أحد العناوين. سيُفعّل وضع التخفّي.</string>
   <string name="preference_privacy_secure_mode">التخفّي</string>
@@ -171,6 +183,7 @@
   <string name="contextmenu_open_in_new_tab">افتح الرابط في لسان جديد</string>
   <string name="contextmenu_image_warning"><![CDATA["الصور المحفوظة و المُشاركة "<b xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">&#1604;&#1606; &#1578;&#1615;&#1581;&#1584;&#1601;</b>" عندما تمسح تأريخ %1$s."]]></string>
   <string name="firstrun_defaultbrowser_title">حسّن خصوصيتك</string>
+  <string name="firstrun_defaultbrowser_text_new">احجب المحتوى مثل الإعلانات والكود التي تتبّعك أينما ذهبت في الوِب وتُبطئ من نشاطك. فعّل حجب الإعلانات لتتصفّح الإنترنت بسرعة أكبر ودون إعلانات مزعجة.</string>
   <string name="firstrun_search_title">تبحثُ بأسلوبك أنت</string>
   <string name="firstrun_search_text">أتبحث عن شيء مختلف؟ اختر محرّك بحث آخر ليكون المبدئي من الإعدادات.</string>
   <string name="firstrun_shortcut_title">أضف اختصارات إلى شاشة البداية</string>
@@ -180,6 +193,8 @@
   <string name="firstrun_close_button">حسنًا، فهمت</string>
   <string name="firstrun_skip_button">تخطّ</string>
   <string name="firstrun_next_button">التالي</string>
+  <string name="block_ads_card_title">%1$s مستعدّ لحجب الإعلانات</string>
+  <string name="block_ads_card_description">ميزة جديدة! تصفّح أسرع بإيقاف الإعلانات والكود التي تتبّعك أينما ذهبت في الوِب.</string>
   <string name="content_blocking_disabled">-</string>
   <string name="dialog_addtohomescreen_action_add">أضِف</string>
   <string name="dialog_addtohomescreen_action_cancel">ألغِ</string>
@@ -219,6 +234,7 @@
   <string name="biometric_auth_title">ألغِ قفل %1$s</string>
   <string name="biometric_auth_description">المس مجسّ البصمة للمتابعة.</string>
   <string name="biometric_auth_new_session">جلسة جديدة</string>
+  <string name="biometric_auth_open_link_new_session">افتح الرابط في جلسة جديدة</string>
   <string name="biometric_auth_image_description">أيقونة البصمة</string>
   <string name="biometric_auth_not_recognized_error">فشل التعرف على البصمة. أعِد المحاولة.</string>
   <string name="biometric_auth_moved_too_quickly">حرّكت إصبعك بسرعة. أعِد المحاولة.</string>
@@ -236,6 +252,8 @@
   <string name="tip_open_in_new_tab">افتح الرابط في لسان جديد\nانقر مطوّلًا على أي رابط في الصفحة</string>
   <string name="tip_request_desktop">أتفضّل عرض نسخة سطح المكتب؟%1$s القائمة &gt; اطلب موقع سطح المكتب</string>
   <string name="tip_disable_tips2">عطّل النصائح في شاشة البداية</string>
+  <string name="tip_block_ads">تصفّح أسرع بإيقاف الإعلانات والكود التي تتبّعك أينما ذهبت في الوِب.</string>
+  <string name="block_ads_title">حجب الإعلانات</string>
   <string name="tip_explain_allowlist">أهذا موقع موثوق؟\n تُعطّل قائمة السماح الحمايةَ من التعقّب في المواقع التي تعرفها وتثق بها.</string>
   <string name="new_tab_opened_snackbar">فُتِح لسان جديد</string>
   <string name="open_new_tab_snackbar">انتقل</string>
@@ -256,4 +274,8 @@
   <string name="fatal_crash_report_close_button_label">أغلِق</string>
   <string name="fatal_crash_report_restart_firefox_label">أعِد تشغيل %1$s</string>
   <string name="crash_report_send_crash_label">أرسِل تقرير الانهيار إلى موزيلا</string>
+  <string name="content_blocking_enabled_snackbar_message">حجب المحتوى مفعّل</string>
+  <string name="content_blocking_disabled_snackbar_message">حجب المحتوى معطّل</string>
+  <string name="content_blocking_snackbar_enable_action">فعّله</string>
+  <string name="content_blocking_snackbar_disable_action">عطّله</string>
 </resources>

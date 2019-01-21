@@ -36,6 +36,7 @@
   <string name="preference_privacy_and_security_summary">Traciamento, cookies, electiones de datos</string>
   <string name="preference_search_summary">Definir option base, autocompletion</string>
   <string name="preference_mozilla_summary">A proposito de %1$s, adjuta</string>
+  <string name="preference_category_ad_blocking">Blocada del avisos publicitari</string>
   <string name="preference_category_tracking_protection">Protection contra le traciamento</string>
   <string name="preference_category_web_content">Contento de web</string>
   <string name="preference_category_switching_apps">Navigation trans le applicationes</string>
@@ -75,6 +76,8 @@
   <string name="preference_language">Lingua</string>
   <string name="preference_language_systemdefault">Valor predefinite per le systema</string>
   <string name="preference_category_privacy">Confidentialitate</string>
+  <string name="preference_privacy_ads_block_ads">Blocar avisos publicitari e altere molestias</string>
+  <string name="preference_privacy_ads_block_ads_summary">Stoppa avisos publicitari e altere molestias per le listas de blocada ex Easylist, EasyPrivacy, Fanboy’s Annoyance, e 777Guard Mobile Ad Filter</string>
   <string name="preference_privacy_block_analytics">Blocar le traciatores analytic</string>
   <string name="preference_privacy_block_ads">Blocar le traciatores de publicitate</string>
   <string name="preference_privacy_block_social">Blocar le traciatores social</string>
@@ -240,6 +243,7 @@
   <string name="tip_open_in_new_tab">Aperi le ligamine in un nove scheda\n Retene pulsate longemente ulle ligamine sur un pagina</string>
   <string name="tip_request_desktop">Vider plus tosto le sito in modo plen scriptorio?%1$s Menu &gt; Requirer sito de scriptorio</string>
   <string name="tip_disable_tips2">Disactivar le suggestiones sur le pagina initial</string>
+  <string name="block_ads_title">Blocada del avisos publicitari</string>
   <string name="tip_explain_allowlist">Sito fidite?\nIste function disactiva le protection contra le traciamento pro sitos que tu cognosce e fide.</string>
   <string name="new_tab_opened_snackbar">Nove scheda aperite</string>
   <string name="open_new_tab_snackbar">Commutar</string>
