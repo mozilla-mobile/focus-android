@@ -180,6 +180,8 @@
   <string name="firstrun_close_button">Anladım!</string>
   <string name="firstrun_skip_button">Geç</string>
   <string name="firstrun_next_button">İleri</string>
+  <string name="block_ads_card_title">%1$s reklamları engellemeye hazır</string>
+  <string name="block_ads_card_description">Yeni özellik! Web’de sizi takip eden reklamları ve kodları durdurarak daha hızlı gezinebilirsiniz.</string>
   <string name="content_blocking_disabled">-</string>
   <string name="dialog_addtohomescreen_action_add">Ekle</string>
   <string name="dialog_addtohomescreen_action_cancel">İptal</string>
@@ -219,6 +221,7 @@
   <string name="biometric_auth_title">%1$s kilidini aç</string>
   <string name="biometric_auth_description">Devam etmek için parmak izi sensörüne dokunun.</string>
   <string name="biometric_auth_new_session">Yeni oturum</string>
+  <string name="biometric_auth_open_link_new_session">Bağlantıyı yeni oturumda aç</string>
   <string name="biometric_auth_image_description">Parmak izi simgesi</string>
   <string name="biometric_auth_not_recognized_error">Parmak izi tanınamadı. Yeniden deneyin.</string>
   <string name="biometric_auth_moved_too_quickly">Parmağınızı çok hızlı hareket ettirdiniz. Yeniden deneyin.</string>
@@ -236,6 +239,7 @@
   <string name="tip_open_in_new_tab">Bağlantıları yeni sekmede açabilirsiniz\n Bir sayfadaki herhangi bir bağlantıya uzun basın</string>
   <string name="tip_request_desktop">Sitenin bilgisayar sürümünü görmek mü istiyorsunuz?%1$s Menü &gt; Masaüstü sitesini iste</string>
   <string name="tip_disable_tips2">Başlangıç ​​ekranında ipuçlarını kapat</string>
+  <string name="block_ads_title">Reklam engelleme</string>
   <string name="tip_explain_allowlist">Bu siteye güveniyor musunuz?\n İzin listesi, bildiğiniz ve güvendiğiniz sitelerde izlenme korumasını kapatır.</string>
   <string name="new_tab_opened_snackbar">Yeni sekme açıldı</string>
   <string name="open_new_tab_snackbar">Geç</string>

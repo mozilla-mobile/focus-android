@@ -274,8 +274,8 @@
   <string name="fatal_crash_report_close_button_label">Začinić</string>
   <string name="fatal_crash_report_restart_firefox_label">%1$s znowa startować</string>
   <string name="crash_report_send_crash_label">Mozilla spadowu rozprawu pósłać</string>
-  <string name="content_blocking_enabled_snackbar_message">Blokowanje wabjenja je zmóžnjene</string>
-  <string name="content_blocking_disabled_snackbar_message">Blokowanje wabjenja je znjemóžnjene</string>
+  <string name="content_blocking_enabled_snackbar_message">Blokowanje wobsaha je zmóžnjene</string>
+  <string name="content_blocking_disabled_snackbar_message">Blokowanje wobsaha je znjemóžnjene</string>
   <string name="content_blocking_snackbar_enable_action">Zmóžnić</string>
   <string name="content_blocking_snackbar_disable_action">Znjemóžnić</string>
 </resources>
