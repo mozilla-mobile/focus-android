@@ -302,11 +302,13 @@ The event ping contains a list of events ([see event format on readthedocs.io](h
 | Disable tips on home screen tip displayed  | action   | show | tip | disable_tips_tip    |    |
 | Set default browser tip displayed  | action   | show | tip | default_browser_tip    |        |
 | Autocomplete URL tip displayed | action   | show | tip | add_autocomplete_url_tip    |        |
+| Allowlist tip displayed | action   | show | tip | allowlist_tip    |        |
 | Open in new tab tip tapped | action   | click | tip | open_in_new_tab_tip    |        |
 | Add to homescreen tip tapped  | action   | click | tip | add_to_homescreen_tip    |        |
 | Disable tips tip tapped  | action   | click | tip | disable_tips_tip    |        | |
 | Set default browser tip tapped  | action   | click | tip | default_browser_tip    |        |
 | Autocomplete URL tip tapped | action   | click | tip | add_autocomplete_url_tip    |        |
+| Allowlist tip displayed | action   | click | tip | allowlist_tip    |        |
 
 ### Crash Reporter
 | Event                | category | method | object         | extra         |
