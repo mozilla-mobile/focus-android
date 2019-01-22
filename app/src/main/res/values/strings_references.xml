@@ -11,10 +11,10 @@
     </string-array>
 
     <string-array name="preference_privacy_cookies_values">
-        <item>@string/pref_key_should_block_cookies_yes_option</item>
-        <item>@string/pref_key_should_block_cookies_third_party_only</item>
-        <item>@string/pref_key_should_block_cookies_third_party_trackers_only</item>
         <item>@string/pref_key_should_block_cookies_no</item>
+        <item>@string/pref_key_should_block_cookies_third_party_trackers_only</item>
+        <item>@string/pref_key_should_block_cookies_third_party_only</item>
+        <item>@string/pref_key_should_block_cookies_yes_option</item>
     </string-array>
 
     <string name="error_connect_title">@string/error_connectionfailure_title</string>
