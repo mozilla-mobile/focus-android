@@ -146,8 +146,6 @@ public class ClassicWebViewProvider implements IWebViewProvider {
     public void disableBlocking(@NotNull WebSettings webSettings, @NotNull SystemWebView systemWebView) {
         webSettings.setBlockNetworkImage(false);
         webSettings.setJavaScriptEnabled(true);
-        CookieManager.getInstance().setAcceptThirdPartyCookies(systemWebView, true);
-        CookieManager.getInstance().setAcceptCookie(true);
     }
 
     public void requestDesktopSite(@NonNull WebSettings settings) {

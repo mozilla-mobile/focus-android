@@ -248,7 +248,6 @@ class GeckoWebViewProvider : IWebViewProvider {
             } else {
                 geckoRuntime!!.settings.javaScriptEnabled = true
                 geckoRuntime!!.settings.webFontsEnabled = true
-                geckoRuntime!!.settings.cookieBehavior = GeckoRuntimeSettings.COOKIE_ACCEPT_ALL
             }
             callback?.onBlockingStateChanged(enabled)
         }
