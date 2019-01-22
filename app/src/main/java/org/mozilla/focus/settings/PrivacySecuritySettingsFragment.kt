@@ -49,7 +49,7 @@ class PrivacySecuritySettingsFragment : BaseSettingsFragment(),
                         )
                     }
             val cookiesValuesWV =
-                requireContext().resources.getStringArray(R.array.preference_privacy_cookies_options)
+                requireContext().resources.getStringArray(R.array.preference_privacy_cookies_values)
                     .filter {
                         it != getString(
                             R.string.pref_key_should_block_cookies_third_party_trackers_only
