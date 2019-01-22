@@ -264,6 +264,8 @@
   <string name="fatal_crash_report_close_button_label">Clauder</string>
   <string name="fatal_crash_report_restart_firefox_label">Reinitiar %1$s</string>
   <string name="crash_report_send_crash_label">Inviar reporto de crash a Mozilla</string>
+  <string name="content_blocking_enabled_snackbar_message">Le blocada de contento es activate</string>
+  <string name="content_blocking_disabled_snackbar_message">Le blocada de contento es disactivate</string>
   <string name="content_blocking_snackbar_enable_action">Activar</string>
   <string name="content_blocking_snackbar_disable_action">Disactivar</string>
 </resources>
