@@ -98,25 +98,25 @@ class Settings private constructor(context: Context) {
     fun getCookiesPrefValue(): String {
         return when (shouldBlockCookiesValue()) {
             resources.getString(
-                R.string.preference_privacy_should_block_cookies_yes_option
+                R.string.preference_privacy_block_cookies_yes
             ) -> resources.getString(R.string.pref_key_should_block_cookies_yes_option)
             resources.getString(
                 R.string.pref_key_should_block_cookies_yes_option
             ) -> resources.getString(R.string.pref_key_should_block_cookies_yes_option)
             resources.getString(
-                R.string.preference_privacy_should_block_cookies_no_option
+                R.string.preference_privacy_block_cookies_no
             ) -> resources.getString(R.string.pref_key_should_block_cookies_no)
             resources.getString(
                 R.string.pref_key_should_block_cookies_no
             ) -> resources.getString(R.string.pref_key_should_block_cookies_no)
             resources.getString(
-                R.string.preference_privacy_should_block_cookies_third_party_tracker_cookies_option
+                R.string.preference_privacy_block_cookies_third_party_tracker
             ) -> resources.getString(R.string.pref_key_should_block_cookies_third_party_trackers_only)
             resources.getString(
                 R.string.pref_key_should_block_cookies_third_party_trackers_only
             ) -> resources.getString(R.string.pref_key_should_block_cookies_third_party_trackers_only)
             resources.getString(
-                R.string.preference_privacy_should_block_cookies_third_party_only_option
+                R.string.preference_privacy_block_cookies_third_party_only
             ) -> resources.getString(R.string.pref_key_should_block_cookies_third_party_only)
             resources.getString(
                 R.string.pref_key_should_block_cookies_third_party_only
