@@ -30,17 +30,17 @@ class CookiesPreference(context: Context?, attrs: AttributeSet?) : ListPreferenc
         val settings = Settings.getInstance(context)
         val value = when (settings.getCookiesPrefValue()) {
             context.getString(R.string.pref_key_should_block_cookies_no) -> {
-                context.resources.getString(R.string.preference_privacy_should_block_cookies_no_option)
+                context.resources.getString(R.string.preference_privacy_block_cookies_no)
             }
             context.resources.getString(R.string.pref_key_should_block_cookies_third_party_only) -> {
-                context.getString(R.string.preference_privacy_should_block_cookies_third_party_only_option)
+                context.getString(R.string.preference_privacy_block_cookies_third_party_only)
             }
             context.resources.getString(R.string.pref_key_should_block_cookies_third_party_trackers_only) -> {
                 context.getString(
-                    R.string.preference_privacy_should_block_cookies_third_party_tracker_cookies_option
+                    R.string.preference_privacy_block_cookies_third_party_tracker
                 )
             }
-            else -> context.getString(R.string.preference_privacy_should_block_cookies_yes_option)
+            else -> context.getString(R.string.preference_privacy_block_cookies_yes)
         }
         super.setSummary(value)
     }
