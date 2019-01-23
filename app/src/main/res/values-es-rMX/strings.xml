@@ -54,6 +54,7 @@
   <string name="preference_switch_autocomplete_topsites">Para sitios favoritos</string>
   <string name="preference_autocomplete_topsite_summary">Habilitar para completar automáticamente más de 450 URLs populares en la barra de direcciones.</string>
   <string name="preference_switch_autocomplete_user_list">Para los sitios que agregues</string>
+  <string name="preference_autocomplete_user_list_description">Habilitar para autocompletar los sitios que agregues aquí.</string>
   <string name="preference_category_autocomplete_manage_sites">Administrar sitios</string>
   <string name="preference_autocomplete_subitem_manage_sites">Administrar sitios</string>
   <string name="preference_autocomplete_action_add">+ Agregar URL personalizada</string>
@@ -77,10 +78,15 @@
   <string name="preference_language_systemdefault">Valor predeterminado del sistema</string>
   <string name="preference_category_privacy">Privacidad</string>
   <string name="preference_privacy_ads_block_ads">Bloquear anuncios y otras molestias</string>
+  <string name="preference_privacy_ads_block_ads_summary">Bloquea los anuncios y otras molestias usando listas de bloqueo de Easylist, EasyPrivacy, Fanboy\'s Annoyance y 777Guard Mobile Ad Filter</string>
   <string name="preference_privacy_block_analytics">Bloquear rastreadores analíticos</string>
   <string name="preference_privacy_block_ads">Bloquear rastreadores de publicidad</string>
+  <string name="preference_privacy_block_ads_new_summary">Elimina los anuncios diseñados para rastrear las visitas al sitio, incluso si no los presionas</string>
+  <string name="preference_privacy_block_analytics_new_summary">Bloquea los rastreadores que analizan y miden interacciones como pulsar y desplazarse</string>
   <string name="preference_privacy_block_social">Bloquear rastreadores sociales</string>
+  <string name="preference_privacy_block_social_new_summary">Detiene los rastreadores relacionados con las redes sociales integrados en los sitios web, incluyendo los botones de compartir en redes sociales</string>
   <string name="preference_privacy_block_content">Bloquear rastreadores de otros contenidos</string>
+  <string name="preference_privacy_block_content_new_summary">Bloquea la actividad de rastreo, pero puede provocar que algunos sitios y páginas se comporten de forma inesperada</string>
   <string name="preference_privacy_category_cookies">Bloquear cookies</string>
   <string name="preference_privacy_should_block_cookies_no_option">No</string>
   <string name="preference_privacy_should_block_cookies_third_party_tracker_cookies_option">Bloquear solo cookies de rastreo de terceros</string>
@@ -88,6 +94,8 @@
   <string name="preference_privacy_should_block_cookies_yes_option">Sí</string>
   <string name="preference_privacy_block_cookies_no">No (permitir todas las cookies)</string>
   <string name="preference_privacy_block_cookies_third_party_tracker">Bloquear cookies de rastreadores de terceros (recomendado)</string>
+  <string name="preference_privacy_block_cookies_third_party_only">Bloquear todas las cookies de terceros\n(puede causar errores en los sitios web)</string>
+  <string name="preference_privacy_block_cookies_yes">Bloquear todas las cookies (causará errores en los sitios web)</string>
   <string name="preference_security_biometric">Usar huella digital para desbloquear aplicación</string>
   <string name="preference_security_biometric_summary">Tu huella digital puede desbloquear %1$s si una URL está abierta en la aplicación. Se activará el modo invisible.</string>
   <string name="preference_privacy_secure_mode">Invisible</string>
@@ -175,6 +183,7 @@
   <string name="contextmenu_open_in_new_tab">Abrir enlace en una nueva pestaña</string>
   <string name="contextmenu_image_warning"><![CDATA["Las imágenes guardadas y compartidas "<b xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">no se borrar&#225;n</b>" cuando elimines el historial %1$s."]]></string>
   <string name="firstrun_defaultbrowser_title">Potencia tu privacidad</string>
+  <string name="firstrun_defaultbrowser_text_new">Bloquea el contenido tal como los anuncios y el código que te siguen en la web y disminuye la velocidad. Activa el bloqueo de anuncios para navegar más rápido sin anuncios molestos.</string>
   <string name="firstrun_search_title">Tu búsqueda, a tu manera</string>
   <string name="firstrun_search_text">¿Buscas algo diferente? Elige otro motor de búsqueda predeterminado en la configuración.</string>
   <string name="firstrun_shortcut_title">Agrega atajos a la pantalla principal</string>
@@ -185,6 +194,7 @@
   <string name="firstrun_skip_button">Ignorar</string>
   <string name="firstrun_next_button">Siguiente</string>
   <string name="block_ads_card_title">%1$s está listo para bloquear anuncios</string>
+  <string name="block_ads_card_description">¡Nueva característica! Navega más rápido al bloquear anuncios y código que te sigue por la web.</string>
   <string name="content_blocking_disabled">-</string>
   <string name="dialog_addtohomescreen_action_add">Agregar</string>
   <string name="dialog_addtohomescreen_action_cancel">Cancelar</string>
@@ -242,6 +252,7 @@
   <string name="tip_open_in_new_tab">Abrir enlace en una nueva pestaña\n Mantén presionado cualquier enlace en una página</string>
   <string name="tip_request_desktop">¿Prefieres ver el sitio como en escritorio?%1$s Menú &gt; Solicitar sitio de escritorio</string>
   <string name="tip_disable_tips2">Desactivar los consejos en la pantalla de inicio</string>
+  <string name="tip_block_ads">Navega más rápido al bloquear anuncios y código que te sigue por la web.</string>
   <string name="block_ads_title">Bloqueo de anuncios</string>
   <string name="tip_explain_allowlist">¿Sitio de confianza?\n Allowlist deshabilita la protección contra rastreo para los sitios que conoces y confías.</string>
   <string name="new_tab_opened_snackbar">Nueva pestaña abierta</string>

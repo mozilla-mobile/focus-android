@@ -54,6 +54,7 @@
   <string name="preference_switch_autocomplete_topsites">Pro le sitos le plus visitate</string>
   <string name="preference_autocomplete_topsite_summary">Activa pro auto-completar plus de 450 URLs popular in le barra de adresses.</string>
   <string name="preference_switch_autocomplete_user_list">Pro le sitos que tu adde</string>
+  <string name="preference_autocomplete_user_list_description">Activar pro auto-completar le sitos que tu adde ci.</string>
   <string name="preference_category_autocomplete_manage_sites">Gerer le sitos</string>
   <string name="preference_autocomplete_subitem_manage_sites">Gerer le sitos</string>
   <string name="preference_autocomplete_action_add">+ Adder URL personalisate</string>
@@ -80,7 +81,10 @@
   <string name="preference_privacy_ads_block_ads_summary">Stoppa avisos publicitari e altere molestias per le listas de blocada ex Easylist, EasyPrivacy, Fanboy’s Annoyance, e 777Guard Mobile Ad Filter</string>
   <string name="preference_privacy_block_analytics">Blocar le traciatores analytic</string>
   <string name="preference_privacy_block_ads">Blocar le traciatores de publicitate</string>
+  <string name="preference_privacy_block_ads_new_summary">Remove le avisos publicitari designate pro traciar visitas de sito mesmo si tu non tocca los</string>
+  <string name="preference_privacy_block_analytics_new_summary">Bloca le traciatores que analysa e mesura interactiones como toccos e rolamento</string>
   <string name="preference_privacy_block_social">Blocar le traciatores social</string>
+  <string name="preference_privacy_block_social_new_summary">Stoppa le traciatores correlate al social-media integrate sur le sitos web e le buttones pro compartir social</string>
   <string name="preference_privacy_block_content">Blocar le altere traciatores de contento</string>
   <string name="preference_privacy_block_content_new_summary">Bloca le activitate de traciamento, ma pote causar que alcun sitos e paginas ha un comportamento inattendite</string>
   <string name="preference_privacy_category_cookies">Blocar le cookies</string>
@@ -90,6 +94,8 @@
   <string name="preference_privacy_should_block_cookies_yes_option">Si</string>
   <string name="preference_privacy_block_cookies_no">No (consentir tote le cookies)</string>
   <string name="preference_privacy_block_cookies_third_party_tracker">Blocar le cookies traciator de tertie partes (recommendate)</string>
+  <string name="preference_privacy_block_cookies_third_party_only">Blocar tote le cookies de tertie-parte \n(pote facer collaber sitos web)</string>
+  <string name="preference_privacy_block_cookies_yes">Blocar tote le cookies (facera collaber le sitos web)</string>
   <string name="preference_security_biometric">Usa le impression digital pro disblocar le application</string>
   <string name="preference_security_biometric_summary">Tu impression digital pote disblocar %1$s si un URL es ja aperte in le application. Le modo furtive sera activate.</string>
   <string name="preference_privacy_secure_mode">Modo furtive</string>
@@ -177,6 +183,7 @@
   <string name="contextmenu_open_in_new_tab">Aperir le ligamine in un nove scheda</string>
   <string name="contextmenu_image_warning"><![CDATA["Le imagines salvate e compartite "<b xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">non essera delite</b>" quando tu elimina le chronologia de %1$s."]]></string>
   <string name="firstrun_defaultbrowser_title">Reinfortia tu confidentialitate</string>
+  <string name="firstrun_defaultbrowser_text_new">Bloca contento como avisos publicitari e codification que te seque circum le Web e te relenta. Activa le blocada del avisos publicitari pro navigar plus veloce sin enoiose avisos publicitari.</string>
   <string name="firstrun_search_title">Le recerca a tu gusto</string>
   <string name="firstrun_search_text">Cerca tu qualcosa differente? Elige un altere motor de recerca in le parametros.</string>
   <string name="firstrun_shortcut_title">Adde accessos directe a tu schermo initial</string>
@@ -186,6 +193,8 @@
   <string name="firstrun_close_button">Certo, io comprende!</string>
   <string name="firstrun_skip_button">Ignorar</string>
   <string name="firstrun_next_button">Avante</string>
+  <string name="block_ads_card_title">%1$s es preste a blocar le avisos publicitari</string>
+  <string name="block_ads_card_description">Nove functionalitate! Naviga plus veloce per stoppar le avisos publicitari e le codification que te seque circum le Web.</string>
   <string name="content_blocking_disabled">-</string>
   <string name="dialog_addtohomescreen_action_add">Adder</string>
   <string name="dialog_addtohomescreen_action_cancel">Cancellar</string>
@@ -243,6 +252,7 @@
   <string name="tip_open_in_new_tab">Aperi le ligamine in un nove scheda\n Retene pulsate longemente ulle ligamine sur un pagina</string>
   <string name="tip_request_desktop">Vider plus tosto le sito in modo plen scriptorio?%1$s Menu &gt; Requirer sito de scriptorio</string>
   <string name="tip_disable_tips2">Disactivar le suggestiones sur le pagina initial</string>
+  <string name="tip_block_ads">Naviga plus veloce per stoppar le avisos publicitari e le codification que te seque circum le Web.</string>
   <string name="block_ads_title">Blocada del avisos publicitari</string>
   <string name="tip_explain_allowlist">Sito fidite?\nIste function disactiva le protection contra le traciamento pro sitos que tu cognosce e fide.</string>
   <string name="new_tab_opened_snackbar">Nove scheda aperite</string>
