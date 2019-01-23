@@ -82,13 +82,20 @@
   <string name="preference_privacy_block_analytics">アクセス解析をブロック</string>
   <string name="preference_privacy_block_ads">追跡広告をブロック</string>
   <string name="preference_privacy_block_ads_new_summary">表示しただけでサイトへの訪問を追跡するように作られた広告を削除します。</string>
+  <string name="preference_privacy_block_analytics_new_summary">タップやスクロールなどの操作を解析して計測するトラッカーをブロックします</string>
   <string name="preference_privacy_block_social">ソーシャル追跡をブロック</string>
+  <string name="preference_privacy_block_social_new_summary">ソーシャル共有ボタンを含め、ウェブサイトに埋め込まれたソーシャルメディア関連のトラッカーを停止します</string>
   <string name="preference_privacy_block_content">他の追跡コンテンツをブロック</string>
+  <string name="preference_privacy_block_content_new_summary">トラッキング活動をブロックしますが、一部のサイトやページが予期せぬ動作する原因となることがあります</string>
   <string name="preference_privacy_category_cookies">Cookie をブロック</string>
   <string name="preference_privacy_should_block_cookies_no_option">いいえ</string>
   <string name="preference_privacy_should_block_cookies_third_party_tracker_cookies_option">サードバーティの追跡 Cookie のみブロック</string>
   <string name="preference_privacy_should_block_cookies_third_party_only_option">サードパーティ Cookie のみブロック</string>
   <string name="preference_privacy_should_block_cookies_yes_option">はい</string>
+  <string name="preference_privacy_block_cookies_no">ブロックしない (すべての Cookie を許可)</string>
+  <string name="preference_privacy_block_cookies_third_party_tracker">サードパーティトラッカーの Cookie をブロック (推奨)</string>
+  <string name="preference_privacy_block_cookies_third_party_only">すべてのサードパーティ Cookie をブロック\n(ウェブサイトが動作しない原因になる可能性があります)</string>
+  <string name="preference_privacy_block_cookies_yes">すべての Cookie をブロック (ウェブサイトが動作しない原因になります)</string>
   <string name="preference_security_biometric">アプリのロック解除に指紋を使用</string>
   <string name="preference_security_biometric_summary">アプリ内で URL を開いている場合、指紋を使って %1$s のロックを解除できます。ステルスモードが有効となります。</string>
   <string name="preference_privacy_secure_mode">ステルス</string>
@@ -176,6 +183,7 @@
   <string name="contextmenu_open_in_new_tab">リンクを新しいタブで開く</string>
   <string name="contextmenu_image_warning"><![CDATA["保存、共有された画像は %1$s の履歴を消去しても "<b xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">&#21066;&#38500;&#12373;&#12428;&#12414;&#12379;&#12435;</b>。]]></string>
   <string name="firstrun_defaultbrowser_title">プライバシーを強化</string>
+  <string name="firstrun_defaultbrowser_text_new">広告のようなコンテンツやあなたを追跡するコード、動作を遅くするコードをブロックします。公告ブロックをオンにすると、迷惑な広告なしでブラウジングが速くなります。</string>
   <string name="firstrun_search_title">好きな方法で検索</string>
   <string name="firstrun_search_text">何か違ったものを探していますか？ 設定で別の検索エンジンを既定として選んでみましょう。</string>
   <string name="firstrun_shortcut_title">ホーム画面にショートカットを追加</string>
@@ -185,6 +193,7 @@
   <string name="firstrun_close_button">了解</string>
   <string name="firstrun_skip_button">スキップ</string>
   <string name="firstrun_next_button">次へ</string>
+  <string name="block_ads_card_title">%1$s が広告をブロックできます</string>
   <string name="content_blocking_disabled">-</string>
   <string name="dialog_addtohomescreen_action_add">追加</string>
   <string name="dialog_addtohomescreen_action_cancel">キャンセル</string>
@@ -242,6 +251,7 @@
   <string name="tip_open_in_new_tab">リンクを新しいタブで開くには\n ページ上でリンクを長押しします</string>
   <string name="tip_request_desktop">完全なデスクトップ向けサイトを見たいですか？%1$s メニュー &gt; デスクトップ版を見る</string>
   <string name="tip_disable_tips2">スタート画面上のヒント表示をオフにする</string>
+  <string name="block_ads_title">広告ブロック</string>
   <string name="tip_explain_allowlist">信頼できるサイト？\n許可リストは、よく知っている信頼できるサイトのトラッキング防止を無効にします。</string>
   <string name="new_tab_opened_snackbar">新しいタブを開きました</string>
   <string name="open_new_tab_snackbar">切り替え</string>

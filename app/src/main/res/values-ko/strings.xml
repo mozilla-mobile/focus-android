@@ -36,6 +36,7 @@
   <string name="preference_privacy_and_security_summary">추적, 쿠키, 데이타 선택</string>
   <string name="preference_search_summary">기본 설정, 자동 완성</string>
   <string name="preference_mozilla_summary">%1$s 정보, 도움말</string>
+  <string name="preference_category_ad_blocking">광고 차단</string>
   <string name="preference_category_tracking_protection">추적 방지</string>
   <string name="preference_category_web_content">웹 콘텐츠</string>
   <string name="preference_category_switching_apps">앱 전환</string>
@@ -53,6 +54,7 @@
   <string name="preference_switch_autocomplete_topsites">자주 가는 사이트</string>
   <string name="preference_autocomplete_topsite_summary">자동 완성 기능을 활성화해서 450개가 넘는 자주 찾는 URL을 주소창에서 사용해 보세요.</string>
   <string name="preference_switch_autocomplete_user_list">내가 추가한 사이트</string>
+  <string name="preference_autocomplete_user_list_description">여기에 추가된 사이트에서 자동완성을 사용합니다.</string>
   <string name="preference_category_autocomplete_manage_sites">사이트 관리</string>
   <string name="preference_autocomplete_subitem_manage_sites">사이트 관리</string>
   <string name="preference_autocomplete_action_add">+ 사용자 정의 URL 추가</string>
@@ -75,15 +77,25 @@
   <string name="preference_language">언어</string>
   <string name="preference_language_systemdefault">시스템 기본값</string>
   <string name="preference_category_privacy">개인 정보</string>
+  <string name="preference_privacy_ads_block_ads">광고 및 기타 간섭 차단</string>
+  <string name="preference_privacy_ads_block_ads_summary">Stops ads and other annoyances using block lists from Easylist나 EasyPrivacy, Fanboy’s Annoyance, 777Guard Mobile Ad Filter를 사용하여 광고와 기타 간섭 항목을 차단함</string>
   <string name="preference_privacy_block_analytics">분석용 추적기 차단</string>
   <string name="preference_privacy_block_ads">광고 추적기 차단</string>
+  <string name="preference_privacy_block_ads_new_summary">탭하지 않아도 방문한 사이트를 추적하는 광고를 차단</string>
+  <string name="preference_privacy_block_analytics_new_summary">탭이나 스크롤과 같은 동작을 분석하고 측정하는 추적기를 차단</string>
   <string name="preference_privacy_block_social">소셜 추적기 차단</string>
+  <string name="preference_privacy_block_social_new_summary">웹사이트나 소셜 공유 버튼에 포함된 소설 미디어 관련 추적기를 차단</string>
   <string name="preference_privacy_block_content">기타 콘텐츠 추적기 차단</string>
+  <string name="preference_privacy_block_content_new_summary">추적 활동을 차단하지만 일부 사이트와 페이지가 의도치 않게 작동할 수 있음</string>
   <string name="preference_privacy_category_cookies">쿠키 차단</string>
   <string name="preference_privacy_should_block_cookies_no_option">아니오</string>
   <string name="preference_privacy_should_block_cookies_third_party_tracker_cookies_option">제 3자 추적기 쿠키 만 차단</string>
   <string name="preference_privacy_should_block_cookies_third_party_only_option">제 3자 쿠키만 차단</string>
   <string name="preference_privacy_should_block_cookies_yes_option">예</string>
+  <string name="preference_privacy_block_cookies_no">아니요(모든 쿠키 허용)</string>
+  <string name="preference_privacy_block_cookies_third_party_tracker">제 3자 추적기 쿠키 차단(권장)</string>
+  <string name="preference_privacy_block_cookies_third_party_only">모든 제 3자 추적기 쿠기 차단\n(웹사이트가 꺠질 수 있음)</string>
+  <string name="preference_privacy_block_cookies_yes">모든 쿠키 차단(웹사이트가 깨지게 됨)</string>
   <string name="preference_security_biometric">잠금 헤제에 지문을 사용</string>
   <string name="preference_security_biometric_summary">앱에 URL이 이미 열려 있다면 지문으로 %1$s를 잠금 해제 할 수 있습니다. 스텔스가 켜집니다.</string>
   <string name="preference_privacy_secure_mode">스텔스</string>
@@ -171,6 +183,7 @@
   <string name="contextmenu_open_in_new_tab">새 탭으로 링크 열기</string>
   <string name="contextmenu_image_warning"><![CDATA["%1$s 기록을 지울 때 "<b xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">&#51200;&#51109; &#48143; &#44277;&#50976;&#46108; &#51060;&#48120;&#51648;</b>는 삭제되지 않습니다.]]></string>
   <string name="firstrun_defaultbrowser_title">개인정보 보호 강화하기</string>
+  <string name="firstrun_defaultbrowser_text_new">웹에서 사용자를 따라다니고 느리게 하는 광고와 같은 콘텐츠와 코드를 차단합니다. 성가신 광고 없이 빠른 탐색을 위해서 광고 차단을 활성화 하세요.</string>
   <string name="firstrun_search_title">검색을 내 입맛대로</string>
   <string name="firstrun_search_text">다른 방식으로 검색을 원하세요? 설정에서 다른 검색 엔진을 기본값으로 선택할 수 있습니다.</string>
   <string name="firstrun_shortcut_title">초기 화면에 바로 가기 추가</string>
@@ -180,6 +193,8 @@
   <string name="firstrun_close_button">알겠습니다!</string>
   <string name="firstrun_skip_button">건너뛰기</string>
   <string name="firstrun_next_button">다음</string>
+  <string name="block_ads_card_title">%1$s가 광고를 차단할 준비가 되었습니다.</string>
+  <string name="block_ads_card_description">새기능입니다! 웹에서 사용자를 따라다니는 광고와 코드를 차단하고 브라우징 속도를 높이세요.</string>
   <string name="content_blocking_disabled">-</string>
   <string name="dialog_addtohomescreen_action_add">추가</string>
   <string name="dialog_addtohomescreen_action_cancel">취소</string>
@@ -219,6 +234,7 @@
   <string name="biometric_auth_title">%1$s 잠금 해제</string>
   <string name="biometric_auth_description">지문 센서를 터치해주세요.</string>
   <string name="biometric_auth_new_session">새 세션</string>
+  <string name="biometric_auth_open_link_new_session">새 세션에서 링크 열기</string>
   <string name="biometric_auth_image_description">지문 아이콘</string>
   <string name="biometric_auth_not_recognized_error">지문이 인식되지 않았습니다. 다시 시도해 주세요.</string>
   <string name="biometric_auth_moved_too_quickly">손가락을 너무 빨리 움직였습니다. 다시 시도해 주세요.</string>
@@ -236,6 +252,8 @@
   <string name="tip_open_in_new_tab">링크를 새 탭에서 엽니다\n 페이지의 링크를 길게 눌러 보세요</string>
   <string name="tip_request_desktop">전체 데스크톱 사이트를 보고 싶으세요?%1$s 메뉴 &gt; 데스크톱 사이트 요청</string>
   <string name="tip_disable_tips2">시작 화면에서 도움말 끄기</string>
+  <string name="tip_block_ads">웹에서 사용자를 따라다지는 광고와 코드를 차단해서 빠르게 브라우징하세요.</string>
+  <string name="block_ads_title">광고 차단</string>
   <string name="tip_explain_allowlist">신뢰할 수 있는 사이트인가요?\n 내가 알고 있는 사이트에 대해서 추적 보호를 비활성화 합니다.</string>
   <string name="new_tab_opened_snackbar">새 탭 열림</string>
   <string name="open_new_tab_snackbar">전환</string>
@@ -256,4 +274,8 @@
   <string name="fatal_crash_report_close_button_label">닫기</string>
   <string name="fatal_crash_report_restart_firefox_label">%1$s 다시 시작</string>
   <string name="crash_report_send_crash_label">Mozilla에 충돌 보고서 보내기</string>
+  <string name="content_blocking_enabled_snackbar_message">콘텐츠 차단이 활성화됨</string>
+  <string name="content_blocking_disabled_snackbar_message">콘텐츠 차단이 비활성화됨</string>
+  <string name="content_blocking_snackbar_enable_action">활성화</string>
+  <string name="content_blocking_snackbar_disable_action">비활성화</string>
 </resources>
