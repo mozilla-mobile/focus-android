@@ -590,7 +590,10 @@ class GeckoWebViewProvider : IWebViewProvider {
                             } catch (e: MalformedURLException) {
                                 false
                             }
-                            HitResult.IMAGE_SRC(elementSrc, if (isValidURL) uri else prefixLocationToRelativeURI(uri))
+                            HitResult.IMAGE_SRC(
+                                elementSrc,
+                                if (isValidURL) uri else prefixLocationToRelativeURI(uri)
+                            )
                         }
                         elementSrc != null ->
                             HitResult.IMAGE(elementSrc)
@@ -619,10 +622,10 @@ class GeckoWebViewProvider : IWebViewProvider {
             }
         }
 
-        fun prefixLocationToRelativeURI(uri: String): String {
+        private fun prefixLocationToRelativeURI(uri: String): String {
             return try {
                 val url = URL(currentUrl)
-                 url.protocol + "://" + url.host + uri
+                url.protocol + "://" + url.host + uri
             } catch (e: MalformedURLException) {
                 // We can't figure this out so just return the probably invalid URI
                 uri
