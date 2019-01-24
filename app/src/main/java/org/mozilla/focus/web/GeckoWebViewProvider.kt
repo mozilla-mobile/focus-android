@@ -56,6 +56,8 @@ import org.mozilla.geckoview.GeckoSession.NavigationDelegate
 import org.mozilla.geckoview.GeckoSessionSettings
 import org.mozilla.geckoview.SessionFinder
 import org.mozilla.geckoview.WebRequestError
+import java.net.MalformedURLException
+import java.net.URL
 import java.util.Locale
 import kotlin.coroutines.CoroutineContext
 
@@ -581,8 +583,15 @@ class GeckoWebViewProvider : IWebViewProvider {
                     }
                 GeckoSession.ContentDelegate.ContextElement.TYPE_IMAGE -> {
                     when {
-                        elementSrc != null && uri != null ->
-                            HitResult.IMAGE_SRC(elementSrc, uri)
+                        elementSrc != null && uri != null -> {
+                            val isValidURL = try {
+                                URL(uri)
+                                true
+                            } catch (e: MalformedURLException) {
+                                false
+                            }
+                            HitResult.IMAGE_SRC(elementSrc, if (isValidURL) uri else prefixLocationToRelativeURI(uri))
+                        }
                         elementSrc != null ->
                             HitResult.IMAGE(elementSrc)
                         else -> HitResult.UNKNOWN("")
@@ -597,10 +606,26 @@ class GeckoWebViewProvider : IWebViewProvider {
                             else -> HitResult.UNKNOWN(it)
                         }
                     } ?: uri?.let {
-                        HitResult.UNKNOWN(it)
+                        val isValidURL = try {
+                            URL(uri)
+                            true
+                        } catch (e: MalformedURLException) {
+                            false
+                        }
+                        HitResult.UNKNOWN(if (isValidURL) it else prefixLocationToRelativeURI(uri))
                     }
                 }
                 else -> HitResult.UNKNOWN("")
+            }
+        }
+
+        fun prefixLocationToRelativeURI(uri: String): String {
+            return try {
+                val url = URL(currentUrl)
+                 url.protocol + "://" + url.host + uri
+            } catch (e: MalformedURLException) {
+                // We can't figure this out so just return the probably invalid URI
+                uri
             }
         }
 
