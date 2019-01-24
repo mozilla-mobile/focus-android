@@ -102,7 +102,7 @@
   <string name="preference_privacy_stealth_summary">Esconder páginas da web quando trocar aplicativo e bloquear a captura de tela.</string>
   <string name="preference_category_security">Segurança</string>
   <string name="preference_category_performance">Desempenho</string>
-  <string name="preference_performance_block_webfonts">Bloquear fontes Web</string>
+  <string name="preference_performance_block_webfonts">Bloquear fontes web</string>
   <string name="preference_performance_block_webfonts_summary">Pode resultar em falta de ícones ou imagens</string>
   <string name="preference_performance_block_javascript">Bloquear JavaScript</string>
   <string name="preference_performance_block_javascript_summary">As páginas podem carregar mais rápido, mas também podem ter comportamento inesperado</string>

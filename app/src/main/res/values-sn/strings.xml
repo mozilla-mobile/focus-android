@@ -36,6 +36,7 @@
   <string name="preference_privacy_and_security_summary">Kuchengeta, makuki, kusarudzwa kwe data</string>
   <string name="preference_search_summary">Ita zvisizvo, zvakakwana</string>
   <string name="preference_mozilla_summary">Nezvedu %1$s, rubatsiro</string>
+  <string name="preference_category_ad_blocking">Vhara Adhiveti</string>
   <string name="preference_category_tracking_protection">Kuchengetedzwa pakuteverwa</string>
   <string name="preference_category_web_content">Zviri paindaneti</string>
   <string name="preference_category_switching_apps">Kuchinja maapurikesheni</string>
@@ -53,6 +54,7 @@
   <string name="preference_switch_autocomplete_topsites">Masaiti anoendwa zvakanyanya</string>
   <string name="preference_autocomplete_topsite_summary">Batidza kuti otokombuliti iitike pamanzwi anosvika 450 akakurumbira URLs mu adhiresi bha.</string>
   <string name="preference_switch_autocomplete_user_list">Pema Saitsi awa isa woga</string>
+  <string name="preference_autocomplete_user_list_description">Batidza kuti ipedzise yoga kunyora mawebsite aunowedzera pano.</string>
   <string name="preference_category_autocomplete_manage_sites">Ronga masaitsi</string>
   <string name="preference_autocomplete_subitem_manage_sites">Ronga masaitsi</string>
   <string name="preference_autocomplete_action_add">+ Wedzera yaunodao URL</string>
@@ -75,6 +77,8 @@
   <string name="preference_language">Mutauro</string>
   <string name="preference_language_systemdefault">Magariro azvo musisitimu</string>
   <string name="preference_category_privacy">Vanza</string>
+  <string name="preference_privacy_ads_block_ads">Chengetedza matangazo uye zvimwe zvinoshungurudza</string>
+  <string name="preference_privacy_ads_block_ads_summary">Anodzivisa matanho nezvimwe zvinoshungurudza vachishandisa block list kubva Easylist, EasyPrivacy, Kutsamwa kwa Fanboy, uye 777 Guard Mobile Ad Filter</string>
   <string name="preference_privacy_block_analytics">Vharira tunotsvaka kwauri twemaadhivhetsi</string>
   <string name="preference_privacy_block_ads">Vharira tunotsvaka kwauri twemaadhivhetsi</string>
   <string name="preference_privacy_block_social">Vharira tunotsvaka twehupenyu</string>
