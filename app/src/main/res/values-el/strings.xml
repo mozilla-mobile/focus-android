@@ -36,6 +36,7 @@
   <string name="preference_privacy_and_security_summary">Επιλογές παρακολούθησης, cookies, δεδομένων</string>
   <string name="preference_search_summary">Ορισμός ως προεπιλογή, αυτόματη συμπλήρωση</string>
   <string name="preference_mozilla_summary">Σχετικά με το %1$s, βοήθεια</string>
+  <string name="preference_category_ad_blocking">Φραγή διαφημίσεων</string>
   <string name="preference_category_tracking_protection">Προστασία από καταγραφή</string>
   <string name="preference_category_web_content">Διαδικτυακό περιεχόμενο</string>
   <string name="preference_category_switching_apps">Εναλλαγή εφαρμογών</string>
@@ -219,6 +220,7 @@
   <string name="biometric_auth_title">Άρση φραγής %1$s</string>
   <string name="biometric_auth_description">Αγγίξτε τον αισθητήρα αποτυπωμάτων για να συνεχίσετε.</string>
   <string name="biometric_auth_new_session">Νέα συνεδρία</string>
+  <string name="biometric_auth_open_link_new_session">Άνοιγμα συνδέσμου σε νέα συνεδρία</string>
   <string name="biometric_auth_image_description">Εικονίδιο αποτυπώματος</string>
   <string name="biometric_auth_not_recognized_error">Το αποτύπωμα δεν αναγνωρίστηκε. Δοκιμάστε ξανά.</string>
   <string name="biometric_auth_moved_too_quickly">Το δάκτυλο κουνήθηκε πολύ γρήγορα. Δοκιμάστε ξανά.</string>
@@ -236,6 +238,7 @@
   <string name="tip_open_in_new_tab">Άνοιγμα συνδέσμου σε νέα καρτέλα\n Πατήστε παρατεταμένα οποιοδήποτε σύνδεσμο σε μια σελίδα</string>
   <string name="tip_request_desktop">Προτιμάτε την πλήρη έκδοση για υπολογιστές;%1$s Μενού &gt; Απαίτηση ιστοσελίδας για υπολογιστές</string>
   <string name="tip_disable_tips2">Απενεργοποίηση συμβουλών στην αρχική οθόνη</string>
+  <string name="block_ads_title">Φραγή διαφημίσεων</string>
   <string name="tip_explain_allowlist">Αξιόπιστη ιστοσελίδα;\n Το Allowlist απενεργοποιεί την Προστασία από καταγραφή για ιστοσελίδες που ξέρετε και εμπιστεύεστε.</string>
   <string name="new_tab_opened_snackbar">Άνοιξε νέα καρτέλα</string>
   <string name="open_new_tab_snackbar">Εναλλαγή</string>
@@ -256,4 +259,8 @@
   <string name="fatal_crash_report_close_button_label">Κλείσιμο</string>
   <string name="fatal_crash_report_restart_firefox_label">Επανεκκίνηση του %1$s</string>
   <string name="crash_report_send_crash_label">Αποστολή αναφοράς κατάρρευσης στη Mozilla</string>
+  <string name="content_blocking_enabled_snackbar_message">Η φραγή περιεχομένου είναι ενεργή</string>
+  <string name="content_blocking_disabled_snackbar_message">Η φραγή περιεχομένου είναι ανενεργή</string>
+  <string name="content_blocking_snackbar_enable_action">Ενεργοποίηση</string>
+  <string name="content_blocking_snackbar_disable_action">Απενεργοποίηση</string>
 </resources>

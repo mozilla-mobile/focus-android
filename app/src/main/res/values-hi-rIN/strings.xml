@@ -54,6 +54,7 @@
   <string name="preference_switch_autocomplete_topsites">मुख्य साइटों के लिए</string>
   <string name="preference_autocomplete_topsite_summary">पता बार में 450 से अधिक लोकप्रिय URLs स्वत: पूर्णता के लिए सक्षम करें।</string>
   <string name="preference_switch_autocomplete_user_list">आपके द्वारा जोड़े साइटों के लिए</string>
+  <string name="preference_autocomplete_user_list_description">आपके द्वारा यहां जोड़े गए स्वत: पूर्ण साइटों को सक्षम करें।</string>
   <string name="preference_category_autocomplete_manage_sites">साइटों को प्रबंधित करें</string>
   <string name="preference_autocomplete_subitem_manage_sites">साइटों को प्रबंधित करें</string>
   <string name="preference_autocomplete_action_add">+ अपनी संशोधित URL जोड़ें</string>
