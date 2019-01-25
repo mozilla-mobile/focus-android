@@ -18,7 +18,7 @@ android {
         minSdkVersion 21
         targetSdkVersion 28
         versionCode 11 // This versionCode is "frozen" for local builds. For "release" builds we
-                       // override this with a generated versionCode at build time.
+        // override this with a generated versionCode at build time.
         versionName "9.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
@@ -92,6 +92,15 @@ android {
         }
     }
 
+    splits {
+        abi {
+            enable true
+            reset()
+            include 'x86', 'armeabi-v7a', 'x86_64'
+            universalApk true
+        }
+    }
+
     sourceSets {
         test {
             resources {
@@ -132,10 +141,10 @@ android {
 }
 
 tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {
-        kotlinOptions.allWarningsAsErrors = true
-        kotlinOptions.freeCompilerArgs += [
-                "-Xuse-experimental=kotlinx.coroutines.ExperimentalCoroutinesApi",
-                "-Xuse-experimental=kotlinx.coroutines.ObsoleteCoroutinesApi"]
+    kotlinOptions.allWarningsAsErrors = true
+    kotlinOptions.freeCompilerArgs += [
+            "-Xuse-experimental=kotlinx.coroutines.ExperimentalCoroutinesApi",
+            "-Xuse-experimental=kotlinx.coroutines.ObsoleteCoroutinesApi"]
 }
 
 repositories {
@@ -212,10 +221,11 @@ dependencies {
     focusImplementation 'com.adjust.sdk:adjust-android:4.11.4'
     focusImplementation 'com.android.installreferrer:installreferrer:1.0' // Required by Adjust
 
-    armImplementation ("org.mozilla.geckoview:geckoview-beta-armeabi-v7a:${geckoview_version}")
-    x86Implementation ("org.mozilla.geckoview:geckoview-beta-x86:${geckoview_version}")
-    aarch64Implementation ("org.mozilla.geckoview:geckoview-beta-arm64-v8a:${geckoview_version}")
-    implementation "com.android.support:palette-v7:$support_libraries_version" // required to force GV dependency version
+    armImplementation("org.mozilla.geckoview:geckoview-beta-armeabi-v7a:${geckoview_version}")
+    x86Implementation("org.mozilla.geckoview:geckoview-beta-x86:${geckoview_version}")
+    aarch64Implementation("org.mozilla.geckoview:geckoview-beta-arm64-v8a:${geckoview_version}")
+    implementation "com.android.support:palette-v7:$support_libraries_version"
+    // required to force GV dependency version
 
     testImplementation "org.junit.jupiter:junit-jupiter-api:5.3.1"
     testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:5.3.1"
@@ -298,7 +308,7 @@ android.applicationVariants.all { variant ->
 
 def blockListOutputDir = 'src/main/res/raw'
 
-task buildBlocklists(type:Copy) {
+task buildBlocklists(type: Copy) {
     from('../shavar-prod-lists') {
         include '*.json'
     }
@@ -390,13 +400,13 @@ def getEnabledLocales() {
     def langs = potentialLanguageDirs.findAll {
         // Only select locales where strings.xml exists
         // Some locales might only contain e.g. sumo URLS in urls.xml, and should be skipped (see es vs es-ES/es-MX/etc)
-        return  file(new File(it, "strings.xml")).exists()
-    } .collect {
+        return file(new File(it, "strings.xml")).exists()
+    }.collect {
         // And reduce down to actual values-* names
         return it.name
-    } .collect {
+    }.collect {
         return it.substring("values-".length())
-    } .collect {
+    }.collect {
         if (it.length() > 3 && it.contains("-r")) {
             // Android resource dirs add an "r" prefix to the region - we need to strip that for java usage
             // Add 1 to have the index of the r, without the dash
