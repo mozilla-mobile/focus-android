@@ -15,6 +15,7 @@ import android.os.Build
 import android.os.IBinder
 import android.support.v4.app.NotificationCompat
 import android.support.v4.content.ContextCompat
+import mozilla.components.support.utils.ThreadUtils
 
 import org.mozilla.focus.R
 import org.mozilla.focus.activity.MainActivity
@@ -25,6 +26,9 @@ import org.mozilla.focus.telemetry.TelemetryWrapper
  * As long as a session is active this service will keep the notification (and our process) alive.
  */
 class SessionNotificationService : Service() {
+
+    private var shouldSendTaskRemovedTelemetry = true
+
     override fun onStartCommand(intent: Intent, flags: Int, startId: Int): Int {
         val action = intent.action ?: return Service.START_NOT_STICKY
 
@@ -36,8 +40,9 @@ class SessionNotificationService : Service() {
 
             ACTION_ERASE -> {
                 TelemetryWrapper.eraseNotificationEvent()
+                shouldSendTaskRemovedTelemetry = false
 
-                components.sessionManager.removeSessions()
+                components.sessionManager.removeAndCloseAllSessions()
 
                 VisibilityLifeCycleCallback.finishAndRemoveTaskIfInBackground(this)
             }
@@ -49,9 +54,13 @@ class SessionNotificationService : Service() {
     }
 
     override fun onTaskRemoved(rootIntent: Intent) {
-        TelemetryWrapper.eraseTaskRemoved()
 
-        components.sessionManager.removeSessions()
+        // Do not double send telemetry for notification erase event
+        if (shouldSendTaskRemovedTelemetry) {
+            TelemetryWrapper.eraseTaskRemoved()
+        }
+
+        components.sessionManager.removeAndCloseAllSessions()
 
         stopForeground(true)
         stopSelf()
@@ -150,17 +159,23 @@ class SessionNotificationService : Service() {
             val intent = Intent(context, SessionNotificationService::class.java)
             intent.action = ACTION_START
 
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                context.startForegroundService(intent)
-            } else {
+            // For #2901: The application is crashing due to the service not calling `startForeground`
+            // before it times out. so this is a speculative fix to decrease the time between these two
+            // calls by running this after potentially expensive calls in FocusApplication.onCreate and
+            // BrowserFragment.inflateView by posting it to the end of the main thread.
+            ThreadUtils.postToMainThread(Runnable {
                 context.startService(intent)
-            }
+            })
         }
 
         internal fun stop(context: Context) {
             val intent = Intent(context, SessionNotificationService::class.java)
 
-            context.stopService(intent)
+            // We want to make sure we always call stop after start. So we're
+            // putting these actions on the same sequential run queue.
+            ThreadUtils.postToMainThread(Runnable {
+                context.stopService(intent)
+            })
         }
     }
 }

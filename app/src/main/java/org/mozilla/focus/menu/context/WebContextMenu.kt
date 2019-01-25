@@ -26,9 +26,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.widget.TextView
 import mozilla.components.browser.session.Session
+import mozilla.components.concept.engine.HitResult
 import org.mozilla.focus.R
-import org.mozilla.focus.open.OpenWithFragment
+import org.mozilla.focus.activity.MainActivity
 import org.mozilla.focus.ext.components
+import org.mozilla.focus.open.OpenWithFragment
 import org.mozilla.focus.telemetry.TelemetryWrapper
 import org.mozilla.focus.telemetry.TelemetryWrapper.BrowserContextMenuValue
 import org.mozilla.focus.utils.Browsers
@@ -53,21 +55,23 @@ object WebContextMenu {
     fun show(
         context: Context,
         callback: IWebView.Callback,
-        hitTarget: IWebView.HitTarget
+        hitResult: HitResult,
+        session: Session
     ) {
-        if (!(hitTarget.isLink || hitTarget.isImage)) {
+
+        if (!hitResult.isLink() && !hitResult.isImage()) {
             // We don't support any other classes yet:
-            throw IllegalStateException("WebContextMenu can only handle long-press on images and/or links.")
+            throw IllegalStateException("WebContextMenu can only handle long-presses on images and/or links.")
         }
 
         TelemetryWrapper.openWebContextMenuEvent()
 
         val builder = AlertDialog.Builder(context)
 
-        builder.setCustomTitle(when {
-            hitTarget.isLink -> createTitleView(context, hitTarget.linkURL)
-            hitTarget.isImage -> createTitleView(context, hitTarget.imageURL)
-            else -> throw IllegalStateException("Unhandled long press target type")
+        builder.setCustomTitle(when (hitResult) {
+            is HitResult.UNKNOWN -> createTitleView(context, hitResult.src)
+            is HitResult.IMAGE_SRC -> createTitleView(context, hitResult.uri)
+            else -> createTitleView(context, hitResult.src)
         })
 
         val view = LayoutInflater.from(context).inflate(R.layout.context_menu, null)
@@ -75,12 +79,10 @@ object WebContextMenu {
 
         builder.setOnCancelListener {
             // What type of element was long-pressed
-            val value: BrowserContextMenuValue = if (hitTarget.isImage && hitTarget.isLink) {
-                BrowserContextMenuValue.ImageWithLink
-            } else if (hitTarget.isImage) {
-                BrowserContextMenuValue.Image
-            } else {
-                BrowserContextMenuValue.Link
+            val value: BrowserContextMenuValue = when (hitResult) {
+                is HitResult.IMAGE_SRC -> BrowserContextMenuValue.ImageWithLink
+                is HitResult.IMAGE -> BrowserContextMenuValue.Image
+                else -> BrowserContextMenuValue.Link
             }
 
             // This even is only sent when the back button is pressed, or when a user
@@ -98,10 +100,10 @@ object WebContextMenu {
             navigationMenuView.isVerticalScrollBarEnabled = false
         }
 
-        setupMenuForHitTarget(dialog, menu, callback, hitTarget, context)
+        setupMenuForHitTarget(dialog, menu, callback, hitResult, context, session)
 
         val warningView = view.findViewById<View>(R.id.warning) as TextView
-        if (hitTarget.isImage) {
+        if (hitResult.isImage()) {
             menu.setBackgroundResource(R.drawable.no_corners_context_menu_navigation_view_background)
 
             @Suppress("DEPRECATION")
@@ -137,43 +139,67 @@ object WebContextMenu {
      * has already been created - we need the dialog in order to be able to dismiss it in the
      * menu callbacks.
      */
-    @Suppress("ComplexMethod")
+    @Suppress("ComplexMethod", "LongParameterList")
     private fun setupMenuForHitTarget(
         dialog: Dialog,
         navigationView: NavigationView,
         callback: IWebView.Callback,
-        hitTarget: IWebView.HitTarget,
-        context: Context
+        hitResult: HitResult,
+        context: Context,
+        session: Session
     ) = with(navigationView) {
-        val appLinkData =
-            if (hitTarget.linkURL != null) getAppDataForLink(context, hitTarget.linkURL) else null
+        val appLinkData = getAppDataForLink(context, hitResult.src)
         inflateMenu(R.menu.menu_browser_context)
 
         menu.findItem(R.id.menu_open_with_app).isVisible = appLinkData != null
-        menu.findItem(R.id.menu_new_tab).isVisible = hitTarget.isLink
-        menu.findItem(R.id.menu_link_share).isVisible = hitTarget.isLink
-        menu.findItem(R.id.menu_link_copy).isVisible = hitTarget.isLink
-        menu.findItem(R.id.menu_image_share).isVisible = hitTarget.isImage
-        menu.findItem(R.id.menu_image_copy).isVisible = hitTarget.isImage
+        menu.findItem(R.id.menu_new_tab).isVisible = hitResult.isLink() &&
+                !session.isCustomTabSession()
+        menu.findItem(R.id.menu_open_in_focus).title = resources.getString(
+            R.string.menu_open_with_default_browser2,
+            resources.getString(R.string.app_name)
+        )
+        menu.findItem(R.id.menu_open_in_focus).isVisible = hitResult.isLink() &&
+                session.isCustomTabSession()
+        menu.findItem(R.id.menu_link_share).isVisible = hitResult.isLink()
+        menu.findItem(R.id.menu_link_copy).isVisible = hitResult.isLink()
+        menu.findItem(R.id.menu_image_share).isVisible = hitResult.isImage()
+        menu.findItem(R.id.menu_image_copy).isVisible = hitResult.isImage()
 
-        menu.findItem(R.id.menu_image_save).isVisible = hitTarget.isImage &&
-                UrlUtils.isHttpOrHttps(hitTarget.imageURL)
+        menu.findItem(R.id.menu_image_save).isVisible = hitResult.isImage() &&
+                UrlUtils.isHttpOrHttps(hitResult.src)
 
         setNavigationItemSelectedListener { item ->
             dialog.dismiss()
 
             when (item.itemId) {
                 R.id.menu_open_with_app -> {
-                    val fragment = OpenWithFragment.newInstance(appLinkData!!, hitTarget.linkURL, null)
-                    fragment.show(context.asFragmentActivity()!!.supportFragmentManager, OpenWithFragment.FRAGMENT_TAG)
+                    val fragment =
+                        OpenWithFragment.newInstance(appLinkData!!, hitResult.src, null)
+                    fragment.show(
+                        context.asFragmentActivity()!!.supportFragmentManager,
+                        OpenWithFragment.FRAGMENT_TAG
+                    )
 
                     true
                 }
+                R.id.menu_open_in_focus -> {
+                    // Open selected link in Focus and navigate there
+                    val newSession = Session(hitResult.src, source = Session.Source.MENU)
+                    context.components.sessionManager.add(newSession, selected = true)
+
+                    val intent = Intent(context, MainActivity::class.java)
+                    intent.action = Intent.ACTION_MAIN
+                    intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
+                    context.startActivity(intent)
+
+                    TelemetryWrapper.openLinkInFullBrowserFromCustomTabEvent()
+                    true
+                }
                 R.id.menu_new_tab -> {
-                    val session = Session(hitTarget.linkURL, source = Session.Source.MENU)
+                    val newSession = Session(hitResult.getLink(), source = Session.Source.MENU)
                     context.components.sessionManager.add(
-                            session,
-                            selected = Settings.getInstance(context).shouldOpenNewTabs()
+                        newSession,
+                        selected = Settings.getInstance(context).shouldOpenNewTabs()
                     )
 
                     if (!Settings.getInstance(context).shouldOpenNewTabs()) {
@@ -182,7 +208,7 @@ object WebContextMenu {
                                 (context as Activity).findViewById(android.R.id.content),
                                 R.string.new_tab_opened_snackbar)
                         snackbar.setAction(R.string.open_new_tab_snackbar) {
-                            context.components.sessionManager.select(session)
+                            context.components.sessionManager.select(newSession)
                         }
                         snackbar.show()
                     }
@@ -200,7 +226,7 @@ object WebContextMenu {
                     TelemetryWrapper.shareLinkEvent()
                     val shareIntent = Intent(Intent.ACTION_SEND)
                     shareIntent.type = "text/plain"
-                    shareIntent.putExtra(Intent.EXTRA_TEXT, hitTarget.linkURL)
+                    shareIntent.putExtra(Intent.EXTRA_TEXT, hitResult.src)
                     dialog.context.startActivity(
                             Intent.createChooser(
                                     shareIntent,
@@ -213,7 +239,7 @@ object WebContextMenu {
                     TelemetryWrapper.shareImageEvent()
                     val shareIntent = Intent(Intent.ACTION_SEND)
                     shareIntent.type = "text/plain"
-                    shareIntent.putExtra(Intent.EXTRA_TEXT, hitTarget.imageURL)
+                    shareIntent.putExtra(Intent.EXTRA_TEXT, hitResult.src)
                     dialog.context.startActivity(
                             Intent.createChooser(
                                     shareIntent,
@@ -224,7 +250,7 @@ object WebContextMenu {
                 }
                 R.id.menu_image_save -> {
                     val download =
-                            Download(hitTarget.imageURL, null, null, null, -1, Environment.DIRECTORY_PICTURES, null)
+                            Download(hitResult.src, null, null, null, -1, Environment.DIRECTORY_PICTURES, null)
                     callback.onDownloadStart(download)
                     TelemetryWrapper.saveImageEvent()
                     true
@@ -234,11 +260,11 @@ object WebContextMenu {
                     val uri: Uri = when {
                         item.itemId == R.id.menu_link_copy -> {
                             TelemetryWrapper.copyLinkEvent()
-                            Uri.parse(hitTarget.linkURL)
+                            Uri.parse(hitResult.src)
                         }
                         item.itemId == R.id.menu_image_copy -> {
                             TelemetryWrapper.copyImageEvent()
-                            Uri.parse(hitTarget.imageURL)
+                            Uri.parse(hitResult.src)
                         }
                         else -> throw IllegalStateException("Unknown hitTarget type - cannot copy to clipboard")
                     }
@@ -250,5 +276,17 @@ object WebContextMenu {
                 else -> throw IllegalArgumentException("Unhandled menu item id=" + item.itemId)
             }
         }
+    }
+
+    private fun HitResult.isImage(): Boolean =
+        (this is HitResult.IMAGE || this is HitResult.IMAGE_SRC) && src.isNotEmpty()
+
+    private fun HitResult.isLink(): Boolean =
+        this.getLink() != "about:blank"
+
+    private fun HitResult.getLink(): String = when (this) {
+        is HitResult.UNKNOWN -> src
+        is HitResult.IMAGE_SRC -> uri
+        else -> "about:blank"
     }
 }

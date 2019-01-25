@@ -11,7 +11,6 @@ import mozilla.components.browser.session.Session
 import mozilla.components.support.utils.SafeIntent
 import org.mozilla.focus.ext.components
 import org.mozilla.focus.session.IntentProcessor
-import org.mozilla.focus.utils.SupportUtils
 
 /**
  * This activity receives VIEW intents and either forwards them to MainActivity or CustomTabActivity.
@@ -23,11 +22,6 @@ class IntentReceiverActivity : Activity() {
         super.onCreate(savedInstanceState)
 
         val intent = SafeIntent(intent)
-
-        if (intent.dataString.equals(SupportUtils.OPEN_WITH_DEFAULT_BROWSER_URL)) {
-            dispatchNormalIntent()
-            return
-        }
 
         val session = intentProcessor.handleIntent(this, intent, savedInstanceState)
 
@@ -55,6 +49,7 @@ class IntentReceiverActivity : Activity() {
     private fun dispatchNormalIntent() {
         val intent = Intent(intent)
         intent.setClassName(applicationContext, MainActivity::class.java.name)
+        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
 
         startActivity(intent)
     }

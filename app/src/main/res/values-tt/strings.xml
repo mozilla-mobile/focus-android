@@ -43,11 +43,6 @@
   <string name="preference_state_on">Кабызылган</string>
   <string name="preference_state_off">Сүнгән</string>
   <string name="preference_subitem_autocomplete">URL-адресны автотөгәлләү</string>
-  <string name="preference_switch_autocomplete">Автотөгәлләү</string>
-  <string name="preference_category_autocomplete_preinstalled">Стандарт URL исемлеге</string>
-  <string name="preference_autocomplete_preinstalled_summary">450\'дән артык мәшһүр сайт адреслары өчен %1$s\'та автотөгәлләүне кабызу.</string>
-  <string name="preference_category_autocomplete_custom_urls">Үзгә URL\'лар</string>
-  <string name="preference_autocomplete_subitem_customlist">Үзгә URL\'лар</string>
   <string name="preference_autocomplete_action_add">+ Үзгә URL өстәү</string>
   <string name="preference_autocomplete_title_add">Үзгә URL өстәү</string>
   <string name="custom_autocomplete_quick_add">Үзгә URL өстәү</string>
@@ -67,14 +62,10 @@
   <string name="preference_language">Тел</string>
   <string name="preference_language_systemdefault">Система теле</string>
   <string name="preference_category_privacy">Хосусыйлык</string>
-  <string name="preference_privacy_block_ads">Реклама күзәтүчеләрен блоклау</string>
-  <string name="preference_privacy_block_ads_summary">Кайбер рекламалар, Сез аларга басмасагыз да, сайтка керүләрегезне күзәтеп тора</string>
   <string name="preference_privacy_block_analytics">Аналитика күзәтүчеләрен блоклау</string>
-  <string name="preference_privacy_block_analytics_summary">Басу һәм скроллинг кебек хәрәкәтләрне җыю, анализлау һәм үлчәү өчен кулланылалар</string>
+  <string name="preference_privacy_block_ads">Реклама күзәтүчеләрен блоклау</string>
   <string name="preference_privacy_block_social">Социаль челтәр күзәтүчеләрен блоклау</string>
-  <string name="preference_privacy_block_social_summary">Сез зиярат иткән сайтларны күзәтү һәм «Уртаклашу» төймәләре кебек мөмкинлекләрне күрсәтү өчен сайтларга куелалар</string>
   <string name="preference_privacy_block_content">Башка эчтәлек күзәтүчеләрен блоклау</string>
-  <string name="preference_privacy_block_content_summary2">Моны кабызу кайбер сәхифәләрнең көтелгәнчә эшләмәвенә сәбәп була ала</string>
   <string name="preference_privacy_category_cookies">Кукиларны блоклау</string>
   <string name="preference_privacy_should_block_cookies_no_option">Юк</string>
   <string name="preference_privacy_should_block_cookies_third_party_only_option">Өченче тараф кукиларын гына блоклау</string>
@@ -164,7 +155,6 @@
   <string name="contextmenu_open_in_new_tab">Сылтаманы яңа биттә ачу</string>
   <string name="contextmenu_image_warning"><![CDATA["%1$s тарихын бетергәндә, сакланган яки уртаклашылган рәсемнәр "<b xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">&#1073;&#1077;&#1090;&#1077;&#1088;&#1077;&#1083;&#1084;&#1241;&#1103;&#1095;&#1241;&#1082;</b>.]]></string>
   <string name="firstrun_defaultbrowser_title">Хосусыйлыгызны көчәйтегез</string>
-  <string name="firstrun_defaultbrowser_text2">Хосусый гизүне яңа дәрәҗәгә күтәрегез. Сайтлар аша Сезне күзәтүче һәм сәхифәләрнең йөкләнү вакытын арттыручы рекламаларны һәм башка эчтәлекләрне блоклагыз.</string>
   <string name="firstrun_search_title">Сезнең эзләү, Сезнең кагыйдәләр</string>
   <string name="firstrun_search_text">Башка берәр нәрсә эзлисезме? Көйләүләр менюсына кереп, стандарт итеп башка бер эзләү системасын сайлый аласыз.</string>
   <string name="firstrun_shortcut_title">Өй экранына ярлыклар өстәгез</string>
@@ -229,5 +219,4 @@
   <string name="tip_autocomplete_url">Иң еш кулланылган сайтларның адресларын автотөгәлләү өчен\nАдрес юлындагы URL\'га озак итеп басып торыгыз</string>
   <string name="tip_open_in_new_tab">Сылтаманы яңа биттә ачу өчен\nСылтамага озак итеп басып торыгыз</string>
   <string name="tip_request_desktop">Сайтның өстәл өсте компьютерлары өчен эшләнгән версиясен карыйсыгыз киләме?%1$sМеню → Өстәл өсте компьютеры</string>
-  <string name="tip_disable_tips">%1$s өй экрандагы киңәшләрне сүндерү</string>
 </resources>

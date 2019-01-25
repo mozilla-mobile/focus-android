@@ -33,7 +33,7 @@ class FirstrunPagerAdapter(
         this.pages = arrayOf(
                 FirstrunPage(
                         context.getString(R.string.firstrun_defaultbrowser_title),
-                        context.getString(R.string.firstrun_defaultbrowser_text2),
+                        context.getString(R.string.firstrun_defaultbrowser_text_new),
                         R.drawable.onboarding_img1),
                 FirstrunPage(
                         context.getString(R.string.firstrun_search_title),

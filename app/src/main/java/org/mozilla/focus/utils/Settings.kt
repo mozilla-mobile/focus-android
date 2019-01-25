@@ -71,22 +71,85 @@ class Settings private constructor(context: Context) {
                 getPreferenceKey(R.string.pref_key_performance_block_javascript),
                 false)
 
-    fun shouldBlockCookiesValue(): String =
-            preferences.getString(getPreferenceKey(R.string
-                    .pref_key_performance_enable_cookies),
-                    resources.getString(R.string.preference_privacy_should_block_cookies_no_option))!!
+    private fun shouldBlockCookiesValue(): String =
+        if (AppConstants.isGeckoBuild) {
+            preferences.getString(
+                getPreferenceKey(
+                    R.string
+                        .pref_key_performance_enable_cookies
+                ),
+                resources.getString(R.string.pref_key_should_block_cookies_third_party_trackers_only)
+            )!!
+        } else {
+            preferences.getString(
+                getPreferenceKey(
+                    R.string
+                        .pref_key_performance_enable_cookies
+                ),
+                resources.getString(R.string.pref_key_should_block_cookies_no)
+            )!!
+        }
+
+    /**
+     * We didn't take a locale switch into account when recording the old cookies setting value,
+     * this should standardize the values into a locale-independent pref value
+     */
+    @Suppress("ComplexMethod")
+    fun getCookiesPrefValue(): String {
+        return when (shouldBlockCookiesValue()) {
+            resources.getString(
+                R.string.preference_privacy_block_cookies_yes
+            ) -> resources.getString(R.string.pref_key_should_block_cookies_yes_option)
+            resources.getString(
+                R.string.pref_key_should_block_cookies_yes_option
+            ) -> resources.getString(R.string.pref_key_should_block_cookies_yes_option)
+            resources.getString(
+                R.string.preference_privacy_block_cookies_no
+            ) -> resources.getString(R.string.pref_key_should_block_cookies_no)
+            resources.getString(
+                R.string.pref_key_should_block_cookies_no
+            ) -> resources.getString(R.string.pref_key_should_block_cookies_no)
+            resources.getString(
+                R.string.preference_privacy_block_cookies_third_party_tracker
+            ) -> resources.getString(R.string.pref_key_should_block_cookies_third_party_trackers_only)
+            resources.getString(
+                R.string.pref_key_should_block_cookies_third_party_trackers_only
+            ) -> resources.getString(R.string.pref_key_should_block_cookies_third_party_trackers_only)
+            resources.getString(
+                R.string.preference_privacy_block_cookies_third_party_only
+            ) -> resources.getString(R.string.pref_key_should_block_cookies_third_party_only)
+            resources.getString(
+                R.string.pref_key_should_block_cookies_third_party_only
+            ) -> resources.getString(R.string.pref_key_should_block_cookies_third_party_only)
+            else -> {
+                // We don't recognize the cookie value so let's clear the setting, this could be
+                // caused by locale switching after choosing a cookie setting in previous Focus versions
+                val defaultValueForEngine =
+                    if (AppConstants.isGeckoBuild)
+                        resources.getString(R.string.pref_key_should_block_cookies_third_party_trackers_only)
+                    else resources.getString(
+                        R.string.pref_key_should_block_cookies_no
+                    )
+                preferences.edit().remove(
+                    getPreferenceKey(
+                        R.string
+                            .pref_key_performance_enable_cookies
+                    )
+                ).apply()
+                defaultValueForEngine
+            }
+        }
+    }
 
     fun shouldBlockCookies(): Boolean =
-            shouldBlockCookiesValue().equals(resources.getString(
-                    R.string.preference_privacy_should_block_cookies_yes_option))
+        getCookiesPrefValue() == resources.getString(R.string.pref_key_should_block_cookies_yes_option)
 
     fun shouldBlockThirdPartyCookies(): Boolean =
-            shouldBlockCookiesValue().equals(
-                    resources.getString(
-                            R.string.preference_privacy_should_block_cookies_third_party_only_option)) ||
-                    shouldBlockCookiesValue().equals(
-                            resources.getString(
-                                    R.string.preference_privacy_should_block_cookies_yes_option))
+        getCookiesPrefValue() == resources.getString(
+            R.string.pref_key_should_block_cookies_third_party_only
+        ) || getCookiesPrefValue() == resources.getString(
+            R.string.pref_key_should_block_cookies_yes_option
+        )
 
     fun shouldShowFirstrun(): Boolean =
             !preferences.getBoolean(FirstrunFragment.FIRSTRUN_PREF, false)
@@ -123,6 +186,11 @@ class Settings private constructor(context: Context) {
             preferences.getBoolean(
                     getPreferenceKey(R.string.pref_key_privacy_block_ads),
                     true)
+
+    fun shouldUseSafeBrowsing() =
+        preferences.getBoolean(
+            getPreferenceKey(R.string.pref_key_safe_browsing),
+            true)
 
     fun shouldBlockAnalyticTrackers() =
             preferences.getBoolean(

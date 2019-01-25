@@ -8,10 +8,11 @@ import android.content.Context
 import android.support.v7.preference.ListPreference
 import android.support.v7.preference.PreferenceViewHolder
 import android.util.AttributeSet
+import org.mozilla.focus.R
 import org.mozilla.focus.utils.Settings
 
 /**
- * Autocomplete preference that will show a sub screen to configure the autocomplete behavior.
+ * Cookies preference that will show a list to configure blocking Cookies options
  */
 class CookiesPreference(context: Context?, attrs: AttributeSet?) : ListPreference(context, attrs) {
 
@@ -25,8 +26,22 @@ class CookiesPreference(context: Context?, attrs: AttributeSet?) : ListPreferenc
         updateSummary()
     }
 
-    private fun updateSummary() {
+    fun updateSummary() {
         val settings = Settings.getInstance(context)
-        super.setSummary(settings.shouldBlockCookiesValue())
+        val value = when (settings.getCookiesPrefValue()) {
+            context.getString(R.string.pref_key_should_block_cookies_no) -> {
+                context.resources.getString(R.string.preference_privacy_block_cookies_no)
+            }
+            context.resources.getString(R.string.pref_key_should_block_cookies_third_party_only) -> {
+                context.getString(R.string.preference_privacy_block_cookies_third_party_only)
+            }
+            context.resources.getString(R.string.pref_key_should_block_cookies_third_party_trackers_only) -> {
+                context.getString(
+                    R.string.preference_privacy_block_cookies_third_party_tracker
+                )
+            }
+            else -> context.getString(R.string.preference_privacy_block_cookies_yes)
+        }
+        super.setSummary(value)
     }
 }

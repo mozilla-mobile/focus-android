@@ -31,11 +31,6 @@
   <string name="preference_state_on">Միաց.</string>
   <string name="preference_state_off">Անջ.</string>
   <string name="preference_subitem_autocomplete">URL ինքնալրացում</string>
-  <string name="preference_switch_autocomplete">Ինքնալրացում</string>
-  <string name="preference_category_autocomplete_preinstalled">Սկզբնադիր URL ցանկ</string>
-  <string name="preference_autocomplete_preinstalled_summary">Միացրեք՝ ունենալու համար %1$s ինքնալրացում աեվլի քան 450 հանրահայտ URL-ների համար:</string>
-  <string name="preference_category_autocomplete_custom_urls">Հարմարեցված URL-ներ</string>
-  <string name="preference_autocomplete_subitem_customlist">Հարմարեցված URL-ներ</string>
   <string name="preference_autocomplete_action_add">+ Հավելել հարմարեցված URL</string>
   <string name="preference_autocomplete_title_add">Հավելել հարմարեցված URL</string>
   <string name="custom_autocomplete_quick_add">Ավելացնել հարմարեցված URL</string>
@@ -52,14 +47,10 @@
   <string name="preference_language">Լեզուն</string>
   <string name="preference_language_systemdefault">Համակարգայինը</string>
   <string name="preference_category_privacy">Գաղտնիություն</string>
-  <string name="preference_privacy_block_ads">Արգելափակել գովազդային հետագծումները</string>
-  <string name="preference_privacy_block_ads_summary">Որոշ գովազդներ հետևում են կայքի այցելուներին, եթե անգամ չեք սեղմում գովազդին</string>
   <string name="preference_privacy_block_analytics">Արգելափակել վերլուծական հետագծումները</string>
-  <string name="preference_privacy_block_analytics_summary">Օգտագործվում է հավաքելու, վերլուծելու և ակտիվությունը չափելու համար, ինչպես օրինակ՝ հպումը և գլորումը:</string>
+  <string name="preference_privacy_block_ads">Արգելափակել գովազդային հետագծումները</string>
   <string name="preference_privacy_block_social">Արգելափակել սոցիալական հետագծումները</string>
-  <string name="preference_privacy_block_social_summary">Ներկառուցված կայքերում՝ հետևելուհ ամար ձեր այցելուներին և ցուցադրելու համար գործառությունը, ինչպես օրինակ՝ կոճակների համօգտագործում</string>
   <string name="preference_privacy_block_content">Արգելափակել այլ բովանդակության հետագծումները</string>
-  <string name="preference_privacy_block_content_summary2">Միացնելու դեպքում որոշ էջեր կարող են անսպասելի վարք ցուցադրել</string>
   <string name="preference_privacy_category_cookies">"Արգելափակել cookie-ները "</string>
   <string name="preference_privacy_should_block_cookies_no_option">Ոչ</string>
   <string name="preference_privacy_should_block_cookies_third_party_only_option">Արգելափակել 3-րդ կողմի cookie-ները հիմա</string>
@@ -144,7 +135,6 @@
   <string name="contextmenu_open_in_new_tab">Բացել հղումը նոր ներդիրում</string>
   <string name="contextmenu_image_warning"><![CDATA["Պահպանված և համօգտագործված պատկերները "<b xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">&#1401;&#1381;&#1398; &#1403;&#1398;&#1403;&#1406;&#1387;</b>, երբ դուք ջնջեք %1$s-ը]]></string>
   <string name="firstrun_defaultbrowser_title">Հզորացրեք ձեր գաղտնիությունը</string>
-  <string name="firstrun_defaultbrowser_text2">Տարեք գաղտնի դիտարկումը հաջորդ մակարդակ: Արգելափակեք գովազդները և այլ բովանդակություն, որը կարող է հետագծել ձեզ կայքերում և արագացրեք էջի բեռնումը:</string>
   <string name="firstrun_search_title">Ձեր որոնումը, ձեր ընտրությունը</string>
   <string name="firstrun_search_text">Այլ բա՞ն եք փնտրում: Ընտրեք այլ որոնիչ Կարգավորումներում:</string>
   <string name="firstrun_shortcut_title">Հավելել դյուրանցումները տուն էկրանին:</string>

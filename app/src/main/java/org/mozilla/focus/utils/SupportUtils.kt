@@ -28,7 +28,6 @@ object SupportUtils {
     const val PRIVACY_NOTICE_URL = "https://www.mozilla.org/privacy/firefox-focus/"
     const val PRIVACY_NOTICE_KLAR_URL = "https://www.mozilla.org/de/privacy/firefox-klar/"
 
-    const val OPEN_WITH_DEFAULT_BROWSER_URL = "https://www.mozilla.org/openGeneralSettings" // Fake URL
     val manifestoURL: String
         get() {
             val langTag = Locales.getLanguageTag(Locale.getDefault())
@@ -43,8 +42,9 @@ object SupportUtils {
         AUTOCOMPLETE("autofill-domain-android"),
         TRACKERS("trackers"),
         USAGE_DATA("usage-data"),
-        WHATS_NEW("whats-new-focus-android-7"),
-        SEARCH_SUGGESTIONS("search-suggestions-focus-android")
+        WHATS_NEW("whats-new-focus-android-8"),
+        SEARCH_SUGGESTIONS("search-suggestions-focus-android"),
+        ALLOWLIST("focus-android-allowlist")
     }
 
     fun getSumoURLForTopic(context: Context, topic: SumoTopic): String {
@@ -53,6 +53,12 @@ object SupportUtils {
         val osTarget = "Android"
         val langTag = Locales.getLanguageTag(Locale.getDefault())
         return "https://support.mozilla.org/1/mobile/$appVersion/$osTarget/$langTag/$escapedTopic"
+    }
+
+    // For some reason this URL has a different format than the other SUMO URLs
+    fun getSafeBrowsingURL(): String {
+        val langTag = Locales.getLanguageTag(Locale.getDefault())
+        return "https://support.mozilla.org/$langTag/kb/how-does-phishing-and-malware-protection-work"
     }
 
     private fun getEncodedTopicUTF8(topic: String): String {

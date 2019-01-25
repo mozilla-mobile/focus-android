@@ -39,11 +39,6 @@
   <string name="preference_state_on">Meyajta’al</string>
   <string name="preference_state_off">Ma’ tu meyajta’al</string>
   <string name="preference_subitem_autocomplete">Chuupuk tu juunaj URL</string>
-  <string name="preference_switch_autocomplete">Chuupuk tu juunaj</string>
-  <string name="preference_category_autocomplete_preinstalled">Tsool ts’íib URL le ta yáax ts’íibo’</string>
-  <string name="preference_autocomplete_preinstalled_summary">Meyajtej uti’al ka %1$s ku laj chuupuk tu juunaj ich 450 URLs le u taj uts tu yich máak u cha’antik ichil le ba’alil tsola’anilob.</string>
-  <string name="preference_category_autocomplete_custom_urls">Tsikbe’eniltal URLs</string>
-  <string name="preference_autocomplete_subitem_customlist">URL tsikbe’eniltal</string>
   <string name="preference_autocomplete_action_add">+ Ts’áabak URL tsikbe’eniltal</string>
   <string name="preference_autocomplete_title_add">Ts’áabak URL tsikbe’eniltal</string>
   <string name="custom_autocomplete_quick_add">Ts’áabak URL tsikbe’eniltal</string>
@@ -63,14 +58,10 @@
   <string name="preference_language">T’aanil</string>
   <string name="preference_language_systemdefault">U biilal yáax ts’íibtaj ti’ le nuupankil meyajilo’</string>
   <string name="preference_category_privacy">Chen tu wóok’sale’</string>
-  <string name="preference_privacy_block_ads">Ma’ meyajta’ab le kaxan ba’al uti’al koonol ba’alob</string>
-  <string name="preference_privacy_block_ads_summary">Yáan koonol ba’alob ku kaxantik a xíimbalil ich le tu’uxilo’, kex ma’ tan péets’ik yóok’olo’</string>
   <string name="preference_privacy_block_analytics">Ma’ meyajta’al le kaxan ba’al túukulnaj</string>
-  <string name="preference_privacy_block_analytics_summary">Beelankil uti’al moolbil, túukulbil yéetel p’iisbil péeksilo’ob je’e bey le ku máachaj bey xan ku jakchajal</string>
+  <string name="preference_privacy_block_ads">Ma’ meyajta’ab le kaxan ba’al uti’al koonol ba’alob</string>
   <string name="preference_privacy_block_social">Ma’ meyajta’al le kaxan ba’al uti’al tsikbal máak</string>
-  <string name="preference_privacy_block_social_summary">Jupa’an ich je’e tu’uxake’ uti’al u kaxantik tu’ux ka maan ich web, bey xan uti’al u ye’esiktech bixilo’ob je’e bey le ka ts’áank’abtik uti’al a túuxtik ba’alob</string>
   <string name="preference_privacy_block_content">Ma’ meyajta’ab le kaxan ba’al uti’al jejelas ba’ilob</string>
-  <string name="preference_privacy_block_content_summary2">Wa ka meyajtike’ ju beytal u k’as jela’antik u meyaj jejelas tseel ju’unilob</string>
   <string name="preference_privacy_category_cookies">Ma’ meyajta’ak cookies</string>
   <string name="preference_privacy_should_block_cookies_no_option">Ma’</string>
   <string name="preference_privacy_should_block_cookies_third_party_only_option">Ma’ meyajta’ak chen cookies ti’ yaanalilo’ob</string>
@@ -155,7 +146,6 @@
   <string name="contextmenu_image_save">Táabsa’ak oochelil</string>
   <string name="contextmenu_open_in_new_tab">Je’ebek le nuupankila’ ich jun túumben nu’ukbesaj</string>
   <string name="firstrun_defaultbrowser_title">Nojochkúuns a ba’il ta wóok’sal</string>
-  <string name="firstrun_defaultbrowser_text2">Bis táanxil tu’ux le a maansajil ich web yéetel u ba’il a wóok’sal. Ma’ cha’ik u chíikpajal le koonol ba’alobo’ wa u láak’ ba’il ku kaxtikech ich le tseel web tu’ux ka maano’ uti’al u chaambelkúunsik a wéensik ba’alob te’ webo’.</string>
   <string name="firstrun_search_title">A kaxan ba’al, je’e bey a k’áato’</string>
   <string name="firstrun_search_text">¿Ka kaxtik ba’al jela’anil wa’a? Yéey u jela’anil u múuk’il a kaxan ba’al ta yéeytaj yáax táanile’ ich le ba’ila’.</string>
   <string name="firstrun_shortcut_title">Ts’a’a u séeb k’at bejilo’ob ti’ a wokoj te’ yáax cha’anila’</string>

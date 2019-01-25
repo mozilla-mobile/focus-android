@@ -56,10 +56,6 @@ public class BrowserMenu extends PopupWindow {
         setElevation(context.getResources().getDimension(R.dimen.menu_elevation));
     }
 
-    public void updateTrackers(int trackers) {
-        adapter.updateTrackers(trackers);
-    }
-
     public void updateLoading(boolean loading) {
         adapter.updateLoading(loading);
     }

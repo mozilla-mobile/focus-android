@@ -26,7 +26,11 @@ import android.widget.FrameLayout
 import android.widget.TextView
 import kotlinx.android.synthetic.main.fragment_urlinput.*
 import kotlinx.android.synthetic.main.fragment_urlinput.view.*
-import kotlinx.coroutines.experimental.launch
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Dispatchers.IO
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
 import mozilla.components.browser.domains.CustomDomains
 import mozilla.components.browser.domains.DomainAutoCompleteProvider
 import mozilla.components.browser.session.Session
@@ -48,15 +52,16 @@ import org.mozilla.focus.tips.Tip
 import org.mozilla.focus.tips.TipManager
 import org.mozilla.focus.utils.AppConstants
 import org.mozilla.focus.utils.Features
+import org.mozilla.focus.utils.OneShotOnPreDrawListener
 import org.mozilla.focus.utils.Settings
 import org.mozilla.focus.utils.StatusBarUtils
 import org.mozilla.focus.utils.SupportUtils
 import org.mozilla.focus.utils.UrlUtils
 import org.mozilla.focus.utils.ViewUtils
-import org.mozilla.focus.utils.OneShotOnPreDrawListener
 import org.mozilla.focus.viewmodel.MainViewModel
 import org.mozilla.focus.whatsnew.WhatsNew
 import java.util.Objects
+import kotlin.coroutines.CoroutineContext
 
 class FocusCrashException : Exception()
 
@@ -69,7 +74,8 @@ class FocusCrashException : Exception()
 class UrlInputFragment :
     LocaleAwareFragment(),
     View.OnClickListener,
-    SharedPreferences.OnSharedPreferenceChangeListener {
+    SharedPreferences.OnSharedPreferenceChangeListener,
+    CoroutineScope {
     companion object {
         @JvmField
         val FRAGMENT_TAG = "url_input"
@@ -87,7 +93,6 @@ class UrlInputFragment :
         private val ANIMATION_BROWSER_SCREEN = "browser_screen"
 
         private val ANIMATION_DURATION = 200
-        private val TIPS_ALPHA = 0.65f
 
         private lateinit var searchSuggestionsViewModel: SearchSuggestionsViewModel
 
@@ -137,6 +142,9 @@ class UrlInputFragment :
         }
     }
 
+    private var job = Job()
+    override val coroutineContext: CoroutineContext
+        get() = job + Dispatchers.Main
     private val autoCompleteProvider: DomainAutoCompleteProvider = DomainAutoCompleteProvider()
     private var displayedPopupMenu: HomeMenu? = null
 
@@ -186,6 +194,10 @@ class UrlInputFragment :
     override fun onResume() {
         super.onResume()
 
+        if (job.isCancelled) {
+            job = Job()
+        }
+
         activity?.let {
             val settings = Settings.getInstance(it.applicationContext)
             val useCustomDomains = settings.shouldAutocompleteFromCustomDomainList()
@@ -197,6 +209,11 @@ class UrlInputFragment :
         StatusBarUtils.getStatusBarHeight(keyboardLinearLayout) {
             adjustViewToStatusBarHeight(it)
         }
+    }
+
+    override fun onPause() {
+        job.cancel()
+        super.onPause()
     }
 
     private fun updateTipsLabel() {
@@ -212,7 +229,6 @@ class UrlInputFragment :
         }
 
         val tipText = String.format(tip.text, System.getProperty("line.separator"))
-        keyboardLinearLayout.homeViewTipsLabel.alpha = TIPS_ALPHA
 
         if (tip.deepLink == null) {
             homeViewTipsLabel.text = tipText
@@ -245,7 +261,6 @@ class UrlInputFragment :
 
     private fun showFocusSubtitle() {
         keyboardLinearLayout.homeViewTipsLabel.text = getString(teaser)
-        keyboardLinearLayout.homeViewTipsLabel.alpha = 1f
         keyboardLinearLayout.homeViewTipsLabel.setOnClickListener(null)
     }
 
@@ -358,6 +373,8 @@ class UrlInputFragment :
     override fun onStart() {
         super.onStart()
 
+        activity?.let {
+            if (Settings.getInstance(it.applicationContext).shouldShowFirstrun()) return@onStart }
         showKeyboard()
     }
 
@@ -442,7 +459,7 @@ class UrlInputFragment :
 
     private fun addUrlToAutocomplete(url: String) {
         var duplicateURL = false
-        val job = launch {
+        val job = launch(IO) {
             duplicateURL = CustomDomains.load(requireContext()).contains(url)
 
             if (duplicateURL) return@launch
@@ -655,6 +672,8 @@ class UrlInputFragment :
         }
     }
 
+    // This isn't that complex, and is only used for l10n screenshots.
+    @Suppress("ComplexMethod")
     private fun handleL10NTrigger(input: String): Boolean {
         if (!AppConstants.isDevBuild) return false
 
@@ -667,6 +686,7 @@ class UrlInputFragment :
             "l10n:tip:4" -> updateSubtitle(Tip.createAutocompleteURLTip(requireContext()))
             "l10n:tip:5" -> updateSubtitle(Tip.createOpenInNewTabTip(requireContext()))
             "l10n:tip:6" -> updateSubtitle(Tip.createRequestDesktopTip(requireContext()))
+            "l10n:tip:7" -> updateSubtitle(Tip.createAllowlistTip(requireContext()))
             else -> triggerHandled = false
         }
 
@@ -719,7 +739,7 @@ class UrlInputFragment :
 
     private fun openUrl(url: String, searchTerms: String?) {
         if (!searchTerms.isNullOrEmpty()) {
-            session?.searchTerms = searchTerms!!
+            session?.searchTerms = searchTerms
         }
 
         val fragmentManager = requireActivity().supportFragmentManager
@@ -742,7 +762,7 @@ class UrlInputFragment :
         } else {
             val session = Session(url, source = Session.Source.USER_ENTERED)
             if (!searchTerms.isNullOrEmpty()) {
-                session.searchTerms = searchTerms!!
+                session.searchTerms = searchTerms
             }
 
             requireComponents.sessionManager.add(session, selected = true)

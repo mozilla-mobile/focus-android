@@ -31,9 +31,11 @@ RELEASE_LOCALES = [
 	"bg",
 	"bn-BD",
 	"bn-IN",
+	"bo",
 	"bs",
 	"ca",
 	"cak",
+	"co",
 	"cs",
 	"cy",
 	"da",
@@ -41,6 +43,7 @@ RELEASE_LOCALES = [
 	"dsb",
 	"el",
 	"en-CA",
+	"en-GB",
 	"eo",
 	"es-AR",
 	"es-CL",
@@ -94,6 +97,7 @@ RELEASE_LOCALES = [
 	"ru",
 	"sk",
 	"sl",
+	"sn",
 	"sq",
 	"sr",
 	"sv-SE",
@@ -122,9 +126,9 @@ RELEASE_LOCALES = [
 
 ADDITIONAL_SCREENSHOT_LOCALES = [
 	"jv",
-	"bo",
 	"ace",
-	"zh-HK"
+	"zh-HK",
+	"nv"
 ]
 
 # Those are locales that we take automated screenshots of.

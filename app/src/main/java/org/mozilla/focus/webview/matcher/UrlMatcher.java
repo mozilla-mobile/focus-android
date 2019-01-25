@@ -16,6 +16,7 @@ import android.support.v4.util.ArrayMap;
 import android.util.JsonReader;
 
 import org.mozilla.focus.R;
+import org.mozilla.focus.utils.Settings;
 import org.mozilla.focus.webview.matcher.util.FocusString;
 
 import java.io.IOException;
@@ -80,9 +81,9 @@ public class UrlMatcher implements  SharedPreferences.OnSharedPreferenceChangeLi
         }
 
         if (blockListOverrides != null) {
-            for (int i = 0; i < blockListOverrides.length; i++) {
+            for (int blockListOverride : blockListOverrides) {
                 try (final JsonReader jsonReader =
-                             new JsonReader(new InputStreamReader(context.getResources().openRawResource(blockListOverrides[i]), StandardCharsets.UTF_8))) {
+                             new JsonReader(new InputStreamReader(context.getResources().openRawResource(blockListOverride), StandardCharsets.UTF_8))) {
                     BlocklistProcessor.loadCategoryMap(jsonReader, categoryMap, BlocklistProcessor.ListType.OVERRIDE_LIST);
                 } catch (IOException e) {
                     throw new IllegalStateException("Unable to parse override blacklist");
@@ -139,7 +140,20 @@ public class UrlMatcher implements  SharedPreferences.OnSharedPreferenceChangeLi
         final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
 
         for (final Map.Entry<String, String> entry : categoryPrefMap.entrySet()) {
-            final boolean prefValue = prefs.getBoolean(entry.getKey(), true);
+            final boolean prefValue;
+            if (entry.getKey().equals(context.getString(R.string.pref_key_performance_block_webfonts))) {
+                prefValue = Settings.getInstance(context).shouldBlockWebFonts();
+            } else if (entry.getKey().equals(context.getString(R.string.pref_key_privacy_block_social))) {
+                prefValue = Settings.getInstance(context).shouldBlockSocialTrackers();
+            } else if (entry.getKey().equals(context.getString(R.string.pref_key_privacy_block_ads))) {
+                prefValue = Settings.getInstance(context).shouldBlockAdTrackers();
+            } else if (entry.getKey().equals(context.getString(R.string.pref_key_privacy_block_analytics))) {
+                prefValue = Settings.getInstance(context).shouldBlockAnalyticTrackers();
+            } else if (entry.getKey().equals(context.getString(R.string.pref_key_privacy_block_other))) {
+                prefValue = Settings.getInstance(context).shouldBlockOtherTrackers();
+            } else {
+                prefValue = prefs.getBoolean(entry.getKey(), true);
+            }
             setCategoryEnabled(entry.getValue(), prefValue);
         }
     }
@@ -193,7 +207,6 @@ public class UrlMatcher implements  SharedPreferences.OnSharedPreferenceChangeLi
         if (enabled) {
             if (enabledCategories.contains(category)) {
                 // Early return - nothing to do if the category is already enabled
-                return;
             } else {
                 enabledCategories.add(category);
                 previouslyUnmatched.clear();
@@ -201,7 +214,6 @@ public class UrlMatcher implements  SharedPreferences.OnSharedPreferenceChangeLi
         } else {
             if (!enabledCategories.contains(category)) {
                 // Early return - nothing to do if the category is already disabled
-                return;
             } else {
                 enabledCategories.remove(category);
                 previouslyMatched.clear();

@@ -18,33 +18,54 @@ import android.util.AttributeSet
 import android.util.Log
 import android.view.View
 import android.webkit.WebSettings
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Dispatchers.IO
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
+import mozilla.components.browser.errorpages.ErrorPages
+import mozilla.components.browser.errorpages.ErrorType
 import mozilla.components.browser.session.Session
+import mozilla.components.concept.engine.HitResult
+import mozilla.components.lib.crash.handler.CrashHandlerService
+import mozilla.components.support.ktx.android.util.Base64
+import mozilla.components.support.ktx.kotlin.isEmail
+import mozilla.components.support.ktx.kotlin.isGeoLocation
+import mozilla.components.support.ktx.kotlin.isPhone
 import org.json.JSONException
 import org.mozilla.focus.R
 import org.mozilla.focus.browser.LocalizedContent
 import org.mozilla.focus.ext.savedWebViewState
 import org.mozilla.focus.gecko.GeckoViewPrompt
 import org.mozilla.focus.gecko.NestedGeckoView
-import org.mozilla.focus.telemetry.SentryWrapper
+import org.mozilla.focus.locale.LocaleManager
+import org.mozilla.focus.locale.Locales
 import org.mozilla.focus.telemetry.TelemetryWrapper
 import org.mozilla.focus.utils.AppConstants
 import org.mozilla.focus.utils.IntentUtils
+import org.mozilla.focus.utils.MobileMetricsPingStorage
 import org.mozilla.focus.utils.Settings
 import org.mozilla.focus.utils.UrlUtils
 import org.mozilla.focus.webview.SystemWebView
+import org.mozilla.geckoview.AllowOrDeny
 import org.mozilla.geckoview.GeckoResult
 import org.mozilla.geckoview.GeckoRuntime
 import org.mozilla.geckoview.GeckoRuntimeSettings
 import org.mozilla.geckoview.GeckoSession
+import org.mozilla.geckoview.GeckoSession.NavigationDelegate
 import org.mozilla.geckoview.GeckoSessionSettings
 import org.mozilla.geckoview.SessionFinder
+import org.mozilla.geckoview.WebRequestError
+import java.net.MalformedURLException
+import java.net.URL
+import java.util.Locale
+import kotlin.coroutines.CoroutineContext
 
 /**
  * WebViewProvider implementation for creating a Gecko based implementation of IWebView.
  */
 @Suppress("TooManyFunctions")
 class GeckoWebViewProvider : IWebViewProvider {
-
     override fun preload(context: Context) {
         sendTelemetryEventOnSwitchToGecko(context)
         createGeckoRuntime(context)
@@ -54,7 +75,7 @@ class GeckoWebViewProvider : IWebViewProvider {
         val settings = Settings.getInstance(context)
         if (!settings.shouldShowFirstrun() && settings.isFirstGeckoRun()) {
             PreferenceManager.getDefaultSharedPreferences(context)
-                    .edit().putBoolean(PREF_FIRST_GECKO_RUN, false).apply()
+                .edit().putBoolean(PREF_FIRST_GECKO_RUN, false).apply()
             Log.d(javaClass.simpleName, "Sending change to Gecko ping")
             TelemetryWrapper.changeToGeckoEngineEvent()
         }
@@ -65,7 +86,7 @@ class GeckoWebViewProvider : IWebViewProvider {
     }
 
     override fun performCleanup(context: Context) {
-        // Nothing: does Gecko need extra private mode cleanup?
+        // Nothing: a WebKit work-around.
     }
 
     override fun performNewBrowserSessionCleanup() {
@@ -76,13 +97,22 @@ class GeckoWebViewProvider : IWebViewProvider {
         if (geckoRuntime == null) {
             val runtimeSettingsBuilder = GeckoRuntimeSettings.Builder()
             runtimeSettingsBuilder.useContentProcessHint(true)
-            // Safe browsing is not ready #3309
-            runtimeSettingsBuilder.blockMalware(false)
-            runtimeSettingsBuilder.blockPhishing(false)
-            runtimeSettingsBuilder.nativeCrashReportingEnabled(false)
-            runtimeSettingsBuilder.javaCrashReportingEnabled(false)
+            runtimeSettingsBuilder.blockMalware(Settings.getInstance(context).shouldUseSafeBrowsing())
+            runtimeSettingsBuilder.blockPhishing(Settings.getInstance(context).shouldUseSafeBrowsing())
+            runtimeSettingsBuilder.crashHandler(CrashHandlerService::class.java)
+            runtimeSettingsBuilder.locales(arrayOf(getLocale(context)))
+
             geckoRuntime =
                     GeckoRuntime.create(context.applicationContext, runtimeSettingsBuilder.build())
+        }
+    }
+
+    private fun getLocale(context: Context): String {
+        val currentLocale = LocaleManager.getInstance().getCurrentLocale(context)
+        return if (currentLocale != null) {
+            Locales.getLanguageTag(currentLocale)
+        } else {
+            Locales.getLanguageTag(Locale.getDefault())
         }
     }
 
@@ -110,10 +140,11 @@ class GeckoWebViewProvider : IWebViewProvider {
     class GeckoWebView(context: Context, attrs: AttributeSet?) :
         NestedGeckoView(context, attrs),
         IWebView,
-        SharedPreferences.OnSharedPreferenceChangeListener {
+        SharedPreferences.OnSharedPreferenceChangeListener,
+        CoroutineScope {
         private var callback: IWebView.Callback? = null
         private var findListener: IFindListener? = null
-        private var currentUrl: String = "about:blank"
+        private var currentUrl: String = ABOUT_BLANK
         private var canGoBack: Boolean = false
         private var canGoForward: Boolean = false
         private var isSecure: Boolean = false
@@ -122,6 +153,9 @@ class GeckoWebViewProvider : IWebViewProvider {
         private var isLoadingInternalUrl = false
         private lateinit var finder: SessionFinder
         private var restored = false
+        private var job = Job()
+        override val coroutineContext: CoroutineContext
+            get() = job + Dispatchers.Main
 
         init {
             PreferenceManager.getDefaultSharedPreferences(context)
@@ -158,6 +192,7 @@ class GeckoWebViewProvider : IWebViewProvider {
         }
 
         override fun onPause() {
+            job.cancel()
         }
 
         override fun goBack() {
@@ -176,9 +211,11 @@ class GeckoWebViewProvider : IWebViewProvider {
         }
 
         override fun onResume() {
-            if (TelemetryWrapper.dayPassedSinceLastUpload(context)) {
-                sendTelemetrySnapshots()
+            if (job.isCancelled) {
+                job = Job()
             }
+
+            storeTelemetrySnapshots()
         }
 
         override fun stopLoading() {
@@ -196,7 +233,13 @@ class GeckoWebViewProvider : IWebViewProvider {
         }
 
         override fun cleanup() {
-            geckoSession.close()
+            if (geckoSession.isOpen) {
+                geckoSession.close()
+            }
+        }
+
+        override fun updateLocale(currentLocale: Locale?) {
+            geckoRuntime!!.settings.locales = arrayOf(Locales.getLanguageTag(currentLocale))
         }
 
         override fun setBlockingEnabled(enabled: Boolean) {
@@ -213,9 +256,10 @@ class GeckoWebViewProvider : IWebViewProvider {
         }
 
         override fun setRequestDesktop(shouldRequestDesktop: Boolean) {
-            geckoSession.settings.setBoolean(
-                GeckoSessionSettings.USE_DESKTOP_MODE,
-                shouldRequestDesktop
+            geckoSession.settings.setInt(
+                GeckoSessionSettings.USER_AGENT_MODE,
+                if (shouldRequestDesktop) GeckoSessionSettings.USER_AGENT_MODE_DESKTOP
+                else GeckoSessionSettings.USER_AGENT_MODE_MOBILE
             )
             callback?.onRequestDesktopStateChanged(shouldRequestDesktop)
         }
@@ -237,18 +281,16 @@ class GeckoWebViewProvider : IWebViewProvider {
                 -> geckoRuntime!!.settings.webFontsEnabled =
                         !Settings.getInstance(context).shouldBlockWebFonts()
                 context.getString(R.string.pref_key_remote_debugging) ->
-                    geckoRuntime!!.settings.remoteDebuggingEnabled = false
+                    geckoRuntime!!.settings.remoteDebuggingEnabled =
+                            Settings.getInstance(context).shouldEnableRemoteDebugging()
                 context.getString(R.string.pref_key_performance_enable_cookies) -> {
-                    val cookiesValue = if (Settings.getInstance(context).shouldBlockCookies() &&
-                        Settings.getInstance(context).shouldBlockThirdPartyCookies()
-                    ) {
-                        GeckoRuntimeSettings.COOKIE_ACCEPT_NONE
-                    } else if (Settings.getInstance(context).shouldBlockThirdPartyCookies()) {
-                        GeckoRuntimeSettings.COOKIE_ACCEPT_FIRST_PARTY
-                    } else {
-                        GeckoRuntimeSettings.COOKIE_ACCEPT_ALL
-                    }
-                    geckoRuntime!!.settings.cookieBehavior = cookiesValue
+                    updateCookieSettings()
+                }
+                context.getString(R.string.pref_key_safe_browsing) -> {
+                    val shouldUseSafeBrowsing =
+                        Settings.getInstance(context).shouldUseSafeBrowsing()
+                    geckoRuntime!!.settings.blockMalware = shouldUseSafeBrowsing
+                    geckoRuntime!!.settings.blockPhishing = shouldUseSafeBrowsing
                 }
                 else -> return
             }
@@ -261,16 +303,23 @@ class GeckoWebViewProvider : IWebViewProvider {
             geckoRuntime!!.settings.webFontsEnabled =
                     !Settings.getInstance(context).shouldBlockWebFonts()
             geckoRuntime!!.settings.remoteDebuggingEnabled = false
-            val cookiesValue = if (Settings.getInstance(context).shouldBlockCookies() &&
-                Settings.getInstance(context).shouldBlockThirdPartyCookies()
-            ) {
-                GeckoRuntimeSettings.COOKIE_ACCEPT_NONE
-            } else if (Settings.getInstance(context).shouldBlockThirdPartyCookies()) {
-                GeckoRuntimeSettings.COOKIE_ACCEPT_FIRST_PARTY
-            } else {
-                GeckoRuntimeSettings.COOKIE_ACCEPT_ALL
-            }
-            geckoRuntime!!.settings.cookieBehavior = cookiesValue
+            updateCookieSettings()
+        }
+
+        private fun updateCookieSettings() {
+            geckoRuntime!!.settings.cookieBehavior =
+                    when (Settings.getInstance(context).getCookiesPrefValue()) {
+                        context.getString(
+                            R.string.pref_key_should_block_cookies_yes_option
+                        ) -> GeckoRuntimeSettings.COOKIE_ACCEPT_NONE
+                        context.getString(
+                            R.string.pref_key_should_block_cookies_third_party_trackers_only
+                        ) -> GeckoRuntimeSettings.COOKIE_ACCEPT_NON_TRACKERS
+                        context.getString(
+                            R.string.pref_key_should_block_cookies_third_party_only
+                        ) -> GeckoRuntimeSettings.COOKIE_ACCEPT_FIRST_PARTY
+                        else -> GeckoRuntimeSettings.COOKIE_ACCEPT_ALL
+                    }
         }
 
         private fun updateBlocking() {
@@ -296,6 +345,19 @@ class GeckoWebViewProvider : IWebViewProvider {
         @Suppress("ComplexMethod", "ReturnCount")
         private fun createContentDelegate(): GeckoSession.ContentDelegate {
             return object : GeckoSession.ContentDelegate {
+                override fun onContextMenu(
+                    session: GeckoSession,
+                    screenX: Int,
+                    screenY: Int,
+                    element: GeckoSession.ContentDelegate.ContextElement
+                ) {
+                    val hitResult = handleLongClick(element.srcUri, element.type, element.linkUri)
+                    callback?.onLongPress(hitResult)
+                }
+
+                override fun onFirstComposite(session: GeckoSession?) {
+                }
+
                 override fun onTitleChange(session: GeckoSession, title: String) {
                     webViewTitle = title
                     callback?.onTitleChanged(title)
@@ -306,25 +368,6 @@ class GeckoWebViewProvider : IWebViewProvider {
                         callback?.onEnterFullScreen({ geckoSession.exitFullScreen() }, null)
                     } else {
                         callback?.onExitFullScreen()
-                    }
-                }
-
-                override fun onContextMenu(
-                    session: GeckoSession,
-                    screenX: Int,
-                    screenY: Int,
-                    uri: String?,
-                    elementType: Int,
-                    elementSrc: String?
-                ) {
-                    if (elementSrc != null && uri != null &&
-                        elementType == GeckoSession.ContentDelegate.ELEMENT_TYPE_IMAGE
-                    ) {
-                        callback?.onLongPress(IWebView.HitTarget(true, uri, true, elementSrc))
-                    } else if (elementSrc != null && elementType == GeckoSession.ContentDelegate.ELEMENT_TYPE_IMAGE) {
-                        callback?.onLongPress(IWebView.HitTarget(false, null, true, elementSrc))
-                    } else if (uri != null) {
-                        callback?.onLongPress(IWebView.HitTarget(true, uri, false, null))
                     }
                 }
 
@@ -354,13 +397,12 @@ class GeckoWebViewProvider : IWebViewProvider {
                 }
 
                 override fun onCrash(session: GeckoSession) {
-                    Log.i(TAG, "Crashed, opening new session")
-                    SentryWrapper.captureGeckoCrash()
                     geckoSession.close()
                     geckoSession = createGeckoSession()
                     applySettingsAndSetDelegates()
                     geckoSession.open(geckoRuntime!!)
                     setSession(geckoSession)
+                    currentUrl = ABOUT_BLANK
                     geckoSession.loadUri(currentUrl)
                 }
 
@@ -427,39 +469,53 @@ class GeckoWebViewProvider : IWebViewProvider {
         @Suppress("ComplexMethod")
         private fun createNavigationDelegate(): GeckoSession.NavigationDelegate {
             return object : GeckoSession.NavigationDelegate {
+                override fun onLoadError(
+                    session: GeckoSession?,
+                    uri: String?,
+                    error: WebRequestError?
+                ): GeckoResult<String> {
+                    ErrorPages.createErrorPage(
+                        context,
+                        geckoErrorToErrorType(error),
+                        uri
+                    ).apply {
+                        return GeckoResult.fromValue(Base64.encodeToUriString(this))
+                    }
+                }
+
                 override fun onLoadRequest(
                     session: GeckoSession,
-                    uri: String,
-                    target: Int,
-                    flags: Int
-                ): GeckoResult<Boolean>? {
-                    val response: GeckoResult<Boolean> = GeckoResult()
-                    val urlToURI = Uri.parse(uri)
-                    // If this is trying to load in a new tab, just load it in the current one
-                    if (target == GeckoSession.NavigationDelegate.TARGET_WINDOW_NEW) {
-                        geckoSession.loadUri(uri)
-                        response.complete(true)
-                    } else if (LocalizedContent.handleInternalContent(
-                            uri,
+                    request: NavigationDelegate.LoadRequest
+                ): GeckoResult<AllowOrDeny>? {
+                    val uri = Uri.parse(request.uri)
+
+                    val complete = when {
+                        request.target == GeckoSession.NavigationDelegate.TARGET_WINDOW_NEW -> {
+                            geckoSession.loadUri(request.uri)
+                            AllowOrDeny.DENY
+                        }
+                        LocalizedContent.handleInternalContent(
+                            request.uri,
                             this@GeckoWebView,
                             context
-                        )
-                    ) {
-                        response.complete(true)
-                    } else if (!UrlUtils.isSupportedProtocol(urlToURI.scheme) && callback != null &&
-                        IntentUtils.handleExternalUri(context, this@GeckoWebView, uri)
-                    ) {
-                        response.complete(true)
-                    } else if (uri == "about:neterror" || uri == "about:certerror") {
-                        response.complete(true)
-                        TODO("Error Page handling with Components ErrorPages #2471")
-                    } else {
-                        callback?.onRequest(flags == GeckoSession.NavigationDelegate.LOAD_REQUEST_IS_USER_TRIGGERED)
-
-                        // Otherwise allow the load to continue normally
-                        response.complete(false)
+                        ) -> {
+                            AllowOrDeny.DENY
+                        }
+                        !UrlUtils.isSupportedProtocol(uri.scheme) && callback != null &&
+                                IntentUtils.handleExternalUri(
+                                    context,
+                                    this@GeckoWebView,
+                                    request.uri
+                                ) -> {
+                            AllowOrDeny.DENY
+                        }
+                        else -> {
+                            callback?.onRequest(request.isRedirect)
+                            AllowOrDeny.ALLOW
+                        }
                     }
-                    return response
+
+                    return GeckoResult.fromValue(complete)
                 }
 
                 override fun onNewSession(
@@ -514,6 +570,68 @@ class GeckoWebViewProvider : IWebViewProvider {
             return GeckoViewPrompt(context as Activity)
         }
 
+        @Suppress("ComplexMethod")
+        fun handleLongClick(elementSrc: String?, elementType: Int, uri: String? = null): HitResult? {
+            return when (elementType) {
+                GeckoSession.ContentDelegate.ContextElement.TYPE_AUDIO ->
+                    elementSrc?.let {
+                        HitResult.AUDIO(it)
+                    }
+                GeckoSession.ContentDelegate.ContextElement.TYPE_VIDEO ->
+                    elementSrc?.let {
+                        HitResult.VIDEO(it)
+                    }
+                GeckoSession.ContentDelegate.ContextElement.TYPE_IMAGE -> {
+                    when {
+                        elementSrc != null && uri != null -> {
+                            val isValidURL = try {
+                                URL(uri)
+                                true
+                            } catch (e: MalformedURLException) {
+                                false
+                            }
+                            HitResult.IMAGE_SRC(
+                                elementSrc,
+                                if (isValidURL) uri else prefixLocationToRelativeURI(uri)
+                            )
+                        }
+                        elementSrc != null ->
+                            HitResult.IMAGE(elementSrc)
+                        else -> HitResult.UNKNOWN("")
+                    }
+                }
+                GeckoSession.ContentDelegate.ContextElement.TYPE_NONE -> {
+                    elementSrc?.let {
+                        when {
+                            it.isPhone() -> HitResult.PHONE(it)
+                            it.isEmail() -> HitResult.EMAIL(it)
+                            it.isGeoLocation() -> HitResult.GEO(it)
+                            else -> HitResult.UNKNOWN(it)
+                        }
+                    } ?: uri?.let {
+                        val isValidURL = try {
+                            URL(uri)
+                            true
+                        } catch (e: MalformedURLException) {
+                            false
+                        }
+                        HitResult.UNKNOWN(if (isValidURL) it else prefixLocationToRelativeURI(uri))
+                    }
+                }
+                else -> HitResult.UNKNOWN("")
+            }
+        }
+
+        private fun prefixLocationToRelativeURI(uri: String): String {
+            return try {
+                val url = URL(currentUrl)
+                url.protocol + "://" + url.host + uri
+            } catch (e: MalformedURLException) {
+                // We can't figure this out so just return the probably invalid URI
+                uri
+            }
+        }
+
         override fun canGoForward(): Boolean {
             return canGoForward
         }
@@ -526,33 +644,31 @@ class GeckoWebViewProvider : IWebViewProvider {
             val stateData = session.savedWebViewState!!
             val savedSession = stateData.getParcelable<GeckoSession>(GECKO_SESSION)!!
 
-            if (geckoSession != savedSession) {
-                if (!restored) {
-                    // Tab changed, we need to close the default session and restore our saved session
-                    geckoSession.close()
+            if (geckoSession != savedSession && !restored) {
+                // Tab changed, we need to close the default session and restore our saved session
+                geckoSession.close()
 
-                    geckoSession = savedSession
-                    canGoBack = stateData.getBoolean(CAN_GO_BACK, false)
-                    canGoForward = stateData.getBoolean(CAN_GO_FORWARD, false)
-                    isSecure = stateData.getBoolean(IS_SECURE, false)
-                    webViewTitle = stateData.getString(WEBVIEW_TITLE, null)
-                    currentUrl = stateData.getString(CURRENT_URL, ABOUT_BLANK)
-                    applySettingsAndSetDelegates()
-                    if (!geckoSession.isOpen) {
-                        geckoSession.open(geckoRuntime!!)
-                    }
-                    setSession(geckoSession)
-                } else {
-                    // App was backgrounded and restored;
-                    // GV restored the GeckoSession itself, but we need to restore our variables
-                    canGoBack = stateData.getBoolean(CAN_GO_BACK, false)
-                    canGoForward = stateData.getBoolean(CAN_GO_FORWARD, false)
-                    isSecure = stateData.getBoolean(IS_SECURE, false)
-                    webViewTitle = stateData.getString(WEBVIEW_TITLE, null)
-                    currentUrl = stateData.getString(CURRENT_URL, ABOUT_BLANK)
-                    applySettingsAndSetDelegates()
-                    restored = false
+                geckoSession = savedSession
+                canGoBack = stateData.getBoolean(CAN_GO_BACK, false)
+                canGoForward = stateData.getBoolean(CAN_GO_FORWARD, false)
+                isSecure = stateData.getBoolean(IS_SECURE, false)
+                webViewTitle = stateData.getString(WEBVIEW_TITLE, null)
+                currentUrl = stateData.getString(CURRENT_URL, ABOUT_BLANK)
+                applySettingsAndSetDelegates()
+                if (!geckoSession.isOpen) {
+                    geckoSession.open(geckoRuntime!!)
                 }
+                setSession(geckoSession)
+            } else {
+                // App was backgrounded and restored;
+                // GV restored the GeckoSession itself, but we need to restore our variables
+                canGoBack = stateData.getBoolean(CAN_GO_BACK, false)
+                canGoForward = stateData.getBoolean(CAN_GO_FORWARD, false)
+                isSecure = stateData.getBoolean(IS_SECURE, false)
+                webViewTitle = stateData.getString(WEBVIEW_TITLE, null)
+                currentUrl = stateData.getString(CURRENT_URL, ABOUT_BLANK)
+                applySettingsAndSetDelegates()
+                restored = false
             }
         }
 
@@ -620,24 +736,33 @@ class GeckoWebViewProvider : IWebViewProvider {
         ) {
             isLoadingInternalUrl = historyURL == LocalizedContent.URL_RIGHTS || historyURL ==
                     LocalizedContent.URL_ABOUT
-            geckoSession.loadData(data.toByteArray(Charsets.UTF_8), mimeType, baseURL)
+            geckoSession.loadData(data.toByteArray(Charsets.UTF_8), mimeType)
             currentUrl = historyURL
         }
 
-        private fun sendTelemetrySnapshots() {
+        private fun storeTelemetrySnapshots() {
+            val storage = MobileMetricsPingStorage(context)
+            if (!storage.shouldStoreMetrics()) return
+
             geckoRuntime!!.telemetry.getSnapshots(true).then({ value ->
-                if (value != null) {
+                launch(IO) {
                     try {
-                        val jsonData = value.toJSONObject()
-                        TelemetryWrapper.addMobileMetricsPing(jsonData)
+                        value?.toJSONObject()?.also {
+                            storage.save(it)
+                        }
                     } catch (e: JSONException) {
                         Log.e("getSnapshots failed", e.message)
                     }
                 }
+
                 GeckoResult<Void>()
-            }, { _ ->
+            }, {
                 GeckoResult<Void>()
             })
+        }
+
+        override fun releaseGeckoSession() {
+            releaseSession()
         }
 
         override fun onDetachedFromWindow() {
@@ -668,5 +793,40 @@ class GeckoWebViewProvider : IWebViewProvider {
         const val WEBVIEW_TITLE = "webViewTitle"
         const val CURRENT_URL = "currentUrl"
         const val ABOUT_BLANK = "about:blank"
+
+        /**
+         * Provides an ErrorType corresponding to the error code provided.
+         */
+        @Suppress("ComplexMethod")
+        internal fun geckoErrorToErrorType(errorCode: WebRequestError?) =
+            when (errorCode?.code) {
+                WebRequestError.ERROR_UNKNOWN -> ErrorType.UNKNOWN
+                WebRequestError.ERROR_SECURITY_SSL -> ErrorType.ERROR_SECURITY_SSL
+                WebRequestError.ERROR_SECURITY_BAD_CERT -> ErrorType.ERROR_SECURITY_BAD_CERT
+                WebRequestError.ERROR_NET_INTERRUPT -> ErrorType.ERROR_NET_INTERRUPT
+                WebRequestError.ERROR_NET_TIMEOUT -> ErrorType.ERROR_NET_TIMEOUT
+                WebRequestError.ERROR_CONNECTION_REFUSED -> ErrorType.ERROR_CONNECTION_REFUSED
+                WebRequestError.ERROR_UNKNOWN_SOCKET_TYPE -> ErrorType.ERROR_UNKNOWN_SOCKET_TYPE
+                WebRequestError.ERROR_REDIRECT_LOOP -> ErrorType.ERROR_REDIRECT_LOOP
+                WebRequestError.ERROR_OFFLINE -> ErrorType.ERROR_OFFLINE
+                WebRequestError.ERROR_PORT_BLOCKED -> ErrorType.ERROR_PORT_BLOCKED
+                WebRequestError.ERROR_NET_RESET -> ErrorType.ERROR_NET_RESET
+                WebRequestError.ERROR_UNSAFE_CONTENT_TYPE -> ErrorType.ERROR_UNSAFE_CONTENT_TYPE
+                WebRequestError.ERROR_CORRUPTED_CONTENT -> ErrorType.ERROR_CORRUPTED_CONTENT
+                WebRequestError.ERROR_CONTENT_CRASHED -> ErrorType.ERROR_CONTENT_CRASHED
+                WebRequestError.ERROR_INVALID_CONTENT_ENCODING -> ErrorType.ERROR_INVALID_CONTENT_ENCODING
+                WebRequestError.ERROR_UNKNOWN_HOST -> ErrorType.ERROR_UNKNOWN_HOST
+                WebRequestError.ERROR_MALFORMED_URI -> ErrorType.ERROR_MALFORMED_URI
+                WebRequestError.ERROR_UNKNOWN_PROTOCOL -> ErrorType.ERROR_UNKNOWN_PROTOCOL
+                WebRequestError.ERROR_FILE_NOT_FOUND -> ErrorType.ERROR_FILE_NOT_FOUND
+                WebRequestError.ERROR_FILE_ACCESS_DENIED -> ErrorType.ERROR_FILE_ACCESS_DENIED
+                WebRequestError.ERROR_PROXY_CONNECTION_REFUSED -> ErrorType.ERROR_PROXY_CONNECTION_REFUSED
+                WebRequestError.ERROR_UNKNOWN_PROXY_HOST -> ErrorType.ERROR_UNKNOWN_PROXY_HOST
+                WebRequestError.ERROR_SAFEBROWSING_MALWARE_URI -> ErrorType.ERROR_SAFEBROWSING_MALWARE_URI
+                WebRequestError.ERROR_SAFEBROWSING_UNWANTED_URI -> ErrorType.ERROR_SAFEBROWSING_UNWANTED_URI
+                WebRequestError.ERROR_SAFEBROWSING_HARMFUL_URI -> ErrorType.ERROR_SAFEBROWSING_HARMFUL_URI
+                WebRequestError.ERROR_SAFEBROWSING_PHISHING_URI -> ErrorType.ERROR_SAFEBROWSING_PHISHING_URI
+                else -> ErrorType.UNKNOWN
+            }
     }
 }

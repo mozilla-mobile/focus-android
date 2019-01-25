@@ -40,10 +40,6 @@
   <string name="preference_state_on">खुला</string>
   <string name="preference_state_off">बन्द</string>
   <string name="preference_subitem_autocomplete">URL स्वत: पूर्ण</string>
-  <string name="preference_switch_autocomplete">स्वत: पूर्ण</string>
-  <string name="preference_category_autocomplete_preinstalled">पूर्वनिर्धारित URL सूची</string>
-  <string name="preference_category_autocomplete_custom_urls">अनुकूल URL हरू</string>
-  <string name="preference_autocomplete_subitem_customlist">अनुकूलन URLहरू</string>
   <string name="preference_autocomplete_action_add">+ अनुकूल URL थप्नुहोस्</string>
   <string name="preference_autocomplete_title_add">+ अनुकूल URL थप्नुहोस्</string>
   <string name="custom_autocomplete_quick_add">अनुकूल URL थप्नुहोस्</string>
@@ -63,12 +59,10 @@
   <string name="preference_language">भाषा</string>
   <string name="preference_language_systemdefault">पूर्वनिर्धारित प्रणाली</string>
   <string name="preference_category_privacy">गोपनीयता</string>
-  <string name="preference_privacy_block_ads">विज्ञापन ट्रयाकरहरू अवरुद्द गर्नुहोस्</string>
   <string name="preference_privacy_block_analytics">विश्लेषणात्मक ट्रयाकहरू अवरुद्द गर्नुहोस्</string>
-  <string name="preference_privacy_block_analytics_summary">ट्याप गर्ने र स्क्रोल गर्ने जस्ता क्रियाकलापहरू संकलन, विश्लेषण र माप गर्न प्रयोग गरियो</string>
+  <string name="preference_privacy_block_ads">विज्ञापन ट्रयाकरहरू अवरुद्द गर्नुहोस्</string>
   <string name="preference_privacy_block_social">सामाजिक ट्रयाकहरू अवरुद्द गर्नुहोस्</string>
   <string name="preference_privacy_block_content">अन्य सामग्री ट्रयाकरहरू ब्लक गर्नुहोस्</string>
-  <string name="preference_privacy_block_content_summary2">सक्षम पार्नाले केहि पृष्ठहरू अनपेक्षित रूपमा व्यवहार गर्न सक्छन्</string>
   <string name="preference_privacy_category_cookies">कुकीहरु ब्लक गर्नुहोस्</string>
   <string name="preference_privacy_should_block_cookies_no_option">होेइन</string>
   <string name="preference_privacy_should_block_cookies_third_party_only_option">3rd-party कुकीहरू मात्र ब्लक गर्नुहोस्</string>

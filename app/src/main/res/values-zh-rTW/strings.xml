@@ -6,6 +6,7 @@
   <string name="urlbar_hint">進行搜尋或輸入網址</string>
   <string name="teaser">無痕瀏覽，不留足跡。</string>
   <string name="feedback_erase">已清除您的瀏覽紀錄。</string>
+  <string name="feedback_erase_custom_tab">已清除分頁瀏覽紀錄。</string>
   <string name="search_hint">搜尋 %1$s</string>
   <string name="menu_share">分享…</string>
   <string name="menu_report_site_issue">回報網站問題</string>
@@ -18,6 +19,9 @@
   <string name="menu_help">說明</string>
   <string name="menu_rights">您的權利</string>
   <string name="menu_trackers_blocked_title">追蹤器封鎖數量</string>
+  <string name="menu_trackers_blocked_subtitle">關閉此功能可能可以解決一些網站的問題</string>
+  <string name="menu_content_blocking">內容封鎖</string>
+  <string name="menu_content_blocking_subtitle">關閉此功能來解決一些網站問題</string>
   <string name="menu_custom_tab_branding">由 %1$s 提供</string>
   <string name="share_dialog_title">透過下列程式分享</string>
   <string name="notification_erase_text">清除瀏覽紀錄</string>
@@ -25,32 +29,38 @@
   <string name="notification_action_erase_and_open">清除並開啟</string>
   <string name="shortcut_erase_short_label">清除</string>
   <string name="shortcut_erase_long_label">清除瀏覽紀錄</string>
+  <string name="shortcut_erase_and_open_short_label">清除並開啟</string>
   <string name="text_selection_search_action">隱私搜尋</string>
   <string name="about_content"><![CDATA[<p xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">%1$s &#35731;&#24744;&#21487;&#33258;&#34892;&#25511;&#21046;&#32218;&#19978;&#29983;&#27963;&#12290;</p>\n<p xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">"&#21487;&#30070;&#20316;&#31169;&#23494;&#28687;&#35261;&#22120;&#20351;&#29992;:\n  "<ul>"\n    "<li>&#30452;&#25509;&#22312;&#31243;&#24335;&#20013;&#25628;&#23563;&#12289;&#28687;&#35261;</li>"\n    "<li>&#23553;&#37782;&#36861;&#36452;&#22120;&#65288;&#20063;&#21487;&#35519;&#25972;&#35373;&#23450;&#65292;&#20801;&#35377;&#36861;&#36452;&#22120;&#65289;</li>"\n    "<li>&#28165;&#38500; Cookie&#12289;&#25628;&#23563;&#32000;&#37636;&#12289;&#19978;&#32178;&#32000;&#37636;</li>"\n  "</ul>\n</p>\n<p xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">%1$s &#26159;&#30001; Mozilla &#25152;&#25171;&#36896;&#65292;&#25105;&#20497;&#30340;&#20351;&#21629;&#26159;&#22521;&#39178;&#19968;&#20491;&#20581;&#24247;&#12289;&#38283;&#25918;&#30340;&#32178;&#38555;&#32178;&#36335;&#12290;<br/>\n<a href="%2$s">&#20102;&#35299;&#26356;&#22810;</a></p>]]></string>
   <string name="preference_privacy_and_security_header">隱私與安全</string>
   <string name="preference_privacy_and_security_summary">追蹤、Cookie、回報資料</string>
   <string name="preference_search_summary">設為預設瀏覽器、自動完成</string>
   <string name="preference_mozilla_summary">關於 %1$s、使用說明</string>
+  <string name="preference_category_ad_blocking">封鎖廣告</string>
   <string name="preference_category_tracking_protection">追蹤保護</string>
   <string name="preference_category_web_content">網站內容</string>
   <string name="preference_category_switching_apps">切換應用程式</string>
   <string name="preference_category_general">一般</string>
+  <string name="preference_general_summary">預設瀏覽器、分頁、語言</string>
   <string name="preference_category_data_collection_use">資料收集與使用</string>
   <string name="preference_category_search">搜尋</string>
   <string name="preference_show_search_suggestions">取得搜尋建議</string>
   <string name="preference_show_search_suggestions_summary">您在網址列打字時，%1$s 就會將您輸入的文字傳送到搜尋引擎</string>
   <string name="preference_search_engine_default">預設</string>
+  <string name="preference_search_engine_label">搜尋引擎</string>
   <string name="preference_state_on">開啟</string>
   <string name="preference_state_off">關閉</string>
   <string name="preference_subitem_autocomplete">網址自動完成</string>
-  <string name="preference_switch_autocomplete">自動完成</string>
-  <string name="preference_category_autocomplete_preinstalled">預設網址清單</string>
-  <string name="preference_autocomplete_preinstalled_summary">開啟後，即可在 %1$s 網址列自動完成超過 450 組熱門網址。</string>
-  <string name="preference_category_autocomplete_custom_urls">自訂網址</string>
-  <string name="preference_autocomplete_subitem_customlist">自訂網址</string>
+  <string name="preference_switch_autocomplete_topsites">針對熱門網站</string>
+  <string name="preference_autocomplete_topsite_summary">在網址列自動完成超過 450 組熱門網址。</string>
+  <string name="preference_switch_autocomplete_user_list">針對您加入的網站</string>
+  <string name="preference_autocomplete_user_list_description">開啟後，即可為加在這裡的網站即可自動完成填寫。</string>
+  <string name="preference_category_autocomplete_manage_sites">管理網站</string>
+  <string name="preference_autocomplete_subitem_manage_sites">管理網站</string>
   <string name="preference_autocomplete_action_add">+ 新增自訂網址</string>
   <string name="preference_autocomplete_title_add">新增自訂網址</string>
   <string name="custom_autocomplete_quick_add">新增自訂網址</string>
+  <string name="add_custom_autocomplete_label">加入鏈結自動完成</string>
   <string name="preference_category_cookies">Cookie 與網站資料</string>
   <string name="preference_category_data_choices">回報資料</string>
   <string name="preference_autocomplete_title_remove">移除自訂網址</string>
@@ -67,18 +77,25 @@
   <string name="preference_language">語言</string>
   <string name="preference_language_systemdefault">系統預設</string>
   <string name="preference_category_privacy">隱私權</string>
-  <string name="preference_privacy_block_ads">封鎖廣告型追蹤器</string>
-  <string name="preference_privacy_block_ads_summary">某些廣告就算您不點擊，也會追蹤您造訪的網站</string>
+  <string name="preference_privacy_ads_block_ads">封鎖頁面中的廣告和其他討厭的東西</string>
+  <string name="preference_privacy_ads_block_ads_summary">使用來自 Easylist、EasyPrivacy、Fanboy’s Annoyance 及 777Guard Mobile Ad Filter 的清單來封鎖廣告與其他討厭的部分</string>
   <string name="preference_privacy_block_analytics">封鎖分析型追蹤器</string>
-  <string name="preference_privacy_block_analytics_summary">用來收集、分析、測量點擊與滾動等行為</string>
+  <string name="preference_privacy_block_ads">封鎖廣告型追蹤器</string>
+  <string name="preference_privacy_block_ads_new_summary">移除就算您不點擊，也會追蹤您造訪過哪些網站的廣告</string>
+  <string name="preference_privacy_block_analytics_new_summary">封鎖會分析或計算您與頁面如何互動的追蹤器</string>
   <string name="preference_privacy_block_social">封鎖社交追蹤器</string>
-  <string name="preference_privacy_block_social_summary">內嵌於網站，用來追蹤您的造訪紀錄，並提供分享按鈕等功能</string>
+  <string name="preference_privacy_block_social_new_summary">防止社群網路相關的追蹤器（包含分享到社交網路的按鈕）置放於網站中</string>
   <string name="preference_privacy_block_content">封鎖其他內容追蹤器</string>
-  <string name="preference_privacy_block_content_summary2">開啟後，可能會造成某些頁面的行為不正常</string>
+  <string name="preference_privacy_block_content_new_summary">封鎖追蹤行為，但可能造成某些網站與頁面運作不正常</string>
   <string name="preference_privacy_category_cookies">封鎖 Cookie</string>
   <string name="preference_privacy_should_block_cookies_no_option">否</string>
+  <string name="preference_privacy_should_block_cookies_third_party_tracker_cookies_option">僅封鎖第三方追蹤 Cookie</string>
   <string name="preference_privacy_should_block_cookies_third_party_only_option">僅封鎖第三方 Cookie</string>
   <string name="preference_privacy_should_block_cookies_yes_option">是</string>
+  <string name="preference_privacy_block_cookies_no">"不封鎖（允許所有 Cookie） "</string>
+  <string name="preference_privacy_block_cookies_third_party_tracker">封鎖來自第三方追蹤器的 Cookie（推薦）</string>
+  <string name="preference_privacy_block_cookies_third_party_only">封鎖所有第三方 Cookie（可能造成網站不正常）</string>
+  <string name="preference_privacy_block_cookies_yes">封鎖所有 Cookie（會造成網站不正常）</string>
   <string name="preference_security_biometric">使用指紋解鎖程式</string>
   <string name="preference_security_biometric_summary">若已在程式中開啟網頁，可使用您的指紋直接解鎖 %1$s。也會開啟隱私模式。</string>
   <string name="preference_privacy_secure_mode">秘密行動</string>
@@ -120,6 +137,7 @@
   <string name="accessibility_announcement_loading">載入中</string>
   <string name="accessibility_announcement_loading_finished">網站已載入</string>
   <string name="content_description_menu">更多選項</string>
+  <string name="indicator_content_description_menu">更多選項按鈕</string>
   <string name="content_description_forward">瀏覽下一頁</string>
   <string name="content_description_reload">重新載入網站</string>
   <string name="content_description_back">瀏覽上一頁</string>
@@ -147,7 +165,7 @@
   <string name="error_hostLookup_title">找不到伺服器</string>
   <string name="error_hostLookup_message"><![CDATA[<ul xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2"><li>"&#35531;&#27298;&#26597;&#32178;&#22336;&#26159;&#21542;&#26377;&#25171;&#37679;&#65311;&#20363;&#22914;&#25226; "<strong>www</strong>".example.com &#25171;&#25104; "<strong>ww</strong>.example.com</li><li>&#33509;&#28961;&#27861;&#36617;&#20837;&#20219;&#20309;&#32178;&#31449;&#65292;&#35531;&#27298;&#26597;&#24744;&#30340;&#32178;&#36335;&#36899;&#32218;&#29376;&#24907;&#12290;</li></ul>]]></string>
   <string name="error_malformedURI_title">網址無效</string>
-  <string name="error_malformedURI_message"><![CDATA[<ul xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2"><li>"&#32178;&#22336;&#36890;&#24120;&#38263;&#24471;&#20687; "<strong>http://www.example.com/</strong>&#12290;</li><li>"&#35531;&#30906;&#23450;&#24744;&#29992;&#30340;&#26159;&#26012;&#32218; (&#20363;: "<strong>/</strong>)&#12290;</li>" "</ul>]]></string>
+  <string name="error_malformedURI_message"><![CDATA[<ul xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2"><li>"&#32178;&#22336;&#36890;&#24120;&#38263;&#24471;&#20687; "<strong>http://www.example.com/</strong>&#12290;</li><li>"&#35531;&#30906;&#23450;&#24744;&#29992;&#30340;&#26159;&#26012;&#32218;&#65288;&#20363;: "<strong>/</strong>&#65289;&#12290;</li>" "</ul>]]></string>
   <string name="error_redirectLoop_title">頁面重新導向不正確</string>
   <string name="error_redirectLoop_message"><![CDATA[<ul xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">" "<li>&#26377;&#26178;&#20505;&#20572;&#29992;&#25110;&#25298;&#32085;&#25509;&#21463; Cookie &#26371;&#36896;&#25104;&#27492;&#21839;&#38988;&#12290;</li>" "</ul>]]></string>
   <string name="error_unsupportedprotocol_title">無法理解的網址</string>
@@ -156,6 +174,7 @@
   <string name="error_sslhandshake_message"><![CDATA[<ul xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2"><li>&#21487;&#33021;&#26159;&#20282;&#26381;&#22120;&#35373;&#23450;&#21839;&#38988;&#36896;&#25104;&#65292;&#25110;&#26159;&#26377;&#20154;&#22039;&#35430;&#20605;&#35037;&#25104;&#35442;&#20282;&#26381;&#22120;&#12290;</li><li>&#33509;&#24744;&#20197;&#21069;&#21487;&#20197;&#33287;&#35442;&#20282;&#26381;&#22120;&#27491;&#24120;&#36899;&#32218;&#65292;&#37027;&#40636;&#36889;&#20491;&#37679;&#35492;&#21487;&#33021;&#21482;&#26159;&#26283;&#26178;&#30340;&#65292;&#35531;&#31245;&#20505;&#20877;&#35430;&#35430;&#30475;&#12290;</li>" "</ul>]]></string>
   <string name="error_generic_title">糟糕</string>
   <string name="error_generic_message">因為某些原因，我們無法載入此頁面。</string>
+  <string name="contextmenu_open_in_app">使用其他程式開啟</string>
   <string name="contextmenu_link_share">分享鏈結</string>
   <string name="contextmenu_link_copy">複製鏈結網址</string>
   <string name="contextmenu_image_share">分享圖片</string>
@@ -164,7 +183,7 @@
   <string name="contextmenu_open_in_new_tab">用新分頁開啟鏈結</string>
   <string name="contextmenu_image_warning"><![CDATA[清除 %1$s 瀏覽紀錄時，將<b xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">&#19981;&#26371;&#21034;&#38500;</b>儲存或分享的圖片。]]></string>
   <string name="firstrun_defaultbrowser_title">加強您的隱私</string>
-  <string name="firstrun_defaultbrowser_text2">隱私瀏覽功能變得更強大了。現在可封鎖廣告，以及其他可在不同網站間追蹤您的上網紀錄，又拖慢網頁載入的追蹤器。</string>
+  <string name="firstrun_defaultbrowser_text_new">封鎖會在整個網路世界中追蹤您並拖慢上網速度的廣告與程式碼等內容。可開啟廣告封鎖功能，減掉討人厭的廣告，讓您上網變得更快。</string>
   <string name="firstrun_search_title">用你的方式搜尋</string>
   <string name="firstrun_search_text">想找點不一樣的東西嗎？可在設定畫面中選擇不同的預設搜尋引擎。</string>
   <string name="firstrun_shortcut_title">在主畫面加入捷徑</string>
@@ -174,6 +193,8 @@
   <string name="firstrun_close_button">好，知道了！</string>
   <string name="firstrun_skip_button">略過</string>
   <string name="firstrun_next_button">下一步</string>
+  <string name="block_ads_card_title">%1$s 已準備好封鎖廣告</string>
+  <string name="block_ads_card_description">推出全新功能！封鎖會在整個網路世界中追蹤您的廣告與程式碼。</string>
   <string name="content_blocking_disabled">-</string>
   <string name="dialog_addtohomescreen_action_add">新增</string>
   <string name="dialog_addtohomescreen_action_cancel">取消</string>
@@ -213,6 +234,7 @@
   <string name="biometric_auth_title">解鎖 %1$s</string>
   <string name="biometric_auth_description">觸碰指紋感測器以繼續。</string>
   <string name="biometric_auth_new_session">開新使用階段</string>
+  <string name="biometric_auth_open_link_new_session">用新瀏覽階段開啟鏈結</string>
   <string name="biometric_auth_image_description">指紋圖示</string>
   <string name="biometric_auth_not_recognized_error">無法識別指紋，請再試一次。</string>
   <string name="biometric_auth_moved_too_quickly">手指移動得太快，請再試一次。</string>
@@ -229,5 +251,31 @@
   <string name="tip_autocomplete_url">自動完成您最常造訪的網站網址\n 長按網址列中的任何網址</string>
   <string name="tip_open_in_new_tab">使用新分頁開啟鏈結\n長按頁面上的任何鏈結</string>
   <string name="tip_request_desktop">還是想看到桌機版頁面嗎？%1$s選單 &gt; 開啟桌面版網站</string>
-  <string name="tip_disable_tips">關閉 %1$s 啟動畫面上的秘訣</string>
+  <string name="tip_disable_tips2">關閉啟動畫面上的使用秘訣</string>
+  <string name="tip_block_ads">封鎖會在整個網路世界中追蹤您的廣告與程式碼。</string>
+  <string name="block_ads_title">封鎖廣告</string>
+  <string name="tip_explain_allowlist">是信任的網站嗎？\n可透過允許清單來針對您信任的網站關閉追蹤保護功能。</string>
+  <string name="new_tab_opened_snackbar">已開啟新分頁</string>
+  <string name="open_new_tab_snackbar">切換</string>
+  <string name="preference_open_new_tab">立即切換到新分頁中的鏈結</string>
+  <string name="preference_category_safe_browsing">安全瀏覽</string>
+  <string name="preference_safe_browsing_title">封鎖可能危險或是詐騙內容的網站</string>
+  <string name="preference_safe_browsing_summary">封鎖已被回報為詐騙、有攻擊性、惡意軟體以及有害軟體的網站。</string>
+  <string name="preference_exceptions">例外網站</string>
+  <string name="preference_exceptions_description">您已針對這些網站關閉內容封鎖功能。</string>
+  <string name="preference_exceptions_menu_remove">移除</string>
+  <string name="preference_exceptions_remove_all_button_label">移除所有網站</string>
+  <string name="tab_crash_report_title">分頁發生錯誤</string>
+  <string name="tab_crash_report_headline">很抱歉，這個分頁有點問題。</string>
+  <string name="tab_crash_report_description">作為一套隱私瀏覽器，我們不會保存上網紀錄，也無法還原此分頁。</string>
+  <string name="tab_crash_report_close_tab_button_label">關閉分頁</string>
+  <string name="fatal_crash_report_title">很抱歉，%1$s 遇到問題，發生錯誤。</string>
+  <string name="fatal_crash_report_description">作為一套隱私瀏覽器，我們不會保存上網紀錄，也無法還原您先前的瀏覽階段。</string>
+  <string name="fatal_crash_report_close_button_label">關閉</string>
+  <string name="fatal_crash_report_restart_firefox_label">重新啟動 %1$s</string>
+  <string name="crash_report_send_crash_label">傳送錯誤報告給 Mozilla</string>
+  <string name="content_blocking_enabled_snackbar_message">已開啟內容封鎖</string>
+  <string name="content_blocking_disabled_snackbar_message">已關閉內容封鎖</string>
+  <string name="content_blocking_snackbar_enable_action">開啟</string>
+  <string name="content_blocking_snackbar_disable_action">關閉</string>
 </resources>

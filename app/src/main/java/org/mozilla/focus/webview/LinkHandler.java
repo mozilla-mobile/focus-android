@@ -12,6 +12,7 @@ import android.support.annotation.Nullable;
 import android.view.View;
 import android.webkit.WebView;
 
+import mozilla.components.concept.engine.HitResult;
 import org.mozilla.focus.web.IWebView;
 
 /* package */ class LinkHandler implements View.OnLongClickListener {
@@ -38,12 +39,16 @@ import org.mozilla.focus.web.IWebView;
         switch (hitTestResult.getType()) {
             case WebView.HitTestResult.SRC_ANCHOR_TYPE:
                 final String linkURL = hitTestResult.getExtra();
-                callback.onLongPress(new IWebView.HitTarget(true, linkURL, false, null));
+                if (linkURL != null) {
+                    callback.onLongPress(new HitResult.UNKNOWN(linkURL));
+                }
                 return true;
 
             case WebView.HitTestResult.IMAGE_TYPE:
                 final String imageURL = hitTestResult.getExtra();
-                callback.onLongPress(new IWebView.HitTarget(false, null, true, imageURL));
+                if (imageURL != null) {
+                    callback.onLongPress(new HitResult.IMAGE(imageURL));
+                }
                 return true;
 
             case WebView.HitTestResult.SRC_IMAGE_ANCHOR_TYPE:
@@ -63,7 +68,7 @@ import org.mozilla.focus.web.IWebView;
                         }
 
                         if (callback != null) {
-                            callback.onLongPress(new IWebView.HitTarget(true, url, true, src));
+                            callback.onLongPress(new HitResult.IMAGE_SRC(src, url));
                         }
                     }
                 });

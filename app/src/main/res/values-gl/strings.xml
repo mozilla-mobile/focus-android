@@ -43,11 +43,6 @@
   <string name="preference_state_on">Activado</string>
   <string name="preference_state_off">Desactivado</string>
   <string name="preference_subitem_autocomplete">Completado automático do URL</string>
-  <string name="preference_switch_autocomplete">Completado automático</string>
-  <string name="preference_category_autocomplete_preinstalled">Lista dos URL predeterminados</string>
-  <string name="preference_autocomplete_preinstalled_summary">Actívao para que %1$s complete automaticamente máis de 450 URL populares na barra de enderezos.</string>
-  <string name="preference_category_autocomplete_custom_urls">URL personalizados</string>
-  <string name="preference_autocomplete_subitem_customlist">URL personalizados</string>
   <string name="preference_autocomplete_action_add">+ Engadir URL personalizado</string>
   <string name="preference_autocomplete_title_add">Engadir URL personalizado</string>
   <string name="custom_autocomplete_quick_add">Engadir URL personalizado</string>
@@ -67,14 +62,10 @@
   <string name="preference_language">Idioma</string>
   <string name="preference_language_systemdefault">Predeterminado do sistema</string>
   <string name="preference_category_privacy">Privacidade</string>
-  <string name="preference_privacy_block_ads">Bloquear os elementos de seguimento de publicidade</string>
-  <string name="preference_privacy_block_ads_summary">Algún anuncios fan o seguimento das súas visitas as páxinas aínda que que non acceda a eles</string>
   <string name="preference_privacy_block_analytics">Bloquear os elementos de seguimento analíticos</string>
-  <string name="preference_privacy_block_analytics_summary">"Úsanse para recoller, analizar e medir accións como premer na pantalla ou desprazarse pola páxina "</string>
+  <string name="preference_privacy_block_ads">Bloquear os elementos de seguimento de publicidade</string>
   <string name="preference_privacy_block_social">Bloquear os elementos de seguimento social</string>
-  <string name="preference_privacy_block_social_summary">Incrustados nos sitios para facer o seguimento das súas visitas e para amosar algúns elementos como os botóns de compartir</string>
   <string name="preference_privacy_block_content">Bloquear os outros elementos de seguimento de contido</string>
-  <string name="preference_privacy_block_content_summary2">A activación pode causar que algunhas páxinas se comporten de forma inesperada</string>
   <string name="preference_privacy_category_cookies">Bloquear as cookies</string>
   <string name="preference_privacy_should_block_cookies_no_option">Non</string>
   <string name="preference_privacy_should_block_cookies_third_party_only_option">Só bloquea as cookies de terceiros</string>
@@ -164,7 +155,6 @@
   <string name="contextmenu_open_in_new_tab">Abrir a ligazón nunha nova lapela</string>
   <string name="contextmenu_image_warning"><![CDATA[<b xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">Non se eliminar&#225;n</b>" as imaxes gardadas e compartidas cando borre o historial de %1$s."]]></string>
   <string name="firstrun_defaultbrowser_title">Potencia a súa privacidade</string>
-  <string name="firstrun_defaultbrowser_text2">A navegación privada pasa a un nivel superior. Bloquea anuncios e outro contido que pode facerlle un seguimento a través dos sitios e atrasar a carga das páxinas.</string>
   <string name="firstrun_search_title">As súas buscas, ao seu modo</string>
   <string name="firstrun_search_text">Busca algo diferente? Escolla outra buscador predeterminado nos Axustes.</string>
   <string name="firstrun_shortcut_title">Engada atallos a súa páxina inicial</string>
@@ -229,5 +219,4 @@
   <string name="tip_autocomplete_url">Completar automaticamente os URL máis visitados\n Unha pulsación longa en calquera URL na barra de enderezos</string>
   <string name="tip_open_in_new_tab">Abrir unha ligazón nunha nova lapela\n Unha pulsación longa en calquera ligazón nunha páxina</string>
   <string name="tip_request_desktop">Prefire ver o sitio de escritorio?%1$s Menú &gt; Solicitar sitio de escritorio</string>
-  <string name="tip_disable_tips">Desactiva os consellos na páxina inicial do %1$s</string>
 </resources>

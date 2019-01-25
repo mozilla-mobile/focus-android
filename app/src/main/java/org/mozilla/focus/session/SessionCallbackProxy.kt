@@ -10,31 +10,42 @@ import org.mozilla.focus.web.Download
 import org.mozilla.focus.web.IWebView
 
 import mozilla.components.browser.session.Session
+import mozilla.components.concept.engine.HitResult
 import org.mozilla.focus.ext.isSearch
 import org.mozilla.focus.ext.shouldRequestDesktopSite
+import org.mozilla.focus.utils.AppConstants
 
 @Suppress("TooManyFunctions")
 class SessionCallbackProxy(private val session: Session, private val delegate: IWebView.Callback) : IWebView.Callback {
 
+    var isDownload = false
+
     override fun onPageStarted(url: String) {
         session.loading = true
-        session.securityInfo = Session.SecurityInfo(false)
 
         // We are always setting the progress to 5% when a new page starts loading. Otherwise it might
         // look like the browser is doing nothing (on a slow network) until we receive a progress
         // from the WebView.
         session.progress = MINIMUM_PROGRESS
 
-        session.url = url
+        if (!AppConstants.isGeckoBuild) {
+            session.securityInfo = Session.SecurityInfo(false)
+            session.url = url
+        }
     }
 
     override fun onPageFinished(isSecure: Boolean) {
+        session.progress = MAXIMUM_PROGRESS
         session.loading = false
-        session.securityInfo = Session.SecurityInfo(
+        if (!isDownload || !AppConstants.isGeckoBuild) {
+            session.securityInfo = Session.SecurityInfo(
                 isSecure,
                 session.securityInfo.host,
                 session.securityInfo.issuer
-        )
+            )
+        } else {
+            isDownload = false
+        }
     }
 
     override fun onSecurityChanged(isSecure: Boolean, host: String?, organization: String?) {
@@ -81,6 +92,7 @@ class SessionCallbackProxy(private val session: Session, private val delegate: I
 
     override fun resetBlockedTrackers() {
         session.trackersBlocked = emptyList()
+        delegate.resetBlockedTrackers()
     }
 
     override fun onBlockingStateChanged(isBlockingEnabled: Boolean) {
@@ -97,12 +109,13 @@ class SessionCallbackProxy(private val session: Session, private val delegate: I
 
     override fun onDownloadStart(download: Download) {
         // To be replaced with session property
+        isDownload = true
         delegate.onDownloadStart(download)
     }
 
-    override fun onLongPress(hitTarget: IWebView.HitTarget) {
+    override fun onLongPress(hitResult: HitResult) {
         // To be replaced with session property
-        delegate.onLongPress(hitTarget)
+        delegate.onLongPress(hitResult)
     }
 
     override fun onEnterFullScreen(callback: IWebView.FullscreenCallback, view: View?) {

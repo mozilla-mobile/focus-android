@@ -4,11 +4,12 @@ buildscript {
     ext.architecture_components_version = '1.1.1'
     ext.support_libraries_version = '28.0.0'
     ext.espresso_version = '3.0.1'
-    ext.kotlin_version = '1.2.71'
-    ext.geckoview_revision = '33bec02bb81f303b8e3d22586b9e67690e939dbb'
-    ext.geckoview_version = '62.0.3.20181001191808' // GeckoView 62 RelBranch from 2018.10.01
-    ext.spotbugs_version = '3.1.2'
-    ext.mozilla_components_version = '0.25'
+    ext.kotlin_version = '1.3.0'
+    ext.coroutines_version = '1.0.1'
+    ext.geckoview_revision = '8574d2808aaa0afa131cc57be70b86dad3398ff0'
+    ext.geckoview_version = '65.0.20190114172331' // GV 65 Rel Branch 1.14.2019
+    ext.spotbugs_version = '3.1.4'
+    ext.mozilla_components_version = '0.32.2'
 
     repositories {
         google()
@@ -16,7 +17,8 @@ buildscript {
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.1.4'
+        classpath 'com.android.tools.build:gradle:3.2.1'
+        classpath 'de.mannodermaus.gradle.plugins:android-junit5:1.3.1.1'
         classpath 'org.ajoberstar:grgit:1.5.0'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
         classpath "gradle.plugin.com.github.spotbugs:spotbugs-gradle-plugin:1.6.1"
@@ -31,7 +33,7 @@ plugins {
     // limitations of the gradle plugin. We've decided to stick with duplication for now since the
     // other methods involve using undocumented APIs
     // https://docs.gradle.org/current/userguide/plugins.html#plugins_dsl_limitations
-    id "io.gitlab.arturbosch.detekt" version "1.0.0.RC8"
+    id "io.gitlab.arturbosch.detekt" version "1.0.0.RC6-3"
     id "org.jetbrains.kotlin.kapt" version "1.2.50"
 }
 
@@ -49,6 +51,9 @@ detekt {
 allprojects {
     repositories {
         google()
+        maven {
+            url "https://maven.mozilla.org/maven2"
+        }
         jcenter()
     }
 }

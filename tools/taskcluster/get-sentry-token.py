@@ -9,11 +9,12 @@ directory.
 """
 
 import os
+import sys
 import taskcluster
 
 # Get JSON data from taskcluster secrets service
 secrets = taskcluster.Secrets({'baseUrl': 'http://taskcluster/secrets/v1'})
-data = secrets.get('project/focus/tokens')
+data = secrets.get('garbage/staging/project/focus/tokens' if '--staging' in sys.argv else 'project/focus/tokens')
 
 token_file_path = os.path.join(os.path.dirname(__file__), '../../.sentry_token')
 with open(token_file_path, 'w') as token_file:

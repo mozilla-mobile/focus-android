@@ -7,33 +7,73 @@ package org.mozilla.focus.settings
 import android.content.SharedPreferences
 import android.os.Build
 import android.os.Bundle
+import android.support.v7.preference.Preference
 import android.support.v7.preference.SwitchPreferenceCompat
 import org.mozilla.focus.R
 import org.mozilla.focus.biometrics.Biometrics
+import org.mozilla.focus.exceptions.ExceptionDomains
+import org.mozilla.focus.exceptions.ExceptionsListFragment
 import org.mozilla.focus.telemetry.TelemetryWrapper
+import org.mozilla.focus.utils.AppConstants
+import org.mozilla.focus.widget.CookiesPreference
 
 class PrivacySecuritySettingsFragment : BaseSettingsFragment(),
     SharedPreferences.OnSharedPreferenceChangeListener {
     override fun onCreatePreferences(p0: Bundle?, p1: String?) {
         addPreferencesFromResource(R.xml.privacy_security_settings)
 
-        val preference = findPreference(getString(R.string.pref_key_biometric))
-        val appName = resources.getString(R.string.app_name)
-        preference.summary = resources.getString(R.string.preference_security_biometric_summary, appName)
+        val biometricPreference = findPreference(getString(R.string.pref_key_biometric))
+        val appName = getString(R.string.app_name)
+        biometricPreference.summary =
+                getString(R.string.preference_security_biometric_summary, appName)
 
         // Remove the biometric toggle if the software or hardware do not support it
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M || !Biometrics.hasFingerprintHardware(
-                context!!
+                requireContext()
             )
         ) {
-            preferenceScreen.removePreference(preference)
+            preferenceScreen.removePreference(biometricPreference)
         }
 
-        updateStealthToggleAvailability()
+        val safeBrowsingPreference =
+            findPreference(getString(R.string.pref_key_category_safe_browsing))
+        val cookiesPreference =
+            findPreference(getString(R.string.pref_key_performance_enable_cookies)) as CookiesPreference
+        if (!AppConstants.isGeckoBuild) {
+            preferenceScreen.removePreference(safeBrowsingPreference)
+            val cookiesStringsWV =
+                requireContext().resources.getStringArray(R.array.preference_privacy_cookies_options)
+                    .filter {
+                        it != getString(
+                            R.string.preference_privacy_block_cookies_third_party_tracker
+                        )
+                    }
+            val cookiesValuesWV =
+                requireContext().resources.getStringArray(R.array.preference_privacy_cookies_values)
+                    .filter {
+                        it != getString(
+                            R.string.pref_key_should_block_cookies_third_party_trackers_only
+                        )
+                    }
+            cookiesPreference.entries = cookiesStringsWV.toTypedArray()
+            cookiesPreference.entryValues = cookiesValuesWV.toTypedArray()
+
+            cookiesPreference.setDefaultValue(
+                getString(R.string.pref_key_should_block_cookies_no)
+            )
+        } else {
+            cookiesPreference.setDefaultValue(
+                getString(R.string.pref_key_should_block_cookies_third_party_trackers_only)
+            )
+        }
+        cookiesPreference.updateSummary()
     }
 
     override fun onResume() {
         super.onResume()
+        updateBiometricsToggleAvailability()
+        updateStealthToggleAvailability()
+        updateExceptionSettingAvailability()
 
         preferenceManager.sharedPreferences.registerOnSharedPreferenceChangeListener(this)
 
@@ -51,6 +91,39 @@ class PrivacySecuritySettingsFragment : BaseSettingsFragment(),
     override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences, key: String) {
         TelemetryWrapper.settingsEvent(key, sharedPreferences.all[key].toString())
         updateStealthToggleAvailability()
+    }
+
+    private fun updateBiometricsToggleAvailability() {
+        val switch = preferenceScreen.findPreference(resources.getString(R.string.pref_key_biometric))
+                as SwitchPreferenceCompat
+
+        if (!Biometrics.hasFingerprintHardware(requireContext())) {
+            switch.isChecked = false
+            switch.isEnabled = false
+            preferenceManager.sharedPreferences
+                    .edit()
+                    .putBoolean(resources.getString(R.string.pref_key_biometric), false)
+                    .apply()
+        } else {
+            switch.isEnabled = true
+        }
+    }
+
+    private fun updateExceptionSettingAvailability() {
+        val exceptionsPreference = findPreference(getString(R.string.pref_key_screen_exceptions))
+        if (ExceptionDomains.load(requireContext()).isEmpty()) {
+            exceptionsPreference.isEnabled = false
+        }
+    }
+
+    override fun onPreferenceTreeClick(preference: Preference): Boolean {
+        when (preference.key) {
+            resources.getString(R.string.pref_key_screen_exceptions) -> {
+                TelemetryWrapper.openExceptionsListSetting()
+                navigateToFragment(ExceptionsListFragment())
+            }
+        }
+        return super.onPreferenceTreeClick(preference)
     }
 
     private fun updateStealthToggleAvailability() {

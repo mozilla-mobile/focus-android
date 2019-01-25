@@ -46,10 +46,6 @@ class BrowserMenuAdapter(
             override val viewType = NavigationItemViewHolder.LAYOUT_ID
         }
 
-        object BlockingSwitch : MenuItem() {
-            override val viewType = BlockingItemViewHolder.LAYOUT_ID
-        }
-
         object RequestDesktopCheck : MenuItem() {
             override val viewType = RequestDesktopCheckItemViewHolder.LAYOUT_ID
         }
@@ -57,7 +53,6 @@ class BrowserMenuAdapter(
 
     private var items = mutableListOf<MenuItem>()
     private var navigationItemViewHolderReference = WeakReference<NavigationItemViewHolder>(null)
-    private var blockingItemViewHolderReference = WeakReference<BlockingItemViewHolder>(null)
 
     init {
         initializeMenu(fragment.url, customTabConfig)
@@ -70,8 +65,6 @@ class BrowserMenuAdapter(
         if (shouldShowButtonToolbar()) {
             items.add(MenuItem.Navigation)
         }
-
-        items.add(MenuItem.BlockingSwitch)
 
         if (customTabConfig == null || customTabConfig.showShareMenuItem) {
             items.add(
@@ -160,11 +153,6 @@ class BrowserMenuAdapter(
         }
     }
 
-    fun updateTrackers(trackers: Int) {
-        val navigationItemViewHolder = blockingItemViewHolderReference.get() ?: return
-        navigationItemViewHolder.updateTrackers(trackers)
-    }
-
     fun updateLoading(loading: Boolean) {
         val navigationItemViewHolder = navigationItemViewHolderReference.get() ?: return
         navigationItemViewHolder.updateLoading(loading)
@@ -180,13 +168,6 @@ class BrowserMenuAdapter(
                 )
                 navigationItemViewHolderReference = WeakReference(navigationItemViewHolder)
                 navigationItemViewHolder
-            }
-            BlockingItemViewHolder.LAYOUT_ID -> {
-                val blockingItemViewHolder = BlockingItemViewHolder(
-                    inflater.inflate(R.layout.menu_blocking_switch, parent, false), fragment
-                )
-                blockingItemViewHolderReference = WeakReference(blockingItemViewHolder)
-                blockingItemViewHolder
             }
             RequestDesktopCheckItemViewHolder.LAYOUT_ID -> {
                 RequestDesktopCheckItemViewHolder(

@@ -4,10 +4,10 @@
 
 package org.mozilla.focus.autocomplete
 
-import android.support.v4.app.Fragment
 import android.content.Context
 import android.graphics.Color
 import android.os.Bundle
+import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.helper.ItemTouchHelper
@@ -23,22 +23,30 @@ import android.widget.CheckBox
 import android.widget.CompoundButton
 import android.widget.TextView
 import kotlinx.android.synthetic.main.fragment_autocomplete_customdomains.*
-import kotlinx.coroutines.experimental.android.UI
-import kotlinx.coroutines.experimental.async
-import kotlinx.coroutines.experimental.launch
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Dispatchers.IO
+import kotlinx.coroutines.Dispatchers.Main
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.async
+import kotlinx.coroutines.launch
 import mozilla.components.browser.domains.CustomDomains
-import org.mozilla.focus.IO
 import org.mozilla.focus.R
 import org.mozilla.focus.settings.BaseSettingsFragment
 import org.mozilla.focus.telemetry.TelemetryWrapper
-import java.util.Collections
 import org.mozilla.focus.utils.ViewUtils
+import java.util.Collections
+import kotlin.coroutines.CoroutineContext
 
 typealias DomainFormatter = (String) -> String
 /**
  * Fragment showing settings UI listing all custom autocomplete domains entered by the user.
  */
-open class AutocompleteListFragment : Fragment() {
+open class AutocompleteListFragment : Fragment(), CoroutineScope {
+    private var job = Job()
+    override val coroutineContext: CoroutineContext
+        get() = job + Dispatchers.Main
+
     /**
      * ItemTouchHelper for reordering items in the domain list.
      */
@@ -123,6 +131,10 @@ open class AutocompleteListFragment : Fragment() {
     override fun onResume() {
         super.onResume()
 
+        if (job.isCancelled) {
+            job = Job()
+        }
+
         (activity as BaseSettingsFragment.ActionBarUpdater).apply {
             updateTitle(R.string.preference_autocomplete_subitem_manage_sites)
             updateIcon(R.drawable.ic_back)
@@ -131,6 +143,11 @@ open class AutocompleteListFragment : Fragment() {
         (domainList.adapter as DomainListAdapter).refresh(activity!!) {
             activity?.invalidateOptionsMenu()
         }
+    }
+
+    override fun onPause() {
+        job.cancel()
+        super.onPause()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
@@ -167,7 +184,7 @@ open class AutocompleteListFragment : Fragment() {
         private val selectedDomains: MutableList<String> = mutableListOf()
 
         fun refresh(context: Context, body: (() -> Unit)? = null) {
-            launch(UI) {
+            launch(Main) {
                 val updatedDomains = async { CustomDomains.load(context) }.await()
 
                 domains.clear()

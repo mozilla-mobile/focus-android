@@ -41,11 +41,6 @@
   <string name="preference_state_on">Jap\'ichisqa</string>
   <string name="preference_state_off">Wañuchisqa</string>
   <string name="preference_subitem_autocomplete">URL sapanmanta junt\'achiy</string>
-  <string name="preference_switch_autocomplete">Sapanmanta junt\'achiy</string>
-  <string name="preference_category_autocomplete_preinstalled">Ajinaña jamuq URL Rikurpu</string>
-  <string name="preference_autocomplete_preinstalled_summary">Kawsachiy kay %1$s sapanmanta junt\'achinanpaq kay direcciones siqipi aswan 450 munasqa URLs kaqkunawan.</string>
-  <string name="preference_category_autocomplete_custom_urls">URLs kaqkunata sapanchaykuy</string>
-  <string name="preference_autocomplete_subitem_customlist">URLs kaqkunata sapanchaykuy</string>
   <string name="preference_autocomplete_action_add">+ sapanchaykunata yapay URL</string>
   <string name="preference_autocomplete_title_add">Sapanchaykunata yapay URL</string>
   <string name="custom_autocomplete_quick_add">Sapanchaykunata yapay URL</string>
@@ -65,14 +60,10 @@
   <string name="preference_language">Runasimi</string>
   <string name="preference_language_systemdefault">Sistemaqpata ajinaña jamuynin</string>
   <string name="preference_category_privacy">Asuy</string>
-  <string name="preference_privacy_block_ads">Publicidadmanta tarichiqkunata ch\'ataykuy</string>
-  <string name="preference_privacy_block_ads_summary">Wakin willaykuna, manapis qam paykunaman yaykuykuqtiykipis, yaykusqaykita kay web raphikunaman tarinku</string>
   <string name="preference_privacy_block_analytics">Analiticos tarichiqkunata ch\'ataykuy</string>
-  <string name="preference_privacy_block_analytics_summary">Kaywan llamk\'akun ruwaykunaykita tantanapaq, qhawaykachanapaq chanta tupunapaq ima, kikinta imaynatachus jukta akllaptiyki mana chay raphinta suchuptiykijina</string>
+  <string name="preference_privacy_block_ads">Publicidadmanta tarichiqkunata ch\'ataykuy</string>
   <string name="preference_privacy_block_social">Social tarichiqkunata ch\'ataykuy</string>
-  <string name="preference_privacy_block_social_summary">Raphikunapi yapasqa kachkanku yaykuyniykita tarinankupaq chanta llamk\'ayta rikuchinanpaq, kikin botonesjina qunakunapaq</string>
   <string name="preference_privacy_block_content">Wak tiyapuykunamanta tarichiqkunata ch\'ataykuy</string>
-  <string name="preference_privacy_block_content_summary2">Kawsachiyqa wakin raphikuna mana suyaq llamk\'achiy kanankuta ruwachinman</string>
   <string name="preference_privacy_category_cookies">Cookies ch\'ataykuy</string>
   <string name="preference_privacy_should_block_cookies_no_option">Mana</string>
   <string name="preference_privacy_should_block_cookies_third_party_only_option">Cookies 3 ñiqi kaqkunallaqpata ch\'ataykuy</string>
@@ -157,7 +148,6 @@
   <string name="contextmenu_open_in_new_tab">T\'inkiyta kichariy juk musuq tikllapi</string>
   <string name="contextmenu_image_warning"><![CDATA["Jallich\'asqa chanta qunakusqa rikch\'aykuna "<b xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">mana raqpasqachu kanqanku</b>" sichus ñawpa yaykusqaykita %1$s kaymanta pichanki chay."]]></string>
   <string name="firstrun_defaultbrowser_title">Asuykita kallpachay</string>
-  <string name="firstrun_defaultbrowser_text2">Qhipan ñiqiman kay asuy t\'aqwiriyta apay. Willaykunata chanta wak tiyapuykunata ima ch\'ataykuy mayqinkunachus tarisuy atinkuman kitinninta chanta raphikunaqpata chaqnanayninta jayrayan ima.</string>
   <string name="firstrun_search_title">Mask\'ayniyki, munasqaykimanjina</string>
   <string name="firstrun_search_text">¿Jukjinatachu mask\'achkanki? Wak ajinaña jamuq mask\'aq motorta akllay configuracionpi.</string>
   <string name="firstrun_shortcut_title">Qallariy pantallaykiman chiqan yaykunata yapay</string>

@@ -6,6 +6,8 @@
     <string name="pref_key_radio_search_engine_list" translatable="false">pref_radio_search_engine_list</string>
     <string name="pref_key_multiselect_search_engine_list" translatable="false">pref_multiselect_search_engine_list</string>
 
+    <string name="pref_key_privacy_ads_block_ads" translatable="false"><xliff:g id="preference_key">pref_privacy_ads_block_ads</xliff:g></string>
+
     <string name="pref_key_privacy_block_ads" translatable="false"><xliff:g id="preference_key">pref_privacy_block_ads</xliff:g></string>
     <string name="pref_key_privacy_block_analytics" translatable="false"><xliff:g id="preference_key">pref_privacy_block_analytics</xliff:g></string>
     <string name="pref_key_privacy_block_social" translatable="false"><xliff:g id="preference_key">pref_privacy_block_social</xliff:g></string>
@@ -14,6 +16,12 @@
     <string name="pref_key_performance_block_webfonts" translatable="false"><xliff:g id="preference_key">pref_performance_block_webfonts</xliff:g></string>
     <string name="pref_key_performance_block_javascript" translatable="false"><xliff:g id="preference_key">pref_performance_block_javascript</xliff:g></string>
     <string name="pref_key_performance_enable_cookies" translatable="false"><xliff:g id="preference_key">pref_performance_enable_cookies</xliff:g></string>
+    
+    <string name="pref_key_should_block_cookies_yes_option" translatable="false"><xliff:g id="preference_key">pref_cookies_yes</xliff:g></string>
+    <string name="pref_key_should_block_cookies_third_party_trackers_only" translatable="false"><xliff:g id="preference_key">pref_cookies_third_party_tracker</xliff:g></string>
+    <string name="pref_key_should_block_cookies_third_party_only" translatable="false"><xliff:g id="preference_key">pref_cookies_third_party</xliff:g></string>
+    <string name="pref_key_should_block_cookies_no" translatable="false"><xliff:g id="preference_key">pref_cookies_no</xliff:g></string>
+
     <string name="pref_key_performance_block_images" translatable="false"><xliff:g id="preference_key">pref_performance_block_images</xliff:g></string>
 
     <string name="pref_key_default_browser" translatable="false"><xliff:g id="preference_key">pref_default_browser</xliff:g></string>
@@ -23,6 +31,8 @@
     <string name="pref_key_telemetry" translatable="false"><xliff:g id="preference_key">pref_telemetry</xliff:g></string>
 
     <string name="pref_key_secure" translatable="false"><xliff:g id="preference_key">pref_secure</xliff:g></string>
+
+    <string name="pref_key_safe_browsing" translatable="false"><xliff:g id="preference_key">pref_safe_browsing</xliff:g></string>
 
     <string name="pref_key_biometric" translatable="false"><xliff:g id="preference_key">pref_biometric</xliff:g></string>
     <string name="pref_key_about" translatable="false"><xliff:g id="preference_key">pref_about</xliff:g></string>
@@ -49,6 +59,7 @@
     <string name="has_added_to_home_screen" translatable="false"><xliff:g id="preference_key">has_added_to_home_screen</xliff:g></string>
     <string name="has_requested_desktop" translatable="false"><xliff:g id="preference_key">has_requested_desktop</xliff:g></string>
     <string name="app_launch_count" translatable="false"><xliff:g id="preference_key">app_launch_count</xliff:g></string>
+    <string name="pref_key_category_safe_browsing" translatable="false"><xliff:g id="preference_key">safe_browsing_category</xliff:g></string>
 
     <string name="pref_key_homescreen_tips" translatable="false">
         <xliff:g id="preference_key">use_homescreen_tips</xliff:g>
@@ -56,5 +67,9 @@
 
     <string name="pref_key_open_new_tab" translatable="false">
         <xliff:g id="preference_key">pref_open_new_tab</xliff:g>
+    </string>
+
+    <string name="pref_key_screen_exceptions" translatable="false">
+        <xliff:g id="preference_key">pref_screen_exceptions</xliff:g>
     </string>
 </resources>

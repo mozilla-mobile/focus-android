@@ -8,14 +8,13 @@ import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.content.Context
 import android.content.Intent
-import android.os.Build
 import android.os.Bundle
 import android.preference.PreferenceManager
 import android.util.AttributeSet
 import android.view.View
-import android.view.WindowManager
 import mozilla.components.browser.session.Session
 import mozilla.components.browser.session.SessionManager
+import mozilla.components.lib.crash.Crash
 import mozilla.components.support.utils.SafeIntent
 import org.mozilla.focus.R
 import org.mozilla.focus.biometrics.Biometrics
@@ -24,14 +23,15 @@ import org.mozilla.focus.fragment.BrowserFragment
 import org.mozilla.focus.fragment.FirstrunFragment
 import org.mozilla.focus.fragment.UrlInputFragment
 import org.mozilla.focus.locale.LocaleAwareAppCompatActivity
+import org.mozilla.focus.session.IntentProcessor
+import org.mozilla.focus.session.removeAndCloseAllSessions
 import org.mozilla.focus.session.ui.SessionsSheetFragment
 import org.mozilla.focus.settings.ExperimentsSettingsFragment
-import org.mozilla.focus.telemetry.SentryWrapper
+import org.mozilla.focus.shortcut.HomeScreen
 import org.mozilla.focus.telemetry.TelemetryWrapper
 import org.mozilla.focus.utils.AppConstants
 import org.mozilla.focus.utils.ExperimentsSyncService
 import org.mozilla.focus.utils.Settings
-import org.mozilla.focus.utils.SupportUtils
 import org.mozilla.focus.utils.ViewUtils
 import org.mozilla.focus.viewmodel.MainViewModel
 import org.mozilla.focus.web.IWebView
@@ -45,24 +45,31 @@ open class MainActivity : LocaleAwareAppCompatActivity() {
     protected open val currentSessionForActivity: Session
         get() = components.sessionManager.selectedSessionOrThrow
 
+    private val intentProcessor by lazy { IntentProcessor(components.sessionManager) }
+
+    private var previousSessionCount = 0
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            SentryWrapper.init(this)
+        if (!isTaskRoot) {
+            if (intent.hasCategory(Intent.CATEGORY_LAUNCHER) && Intent.ACTION_MAIN == intent.action) {
+                finish()
+                return
+            }
         }
 
         initViewModel()
-
-        if (Settings.getInstance(this).shouldUseSecureMode()) {
-            window.addFlags(WindowManager.LayoutParams.FLAG_SECURE)
-        }
 
         window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_STABLE or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
 
         setContentView(R.layout.activity_main)
 
         val intent = SafeIntent(intent)
+
+        if (intent.hasExtra(HomeScreen.ADD_TO_HOMESCREEN_TAG)) {
+            intentProcessor.handleNewIntent(this, intent)
+        }
 
         if (intent.isLauncherIntent) {
             TelemetryWrapper.openFromIconEvent()
@@ -106,6 +113,7 @@ open class MainActivity : LocaleAwareAppCompatActivity() {
             }
 
             override fun onSessionRemoved(session: Session) {
+                previousSessionCount = components.sessionManager.sessions.count()
                 if (!isCustomTabMode && components.sessionManager.sessions.isEmpty()) {
                     showUrlInputScreen()
 
@@ -124,7 +132,7 @@ open class MainActivity : LocaleAwareAppCompatActivity() {
 
         // If needed show the first run tour on top of the browser or url input fragment.
         if (Settings.getInstance(this@MainActivity).shouldShowFirstrun() && !isCustomTabMode) {
-            showFirstrun()
+            showFirstrun(components.sessionManager.selectedSession)
         }
     }
 
@@ -137,12 +145,6 @@ open class MainActivity : LocaleAwareAppCompatActivity() {
 
         TelemetryWrapper.startSession()
         checkBiometricStillValid()
-
-        if (Settings.getInstance(this).shouldUseSecureMode()) {
-            window.addFlags(WindowManager.LayoutParams.FLAG_SECURE)
-        } else {
-            window.clearFlags(WindowManager.LayoutParams.FLAG_SECURE)
-        }
     }
 
     override fun onPause() {
@@ -172,14 +174,21 @@ open class MainActivity : LocaleAwareAppCompatActivity() {
     }
 
     override fun onNewIntent(unsafeIntent: Intent) {
-        val intent = SafeIntent(unsafeIntent)
+        if (Crash.isCrashIntent(unsafeIntent)) {
+            val browserFragment = supportFragmentManager
+                    .findFragmentByTag(BrowserFragment.FRAGMENT_TAG) as BrowserFragment?
+            val crash = Crash.fromIntent(unsafeIntent)
 
-        if (intent.dataString.equals(SupportUtils.OPEN_WITH_DEFAULT_BROWSER_URL)) {
-            openGeneralSettings()
-            return
+            browserFragment?.handleTabCrash(crash)
         }
 
+        val intent = SafeIntent(unsafeIntent)
+
         val action = intent.action
+
+        if (intent.hasExtra(HomeScreen.ADD_TO_HOMESCREEN_TAG)) {
+            intentProcessor.handleNewIntent(this, intent)
+        }
 
         if (ACTION_OPEN == action) {
             TelemetryWrapper.openNotificationActionEvent()
@@ -198,7 +207,7 @@ open class MainActivity : LocaleAwareAppCompatActivity() {
         val fromShortcut = intent.getBooleanExtra(EXTRA_SHORTCUT, false)
         val fromNotification = intent.getBooleanExtra(EXTRA_NOTIFICATION, false)
 
-        components.sessionManager.removeSessions()
+        components.sessionManager.removeAndCloseAllSessions()
 
         if (fromShortcut) {
             TelemetryWrapper.eraseShortcutEvent()
@@ -212,8 +221,9 @@ open class MainActivity : LocaleAwareAppCompatActivity() {
         val browserFragment = fragmentManager.findFragmentByTag(BrowserFragment.FRAGMENT_TAG) as BrowserFragment?
 
         val isShowingBrowser = browserFragment != null
+        val crashReporterIsVisible = browserFragment?.crashReporterIsVisible() ?: false
 
-        if (isShowingBrowser) {
+        if (isShowingBrowser && !crashReporterIsVisible) {
             ViewUtils.showBrandedSnackbar(findViewById(android.R.id.content),
                     R.string.feedback_erase,
                     resources.getInteger(R.integer.erase_snackbar_delay))
@@ -265,10 +275,20 @@ open class MainActivity : LocaleAwareAppCompatActivity() {
             return
         }
 
+        val browserFragment = BrowserFragment.createForSession(currentSession)
+        val isNewSession = previousSessionCount < components.sessionManager.sessions.count() && previousSessionCount > 0
+
+        if ((currentSession.source == Session.Source.ACTION_SEND ||
+                currentSession.source == Session.Source.HOME_SCREEN) && isNewSession) {
+            browserFragment.openedFromExternalLink = true
+        }
+
         fragmentManager
                 .beginTransaction()
-                .replace(R.id.container, BrowserFragment.createForSession(currentSession), BrowserFragment.FRAGMENT_TAG)
+                .replace(R.id.container, browserFragment, BrowserFragment.FRAGMENT_TAG)
             .commitAllowingStateLoss()
+
+        previousSessionCount = components.sessionManager.sessions.count()
     }
 
     override fun onCreateView(name: String, context: Context, attrs: AttributeSet): View? {
@@ -325,7 +345,6 @@ open class MainActivity : LocaleAwareAppCompatActivity() {
         const val ACTION_ERASE = "erase"
         const val ACTION_OPEN = "open"
 
-        const val EXTRA_TEXT_SELECTION = "text_selection"
         const val EXTRA_NOTIFICATION = "notification"
 
         private const val EXTRA_SHORTCUT = "shortcut"

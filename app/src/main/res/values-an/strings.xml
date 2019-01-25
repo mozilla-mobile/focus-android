@@ -41,11 +41,6 @@
   <string name="preference_state_on">Activau</string>
   <string name="preference_state_off">Desactivau</string>
   <string name="preference_subitem_autocomplete">Autocompletar URL</string>
-  <string name="preference_switch_autocomplete">Autocompletar</string>
-  <string name="preference_category_autocomplete_preinstalled">Lista URL per defecto</string>
-  <string name="preference_autocomplete_preinstalled_summary">Activar pa tener autocompletau de %1$s con 450 URLs populars en a barra d\'adrezas.</string>
-  <string name="preference_category_autocomplete_custom_urls">URLs personalizadas</string>
-  <string name="preference_autocomplete_subitem_customlist">URLs personalizadas</string>
   <string name="preference_autocomplete_action_add">+ Anyader URL personalizada</string>
   <string name="preference_autocomplete_title_add">Anyader URL personalizada</string>
   <string name="custom_autocomplete_quick_add">Anyadir una URL personalizada</string>
@@ -65,14 +60,10 @@
   <string name="preference_language">Idioma</string>
   <string name="preference_language_systemdefault">Predeterminau d\'o sistema</string>
   <string name="preference_category_privacy">Privacidat</string>
-  <string name="preference_privacy_block_ads">Blocar los trazadors publicitarios</string>
-  <string name="preference_privacy_block_ads_summary">Bells anuncios fan seguimiento d\'as visitas alo puesto, mesmo si no fas clic en os anuncios</string>
   <string name="preference_privacy_block_analytics">Bloca los trazadors analiticos</string>
-  <string name="preference_privacy_block_analytics_summary">Usaus pa replegar, analisar y medir actividatz como toques a la pantalla y desplazamientos de pantalles</string>
+  <string name="preference_privacy_block_ads">Blocar los trazadors publicitarios</string>
   <string name="preference_privacy_block_social">Bloca los trazadors socials</string>
-  <string name="preference_privacy_block_social_summary">Incrustaus en puestos web pa trazar las tuyas visitas y amostrar funcionalidatz coo los botons de compartición</string>
   <string name="preference_privacy_block_content">Bloca los trazadors d\'atro conteniu</string>
-  <string name="preference_privacy_block_content_summary2">Activar esta opción puede provocar problemas en bellas pachinas</string>
   <string name="preference_privacy_category_cookies">Blocar las cookies</string>
   <string name="preference_privacy_should_block_cookies_no_option">No</string>
   <string name="preference_privacy_should_block_cookies_third_party_only_option">Blocar nomás las cookies de tercers</string>
@@ -157,7 +148,6 @@
   <string name="contextmenu_open_in_new_tab">Ubrir lo vinclo en una nueva pestanya</string>
   <string name="contextmenu_image_warning"><![CDATA["Las imachens alzadas y compartidas "<b xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">no se borrar&#225;n</b>" quan borres l\'historial de %1$s."]]></string>
   <string name="firstrun_defaultbrowser_title">Refuerza la tuya privacidat</string>
-  <string name="firstrun_defaultbrowser_text2">Leva la navegación privada ta lo siguient nivel. Bloca anuncios y atros contenius que puedan seguir-te a través d\'a web y enlenteixen la carga d\'as pachinas.</string>
   <string name="firstrun_search_title">Busca a la tuya traza</string>
   <string name="firstrun_search_text">Yes mirando bella cosa diferent? Triga belatro motor de busqueda en os Achustes.</string>
   <string name="firstrun_shortcut_title">Anyade alcorces a la tuya pantalla d\'inicio</string>

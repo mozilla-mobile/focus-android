@@ -41,11 +41,6 @@
   <string name="preference_state_on">Utzijik</string>
   <string name="preference_state_off">Uchupik</string>
   <string name="preference_subitem_autocomplete">Utz\'aqatisaxik pa utukelam URL</string>
-  <string name="preference_switch_autocomplete">Utz\'aqatisaxik pa utukelam</string>
-  <string name="preference_category_autocomplete_preinstalled">Ucholajil URL ya\'om chi uloq</string>
-  <string name="preference_autocomplete_preinstalled_summary">Chatzija\' chech uriqik %1$s utz\'aqatisaxik pa utukelam kq\'ax pa uwi\' 450 qas eta\'matal URLs pa le uq\'e\'tb\'al kemriqonib\'al.</string>
-  <string name="preference_category_autocomplete_custom_urls">Winaqirisam URLs</string>
-  <string name="preference_autocomplete_subitem_customlist">Winaqirisam URLs</string>
   <string name="preference_autocomplete_action_add">+ Uya\'ik winaqirisam URL</string>
   <string name="preference_autocomplete_title_add">Uya\'ik winaqirisam URL</string>
   <string name="custom_autocomplete_quick_add">Uya\'ik winaqirisam URL</string>
@@ -65,14 +60,10 @@
   <string name="preference_language">Ch\'ab\'al</string>
   <string name="preference_language_systemdefault">Wokchakub\'al ya\'om chi uloq</string>
   <string name="preference_category_privacy">Echeb\'alil</string>
-  <string name="preference_privacy_block_ads">Q\'ateb\'al chi\'l taq tzukub\'al</string>
-  <string name="preference_privacy_block_ads_summary">Jujun taq ukemtzijob\'exik kkiterene\'j rij taq solinem pa taq wokk\'olib\'al web\', pine\' man kapitz\' ta pa taq ukemtzijob\'exik</string>
   <string name="preference_privacy_block_analytics">Chaq\'atej taq k\'oxomab\'al rech taq tzukub\'al</string>
-  <string name="preference_privacy_block_analytics_summary">Kkoj chech umulixik, uk\'oxomaxik, chi\'l retaxik taq b\'anowem pacha\' tz\'ib\'anem chi\'l silob\'em</string>
+  <string name="preference_privacy_block_ads">Q\'ateb\'al chi\'l taq tzukub\'al</string>
   <string name="preference_privacy_block_social">Uq\'atexik taq tzukub\'al rech uk\'iyal</string>
-  <string name="preference_privacy_block_social_summary">Wiqital pa taq wokk\'olib\'al web\' chech uterene\'xik taq solinem chi\'l chech uk\'utunsaxik taq chakunem pacha\' taq pitz\'b\'al rech ukomone\'xik</string>
   <string name="preference_privacy_block_content">Chaq\'atej nik\'aj chi taq tzukub\'al upam chak</string>
-  <string name="preference_privacy_block_content_summary2">Le utzijik wene kub\'ano chi jujun taq uxaq wuj man eye\'tal ta le kkib\'ano</string>
   <string name="preference_privacy_category_cookies">Chaq\'atej cookies</string>
   <string name="preference_privacy_should_block_cookies_no_option">Ja\'i\'</string>
   <string name="preference_privacy_should_block_cookies_third_party_only_option">"Xew chaq\'atej cookies kech 3urox "</string>
@@ -157,7 +148,6 @@
   <string name="contextmenu_open_in_new_tab">Chajaqa\' kemwiqb\'al pa jun k\'ak\' k\'utjaqb\'al</string>
   <string name="contextmenu_image_warning"><![CDATA["Chak\'olo\' chi\'l chakomone\'j taq wachib\'al "<b xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">man kchupixax taj</b>" are taq kachupu %1$s b\'antal kanoq."]]></string>
   <string name="firstrun_defaultbrowser_title">Chaya\' uchuq\'ab\' le awecheb\'alil</string>
-  <string name="firstrun_defaultbrowser_text2">Chak\'ama\' b\'i le nik\'ob\'al rech echeb\'alil pa le jun chi cholajil. Che\'aq\'atej taq ukemtzijob\'exik chi\'l jun chi upam chak le kkowinik ktzukun pa taq kemk\'olib\'al web\' chi\'l kuq\'atej taq ukanil uya\'ik uchuq\'ab\' uxaq wuj.</string>
   <string name="firstrun_search_title">Le atzukunem, le a b\'e</string>
   <string name="firstrun_search_text">¿Ktajin katzukuj jalan taq jastaq? Chacha\' jun chi chi\'ch\' rech tzukunem ya\'om chi uloq pa taq suk\'manem.</string>
   <string name="firstrun_shortcut_title">Chaya\' taq ramb\'al b\'e pa le umajib\'al q\'axwach</string>

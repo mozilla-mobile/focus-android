@@ -193,6 +193,24 @@ MISSING_LOCALES = {
         'local_name': 'Basa Acèh',
         'plural_rule': 'id',
         'team': 'anp <LL@li.org>\n'
+    },
+    'nv': {
+        'name': 'Navajo',
+        'local_name': 'Diné Bizaad',
+        'plural_rule': 'id',
+        'team': 'anp <LL@li.org>\n'
+    },
+    'co': {
+        'name': 'Corsican',
+        'local_name': 'Corsu',
+        'plural_rule': 'pt',
+        'team': 'anp <LL@li.org>\n'
+    },
+    'sn': {
+        'name': 'Shona',
+        'local_name': 'ChiShona',
+        'plural_rule': 'az',
+        'team': 'anp <LL@li.org>\n'
     }
 }
 

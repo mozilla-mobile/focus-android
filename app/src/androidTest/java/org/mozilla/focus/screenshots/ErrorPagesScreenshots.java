@@ -57,7 +57,7 @@ public class ErrorPagesScreenshots extends ScreenshotTest {
     }
 
     @Test
-    public void takeScreenshotsOfErrorPages() throws Exception {
+    public void takeScreenshotsOfErrorPages() {
         for (ErrorTypes error: ErrorTypes.values()) {
             onView(withId(R.id.urlView))
                     .check(matches(isDisplayed()))
@@ -70,7 +70,7 @@ public class ErrorPagesScreenshots extends ScreenshotTest {
             // Android O has an issue with using Locator.ID
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 UiObject tryAgainBtn = device.findObject(new UiSelector()
-                        .descriptionContains(getString(R.string.errorpage_refresh))
+                        .resourceId("errorTryAgain")
                         .clickable(true));
                 assertTrue(tryAgainBtn.waitForExists(waitingTime));
             } else {

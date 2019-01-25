@@ -41,11 +41,6 @@
   <string name="preference_state_on">Aqtayata</string>
   <string name="preference_state_off">jiwt\'ayata</string>
   <string name="preference_subitem_autocomplete">URL justupach phuqhachata</string>
-  <string name="preference_switch_autocomplete">Justupacj phuqhachata</string>
-  <string name="preference_category_autocomplete_preinstalled">Jan walt\'awinakax URL ukankiwa</string>
-  <string name="preference_autocomplete_preinstalled_summary">"%1$s Janiw utjirxamakiti, justupach phuqhachataw 450 wali uñt\'at URLs uka tuqinkiwa "</string>
-  <string name="preference_category_autocomplete_custom_urls">URLs wakt\'ayasiña</string>
-  <string name="preference_autocomplete_subitem_customlist">URLs wakt\'ayasiña</string>
   <string name="preference_autocomplete_action_add">URL ukar wakt\'ayasiñ yapt\'aña</string>
   <string name="preference_autocomplete_title_add">URL ukar wakt\'ayasiñ yapt\'aña</string>
   <string name="custom_autocomplete_quick_add">URL Wakt\'ayasiñ yapt\'aña</string>
@@ -65,14 +60,10 @@
   <string name="preference_language">Aru</string>
   <string name="preference_language_systemdefault">Llikaw jan walt\'kiti</string>
   <string name="preference_category_privacy">Maynitakiki</string>
-  <string name="preference_privacy_block_ads">Yatiyawinak uñachayir jark\'antaña</string>
-  <string name="preference_privacy_block_ads_summary">Yaqhip yatiyanakax uñstaskakiwa, janis ukar limt\'kat ukhaxa</string>
   <string name="preference_privacy_block_analytics">Uñakipir thaqhirinak jark\'antaña</string>
-  <string name="preference_privacy_block_analytics_summary">Uka apthapiña, uñakipiri ukhamarak tupur luratanak llamt\'as saraqas apnaqaña</string>
+  <string name="preference_privacy_block_ads">Yatiyawinak uñachayir jark\'antaña</string>
   <string name="preference_privacy_block_social">Jaqit thaqhirinak jark\'antaña</string>
-  <string name="preference_privacy_block_social_summary">Uka llika janjan k\'iñantatanak mantatanakam thaqtaña ukatx wutunanakar uñacht\'ayaña</string>
   <string name="preference_privacy_block_content">Yaqha utjir thaqhirinak jark\'antaña</string>
-  <string name="preference_privacy_block_content_summary2">Jark\'antasinx inas yaqhip llika janjanakax jan walixchispati</string>
   <string name="preference_privacy_category_cookies">Yatiyanak jark\'antaña</string>
   <string name="preference_privacy_should_block_cookies_no_option">Janiwa</string>
   <string name="preference_privacy_should_block_cookies_third_party_only_option">"Yatiyawinakx chikatan chikatapak 3  jist\'antaña"</string>
@@ -156,7 +147,6 @@
   <string name="contextmenu_open_in_new_tab">Uka chhithapx machaqar jist\'araña</string>
   <string name="contextmenu_image_warning"><![CDATA["Uka jamuqx imam "<b xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">ukat ch\'iqiyam janiw</b>" pichsuskaniti, %1$s kunawsatix apnaqatanakam pichxat ukhaxa."]]></string>
   <string name="firstrun_defaultbrowser_title">jumankirikis uk ch\'amañcham</string>
-  <string name="firstrun_defaultbrowser_text2">Uka juman thaqhatam yaqhar apam. Yatiyäwinak jark\'antam ukat yaqha utjirinak llika janjanakan jan jayarst\'añatal thaqtasmawa.</string>
   <string name="firstrun_search_title">Thaqhatam ukhamark jumankiri</string>
   <string name="firstrun_search_text">Yaqht thaqhaskta? Yaqha thaqhañamp thaqtam.</string>
   <string name="firstrun_shortcut_title">Jank\'ak mantañanak uka mantañawjar ucht\'asim.</string>

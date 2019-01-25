@@ -7,6 +7,7 @@ package org.mozilla.focus.menu.browser;
 
 import android.graphics.drawable.Drawable;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.TextView;
 
 import org.mozilla.focus.R;
@@ -20,6 +21,7 @@ import org.mozilla.focus.R;
         super(itemView);
 
         menuItemView = (TextView) itemView;
+        menuItemView.setHeight(ViewGroup.LayoutParams.WRAP_CONTENT);
     }
 
     /* package-private */ void bind(BrowserMenuAdapter.MenuItem.Default menuItem) {

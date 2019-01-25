@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ProgressBar
 import mozilla.components.browser.session.Session
+import mozilla.components.concept.engine.HitResult
 
 import org.mozilla.focus.R
 import org.mozilla.focus.web.Download
@@ -75,7 +76,7 @@ class InfoFragment : WebFragment() {
 
             override fun onDownloadStart(download: Download) {}
 
-            override fun onLongPress(hitTarget: IWebView.HitTarget) {}
+            override fun onLongPress(hitResult: HitResult) {}
 
             override fun onURLChanged(url: String) {}
 

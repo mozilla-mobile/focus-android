@@ -35,7 +35,7 @@
             android:gravity="center"
             android:lineSpacingExtra="7sp"
             android:text="@string/teaser"
-            android:textColor="#eeeeee"
+            android:textColor="#f9f9fa"
             android:textSize="14sp"
             android:focusable="false" />
 
@@ -47,7 +47,8 @@
         android:orientation="horizontal"
         android:elevation="4dp"
         android:clickable="true"
-        android:clipChildren="false">
+        android:clipChildren="false"
+        android:focusable="true">
 
         <View
             android:id="@+id/toolbarBackgroundView"

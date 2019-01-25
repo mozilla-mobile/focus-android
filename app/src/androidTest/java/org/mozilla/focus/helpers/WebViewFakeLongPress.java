@@ -4,21 +4,20 @@ import android.support.test.espresso.UiController;
 import android.support.test.espresso.ViewAction;
 import android.support.test.espresso.matcher.ViewMatchers;
 import android.view.View;
-
+import mozilla.components.concept.engine.HitResult;
 import org.hamcrest.Matcher;
 import org.mozilla.focus.R;
-import org.mozilla.focus.web.IWebView;
 import org.mozilla.focus.webview.SystemWebView;
 
 public class WebViewFakeLongPress implements ViewAction {
-    public static ViewAction injectHitTarget(IWebView.HitTarget hitTarget) {
-        return new WebViewFakeLongPress(hitTarget);
+    public static ViewAction injectHitResult(HitResult hitResult) {
+        return new WebViewFakeLongPress(hitResult);
     }
 
-    private IWebView.HitTarget hitTarget;
+    private HitResult hitResult;
 
-    private WebViewFakeLongPress(IWebView.HitTarget hitTarget) {
-        this.hitTarget = hitTarget;
+    private WebViewFakeLongPress(HitResult hitResult) {
+        this.hitResult = hitResult;
     }
 
     @Override
@@ -28,7 +27,7 @@ public class WebViewFakeLongPress implements ViewAction {
 
     @Override
     public String getDescription() {
-        return String.format("Long pressing webview");
+        return "Long pressing webview";
     }
 
     @Override
@@ -36,6 +35,6 @@ public class WebViewFakeLongPress implements ViewAction {
         final SystemWebView webView = (SystemWebView) view;
 
         webView.getCallback()
-                .onLongPress(hitTarget);
+                .onLongPress(hitResult);
     }
 }

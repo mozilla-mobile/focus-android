@@ -40,7 +40,9 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 
 import org.mozilla.focus.R;
+import org.mozilla.geckoview.GeckoResult;
 import org.mozilla.geckoview.GeckoSession;
+import org.mozilla.geckoview.AllowOrDeny;
 import org.mozilla.geckoview.GeckoSession.PermissionDelegate.MediaSource;
 
 import java.text.ParseException;
@@ -105,9 +107,9 @@ public final class GeckoViewPrompt implements GeckoSession.PromptDelegate {
 
     @Override
     public void onAlert(final GeckoSession session, final String title, final String msg,
-                      final AlertCallback callback) {
+                        final AlertCallback callback) {
         final Activity activity = mActivity;
-        if (activity == null) {
+        if (activity == null || activity.isFinishing()) {
             callback.dismiss();
             return;
         }
@@ -124,7 +126,7 @@ public final class GeckoViewPrompt implements GeckoSession.PromptDelegate {
                                 final String msg, final String[] btnMsg,
                                 final ButtonCallback callback) {
         final Activity activity = mActivity;
-        if (activity == null) {
+        if (activity == null || activity.isFinishing()) {
             callback.dismiss();
             return;
         }
@@ -200,7 +202,7 @@ public final class GeckoViewPrompt implements GeckoSession.PromptDelegate {
                               final String msg, final String value,
                               final TextCallback callback) {
         final Activity activity = mActivity;
-        if (activity == null) {
+        if (activity == null || activity.isFinishing()) {
             callback.dismiss();
             return;
         }
@@ -225,7 +227,7 @@ public final class GeckoViewPrompt implements GeckoSession.PromptDelegate {
     @Override
     public void onAuthPrompt(GeckoSession geckoSession, String s, String s1, AuthOptions authOptions, final AuthCallback authCallback) {
         final Activity activity = mActivity;
-        if (activity == null) {
+        if (activity == null || activity.isFinishing()) {
             authCallback.dismiss();
             return;
         }
@@ -309,7 +311,7 @@ public final class GeckoViewPrompt implements GeckoSession.PromptDelegate {
                                 final String msg, final int type,
                                 final Choice[] choices, final ChoiceCallback callback) {
         final Activity activity = mActivity;
-        if (activity == null) {
+        if (activity == null || activity.isFinishing()) {
             callback.dismiss();
             return;
         }
@@ -490,7 +492,7 @@ public final class GeckoViewPrompt implements GeckoSession.PromptDelegate {
     public void onColorPrompt(final GeckoSession session, final String title,
                                final String value, final TextCallback callback) {
         final Activity activity = mActivity;
-        if (activity == null) {
+        if (activity == null || activity.isFinishing()) {
             callback.dismiss();
             return;
         }
@@ -567,7 +569,7 @@ public final class GeckoViewPrompt implements GeckoSession.PromptDelegate {
             if (value != null && !value.isEmpty()) {
                 return formatter.parse(value);
             }
-        } catch (final ParseException e) {
+        } catch (final ParseException ignored) {
         }
         return defaultToNow ? new Date() : null;
     }
@@ -599,7 +601,7 @@ public final class GeckoViewPrompt implements GeckoSession.PromptDelegate {
                                   final int type, final String value, final String min,
                                   final String max, final TextCallback callback) {
         final Activity activity = mActivity;
-        if (activity == null) {
+        if (activity == null || activity.isFinishing()) {
             callback.dismiss();
             return;
         }
@@ -636,7 +638,7 @@ public final class GeckoViewPrompt implements GeckoSession.PromptDelegate {
             if (resId != 0) {
                 try {
                     picker = (DatePicker) inflater.inflate(resId, /* root */ null);
-                } catch (final ClassCastException | InflateException e) {
+                } catch (final ClassCastException | InflateException ignored) {
                 }
             }
             if (picker == null) {
@@ -663,7 +665,7 @@ public final class GeckoViewPrompt implements GeckoSession.PromptDelegate {
             if (resId != 0) {
                 try {
                     picker = (TimePicker) inflater.inflate(resId, /* root */ null);
-                } catch (final ClassCastException | InflateException e) {
+                } catch (final ClassCastException | InflateException ignored) {
                 }
             }
             if (picker == null) {
@@ -714,7 +716,7 @@ public final class GeckoViewPrompt implements GeckoSession.PromptDelegate {
     @Override
     public void onFilePrompt(GeckoSession session, String title, int type, String[] mimeTypes, FileCallback callback) {
         final Activity activity = mActivity;
-        if (activity == null) {
+        if (activity == null || activity.isFinishing()) {
             callback.dismiss();
             return;
         }
@@ -761,6 +763,11 @@ public final class GeckoViewPrompt implements GeckoSession.PromptDelegate {
         }
     }
 
+    @Override
+    public GeckoResult<AllowOrDeny> onPopupRequest(GeckoSession session, String targetUri) {
+        return GeckoResult.fromValue(AllowOrDeny.DENY);
+    }
+
     public void onFileCallbackResult(final int resultCode, final Intent data) {
         if (mFileCallback == null) {
             return;
@@ -799,7 +806,7 @@ public final class GeckoViewPrompt implements GeckoSession.PromptDelegate {
     public void promptForPermission(final GeckoSession session, final String title,
                                     final GeckoSession.PermissionDelegate.Callback callback) {
         final Activity activity = mActivity;
-        if (activity == null) {
+        if (activity == null || activity.isFinishing()) {
             callback.reject();
             return;
         }
@@ -861,7 +868,7 @@ public final class GeckoViewPrompt implements GeckoSession.PromptDelegate {
                                final MediaSource[] video, final MediaSource[] audio,
                                final GeckoSession.PermissionDelegate.MediaCallback callback) {
         final Activity activity = mActivity;
-        if (activity == null || (video == null && audio == null)) {
+        if (activity == null || activity.isFinishing() || (video == null && audio == null)) {
             callback.reject();
             return;
         }

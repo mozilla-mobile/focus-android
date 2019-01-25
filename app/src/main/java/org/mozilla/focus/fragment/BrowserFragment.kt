@@ -17,7 +17,6 @@ import android.content.Intent
 import android.content.IntentFilter
 import android.content.pm.PackageManager
 import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.TransitionDrawable
 import android.net.Uri
 import android.os.Build
@@ -27,6 +26,7 @@ import android.preference.PreferenceManager
 import android.support.annotation.RequiresApi
 import android.support.design.widget.AppBarLayout
 import android.support.design.widget.CoordinatorLayout
+import android.support.design.widget.Snackbar
 import android.support.v4.app.ActivityCompat
 import android.support.v4.content.ContextCompat
 import android.support.v4.widget.SwipeRefreshLayout
@@ -34,7 +34,6 @@ import android.text.Editable
 import android.text.TextUtils
 import android.text.TextWatcher
 import android.util.Log
-import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -43,15 +42,23 @@ import android.view.accessibility.AccessibilityEvent
 import android.view.accessibility.AccessibilityManager
 import android.view.inputmethod.EditorInfo
 import android.webkit.CookieManager
-import android.webkit.URLUtil
 import android.widget.FrameLayout
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import kotlinx.android.synthetic.main.browser_display_toolbar.*
+import kotlinx.android.synthetic.main.fragment_browser.*
+import kotlinx.android.synthetic.main.toolbar.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
 import mozilla.components.browser.session.Session
 import mozilla.components.browser.session.SessionManager
+import mozilla.components.concept.engine.HitResult
+import mozilla.components.lib.crash.Crash
 import mozilla.components.support.utils.ColorUtils
 import mozilla.components.support.utils.DownloadUtils
 import mozilla.components.support.utils.DrawableUtils
@@ -63,6 +70,8 @@ import org.mozilla.focus.biometrics.BiometricAuthenticationDialogFragment
 import org.mozilla.focus.biometrics.BiometricAuthenticationHandler
 import org.mozilla.focus.biometrics.Biometrics
 import org.mozilla.focus.broadcastreceiver.DownloadBroadcastReceiver
+import org.mozilla.focus.exceptions.ExceptionDomains
+import org.mozilla.focus.ext.isSearch
 import org.mozilla.focus.ext.requireComponents
 import org.mozilla.focus.ext.shouldRequestDesktopSite
 import org.mozilla.focus.findinpage.FindInPageCoordinator
@@ -70,16 +79,18 @@ import org.mozilla.focus.gecko.NestedGeckoView
 import org.mozilla.focus.locale.LocaleAwareAppCompatActivity
 import org.mozilla.focus.menu.browser.BrowserMenu
 import org.mozilla.focus.menu.context.WebContextMenu
+import org.mozilla.focus.menu.trackingprotection.TrackingProtectionMenu
 import org.mozilla.focus.observer.LoadTimeObserver
 import org.mozilla.focus.open.OpenWithFragment
-import org.mozilla.focus.popup.PopupUtils
 import org.mozilla.focus.session.SessionCallbackProxy
+import org.mozilla.focus.session.removeAndCloseAllSessions
+import org.mozilla.focus.session.removeAndCloseSession
 import org.mozilla.focus.session.ui.SessionsSheetFragment
+import org.mozilla.focus.telemetry.CrashReporterWrapper
 import org.mozilla.focus.telemetry.TelemetryWrapper
 import org.mozilla.focus.utils.AppConstants
 import org.mozilla.focus.utils.Browsers
 import org.mozilla.focus.utils.Features
-import org.mozilla.focus.utils.Settings
 import org.mozilla.focus.utils.StatusBarUtils
 import org.mozilla.focus.utils.SupportUtils
 import org.mozilla.focus.utils.UrlUtils
@@ -88,9 +99,11 @@ import org.mozilla.focus.web.Download
 import org.mozilla.focus.web.HttpAuthenticationDialogBuilder
 import org.mozilla.focus.web.IWebView
 import org.mozilla.focus.widget.AnimatedProgressBar
-import org.mozilla.focus.widget.FloatingEraseButton
 import org.mozilla.focus.widget.FloatingSessionsButton
 import java.lang.ref.WeakReference
+import java.net.MalformedURLException
+import java.net.URL
+import kotlin.coroutines.CoroutineContext
 
 /**
  * Fragment for displaying the browser UI.
@@ -98,20 +111,22 @@ import java.lang.ref.WeakReference
 @Suppress("LargeClass", "TooManyFunctions")
 class BrowserFragment : WebFragment(), LifecycleObserver, View.OnClickListener,
     DownloadDialogFragment.DownloadDialogListener, View.OnLongClickListener,
-    BiometricAuthenticationDialogFragment.BiometricAuthenticationListener {
+    BiometricAuthenticationDialogFragment.BiometricAuthenticationListener,
+    CoroutineScope {
 
     private var pendingDownload: Download? = null
     private var backgroundTransitionGroup: TransitionDrawableGroup? = null
     private var urlView: TextView? = null
     private var progressView: AnimatedProgressBar? = null
-    private var blockView: FrameLayout? = null
-    private var securityView: ImageView? = null
+    private var trackingProtectionView: ImageButton? = null
     private var menuView: ImageButton? = null
     private var statusBar: View? = null
     private var urlBar: View? = null
     private var popupTint: FrameLayout? = null
     private var swipeRefresh: SwipeRefreshLayout? = null
     private var menuWeakReference: WeakReference<BrowserMenu>? = WeakReference<BrowserMenu>(null)
+    private var trackingProtectionMenuWeakReference: WeakReference<TrackingProtectionMenu>? =
+        WeakReference<TrackingProtectionMenu>(null)
 
     /**
      * Container for custom video views shown in fullscreen mode.
@@ -138,6 +153,8 @@ class BrowserFragment : WebFragment(), LifecycleObserver, View.OnClickListener,
     private var findInPagePrevious: ImageButton? = null
     private var closeFindInPage: ImageButton? = null
 
+    private var showContentBlockingSnackbar = false
+
     private var fullscreenCallback: IWebView.FullscreenCallback? = null
 
     private var manager: DownloadManager? = null
@@ -148,12 +165,18 @@ class BrowserFragment : WebFragment(), LifecycleObserver, View.OnClickListener,
 
     private var biometricController: BiometricAuthenticationHandler? = null
 
+    private var job = Job()
+    override val coroutineContext: CoroutineContext
+        get() = job + Dispatchers.Main
+
     // The url property is used for things like sharing the current URL. We could try to use the webview,
     // but sometimes it's null, and sometimes it returns a null URL. Sometimes it returns a data:
     // URL for error pages. The URL we show in the toolbar is (A) always correct and (B) what the
     // user is probably expecting to share, so lets use that here:
     val url: String
         get() = urlView!!.text.toString()
+
+    var openedFromExternalLink: Boolean = false
 
     override lateinit var session: Session
         private set
@@ -164,12 +187,6 @@ class BrowserFragment : WebFragment(), LifecycleObserver, View.OnClickListener,
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         ProcessLifecycleOwner.get().lifecycle.addObserver(this)
-
-        if (biometricController == null && Build.VERSION.SDK_INT >= Build.VERSION_CODES.M &&
-            Biometrics.hasFingerprintHardware(requireContext())
-        ) {
-            biometricController = BiometricAuthenticationHandler(requireContext())
-        }
 
         val sessionUUID = arguments!!.getString(ARGUMENT_SESSION_UUID) ?: throw IllegalAccessError("No session exists")
 
@@ -183,11 +200,8 @@ class BrowserFragment : WebFragment(), LifecycleObserver, View.OnClickListener,
     override fun onPause() {
         super.onPause()
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M &&
-            Settings.getInstance(requireContext()).shouldUseBiometrics() &&
-            Biometrics.hasFingerprintHardware(requireContext())
-        ) {
-            biometricController!!.stopListening()
+        if (Biometrics.isBiometricsEnabled(requireContext())) {
+            biometricController?.stopListening()
             view!!.alpha = 0f
         }
 
@@ -203,6 +217,18 @@ class BrowserFragment : WebFragment(), LifecycleObserver, View.OnClickListener,
 
             menuWeakReference!!.clear()
         }
+
+        val tpMenu = trackingProtectionMenuWeakReference!!.get()
+        if (tpMenu != null) {
+            tpMenu.dismiss()
+
+            trackingProtectionMenuWeakReference!!.clear()
+        }
+    }
+
+    override fun onStop() {
+        job.cancel()
+        super.onStop()
     }
 
     @Suppress("LongMethod", "ComplexMethod")
@@ -274,7 +300,6 @@ class BrowserFragment : WebFragment(), LifecycleObserver, View.OnClickListener,
         closeFindInPage = view.findViewById(R.id.close_find_in_page)
         closeFindInPage!!.setOnClickListener(this)
 
-        setBlockingEnabled(session.trackerBlockingEnabled)
         setShouldRequestDesktop(session.shouldRequestDesktopSite)
 
         LoadTimeObserver.addObservers(session, this)
@@ -291,16 +316,9 @@ class BrowserFragment : WebFragment(), LifecycleObserver, View.OnClickListener,
         backButton = view.findViewById(R.id.back)
         backButton?.let { it.setOnClickListener(this) }
 
-        val blockIcon = view.findViewById<View>(R.id.block_image) as ImageView
-        blockIcon.setImageResource(R.drawable.ic_tracking_protection_disabled)
-
-        blockView = view.findViewById<View>(R.id.block) as FrameLayout
-
-        securityView = view.findViewById(R.id.security_info)
-
-        securityView!!.setImageResource(R.drawable.ic_internet)
-
-        securityView!!.setOnClickListener(this)
+        trackingProtectionView = view.findViewById(R.id.tracking_protection_menu)
+        trackingProtectionView!!.setOnClickListener(this)
+        updateTrackingProtectionView(session)
 
         menuView = view.findViewById<View>(R.id.menuView) as ImageButton
         menuView!!.setOnClickListener(this)
@@ -326,6 +344,7 @@ class BrowserFragment : WebFragment(), LifecycleObserver, View.OnClickListener,
         // values automatically yet.
         // We want to change that in Android Components: https://github.com/mozilla-mobile/android-components/issues/665
         sessionObserver.apply {
+            onTrackerBlockingEnabledChanged(session, session.trackerBlockingEnabled)
             onLoadingStateChanged(session, session.loading)
             onUrlChanged(session, session.url)
             onSecurityChanged(session, session.securityInfo)
@@ -333,7 +352,7 @@ class BrowserFragment : WebFragment(), LifecycleObserver, View.OnClickListener,
     }
 
     private fun initialiseNormalBrowserUi(view: View) {
-        val eraseButton = view.findViewById<FloatingEraseButton>(R.id.erase)
+        val eraseButton = view.findViewById<ImageButton>(R.id.erase)
         eraseButton.setOnClickListener(this)
 
         urlView!!.setOnClickListener(this)
@@ -345,26 +364,24 @@ class BrowserFragment : WebFragment(), LifecycleObserver, View.OnClickListener,
         sessionManager.register(object : SessionManager.Observer {
             override fun onSessionAdded(session: Session) {
                 tabsButton.updateSessionsCount(sessionManager.sessions.size)
-                eraseButton.updateSessionsCount(sessionManager.sessions.size)
             }
 
             override fun onSessionRemoved(session: Session) {
                 tabsButton.updateSessionsCount(sessionManager.sessions.size)
-                eraseButton.updateSessionsCount(sessionManager.sessions.size)
             }
 
             override fun onAllSessionsRemoved() {
                 tabsButton.updateSessionsCount(sessionManager.sessions.size)
-                eraseButton.updateSessionsCount(sessionManager.sessions.size)
             }
         })
 
         tabsButton.updateSessionsCount(sessionManager.sessions.size)
-        eraseButton.updateSessionsCount(sessionManager.sessions.size)
     }
 
     private fun initialiseCustomTabUi(view: View) {
         val customTabConfig = session.customTabConfig!!
+        val erase = view.findViewById<ImageButton>(R.id.erase)
+        erase.visibility = View.GONE
 
         // Unfortunately there's no simpler way to have the FAB only in normal-browser mode.
         // - ViewStub: requires splitting attributes for the FAB between the ViewStub, and actual FAB layout file.
@@ -372,12 +389,9 @@ class BrowserFragment : WebFragment(), LifecycleObserver, View.OnClickListener,
         // - View.GONE: doesn't work because the layout-behaviour makes the FAB visible again when scrolling.
         // - Adding at runtime: works, but then we need to use a separate layout file (and you need
         //   to set some attributes programatically, same as ViewStub).
-        val erase = view.findViewById<FloatingEraseButton>(R.id.erase)
-        val eraseContainer = erase.parent as ViewGroup
-        eraseContainer.removeView(erase)
-
         val sessions = view.findViewById<FloatingSessionsButton>(R.id.tabs)
-        eraseContainer.removeView(sessions)
+        val sessionContainer = sessions.parent as ViewGroup
+        sessionContainer.removeView(sessions)
 
         val textColor: Int
 
@@ -448,7 +462,7 @@ class BrowserFragment : WebFragment(), LifecycleObserver, View.OnClickListener,
         }
 
         // We need to tint some icons.. We already tinted the close button above. Let's tint our other icons too.
-        securityView!!.setColorFilter(textColor)
+        trackingProtectionView!!.setColorFilter(textColor)
 
         val menuIcon = DrawableUtils.loadAndTintDrawable(requireContext(), R.drawable.ic_menu, textColor)
         menuView!!.setImageDrawable(menuIcon)
@@ -483,7 +497,9 @@ class BrowserFragment : WebFragment(), LifecycleObserver, View.OnClickListener,
 
             override fun countBlockedTracker() {}
 
-            override fun resetBlockedTrackers() {}
+            override fun resetBlockedTrackers() {
+                tracking_protection_count?.text = 0.toString()
+            }
 
             override fun onBlockingStateChanged(isBlockingEnabled: Boolean) {}
 
@@ -499,8 +515,8 @@ class BrowserFragment : WebFragment(), LifecycleObserver, View.OnClickListener,
 
             override fun onRequestDesktopStateChanged(shouldRequestDesktop: Boolean) {}
 
-            override fun onLongPress(hitTarget: IWebView.HitTarget) {
-                WebContextMenu.show(requireActivity(), this, hitTarget)
+            override fun onLongPress(hitResult: HitResult) {
+                WebContextMenu.show(requireActivity(), this, hitResult, session)
             }
 
             override fun onEnterFullScreen(callback: IWebView.FullscreenCallback, view: View?) {
@@ -643,7 +659,7 @@ class BrowserFragment : WebFragment(), LifecycleObserver, View.OnClickListener,
             return
         }
 
-        if (grantResults.size <= 0 || grantResults[0] != PackageManager.PERMISSION_GRANTED) {
+        if (grantResults.isEmpty() || grantResults[0] != PackageManager.PERMISSION_GRANTED) {
             // We didn't get the storage permission: We are not able to start this download.
             pendingDownload = null
         }
@@ -654,16 +670,15 @@ class BrowserFragment : WebFragment(), LifecycleObserver, View.OnClickListener,
     }
 
     internal fun showDownloadPromptDialog(download: Download) {
-        val fragmentManager = fragmentManager
+        val fragmentManager = childFragmentManager
 
-        if (fragmentManager!!.findFragmentByTag(DownloadDialogFragment.FRAGMENT_TAG) != null) {
+        if (fragmentManager.findFragmentByTag(DownloadDialogFragment.FRAGMENT_TAG) != null) {
             // We are already displaying a download dialog fragment (Probably a restored fragment).
             // No need to show another one.
             return
         }
 
         val downloadDialogFragment = DownloadDialogFragment.newInstance(download)
-        downloadDialogFragment.setTargetFragment(this@BrowserFragment, REQUEST_CODE_DOWNLOAD_DIALOG)
 
         try {
             downloadDialogFragment.show(fragmentManager, DownloadDialogFragment.FRAGMENT_TAG)
@@ -678,10 +693,66 @@ class BrowserFragment : WebFragment(), LifecycleObserver, View.OnClickListener,
         }
     }
 
-    internal fun showAddToHomescreenDialog(url: String, title: String) {
-        val fragmentManager = fragmentManager
+    private fun showCrashReporter(crash: Crash) {
+        val fragmentManager = requireActivity().supportFragmentManager
 
-        if (fragmentManager!!.findFragmentByTag(AddToHomescreenDialogFragment.FRAGMENT_TAG) != null) {
+        Log.e("crash:", crash.toString())
+        if (crashReporterIsVisible()) {
+            // We are already displaying the crash reporter
+            // No need to show another one.
+            return
+        }
+
+        val crashReporterFragment = CrashReporterFragment.create()
+
+        crashReporterFragment.onCloseTabPressed = { sendCrashReport ->
+            if (sendCrashReport) { CrashReporterWrapper.submitCrash(crash) }
+            erase()
+            hideCrashReporter()
+        }
+
+        fragmentManager
+                .beginTransaction()
+                .addToBackStack(null)
+                .add(R.id.crash_container, crashReporterFragment, CrashReporterFragment.FRAGMENT_TAG)
+                .commit()
+
+        crash_container.visibility = View.VISIBLE
+        tabs.hide()
+        trackingProtectionView?.setImageResource(R.drawable.ic_firefox)
+        menuView?.visibility = View.GONE
+        erase?.visibility = View.GONE
+        urlView?.text = requireContext().getString(R.string.tab_crash_report_title)
+    }
+
+    private fun hideCrashReporter() {
+        val fragmentManager = requireActivity().supportFragmentManager
+        val fragment = fragmentManager.findFragmentByTag(CrashReporterFragment.FRAGMENT_TAG)
+                ?: return
+
+        fragmentManager
+                .beginTransaction()
+                .remove(fragment)
+                .commit()
+
+        crash_container.visibility = View.GONE
+        tabs.show()
+        trackingProtectionView?.setImageResource(R.drawable.ic_tracking_protection_cutout)
+        menuView?.visibility = View.VISIBLE
+        erase?.visibility = View.VISIBLE
+        urlView?.text = session.let {
+            if (it.isSearch) it.searchTerms else it.url
+        }
+    }
+
+    fun crashReporterIsVisible(): Boolean = requireActivity().supportFragmentManager.let {
+        it.findFragmentByTag(CrashReporterFragment.FRAGMENT_TAG)?.isVisible ?: false
+    }
+
+    internal fun showAddToHomescreenDialog(url: String, title: String) {
+        val fragmentManager = childFragmentManager
+
+        if (fragmentManager.findFragmentByTag(AddToHomescreenDialogFragment.FRAGMENT_TAG) != null) {
             // We are already displaying a homescreen dialog fragment (Probably a restored fragment).
             // No need to show another one.
             return
@@ -693,12 +764,12 @@ class BrowserFragment : WebFragment(), LifecycleObserver, View.OnClickListener,
             session.trackerBlockingEnabled,
             session.shouldRequestDesktopSite
         )
-        addToHomescreenDialogFragment.setTargetFragment(
-            this@BrowserFragment,
-            REQUEST_CODE_ADD_TO_HOMESCREEN_DIALOG)
 
         try {
-            addToHomescreenDialogFragment.show(fragmentManager, AddToHomescreenDialogFragment.FRAGMENT_TAG)
+            addToHomescreenDialogFragment.show(
+                fragmentManager,
+                AddToHomescreenDialogFragment.FRAGMENT_TAG
+            )
         } catch (e: IllegalStateException) {
             // It can happen that at this point in time the activity is already in the background
             // and onSaveInstanceState() has already been called. Fragment transactions are not
@@ -713,8 +784,19 @@ class BrowserFragment : WebFragment(), LifecycleObserver, View.OnClickListener,
         }
     }
 
-    override fun onCreateNewSession() {
-        erase()
+    override fun biometricCreateNewSessionWithLink() {
+        for (session in requireComponents.sessionManager.sessions) {
+            if (session != requireComponents.sessionManager.selectedSession) {
+                requireComponents.sessionManager.remove(session)
+            }
+        }
+
+        // Purposefully not calling onAuthSuccess in case we add to that function in the future
+        view!!.alpha = 1f
+    }
+
+    override fun biometricCreateNewSession() {
+        requireComponents.sessionManager.removeAndCloseAllSessions()
     }
 
     override fun onAuthSuccess() {
@@ -731,6 +813,10 @@ class BrowserFragment : WebFragment(), LifecycleObserver, View.OnClickListener,
 
     override fun onResume() {
         super.onResume()
+
+        if (job.isCancelled) {
+            job = Job()
+        }
 
         val filter = IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE)
         requireContext().registerReceiver(downloadBroadcastReceiver, filter)
@@ -751,35 +837,47 @@ class BrowserFragment : WebFragment(), LifecycleObserver, View.OnClickListener,
             statusBar!!.layoutParams.height = statusBarHeight
         }
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M &&
-            Settings.getInstance(requireContext()).shouldUseBiometrics() &&
-            Biometrics.hasFingerprintHardware(requireContext())
-        ) {
+        if (Biometrics.isBiometricsEnabled(requireContext())) {
+            if (biometricController == null) {
+                biometricController = BiometricAuthenticationHandler(context!!)
+            }
+
             displayBiometricPromptIfNeeded()
         } else {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                biometricController?.stopListening()
+            }
+
+            biometricController = null
             view!!.alpha = 1f
         }
     }
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     private fun displayBiometricPromptIfNeeded() {
-        val fragmentManager = requireActivity().supportFragmentManager
+        val fragmentManager = childFragmentManager
 
         // Check that we need to auth and that the fragment isn't already displayed
-        if (biometricController!!.needsAuth) {
-            biometricController!!.startAuthentication()
+        if (biometricController!!.needsAuth || openedFromExternalLink) {
+            view!!.alpha = 0f
+            biometricController!!.startAuthentication(openedFromExternalLink)
+            openedFromExternalLink = false
 
             // Are we already displaying the biometric fragment?
             if (fragmentManager.findFragmentByTag(BiometricAuthenticationDialogFragment.FRAGMENT_TAG) != null) {
                 return
             }
 
-            biometricController!!.biometricFragment!!.setTargetFragment(
-                this@BrowserFragment, REQUEST_CODE_BIOMETRIC_PROMPT)
-            biometricController!!.biometricFragment!!.show(
-                fragmentManager,
-                BiometricAuthenticationDialogFragment.FRAGMENT_TAG
-            )
+            try {
+                biometricController!!.biometricFragment!!.show(
+                    fragmentManager,
+                    BiometricAuthenticationDialogFragment.FRAGMENT_TAG
+                )
+            } catch (e: IllegalStateException) {
+                // It can happen that at this point in time the activity is already in the background
+                // and onSaveInstanceState() has already been called. Fragment transactions are not
+                // allowed after that anymore.
+            }
         } else {
             view!!.alpha = 1f
         }
@@ -842,6 +940,16 @@ class BrowserFragment : WebFragment(), LifecycleObserver, View.OnClickListener,
             // Go back in web history
             goBack()
         } else {
+            if (crashReporterIsVisible()) {
+                requireActivity()
+                        .supportFragmentManager
+                        .findFragmentByTag(CrashReporterFragment.FRAGMENT_TAG)
+                        .let { it as? CrashReporterFragment }
+                        ?.apply {
+                            onBackPressed()
+                        }
+            }
+
             if (session.source == Session.Source.ACTION_VIEW || session.isCustomTabSession()) {
                 TelemetryWrapper.eraseBackToAppEvent()
 
@@ -887,11 +995,28 @@ class BrowserFragment : WebFragment(), LifecycleObserver, View.OnClickListener,
 
         webView?.cleanup()
 
-        if (session.isCustomTabSession()) {
-            requireComponents.sessionManager.remove(session)
-        } else {
-            requireComponents.sessionManager.remove()
+        requireComponents.sessionManager.removeAndCloseSession(session)
+    }
+
+    fun eraseAll() {
+        val webView = getWebView()
+        val context = context
+
+        // Notify the user their session has been erased if Talk Back is enabled:
+        if (context != null) {
+            val manager = context.getSystemService(Context.ACCESSIBILITY_SERVICE) as AccessibilityManager
+            if (manager.isEnabled) {
+                val event = AccessibilityEvent.obtain()
+                event.eventType = AccessibilityEvent.TYPE_ANNOUNCEMENT
+                event.className = javaClass.name
+                event.packageName = getContext()!!.packageName
+                event.text.add(getString(R.string.feedback_erase))
+            }
         }
+
+        webView?.cleanup()
+
+        requireComponents.sessionManager.removeAndCloseAllSessions()
     }
 
     private fun shareCurrentUrl() {
@@ -926,7 +1051,9 @@ class BrowserFragment : WebFragment(), LifecycleObserver, View.OnClickListener,
                 menuWeakReference = WeakReference(menu)
             }
 
-            R.id.display_url -> if (requireComponents.sessionManager.findSessionById(session.id) != null) {
+            R.id.display_url -> if (
+                    !crashReporterIsVisible() &&
+                    requireComponents.sessionManager.findSessionById(session.id) != null) {
                 val urlFragment = UrlInputFragment
                     .createWithSession(session, urlView!!)
 
@@ -939,7 +1066,7 @@ class BrowserFragment : WebFragment(), LifecycleObserver, View.OnClickListener,
             R.id.erase -> {
                 TelemetryWrapper.eraseEvent()
 
-                erase()
+                eraseAll()
             }
 
             R.id.tabs -> {
@@ -977,11 +1104,12 @@ class BrowserFragment : WebFragment(), LifecycleObserver, View.OnClickListener,
                 requireComponents.sessionManager.select(session)
 
                 val webView = getWebView()
+                webView?.releaseGeckoSession()
                 webView?.saveWebViewState(session)
 
                 val intent = Intent(context, MainActivity::class.java)
                 intent.action = Intent.ACTION_MAIN
-                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
                 startActivity(intent)
 
                 TelemetryWrapper.openFullBrowser()
@@ -1061,7 +1189,10 @@ class BrowserFragment : WebFragment(), LifecycleObserver, View.OnClickListener,
                 showAddToHomescreenDialog(url, title)
             }
 
-            R.id.security_info -> showSecurityPopUp()
+            R.id.tracking_protection_menu -> if (!crashReporterIsVisible()) {
+                TelemetryWrapper.contentBlockingMenuEvent()
+                showTrackingProtectionMenu()
+            }
 
             R.id.report_site_issue -> {
                 val reportUrl = String.format(SupportUtils.REPORT_SITE_ISSUE_URL, url)
@@ -1137,7 +1268,12 @@ class BrowserFragment : WebFragment(), LifecycleObserver, View.OnClickListener,
 
     fun reload() = getWebView()?.reload()
 
-    fun setBlockingEnabled(enabled: Boolean) {
+    fun reloadWithNewBlockingState() {
+        reload()
+        showContentBlockingSnackbar = true
+    }
+
+    fun setBlockingUI(enabled: Boolean) {
         val webView = getWebView()
         webView?.setBlockingEnabled(enabled)
 
@@ -1178,28 +1314,11 @@ class BrowserFragment : WebFragment(), LifecycleObserver, View.OnClickListener,
         getWebView()?.setRequestDesktop(enabled)
     }
 
-    private fun showSecurityPopUp() {
-        // Don't show Security Popup if the page is loading
-        if (session.loading) {
-            return
-        }
-        val securityPopup = PopupUtils.createSecurityPopup(requireContext(), session)
-        if (securityPopup != null) {
-            securityPopup.setOnDismissListener { popupTint!!.visibility = View.GONE }
-            securityPopup.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-            securityPopup.animationStyle = android.R.style.Animation_Dialog
-            securityPopup.isTouchable = true
-            securityPopup.isFocusable = true
-            securityPopup.elevation = resources.getDimension(R.dimen.menu_elevation)
-            val offsetY = requireContext().resources.getDimensionPixelOffset(R.dimen.doorhanger_offsetY)
-            securityPopup.showAtLocation(urlBar, Gravity.TOP or Gravity.CENTER_HORIZONTAL, 0, offsetY)
-            popupTint!!.visibility = View.VISIBLE
-        }
-    }
+    private fun showTrackingProtectionMenu() {
+        val menu = TrackingProtectionMenu(requireActivity(), this)
+        menu.show(trackingProtectionView!!)
 
-    // In the future, if more badging icons are needed, this should be abstracted
-    fun updateBlockingBadging(enabled: Boolean) {
-        blockView!!.visibility = if (enabled) View.GONE else View.VISIBLE
+        trackingProtectionMenuWeakReference = WeakReference(menu)
     }
 
     override fun onLongClick(view: View): Boolean {
@@ -1243,6 +1362,7 @@ class BrowserFragment : WebFragment(), LifecycleObserver, View.OnClickListener,
     }
 
     override fun applyLocale() {
+        super.applyLocale()
         activity?.supportFragmentManager
             ?.beginTransaction()
             ?.replace(
@@ -1251,6 +1371,19 @@ class BrowserFragment : WebFragment(), LifecycleObserver, View.OnClickListener,
                 BrowserFragment.FRAGMENT_TAG
             )
             ?.commit()
+    }
+
+    private fun updateTrackingProtectionView(session: Session) {
+        if (crashReporterIsVisible()) return
+        val tpView = trackingProtectionView ?: return
+
+        if (session.trackerBlockingEnabled) {
+            tpView.setImageResource(R.drawable.ic_tracking_protection_cutout)
+            tracking_protection_count?.visibility = View.VISIBLE
+        } else {
+            tpView.setImageResource(R.drawable.ic_tracking_protection_disabled)
+            tracking_protection_count?.visibility = View.INVISIBLE
+        }
     }
 
     @Suppress("DEPRECATION", "MagicNumber")
@@ -1306,19 +1439,33 @@ class BrowserFragment : WebFragment(), LifecycleObserver, View.OnClickListener,
                     progressView!!.visibility = View.GONE
                 }
                 swipeRefresh!!.isRefreshing = false
-            }
 
-            updateBlockingBadging(loading || session.trackerBlockingEnabled)
+                showContentBlockingSnackbarIfChanged()
+            }
 
             updateToolbarButtonStates(loading)
 
             val menu = menuWeakReference!!.get()
             menu?.updateLoading(loading)
 
-            hideFindInPage()
+            if (findInPageView?.visibility == View.VISIBLE) {
+                hideFindInPage()
+            }
         }
 
         override fun onUrlChanged(session: Session, url: String) {
+            if (crashReporterIsVisible()) return
+
+            val host = try {
+                URL(url).host
+            } catch (_: MalformedURLException) {
+                url
+            }
+
+            val isException =
+                host != null && ExceptionDomains.load(requireContext()).contains(host)
+            getWebView()?.setBlockingEnabled(!isException)
+
             urlView?.text = UrlUtils.stripUserInfo(url)
         }
 
@@ -1327,29 +1474,56 @@ class BrowserFragment : WebFragment(), LifecycleObserver, View.OnClickListener,
         }
 
         override fun onTrackerBlocked(session: Session, blocked: String, all: List<String>) {
-            menuWeakReference?.let {
-                val menu = it.get()
+            GlobalScope.launch(Dispatchers.Main) {
+                trackingProtectionView?.setImageResource(R.drawable.ic_tracking_protection_cutout)
+                tracking_protection_count?.visibility = View.VISIBLE
+                tracking_protection_count?.text = all.size.toString()
+                trackingProtectionMenuWeakReference?.let {
+                    val menu = it.get()
 
-                menu?.updateTrackers(all.size)
+                    menu?.updateTrackers(all.size)
+                }
             }
         }
 
         override fun onSecurityChanged(session: Session, securityInfo: Session.SecurityInfo) {
-            if (!session.loading) {
-                if (securityInfo.secure) {
-                    securityView!!.setImageResource(R.drawable.ic_lock)
-                } else {
-                    if (URLUtil.isHttpUrl(url)) {
-                        // HTTP site
-                        securityView!!.setImageResource(R.drawable.ic_internet)
-                    } else {
-                        // Certificate is bad
-                        securityView!!.setImageResource(R.drawable.ic_warning)
-                    }
-                }
-            } else {
-                securityView!!.setImageResource(R.drawable.ic_internet)
+            trackingProtectionMenuWeakReference?.let {
+                val menu = it.get()
+
+                menu?.updateSecurity(session)
             }
+        }
+
+        override fun onTrackerBlockingEnabledChanged(session: Session, blockingEnabled: Boolean) {
+            updateTrackingProtectionView(session)
+            setBlockingUI(blockingEnabled)
+        }
+    }
+
+    fun handleTabCrash(crash: Crash) {
+        showCrashReporter(crash)
+    }
+
+    private fun showContentBlockingSnackbarIfChanged() {
+        if (showContentBlockingSnackbar) {
+            // Show Snackbar to inform users and allow them to undo their choice
+            val snackbar = Snackbar.make(
+                activity!!.findViewById(android.R.id.content),
+                if (!session.trackerBlockingEnabled)
+                    R.string.content_blocking_disabled_snackbar_message else
+                    R.string.content_blocking_enabled_snackbar_message,
+                Snackbar.LENGTH_SHORT
+            )
+            snackbar.setAction(
+                if (!session.trackerBlockingEnabled)
+                    R.string.content_blocking_snackbar_enable_action else
+                    R.string.content_blocking_snackbar_disable_action
+            ) {
+                val menu = trackingProtectionMenuWeakReference!!.get()
+                menu?.updateBlocking(!session.trackerBlockingEnabled)
+            }
+            snackbar.show()
+            showContentBlockingSnackbar = false
         }
     }
 
@@ -1363,9 +1537,6 @@ class BrowserFragment : WebFragment(), LifecycleObserver, View.OnClickListener,
         private const val RESTORE_KEY_DOWNLOAD = "download"
 
         private const val INITIAL_PROGRESS = 5
-        private const val REQUEST_CODE_DOWNLOAD_DIALOG = 300
-        private const val REQUEST_CODE_ADD_TO_HOMESCREEN_DIALOG = 301
-        private const val REQUEST_CODE_BIOMETRIC_PROMPT = 302
 
         @JvmStatic
         fun createForSession(session: Session): BrowserFragment {

@@ -18,6 +18,7 @@
   <string name="menu_help">సహాయం</string>
   <string name="menu_rights">మీ హక్కులు</string>
   <string name="menu_trackers_blocked_title">నిరోధించిన ట్రాకర్లు</string>
+  <string name="menu_content_blocking">విషయ నిరోధం</string>
   <string name="menu_custom_tab_branding">వీరిచే %1$s</string>
   <string name="share_dialog_title">దీనిద్వారా పంచుకోండి</string>
   <string name="notification_erase_text">విహరణ చరిత్రను తుడిచివేయి</string>
@@ -40,10 +41,10 @@
   <string name="preference_state_on">చేతనం</string>
   <string name="preference_state_off">అచేతనం</string>
   <string name="preference_subitem_autocomplete">URL స్వయంపూర్తి</string>
-  <string name="preference_switch_autocomplete">స్వయంపూర్తి</string>
-  <string name="preference_category_autocomplete_preinstalled">అప్రమేయ URL జాబితా</string>
-  <string name="preference_category_autocomplete_custom_urls">ఇష్టానుసారం URLలు</string>
-  <string name="preference_autocomplete_subitem_customlist">ఇష్టానుసారం URLs</string>
+  <string name="preference_switch_autocomplete_topsites">మేటి సైట్లకు</string>
+  <string name="preference_switch_autocomplete_user_list">మీరు జోడించిన సైట్లకు</string>
+  <string name="preference_category_autocomplete_manage_sites">సైట్ల నిర్వహణ</string>
+  <string name="preference_autocomplete_subitem_manage_sites">సైట్లను నిర్వహించండి</string>
   <string name="preference_autocomplete_action_add">+ఇష్టానుసారమైన URLను జోడించండి</string>
   <string name="preference_autocomplete_title_add">ఇష్టానుసారమైన URLను జోడించండి</string>
   <string name="custom_autocomplete_quick_add">ఇష్టానుసారమైన URLను జోడించండి</string>
@@ -61,8 +62,8 @@
   <string name="preference_language">భాష</string>
   <string name="preference_language_systemdefault">వ్యవస్థ అప్రమేయం</string>
   <string name="preference_category_privacy">అంతరంగికత</string>
-  <string name="preference_privacy_block_ads">యాడ్ ట్రాకర్లను నిరోధించు</string>
   <string name="preference_privacy_block_analytics">వైశ్లేషిక ట్రాకర్లను నిరోధించు</string>
+  <string name="preference_privacy_block_ads">యాడ్ ట్రాకర్లను నిరోధించు</string>
   <string name="preference_privacy_block_social">సామాజిక ట్రాకర్లను నిరోధించు</string>
   <string name="preference_privacy_block_content">ఇతర ట్రాకర్లను నిరోధించు</string>
   <string name="preference_privacy_category_cookies">కుకీలను నిరోధించాలా</string>
@@ -105,11 +106,13 @@
   <string name="accessibility_announcement_loading">వస్తోంది</string>
   <string name="accessibility_announcement_loading_finished">వెబ్‌సైటు లోడయింది</string>
   <string name="content_description_menu">మరిన్ని ఎంపికలు</string>
+  <string name="indicator_content_description_menu">మరిన్ని ఎంపికల బొత్తం</string>
   <string name="content_description_forward">ముందుకు వెళ్ళు</string>
   <string name="content_description_reload">వెబ్‌సైటుని మళ్ళీ లోడుచేయి</string>
   <string name="content_description_back">వెనక్కి వెళ్ళు</string>
   <string name="content_description_stop">వెబ్‌సైటు లోడుచేయడం ఆపివేయి</string>
   <string name="content_description_customtab_exit">మునుపటి అనువర్తనానికి తిరిగి వెళ్ళు</string>
+  <string name="content_description_trackers_blocked">నిరోధించిన ట్రాకర్ల సంఖ్య</string>
   <string name="content_description_blocking_switch">ట్రాకర్లను నిరోధించండి</string>
   <string name="your_rights">మీ హక్కులు</string>
   <string name="external_app_prompt_title">ఈ లంకెని మరొక అనువర్తనంలో తెరువు</string>
@@ -182,9 +185,19 @@
   <string name="custom_tab_copy_url_action">URL కాపీ అయ్యింది</string>
   <string name="preference_advanced_summary">డెవలపర్ల పనిముట్లు</string>
   <string name="preference_category_advanced">ఉన్నతం</string>
+  <string name="biometric_auth_new_session">కొత్త సెషన్</string>
+  <string name="biometric_auth_image_description">వేలిముద్ర చిహ్నం</string>
   <string name="enable_search_suggestion_subtitle_learnmore">ఇంకా తెలుసుకోండి</string>
   <string name="enable_search_suggestions_no">వద్దు</string>
   <string name="enable_search_suggestions_yes">అవును</string>
   <string name="no_suggestions_message">కొన్ని సెర్చింజన్లు సలహాలను చూపించలేవు</string>
   <string name="dismiss_no_suggestions_prompt_button">మూసివేయి</string>
+  <string name="open_new_tab_snackbar">మారు</string>
+  <string name="preference_category_safe_browsing">సురక్షిత విహరణ</string>
+  <string name="preference_exceptions">మినహాయింపులు</string>
+  <string name="preference_exceptions_menu_remove">తొలగించు</string>
+  <string name="preference_exceptions_remove_all_button_label">అన్ని వెబ్‌సైట్లను తీసివేయి</string>
+  <string name="tab_crash_report_headline">క్షమించండి. ఈ ట్యాబులో ఏదో సమస్య ఉంది.</string>
+  <string name="tab_crash_report_close_tab_button_label">ట్యాబును మూసివేయి</string>
+  <string name="fatal_crash_report_close_button_label">మూసివేయి</string>
 </resources>

@@ -12,7 +12,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.webkit.WebView
 import mozilla.components.browser.session.Session
-
 import org.mozilla.focus.R
 import org.mozilla.focus.ext.savedWebViewState
 import org.mozilla.focus.ext.shouldRequestDesktopSite
@@ -61,12 +60,13 @@ abstract class WebFragment : LocaleAwareFragment() {
         webViewInstance!!.setCallback(createCallback())
 
         session?.let {
-            webViewInstance!!.setBlockingEnabled(it.trackerBlockingEnabled)
             webViewInstance!!.setRequestDesktop(it.shouldRequestDesktopSite)
         }
 
         if (!AppConstants.isGeckoBuild) {
             restoreStateOrLoadUrl()
+        } else {
+            loadInitialUrl()
         }
 
         onCreateViewCalled()
@@ -76,8 +76,9 @@ abstract class WebFragment : LocaleAwareFragment() {
     override fun applyLocale() {
         val context = context ?: return
         val localeManager = LocaleManager.getInstance()
+        val currentLocale = localeManager.getCurrentLocale(context)
+
         if (!localeManager.isMirroringSystemLocale(context)) {
-            val currentLocale = localeManager.getCurrentLocale(context)
             Locale.setDefault(currentLocale)
             val resources = context.resources
             val config = resources.configuration
@@ -86,6 +87,7 @@ abstract class WebFragment : LocaleAwareFragment() {
             @Suppress("DEPRECATION")
             context.resources.updateConfiguration(config, null)
         }
+        getWebView()?.updateLocale(currentLocale)
         // We create and destroy a new WebView here to force the internal state of WebView to know
         // about the new language. See issue #666.
         val unneeded = WebView(getContext())
@@ -131,6 +133,16 @@ abstract class WebFragment : LocaleAwareFragment() {
 
     protected fun getWebView(): IWebView? {
         return if (isWebViewAvailable) webViewInstance else null
+    }
+
+    private fun loadInitialUrl() {
+        val session = session
+        if (session == null || session.savedWebViewState == null) {
+            val url = initialUrl
+            if (!TextUtils.isEmpty(url)) {
+                webViewInstance!!.loadUrl(url)
+            }
+        }
     }
 
     private fun restoreStateOrLoadUrl() {

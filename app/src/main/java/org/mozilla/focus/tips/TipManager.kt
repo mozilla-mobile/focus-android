@@ -6,8 +6,6 @@ package org.mozilla.focus.tips
 
 import android.app.Activity
 import android.content.Context
-import android.content.Intent
-import android.net.Uri
 import android.os.Build
 import mozilla.components.browser.session.Session
 import org.mozilla.focus.R.string.app_name
@@ -15,23 +13,45 @@ import org.mozilla.focus.R.string.tip_add_to_homescreen
 import org.mozilla.focus.R.string.tip_autocomplete_url
 import org.mozilla.focus.R.string.tip_disable_tips2
 import org.mozilla.focus.R.string.tip_disable_tracking_protection
+import org.mozilla.focus.R.string.tip_explain_allowlist
 import org.mozilla.focus.R.string.tip_open_in_new_tab
 import org.mozilla.focus.R.string.tip_request_desktop
 import org.mozilla.focus.R.string.tip_set_default_browser
+import org.mozilla.focus.exceptions.ExceptionDomains
 import org.mozilla.focus.ext.components
 import org.mozilla.focus.locale.LocaleAwareAppCompatActivity
+import org.mozilla.focus.locale.LocaleManager
 import org.mozilla.focus.telemetry.TelemetryWrapper
 import org.mozilla.focus.utils.Settings
 import org.mozilla.focus.utils.SupportUtils
 import org.mozilla.focus.utils.homeScreenTipsExperimentDescriptor
 import org.mozilla.focus.utils.isInExperiment
 import org.mozilla.focus.utils.Browsers
+import java.util.Locale
 import java.util.Random
 
 class Tip(val id: Int, val text: String, val shouldDisplay: () -> Boolean, val deepLink: (() -> Unit)? = null) {
     companion object {
         private const val FORCE_SHOW_DISABLE_TIPS_LAUNCH_COUNT = 2
         private const val FORCE_SHOW_DISABLE_TIPS_INTERVAL = 30
+
+        fun createAllowlistTip(context: Context): Tip {
+            val id = tip_explain_allowlist
+            val name = context.resources.getString(id)
+            val url = SupportUtils.getSumoURLForTopic(context, SupportUtils.SumoTopic.ALLOWLIST)
+
+            val deepLink = {
+                val session = Session(url, source = Session.Source.MENU)
+                context.components.sessionManager.add(session, selected = true)
+                TelemetryWrapper.pressTipEvent(id)
+            }
+
+            val shouldDisplayAllowListTip = {
+                ExceptionDomains.load(context).isEmpty()
+            }
+
+            return Tip(id, name, shouldDisplayAllowListTip, deepLink)
+        }
 
         fun createTrackingProtectionTip(context: Context): Tip {
             val id = tip_disable_tracking_protection
@@ -67,18 +87,13 @@ class Tip(val id: Int, val text: String, val shouldDisplay: () -> Boolean, val d
             val appName = context.resources.getString(app_name)
             val id = tip_set_default_browser
             val name = context.resources.getString(id, appName)
-            val browsers = Browsers(context, Browsers.TRADITIONAL_BROWSER_URL)
 
             val shouldDisplayDefaultBrowser = {
                 !Browsers(context, Browsers.TRADITIONAL_BROWSER_URL).isDefaultBrowser(context)
             }
 
             val deepLinkDefaultBrowser = {
-                if (!browsers.hasDefaultBrowser(context)) {
-                    // Open in method:
-                    val intent = Intent(Intent.ACTION_VIEW, Uri.parse(SupportUtils.OPEN_WITH_DEFAULT_BROWSER_URL))
-                    context.startActivity(intent)
-                } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                     SupportUtils.openDefaultAppsSettings(context)
                 } else {
                     SupportUtils.openDefaultBrowserSumoPage(context)
@@ -174,6 +189,8 @@ class Tip(val id: Int, val text: String, val shouldDisplay: () -> Boolean, val d
     }
 }
 
+// Yes, this a large class with a lot of functions. But it's very simple and still easy to read.
+@Suppress("TooManyFunctions")
 object TipManager {
     private const val MAX_TIPS_TO_DISPLAY = 3
 
@@ -181,8 +198,10 @@ object TipManager {
     private val random = Random()
     private var listInitialized = false
     private var tipsShown = 0
+    private var locale: Locale? = null
 
     private fun populateListOfTips(context: Context) {
+        addAllowlistTip(context)
         addTrackingProtectionTip(context)
         addHomescreenTip(context)
         addDefaultBrowserTip(context)
@@ -197,8 +216,10 @@ object TipManager {
     fun getNextTipIfAvailable(context: Context): Tip? {
         if (!context.isInExperiment(homeScreenTipsExperimentDescriptor)) return null
         if (!Settings.getInstance(context).shouldDisplayHomescreenTips()) return null
+        val currentLocale = LocaleManager.getInstance().getCurrentLocale(context)
 
-        if (!listInitialized) {
+        if (!listInitialized || currentLocale != locale) {
+            locale = currentLocale
             populateListOfTips(context)
             listInitialized = true
         }
@@ -233,6 +254,11 @@ object TipManager {
 
     private fun getRandomTipIndex(): Int {
         return if (listOfTips.count() == 1) 0 else random.nextInt(listOfTips.count() - 1)
+    }
+
+    private fun addAllowlistTip(context: Context) {
+        val tip = Tip.createAllowlistTip(context)
+        listOfTips.add(tip)
     }
 
     private fun addTrackingProtectionTip(context: Context) {

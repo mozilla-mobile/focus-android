@@ -16,7 +16,6 @@ import android.util.Log;
 import junit.framework.Assert;
 
 import org.junit.After;
-import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -51,12 +50,11 @@ import static org.mozilla.focus.helpers.TestHelper.waitingTime;
  * The test uses a whitelist so it might fail as soon as you store new files on disk.
  */
 @RunWith(AndroidJUnit4.class)
-@Ignore("This test fails permanently, see https://github.com/mozilla-mobile/focus-android/issues/2940")
 public class WebViewDataTest {
     private static final String LOGTAG = "WebViewDataTest";
 
     /**
-     * A list of files Android Studio will inject into the data dir if you:
+     * A list of files Android Studio will inject into the data dir if you:x`
      * - Build with Android Studio 3.0+
      * - Have opened the "Android Profiler" tab at least once since the AS process started
      * - Run on an API 26+ device (or maybe when explicitly enabling advanced debugging on older devices)
@@ -64,7 +62,8 @@ public class WebViewDataTest {
     private static final Set<String> ANDROID_PROFILER_FILES = Collections.unmodifiableSet(new HashSet<>(Arrays.asList(
             "libperfa_x86.so",
             "perfa.jar",
-            "perfd"
+            "perfd",
+            "libmozglue.so"
     )));
 
     private static final Set<String> WHITELIST_DATA_DIR_CONTENTS;
@@ -73,10 +72,13 @@ public class WebViewDataTest {
                 "cache",
                 "code_cache",
                 "shared_prefs",
+                "lib",
                 "app_dxmaker_cache",
                 "telemetry",
                 "databases",
                 "app_webview",
+                "app_tmpdir",
+                "gv_measurements.json",
                 "files",
                 "app_screengrab" // The folder we store our screenshots in.
         ));
@@ -136,6 +138,9 @@ public class WebViewDataTest {
         protected void beforeActivityLaunched() {
             super.beforeActivityLaunched();
 
+            // Klar is used to test Geckoview. make sure it's set to Gecko
+            TestHelper.selectGeckoForKlar();
+
             appContext = InstrumentationRegistry.getInstrumentation()
                     .getTargetContext()
                     .getApplicationContext();
@@ -145,8 +150,9 @@ public class WebViewDataTest {
                     .putBoolean(FIRSTRUN_PREF, true)
                     .apply();
 
-            // This test is for webview only. Debug is defaulted to Webview, and Klar is used for GV testing.
-            org.junit.Assume.assumeTrue(!AppConstants.INSTANCE.isGeckoBuild() && !AppConstants.INSTANCE.isKlarBuild());
+            // This test fails permanently on webview, see https://github.com/mozilla-mobile/focus-android/issues/2940")
+            // For now, enable on Klar build only
+            org.junit.Assume.assumeTrue(AppConstants.INSTANCE.isKlarBuild());
 
             webServer = new MockWebServer();
 
@@ -176,7 +182,7 @@ public class WebViewDataTest {
     };
 
     @After
-    public void tearDown() throws Exception {
+    public void tearDown() {
         mActivityTestRule.getActivity().finishAndRemoveTask();
     }
 
@@ -261,6 +267,10 @@ public class WebViewDataTest {
 
             if (NO_TRACES_IGNORE_LIST.contains(name)) {
                 Log.d(LOGTAG, "assertNoTraces: Ignoring file '" + name + "'...");
+                continue;
+            }
+
+            if (!file.exists()) {
                 continue;
             }
 

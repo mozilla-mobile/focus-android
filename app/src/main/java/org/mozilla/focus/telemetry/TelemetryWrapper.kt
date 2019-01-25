@@ -15,7 +15,7 @@ import android.os.StrictMode
 import android.preference.PreferenceManager
 import android.support.annotation.CheckResult
 import android.support.annotation.VisibleForTesting
-import kotlinx.coroutines.experimental.runBlocking
+import kotlinx.coroutines.runBlocking
 import mozilla.components.ui.autocomplete.InlineAutocompleteEditText
 import org.json.JSONObject
 import org.mozilla.focus.BuildConfig
@@ -23,6 +23,7 @@ import org.mozilla.focus.R
 import org.mozilla.focus.ext.components
 import org.mozilla.focus.search.CustomSearchEngineStore
 import org.mozilla.focus.utils.AppConstants
+import org.mozilla.focus.utils.MobileMetricsPingStorage
 import org.mozilla.focus.utils.Settings
 import org.mozilla.focus.utils.UrlUtils
 import org.mozilla.focus.utils.activeExperimentNames
@@ -39,7 +40,8 @@ import org.mozilla.telemetry.ping.TelemetryMobileMetricsPingBuilder
 import org.mozilla.telemetry.schedule.jobscheduler.JobSchedulerTelemetryScheduler
 import org.mozilla.telemetry.serialize.JSONPingSerializer
 import org.mozilla.telemetry.storage.FileTelemetryStorage
-import java.net.URI
+import java.net.MalformedURLException
+import java.net.URL
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -53,7 +55,6 @@ import kotlin.collections.HashSet
 object TelemetryWrapper {
     private const val TELEMETRY_APP_NAME_FOCUS = "Focus"
     private const val TELEMETRY_APP_NAME_KLAR = "Klar"
-    private const val TELEMETRY_APP_ENGINE_GECKOVIEW = "GeckoView"
     private const val LAST_MOBILE_METRICS_PINGS = "LAST_MOBILE_METRICS_PINGS"
 
     private val dateFormat = SimpleDateFormat("yyyyMMdd", Locale.US)
@@ -96,6 +97,7 @@ object TelemetryWrapper {
         val HIDE = "hide"
         val SHARE_INTENT = "share_intent"
         val REMOVE = "remove"
+        val REMOVE_ALL = "remove_all"
         val REORDER = "reorder"
         val RESTORE = "restore"
         val PAGE = "page"
@@ -108,6 +110,7 @@ object TelemetryWrapper {
         val SETTING = "setting"
         val APP = "app"
         val MENU = "menu"
+        val CONTENT_BLOCKING_MENU = "content_blocking_menu"
         val BACK_BUTTON = "back_button"
         val NOTIFICATION = "notification"
         val NOTIFICATION_ACTION = "notification_action"
@@ -134,6 +137,10 @@ object TelemetryWrapper {
         val GECKO_ENGINE = "gecko_engine"
         val TIP = "tip"
         val SEARCH_SUGGESTION_PROMPT = "search_suggestion_prompt"
+        val MAKE_DEFAULT_BROWSER_OPEN_WITH = "make_default_browser_open_with"
+        val MAKE_DEFAULT_BROWSER_SETTINGS = "make_default_browser_settings"
+        val ALLOWLIST = "allowlist"
+        val CRASH_REPORTER = "crash_reporter"
     }
 
     private object Value {
@@ -171,6 +178,8 @@ object TelemetryWrapper {
         val AUTOCOMPLETE_URL_TIP = "autocomplete_url_tip"
         val OPEN_IN_NEW_TAB_TIP = "open_in_new_tab_tip"
         val DISABLE_TIPS_TIP = "disable_tips_tip"
+        val ALLOWLIST_TIP = "allowlist_tip"
+        val CLOSE_TAB = "close_tab"
     }
 
     private object Extra {
@@ -186,16 +195,15 @@ object TelemetryWrapper {
         val SEARCH_SUGGESTION = "search_suggestion"
         val TOTAL_URI_COUNT = "total_uri_count"
         val UNIQUE_DOMAINS_COUNT = "unique_domains_count"
+        val SUBMIT_CRASH = "submit_crash"
     }
 
-    enum class BrowserContextMenuValue {
-        Link, Image, ImageWithLink;
+    enum class BrowserContextMenuValue(val value: String) {
+        Link(Value.LINK),
+        Image(Value.IMAGE),
+        ImageWithLink(Value.IMAGE_WITH_LINK);
 
-        override fun toString(): String = when (this) {
-            Link -> Value.LINK
-            Image -> Value.IMAGE
-            ImageWithLink -> Value.IMAGE_WITH_LINK
-        }
+        override fun toString(): String = value
     }
 
     @JvmStatic
@@ -251,9 +259,7 @@ object TelemetryWrapper {
                     .setSettingsProvider(TelemetrySettingsProvider(context))
                     .setCollectionEnabled(telemetryEnabled)
                     .setUploadEnabled(telemetryEnabled)
-                    .setBuildId(TelemetryConfiguration(context).buildId +
-                    (if (AppConstants.isGeckoBuild)
-                        ("-$TELEMETRY_APP_ENGINE_GECKOVIEW") else ""))
+                    .setBuildId(TelemetryConfiguration(context).buildId)
 
             val serializer = JSONPingSerializer()
             val storage = FileTelemetryStorage(configuration, serializer)
@@ -263,13 +269,32 @@ object TelemetryWrapper {
             TelemetryHolder.set(Telemetry(configuration, storage, client, scheduler)
                     .addPingBuilder(TelemetryCorePingBuilder(configuration))
                     .addPingBuilder(TelemetryEventPingBuilder(configuration))
-                    .setDefaultSearchProvider(createDefaultSearchProvider(context)))
+                    .also {
+                        if (!dayPassedSinceLastUpload(context)) return@also
 
-            TelemetryWrapper.recordActiveExperiments(context)
+                        runBlocking {
+                            val metricsStorage = MobileMetricsPingStorage(context)
+                            val mobileMetrics = metricsStorage.load() ?: JSONObject()
+                            metricsStorage.clearStorage()
+
+                            it.addPingBuilder(TelemetryMobileMetricsPingBuilder(mobileMetrics,
+                                    configuration))
+                        }
+
+                        // Record new edited date
+                        PreferenceManager.getDefaultSharedPreferences(context)
+                                .edit()
+                                .putLong(LAST_MOBILE_METRICS_PINGS, (dateFormat.format(Date()).toLong()))
+                                .apply()
+                    }
+                    .setDefaultSearchProvider(createDefaultSearchProvider(context)))
         } finally {
             StrictMode.setThreadPolicy(threadPolicy)
         }
     }
+
+    val clientId: String
+        get() = TelemetryHolder.get().clientId
 
     private fun createDefaultSearchProvider(context: Context): DefaultSearchMeasurement.DefaultSearchEngineProvider {
         return DefaultSearchMeasurement.DefaultSearchEngineProvider {
@@ -312,30 +337,21 @@ object TelemetryWrapper {
 
     @JvmStatic
     fun addLoadToHistogram(url: String, newLoadTime: Long) {
-        domainMap.add(UrlUtils.stripCommonSubdomains(URI(url).host))
-        numUri++
-        var histogramLoadIndex = (newLoadTime / BUCKET_SIZE_MS).toInt()
+        try {
+            domainMap.add(UrlUtils.stripCommonSubdomains(URL(url).host))
+            numUri++
+            var histogramLoadIndex = (newLoadTime / BUCKET_SIZE_MS).toInt()
 
-        if (histogramLoadIndex > (HISTOGRAM_SIZE - 2)) {
-            histogramLoadIndex = HISTOGRAM_SIZE - 1
-        } else if (histogramLoadIndex < HISTOGRAM_MIN_INDEX) {
-            histogramLoadIndex = HISTOGRAM_MIN_INDEX
+            if (histogramLoadIndex > (HISTOGRAM_SIZE - 2)) {
+                histogramLoadIndex = HISTOGRAM_SIZE - 1
+            } else if (histogramLoadIndex < HISTOGRAM_MIN_INDEX) {
+                histogramLoadIndex = HISTOGRAM_MIN_INDEX
+            }
+
+            histogram[histogramLoadIndex]++
+        } catch (e: MalformedURLException) {
+            // ignore invalid URLs
         }
-
-        histogram[histogramLoadIndex]++
-    }
-
-    @JvmStatic
-    fun addMobileMetricsPing(mobileMetrics: JSONObject) {
-        val telemetry = TelemetryHolder.get()
-        telemetry.addPingBuilder(TelemetryMobileMetricsPingBuilder(mobileMetrics,
-                telemetry.configuration))
-        telemetry.queuePing(TelemetryMobileMetricsPingBuilder.TYPE)
-        // Record new edited date
-        PreferenceManager.getDefaultSharedPreferences(telemetry.configuration.context)
-                .edit()
-                .putLong(LAST_MOBILE_METRICS_PINGS, (dateFormat.format(Date()).toLong()))
-                .apply()
     }
 
     @JvmStatic
@@ -371,6 +387,7 @@ object TelemetryWrapper {
         TelemetryHolder.get()
                 .queuePing(TelemetryCorePingBuilder.TYPE)
                 .queuePing(TelemetryEventPingBuilder.TYPE)
+                .queuePing(TelemetryMobileMetricsPingBuilder.TYPE)
                 .scheduleUpload()
     }
 
@@ -437,6 +454,11 @@ object TelemetryWrapper {
         } else {
             TelemetryEvent.create(Category.ACTION, Method.CLICK, Object.DOWNLOAD_DIALOG, Value.CANCEL).queue()
         }
+    }
+
+    @JvmStatic
+    fun contentBlockingMenuEvent() {
+        TelemetryEvent.create(Category.ACTION, Method.CLICK, Object.CONTENT_BLOCKING_MENU).queue()
     }
 
     @JvmStatic
@@ -533,6 +555,20 @@ object TelemetryWrapper {
     }
 
     @JvmStatic
+    fun crashReporterOpened() {
+        TelemetryEvent.create(Category.ACTION, Method.SHOW, Object.CRASH_REPORTER).queue()
+    }
+
+    @JvmStatic
+    fun crashReporterClosed(crashSubmitted: Boolean) {
+        TelemetryEvent.create(
+                Category.ACTION,
+                Method.HIDE,
+                Object.CRASH_REPORTER)
+                .extra(Extra.SUBMIT_CRASH, crashSubmitted.toString()).queue()
+    }
+
+    @JvmStatic
     fun openNotificationActionEvent() {
         TelemetryEvent.create(Category.ACTION, Method.CLICK, Object.NOTIFICATION_ACTION, Value.OPEN).queue()
     }
@@ -561,6 +597,12 @@ object TelemetryWrapper {
     fun eraseShortcutEvent() {
         withSessionCounts(TelemetryEvent.create(Category.ACTION, Method.CLICK, Object.SHORTCUT, Value.ERASE))
                 .queue()
+    }
+
+    @JvmStatic
+    fun eraseAndOpenShortcutEvent() {
+        withSessionCounts(TelemetryEvent.create(Category.ACTION, Method.CLICK, Object.SHORTCUT, Value.ERASE_AND_OPEN))
+            .queue()
     }
 
     @JvmStatic
@@ -610,6 +652,19 @@ object TelemetryWrapper {
     fun openLinkInNewTabEvent() {
         withSessionCounts(TelemetryEvent.create(Category.ACTION, Method.OPEN, Object.BROWSER_CONTEXTMENU, Value.TAB))
                 .queue()
+    }
+
+    @JvmStatic
+    fun openLinkInFullBrowserFromCustomTabEvent() {
+        withSessionCounts(
+            TelemetryEvent.create(
+                Category.ACTION,
+                Method.OPEN,
+                Object.BROWSER_CONTEXTMENU,
+                Value.FULL_BROWSER
+            )
+        )
+            .queue()
     }
 
     @JvmStatic
@@ -668,6 +723,23 @@ object TelemetryWrapper {
                 Object.BLOCKING_SWITCH,
                 isBlockingEnabled.toString()
         ).queue()
+    }
+
+    @JvmStatic
+    fun openExceptionsListSetting() {
+        TelemetryEvent.create(Category.ACTION, Method.OPEN, Object.ALLOWLIST).queue()
+    }
+
+    fun removeExceptionDomains(count: Int) {
+        TelemetryEvent.create(Category.ACTION, Method.REMOVE, Object.ALLOWLIST)
+            .extra(Extra.TOTAL, count.toString())
+            .queue()
+    }
+
+    fun removeAllExceptionDomains(count: Int) {
+        TelemetryEvent.create(Category.ACTION, Method.REMOVE_ALL, Object.ALLOWLIST)
+            .extra(Extra.TOTAL, count.toString())
+            .queue()
     }
 
     @JvmStatic
@@ -862,6 +934,16 @@ object TelemetryWrapper {
     }
 
     @JvmStatic
+    fun makeDefaultBrowserOpenWith() {
+        TelemetryEvent.create(Category.ACTION, Method.SHOW, Object.MAKE_DEFAULT_BROWSER_OPEN_WITH).queue()
+    }
+
+    @JvmStatic
+    fun makeDefaultBrowserSettings() {
+        TelemetryEvent.create(Category.ACTION, Method.SHOW, Object.MAKE_DEFAULT_BROWSER_SETTINGS).queue()
+    }
+
+    @JvmStatic
     fun dayPassedSinceLastUpload(context: Context): Boolean {
         val dateOfLastPing = PreferenceManager
                 .getDefaultSharedPreferences(context).getLong(LAST_MOBILE_METRICS_PINGS, 0)
@@ -880,6 +962,7 @@ object TelemetryWrapper {
             R.string.tip_set_default_browser -> Value.DEFAULT_BROWSER_TIP
             R.string.tip_autocomplete_url -> Value.AUTOCOMPLETE_URL_TIP
             R.string.tip_disable_tips2 -> Value.DISABLE_TIPS_TIP
+            R.string.tip_explain_allowlist -> Value.ALLOWLIST_TIP
             else -> {
                 // Unknown tip, fail silently rather than crashing.
                 return
@@ -897,6 +980,7 @@ object TelemetryWrapper {
             R.string.tip_add_to_homescreen -> Value.ADD_TO_HOMESCREEN_TIP
             R.string.tip_set_default_browser -> Value.DEFAULT_BROWSER_TIP
             R.string.tip_autocomplete_url -> Value.AUTOCOMPLETE_URL_TIP
+            R.string.tip_explain_allowlist -> Value.ALLOWLIST_TIP
             R.string.tip_disable_tips2 -> Value.DISABLE_TIPS_TIP
             else -> {
                 // Unknown tip, fail silently rather than crashing.

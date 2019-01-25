@@ -65,8 +65,12 @@
 
     <!-- Menu item: This is the subtitle for the Trackers blocked menu entry that shows how many
     trackers have been blocked for the currently loaded website.  -->
-    <string name="menu_trackers_blocked_subtitle">Turning this off may fix some site problems
-    </string>
+    <string name="menu_trackers_blocked_subtitle">Turning this off may fix some site problems</string>
+
+    <!-- Menu item: This is the label for turning off content blocking for the current website. -->
+    <string name="menu_content_blocking">Content Blocking</string>
+    <!-- This is the subtitle content blocking toggle -->
+    <string name="menu_content_blocking_subtitle">Turn off to fix some sites</string>
 
     <!-- This is a small text at the bottom of the menu shown in a "custom tab" for branding purposes.
      See https://github.com/mozilla-mobile/focus-android/issues/2106
@@ -98,6 +102,11 @@
          instead of the short title when it has enough space. Android recommends a maximum length
          of 25 characters. -->
     <string name="shortcut_erase_long_label">Erase browsing history</string>
+
+
+    <!-- On Android 7+ users can add a shortcut for erasing the browsing history to the home screen.
+         This is the label for this shortcut. Android recommends a maximum length of 10 characters. -->
+    <string name="shortcut_erase_and_open_short_label">Erase &amp; open</string>
 
     <!-- This is the label of an action we offer when the user selects text in other third-party apps.
          Clicking this action will launch Focus and perform a search in the default search engine. -->
@@ -132,6 +141,9 @@
     <!-- About the app and help are links that are inside this menu -->
     <!-- %1$s will be replaced by the app name (e.g. Firefox Focus) -->
     <string name="preference_mozilla_summary">About %1$s, help</string>
+
+    <!-- Preference category for ad blocking -->
+    <string name="preference_category_ad_blocking">Ad Blocking</string>
 
     <!-- Preference category for ad blocking and tracking protection settings -->
     <string name="preference_category_tracking_protection">Tracking Protection</string>
@@ -180,11 +192,11 @@
     <!-- Summary for the toggle to enable autocomplete for the topsites list -->
     <string name="preference_autocomplete_topsite_summary">Enable to autocomplete more than 450 popular URLs in the address bar.</string>
 
-    <!-- Title of "switch" preference that enables/disables autocomplete for the user-dfined list -->
+    <!-- Title of "switch" preference that enables/disables autocomplete for the user-defined list -->
     <string name="preference_switch_autocomplete_user_list">For Sites You Add</string>
 
     <!-- Summary for the toggle to enable autocomplete for the user-defined list -->
-    <string name="preference_autocomplete_user_list_summary">Enable to autocomplete more than 450 popular URLs in the address bar.</string>
+    <string name="preference_autocomplete_user_list_description">Enable to autocomplete sites you add here.</string>
 
     <!-- Preference category: Manage (user-defined) sites -->
     <string name="preference_category_autocomplete_manage_sites">Manage sites</string>
@@ -249,21 +261,41 @@
     <string name="preference_language_systemdefault">System default</string>
 
     <string name="preference_category_privacy">Privacy</string>
-    <string name="preference_privacy_block_ads">Block ad trackers</string>
-    <string name="preference_privacy_block_ads_summary">Some ads track site visits, even if you don’t click the ads</string>
+
+    <string name="preference_privacy_ads_block_ads">Block ads and other annoyances</string>
+
+    <!-- Description for the toggle to block ads and some other annoyances on the web.
+        Do not translate: "Easylist", "EasyPrivacy", "Fanboy's Annoyance" or "777Guard Mobile Ad Filter" -->
+    <string name="preference_privacy_ads_block_ads_summary">Stops ads and other annoyances using block lists from Easylist, EasyPrivacy, Fanboy’s Annoyance, and 777Guard Mobile Ad Filter</string>
+
+    
     <string name="preference_privacy_block_analytics">Block analytic trackers</string>
-    <string name="preference_privacy_block_analytics_summary">Used to collect, analyze and measure activities like tapping and scrolling</string>
+    <string name="preference_privacy_block_ads">Block ad trackers</string>
+    <!-- Description for the toggle that blocks and remove ads from webpages that are designed to track your visiting behavior -->
+    <string name="preference_privacy_block_ads_new_summary">Removes ads designed to track site visits even if you don’t tap them</string>
+    <!-- Description for the toggle that Blocks trackers (scripts) that are designed to analyze and measure user interaction-->
+    <string name="preference_privacy_block_analytics_new_summary">Blocks trackers that analyze and measure interactions like tapping and scrolling</string>
     <string name="preference_privacy_block_social">Block social trackers</string>
-    <string name="preference_privacy_block_social_summary">Embedded on sites to track your visits and to display functionality like share buttons</string>
+    <!-- Description for the toggle that Blocks social-media related trackers (scripts), including the ones that embed share buttons -->
+    <string name="preference_privacy_block_social_new_summary">Stops social-media related trackers embedded on websites, including social share buttons</string>
     <string name="preference_privacy_block_content">Block other content trackers</string>
-    <string name="preference_privacy_block_content_summary2">Enabling may cause some pages to behave unexpectedly</string>
+    <!-- Description for the toggle that blocks other trackers -->
+    <string name="preference_privacy_block_content_new_summary">Blocks tracking activity, but may cause some sites and pages to behave unexpectedly</string>
+
     <string name="preference_privacy_category_cookies">Block cookies</string>
 
     <!-- Three options for Cookie blocking. Yes (All cookies Blocked), Block 3rd-party cookies
     only (Only 3rd-party Cookies Blocked), No (No cookies blocked) -->
     <string name="preference_privacy_should_block_cookies_no_option">No</string>
+    <string name="preference_privacy_should_block_cookies_third_party_tracker_cookies_option">Block 3rd-party tracker cookies only</string>
     <string name="preference_privacy_should_block_cookies_third_party_only_option">Block 3rd-party cookies only</string>
     <string name="preference_privacy_should_block_cookies_yes_option">Yes</string>
+
+    <!-- New four options for Cookie blocking -->
+    <string name="preference_privacy_block_cookies_no">No (allow all cookies)</string>
+    <string name="preference_privacy_block_cookies_third_party_tracker">Block third-party trackers cookies (recommended)</string>
+    <string name="preference_privacy_block_cookies_third_party_only">Block all third-party cookies \n(may cause websites to break)</string>
+    <string name="preference_privacy_block_cookies_yes">Block all cookies (will cause websites to break)</string>
 
     <!-- Preference Title: Biometrics can be used to unlock Focus if the previous session's data was not erased by the user. -->
     <string name="preference_security_biometric">Use fingerprint to unlock app</string>
@@ -522,8 +554,10 @@ be temporary, and you can try again later.</li>
 
     <!-- First run tour (Default browser): Title -->
     <string name="firstrun_defaultbrowser_title">Power up your privacy</string>
+
     <!-- First run tour (Default browser): Text. -->
-    <string name="firstrun_defaultbrowser_text2">Take private browsing to the next level. Block ads and other content that can track you across sites and bog down page load times.</string>
+    <string name="firstrun_defaultbrowser_text_new">Block content like ads and code that follow you around the web and slow you down. Turn on ad blocking to browse faster without annoying ads.</string>
+
 
     <!-- First run tour (Search): Title -->
     <string name="firstrun_search_title">Your search, your way</string>
@@ -543,6 +577,12 @@ be temporary, and you can try again later.</li>
     <string name="firstrun_close_button">OK, got it!</string>
     <string name="firstrun_skip_button">Skip</string>
     <string name="firstrun_next_button">Next</string>
+
+    <!-- Title for intro card shown to users after updating. %1$s will be replaced with the name of the app (e.g. Firefox Focus) -->
+    <string name="block_ads_card_title">%1$s is ready to block ads</string>
+
+    <!-- Description for intro card shown to users after updating. -->
+    <string name="block_ads_card_description">New feature! Browse faster by stopping ads and code that follow you around the web.</string>
 
     <!-- Indicator that no trackers are being blocked because content blocking is disabled; normally shows the number of blocked trackers -->
     <string name="content_blocking_disabled">-</string>
@@ -674,6 +714,10 @@ be temporary, and you can try again later.</li>
      When pressed, the user's previous session is cleared, and authentication is not required. -->
     <string name="biometric_auth_new_session">New Session</string>
 
+    <!-- Button for the fingerprint authentication dialog box that is shown to the user when sharing a link to the app
+    while the user has biometric authentication enabled. When pressed, the user's previous session is cleared, and the shared link is opened. -->
+    <string name="biometric_auth_open_link_new_session">Open Link in New Session</string>
+
     <!-- Description for the fingerprint authentication image. Used for accessibility purposes. -->
     <string name="biometric_auth_image_description">Fingerprint icon</string>
 
@@ -747,18 +791,73 @@ be temporary, and you can try again later.</li>
     <!-- Tip displayed on home view explaining how to add a custom autocomplete URL -->
     <string name="tip_disable_tips2">Turn off tips on the start screen</string>
 
-    <!-- Displayed in a snackbar when a user opens a new tab, gives action to switch to the newly opened tab -->
+    <!-- Tip displayed on home view explaining ad blocking -->
+    <string name="tip_block_ads">Browse faster by stopping ads and code that follows you around the web.</string>
+
+    <!-- Title for a switch that enables or disables ads -->
+    <string name="block_ads_title">Ad blocking</string>
+
+    <!-- Tip displayed on the home view explaining how to use the Allowlist feature.
+     "Allowlist" is a replacement for the word whitelist. -->
+    <string name="tip_explain_allowlist">Trusted site?\n
+        Allowlist disables Tracking Protection for sites you know and trust.
+    </string>
+
+    <!-- Label for the snackbar when a user opens a new tab -->
     <string name="new_tab_opened_snackbar">New tab opened</string>
+
+    <!-- Label for the button in the snackbar that switches to the newly opened tab -->
     <string name="open_new_tab_snackbar">Switch</string>
 
     <!-- Preference for switching to a new tab immediately after opening -->
     <string name="preference_open_new_tab">Switch to link in new tab immediately</string>
 
-    <!-- deprecated strings -->
-    <string name="tip_disable_tips">Turn off tips on the %1$s start screen</string>
-    <string name="preference_switch_autocomplete">Autocomplete</string>
-    <string name="preference_category_autocomplete_preinstalled">Default URL List</string>
-    <string name="preference_autocomplete_preinstalled_summary">Enable to have %1$s autocomplete over 450 popular URLs in the address bar.</string>
-    <string name="preference_category_autocomplete_custom_urls">Custom URLs</string>
-    <string name="preference_autocomplete_subitem_customlist">Custom URLs</string>
+    <!-- Preference for safe browsing which when enabled, blocks dangerous or deceptive webpages that may include phishing or malware -->
+    <string name="preference_category_safe_browsing">Safe Browsing</string>
+    <!-- Preference title for safe browsing which when enabled, blocks dangerous or deceptive webpages that may include phishing or malware -->
+    <string name="preference_safe_browsing_title">Block potentially dangerous and deceptive sites</string>
+    <!-- Preference summary for safe browsing which when enabled, blocks dangerous or deceptive webpages that may include phishing or malware -->
+    <string name="preference_safe_browsing_summary">Block reported deceptive and attack sites, malware sites, and unwanted software sites.</string>
+
+    <!-- Preference for exceptions tracking protection -->
+    <string name="preference_exceptions">Exceptions</string>
+    <!-- Description for the exceptions preference screen-->
+    <string name="preference_exceptions_description">You have disabled Content Blocking for these websites.</string>
+    <!-- Menu item to remove existing exceptions. -->
+    <string name="preference_exceptions_menu_remove">Remove</string>
+    <!-- Button to remove all websites from the exception list -->
+    <string name="preference_exceptions_remove_all_button_label">Remove all websites</string>
+
+    <!-- Title for the tab crash report screen-->
+    <string name="tab_crash_report_title">Tab Crashed</string>
+    <!-- Headline for the tab crash report screen -->
+    <string name="tab_crash_report_headline">Sorry. We’re having a problem with this tab.</string>
+    <!-- Subtitle for the tab crash report screen -->
+    <string name="tab_crash_report_description">As a private browser, we never save and cannot restore this tab.</string>
+    <!-- Label for button to close the tab-->
+    <string name="tab_crash_report_close_tab_button_label">Close Tab</string>
+
+    <!-- Title for the fatal crash report window
+        %1$s will be replaced by the app name (e.g. Firefox Focus) -->
+    <string name="fatal_crash_report_title">Sorry. %1$s had a problem and crashed.</string>
+    <!-- Description for the fatal crash report window -->
+    <string name="fatal_crash_report_description">As a private browser, we never save and cannot restore your last browsing session.</string>
+    <!-- Label for the button that closes the window -->
+    <string name="fatal_crash_report_close_button_label">Close</string>
+    <!-- Label for the button to restart Firefox
+        %1$s will be replaced by the app name (e.g. Firefox Focus) -->
+    <string name="fatal_crash_report_restart_firefox_label">Restart %1$s</string>
+
+
+    <!-- Label for the checkbox to send the tab crash report to Mozilla -->
+    <string name="crash_report_send_crash_label">Send crash report to Mozilla</string>
+
+    <!-- Pop-up message to inform users they have enabled content blocking -->
+    <string name="content_blocking_enabled_snackbar_message">Content Blocking is enabled</string>
+    <!-- Pop-up message to inform users they have disabled content blocking -->
+    <string name="content_blocking_disabled_snackbar_message">Content Blocking is disabled</string>
+    <!-- Snackbar action button that users can press to enable content blocking -->
+    <string name="content_blocking_snackbar_enable_action">Enable</string>
+    <!-- Snackbar action button that users can press to disable content blocking -->
+    <string name="content_blocking_snackbar_disable_action">Disable</string>
 </resources>
