@@ -157,17 +157,17 @@ repositories {
         //  Remember the version of the artifacts. In the example above that's: 61.0.20180611134439
 
         // ARM GeckoView builds
-        url "https://index.taskcluster.net/v1/task/gecko.v2.mozilla-beta.revision" +
+        url "https://index.taskcluster.net/v1/task/gecko.v2.mozilla.revision" +
                 ".${geckoview_revision}.mobile.android-api-16-opt/artifacts/public/android/maven"
     }
     maven {
         // x86 GeckoView builds
-        url "https://index.taskcluster.net/v1/task/gecko.v2.mozilla-beta.revision" +
+        url "https://index.taskcluster.net/v1/task/gecko.v2.mozilla.revision" +
                 ".${geckoview_revision}.mobile.android-x86-opt/artifacts/public/android/maven"
     }
     maven {
         // aarch64 builds
-        url "https://index.taskcluster.net/v1/task/gecko.v2.mozilla-beta.revision" +
+        url "https://index.taskcluster.net/v1/task/gecko.v2.mozilla.revision" +
                 ".${geckoview_revision}.mobile.android-aarch64-opt/artifacts/public/android/maven"
     }
 }
@@ -212,9 +212,9 @@ dependencies {
     focusImplementation 'com.adjust.sdk:adjust-android:4.11.4'
     focusImplementation 'com.android.installreferrer:installreferrer:1.0' // Required by Adjust
 
-    armImplementation ("org.mozilla.geckoview:geckoview-beta-armeabi-v7a:${geckoview_version}")
-    x86Implementation ("org.mozilla.geckoview:geckoview-beta-x86:${geckoview_version}")
-    aarch64Implementation ("org.mozilla.geckoview:geckoview-beta-arm64-v8a:${geckoview_version}")
+    armImplementation ("org.mozilla.geckoview:geckoview-armeabi-v7a:${geckoview_version}")
+    x86Implementation ("org.mozilla.geckoview:geckoview-x86:${geckoview_version}")
+    aarch64Implementation ("org.mozilla.geckoview:geckoview-arm64-v8a:${geckoview_version}")
     implementation "com.android.support:palette-v7:$support_libraries_version" // required to force GV dependency version
 
     testImplementation "org.junit.jupiter:junit-jupiter-api:5.3.1"
