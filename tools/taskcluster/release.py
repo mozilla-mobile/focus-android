@@ -127,14 +127,13 @@ def populate_chain_of_trust_required_but_unused_files():
             json.dump({}, f)    # Yaml is a super-set of JSON.
 
 
-def release(apks, track, commit, tag, date_string):
+def release(apks, track, commit, tag, date_string, is_staging):
     queue = taskcluster.Queue({ 'baseUrl': 'http://taskcluster/queue/v1' })
     date = arrow.get(date_string)
-    is_staging = track == 'staging-nightly'
-    index_release = {
-        'staging-nightly': 'staging-signed-nightly',
-        'nightly': 'signed-nightly',
-    }.get(track, 'release')
+    index_release = '{}{}'.format(
+        'staging-' if is_staging else '',
+        'signed-nightly' if track == 'nightly' else 'release'
+    )
 
     task_graph = {}
 
@@ -169,8 +168,9 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(
         description='Create a release pipeline (build, sign, publish) on taskcluster.')
 
-    parser.add_argument('--track', dest="track", action="store", choices=['internal', 'alpha', 'nightly',
-                                                                          'staging-nightly'], help="", required=True)
+    parser.add_argument('--track', dest="track", action="store", choices=['internal', 'alpha', 'nightly'], help="", required=True)
+    parser.add_argument('--staging', action="store_true", help="Perform a staging build (use dep workers, "
+                                                               "don't communicate with Google Play")
     parser.add_argument('--commit', dest="commit", action="store_true", help="commit the google play transaction")
     parser.add_argument('--tag', dest="tag", action="store", help="git tag to build from")
     parser.add_argument('--apk', dest="apks", metavar="path", action="append", help="Path to APKs to sign and upload", required=True)
@@ -181,4 +181,4 @@ if __name__ == "__main__":
 
     apks = map(lambda x: result.output + '/' + x, result.apks)
 
-    release(apks, result.track, result.commit, result.tag, result.date)
+    release(apks, result.track, result.commit, result.tag, result.date, result.staging)

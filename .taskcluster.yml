@@ -206,10 +206,10 @@ tasks:
         scheduler_id: focus-nightly-sched
         is_mozilla_mobile_repo:
           $eval: event.repository.html_url == 'https://github.com/mozilla-mobile/focus-android'
-        track:
+        command_staging_flag:
           $if: event.repository.html_url == 'https://github.com/mozilla-mobile/focus-android'
-          then: 'nightly'
-          else: 'staging-nightly'
+          then: ''
+          else: '--staging'
       in:
         taskId: ${decision_task_id}
         taskGroupId: ${decision_task_id}  # Must be explicit because of Chain of Trust
@@ -266,14 +266,15 @@ tasks:
               && git clone ${repository} repository
               && cd repository
               && python tools/taskcluster/release.py \
-                --track ${track} \
+                --track nightly \
                 --commit \
                 --output /opt/repository/app/build/outputs/apk \
                 --apk klarArm/nightly/app-klar-arm-nightly-unsigned.apk \
                 --apk klarX86/nightly/app-klar-x86-nightly-unsigned.apk \
                 --apk focusArm/nightly/app-focus-arm-nightly-unsigned.apk \
                 --apk focusX86/nightly/app-focus-x86-nightly-unsigned.apk \
-                --date ${now}
+                --date ${now} \
+                ${command_staging_flag}
           artifacts:
             public/task-graph.json:
               type: file
