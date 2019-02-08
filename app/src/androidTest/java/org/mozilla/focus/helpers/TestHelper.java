@@ -5,19 +5,20 @@
 
 package org.mozilla.focus.helpers;
 
-import android.os.RemoteException;
+import android.content.Context;
+import android.content.res.Resources;
 import android.support.annotation.NonNull;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.espresso.ViewInteraction;
 import android.support.test.uiautomator.UiDevice;
 import android.support.test.uiautomator.UiObject;
 import android.support.test.uiautomator.UiObjectNotFoundException;
-import android.support.test.uiautomator.UiScrollable;
 import android.support.test.uiautomator.UiSelector;
 import android.text.format.DateUtils;
+import android.util.DisplayMetrics;
 
-import org.junit.Assert;
 import org.mozilla.focus.R;
+import org.mozilla.focus.utils.AppConstants;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -34,6 +35,8 @@ import okio.Okio;
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
+import static android.support.test.espresso.matcher.ViewMatchers.withText;
+import static android.support.test.espresso.web.sugar.Web.onWebView;
 import static android.view.KeyEvent.KEYCODE_ENTER;
 import static junit.framework.Assert.assertTrue;
 import static org.hamcrest.Matchers.allOf;
@@ -45,8 +48,21 @@ public final class TestHelper {
     public static final long waitingTime = DateUtils.SECOND_IN_MILLIS * 4;
     public static final long webPageLoadwaitingTime = DateUtils.SECOND_IN_MILLIS * 15;
 
-    /********* First View Locators ***********/
+    public static String getAppName() {
+        return InstrumentationRegistry.getInstrumentation()
+                .getTargetContext().getPackageName();
+    }
 
+    // wait for web area to be visible
+    public static void waitForWebContent() {
+        if (!AppConstants.INSTANCE.isGeckoBuild()) {
+            assertTrue(webView.waitForExists(waitingTime));
+        } else {
+            assertTrue(geckoView.waitForExists(waitingTime));
+        }
+    }
+
+    /********* First View Locators ***********/
     public static UiObject firstSlide = mDevice.findObject(new UiSelector()
             .text("Power up your privacy")
             .enabled(true));
@@ -60,13 +76,13 @@ public final class TestHelper {
             .text("Make privacy a habit")
             .enabled(true));
     public static UiObject nextBtn = mDevice.findObject(new UiSelector()
-            .resourceId("org.mozilla.focus.debug:id/next")
+            .resourceId(getAppName() + ":id/next")
             .enabled(true));
     public static UiObject finishBtn = mDevice.findObject(new UiSelector()
-            .resourceId("org.mozilla.focus.debug:id/finish")
+            .resourceId(getAppName() + ":id/finish")
             .enabled(true));
     public static UiObject initialView = mDevice.findObject(new UiSelector()
-            .resourceId("org.mozilla.focus.debug:id/backgroundView")
+            .resourceId(getAppName() + ":id/backgroundView")
             .enabled(true));
 
     /********* Main View Locators ***********/
@@ -76,45 +92,54 @@ public final class TestHelper {
 
     /********* Web View Locators ***********/
     public static UiObject browserURLbar = mDevice.findObject(new UiSelector()
-            .resourceId("org.mozilla.focus.debug:id/display_url")
+            .resourceId(getAppName() + ":id/display_url")
             .clickable(true));
-
+    public static UiObject permAllowBtn = mDevice.findObject(new UiSelector()
+            .resourceId("com.android.packageinstaller:id/permission_allow_button")
+            .clickable(true));
     public static UiObject inlineAutocompleteEditText = mDevice.findObject(new UiSelector()
-            .resourceId("org.mozilla.focus.debug:id/urlView")
+            .resourceId(getAppName() + ":id/urlView")
             .focused(true)
             .enabled(true));
+    public static UiObject searchSuggestionsTitle = mDevice.findObject(new UiSelector()
+            .resourceId(getAppName() + ":id/enable_search_suggestions_title")
+            .enabled(true));
+    public static UiObject searchSuggestionsButtonYes = mDevice.findObject(new UiSelector()
+            .resourceId(getAppName() + ":id/enable_search_suggestions_button")
+            .enabled(true));
     public static UiObject cleartextField = mDevice.findObject(new UiSelector()
-            .resourceId("org.mozilla.focus.debug:id/clearView")
+            .resourceId(getAppName() + ":id/clearView")
             .enabled(true));
     public static UiObject hint = mDevice.findObject(new UiSelector()
-            .resourceId("org.mozilla.focus.debug:id/searchView")
+            .resourceId(getAppName() + ":id/searchView")
             .clickable(true));
+    public static UiObject suggestionList = mDevice.findObject(new UiSelector()
+            .resourceId(getAppName() + ":id/suggestionList"));
+    public static UiObject suggestion = mDevice.findObject(new UiSelector()
+            .resourceId(getAppName() + ":id/suggestion"));
     public static UiObject webView = mDevice.findObject(new UiSelector()
             .className("android.webkit.WebView")
             .enabled(true));
+    public static UiObject geckoView = mDevice.findObject(new UiSelector()
+            .resourceId(getAppName() + ":id/webview")
+            .enabled(true));
     public static UiObject progressBar = mDevice.findObject(new UiSelector()
-            .resourceId("org.mozilla.focus.debug:id/progress")
+            .resourceId(getAppName() + ":id/progress")
             .enabled(true));
     public static UiObject tryAgainBtn = mDevice.findObject(new UiSelector()
-            .description("Try Again")
+            .resourceId("errorTryAgain")
             .clickable(true));
     public static ViewInteraction floatingEraseButton = onView(
             allOf(withId(R.id.erase), isDisplayed()));
-    public static UiObject notFoundMsg = mDevice.findObject(new UiSelector()
-            .description("The address wasn’t understood")
-            .enabled(true));
-    public static UiObject notFounddetailedMsg = mDevice.findObject(new UiSelector()
-            .description("You might need to install other software to open this address.")
-            .enabled(true));
     public static UiObject browserViewSettingsMenuItem = mDevice.findObject(new UiSelector()
-            .resourceId("org.mozilla.focus.debug:id/settings")
+            .resourceId(getAppName() + ":id/settings")
             .clickable(true));
     public static UiObject erasedMsg = TestHelper.mDevice.findObject(new UiSelector()
             .text("Your browsing history has been erased.")
-            .resourceId("org.mozilla.focus.debug:id/snackbar_text")
+            .resourceId(getAppName() + ":id/snackbar_text")
             .enabled(true));
     public static UiObject lockIcon = mDevice.findObject(new UiSelector()
-            .resourceId("org.mozilla.focus.debug:id/lock")
+            .resourceId(getAppName() + ":id/lock")
             .description("Secure connection"));
     public static UiObject notificationBarDeleteItem = TestHelper.mDevice.findObject(new UiSelector()
             .text("Erase browsing history")
@@ -122,7 +147,7 @@ public final class TestHelper {
             .enabled(true));
     public static UiObject notificationExpandSwitch = TestHelper.mDevice.findObject(new UiSelector()
             .resourceId("android:id/expand_button")
-            .packageName("org.mozilla.focus.debug")
+            .packageName(getAppName() + "")
             .enabled(true));
     public static UiObject notificationOpenItem = TestHelper.mDevice.findObject(new UiSelector()
             .resourceId("android:id/action0")
@@ -132,55 +157,74 @@ public final class TestHelper {
             .resourceId("android:id/action0")
             .description("Erase and Open")
             .enabled(true));
-    public static UiObject FocusInRecentApps = TestHelper.mDevice.findObject(new UiSelector()
-            .text("Focus (Dev)")
-            .resourceId("com.android.systemui:id/title")
-            .enabled(true));
     public static UiObject blockOffIcon = TestHelper.mDevice.findObject(new UiSelector()
-            .resourceId("org.mozilla.focus.debug:id/block")
+            .resourceId(getAppName() + ":id/block")
             .enabled(true));
     public static UiObject AddtoHSmenuItem = TestHelper.mDevice.findObject(new UiSelector()
-            .resourceId("org.mozilla.focus.debug:id/add_to_homescreen")
+            .resourceId(getAppName() + ":id/add_to_homescreen")
             .enabled(true));
     public static UiObject AddtoHSCancelBtn = TestHelper.mDevice.findObject(new UiSelector()
-            .resourceId("org.mozilla.focus.debug:id/addtohomescreen_dialog_cancel")
+            .resourceId(getAppName() + ":id/addtohomescreen_dialog_cancel")
             .enabled(true));
     public static UiObject AddtoHSOKBtn = TestHelper.mDevice.findObject(new UiSelector()
-            .resourceId("org.mozilla.focus.debug:id/addtohomescreen_dialog_add")
+            .resourceId(getAppName() + ":id/addtohomescreen_dialog_add")
             .enabled(true));
     public static UiObject AddautoBtn = TestHelper.mDevice.findObject(new UiSelector()
-            .text("ADD AUTOMATICALLY")
+            .className("android.widget.Button")
+            .instance(1)
             .enabled(true));
     public static UiObject shortcutTitle = TestHelper.mDevice.findObject(new UiSelector()
-            .resourceId("org.mozilla.focus.debug:id/edit_title")
+            .resourceId(getAppName() + ":id/edit_title")
             .enabled(true));
     public static UiObject savedNotification = TestHelper.mDevice.findObject(new UiSelector()
             .text("Download complete.")
             .resourceId("android:id/text")
             .enabled(true));
 
+    public static UiObject securityInfoIcon = TestHelper.mDevice.findObject(new UiSelector()
+            .resourceId(TestHelper.getAppName() + ":id/security_info")
+            .enabled(true));
+    public static UiObject identityState = TestHelper.mDevice.findObject(new UiSelector()
+            .resourceId(TestHelper.getAppName() + ":id/site_identity_state")
+            .enabled(true));
+
+    public static UiObject downloadTitle = TestHelper.mDevice.findObject(new UiSelector()
+            .resourceId(TestHelper.getAppName() + ":id/title_template")
+            .enabled(true));
+    public static UiObject downloadFileName = TestHelper.mDevice.findObject(new UiSelector()
+            .resourceId(TestHelper.getAppName() + ":id/download_dialog_file_name")
+            .enabled(true));
+    public static UiObject downloadWarning = TestHelper.mDevice.findObject(new UiSelector()
+            .resourceId(TestHelper.getAppName() + ":id/download_dialog_warning")
+            .enabled(true));
+    public static UiObject downloadCancelBtn = TestHelper.mDevice.findObject(new UiSelector()
+            .resourceId(TestHelper.getAppName() + ":id/download_dialog_cancel")
+            .enabled(true));
+    public static UiObject downloadBtn = TestHelper.mDevice.findObject(new UiSelector()
+            .resourceId(TestHelper.getAppName() + ":id/download_dialog_download")
+            .enabled(true));
+    public static UiObject completedMsg = TestHelper.mDevice.findObject(new UiSelector()
+            .resourceId(TestHelper.getAppName() + ":id/snackbar_text")
+            .enabled(true));
 
     /********* Main View Menu Item Locators ***********/
     public static UiObject whatsNewItem = mDevice.findObject(new UiSelector()
-            .resourceId("org.mozilla.focus.debug:id/whats_new")
+            .resourceId(getAppName() + ":id/whats_new")
             .enabled(true));
     public static UiObject HelpItem = mDevice.findObject(new UiSelector()
-            .resourceId("org.mozilla.focus.debug:id/help")
+            .resourceId(getAppName() + ":id/help")
             .enabled(true));
     public static UiObject settingsMenuItem = mDevice.findObject(new UiSelector()
-            .resourceId("org.mozilla.focus.debug:id/settings")
+            .resourceId(getAppName() + ":id/settings")
             .enabled(true));
     public static UiObject blockCounterItem = mDevice.findObject(new UiSelector()
-            .resourceId("org.mozilla.focus.debug:id/trackers_count"));
-    public static UiObject blockToggleSwitch = mDevice.findObject(new UiSelector()
-            .resourceId("org.mozilla.focus.debug:id/blocking_switch"));
+            .resourceId(getAppName() + ":id/trackers_count"));
     public static UiObject menulist = mDevice.findObject(new UiSelector()
-            .resourceId("org.mozilla.focus.debug:id/list")
+            .resourceId(getAppName() + ":id/list")
             .enabled(true));
     public static String getMenuItemText(UiObject item) throws UiObjectNotFoundException {
-        String text = item.getChild(new UiSelector().index(0))
+        return item.getChild(new UiSelector().index(0))
                 .getChild(new UiSelector().index(0)).getText();
-        return text;
     }
 
     /********** Share Menu Dialog ********************/
@@ -193,10 +237,10 @@ public final class TestHelper {
             .enabled(true));
 
     /********* Settings Menu Item Locators ***********/
-    public static UiScrollable settingsList = new UiScrollable(new UiSelector()
-            .resourceId("android:id/list").scrollable(true));
+    public static UiObject settingsMenu = mDevice.findObject(new UiSelector()
+            .resourceId(getAppName() + ":id/recycler_view"));
     public static UiObject settingsHeading = mDevice.findObject(new UiSelector()
-            .resourceId("org.mozilla.focus.debug:id/toolbar")
+            .resourceId(getAppName() + ":id/toolbar")
             .enabled(true));
     public static UiObject navigateUp = mDevice.findObject(new UiSelector()
             .description("Navigate up"));
@@ -204,10 +248,37 @@ public final class TestHelper {
             .className("android.widget.Switch")
             .instance(1));
     public static UiObject refreshBtn = mDevice.findObject(new UiSelector()
-            .resourceId("org.mozilla.focus.debug:id/refresh")
+            .resourceId(getAppName() + ":id/refresh")
             .enabled(true));
 
-    private TestHelper () throws UiObjectNotFoundException {
+    public static void expandNotification() throws UiObjectNotFoundException {
+        if (!notificationOpenItem.waitForExists(waitingTime)) {
+            if (!notificationExpandSwitch.exists()) {
+                notificationBarDeleteItem.pinchOut(50, 5);
+            } else {
+                notificationExpandSwitch.click();
+            }
+            assertTrue(notificationOpenItem.exists());
+        }
+    }
+
+    public static final int X_OFFSET = 20;
+    public static final int Y_OFFSET = 500;
+    public static final int STEPS = 10;
+
+    private static DisplayMetrics devicePixels() {
+        DisplayMetrics metrics = Resources.getSystem().getDisplayMetrics();
+        return metrics;
+    }
+
+    public static void swipeScreenLeft() {
+        DisplayMetrics metrics = devicePixels();
+        mDevice.swipe(metrics.widthPixels - X_OFFSET, Y_OFFSET, 0, Y_OFFSET, STEPS);
+    }
+
+    public static void swipeScreenRight() {
+        DisplayMetrics metrics = devicePixels();
+        mDevice.swipe(X_OFFSET, Y_OFFSET, metrics.widthPixels, Y_OFFSET, STEPS);
     }
 
     public static void waitForIdle() {
@@ -222,39 +293,8 @@ public final class TestHelper {
     public static void pressHomeKey() {
         mDevice.pressHome();
     }
-    public static void pressRecentAppsKey() throws RemoteException {
-        mDevice.pressRecentApps();
-    }
     public static void openNotification() {
         mDevice.openNotification();
-    }
-
-    public static void swipeUpScreen () {
-        int dHeight = mDevice.getDisplayHeight();
-        int dWidth = mDevice.getDisplayWidth();
-        int xScrollPosition = dWidth / 2;
-        int yScrollStart = dHeight / 4 * 3;
-        mDevice.swipe(
-                xScrollPosition,
-                yScrollStart,
-                xScrollPosition,
-                0,
-                20
-        );
-    }
-
-    public static void swipedownScreen () {
-        int dHeight = mDevice.getDisplayHeight();
-        int dWidth = mDevice.getDisplayWidth();
-        int xScrollPosition = dWidth / 2;
-        int yScrollStart = dHeight / 4;
-        mDevice.swipe(
-                xScrollPosition,
-                yScrollStart,
-                xScrollPosition,
-                dHeight,
-                20
-        );
     }
 
     public static MockResponse createMockResponseFromAsset(@NonNull String fileName) throws IOException {
@@ -300,11 +340,14 @@ public final class TestHelper {
     }
 
     public static void waitForWebSiteTitleLoad() {
-        UiObject titleMsg = mDevice.findObject(new UiSelector()
-                .description("focus test page")
-                .enabled(true));
+        onWebView(withText("focus test page"));
+    }
 
-        assertTrue(webView.waitForExists(waitingTime));
-        Assert.assertTrue("Website title loaded", titleMsg.waitForExists(waitingTime));
+    public static void selectGeckoForKlar() {
+        InstrumentationRegistry.getTargetContext().getSharedPreferences("mozilla.components.service.fretboard.overrides",
+                Context.MODE_PRIVATE)
+                .edit()
+                .putBoolean("use-gecko", AppConstants.INSTANCE.isKlarBuild())
+                .commit();
     }
 }

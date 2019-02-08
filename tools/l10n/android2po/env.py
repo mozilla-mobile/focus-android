@@ -91,6 +91,126 @@ MISSING_LOCALES = {
         'local_name': "Tu'un savi",
         'plural_rule': 'id',
         'team': 'mix <LL@li.org>\n'
+    },
+    'oc': {
+        'name': 'Occitan',
+        'local_name': 'occitan',
+        'plural_rule': 'fi',
+        'team': 'oc <LL@li.org>\n'
+    },
+    'an': {
+        'name': 'Aragonese',
+        'local_name': 'Aragonés',
+        'plural_rule': 'fi',
+        'team': 'an <LL@li.org>\n'
+    },
+    'wo': {
+        'name': 'Wolof',
+        'local_name': 'Wolof',
+        'plural_rule': 'id',
+        'team': 'wo <LL@li.org>\n'
+    },
+    'tt': {
+        'name': 'Tatar',
+        'local_name': 'татарча',
+        'plural_rule': 'fi',
+        'team': 'tt <LL@li.org>\n'
+    },
+    'anp': {
+        'name': 'Angika',
+        'local_name': 'अंगिका',
+        'plural_rule': 'bg',
+        'team': 'anp <LL@li.org>\n'
+    },
+    'tsz': {
+        'name': 'Purépecha',
+        'local_name': 'p\'urhepecha',
+        'plural_rule': 'de',
+        'team': 'anp <LL@li.org>\n'
+    },
+    'ixl': {
+        'name': 'Ixil',
+        'local_name': 'ixil',
+        'plural_rule': 'de',
+        'team': 'anp <LL@li.org>\n'
+    },
+    'pai': {
+        'name': 'Pai pai',
+        'local_name': 'paa ipai',
+        'plural_rule': 'lo',
+        'team': 'anp <LL@li.org>\n'
+    },
+    'quy': {
+        'name': 'Quechua Chanka',
+        'local_name': 'Chanka Qhichwa',
+        'plural_rule': 'pt',
+        'team': 'anp <LL@li.org>\n'
+    },
+    'ay': {
+        'name': 'Aymara',
+        'local_name': 'Aimara',
+        'plural_rule': 'de',
+        'team': 'anp <LL@li.org>\n'
+    },
+    'quc': {
+        'name': 'K\'iche\'',
+        'local_name': 'K\'iche\'',
+        'plural_rule': 'de',
+        'team': 'anp <LL@li.org>\n'
+    },
+    'jv': {
+        'name': 'Javanese',
+        'local_name': 'Basa Jawa',
+        'plural_rule': 'ja',
+        'team': 'anp <LL@li.org>\n'
+    },
+    'ppl': {
+        'name': 'Náhuat Pipil',
+        'local_name': 'Náhuat Pipil',
+        'plural_rule': 'az',
+        'team': 'anp <LL@li.org>\n'
+    },
+    'su': {
+        'name': 'Sundanese',
+        'local_name': 'Basa Sunda',
+        'plural_rule': 'ja',
+        'team': 'anp <LL@li.org>\n'
+    },
+    'hus': {
+        'name': 'Huastec',
+        'local_name': 'Tének',
+        'plural_rule': 'ja',
+        'team': 'anp <LL@li.org>\n'
+    },
+    'yua': {
+        'name': 'Yucatec',
+        'local_name': 'Maaya',
+        'plural_rule': 'az',
+        'team': 'anp <LL@li.org>\n'
+    },
+    'ace': {
+        'name': 'Acehnese',
+        'local_name': 'Basa Acèh',
+        'plural_rule': 'id',
+        'team': 'anp <LL@li.org>\n'
+    },
+    'nv': {
+        'name': 'Navajo',
+        'local_name': 'Diné Bizaad',
+        'plural_rule': 'id',
+        'team': 'anp <LL@li.org>\n'
+    },
+    'co': {
+        'name': 'Corsican',
+        'local_name': 'Corsu',
+        'plural_rule': 'pt',
+        'team': 'anp <LL@li.org>\n'
+    },
+    'sn': {
+        'name': 'Shona',
+        'local_name': 'ChiShona',
+        'plural_rule': 'az',
+        'team': 'anp <LL@li.org>\n'
     }
 }
 

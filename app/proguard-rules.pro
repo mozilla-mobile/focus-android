@@ -1,5 +1,6 @@
 
 # We do not want to obfuscate - It's just painful to debug without the right mapping file.
+# If we update this, we'll have to update our Sentry config to upload ProGuard mappings.
 -dontobfuscate
 
 
@@ -71,10 +72,61 @@
     java.util.Locale get(int);
 }
 
+
+####################################################################################################
+# Okhttp
+####################################################################################################
+
+# JSR 305 annotations are for embedding nullability information.
+-dontwarn javax.annotation.**
+
+# A resource is loaded with a relative path so the package of this class must be preserved.
+-keepnames class okhttp3.internal.publicsuffix.PublicSuffixDatabase
+
+# Animal Sniffer compileOnly dependency to ensure APIs are compatible with older versions of Java.
+-dontwarn org.codehaus.mojo.animal_sniffer.*
+
+# OkHttp platform used only on JVM and when Conscrypt dependency is available.
+-dontwarn okhttp3.internal.platform.ConscryptPlatform
+
+####################################################################################################
+# Sentry
+####################################################################################################
+
+# Recommended config via https://docs.sentry.io/clients/java/modules/android/#manual-integration
+# Since we don't obfuscate, we don't need to use their Gradle plugin to upload ProGuard mappings.
+-keepattributes LineNumberTable,SourceFile
+-dontwarn org.slf4j.**
+-dontwarn javax.**
+
+# Our addition: this class is saved to disk via Serializable, which ProGuard doesn't like.
+# If we exclude this, upload silently fails (Sentry swallows a NPE so we don't crash).
+# I filed https://github.com/getsentry/sentry-java/issues/572
+#
+# If Sentry ever mysteriously stops working after we upgrade it, this could be why.
+-keep class io.sentry.event.Event { *; }
+
 ####################################################################################################
 # Android architecture components
 ####################################################################################################
 
+-dontwarn android.**
+-dontwarn com.google.**
+-dontwarn org.mozilla.geckoview.**
+
 # https://developer.android.com/topic/libraries/architecture/release-notes.html
 # According to the docs this won't be needed when 1.0 of the library is released.
 -keep class * implements android.arch.lifecycle.GeneratedAdapter {<init>(...);}
+
+# Temporary fix until we can use androidx
+-dontwarn mozilla.components.service.fretboard.scheduler.workmanager.**
+
+####################################################################################################
+# Kotlinx
+####################################################################################################
+
+-keepnames class kotlinx.coroutines.internal.MainDispatcherFactory {}
+-keepnames class kotlinx.coroutines.CoroutineExceptionHandler {}
+-keepclassmembernames class kotlinx.** {
+    volatile <fields>;
+}

@@ -6,22 +6,19 @@ package org.mozilla.focus.session.ui
 
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
-import android.support.v4.content.ContextCompat
-import android.support.v4.graphics.drawable.DrawableCompat
-import android.support.v7.content.res.AppCompatResources
 import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.widget.TextView
+import mozilla.components.browser.session.Session
 import org.mozilla.focus.R
-import org.mozilla.focus.session.Session
-import org.mozilla.focus.session.SessionManager
-import org.mozilla.focus.telemetry.TelemetryWrapper
 import org.mozilla.focus.ext.beautifyUrl
+import org.mozilla.focus.ext.requireComponents
+import org.mozilla.focus.telemetry.TelemetryWrapper
 import java.lang.ref.WeakReference
 
 class SessionViewHolder internal constructor(
-        private val fragment: SessionsSheetFragment,
-        private val textView: TextView
+    private val fragment: SessionsSheetFragment,
+    private val textView: TextView
 ) : RecyclerView.ViewHolder(textView), View.OnClickListener {
     companion object {
         @JvmField
@@ -31,37 +28,33 @@ class SessionViewHolder internal constructor(
     private var sessionReference: WeakReference<Session> = WeakReference<Session>(null)
 
     init {
+        textView.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_link, 0, 0, 0)
         textView.setOnClickListener(this)
     }
 
     fun bind(session: Session) {
         this.sessionReference = WeakReference(session)
 
-        updateUrl(session)
+        updateTitle(session)
 
-        val isCurrentSession = SessionManager.getInstance().isCurrentSession(session)
-        val actionColor = ContextCompat.getColor(textView.context, R.color.colorAction)
-        val darkColor = ContextCompat.getColor(textView.context, R.color.colorSession)
+        val isCurrentSession = fragment.requireComponents.sessionManager.selectedSession == session
 
-        updateTextColor(isCurrentSession, actionColor, darkColor)
-        updateDrawable(isCurrentSession, actionColor, darkColor)
+        updateTextBackgroundColor(isCurrentSession)
     }
 
-    private fun updateTextColor(isCurrentSession: Boolean, actionColor: Int, darkColor: Int) {
-        textView.setTextColor(if (isCurrentSession) actionColor else darkColor)
+    private fun updateTextBackgroundColor(isCurrentSession: Boolean) {
+        val drawable = if (isCurrentSession) {
+            R.drawable.background_list_item_current_session
+        } else {
+            R.drawable.background_list_item_session
+        }
+        textView.setBackgroundResource(drawable)
     }
 
-    private fun updateDrawable(isCurrentSession: Boolean, actionColor: Int, darkColor: Int) {
-        val drawable = AppCompatResources.getDrawable(itemView.context, R.drawable.ic_link) ?: return
-
-        val wrapDrawable = DrawableCompat.wrap(drawable.mutate())
-        DrawableCompat.setTint(wrapDrawable, if (isCurrentSession) actionColor else darkColor)
-
-        textView.setCompoundDrawablesWithIntrinsicBounds(wrapDrawable, null, null, null)
-    }
-
-    private fun updateUrl(session: Session) {
-        textView.text = session.url.value.beautifyUrl()
+    private fun updateTitle(session: Session) {
+        textView.text =
+            if (session.title.isEmpty()) session.url.beautifyUrl()
+            else session.title
     }
 
     override fun onClick(view: View) {
@@ -72,7 +65,7 @@ class SessionViewHolder internal constructor(
     private fun selectSession(session: Session) {
         fragment.animateAndDismiss().addListener(object : AnimatorListenerAdapter() {
             override fun onAnimationEnd(animation: Animator) {
-                SessionManager.getInstance().selectSession(session)
+                fragment.requireComponents.sessionManager.select(session)
 
                 TelemetryWrapper.switchTabInTabsTrayEvent()
             }

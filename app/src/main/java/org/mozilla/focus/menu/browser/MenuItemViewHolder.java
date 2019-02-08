@@ -5,7 +5,9 @@
 
 package org.mozilla.focus.menu.browser;
 
+import android.graphics.drawable.Drawable;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.TextView;
 
 import org.mozilla.focus.R;
@@ -13,21 +15,34 @@ import org.mozilla.focus.R;
 /* package-private */ class MenuItemViewHolder extends BrowserMenuViewHolder {
     /* package-private */ static final int LAYOUT_ID = R.layout.menu_item;
 
-    private TextView menuItemView;
+    private final TextView menuItemView;
 
     /* package-private */ MenuItemViewHolder(View itemView) {
         super(itemView);
 
         menuItemView = (TextView) itemView;
+        menuItemView.setHeight(ViewGroup.LayoutParams.WRAP_CONTENT);
     }
 
-    /* package-private */ void bind(BrowserMenuAdapter.MenuItem menuItem) {
-        menuItemView.setId(menuItem.id);
-        menuItemView.setText(menuItem.label);
+    /* package-private */ void bind(BrowserMenuAdapter.MenuItem.Default menuItem) {
+        menuItemView.setId(menuItem.getId());
+        menuItemView.setText(menuItem.getLabel());
+        if (menuItem.getDrawableResId() != 0) {
+            final Drawable drawable = menuItemView.getContext().getDrawable(menuItem.getDrawableResId());
+            if (drawable != null) {
+                drawable.setTint(menuItemView.getContext().getResources().getColor(R.color.colorSettingsTint));
+                menuItemView.setCompoundDrawablesRelativeWithIntrinsicBounds(
+                        drawable,
+                        null,
+                        null,
+                        null
+                );
+            }
+        }
 
-        final boolean isLoading = browserFragment.getSession().getLoading().getValue();
+        final boolean isLoading = browserFragment.getSession().getLoading();
 
-        if (menuItem.id == R.id.add_to_homescreen && isLoading) {
+        if ((menuItem.getId() == R.id.add_to_homescreen || menuItem.getId() == R.id.find_in_page) && isLoading) {
             menuItemView.setTextColor(browserFragment.getResources().getColor(R.color.colorTextInactive));
             menuItemView.setClickable(false);
         } else {

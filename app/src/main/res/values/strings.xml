@@ -3,6 +3,11 @@
    - License, v. 2.0. If a copy of the MPL was not distributed with this
    - file, You can obtain one at http://mozilla.org/MPL/2.0/. -->
 <resources>
+    <!-- ####################################################################################### -->
+    <!-- ## Put only strings into this file that should be translated. Move all other strings ## -->
+    <!-- ## into a separate file like strings_references.xml                                  ## -->
+    <!-- ####################################################################################### -->
+
     <!-- Label used for buttons, e.g. in dialogs -->
     <string name="action_cancel">Cancel</string>
     <!-- Label used for buttons, e.g. in dialogs -->
@@ -18,22 +23,28 @@
     <!-- "Snackbar" shown after the user has pressed the 'erase' button at the end of a browsing session -->
     <string name="feedback_erase">Your browsing history has been erased.</string>
 
+    <!-- "Snackbar" shown after the user has pressed the 'erase' button at the end of a custom tab browsing session -->
+    <string name="feedback_erase_custom_tab">Tab’s browsing history has been erased.</string>
+
     <!-- This label is shown below the URL bar as soon as the user enters text. Clicking the label will perform a search -->
     <string name="search_hint">Search for %1$s</string>
 
     <!-- Menu item: Share the currently visible page -->
     <string name="menu_share">Share…</string>
 
+    <!-- Menu item: Report an issue on the current site -->
+    <string name="menu_report_site_issue">Report Site Issue</string>
+
     <!-- Menu item: Switch to another browser to open the currently visible page. %1$s will be
-      replaces with the name of the browser like: "Open with Firefox" or "Open with Chrome". Some
-      links can be opened by native apps that aren't a browser, e.g. "Open with YouTube" -->
-    <string name="menu_open_with_default_browser">Open with %1$s</string>
+      replaced with the name of the browser like: "Open in Firefox" or "Open in Chrome". Some
+      links can be opened by native apps that aren't a browser, e.g. "Open in YouTube" -->
+    <string name="menu_open_with_default_browser2">Open in %1$s</string>
 
     <!-- Menu item: Switch to another browser to open the currently visible page. This menu item
       will be shown if there are multiple browsers and we do not know which one is the default
       browser or in case Focus is actually the default browser. Clicking this menu item will show
       a screen with multiple browsers (or other apps that can open the current URL) to choose from. -->
-    <string name="menu_open_with_a_browser">Open with…</string>
+    <string name="menu_open_with_a_browser2">Open in…</string>
 
     <!-- Menu item: Add the current page as a shortcut to the device's home screen (launcher). -->
     <string name="menu_add_to_home_screen">Add to Home screen</string>
@@ -51,6 +62,20 @@
          blocking of trackers for the current browsing session - for example if the current website
          doesn't work correctly with blocked content. -->
     <string name="menu_trackers_blocked_title">Trackers blocked</string>
+
+    <!-- Menu item: This is the subtitle for the Trackers blocked menu entry that shows how many
+    trackers have been blocked for the currently loaded website.  -->
+    <string name="menu_trackers_blocked_subtitle">Turning this off may fix some site problems</string>
+
+    <!-- Menu item: This is the label for turning off content blocking for the current website. -->
+    <string name="menu_content_blocking">Content Blocking</string>
+    <!-- This is the subtitle content blocking toggle -->
+    <string name="menu_content_blocking_subtitle">Turn off to fix some sites</string>
+
+    <!-- This is a small text at the bottom of the menu shown in a "custom tab" for branding purposes.
+     See https://github.com/mozilla-mobile/focus-android/issues/2106
+      %1$s will be replaced by the app name (e.g. Firefox Focus) -->
+    <string name="menu_custom_tab_branding">Powered by %1$s</string>
 
     <!-- This is the title of a dialog that shows all the share targets (apps or contacts) when
          sharing an URL. -->
@@ -78,6 +103,11 @@
          of 25 characters. -->
     <string name="shortcut_erase_long_label">Erase browsing history</string>
 
+
+    <!-- On Android 7+ users can add a shortcut for erasing the browsing history to the home screen.
+         This is the label for this shortcut. Android recommends a maximum length of 10 characters. -->
+    <string name="shortcut_erase_and_open_short_label">Erase &amp; open</string>
+
     <!-- This is the label of an action we offer when the user selects text in other third-party apps.
          Clicking this action will launch Focus and perform a search in the default search engine. -->
     <string name="text_selection_search_action">Search Privately</string>
@@ -97,10 +127,55 @@
 <a href="%2$s">Learn more</a></p>
     ]]></string>
 
+    <!-- Header for the Privacy and Security settings menu -->
+    <string name="preference_privacy_and_security_header">Privacy &amp; Security</string>
+
+    <!-- Preference summary for settings related to privacy and security -->
+    <string name="preference_privacy_and_security_summary">Tracking, cookies, data choices</string>
+
+    <!-- Preference category description for settings related to search, set default
+    and autocomplete are settings a user can find and change inside the "search" settings screen -->
+    <string name="preference_search_summary">Set default, autocomplete</string>
+
+    <!-- Preference category description for settings screen for settings related to Mozilla -->
+    <!-- About the app and help are links that are inside this menu -->
+    <!-- %1$s will be replaced by the app name (e.g. Firefox Focus) -->
+    <string name="preference_mozilla_summary">About %1$s, help</string>
+
+    <!-- Preference category for ad blocking -->
+    <string name="preference_category_ad_blocking">Ad Blocking</string>
+
+    <!-- Preference category for ad blocking and tracking protection settings -->
+    <string name="preference_category_tracking_protection">Tracking Protection</string>
+
+    <!-- Preference category for settings related to controlling web content -->
+    <string name="preference_category_web_content">Web Content</string>
+
+    <!-- Preference category: stealth settings for while switching apps -->
+    <string name="preference_category_switching_apps">Switching Apps</string>
+
+    <!-- Preference category for General Settings -->
+    <string name="preference_category_general">General</string>
+
+    <!-- Preference summary for General Settings category; the three things users can find in this category -->
+    <string name="preference_general_summary">Default browser, tabs, language</string>
+
+    <!-- Preference category for settings about sending usage data -->
+    <string name="preference_category_data_collection_use">Data Collection &amp; Use</string>
+
     <string name="preference_category_search">Search</string>
+
+    <!-- Title of "switch" preference that enables/disables search suggestions -->
+    <string name="preference_show_search_suggestions">Get search suggestions</string>
+    <!-- Description of the preference that enables/disables search suggestions
+        %1$s will be replaced by the app name (e.g. Firefox Focus) -->
+    <string name="preference_show_search_suggestions_summary">%1$s will send what you type in the address bar to your search engine</string>
 
     <!-- This label is shown below the name of the default search engine in settings -->
     <string name="preference_search_engine_default">Default</string>
+
+    <!-- This label is shown above the currently selected search engine in settings -->
+    <string name="preference_search_engine_label">Search engine</string>
 
     <!-- Text that is shown below a "switch" preference that is enabled. -->
     <string name="preference_state_on">On</string>
@@ -111,20 +186,23 @@
     <!-- Item in settings that will open a new preference screen for configuring the URL autocomplete behavior. -->
     <string name="preference_subitem_autocomplete">URL Autocomplete</string>
 
-    <!-- Title of "switch" preference that enables/disables autocomplete -->
-    <string name="preference_switch_autocomplete">Autocomplete</string>
+    <!-- Title of "switch" preference that enables/disables autocomplete for the default list -->
+    <string name="preference_switch_autocomplete_topsites">For Top sites</string>
 
-    <!-- Preference title: URL autocomplete list that ships with Focus/Klar. -->
-    <string name="preference_category_autocomplete_preinstalled">Default URL List</string>
+    <!-- Summary for the toggle to enable autocomplete for the topsites list -->
+    <string name="preference_autocomplete_topsite_summary">Enable to autocomplete more than 450 popular URLs in the address bar.</string>
 
-    <!-- Preference summary: URL autocomplete list that ships with Focus/Klar. -->
-    <string name="preference_autocomplete_preinstalled_summary">Enable to have %1$s autocomplete over 450 popular URLs in the address bar.</string>
+    <!-- Title of "switch" preference that enables/disables autocomplete for the user-defined list -->
+    <string name="preference_switch_autocomplete_user_list">For Sites You Add</string>
 
-    <!-- Preference category: Custom (user-defined) autocomplete URLs. -->
-    <string name="preference_category_autocomplete_custom">Custom URL</string>
+    <!-- Summary for the toggle to enable autocomplete for the user-defined list -->
+    <string name="preference_autocomplete_user_list_description">Enable to autocomplete sites you add here.</string>
 
-    <!-- Item in autocomplete settings that will open a new preference screen for adding and removing custom autocomplete URLs -->
-    <string name="preference_autocomplete_subitem_customlist">Custom URLs</string>
+    <!-- Preference category: Manage (user-defined) sites -->
+    <string name="preference_category_autocomplete_manage_sites">Manage sites</string>
+
+    <!-- Item in autocomplete settings that will open a new preference screen for adding and removing URLs to the user-defined list-->
+    <string name="preference_autocomplete_subitem_manage_sites">Manage sites</string>
 
     <!-- Action at the bottom of the list of custom autocomplete URLs that will open a new screen to add a new URL to the list. -->
     <string name="preference_autocomplete_action_add">+ Add custom URL</string>
@@ -132,6 +210,19 @@
     <!-- Title of the screen for adding custom autocomplete URLs. -->
     <string name="preference_autocomplete_title_add">Add custom URL</string>
 
+    <!-- Label for the button to quick add custom autocomplete URLs. -->
+    <string name="custom_autocomplete_quick_add">Add custom URL</string>
+
+    <!-- Label for the button to quick add the current URL to the custom autocomplete list -->
+    <string name="add_custom_autocomplete_label">Add link to autocomplete</string>
+
+    <!-- Preference category for settings about cookies and site data -->
+    <string name="preference_category_cookies">Cookies and Site Data</string>
+
+    <!-- Preference category for settings about data choices -->
+    <string name="preference_category_data_choices">Data Choices</string>
+
+    <!-- Title of the screen for removing custom autocomplete URLs. -->
     <string name="preference_autocomplete_title_remove">Remove custom URLs</string>
 
     <!-- A link to SUMO at autocomplete settings. -->
@@ -147,10 +238,10 @@
     <string name="preference_autocomplete_add_hint">Paste or enter URL</string>
 
     <!-- Example how a custom domain autocomplete URL be added (e.g. without http://) -->
-    <string name="preference_autocomplete_add_example">Example: example.com</string>
+    <string name="preference_autocomplete_add_example2">Example: mozilla.org</string>
 
-    <!-- Content description (not visible, for screen readers etc.): A "handle" that allows the user to reorder custom autocomplete URLs -->
-    <string name="preference_autocomplete_handle_content_description">-</string>
+    <!-- To be removed once the new hint has been translated -->
+    <string name="preference_autocomplete_add_example">Example: example.com</string>
 
     <!-- Confirmation "snackbar" shown after a new custom autocomplete URL has been added. -->
     <string name="preference_autocomplete_add_confirmation">New custom URL added.</string>
@@ -169,18 +260,50 @@
          is using the system default language. -->
     <string name="preference_language_systemdefault">System default</string>
 
-    <!-- This is the title of the dialog for selecting a new default search engine -->
-    <string name="preference_dialog_title_search_engine">Default search</string>
-
     <string name="preference_category_privacy">Privacy</string>
-    <string name="preference_privacy_block_ads">Block ad trackers</string>
-    <string name="preference_privacy_block_ads_summary">Some ads track site visits, even if you don’t click the ads</string>
+
+    <string name="preference_privacy_ads_block_ads">Block ads and other annoyances</string>
+
+    <!-- Description for the toggle to block ads and some other annoyances on the web.
+        Do not translate: "Easylist", "EasyPrivacy", "Fanboy's Annoyance" or "777Guard Mobile Ad Filter" -->
+    <string name="preference_privacy_ads_block_ads_summary">Stops ads and other annoyances using block lists from Easylist, EasyPrivacy, Fanboy’s Annoyance, and 777Guard Mobile Ad Filter</string>
+
+    
     <string name="preference_privacy_block_analytics">Block analytic trackers</string>
-    <string name="preference_privacy_block_analytics_summary">Used to collect, analyze and measure activities like tapping and scrolling</string>
+    <string name="preference_privacy_block_ads">Block ad trackers</string>
+    <!-- Description for the toggle that blocks and remove ads from webpages that are designed to track your visiting behavior -->
+    <string name="preference_privacy_block_ads_new_summary">Removes ads designed to track site visits even if you don’t tap them</string>
+    <!-- Description for the toggle that Blocks trackers (scripts) that are designed to analyze and measure user interaction-->
+    <string name="preference_privacy_block_analytics_new_summary">Blocks trackers that analyze and measure interactions like tapping and scrolling</string>
     <string name="preference_privacy_block_social">Block social trackers</string>
-    <string name="preference_privacy_block_social_summary">Embedded on sites to track your visits and to display functionality like share buttons</string>
+    <!-- Description for the toggle that Blocks social-media related trackers (scripts), including the ones that embed share buttons -->
+    <string name="preference_privacy_block_social_new_summary">Stops social-media related trackers embedded on websites, including social share buttons</string>
     <string name="preference_privacy_block_content">Block other content trackers</string>
-    <string name="preference_privacy_block_content_summary2">Enabling may cause some pages to behave unexpectedly</string>
+    <!-- Description for the toggle that blocks other trackers -->
+    <string name="preference_privacy_block_content_new_summary">Blocks tracking activity, but may cause some sites and pages to behave unexpectedly</string>
+
+    <string name="preference_privacy_category_cookies">Block cookies</string>
+
+    <!-- Three options for Cookie blocking. Yes (All cookies Blocked), Block 3rd-party cookies
+    only (Only 3rd-party Cookies Blocked), No (No cookies blocked) -->
+    <string name="preference_privacy_should_block_cookies_no_option">No</string>
+    <string name="preference_privacy_should_block_cookies_third_party_tracker_cookies_option">Block 3rd-party tracker cookies only</string>
+    <string name="preference_privacy_should_block_cookies_third_party_only_option">Block 3rd-party cookies only</string>
+    <string name="preference_privacy_should_block_cookies_yes_option">Yes</string>
+
+    <!-- New four options for Cookie blocking -->
+    <string name="preference_privacy_block_cookies_no">No (allow all cookies)</string>
+    <string name="preference_privacy_block_cookies_third_party_tracker">Block third-party trackers cookies (recommended)</string>
+    <string name="preference_privacy_block_cookies_third_party_only">Block all third-party cookies \n(may cause websites to break)</string>
+    <string name="preference_privacy_block_cookies_yes">Block all cookies (will cause websites to break)</string>
+
+    <!-- Preference Title: Biometrics can be used to unlock Focus if the previous session's data was not erased by the user. -->
+    <string name="preference_security_biometric">Use fingerprint to unlock app</string>
+    <!-- Preference Summary: Biometrics (iris scan, fingerprint, or facial scan) can be used to unlock Focus if the app had a URL
+        open when the app was last run to ensure that only the phone's owner can view a previous session.
+        %1$s will be replaced by the app name (e.g. Firefox Focus) -->
+    <string name="preference_security_biometric_summary">Your fingerprint can unlock %1$s if a URL is already opened in the app.
+    Stealth will be turned on.</string>
 
     <!-- Preference Title: Secure Mode is a setting that prevents the app's content to show up in the "recent apps" screen
          and prevents the user from taking screenshots or casting the app to other displays. -->
@@ -188,14 +311,19 @@
     <!-- Preference Summary: Stealth mode (previously "Secure mode") is a setting that prevents the
      app's content (in our case especially the content of webpages) to show up in the "recent apps"
      screen. Additionally Android will prevent the user from taking screenshots or casting the app
-     to other displays. However we try to keep this description short and brief to avoid confusion. -->
-    <string name="preference_privacy_stealth_summary">Hide webpages when switching apps</string>
+     to other displays. -->
+    <string name="preference_privacy_stealth_summary">Hide webpages when switching apps and block taking screenshots.</string>
+
+    <string name="preference_category_security">Security</string>
 
     <string name="preference_category_performance">Performance</string>
     <string name="preference_performance_block_webfonts">Block Web fonts</string>
     <!-- This text is shown below the setting for disabling web fonts. Some websites use icons/images from a font and those do not show up if fonts are blocked.-->
     <string name="preference_performance_block_webfonts_summary">May result in missing icons or images</string>
-    <string name="preference_performance_block_images">Block images</string>
+
+    <string name="preference_performance_block_javascript">Block JavaScript</string>
+    <!-- This text is shown below setting for disabling JavaScript. Some websites may not work correctly when JavaScript is disabled -->
+    <string name="preference_performance_block_javascript_summary">Pages may load faster, but may also behave unexpectedly</string>
 
     <!-- This preference does not set Focus as the default browser but instead links to Android's
      "default apps" settings screen or if not supported by this Android version to a SUMO page describing
@@ -230,40 +358,19 @@
     <string name="preference_search_remove_title">Remove search engines</string>
     <string name="preference_search_remove">Remove</string>
 
-    <!-- Clickable text in tutorial to open a dialog to manually add a search engine -->
-    <string name="tutorial_search_manually_add">Manually add</string>
+    <!-- Title: Homescreen tips settings toggle to determine whether or not tips are displayed when
+     a user first launches the app. -->
+    <string name="preference_homescreen_tips">Show home screen tips</string>
 
-    <string name="tutorial_search_title">Add search engine</string>
-    <string name="tutorial_search_step1">1. Go to the search engine homepage.</string>
-    <string name="tutorial_search_step2">2. Tap into the search engine’s search field.</string>
-    <!-- An alternative string for Step 2 of the tutorial -->
-    <string name="tutorial_search_step2_alternative">2. Long press the search engine’s search field.</string>
-    <string name="tutorial_search_step3">3. Tap the magnifying glass icon above the keyboard to add the search engine.</string>
     <!-- Clickable action text that shows when user long-presses on a search engine search field (this is similar to paste or copy when long-pressing a text field) -->
     <string name="action_option_add_search_engine">Add search engine</string>
 
-    <!-- An alternative string for Step 3 of the tutorial. Parameter 1 is action_option_add_search_engine, which is the action text that the tutorial is referring to -->
-    <string name="tutorial_search_step3_alternative">3. Tap %1$s</string>
-    <string name="tutorial_search_step4">4. If you don’t see the magnifying glass, try manually adding a search engine.</string>
-
-    <!-- An alternative string for Step 4 of tutorial. Instruction with suggested action to add search engine, and alternative if that fails. Parameter 1 is &action_option_add_search_engine, which is the clickable action text for adding a search engine. -->
-    <string name="tutorial_search_step4_alternative">4. If you don’t see %1$s, try manually adding a search engine.</string>
-    <string name="tutorial_search_finish">GET STARTED</string>
-
-    <string name="search_add_hint">Tap the magnifying glass icon above the keyboard to add this search engine.</string>
-
-    <string name="search_add_manually_name">Name to display</string>
     <string name="search_add_manually_name_hint">Search engine name</string>
     <string name="search_add_manually_string">Search string to use</string>
     <string name="search_add_manually_save">Save</string>
 
-    <!-- Explanation of how to add search string, with instruction on how to modify the string if necessary. The string "%s" should not be changed or removed. -->
-    <string name="search_add_manually_string_hint">Paste or enter search string. If necessary, replace search term with: %s.</string>
     <!-- Example of search engine url -->
     <string name="search_add_manually_example">Example: example.com/search/?q=%s</string>
-
-    <!-- This text is not visible. Instead it will be read by the accessibility service to describe the icon for adding a search engine -->
-    <string name="accessibility_announcement_search">Add search engine</string>
 
     <string name="search_add_confirmation">New search engine added.</string>
 
@@ -286,21 +393,10 @@
      history and go back to the home screen. -->
     <string name="content_description_erase">Erase browsing history</string>
 
-    <!-- Content description (not visible, for screen readers etc.): A floating action button that
-      is shown on top of the web content. Clicking the button shows (expands) the menu for switching
-      tabs, adding a new tab or erasing the browsing history. -->
-    <string name="content_description_fab_expand">Expand</string>
-
     <!-- If the user has multiple tabs open we will show an addition "floating action button" showing how many tabs are open.
      This string is not displayed and read only by screenreaders. %1$s will be replaced with the number of open tabs. This
       button will only be visible when there is more than one tab open (>= 2). -->
     <string name="content_description_tab_counter">Tabs open: %1$s</string>
-
-    <!-- Description of the "+" button used to open a new temporary tab ("open" is a verb), not displayed and read only by screenreaders. -->
-    <string name="content_description_open_tab">Open tab</string>
-
-    <!-- Description of the "X" button used to close a new temporary tab ("close" is a verb), not displayed and read only by screenreaders. -->
-    <string name="content_description_close_tab">Close tab</string>
 
     <!-- Content description (not visible, for screen readers etc.): Lock icon showed in the URL bar for
      https pages.. -->
@@ -317,6 +413,10 @@
     <!-- Content description (not visible, for screen readers etc.): "Three dot" menu button. -->
     <string name="content_description_menu">More options</string>
 
+    <!-- Content description (not visible, for screen readers etc.): "Three dot" menu button used
+    on home screen-->
+    <string name="indicator_content_description_menu">More options button</string>
+
     <!-- Content description (not visible, for screen readers etc.): Navigate forward (browsing history) -->
     <string name="content_description_forward">Navigate forward</string>
 
@@ -332,12 +432,13 @@
     <!-- Content description (not visible, for screen readers etc.): Custom Tab exit button - closes the custom tab and returns to the previous app. -->
     <string name="content_description_customtab_exit">Return to previous app</string>
 
+    <!-- Content description (not visible, for screen readers etc.): This is the description for the ImageView in the menu that displays
+         the number of trackers blocked for the current session -->
+    <string name="content_description_trackers_blocked">Number of trackers blocked</string>
+
     <!-- Content description (not visible, for screen readers etc.): This is the description for the switch in the menu that temporarily disables/enables
          content blocking for the current session -->
     <string name="content_description_blocking_switch">Block trackers</string>
-
-    <!-- This is a context menu item shown when long pressing on the URL bar. Selecting it will copy the text from the clipboard into the URL bar and open the URL or perform a search. -->
-    <string name="context_menu_paste_go">Paste &amp; Go</string>
 
     <string name="your_rights">Your Rights</string>
 
@@ -385,11 +486,7 @@
     ]]>
     </string>
 
-    <string name="error_connect_title">@string/error_connectionfailure_title</string>
-    <string name="error_connect_message">@string/error_connectionfailure_message</string>
-
     <string name="error_timeout_title">The connection timed out</string>
-    <string name="error_timeout_message">@string/error_connectionfailure_message</string>
 
     <string name="error_hostLookup_title">Server not found</string>
     <string name="error_hostLookup_message"><![CDATA[
@@ -438,6 +535,8 @@ be temporary, and you can try again later.</li>
     <string name="error_generic_message">We can’t load this page for some reason.</string>
 
     <!-- Label used in the contextmenu shown when long-pressing on a link -->
+    <string name="contextmenu_open_in_app">Open with app</string>
+    <!-- Label used in the contextmenu shown when long-pressing on a link -->
     <string name="contextmenu_link_share">Share link</string>
     <!-- Label used in the contextmenu shown when long-pressing on a link -->
     <string name="contextmenu_link_copy">Copy link address</string>
@@ -455,8 +554,10 @@ be temporary, and you can try again later.</li>
 
     <!-- First run tour (Default browser): Title -->
     <string name="firstrun_defaultbrowser_title">Power up your privacy</string>
+
     <!-- First run tour (Default browser): Text. -->
-    <string name="firstrun_defaultbrowser_text2">Take private browsing to the next level. Block ads and other content that can track you across sites and bog down page load times.</string>
+    <string name="firstrun_defaultbrowser_text_new">Block content like ads and code that follow you around the web and slow you down. Turn on ad blocking to browse faster without annoying ads.</string>
+
 
     <!-- First run tour (Search): Title -->
     <string name="firstrun_search_title">Your search, your way</string>
@@ -477,11 +578,14 @@ be temporary, and you can try again later.</li>
     <string name="firstrun_skip_button">Skip</string>
     <string name="firstrun_next_button">Next</string>
 
+    <!-- Title for intro card shown to users after updating. %1$s will be replaced with the name of the app (e.g. Firefox Focus) -->
+    <string name="block_ads_card_title">%1$s is ready to block ads</string>
+
+    <!-- Description for intro card shown to users after updating. -->
+    <string name="block_ads_card_description">New feature! Browse faster by stopping ads and code that follow you around the web.</string>
+
     <!-- Indicator that no trackers are being blocked because content blocking is disabled; normally shows the number of blocked trackers -->
     <string name="content_blocking_disabled">-</string>
-
-    <!-- The title of a dialog we show when the user selected a menu action to add the current website as a shortcut to the home screen. -->
-    <string name="dialog_addtohomescreen_title">Add to Home screen</string>
 
     <!-- Label of the action that will add the current website to the home screen (shown in the confirmation dialog). -->
     <string name="dialog_addtohomescreen_action_add">Add</string>
@@ -492,16 +596,6 @@ be temporary, and you can try again later.</li>
     <!-- When tracking protection is disabled for the current session then we will show this warning in the "Add to home screen" dialog to
          let the user know that the shortcut will always be opened with tracking protection disabled. -->
     <string name="dialog_addtohomescreen_tracking_protection">Shortcut will open with Tracking Protection disabled</string>
-
-    <!-- When the limit of concurrent tabs is reached and the user wants to open another tab then we show a dialog to select a tab
-         that will be overridden with the new link. This is the title of the dialog where the user selects a tab to replace with the
-         new URL. -->
-    <string name="dialog_opentab_title">Open link in selected tab</string>
-
-    <!-- When the limit of concurrent tabs is reached and the user wants to open another tab then we show a dialog to select a tab
-         that will be overridden with the new link. This is the label of the action/button to open the new link in the selected
-          existing tab. -->
-    <string name="dialog_opentab_action_open">Open</string>
 
     <!-- The user visible name of the "notification channel" (Android 8+ feature) for the ongoing notification shown while a browsing session is active.
     The recommended maximum length is 40 characters; the value may be truncated if it is too long.
@@ -550,4 +644,220 @@ be temporary, and you can try again later.</li>
     %2$s will be replaced with a URL linking to the GPL
     %3$s will be replaced with a URL linking to the tracking protection wiki page (e.g. https://wiki.mozilla.org/Security/Tracking_protection#Lists) -->
     <string name="your_rights_content5"><![CDATA[%1$s also uses blocklists provided by Disconnect, Inc. as separate and independent works under the <a href="%2$s">GNU General Public License v3</a>, and available <a href="%3$s">here</a>.]]></string>
+
+    <!-- Text shown in prompts for GeckoView -->
+    <string name="gv_prompt_username_hint">Username</string>
+    <string name="gv_prompt_password_hint">Password</string>
+    <string name="gv_prompt_clear">Clear</string>
+
+    <!-- Text shown in Security Information Popup -->
+    <!-- Text to denote secure or insecure connection -->
+    <string name="security_popup_secure_connection">Secure Connection</string>
+    <string name="security_popup_insecure_connection">Insecure Connection</string>
+    <!-- %1$s will be replaced with organization that granted the SSL certificate -->
+    <string name="security_popup_security_verified">Verified by: %1$s</string>
+
+    <!-- Content Description of Security Icon in toolbar -->
+    <string name="site_security_icon_content_description">Site Security</string>
+    <string name="preference_autocomplete_duplicate_url_error">URL already exists</string>
+
+    <!-- Label for the Find in page button -->
+    <string name="find_in_page">Find in Page</string>
+
+    <!-- Watermark/Hint for the find in page input field -->
+    <string name="find_in_page_input">Find in page</string>
+
+    <!-- String to show the number of results found in the page and the
+        position the user is at. The first argument is the position, the second argument is the total -->
+    <string name="find_in_page_result">%1$d/%2$d</string>
+    <!-- String to be read by the accessibility service presenting the number of results found in the page
+        and the position the user is at. The first argument is the position, the second argument is the total -->
+    <string name="accessibility_find_in_page_result">%1$d out of %2$d</string>
+
+    <!-- String to be read by the accessibility service when focusing the next result button -->
+    <string name="accessibility_next_result">Find next result</string>
+    <!-- String to be read by the accessibility service when focusing the previous result button -->
+    <string name="accessibility_previous_result">Find previous result</string>
+    <!-- String to be read by the accessibility service when focusing the dismiss button in the "find in page" UI -->
+    <string name="accessibility_dismiss_find_in_page">Dismiss find in page</string>
+    
+    <!-- Http Authentication Popup: Title -->
+    <string name="http_auth_dialog_title">Authentication required</string>
+    <!-- Http Authentication Popup: Username -->
+    <string name="http_auth_dialog_username">Username</string>
+    <!-- Http Authentication Popup: Password -->
+    <string name="http_auth_dialog_password">Password</string>
+
+    <!-- Checkbox menu item text to request desktop site -->
+    <string name="preference_performance_request_desktop_site">Request desktop site</string>
+
+    <!-- Displayed after a user long presses on the URL in a custom tab to copy the URL -->
+    <string name="custom_tab_copy_url_action">URL copied</string>
+
+    <!-- Description of what a user may find in the Advanced Setting category, used for debugging -->
+    <string name="preference_advanced_summary">Developer tools</string>
+
+    <!-- Title of Advanced Setting category -->
+    <string name="preference_category_advanced">Advanced</string>
+
+    <!-- Preference to enable remote debugging of the app via USB or Wi-Fi -->
+    <string name="preference_remote_debugging">Remote debugging via USB/Wi-Fi</string>
+
+    <!-- Title for the fingerprint authentication dialog box that is shown to the user when opening the app.
+     %1$s is replaced with the app name -->
+    <string name="biometric_auth_title">Unlock %1$s</string>
+
+    <!-- Description for the fingerprint authentication dialog box that is shown to the user when opening the app -->
+    <string name="biometric_auth_description">Touch the fingerprint sensor to continue.</string>
+
+    <!-- New session button for the fingerprint authentication dialog box that is shown to the user when opening the app.
+     When pressed, the user's previous session is cleared, and authentication is not required. -->
+    <string name="biometric_auth_new_session">New Session</string>
+
+    <!-- Button for the fingerprint authentication dialog box that is shown to the user when sharing a link to the app
+    while the user has biometric authentication enabled. When pressed, the user's previous session is cleared, and the shared link is opened. -->
+    <string name="biometric_auth_open_link_new_session">Open Link in New Session</string>
+
+    <!-- Description for the fingerprint authentication image. Used for accessibility purposes. -->
+    <string name="biometric_auth_image_description">Fingerprint icon</string>
+
+    <!-- Error text displayed when the user's fingerprint cannot be recognized upon re-entering the app.
+     This is displayed during the authentication flow as the app launches. -->
+    <string name="biometric_auth_not_recognized_error">Fingerprint not recognized. Try again.</string>
+
+    <!-- Error text displayed when the user's fingerprint moved too quickly upon re-entering the app
+    This is displayed during the authentication flow as the app launches.-->
+    <string name="biometric_auth_moved_too_quickly">Finger moved too fast. Try again.</string>
+
+    <!-- Title for the prompt to enable search suggestions -->
+    <string name="enable_search_suggestion_title">Would you like to turn on search suggestions?</string>
+
+    <!-- Description for the prompt to enable search suggestions
+        %1$s will be replaced by the app name (e.g. Firefox Focus)
+        %2$s will be replaced with "Learn more" which will be a tappable link
+        using the string: "enable_search_suggestion_subtitle_learnmore" -->
+    <string name="enable_search_suggestion_subtitle">To get search suggestions, %1$s needs to send what you type in the address bar to the search engine you’ve chosen. %2$s.</string>
+
+    <!-- String to be placed inside the string: enable_search_suggestion_subtitle,
+        which will be a "Learn More" link. -->
+    <string name="enable_search_suggestion_subtitle_learnmore">Learn more</string>
+
+    <!-- Label used for the "NO button" for the prompt to enable search suggestions -->
+    <string name="enable_search_suggestions_no">No</string>
+
+    <!-- Label used for the "YES button" for the prompt to enable search suggestions -->
+    <string name="enable_search_suggestions_yes">Yes</string>
+
+    <!-- Message displayed when using a search engine that doesn't provide suggestions -->
+    <string name="no_suggestions_message">Some search engines cannot show suggestions.</string>
+
+    <!-- Button to dismiss the message displayed  when using a search engine that doesn't provide suggestions-->
+    <string name="dismiss_no_suggestions_prompt_button">Dismiss</string>
+
+    <!-- Tips displayed on the home view -->
+
+    <!-- Tip displayed on home view explaining how to disable tracking protection
+    The new line here must be kept as the second half of the string is clickable for the user. -->
+    <string name="tip_disable_tracking_protection">Site behaving unexpectedly?\n
+    Try turning off Tracking Protection</string>
+
+    <!-- Tip displayed on home view explaining how to add sites to homescreen
+    Argument 1 will be replaced with a line break in the application.-->
+    <string name="tip_add_to_homescreen"><![CDATA[Get one-tap access to sites you use most%1$s Menu > Add to Home screen]]></string>
+
+    <!-- Tip displayed on home view explaining how to make Focus the default browser
+    Argument 1 is the app name (Firefox Focus/Firefox Klar/etc).
+    The new line here must be kept as the second half of the string is clickable for the user. -->
+    <string name="tip_set_default_browser">Open every link in %1$s\n
+        Set %1$s as default browser
+    </string>
+
+    <!-- Tip displayed on home view explaining how to add a custom autocomplete URL
+    The new line here must be kept as the second half of the string is clickable for the user. -->
+    <string name="tip_autocomplete_url">Autocomplete URLs for sites you use most\n
+        Long-press any URL in the address bar
+    </string>
+
+    <!-- Tip displayed on home view explaining how to add a custom autocomplete URL
+    The new line here must be kept as the second half of the string is clickable for the user. -->
+    <string name="tip_open_in_new_tab">Open a link in a new tab\n
+        Long-press any link on a page
+    </string>
+
+    <!-- Tip displayed on home view explaining how to request the desktop version of a website.
+     Argument 1 will be replaced with a line break in the application. -->
+    <string name="tip_request_desktop"><![CDATA[Rather see the full desktop site?%1$s Menu > Request desktop site]]></string>
+
+    <!-- Tip displayed on home view explaining how to add a custom autocomplete URL -->
+    <string name="tip_disable_tips2">Turn off tips on the start screen</string>
+
+    <!-- Tip displayed on home view explaining ad blocking -->
+    <string name="tip_block_ads">Browse faster by stopping ads and code that follows you around the web.</string>
+
+    <!-- Title for a switch that enables or disables ads -->
+    <string name="block_ads_title">Ad blocking</string>
+
+    <!-- Tip displayed on the home view explaining how to use the Allowlist feature.
+     "Allowlist" is a replacement for the word whitelist. -->
+    <string name="tip_explain_allowlist">Trusted site?\n
+        Allowlist disables Tracking Protection for sites you know and trust.
+    </string>
+
+    <!-- Label for the snackbar when a user opens a new tab -->
+    <string name="new_tab_opened_snackbar">New tab opened</string>
+
+    <!-- Label for the button in the snackbar that switches to the newly opened tab -->
+    <string name="open_new_tab_snackbar">Switch</string>
+
+    <!-- Preference for switching to a new tab immediately after opening -->
+    <string name="preference_open_new_tab">Switch to link in new tab immediately</string>
+
+    <!-- Preference for safe browsing which when enabled, blocks dangerous or deceptive webpages that may include phishing or malware -->
+    <string name="preference_category_safe_browsing">Safe Browsing</string>
+    <!-- Preference title for safe browsing which when enabled, blocks dangerous or deceptive webpages that may include phishing or malware -->
+    <string name="preference_safe_browsing_title">Block potentially dangerous and deceptive sites</string>
+    <!-- Preference summary for safe browsing which when enabled, blocks dangerous or deceptive webpages that may include phishing or malware -->
+    <string name="preference_safe_browsing_summary">Block reported deceptive and attack sites, malware sites, and unwanted software sites.</string>
+
+    <!-- Preference for exceptions tracking protection -->
+    <string name="preference_exceptions">Exceptions</string>
+    <!-- Description for the exceptions preference screen-->
+    <string name="preference_exceptions_description">You have disabled Content Blocking for these websites.</string>
+    <!-- Menu item to remove existing exceptions. -->
+    <string name="preference_exceptions_menu_remove">Remove</string>
+    <!-- Button to remove all websites from the exception list -->
+    <string name="preference_exceptions_remove_all_button_label">Remove all websites</string>
+
+    <!-- Title for the tab crash report screen-->
+    <string name="tab_crash_report_title">Tab Crashed</string>
+    <!-- Headline for the tab crash report screen -->
+    <string name="tab_crash_report_headline">Sorry. We’re having a problem with this tab.</string>
+    <!-- Subtitle for the tab crash report screen -->
+    <string name="tab_crash_report_description">As a private browser, we never save and cannot restore this tab.</string>
+    <!-- Label for button to close the tab-->
+    <string name="tab_crash_report_close_tab_button_label">Close Tab</string>
+
+    <!-- Title for the fatal crash report window
+        %1$s will be replaced by the app name (e.g. Firefox Focus) -->
+    <string name="fatal_crash_report_title">Sorry. %1$s had a problem and crashed.</string>
+    <!-- Description for the fatal crash report window -->
+    <string name="fatal_crash_report_description">As a private browser, we never save and cannot restore your last browsing session.</string>
+    <!-- Label for the button that closes the window -->
+    <string name="fatal_crash_report_close_button_label">Close</string>
+    <!-- Label for the button to restart Firefox
+        %1$s will be replaced by the app name (e.g. Firefox Focus) -->
+    <string name="fatal_crash_report_restart_firefox_label">Restart %1$s</string>
+
+
+    <!-- Label for the checkbox to send the tab crash report to Mozilla -->
+    <string name="crash_report_send_crash_label">Send crash report to Mozilla</string>
+
+    <!-- Pop-up message to inform users they have enabled content blocking -->
+    <string name="content_blocking_enabled_snackbar_message">Content Blocking is enabled</string>
+    <!-- Pop-up message to inform users they have disabled content blocking -->
+    <string name="content_blocking_disabled_snackbar_message">Content Blocking is disabled</string>
+    <!-- Snackbar action button that users can press to enable content blocking -->
+    <string name="content_blocking_snackbar_enable_action">Enable</string>
+    <!-- Snackbar action button that users can press to disable content blocking -->
+    <string name="content_blocking_snackbar_disable_action">Disable</string>
 </resources>

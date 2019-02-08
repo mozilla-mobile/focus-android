@@ -1,34 +1,45 @@
+import com.github.spotbugs.SpotBugsTask
+
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
-apply plugin: 'findbugs'
+apply plugin: "com.github.spotbugs"
+apply plugin: "de.mannodermaus.android-junit5"
 apply plugin: 'jacoco'
-apply plugin: 'jacoco-android'
 apply plugin: 'pmd'
 apply plugin: 'checkstyle'
 apply plugin: 'kotlin-android-extensions'
 apply from: "$project.rootDir/tools/gradle/versionCode.gradle"
 
 android {
-    compileSdkVersion 26
-    buildToolsVersion "26.0.1"
+    compileSdkVersion 28
+    buildToolsVersion '28.0.3'
     defaultConfig {
         applicationId "org.mozilla"
         minSdkVersion 21
-        targetSdkVersion 26
+        targetSdkVersion 28
         versionCode 11 // This versionCode is "frozen" for local builds. For "release" builds we
                        // override this with a generated versionCode at build time.
-        versionName "4.0"
+        versionName "9.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
         multiDexEnabled true
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
     }
 
     dexOptions {
         preDexLibraries true
     }
 
+    lintOptions {
+        lintConfig file("lint.xml")
+    }
+
     // We have a three dimensional build configuration:
-    // BUILD TYPE (debug, beta, release) X PRODUCT FLAVOR (focus, klar) X ENGINE FLAVOR (webview, gecko)
+    // BUILD TYPE (debug, release) X PRODUCT FLAVOR (focus, klar) X ARCHITECTURE (x86, arm, aarch64)
 
     buildTypes {
         release {
@@ -36,35 +47,24 @@ android {
             shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
-        beta {
-            initWith debug
-            minifyEnabled true
-            shrinkResources true
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            applicationIdSuffix ".beta"
-        }
         debug {
             applicationIdSuffix ".debug"
         }
-        // Use a separate buildType for coverage: testCoverageEnabled produces slower code (4-5x slower
-        // in places that I've benchmarked), and more importantly seems to break debugging with Android Studio
-        // for some developers (i.e. variables can't be inspected or seen).
-        coverage {
-            initWith debug
-
-            applicationIdSuffix ".coverage"
-            testCoverageEnabled true
+        nightly {
+            initWith release
         }
     }
     testOptions {
-        unitTests.all {
-            jacoco {
-                includeNoLocationClasses = true
-            }
+        unitTests {
+            includeAndroidResources = true
         }
     }
 
-    flavorDimensions "product", "engine"
+    aaptOptions {
+        noCompress 'so'
+    }
+
+    flavorDimensions "product", "abi"
 
     productFlavors {
         // In most countries we are Firefox Focus - but in some we need to be Firefox Klar
@@ -79,23 +79,16 @@ android {
             applicationIdSuffix ".klar"
         }
 
-        // We can build with two engines: webview or gecko
-        webview {
-            dimension "engine"
+        x86 {
+            dimension "abi"
         }
 
-        gecko {
-            dimension "engine"
-
-            applicationIdSuffix ".gecko"
+        arm {
+            dimension "abi"
         }
-    }
 
-    variantFilter { variant ->
-        def flavors = variant.flavors*.name
-        // We only need a gecko debug and beta build for now.
-        if (flavors.contains("gecko") && ((variant.buildType.name != "debug" && variant.buildType.name != "beta") || flavors.contains("klar"))) {
-            setIgnore(true)
+        aarch64 {
+            dimension "abi"
         }
     }
 
@@ -109,122 +102,201 @@ android {
             }
         }
 
-        focusWebviewRelease {
-            java.srcDir 'src/focusRelease/java'
-            manifest.srcFile 'src/focusRelease/AndroidManifest.xml'
-            res.srcDir 'src/focusRelease/res'
-        }
-        klarWebviewRelease {
-            java.srcDir 'src/klarRelease/java'
-            res.srcDir 'src/klarRelease/res'
-        }
-        focusWebviewBeta {
-            res.srcDir 'src/focusBeta/res'
-        }
-        klarWebviewBeta {
-            res.srcDir 'src/klarBeta/res'
-        }
-        focusWebviewDebug {
-            res.srcDir 'src/focusDebug/res'
-        }
-        klarWebviewDebug {
-            res.srcDir 'src/klarDebug/res'
-        }
-    }
-}
+        // Release
+        focusX86Release.root = 'src/focusRelease'
+        focusArmRelease.root = 'src/focusRelease'
+        focusAarch64Release.root = 'src/focusRelease'
 
-kotlin {
-    experimental { coroutines 'enable' }
+        klarX86Release.root = 'src/klarRelease'
+        klarArmRelease.root = 'src/klarRelease'
+        klarAarch64Release.root = 'src/klarRelease'
+
+        // Debug
+        focusX86Debug.root = 'src/focusDebug'
+        focusArmDebug.root = 'src/focusDebug'
+        focusAarch64Debug.root = 'src/focusDebug'
+
+        klarX86Debug.root = 'src/klarDebug'
+        klarArmDebug.root = 'src/klarDebug'
+        klarAarch64Debug.root = 'src/klarDebug'
+
+        // Nightly
+        focusX86Nightly.root = 'src/focusNightly'
+        focusArmNightly.root = 'src/focusNightly'
+        focusAarch64Nightly.root = 'src/focusNightly'
+
+        klarX86Nightly.root = 'src/klarNightly'
+        klarArmNightly.root = 'src/klarNightly'
+        klarAarch64Nightly.root = 'src/klarNightly'
+    }
 }
 
 tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {
         kotlinOptions.allWarningsAsErrors = true
-}
-
-jacocoAndroidUnitTestReport {
-    csv.enabled false
-    html.enabled true
-    xml.enabled true
+        kotlinOptions.freeCompilerArgs += [
+                "-Xuse-experimental=kotlinx.coroutines.ExperimentalCoroutinesApi",
+                "-Xuse-experimental=kotlinx.coroutines.ObsoleteCoroutinesApi"]
 }
 
 repositories {
-    flatDir {
-        dirs 'libs'
+    maven {
+        //  For the latest version of GeckoView (moving target!):
+        //
+        //  Look at the Latest Firefox 64 on the mozilla-release repository:
+        //  hg.mozilla.org/releases/mozilla-release/branches
+        //
+        //  Click on the changeset ID to find the matching changeset/commit ID (shortened).
+        //  For the example tag above that's 5b5e620e33ee.
+        //
+        //  Now go to the list of revisions to find the matching changeset
+        //  (It should start with the ID you got from the tag, remember the full ID!):
+        //  tools.taskcluster.net/index/gecko.v2.mozilla-release.revision
+        //
+        //  Click through until you find the artifacts (revision -> mobile -> android-api-16-opt).
+        //
+        //  Remember the version of the artifacts. In the example above that's: 61.0.20180611134439
+
+        // ARM GeckoView builds
+        url "https://index.taskcluster.net/v1/task/gecko.v2.mozilla.revision" +
+                ".${geckoview_revision}.mobile.android-api-16-opt/artifacts/public/android/maven"
     }
-    mavenCentral()
+    maven {
+        // x86 GeckoView builds
+        url "https://index.taskcluster.net/v1/task/gecko.v2.mozilla.revision" +
+                ".${geckoview_revision}.mobile.android-x86-opt/artifacts/public/android/maven"
+    }
+    maven {
+        // aarch64 builds
+        url "https://index.taskcluster.net/v1/task/gecko.v2.mozilla.revision" +
+                ".${geckoview_revision}.mobile.android-aarch64-opt/artifacts/public/android/maven"
+    }
 }
 
 dependencies {
-    compile "com.android.support:appcompat-v7:$support_libraries_version"
-    compile "com.android.support:customtabs:$support_libraries_version"
-    compile "com.android.support:design:$support_libraries_version"
-    compile "com.android.support:cardview-v7:$support_libraries_version"
-    compile "com.android.support:recyclerview-v7:$support_libraries_version"
+    implementation "com.android.support:appcompat-v7:$support_libraries_version"
+    implementation "com.android.support:customtabs:$support_libraries_version"
+    implementation "com.android.support:design:$support_libraries_version"
+    implementation "com.android.support:cardview-v7:$support_libraries_version"
+    implementation "com.android.support:recyclerview-v7:$support_libraries_version"
+    implementation "com.android.support:support-v4:$support_libraries_version"
+    implementation "com.android.support:preference-v7:$support_libraries_version"
+    implementation 'io.sentry:sentry-android:1.7.9'
 
-    compile "android.arch.lifecycle:extensions:$architecture_components_version"
+    implementation "android.arch.lifecycle:extensions:$architecture_components_version"
 
-    compile ("com.google.code.findbugs:annotations:3.0.1") {
-        // We really only need the SuppressFBWarnings annotation, everything else can be ignored.
-        // Without this we get weird failures due to dependencies.
-        transitive = false
+    compileOnly 'net.jcip:jcip-annotations:1.0'
+    compileOnly "com.github.spotbugs:spotbugs-annotations:$spotbugs_version"
+    implementation("com.google.code.findbugs:jsr305:3.0.2")
+
+    implementation "org.mozilla.components:browser-session:$mozilla_components_version"
+    implementation "org.mozilla.components:browser-domains:$mozilla_components_version"
+    implementation "org.mozilla.components:browser-search:$mozilla_components_version"
+    implementation "org.mozilla.components:concept-engine:$mozilla_components_version"
+    implementation "org.mozilla.components:ui-autocomplete:$mozilla_components_version"
+    implementation "org.mozilla.components:ui-colors:$mozilla_components_version"
+    implementation "org.mozilla.components:service-telemetry:$mozilla_components_version"
+    implementation "org.mozilla.components:browser-errorpages:$mozilla_components_version"
+    implementation "org.mozilla.components:service-fretboard:$mozilla_components_version", {
+        exclude group: 'android.arch.work', module: 'work-runtime'
     }
+    implementation "org.mozilla.components:support-ktx:$mozilla_components_version"
+    implementation "org.mozilla.components:support-utils:$mozilla_components_version"
+    implementation "org.mozilla.components:lib-crash:$mozilla_components_version"
 
-    compile 'org.mozilla.telemetry:telemetry:1.1.1'
+    implementation 'com.squareup.okhttp3:okhttp:3.11.0'
 
-    compile "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
-    compile "org.jetbrains.kotlinx:kotlinx-coroutines-android:0.19.3"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutines_version"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines_version"
 
-    focusCompile 'com.adjust.sdk:adjust-android:4.11.4'
-    focusCompile 'com.google.android.gms:play-services-analytics:10.2.6' // Required by Adjust
+    focusImplementation 'com.adjust.sdk:adjust-android:4.11.4'
+    focusImplementation 'com.android.installreferrer:installreferrer:1.0' // Required by Adjust
 
-    geckoCompile(name: 'geckoview-latest', ext: 'aar')
+    armImplementation ("org.mozilla.geckoview:geckoview-armeabi-v7a:${geckoview_version}")
+    x86Implementation ("org.mozilla.geckoview:geckoview-x86:${geckoview_version}")
+    aarch64Implementation ("org.mozilla.geckoview:geckoview-arm64-v8a:${geckoview_version}")
+    implementation "com.android.support:palette-v7:$support_libraries_version" // required to force GV dependency version
 
-    // Leakcanary is only being used with debug build variant as of now, all others use a no-op version
-    debugCompile "com.squareup.leakcanary:leakcanary-android:$leakcanary_version"
-    compile "com.squareup.leakcanary:leakcanary-android-no-op:$leakcanary_version"
+    testImplementation "org.junit.jupiter:junit-jupiter-api:5.3.1"
+    testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:5.3.1"
+    testImplementation "org.junit.jupiter:junit-jupiter-params:5.3.1"
+    testImplementation "junit:junit:4.12"
+    testRuntimeOnly "org.junit.vintage:junit-vintage-engine:5.3.1"
+    testImplementation "org.robolectric:robolectric:4.0-alpha-3" // required to support api level 28
+    testImplementation 'org.mockito:mockito-core:2.21.0'
+    testImplementation "android.arch.core:core-testing:${architecture_components_version}"
 
-    testCompile 'junit:junit:4.12'
-    testCompile "org.robolectric:robolectric:3.5.1"
-    testCompile 'org.mockito:mockito-core:2.12.0'
+    androidTestImplementation 'com.android.support.test.uiautomator:uiautomator-v18:2.1.3'
 
-    androidTestCompile 'com.android.support.test.uiautomator:uiautomator-v18:2.1.3'
-
-    androidTestCompile "com.android.support.test.espresso:espresso-core:$espresso_version", {
+    androidTestImplementation "com.android.support.test.espresso:espresso-core:$espresso_version", {
         exclude group: 'com.android.support', module: 'support-annotations'
     }
-    androidTestCompile "com.android.support.test.espresso:espresso-idling-resource:$espresso_version"
-    androidTestCompile "com.android.support.test.espresso:espresso-web:$espresso_version", {
+    androidTestImplementation "com.android.support.test.espresso:espresso-idling-resource:$espresso_version"
+    androidTestImplementation "com.android.support.test.espresso:espresso-web:$espresso_version", {
         exclude group: 'com.android.support', module: 'support-annotations'
     }
 
-    androidTestCompile 'com.squareup.okhttp3:mockwebserver:3.7.0'
-    testCompile 'com.squareup.okhttp3:mockwebserver:3.7.0'
+    androidTestImplementation 'com.squareup.okhttp3:mockwebserver:3.10.0'
+    testImplementation 'com.squareup.okhttp3:mockwebserver:3.10.0'
 
-    androidTestCompile "tools.fastlane:screengrab:1.1.0", {
+    androidTestImplementation "tools.fastlane:screengrab:1.2.0", {
         exclude group: 'com.android.support', module: 'support-annotations'
     }
+    androidTestImplementation 'com.android.support.test.espresso:espresso-contrib:2.2.2', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+        exclude group: 'com.android.support', module: 'support-v4'
+        exclude group: 'com.android.support', module: 'design'
+        exclude group: 'com.android.support', module: 'recyclerview-v7'
+    }
+    implementation 'com.android.support.test:runner:1.0.2'
+    testImplementation 'com.android.support.test:rules:1.0.2'
+
+    implementation 'com.android.support.constraint:constraint-layout:1.1.3'
+    implementation 'com.jakewharton:process-phoenix:2.0.0'
+    debugImplementation 'com.facebook.stetho:stetho:1.5.0'
 }
-
 // -------------------------------------------------------------------------------------------------
 //  Dynamically set versionCode (See tools/build/versionCode.gradle
 // -------------------------------------------------------------------------------------------------
 
 android.applicationVariants.all { variant ->
     def buildType = variant.buildType.name
-    def isBetaOrRelease = buildType == "release" || buildType == "beta"
 
-    if (isBetaOrRelease) {
-        variant.mergedFlavor.versionCode = generatedVersionCode
+    if (buildType == "release" || buildType == "nightly") {
+        def versionCode = generatedVersionCode
+
+        // The Google Play Store does not allow multiple APKs for the same app that all have the
+        // same version code. Therefore we need to have different version codes for our ARM and x86
+        // builds.
+
+        // Our generated version code now has a length of 9 (See tools/gradle/versionCode.gradle).
+        // Our x86 builds need a higher version code to avoid installing ARM builds on an x86 device
+        // with ARM compatibility mode.
+
+        if (variant.flavorName.contains("X86")) {
+            versionCode = versionCode + 2
+        } else if (variant.flavorName.contains("Aarch64")) {
+            versionCode = versionCode + 1
+        }// else variant.flavorName.contains("Arm")) use generated version code
+
+        variant.outputs.all { output ->
+            setVersionCodeOverride(versionCode)
+        }
     }
 
-    println("Build type: " + buildType + " (versionCode = " + variant.mergedFlavor.versionCode + ")")
+    println("----------------------------------------------")
+    println("Build type:   " + buildType)
+    println("Flavor:       " + variant.flavorName)
+    println("Version code: " + variant.mergedFlavor.versionCode)
+
+
 }
 
 // -------------------------------------------------------------------------------------------------
 // Generate blocklists
 // -------------------------------------------------------------------------------------------------
 
-def blockListOutputDir = 'src/webview/res/raw'
+def blockListOutputDir = 'src/main/res/raw'
 
 task buildBlocklists(type:Copy) {
     from('../shavar-prod-lists') {
@@ -239,12 +311,14 @@ task buildBlocklists(type:Copy) {
 }
 
 clean.doLast {
-    file(blockListOutputDir).deleteDir()
+    delete fileTree(blockListOutputDir) {
+        include '**/*.json'
+    }
 }
 
 tasks.whenTaskAdded { task ->
     def name = task.name
-    if (name.contains("generate") && name.contains("Config") && name.contains("Webview")) {
+    if (name.contains("generate") && name.contains("Config")) {
         task.dependsOn buildBlocklists
     }
 }
@@ -256,20 +330,44 @@ tasks.whenTaskAdded { task ->
 android.applicationVariants.all { variant ->
     def variantName = variant.getName()
 
-    print("Adjust token (" + variantName + "): ")
+    print("Adjust token: ")
 
     if (variantName.contains("Release") && variantName.contains("focus")) {
         try {
             def token = new File("${rootDir}/.adjust_token").text.trim()
             buildConfigField 'String', 'ADJUST_TOKEN', '"' + token + '"'
-            println "(Added from .adjust_token file"
-        } catch (java.io.FileNotFoundException e) {
+            println "(Added from .adjust_token file)"
+        } catch (FileNotFoundException ignored) {
             buildConfigField 'String', 'ADJUST_TOKEN', 'null'
             println("X_X")
         }
     } else {
         buildConfigField 'String', 'ADJUST_TOKEN', 'null'
         println("--")
+    }
+}
+
+// -------------------------------------------------------------------------------------------------
+// Gecko: Put GeckoVersion into BuildConfig
+// -------------------------------------------------------------------------------------------------
+
+android.applicationVariants.all {
+    buildConfigField 'String', 'GECKOVIEW_VERSION', "\"${geckoview_version}\""
+}
+
+// -------------------------------------------------------------------------------------------------
+// Sentry: Read token from locale file if it exists (Only release builds)
+// -------------------------------------------------------------------------------------------------
+
+android.applicationVariants.all {
+    print("Sentry token: ")
+    try {
+        def token = new File("${rootDir}/.sentry_token").text.trim()
+        buildConfigField 'String', 'SENTRY_TOKEN', '"' + token + '"'
+        println "(Added from .sentry_token file)"
+    } catch (FileNotFoundException ignored) {
+        buildConfigField 'String', 'SENTRY_TOKEN', '""'
+        println("X_X")
     }
 }
 
@@ -285,7 +383,7 @@ def getEnabledLocales() {
     def potentialLanguageDirs = resDir.listFiles(new FilenameFilter() {
         @Override
         boolean accept(File dir, String name) {
-            return name.startsWith("values-");
+            return name.startsWith("values-")
         }
     })
 
@@ -355,21 +453,20 @@ clean.doLast {
 // -------------------------------------------------------------------------------------------------
 // Static Analysis: findbugs and pmd
 // -------------------------------------------------------------------------------------------------
-
-findbugs {
+spotbugs {
     ignoreFailures = false
 
-    effort = "max"
+    effort = "min"
     // This selects what level of bugs to report: low means low priority issues will be reported
     // (in addition to medium+high), which corresponds to warning about everything.
     // TODO: boost this to low once low priority issues are fixed.
     reportLevel = "medium"
 
-    excludeFilter = new File("${project.rootDir}/quality/findbugs-exclude.xml")
+    excludeFilter = new File("${project.rootDir}/quality/spotbugs-exclude.xml")
 }
 
-task findbugs(type: FindBugs, dependsOn: "assemble", group: 'verification') {
-    classes = files("$projectDir.absolutePath/build/intermediates/classes")
+task spotbugs(type: SpotBugsTask, dependsOn: "assemble", group: 'verification') {
+    classes = files("$projectDir.absolutePath/build/intermediates/javac")
 
     source = fileTree('src/main/java')
     classpath = files()
@@ -401,7 +498,7 @@ task pmd(type: Pmd, group: 'verification') {
         xml.enabled = false
         html.enabled = true
         html {
-            destination "$projectDir.absolutePath/build/reports/pmd/pmd.html"
+            destination file("$projectDir.absolutePath/build/reports/pmd/pmd.html")
         }
     }
 }
@@ -416,5 +513,43 @@ task checkstyle(type: Checkstyle) {
 }
 
 afterEvaluate {
-    check.dependsOn 'findbugs', 'pmd', 'checkstyle'
+    check.dependsOn 'spotbugs', 'pmd', 'checkstyle'
+}
+
+if (project.hasProperty("coverage")) {
+    tasks.withType(Test) {
+        jacoco.includeNoLocationClasses = true
+    }
+
+    android.applicationVariants.all { variant ->
+        task "jacoco${variant.name.capitalize()}TestReport"(type: JacocoReport,
+                dependsOn: ["test${variant.name.capitalize()}UnitTest"]) {
+
+            reports {
+                html.enabled true
+                xml.enabled true
+            }
+
+            def fileFilter = ['**/R.class', '**/R$*.class', '**/BuildConfig.*', '**/Manifest*.*',
+                              '**/*Test*.*', 'android/**/*.*', '**/*$[0-9].*']
+            def kotlinTree = fileTree(dir: "$project.buildDir/tmp/kotlin-classes/${variant.name}", excludes: fileFilter)
+            def javaTree = fileTree(dir: "$project.buildDir/intermediates/classes/${variant.flavorName}/${variant.buildType.name}",
+                    excludes: fileFilter)
+            def mainSrc = "$project.projectDir/src/main/java"
+            sourceDirectories = files([mainSrc])
+            classDirectories = files([kotlinTree, javaTree])
+            executionData = fileTree(dir: project.buildDir, includes: [
+                    "jacoco/test${variant.name.capitalize()}UnitTest.exec", 'outputs/code-coverage/connected/*coverage.ec'
+            ])
+        }
+    }
+
+    android {
+        buildTypes {
+            debug {
+                testCoverageEnabled true
+                applicationIdSuffix ".coverage"
+            }
+        }
+    }
 }

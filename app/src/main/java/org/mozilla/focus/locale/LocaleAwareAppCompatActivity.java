@@ -11,8 +11,10 @@ import android.support.v4.text.TextUtilsCompat;
 import android.support.v4.view.ViewCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.view.WindowManager;
 
 import org.mozilla.focus.activity.SettingsActivity;
+import org.mozilla.focus.utils.Settings;
 
 import java.util.Locale;
 
@@ -34,6 +36,11 @@ public abstract class LocaleAwareAppCompatActivity
         mLastLocale = LocaleManager.getInstance().getCurrentLocale(getApplicationContext());
 
         LocaleManager.getInstance().updateConfiguration(this, mLastLocale);
+
+
+        if (Settings.getInstance(this).shouldUseSecureMode()) {
+            getWindow().addFlags(WindowManager.LayoutParams.FLAG_SECURE);
+        }
 
         super.onCreate(savedInstanceState);
     }
@@ -83,6 +90,24 @@ public abstract class LocaleAwareAppCompatActivity
         startActivityForResult(settingsIntent, 0);
     }
 
+    public void openPrivacySecuritySettings() {
+        final Intent settingsIntent = new Intent(this, SettingsActivity.class);
+        settingsIntent.putExtra(SettingsActivity.SHOULD_OPEN_PRIVACY_EXTRA, true);
+        startActivityForResult(settingsIntent, 0);
+    }
+
+    public void openGeneralSettings() {
+        final Intent settingsIntent = new Intent(this, SettingsActivity.class);
+        settingsIntent.putExtra(SettingsActivity.SHOULD_OPEN_GENERAL_EXTRA, true);
+        startActivityForResult(settingsIntent, 0);
+    }
+
+    public void openMozillaSettings() {
+        final Intent settingsIntent = new Intent(this, SettingsActivity.class);
+        settingsIntent.putExtra(SettingsActivity.SHOULD_OPEN_MOZILLA_EXTRA, true);
+        startActivityForResult(settingsIntent, 0);
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -97,6 +122,11 @@ public abstract class LocaleAwareAppCompatActivity
     @Override
     protected void onResume() {
         super.onResume();
+        if (Settings.getInstance(this).shouldUseSecureMode()) {
+            getWindow().addFlags(WindowManager.LayoutParams.FLAG_SECURE);
+        } else {
+            getWindow().clearFlags(WindowManager.LayoutParams.FLAG_SECURE);
+        }
         ((LocaleAwareApplication) getApplicationContext()).onActivityResume();
     }
 

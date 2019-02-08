@@ -20,16 +20,18 @@ import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 
 import org.junit.After;
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mozilla.focus.R;
+import org.mozilla.focus.helpers.TestHelper;
+import org.mozilla.focus.utils.AppConstants;
 
 import java.io.IOException;
 
 import okhttp3.mockwebserver.MockResponse;
 import okhttp3.mockwebserver.MockWebServer;
-import org.mozilla.focus.helpers.TestHelper;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
@@ -45,6 +47,7 @@ import static android.support.test.espresso.web.webdriver.DriverAtoms.getText;
 import static org.hamcrest.core.IsEqual.equalTo;
 import static org.mozilla.focus.fragment.FirstrunFragment.FIRSTRUN_PREF;
 
+
 @RunWith(AndroidJUnit4.class)
 public class CustomTabTest {
     private static final String MENU_ITEM_LABEL = "TestItem4223";
@@ -55,16 +58,29 @@ public class CustomTabTest {
     private MockWebServer webServer;
 
     @Rule
-    public ActivityTestRule<MainActivity> activityTestRule  = new ActivityTestRule<>(
-            MainActivity.class, true, false);
+    public ActivityTestRule<IntentReceiverActivity> activityTestRule  = new ActivityTestRule<>(
+            IntentReceiverActivity.class, true, false);
+
+    @Before
+    public void setUp() {
+
+        Context appContext = InstrumentationRegistry.getInstrumentation()
+                .getTargetContext()
+                .getApplicationContext();
+
+        // This test runs on both GV and WV.
+        // Klar is used to test Geckoview. make sure it's set to Gecko
+        TestHelper.selectGeckoForKlar();
+
+    }
 
     @After
-    public void tearDown() throws Exception {
+    public void tearDown() {
         activityTestRule.getActivity().finishAndRemoveTask();
     }
 
     @Test
-    public void testCustomTabUI() throws Exception {
+    public void testCustomTabUI() {
         try {
             startWebServer();
 
@@ -72,9 +88,14 @@ public class CustomTabTest {
             activityTestRule.launchActivity(createCustomTabIntent());
 
             // Wait for website to load
-            onWebView()
-                    .withElement(findElement(Locator.ID, TEST_PAGE_HEADER_ID))
-                    .check(webMatches(getText(), equalTo(TEST_PAGE_HEADER_TEXT)));
+            Context appContext = InstrumentationRegistry.getInstrumentation()
+                    .getTargetContext()
+                    .getApplicationContext();
+            if (!AppConstants.INSTANCE.isGeckoBuild()) {
+                onWebView()
+                        .withElement(findElement(Locator.ID, TEST_PAGE_HEADER_ID))
+                        .check(webMatches(getText(), equalTo(TEST_PAGE_HEADER_TEXT)));
+            }
 
             // Verify action button is visible
             onView(withContentDescription(ACTION_BUTTON_DESCRIPTION))

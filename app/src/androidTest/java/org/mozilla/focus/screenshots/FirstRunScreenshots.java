@@ -4,6 +4,7 @@
 
 package org.mozilla.focus.screenshots;
 
+import android.os.SystemClock;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 import android.support.test.uiautomator.UiObjectNotFoundException;
@@ -15,28 +16,43 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mozilla.focus.R;
 import org.mozilla.focus.activity.MainActivity;
-import org.mozilla.focus.helpers.TestHelper;
 import org.mozilla.focus.helpers.MainActivityFirstrunTestRule;
+import org.mozilla.focus.helpers.TestHelper;
+import org.mozilla.focus.utils.AppConstants;
 
 import tools.fastlane.screengrab.Screengrab;
 import tools.fastlane.screengrab.locale.LocaleTestRule;
 
+import static android.support.test.espresso.Espresso.onView;
+import static android.support.test.espresso.assertion.ViewAssertions.matches;
+import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
+import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static junit.framework.Assert.assertTrue;
 
 @RunWith(AndroidJUnit4.class)
 public class FirstRunScreenshots extends ScreenshotTest {
     @Rule
-    public ActivityTestRule<MainActivity> mActivityTestRule = new MainActivityFirstrunTestRule(true);
+    public ActivityTestRule<MainActivity> mActivityTestRule = new MainActivityFirstrunTestRule(true) {
+        @Override
+        protected void beforeActivityLaunched() {
+            super.beforeActivityLaunched();
+
+            // This test is for webview only for now.
+            org.junit.Assume.assumeTrue(!AppConstants.INSTANCE.isGeckoBuild() &&
+                    !AppConstants.INSTANCE.isKlarBuild());
+        }
+    };
 
     @ClassRule
     public static final LocaleTestRule localeTestRule = new LocaleTestRule();
 
     @Test
     public void takeScreenshotsOfFirstrun() throws UiObjectNotFoundException {
-        assertTrue(device.findObject(new UiSelector()
-                .text(getString(R.string.firstrun_defaultbrowser_title))
-                .enabled(true)
-        ).waitForExists(waitingTime));
+        onView(withText(R.string.firstrun_defaultbrowser_title))
+                .check(matches(isDisplayed()));
+
+        device.waitForIdle();
+        SystemClock.sleep(5000);
 
         Screengrab.screenshot("Onboarding_1_View");
         TestHelper.nextBtn.click();

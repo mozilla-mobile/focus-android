@@ -9,7 +9,10 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.view.View;
 
-import org.mozilla.focus.session.Session;
+import java.util.Locale;
+
+import mozilla.components.browser.session.Session;
+import mozilla.components.concept.engine.HitResult;
 
 public interface IWebView {
     class HitTarget {
@@ -39,15 +42,20 @@ public interface IWebView {
         void onPageStarted(String url);
 
         void onPageFinished(boolean isSecure);
+
+        void onSecurityChanged(boolean isSecure, String host, String organization);
+
         void onProgress(int progress);
 
         void onURLChanged(final String url);
+
+        void onTitleChanged(final String title);
 
         void onRequest(final boolean isTriggeredByUserGesture);
 
         void onDownloadStart(Download download);
 
-        void onLongPress(final HitTarget hitTarget);
+        void onLongPress(final HitResult hitResult);
 
         /**
          * Notify the host application that the current page has entered full screen mode.
@@ -72,16 +80,28 @@ public interface IWebView {
         void resetBlockedTrackers();
 
         void onBlockingStateChanged(boolean isBlockingEnabled);
+
+        void onHttpAuthRequest(@NonNull HttpAuthCallback callback, String host, String realm);
+
+        void onRequestDesktopStateChanged(boolean shouldRequestDesktop);
     }
 
     interface FullscreenCallback {
         void fullScreenExited();
     }
 
+    interface HttpAuthCallback {
+        void proceed(String username, String password);
+
+        void cancel();
+    }
+
     /**
      * Enable/Disable content blocking for this session (Only the blockers that are enabled in the app's settings will be turned on/off).
      */
     void setBlockingEnabled(boolean enabled);
+
+    void setRequestDesktop(boolean shouldRequestDesktop);
 
     void setCallback(Callback callback);
 
@@ -112,6 +132,22 @@ public interface IWebView {
     void restoreWebViewState(Session session);
 
     void saveWebViewState(@NonNull Session session);
+
+    void exitFullscreen();
+
+    void findAllAsync(String find);
+
+    void findNext(boolean forward);
+
+    void clearMatches();
+
+    void setFindListener(IFindListener findListener);
+
+    void loadData(String baseURL, String data, String mimeType, String encoding, String historyURL);
+
+    void releaseGeckoSession();
+
+    void updateLocale(Locale currentLocale);
 
     /**
      * Get the title of the currently displayed website.

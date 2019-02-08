@@ -7,7 +7,6 @@ package org.mozilla.focus.activity;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.RemoteException;
 import android.preference.PreferenceManager;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.rule.ActivityTestRule;
@@ -23,25 +22,25 @@ import org.junit.Assert;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mozilla.focus.helpers.TestHelper;
+import org.mozilla.focus.utils.AppConstants;
 
 import java.io.IOException;
 
 import okhttp3.mockwebserver.MockResponse;
 import okhttp3.mockwebserver.MockWebServer;
-import org.mozilla.focus.helpers.TestHelper;
 
 import static junit.framework.Assert.assertTrue;
 import static org.hamcrest.core.IsNull.notNullValue;
 import static org.junit.Assert.assertThat;
-import static org.mozilla.focus.helpers.TestHelper.waitingTime;
 import static org.mozilla.focus.fragment.FirstrunFragment.FIRSTRUN_PREF;
+import static org.mozilla.focus.helpers.TestHelper.waitingTime;
 
 // This test opens enters and invalid URL, and Focus should provide an appropriate error message
 @RunWith(AndroidJUnit4.class)
 public class SwitchContextTest {
 
     private static final String TEST_PATH = "/";
-    private Context appContext;
     private MockWebServer webServer;
 
     @Rule
@@ -50,9 +49,12 @@ public class SwitchContextTest {
         protected void beforeActivityLaunched() {
             super.beforeActivityLaunched();
 
-            appContext = InstrumentationRegistry.getInstrumentation()
+            Context appContext = InstrumentationRegistry.getInstrumentation()
                     .getTargetContext()
                     .getApplicationContext();
+
+            // This test is for webview only. Debug is defaulted to Webview, and Klar is used for GV testing.
+            org.junit.Assume.assumeTrue(!AppConstants.INSTANCE.isGeckoBuild() && !AppConstants.INSTANCE.isKlarBuild());
 
             PreferenceManager.getDefaultSharedPreferences(appContext)
                     .edit()
@@ -67,6 +69,8 @@ public class SwitchContextTest {
                         .addHeader("Set-Cookie", "sphere=battery; Expires=Wed, 21 Oct 2035 07:28:00 GMT;"));
                 webServer.enqueue(new MockResponse()
                         .setBody(TestHelper.readTestAsset("rabbit.jpg")));
+                webServer.enqueue(new MockResponse()
+                        .setBody(TestHelper.readTestAsset("download.jpg")));
 
                 webServer.start();
             } catch (IOException e) {
@@ -88,21 +92,12 @@ public class SwitchContextTest {
     };
 
     @After
-    public void tearDown() throws Exception {
+    public void tearDown() {
         mActivityTestRule.getActivity().finishAndRemoveTask();
     }
 
-    private UiObject titleMsg = TestHelper.mDevice.findObject(new UiSelector()
-            .description("focus test page")
-            .enabled(true));
-
-    private UiObject rabbitImage = TestHelper.mDevice.findObject(new UiSelector()
-            .description("Smiley face")
-            .enabled(true));
-
-
     @Test
-    public void ForegroundTest() throws InterruptedException, UiObjectNotFoundException {
+    public void ForegroundTest() throws  UiObjectNotFoundException {
 
         // Open a webpage
         TestHelper.inlineAutocompleteEditText.waitForExists(waitingTime);
@@ -114,28 +109,23 @@ public class SwitchContextTest {
 
         // Assert website is loaded
         TestHelper.waitForWebSiteTitleLoad();
-        assertTrue(rabbitImage.exists());
 
         // Switch out of Focus, pull down system bar and select open action
         TestHelper.pressHomeKey();
         TestHelper.openNotification();
         TestHelper.waitForIdle();
         // If simulator has more recent message, the options need to be expanded
-        if (!TestHelper.notificationOpenItem.waitForExists(waitingTime)) {
-            TestHelper.notificationExpandSwitch.click();
-            assertTrue(TestHelper.notificationOpenItem.exists());
-        }
+        TestHelper.expandNotification();
         TestHelper.notificationOpenItem.click();
 
         // Verify that it's on the main view, showing the previous browsing session
         TestHelper.browserURLbar.waitForExists(waitingTime);
         assertTrue(TestHelper.browserURLbar.exists());
         TestHelper.waitForWebSiteTitleLoad();
-        assertTrue(rabbitImage.exists());
     }
 
     @Test
-    public void eraseAndOpenTest() throws InterruptedException, UiObjectNotFoundException {
+    public void eraseAndOpenTest() throws UiObjectNotFoundException {
 
         // Open a webpage
         TestHelper.inlineAutocompleteEditText.waitForExists(waitingTime);
@@ -147,17 +137,13 @@ public class SwitchContextTest {
 
         // Assert website is loaded
         TestHelper.waitForWebSiteTitleLoad();
-        assertTrue(rabbitImage.exists());
 
         // Switch out of Focus, pull down system bar and select open action
         TestHelper.pressHomeKey();
         TestHelper.openNotification();
 
         // If simulator has more recent message, the options need to be expanded
-        if (!TestHelper.notificationEraseOpenItem.waitForExists(waitingTime)) {
-            TestHelper.notificationExpandSwitch.click();
-            assertTrue(TestHelper.notificationEraseOpenItem.exists());
-        }
+        TestHelper.expandNotification();
         TestHelper.notificationEraseOpenItem.click();
 
         // Verify that it's on the main view, showing the initial view
@@ -165,18 +151,16 @@ public class SwitchContextTest {
         assertTrue(TestHelper.erasedMsg.exists());
         assertTrue(TestHelper.inlineAutocompleteEditText.exists());
         assertTrue(TestHelper.initialView.exists());
-        assertTrue(!rabbitImage.exists());
     }
 
     @Test
-    public void settingsToFocus() throws InterruptedException, UiObjectNotFoundException, RemoteException {
+    public void settingsToFocus() throws UiObjectNotFoundException {
 
         // Initialize UiDevice instance
         final int LAUNCH_TIMEOUT = 5000;
         final String SETTINGS_APP = "com.android.settings";
-        final UiObject settingsTitle = TestHelper.mDevice.findObject(new UiSelector()
-                .text("Settings")
-                .packageName("com.android.settings")
+        final UiObject settings = TestHelper.mDevice.findObject(new UiSelector()
+                .packageName(SETTINGS_APP)
                 .enabled(true));
 
         // Open a webpage
@@ -188,7 +172,6 @@ public class SwitchContextTest {
 
         // Assert website is loaded
         TestHelper.waitForWebSiteTitleLoad();
-        junit.framework.Assert.assertTrue(rabbitImage.exists());
 
         // Switch out of Focus, open settings app
         TestHelper.pressHomeKey();
@@ -207,22 +190,18 @@ public class SwitchContextTest {
                 .getLaunchIntentForPackage(SETTINGS_APP);
         context.startActivity(intent);
 
-        // Verify that it's in the Settings, then switch to Focus
-        settingsTitle.waitForExists(waitingTime);
-        assertTrue(settingsTitle.exists());
+        // switch to Focus
+        settings.waitForExists(waitingTime);
+        assertTrue(settings.exists());
         TestHelper.openNotification();
 
         // If simulator has more recent message, the options need to be expanded
-        if (!TestHelper.notificationOpenItem.waitForExists(waitingTime)) {
-            TestHelper.notificationExpandSwitch.click();
-            assertTrue(TestHelper.notificationOpenItem.exists());
-        }
+        TestHelper.expandNotification();
         TestHelper.notificationOpenItem.click();
 
         // Verify that it's on the main view, showing the previous browsing session
         TestHelper.browserURLbar.waitForExists(waitingTime);
         assertTrue(TestHelper.browserURLbar.exists());
         TestHelper.waitForWebSiteTitleLoad();
-        assertTrue(rabbitImage.exists());
     }
 }

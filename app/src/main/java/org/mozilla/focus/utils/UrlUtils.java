@@ -11,9 +11,9 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.webkit.URLUtil;
-
-import org.mozilla.focus.search.SearchEngine;
-import org.mozilla.focus.search.SearchEngineManager;
+import mozilla.components.browser.search.SearchEngine;
+import org.mozilla.focus.browser.LocalizedContent;
+import org.mozilla.focus.ext.ContextKt;
 
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -37,11 +37,8 @@ public class UrlUtils {
      */
     public static boolean isUrl(String url) {
         String trimmedUrl = url.trim();
-        if (trimmedUrl.contains(" ")) {
-            return false;
-        }
+        return !trimmedUrl.contains(" ") && (trimmedUrl.contains(".") || trimmedUrl.contains(":"));
 
-        return trimmedUrl.contains(".") || trimmedUrl.contains(":");
     }
 
     public static boolean isValidSearchQueryUrl(String url) {
@@ -51,32 +48,22 @@ public class UrlUtils {
             trimmedUrl = "http://" + trimmedUrl;
         }
 
-        if (!URLUtil.isNetworkUrl(trimmedUrl)) {
-            return false;
-        }
+        final boolean isNetworkUrl = URLUtil.isNetworkUrl(trimmedUrl);
+        final boolean containsToken = trimmedUrl.contains("%s");
 
-        if (!trimmedUrl.matches(".*%s$")) {
-            return false;
-        }
-
-        return true;
+        return isNetworkUrl && containsToken;
     }
 
     public static boolean isHttpOrHttps(String url) {
-        if (TextUtils.isEmpty(url)) {
-            return false;
-        }
+        return !TextUtils.isEmpty(url) && (url.startsWith("http:") || url.startsWith("https:"));
 
-        return url.startsWith("http:") || url.startsWith("https:");
-    }
-
-    public static boolean isSearchQuery(String text) {
-        return text.contains(" ");
     }
 
     public static String createSearchUrl(Context context, String searchTerm) {
-        final SearchEngine searchEngine = SearchEngineManager.getInstance()
-                .getDefaultSearchEngine(context);
+        final String defaultIdentifier = Settings.getInstance(context).getDefaultSearchEngineName();
+
+        final SearchEngine searchEngine = ContextKt.getComponents(context).getSearchEngineManager()
+                .getDefaultSearchEngine(context, defaultIdentifier);
 
         return searchEngine.buildSearchUrl(searchTerm);
     }
@@ -110,9 +97,11 @@ public class UrlUtils {
     public static boolean isPermittedResourceProtocol(@Nullable final String scheme) {
         return scheme != null && (
                 scheme.startsWith("http") ||
-                scheme.startsWith("https") ||
-                scheme.startsWith("file") ||
-                scheme.startsWith("data"));
+                        scheme.startsWith("https") ||
+                        scheme.startsWith("file") ||
+                        scheme.startsWith("data") ||
+                        scheme.startsWith("javascript") ||
+                        scheme.startsWith("about"));
     }
 
     public static boolean isSupportedProtocol(@Nullable final String scheme) {
@@ -184,5 +173,14 @@ public class UrlUtils {
         }
 
         return url.substring(start);
+    }
+
+    public static String stripSchemeAndSubDomain(String url) {
+        return normalize(stripCommonSubdomains(stripScheme(url)));
+    }
+
+    public static boolean isLocalizedContent(@Nullable String url) {
+        return url != null &&
+            (url.equals(LocalizedContent.URL_ABOUT) || url.equals(LocalizedContent.URL_RIGHTS) || url.equals("about:blank"));
     }
 }

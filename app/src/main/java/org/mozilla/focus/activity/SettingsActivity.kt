@@ -9,13 +9,20 @@ import android.view.MenuItem
 import kotlinx.android.synthetic.main.activity_settings.*
 import org.mozilla.focus.R
 import org.mozilla.focus.locale.LocaleAwareAppCompatActivity
+import org.mozilla.focus.settings.BaseSettingsFragment
+import org.mozilla.focus.settings.MozillaSettingsFragment
 import org.mozilla.focus.settings.SettingsFragment
+import org.mozilla.focus.settings.PrivacySecuritySettingsFragment
+import org.mozilla.focus.settings.GeneralSettingsFragment
 
-class SettingsActivity : LocaleAwareAppCompatActivity(), SettingsFragment.ActionBarUpdater {
+class SettingsActivity : LocaleAwareAppCompatActivity(), BaseSettingsFragment.ActionBarUpdater {
 
     companion object {
         @JvmField
         val ACTIVITY_RESULT_LOCALE_CHANGED = 1
+        const val SHOULD_OPEN_PRIVACY_EXTRA = "shouldOpenPrivacy"
+        const val SHOULD_OPEN_MOZILLA_EXTRA = "shouldOpenMozilla"
+        const val SHOULD_OPEN_GENERAL_EXTRA = "shouldOpenGeneral"
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -26,12 +33,24 @@ class SettingsActivity : LocaleAwareAppCompatActivity(), SettingsFragment.Action
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        if (savedInstanceState == null) {
-            val fragment = SettingsFragment.newInstance(intent.extras, SettingsFragment.SettingsScreen.MAIN)
-
-            fragmentManager.beginTransaction()
-                    .add(R.id.container, fragment)
+        if (intent.extras != null) {
+            if (intent?.extras?.getBoolean(SHOULD_OPEN_PRIVACY_EXTRA) == true) {
+                supportFragmentManager.beginTransaction()
+                    .replace(R.id.container, PrivacySecuritySettingsFragment())
                     .commit()
+            } else if (intent?.extras?.getBoolean(SHOULD_OPEN_MOZILLA_EXTRA) == true) {
+                supportFragmentManager.beginTransaction()
+                        .replace(R.id.container, MozillaSettingsFragment())
+                        .commit()
+            } else if (intent?.extras?.getBoolean(SHOULD_OPEN_GENERAL_EXTRA) == true) {
+                supportFragmentManager.beginTransaction()
+                        .replace(R.id.container, GeneralSettingsFragment())
+                        .commit()
+            }
+        } else if (savedInstanceState == null) {
+            supportFragmentManager.beginTransaction()
+                .add(R.id.container, SettingsFragment.newInstance())
+                .commit()
         }
 
         // Ensure all locale specific Strings are initialised on first run, we don't set the title

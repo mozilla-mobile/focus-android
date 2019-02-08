@@ -9,23 +9,23 @@ import android.support.test.espresso.ViewAction;
 import android.support.test.espresso.web.webdriver.Locator;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
-import android.support.test.uiautomator.UiObjectNotFoundException;
 import android.view.View;
 
 import org.hamcrest.Matcher;
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mozilla.focus.R;
 import org.mozilla.focus.helpers.MainActivityFirstrunTestRule;
+import org.mozilla.focus.helpers.TestHelper;
 
 import java.io.IOException;
 
 import okhttp3.mockwebserver.MockResponse;
 import okhttp3.mockwebserver.MockWebServer;
-import org.mozilla.focus.helpers.TestHelper;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
@@ -45,7 +45,10 @@ import static android.support.test.espresso.web.webdriver.DriverAtoms.findElemen
 import static android.support.test.espresso.web.webdriver.DriverAtoms.getText;
 import static org.hamcrest.Matchers.containsString;
 
+
+// https://testrail.stage.mozaws.net/index.php?/cases/view/94146
 @RunWith(AndroidJUnit4.class)
+@Ignore("Pull to refresh is currently disabled in all builds")
 public class PullDownToRefreshTest {
     private static final String COUNTER = "counter";
     private static final String FIRST_TIME = "1";
@@ -75,7 +78,7 @@ public class PullDownToRefreshTest {
     }
 
     @Test
-    public void pullDownToRefreshTest() throws InterruptedException, UiObjectNotFoundException, IOException {
+    public void pullDownToRefreshTest() {
 
        onView(withId(R.id.urlView))
                 .check(matches(isDisplayed()))

@@ -5,15 +5,17 @@
 package org.mozilla.focus.ext
 
 import android.content.Context
-
-// Extension functions for the Context class
+import org.mozilla.focus.Components
+import org.mozilla.focus.FocusApplication
 
 /**
- * The (visible) version name of the application, as specified by the <manifest> tag's versionName
- * attribute. E.g. "2.0".
+ * Get the FocusApplication object from a context.
  */
-val Context.appVersionName: String?
-    get() {
-        val packageInfo = packageManager.getPackageInfo(packageName, 0)
-        return packageInfo.versionName
-    }
+val Context.application: FocusApplication
+    get() = applicationContext as FocusApplication
+
+/**
+ * Get the components of this application.
+ */
+val Context.components: Components
+    get() = application.components

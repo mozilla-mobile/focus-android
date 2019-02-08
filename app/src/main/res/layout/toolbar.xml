@@ -3,12 +3,13 @@
    - License, v. 2.0. If a copy of the MPL was not distributed with this
    - file, You can obtain one at http://mozilla.org/MPL/2.0/. -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:animateLayoutChanges="true"
     android:orientation="horizontal"
-    android:paddingStart="16dp"
+    android:paddingStart="8dp"
     android:paddingEnd="0dp">
 
     <ImageButton
@@ -20,18 +21,55 @@
         android:contentDescription="@string/content_description_customtab_exit"
         android:visibility="gone"/>
 
-    <ImageView
-        android:id="@+id/lock"
-        android:layout_width="24dp"
-        android:layout_height="24dp"
-        android:layout_gravity="center_vertical"
-        android:layout_marginBottom="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="10dp"
-        android:scaleType="centerInside"
-        android:src="@drawable/ic_lock"
-        android:visibility="gone"
-        android:contentDescription="@string/content_description_lock" />
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_gravity="center_vertical">
+
+        <ImageButton
+            android:id="@+id/tracking_protection_menu"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:background="?android:attr/selectableItemBackgroundBorderless"
+            android:clickable="true"
+            android:focusable="true"
+            android:scaleType="centerInside"
+            android:src="@drawable/ic_tracking_protection_cutout"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tracking_protection_count"
+            android:layout_width="22dp"
+            android:layout_height="wrap_content"
+            android:maxLines="1"
+            android:text="0"
+            android:textColor="@color/photonWhite"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="@+id/tracking_protection_menu"
+            app:layout_constraintEnd_toEndOf="@+id/tracking_protection_menu"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toEndOf="@+id/guideline"
+            app:layout_constraintTop_toBottomOf="@id/guideline2"
+            app:layout_constraintVertical_bias="0.0" />
+
+        <android.support.constraint.Guideline
+            android:id="@+id/guideline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="26dp" />
+
+        <android.support.constraint.Guideline
+            android:id="@+id/guideline2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_begin="22dp" />
+
+    </android.support.constraint.ConstraintLayout>
 
     <!-- lint: We need to use singleLine=true for the fading edge to work (which is officially deprecated,
          but still needed), hence we ignore deprecated warnings here.. -->
@@ -45,9 +83,7 @@
         android:ellipsize="none"
         android:requiresFadingEdge="horizontal"
         android:gravity="center_vertical"
-        android:lines="1"
         android:layout_marginEnd="8dp"
-        android:maxLines="1"
         android:singleLine="true"
         android:textColor="#ffffff"
         android:textSize="15sp" />
@@ -66,6 +102,15 @@
         android:visibility="gone"
         android:layout_gravity="center_vertical"
         android:background="?android:attr/selectableItemBackgroundBorderless"/>
+
+    <ImageButton
+        android:id="@+id/erase"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_gravity="center_vertical"
+        android:background="?android:attr/selectableItemBackgroundBorderless"
+        android:contentDescription="@string/content_description_erase"
+        android:src="@drawable/ic_delete" />
 
     <FrameLayout
         android:layout_width="wrap_content"
@@ -101,5 +146,4 @@
         </FrameLayout>
 
     </FrameLayout>
-
 </LinearLayout>

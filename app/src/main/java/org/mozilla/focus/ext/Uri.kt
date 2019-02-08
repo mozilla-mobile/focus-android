@@ -5,6 +5,7 @@
 package org.mozilla.focus.ext
 
 import android.net.Uri
+import mozilla.components.support.ktx.kotlin.ELLIPSIS
 
 // Extension functions for the android.net.Uri class
 
@@ -30,7 +31,7 @@ fun Uri.truncatedHost(): String? {
     //   www.tomshardware.co.uk -> tomshardware.co.uk
     // * If there's no host then just remove the URL as is.
 
-    val hostSegments = host.split(".")
+    val hostSegments = host!!.split(".")
     val usedHostSegments = mutableListOf<String>()
 
     for (segment in hostSegments.reversed()) {

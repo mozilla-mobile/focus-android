@@ -6,19 +6,15 @@ package org.mozilla.focus.screenshots;
 
 import android.os.Build;
 import android.support.test.espresso.web.webdriver.Locator;
-import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 import android.support.test.uiautomator.UiObject;
 import android.support.test.uiautomator.UiSelector;
 
 import org.junit.ClassRule;
-import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mozilla.focus.R;
-import org.mozilla.focus.activity.MainActivity;
 import org.mozilla.focus.helpers.TestHelper;
-import org.mozilla.focus.helpers.MainActivityFirstrunTestRule;
 
 import tools.fastlane.screengrab.Screengrab;
 import tools.fastlane.screengrab.locale.LocaleTestRule;
@@ -39,8 +35,6 @@ import static junit.framework.Assert.assertTrue;
 
 @RunWith(AndroidJUnit4.class)
 public class ErrorPagesScreenshots extends ScreenshotTest {
-    @Rule
-    public ActivityTestRule<MainActivity> mActivityTestRule = new MainActivityFirstrunTestRule(false);
 
     @ClassRule
     public static final LocaleTestRule localeTestRule = new LocaleTestRule();
@@ -63,7 +57,7 @@ public class ErrorPagesScreenshots extends ScreenshotTest {
     }
 
     @Test
-    public void takeScreenshotsOfErrorPages() throws Exception {
+    public void takeScreenshotsOfErrorPages() {
         for (ErrorTypes error: ErrorTypes.values()) {
             onView(withId(R.id.urlView))
                     .check(matches(isDisplayed()))
@@ -76,7 +70,7 @@ public class ErrorPagesScreenshots extends ScreenshotTest {
             // Android O has an issue with using Locator.ID
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 UiObject tryAgainBtn = device.findObject(new UiSelector()
-                        .descriptionContains(getString(R.string.errorpage_refresh))
+                        .resourceId("errorTryAgain")
                         .clickable(true));
                 assertTrue(tryAgainBtn.waitForExists(waitingTime));
             } else {
