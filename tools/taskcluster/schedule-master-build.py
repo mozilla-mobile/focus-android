@@ -187,5 +187,5 @@ if __name__ == "__main__":
     # uiWebviewX86TestTaskId, uiWebviewX86TestTask = generate_ui_test_task([unitTestTaskId, codeQualityTaskId], "Webview", "X86")
     # schedule_task(queue, uiWebviewX86TestTaskId, uiWebviewX86TestTask)
 
-    uploadNDTaskId, uploadNDTask = upload_apk_nimbledroid_task([unitTestTaskId, codeQualityTaskId])
-    schedule_task(queue, uploadNDTaskId, uploadNDTask)
+    # uploadNDTaskId, uploadNDTask = upload_apk_nimbledroid_task([unitTestTaskId, codeQualityTaskId])
+    # schedule_task(queue, uploadNDTaskId, uploadNDTask)
