@@ -299,10 +299,11 @@ class GeckoWebViewProvider : IWebViewProvider {
 
         private fun applyAppSettings() {
             geckoRuntime!!.settings.javaScriptEnabled =
-                    !Settings.getInstance(context).shouldBlockJavaScript()
+                !Settings.getInstance(context).shouldBlockJavaScript()
             geckoRuntime!!.settings.webFontsEnabled =
-                    !Settings.getInstance(context).shouldBlockWebFonts()
-            geckoRuntime!!.settings.remoteDebuggingEnabled = false
+                !Settings.getInstance(context).shouldBlockWebFonts()
+            geckoRuntime!!.settings.remoteDebuggingEnabled =
+                Settings.getInstance(context).shouldEnableRemoteDebugging()
             updateCookieSettings()
         }
 
