@@ -18,7 +18,7 @@ import org.mozilla.focus.R
 
 class FloatingSessionsButton : FloatingActionButton {
 
-    private var textPaint: TextPaint? = null
+    private var textPaint: TextPaint
     private var tabCount: Int = 0
 
     constructor(context: Context) : super(context)
@@ -35,8 +35,8 @@ class FloatingSessionsButton : FloatingActionButton {
         val textSize = resources.getDimensionPixelSize(R.dimen.tabs_button_text_size)
 
         textPaint = TextPaint(paint)
-        textPaint?.textAlign = Paint.Align.CENTER
-        textPaint?.textSize = textSize.toFloat()
+        textPaint.textAlign = Paint.Align.CENTER
+        textPaint.textSize = textSize.toFloat()
 
         setImageResource(R.drawable.tab_number_border)
     }
@@ -65,11 +65,11 @@ class FloatingSessionsButton : FloatingActionButton {
         super.onDraw(canvas)
 
         val x = canvas.width / 2f
-        val y = canvas.height / 2f - (textPaint!!.descent() + textPaint!!.ascent()) / 2f
+        val y = canvas.height / 2f - (textPaint.descent() + textPaint.ascent()) / 2f
 
         val text = if (tabCount < TOO_MANY_TABS) tabCount.toString() else TOO_MANY_TABS_SYMBOL
 
-        canvas.drawText(text, x, y, textPaint!!)
+        canvas.drawText(text, x, y, textPaint)
     }
 
     companion object {
