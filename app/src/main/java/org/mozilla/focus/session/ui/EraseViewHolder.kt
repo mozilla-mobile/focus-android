@@ -20,9 +20,11 @@ class EraseViewHolder(
     itemView: View
 ) : RecyclerView.ViewHolder(itemView), View.OnClickListener {
 
+    private val textView: TextView
+
     init {
-        val textView = itemView as TextView
-        val leftDrawable = AppCompatResources.getDrawable(itemView.getContext(), R.drawable.ic_delete)
+        textView = itemView as TextView
+        val leftDrawable = AppCompatResources.getDrawable(itemView.context, R.drawable.ic_delete)
         textView.setCompoundDrawablesWithIntrinsicBounds(leftDrawable, null, null, null)
         textView.setOnClickListener(this)
     }
@@ -30,6 +32,7 @@ class EraseViewHolder(
     override fun onClick(view: View) {
         TelemetryWrapper.eraseInTabsTrayEvent()
 
+        textView.setOnClickListener(null)
         fragment.animateAndDismiss().addListener(object : AnimatorListenerAdapter() {
             override fun onAnimationEnd(animation: Animator) {
                 fragment.requireComponents.sessionManager.removeAndCloseAllSessions()
