@@ -2,8 +2,23 @@
 <!-- This Source Code Form is subject to the terms of the Mozilla Public
    - License, v. 2.0. If a copy of the MPL was not distributed with this
    - file, You can obtain one at http://mozilla.org/MPL/2.0/. -->
-<android.support.v7.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/domainList"
-    android:orientation="vertical"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" />
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <android.support.v7.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/domainList"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/addCustomUrlFab"
+        android:src="@drawable/ic_add"
+        android:layout_gravity="bottom|center_horizontal"
+        android:layout_width="@dimen/floating_action_button_size"
+        android:layout_height="@dimen/floating_action_button_size"
+        android:layout_margin="@dimen/floating_action_button_margin" />
+
+</android.support.design.widget.CoordinatorLayout>

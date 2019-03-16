@@ -7,6 +7,7 @@ package org.mozilla.focus.autocomplete
 import android.content.Context
 import android.graphics.Color
 import android.os.Bundle
+import android.support.design.widget.FloatingActionButton
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
@@ -67,14 +68,6 @@ open class AutocompleteListFragment : Fragment(), CoroutineScope {
 
                 override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {}
 
-                override fun getMovementFlags(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder): Int {
-                    if (viewHolder is AddActionViewHolder) {
-                        return ItemTouchHelper.Callback.makeMovementFlags(0, 0)
-                    }
-
-                    return super.getMovementFlags(recyclerView, viewHolder)
-                }
-
                 override fun onSelectedChanged(viewHolder: RecyclerView.ViewHolder?, actionState: Int) {
                     super.onSelectedChanged(viewHolder, actionState)
 
@@ -90,19 +83,7 @@ open class AutocompleteListFragment : Fragment(), CoroutineScope {
                         viewHolder.onCleared()
                     }
                 }
-
-                override fun canDropOver(
-                    recyclerView: RecyclerView,
-                    current: RecyclerView.ViewHolder,
-                    target: RecyclerView.ViewHolder
-                ): Boolean {
-                    if (target is AddActionViewHolder) {
-                        return false
-                    }
-
-                    return super.canDropOver(recyclerView, current, target)
-                }
-    })
+            })
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -115,8 +96,18 @@ open class AutocompleteListFragment : Fragment(), CoroutineScope {
      */
     open fun isSelectionMode() = false
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View =
-            inflater.inflate(R.layout.fragment_autocomplete_customdomains, container, false)
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+        val root = inflater.inflate(R.layout.fragment_autocomplete_customdomains, container, false)
+        val addCustomUrlFab = root.findViewById<FloatingActionButton>(R.id.addCustomUrlFab)
+        addCustomUrlFab.setOnClickListener {
+            fragmentManager!!
+                    .beginTransaction()
+                    .replace(R.id.container, AutocompleteAddFragment())
+                    .addToBackStack(null)
+                    .commit()
+        }
+        return root
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         domainList.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
@@ -196,26 +187,18 @@ open class AutocompleteListFragment : Fragment(), CoroutineScope {
             }
         }
 
-        override fun getItemViewType(position: Int) =
-                when (position) {
-                    domains.size -> AddActionViewHolder.LAYOUT_ID
-                    else -> DomainViewHolder.LAYOUT_ID
-                }
+        override fun getItemViewType(position: Int) = DomainViewHolder.LAYOUT_ID
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder =
                 when (viewType) {
-                    AddActionViewHolder.LAYOUT_ID ->
-                            AddActionViewHolder(
-                                    this@AutocompleteListFragment,
-                                    LayoutInflater.from(parent.context).inflate(viewType, parent, false))
                     DomainViewHolder.LAYOUT_ID ->
-                            DomainViewHolder(
-                                    LayoutInflater.from(parent.context).inflate(viewType, parent, false),
-                                    { AutocompleteDomainFormatter.format(it) })
+                        DomainViewHolder(
+                                LayoutInflater.from(parent.context).inflate(viewType, parent, false),
+                                { AutocompleteDomainFormatter.format(it) })
                     else -> throw IllegalArgumentException("Unknown view type: $viewType")
                 }
 
-        override fun getItemCount(): Int = domains.size + if (isSelectionMode()) 0 else 1
+        override fun getItemCount(): Int = domains.size
 
         override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
             if (holder is DomainViewHolder) {
@@ -305,28 +288,6 @@ open class AutocompleteListFragment : Fragment(), CoroutineScope {
 
         fun onCleared() {
             itemView.setBackgroundColor(0)
-        }
-    }
-
-    /**
-     * ViewHolder implementation for a "Add custom domain" item at the bottom of the list.
-     */
-    private class AddActionViewHolder(
-        val fragment: AutocompleteListFragment,
-        itemView: View
-    ) : RecyclerView.ViewHolder(itemView) {
-        init {
-            itemView.setOnClickListener {
-                fragment.fragmentManager!!
-                        .beginTransaction()
-                        .replace(R.id.container, AutocompleteAddFragment())
-                        .addToBackStack(null)
-                        .commit()
-            }
-        }
-
-        companion object {
-            val LAYOUT_ID = R.layout.item_add_custom_domain
         }
     }
 }

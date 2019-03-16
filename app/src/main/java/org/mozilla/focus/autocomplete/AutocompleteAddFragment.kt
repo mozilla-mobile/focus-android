@@ -106,8 +106,6 @@ class AutocompleteAddFragment : Fragment(), CoroutineScope {
             TelemetryWrapper.saveAutocompleteDomainEvent(TelemetryWrapper.AutoCompleteEventSource.SETTINGS)
         }
 
-        ViewUtils.showBrandedSnackbar(view, R.string.preference_autocomplete_add_confirmation, 0)
-
         fragmentManager?.popBackStack()
     }
 }
