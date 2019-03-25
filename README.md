@@ -1,4 +1,4 @@
-⚠️ ** Note: Development of this project is not currently a high priority, and thus we cannot guarantee timely reviews or interactions on this repository. If you would like to contribute to one of our other Android projects, we recommend checking out [Android Components](https://github.com/mozilla-mobile/android-components). We greatly appreciate your interest in and contributions towards Focus and look forward to working with you on other projects!**
+⚠️ **Note: Development of this project is not currently a high priority, and thus we cannot guarantee timely reviews or interactions on this repository. If you would like to contribute to one of our other Android projects, we recommend checking out [Android Components](https://github.com/mozilla-mobile/android-components). We greatly appreciate your interest in and contributions towards Focus and look forward to working with you on other projects!**
 
 # Firefox Focus for Android
 
