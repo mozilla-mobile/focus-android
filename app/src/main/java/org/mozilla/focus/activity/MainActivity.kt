@@ -79,11 +79,7 @@ open class MainActivity : LocaleAwareAppCompatActivity() {
 
         WebViewProvider.preload(this)
 
-        val launchCount = Settings.getInstance(this).getAppLaunchCount()
-        PreferenceManager.getDefaultSharedPreferences(this)
-                .edit()
-                .putInt(getString(R.string.app_launch_count), launchCount + 1)
-                .apply()
+        setupSharedPref()
     }
 
     private fun initViewModel() {
@@ -98,6 +94,15 @@ open class MainActivity : LocaleAwareAppCompatActivity() {
                         .commitAllowingStateLoss()
             }
         })
+    }
+
+    private fun setupSharedPref() {
+      val launchCount = Settings.getInstance(this)
+          .getAppLaunchCount()
+      PreferenceManager.getDefaultSharedPreferences(this)
+          .edit()
+          .putInt(getString(R.string.app_launch_count), launchCount + 1)
+          .apply()
     }
 
     private fun registerSessionObserver() {
@@ -152,19 +157,23 @@ open class MainActivity : LocaleAwareAppCompatActivity() {
             WebViewProvider.performCleanup(this)
         }
 
-        val fragmentManager = supportFragmentManager
-        val browserFragment =
-            fragmentManager.findFragmentByTag(BrowserFragment.FRAGMENT_TAG) as BrowserFragment?
-        browserFragment?.cancelAnimation()
-
-        val urlInputFragment =
-            fragmentManager.findFragmentByTag(UrlInputFragment.FRAGMENT_TAG) as UrlInputFragment?
-        urlInputFragment?.cancelAnimation()
+        stopAnimations()
 
         super.onPause()
 
         TelemetryWrapper.stopSession()
     }
+
+    private fun stopAnimations() {
+      val fragmentManager = supportFragmentManager
+      val browserFragment =
+        fragmentManager.findFragmentByTag(BrowserFragment.FRAGMENT_TAG) as BrowserFragment?
+      browserFragment?.cancelAnimation()
+
+      val urlInputFragment =
+        fragmentManager.findFragmentByTag(UrlInputFragment.FRAGMENT_TAG) as UrlInputFragment?
+      urlInputFragment?.cancelAnimation()
+  }
 
     override fun onStop() {
         super.onStop()
