@@ -18,6 +18,17 @@
         android:layout_marginTop="@dimen/urlinput_height"
         android:orientation="vertical"
         app:animate="true">
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="133dp"
+        android:layout_height="113dp"
+        android:layout_gravity="center"
+        app:srcCompat="@drawable/mlogo" />
 
         <ImageView
             android:layout_width="wrap_content"
@@ -38,6 +49,7 @@
             android:textColor="#f9f9fa"
             android:textSize="14sp"
             android:focusable="false" />
+</LinearLayout>
 
     </org.mozilla.focus.widget.ResizableKeyboardLinearLayout>
 
@@ -164,5 +176,7 @@
         android:visibility="gone"
         android:layout_marginTop="@dimen/urlinput_height">
     </FrameLayout>
+
+
 
 </FrameLayout>
