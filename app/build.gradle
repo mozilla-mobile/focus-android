@@ -512,6 +512,13 @@ task checkstyle(type: Checkstyle) {
     classpath = files()
 }
 
+task preHook {
+	dependsOn 'checkstyle'
+	dependsOn 'pmd'
+	dependsOn 'assembleFocusX86DebugAndroidTest'
+	dependsOn 'testFocusX86DebugUnitTest'
+}
+
 afterEvaluate {
     check.dependsOn 'spotbugs', 'pmd', 'checkstyle'
 }

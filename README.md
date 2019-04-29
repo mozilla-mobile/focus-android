@@ -70,6 +70,16 @@ To add it, run this command from the project root:
 ln -s ../../quality/pre-push-recommended.sh .git/hooks/pre-push
 ```
 
+Or from DOS prompt:
+```sh
+mklink /H .git\hooks\pre-push quality\pre-push-recommended.sh
+```
+
+To manually run the pre-push hook (e.g. to run tests without pushing):
+```sh
+./gradlew preHook
+```
+
 To push without running the pre-push hook (e.g. doc updates):
 ```sh
 git push <remote> --no-verify
