@@ -63,12 +63,8 @@ task clean(type: Delete) {
 }
 
 task preHook {
-//	dependsOn 'checkstyle'
 	dependsOn 'ktlint'
-//	dependsOn 'pmd'
 	dependsOn 'detektCheck'
-//	dependsOn 'assembleFocusX86DebugAndroidTest'
-//	dependsOn 'testFocusX86DebugUnitTest'
 }
 
 configurations {
