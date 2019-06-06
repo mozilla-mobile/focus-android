@@ -97,7 +97,7 @@ def generate_signing_task(build_task_id, apks, date, index_release, is_staging):
     )
 
 
-def generate_push_task(signing_task_id, apks, track, commit, is_staging):
+def generate_push_task(signing_task_id, apks, channel, commit, is_staging):
     artifacts = []
     for apk in apks:
         artifacts.append("public/" + os.path.basename(apk))
@@ -112,7 +112,7 @@ def generate_push_task(signing_task_id, apks, track, commit, is_staging):
         scopes=[
             "project:mobile:focus:releng:googleplay:product:focus{}".format(':dep' if is_staging else '')
         ],
-        track=track,
+        channel=channel,
         commit=commit,
         is_staging=is_staging,
     )
@@ -127,12 +127,12 @@ def populate_chain_of_trust_required_but_unused_files():
             json.dump({}, f)    # Yaml is a super-set of JSON.
 
 
-def release(apks, track, commit, tag, date_string, is_staging):
+def release(apks, channel, commit, tag, date_string, is_staging):
     queue = taskcluster.Queue({ 'baseUrl': 'http://taskcluster/queue/v1' })
     date = arrow.get(date_string)
     index_release = '{}{}'.format(
         'staging-' if is_staging else '',
-        'signed-nightly' if track == 'nightly' else 'release'
+        'signed-nightly' if channel == 'nightly' else 'release'
     )
 
     task_graph = {}
@@ -149,7 +149,7 @@ def release(apks, track, commit, tag, date_string, is_staging):
     task_graph[sign_task_id] = {}
     task_graph[sign_task_id]["task"] = queue.task(sign_task_id)
 
-    push_task_id, push_task = generate_push_task(sign_task_id, apks, track, commit, is_staging)
+    push_task_id, push_task = generate_push_task(sign_task_id, apks, channel, commit, is_staging)
     lib.tasks.schedule_task(queue, push_task_id, push_task)
 
     task_graph[push_task_id] = {}
@@ -168,7 +168,7 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(
         description='Create a release pipeline (build, sign, publish) on taskcluster.')
 
-    parser.add_argument('--track', dest="track", action="store", choices=['internal', 'alpha', 'nightly'], help="", required=True)
+    parser.add_argument('--channel', dest="channel", action="store", choices=['internal', 'alpha', 'nightly'], help="", required=True)
     parser.add_argument('--staging', action="store_true", help="Perform a staging build (use dep workers, "
                                                                "don't communicate with Google Play")
     parser.add_argument('--commit', dest="commit", action="store_true", help="commit the google play transaction")
@@ -181,4 +181,4 @@ if __name__ == "__main__":
 
     apks = map(lambda x: result.output + '/' + x, result.apks)
 
-    release(apks, result.track, result.commit, result.tag, result.date, result.staging)
+    release(apks, result.channel, result.commit, result.tag, result.date, result.staging)
