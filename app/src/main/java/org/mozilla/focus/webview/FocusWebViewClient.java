@@ -97,7 +97,7 @@ import static android.view.View.IMPORTANT_FOR_ACCESSIBILITY_YES;
                 // Add an onLoad() listener so that we run the cleanup script every time
                 // a <link>'d css stylesheet is loaded:
                 "var links = document.getElementsByTagName('link');" +
-                "for (i = 0; i < links.length; i++) {" +
+                "for (let i = 0; i < links.length; i++) {" +
                 "  link = links[i];" +
                 "  if (link.rel == 'stylesheet') {" +
                 "    link.addEventListener('load', cleanupVisited, false);" +
