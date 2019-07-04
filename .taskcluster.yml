@@ -168,7 +168,7 @@ tasks:
               && git checkout ${event.release.tag_name}
               && python tools/taskcluster/release.py \
                 --tag ${event.release.tag_name} \
-                --track alpha \
+                --channel alpha \
                 --commit \
                 --output /opt/focus-android/app/build/outputs/apk \
                 --apk focusX86/release/app-focus-x86-release-unsigned.apk \
@@ -266,7 +266,7 @@ tasks:
               && git clone ${repository} repository
               && cd repository
               && python tools/taskcluster/release.py \
-                --track nightly \
+                --channel nightly \
                 --commit \
                 --output /opt/repository/app/build/outputs/apk \
                 --apk klarArm/nightly/app-klar-arm-nightly-unsigned.apk \

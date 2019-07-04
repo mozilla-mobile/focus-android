@@ -54,7 +54,7 @@ import static android.view.View.IMPORTANT_FOR_ACCESSIBILITY_YES;
      */
     private static final String CLEAR_VISITED_CSS =
             "var nSheets = document.styleSheets.length;" +
-            "for (s=0; s < nSheets; s++) {" +
+            "for (let s=0; s < nSheets; s++) {" +
             "  var stylesheet = document.styleSheets[s];" +
             "  var nRules = stylesheet.cssRules ? stylesheet.cssRules.length : 0;" +
             // rules need to be removed by index. That modifies the whole list - it's easiest
@@ -97,7 +97,7 @@ import static android.view.View.IMPORTANT_FOR_ACCESSIBILITY_YES;
                 // Add an onLoad() listener so that we run the cleanup script every time
                 // a <link>'d css stylesheet is loaded:
                 "var links = document.getElementsByTagName('link');" +
-                "for (i = 0; i < links.length; i++) {" +
+                "for (let i = 0; i < links.length; i++) {" +
                 "  link = links[i];" +
                 "  if (link.rel == 'stylesheet') {" +
                 "    link.addEventListener('load', cleanupVisited, false);" +
