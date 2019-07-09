@@ -15,6 +15,9 @@ import org.mozilla.focus.ext.requireComponents
 /**
  * Adapter implementation to show a list of active browsing sessions and an "erase" button at the end.
  */
+@Suppress("TooManyFunctions")
+//The adapter does one thing well, the "large" number of methods comes from listening to the
+//many session events (added/removed) etc.
 class SessionsAdapter internal constructor(
     private val fragment: SessionsSheetFragment,
     private var sessions: List<Session> = emptyList()
@@ -78,5 +81,9 @@ class SessionsAdapter internal constructor(
     private fun onUpdate(sessions: List<Session>) {
         this.sessions = sessions
         notifyDataSetChanged()
+    }
+
+    fun onItemDismiss(adapterPosition: Int) {
+        fragment.requireComponents.sessionManager.remove(sessions[adapterPosition])
     }
 }

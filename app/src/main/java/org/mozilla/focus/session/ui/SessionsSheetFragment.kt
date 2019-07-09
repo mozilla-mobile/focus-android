@@ -9,6 +9,7 @@ import android.animation.AnimatorListenerAdapter
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.support.v7.widget.helper.ItemTouchHelper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewAnimationUtils
@@ -43,9 +44,13 @@ class SessionsSheetFragment : LocaleAwareFragment(), View.OnClickListener {
         val sessionManager = requireComponents.sessionManager
 
         val sessionsAdapter = SessionsAdapter(this, sessionManager.sessions)
+        val sessionsAdapterTouchHelperCallback = SessionsAdapterTouchHelperCallback(sessionsAdapter, context)
+        val sessionsAdapterTouchHelper = ItemTouchHelper(sessionsAdapterTouchHelperCallback)
+
         sessionManager.register(sessionsAdapter, owner = this)
 
         view.findViewById<RecyclerView>(R.id.sessions).let {
+            sessionsAdapterTouchHelper.attachToRecyclerView(it)
             it.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
             it.adapter = sessionsAdapter
         }
