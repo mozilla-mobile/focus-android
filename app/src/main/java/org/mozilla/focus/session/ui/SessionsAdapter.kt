@@ -22,6 +22,15 @@ class SessionsAdapter internal constructor(
     private val fragment: SessionsSheetFragment,
     private var sessions: List<Session> = emptyList()
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>(), SessionManager.Observer {
+    companion object {
+        const val ERASE_ITEM_ID = 0L
+    }
+
+    init {
+        setHasStableIds(true)
+
+    }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val inflater = LayoutInflater.from(parent.context)
 
@@ -43,6 +52,13 @@ class SessionsAdapter internal constructor(
             EraseViewHolder.LAYOUT_ID -> { /* Nothing to do */ }
             SessionViewHolder.LAYOUT_ID -> (holder as SessionViewHolder).bind(sessions[position])
             else -> throw IllegalStateException("Unknown viewType")
+        }
+    }
+    override fun getItemId(position: Int): Long {
+        return if(isErasePosition(position)) {
+            ERASE_ITEM_ID
+        } else {
+            sessions[position].id.hashCode().toLong()
         }
     }
 
@@ -67,7 +83,9 @@ class SessionsAdapter internal constructor(
     }
 
     override fun onSessionRemoved(session: Session) {
-        onUpdate(fragment.requireComponents.sessionManager.sessions)
+        val position = sessions.indexOf(session)
+        this.sessions = fragment.requireComponents.sessionManager.sessions
+        notifyItemRemoved(position) //More pinpoint notification of changes
     }
 
     override fun onSessionSelected(session: Session) {

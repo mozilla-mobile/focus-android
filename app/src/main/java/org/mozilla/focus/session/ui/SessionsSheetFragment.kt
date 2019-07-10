@@ -6,6 +6,7 @@ package org.mozilla.focus.session.ui
 
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
+import android.animation.LayoutTransition
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
@@ -26,7 +27,7 @@ import org.mozilla.focus.utils.OneShotOnPreDrawListener
 class SessionsSheetFragment : LocaleAwareFragment(), View.OnClickListener {
 
     private lateinit var backgroundView: View
-    private lateinit var cardView: View
+    private lateinit var cardView: ViewGroup
     private var isAnimating: Boolean = false
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -36,6 +37,12 @@ class SessionsSheetFragment : LocaleAwareFragment(), View.OnClickListener {
         backgroundView.setOnClickListener(this)
 
         cardView = view.findViewById(R.id.card)
+
+        // Animate the RecyclerView height changes.
+        // See detailed comments in fragment_sessionssheet.xml
+        // https://proandroiddev.com/the-little-secret-of-android-animatelayoutchanges-e4caab2fddec
+        cardView.layoutTransition?.enableTransitionType(LayoutTransition.CHANGING)
+
         OneShotOnPreDrawListener(cardView) {
             playAnimation(false)
             true

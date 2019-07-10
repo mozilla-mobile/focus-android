@@ -12,25 +12,28 @@ import android.graphics.Color
 class SessionsAdapterTouchHelperCallback(
     private val mAdapter: SessionsAdapter,
     context: Context?
-) : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.RIGHT) {
+) : ItemTouchHelper.Callback() {
     companion object {
-        const val BACKGROUND_CORNER_OFFSET = 20
+        private const val BACKGROUND_CORNER_OFFSET = 20
+        private val background = ColorDrawable(Color.RED)
     }
-
-    private val background = ColorDrawable(Color.RED)
-
     private val icon = context?.let { AppCompatResources.getDrawable(it, org.mozilla.focus.R.drawable.ic_delete) }
 
+    override fun getMovementFlags(recyclerView: RecyclerView, viewHolder: ViewHolder): Int {
+        val swipeable = viewHolder is SessionViewHolder //We support only dismiss (swipe right) for session view holders.
+        return makeMovementFlags(0, if(swipeable) ItemTouchHelper.RIGHT else 0)
+    }
     /**
      * No need to support reordering
      */
-    override fun onMove(p0: RecyclerView, p1: ViewHolder, p2: ViewHolder): Boolean {
+    override fun onMove(recyclerView: RecyclerView, dragged: ViewHolder, target: ViewHolder): Boolean {
         return false
     }
 
+
     /**
-     * When the item is swiped right, we want to draw a background and the erase icon on the empty
-     * to indicate the swipe will result in deleting the tab (session)
+     * When the item is swiped right, we will draw a background plus the erase icon on
+     * the empty space behind to indicate that the swipe will result in deleting the tab (session)
      */
     override fun onChildDraw(
         c: Canvas,
