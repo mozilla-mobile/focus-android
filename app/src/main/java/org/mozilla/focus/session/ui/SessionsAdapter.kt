@@ -102,6 +102,23 @@ class SessionsAdapter internal constructor(
     }
 
     fun onItemDismiss(adapterPosition: Int) {
-        fragment.requireComponents.sessionManager.remove(sessions[adapterPosition])
+        if(!isErasePosition(adapterPosition)) {
+            val sessionToDismiss = sessions[adapterPosition]
+            val sessionManager = fragment.requireComponents.sessionManager
+            val dismissedSessionIsSelected = sessionManager.selectedSessionOrThrow == sessionToDismiss
+
+            sessionManager.remove(sessionToDismiss)
+
+            if(dismissedSessionIsSelected) {
+                // A bug in the current version of SessionManager may not emit onSessionSelected
+                // to observers when removing the (previously) selected session.
+                // see: https://github.com/mozilla-mobile/android-components/issues/3720
+                sessionManager.selectedSession?.let {
+                    sessionManager.select(it)
+                }
+            }
+        }
     }
+
+
 }
