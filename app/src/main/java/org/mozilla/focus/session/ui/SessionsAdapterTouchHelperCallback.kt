@@ -17,19 +17,21 @@ class SessionsAdapterTouchHelperCallback(
         private const val BACKGROUND_CORNER_OFFSET = 20
         private val background = ColorDrawable(Color.RED)
     }
+
     private val icon = context?.let { AppCompatResources.getDrawable(it, org.mozilla.focus.R.drawable.ic_delete) }
 
     override fun getMovementFlags(recyclerView: RecyclerView, viewHolder: ViewHolder): Int {
-        val swipeable = viewHolder is SessionViewHolder //We support only dismiss (swipe right) for session view holders.
-        return makeMovementFlags(0, if(swipeable) ItemTouchHelper.RIGHT else 0)
+        //We support only dismiss (swipe right) for session view holders.
+        val swipeable = viewHolder is SessionViewHolder
+        return makeMovementFlags(0, if (swipeable) ItemTouchHelper.RIGHT else 0)
     }
+
     /**
      * No need to support reordering
      */
     override fun onMove(recyclerView: RecyclerView, dragged: ViewHolder, target: ViewHolder): Boolean {
         return false
     }
-
 
     /**
      * When the item is swiped right, we will draw a background plus the erase icon on

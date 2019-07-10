@@ -28,7 +28,6 @@ class SessionsAdapter internal constructor(
 
     init {
         setHasStableIds(true)
-
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
@@ -49,13 +48,15 @@ class SessionsAdapter internal constructor(
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (holder.itemViewType) {
-            EraseViewHolder.LAYOUT_ID -> { /* Nothing to do */ }
+            EraseViewHolder.LAYOUT_ID -> { /* Nothing to do */
+            }
             SessionViewHolder.LAYOUT_ID -> (holder as SessionViewHolder).bind(sessions[position])
             else -> throw IllegalStateException("Unknown viewType")
         }
     }
+
     override fun getItemId(position: Int): Long {
-        return if(isErasePosition(position)) {
+        return if (isErasePosition(position)) {
             ERASE_ITEM_ID
         } else {
             sessions[position].id.hashCode().toLong()
@@ -102,14 +103,14 @@ class SessionsAdapter internal constructor(
     }
 
     fun onItemDismiss(adapterPosition: Int) {
-        if(!isErasePosition(adapterPosition)) {
+        if (!isErasePosition(adapterPosition)) {
             val sessionToDismiss = sessions[adapterPosition]
             val sessionManager = fragment.requireComponents.sessionManager
             val dismissedSessionIsSelected = sessionManager.selectedSessionOrThrow == sessionToDismiss
 
             sessionManager.remove(sessionToDismiss)
 
-            if(dismissedSessionIsSelected) {
+            if (dismissedSessionIsSelected) {
                 // A bug in the current version of SessionManager may not emit onSessionSelected
                 // to observers when removing the (previously) selected session.
                 // see: https://github.com/mozilla-mobile/android-components/issues/3720
@@ -119,6 +120,4 @@ class SessionsAdapter internal constructor(
             }
         }
     }
-
-
 }
