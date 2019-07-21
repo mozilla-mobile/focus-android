@@ -66,7 +66,7 @@ class FocusApplication : LocaleAwareApplication(), CoroutineScope {
 
         components.searchEngineManager.apply {
             launch(IO) {
-                load(this@FocusApplication)
+                loadAsync(this@FocusApplication)
             }
 
             registerForLocaleUpdates(this@FocusApplication)
