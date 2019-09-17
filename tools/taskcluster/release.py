@@ -30,7 +30,7 @@ BUILDER = lib.tasks.TaskBuilder(
     scheduler_id=SCHEDULER_ID,
 )
 
-def generate_build_task(variant, tag):
+def generate_build_task(artifacts, tag):
 
     checkout = "git fetch origin && git reset --hard origin/master" if tag is None else "git fetch origin && git checkout %s" % (tag)
 
@@ -40,7 +40,6 @@ def generate_build_task(variant, tag):
         # Non-tagged (nightly) builds should contain all languages
         checkout = checkout + ' && python tools/l10n/filter-release-translations.py'
         assemble_task = 'assembleRelease'
-
 
     return taskcluster.slugId(), BUILDER.build_task(
         name="(Focus for Android) Build task",
@@ -52,13 +51,13 @@ def generate_build_task(variant, tag):
         features = {
             "chainOfTrust": True
         },
-        artifacts = variant.artifacts(),
+        artifacts = artifacts,
         worker_type='gecko-focus',
         scopes=[
             "secrets:get:project/focus/tokens"
         ])
 
-def generate_signing_task(build_task_id, variant, tag):
+def generate_signing_task(build_task_id, upstream_artifacts, tag):
 
     routes = []
 
@@ -83,20 +82,20 @@ def generate_signing_task(build_task_id, variant, tag):
         name="(Focus for Android) Signing task",
         description="Sign release builds of Focus/Klar",
         signing_format=signing_format,
-        apks=variant.upstream_artifacts(),
+        apks=upstream_artifacts,
         scopes=scopes,
         routes=routes
     )
 
-def generate_push_task(signing_task_id, variant, channel, commit):
+def generate_push_task(signing_task_id, upstream_artifacts, channel, commit):
 
-    print variant.upstream_artifacts()
+    print upstream_artifacts
 
     return taskcluster.slugId(), BUILDER.build_push_task(
         signing_task_id,
         name="(Focus for Android) Push task",
         description="Upload signed release builds of Focus/Klar to Google Play",
-        apks=variant.upstream_artifacts(),
+        apks=upstream_artifacts,
         scopes=[
             "project:mobile:focus:releng:googleplay:product:focus"
         ],
@@ -114,24 +113,29 @@ def populate_chain_of_trust_required_but_unused_files():
             json.dump({}, f)    # Yaml is a super-set of JSON.
 
 
-def release(variant, channel, commit, tag):
+def release(variants, channel, commit, tag):
     queue = taskcluster.Queue({ 'baseUrl': 'http://taskcluster/queue/v1' })
 
     task_graph = {}
+    artifacts = []
+    upstream_artifacts = []
+    for variant in variants:
+        artifacts.extend(variant.artifacts())
+        upstream_artifacts.extend(variant.upstream_artifacts())
 
-    build_task_id, build_task = generate_build_task(variant, tag)
+    build_task_id, build_task = generate_build_task(artifacts, tag)
     lib.tasks.schedule_task(queue, build_task_id, build_task)
 
     task_graph[build_task_id] = {}
     task_graph[build_task_id]["task"] = queue.task(build_task_id)
 
-    sign_task_id, sign_task = generate_signing_task(build_task_id, variant, tag)
+    sign_task_id, sign_task = generate_signing_task(build_task_id, upstream_artifacts, tag)
     lib.tasks.schedule_task(queue, sign_task_id, sign_task)
 
     task_graph[sign_task_id] = {}
     task_graph[sign_task_id]["task"] = queue.task(sign_task_id)
 
-    push_task_id, push_task = generate_push_task(sign_task_id, variant, channel, commit)
+    push_task_id, push_task = generate_push_task(sign_task_id, upstream_artifacts, channel, commit)
     lib.tasks.schedule_task(queue, push_task_id, push_task)
 
     task_graph[push_task_id] = {}
@@ -157,7 +161,10 @@ if __name__ == "__main__":
 
     result = parser.parse_args()
 
+    variants = []
     for product in ('focus', 'klar'):
         build_type = "release" if result.channel == "alpha" else result.channel
-        variant = get_variant(build_type, product)
-        release(variant, result.channel, result.commit, result.tag)
+        my_variant = get_variant(build_type, product)
+        variants.append(my_variant)
+
+    release(variants, result.channel, result.commit, result.tag)
