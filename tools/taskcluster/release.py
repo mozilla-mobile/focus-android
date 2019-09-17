@@ -154,12 +154,10 @@ if __name__ == "__main__":
     parser.add_argument('--channel', dest="channel", action="store", choices=['internal', 'alpha', 'nightly'], help="", required=True)
     parser.add_argument('--commit', dest="commit", action="store_true", help="commit the google play transaction")
     parser.add_argument('--tag', dest="tag", action="store", help="git tag to build from")
-    parser.add_argument('--apk', dest="apks", metavar="path", action="append", help="Path to APKs to sign and upload", required=True)
-    parser.add_argument('--output', dest="output", metavar="path", action="store", help="Path to the build output", required=True)
 
     result = parser.parse_args()
 
     for product in ('focus', 'klar'):
         build_type = "release" if result.channel == "alpha" else result.channel
-        variant = get_variant(build_type.capitalize(), product)
+        variant = get_variant(build_type, product)
         release(variant, result.channel, result.commit, result.tag)
