@@ -14,6 +14,8 @@ import os
 import taskcluster
 import lib.tasks
 
+from lib.gradle import get_variant
+
 TASK_ID = os.environ.get('TASK_ID')
 SCHEDULER_ID = os.environ.get('SCHEDULER_ID')
 HEAD_REV = os.environ.get('MOBILE_HEAD_REV')
@@ -28,15 +30,7 @@ BUILDER = lib.tasks.TaskBuilder(
     scheduler_id=SCHEDULER_ID,
 )
 
-def generate_build_task(apks, tag):
-    artifacts = {}
-    for apk in apks:
-        artifact = {
-            "type": 'file',
-            "path": apk,
-            "expires": taskcluster.stringDate(taskcluster.fromNow('1 year'))
-        }
-        artifacts["public/%s" % os.path.basename(apk)] = artifact
+def generate_build_task(artifacts, tag):
 
     checkout = "git fetch origin && git reset --hard origin/master" if tag is None else "git fetch origin && git checkout %s" % (tag)
 
@@ -64,10 +58,7 @@ def generate_build_task(apks, tag):
             "secrets:get:project/focus/tokens"
         ])
 
-def generate_signing_task(build_task_id, apks, tag):
-    artifacts = []
-    for apk in apks:
-        artifacts.append("public/" + os.path.basename(apk))
+def generate_signing_task(build_task_id, artifacts, tag):
 
     routes = []
 
@@ -97,10 +88,7 @@ def generate_signing_task(build_task_id, apks, tag):
         routes=routes
     )
 
-def generate_push_task(signing_task_id, apks, channel, commit):
-    artifacts = []
-    for apk in apks:
-        artifacts.append("public/" + os.path.basename(apk))
+def generate_push_task(signing_task_id, artifacts, channel, commit):
 
     print artifacts
 
@@ -126,24 +114,24 @@ def populate_chain_of_trust_required_but_unused_files():
             json.dump({}, f)    # Yaml is a super-set of JSON.
 
 
-def release(apks, channel, commit, tag):
+def release(variant, channel, commit, tag):
     queue = taskcluster.Queue({ 'baseUrl': 'http://taskcluster/queue/v1' })
 
     task_graph = {}
 
-    build_task_id, build_task = generate_build_task(apks, tag)
+    build_task_id, build_task = generate_build_task(variant.upstream_artifacts(), tag)
     lib.tasks.schedule_task(queue, build_task_id, build_task)
 
     task_graph[build_task_id] = {}
     task_graph[build_task_id]["task"] = queue.task(build_task_id)
 
-    sign_task_id, sign_task = generate_signing_task(build_task_id, apks, tag)
+    sign_task_id, sign_task = generate_signing_task(build_task_id, variant.upstream_artifacts(), tag)
     lib.tasks.schedule_task(queue, sign_task_id, sign_task)
 
     task_graph[sign_task_id] = {}
     task_graph[sign_task_id]["task"] = queue.task(sign_task_id)
 
-    push_task_id, push_task = generate_push_task(sign_task_id, apks, channel, commit)
+    push_task_id, push_task = generate_push_task(sign_task_id, variant.upstream_artifacts(), channel, commit)
     lib.tasks.schedule_task(queue, push_task_id, push_task)
 
     task_graph[push_task_id] = {}
@@ -171,6 +159,6 @@ if __name__ == "__main__":
 
     result = parser.parse_args()
 
-    apks = map(lambda x: result.output + '/' + x, result.apks)
-
-    release(apks, result.channel, result.commit, result.tag)
+    for product in ('focus', 'klar'):
+        variant = get_variant(result.channel.capitalize(), product)
+        release(variant, result.channel, result.commit, result.tag)
