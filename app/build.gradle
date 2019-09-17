@@ -499,7 +499,7 @@ if (project.hasProperty("coverage")) {
 
 // -------------------------------------------------------------------------------------------------
 // Task for printing APK information for the requested variant
-// Usage: "./gradlew printVariant -PvariantBuildType=nightly -PvariantProdut=focus"
+// Usage: "./gradlew printVariant -PvariantBuildType=nightly -PvariantProduct=focus"
 // -------------------------------------------------------------------------------------------------
 task printVariant {
     doLast {
