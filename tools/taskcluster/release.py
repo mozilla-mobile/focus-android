@@ -30,7 +30,7 @@ BUILDER = lib.tasks.TaskBuilder(
     scheduler_id=SCHEDULER_ID,
 )
 
-def generate_build_task(artifacts, tag):
+def generate_build_task(variant, tag):
 
     checkout = "git fetch origin && git reset --hard origin/master" if tag is None else "git fetch origin && git checkout %s" % (tag)
 
@@ -52,13 +52,13 @@ def generate_build_task(artifacts, tag):
         features = {
             "chainOfTrust": True
         },
-        artifacts = artifacts,
+        artifacts = variant.artifacts(),
         worker_type='gecko-focus',
         scopes=[
             "secrets:get:project/focus/tokens"
         ])
 
-def generate_signing_task(build_task_id, artifacts, tag):
+def generate_signing_task(build_task_id, variant, tag):
 
     routes = []
 
@@ -83,20 +83,20 @@ def generate_signing_task(build_task_id, artifacts, tag):
         name="(Focus for Android) Signing task",
         description="Sign release builds of Focus/Klar",
         signing_format=signing_format,
-        apks=artifacts,
+        apks=variant.upstream_artifacts(),
         scopes=scopes,
         routes=routes
     )
 
-def generate_push_task(signing_task_id, artifacts, channel, commit):
+def generate_push_task(signing_task_id, variant, channel, commit):
 
-    print artifacts
+    print variant.upstream_artifacts()
 
     return taskcluster.slugId(), BUILDER.build_push_task(
         signing_task_id,
         name="(Focus for Android) Push task",
         description="Upload signed release builds of Focus/Klar to Google Play",
-        apks=artifacts,
+        apks=variant.upstream_artifacts(),
         scopes=[
             "project:mobile:focus:releng:googleplay:product:focus"
         ],
@@ -119,19 +119,19 @@ def release(variant, channel, commit, tag):
 
     task_graph = {}
 
-    build_task_id, build_task = generate_build_task(variant.upstream_artifacts(), tag)
+    build_task_id, build_task = generate_build_task(variant, tag)
     lib.tasks.schedule_task(queue, build_task_id, build_task)
 
     task_graph[build_task_id] = {}
     task_graph[build_task_id]["task"] = queue.task(build_task_id)
 
-    sign_task_id, sign_task = generate_signing_task(build_task_id, variant.upstream_artifacts(), tag)
+    sign_task_id, sign_task = generate_signing_task(build_task_id, variant, tag)
     lib.tasks.schedule_task(queue, sign_task_id, sign_task)
 
     task_graph[sign_task_id] = {}
     task_graph[sign_task_id]["task"] = queue.task(sign_task_id)
 
-    push_task_id, push_task = generate_push_task(sign_task_id, variant.upstream_artifacts(), channel, commit)
+    push_task_id, push_task = generate_push_task(sign_task_id, variant, channel, commit)
     lib.tasks.schedule_task(queue, push_task_id, push_task)
 
     task_graph[push_task_id] = {}
