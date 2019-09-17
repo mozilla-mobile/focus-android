@@ -160,5 +160,6 @@ if __name__ == "__main__":
     result = parser.parse_args()
 
     for product in ('focus', 'klar'):
-        variant = get_variant(result.channel.capitalize(), product)
+        build_type = "release" if result.channel == "alpha" else result.channel
+        variant = get_variant(build_type.capitalize(), product)
         release(variant, result.channel, result.commit, result.tag)
