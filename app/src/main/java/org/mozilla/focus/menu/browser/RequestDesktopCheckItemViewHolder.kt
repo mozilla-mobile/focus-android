@@ -7,6 +7,7 @@ package org.mozilla.focus.menu.browser
 import android.view.View
 import android.widget.CheckBox
 import android.widget.CompoundButton
+import android.widget.Switch
 
 import org.mozilla.focus.R
 import org.mozilla.focus.fragment.BrowserFragment
@@ -20,7 +21,7 @@ internal class RequestDesktopCheckItemViewHolder/* package */(
     itemView: View,
     private val fragment: BrowserFragment
 ) : BrowserMenuViewHolder(itemView), CompoundButton.OnCheckedChangeListener {
-    private val checkbox: CheckBox = itemView.findViewById(R.id.check_menu_item_checkbox)
+    private val checkbox: Switch = itemView.findViewById(R.id.check_menu_item_checkbox)
 
     init {
         checkbox.isChecked = fragment.session.shouldRequestDesktopSite
