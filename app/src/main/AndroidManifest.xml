@@ -27,6 +27,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:name=".FocusApplication"
+        android:installLocation="auto"
         android:usesCleartextTraffic="true">
 
         <activity android:name=".activity.IntentReceiverActivity">
