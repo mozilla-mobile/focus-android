@@ -108,6 +108,13 @@
                     tools:targetApi="o" /><!-- importantForAutofill is only supported on Android O+ -->
 
                 <ImageButton
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:background="?android:attr/selectableItemBackgroundBorderless"
+                    android:src="@drawable/ic_mic_black_24dp"
+                    android:id="@+id/microphone"/>
+
+                <ImageButton
                     android:id="@+id/clearView"
                     android:layout_width="40dp"
                     android:layout_height="40dp"

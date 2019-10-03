@@ -6,6 +6,8 @@ package org.mozilla.focus.fragment
 
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
+import android.app.Activity
+import android.content.Intent
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import android.content.SharedPreferences
@@ -13,6 +15,7 @@ import android.content.res.Configuration
 import android.graphics.drawable.TransitionDrawable
 import android.os.Bundle
 import android.preference.PreferenceManager
+import android.speech.RecognizerIntent
 import android.text.InputType
 import android.text.SpannableString
 import android.text.method.LinkMovementMethod
@@ -24,6 +27,8 @@ import android.view.ViewGroup
 import android.webkit.URLUtil
 import android.widget.FrameLayout
 import android.widget.TextView
+import android.widget.Toast
+import androidx.core.app.ActivityCompat.startActivityForResult
 import kotlinx.android.synthetic.main.fragment_urlinput.*
 import kotlinx.android.synthetic.main.fragment_urlinput.view.*
 import kotlinx.coroutines.CoroutineScope
@@ -62,7 +67,7 @@ import org.mozilla.focus.utils.UrlUtils
 import org.mozilla.focus.utils.ViewUtils
 import org.mozilla.focus.viewmodel.MainViewModel
 import org.mozilla.focus.whatsnew.WhatsNew
-import java.util.Objects
+import java.util.*
 import kotlin.coroutines.CoroutineContext
 
 class FocusCrashException : Exception()
@@ -152,6 +157,7 @@ class UrlInputFragment :
     private val customDomainsProvider = CustomDomainsProvider()
     private var useShipped = false
     private var useCustom = false
+    private val REQUEST_CODE = 1
     private var displayedPopupMenu: HomeMenu? = null
 
     @Volatile
@@ -296,7 +302,7 @@ class UrlInputFragment :
         View? = inflater.inflate(R.layout.fragment_urlinput, container, false)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        listOf(dismissView, clearView).forEach { it.setOnClickListener(this) }
+        listOf(dismissView, clearView , microphone).forEach { it.setOnClickListener(this) }
 
         urlView?.setOnFilterListener(::onFilter)
         urlView?.setOnTextChangeListener(::onTextChange)
@@ -426,6 +432,10 @@ class UrlInputFragment :
             } else {
                 clear()
             }
+            R.id.microphone -> {
+                speakk()
+
+            }
 
             R.id.menuView -> showHomeMenu(view)
 
@@ -448,6 +458,40 @@ class UrlInputFragment :
             }
 
             else -> throw IllegalStateException("Unhandled view in onClick()")
+        }
+    }
+
+    private fun speakk() {
+
+
+        val mIntent = Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH)
+        mIntent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM)
+
+        mIntent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, Locale.getDefault())
+        mIntent.putExtra(RecognizerIntent.EXTRA_PROMPT,"Please Speak ")
+
+        try {
+
+            startActivityForResult(mIntent,REQUEST_CODE)
+
+        }catch (e : java.lang.Exception){
+
+            Toast.makeText(activity,e.message,Toast.LENGTH_SHORT).show()
+
+        }
+
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        when(requestCode){
+            REQUEST_CODE -> {
+                if(resultCode == Activity.RESULT_OK && data != null){
+                    val result = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS)
+                    urlView?.setText(result[0])
+                    showKeyboard()
+                }
+            }
         }
     }
 
