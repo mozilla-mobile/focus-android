@@ -3,11 +3,13 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 package org.mozilla.focus.fragment
 
+import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ProgressBar
+import androidx.core.os.bundleOf
 import mozilla.components.browser.session.Session
 
 import org.mozilla.focus.R
@@ -31,14 +33,14 @@ class InfoFragment : WebFragment() {
     ): View {
         val view = inflater.inflate(R.layout.fragment_info, container, false)
         progressView = view.findViewById(R.id.progress)
-        webView = view.findViewById(R.id.webview)
+        webView = view.findViewById<View?>(R.id.webview)
         val url = initialUrl
         if (url != null && !(url.startsWith("http://") || url.startsWith("https://"))) {
-            // Hide webview until content has loaded, if we're loading built in about/rights/etc
+            // Make webview background transparent if we're loading built in about/rights/etc
             // pages: this avoid a white flash (on slower devices) between the screen appearing,
             // and the about/right/etc content appearing. We don't do this for SUMO and other
             // external pages, because they are both light-coloured, and significantly slower loading.
-            webView?.visibility = View.INVISIBLE
+            webView?.setBackgroundColor(Color.TRANSPARENT)
         }
         applyLocale()
         return view
@@ -50,15 +52,16 @@ class InfoFragment : WebFragment() {
     override fun createCallback(): IWebView.Callback {
         return object : IWebView.Callback {
             override fun onPageStarted(url: String) {
-                progressView?.announceForAccessibility(getString(R.string.accessibility_announcement_loading))
-                progressView?.visibility = View.VISIBLE
+                progressView?.apply {
+                    announceForAccessibility(getString(R.string.accessibility_announcement_loading))
+                    visibility = View.VISIBLE
+                }
             }
 
             override fun onPageFinished(isSecure: Boolean) {
-                progressView?.announceForAccessibility(getString(R.string.accessibility_announcement_loading_finished))
-                progressView?.visibility = View.INVISIBLE
-                if (webView?.visibility != View.VISIBLE) {
-                    webView?.visibility = View.VISIBLE
+                progressView?.apply {
+                    announceForAccessibility(getString(R.string.accessibility_announcement_loading_finished))
+                    visibility = View.INVISIBLE
                 }
             }
 
@@ -107,11 +110,9 @@ class InfoFragment : WebFragment() {
         private const val ARGUMENT_URL = "url"
 
         fun create(url: String): InfoFragment {
-            val arguments = Bundle()
-            arguments.putString(ARGUMENT_URL, url)
-            val fragment = InfoFragment()
-            fragment.arguments = arguments
-            return fragment
+            return InfoFragment().apply {
+                arguments = bundleOf(ARGUMENT_URL to url)
+            }
         }
     }
 }

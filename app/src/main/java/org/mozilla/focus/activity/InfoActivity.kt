@@ -64,14 +64,14 @@ class InfoActivity : LocaleAwareAppCompatActivity() {
     }
 
     companion object {
-        private val EXTRA_URL = "extra_url"
-        private val EXTRA_TITLE = "extra_title"
+        private const val EXTRA_URL = "extra_url"
+        private const val EXTRA_TITLE = "extra_title"
 
         fun getIntentFor(context: Context, url: String, title: String): Intent {
-            val intent = Intent(context, InfoActivity::class.java)
-            intent.putExtra(EXTRA_URL, url)
-            intent.putExtra(EXTRA_TITLE, title)
-            return intent
+            return Intent(context, InfoActivity::class.java).apply {
+                putExtra(EXTRA_URL, url)
+                putExtra(EXTRA_TITLE, title)
+            }
         }
 
         fun getAboutIntent(context: Context): Intent {
