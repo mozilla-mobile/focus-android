@@ -6,6 +6,8 @@ package org.mozilla.focus.fragment
 
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
+import android.app.Activity
+import android.content.Intent
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import android.content.SharedPreferences
@@ -13,6 +15,7 @@ import android.content.res.Configuration
 import android.graphics.drawable.TransitionDrawable
 import android.os.Bundle
 import android.preference.PreferenceManager
+import android.speech.RecognizerIntent
 import android.text.InputType
 import android.text.SpannableString
 import android.text.method.LinkMovementMethod
@@ -23,9 +26,14 @@ import android.view.View
 import android.view.ViewGroup
 import android.webkit.URLUtil
 import android.widget.FrameLayout
+import android.widget.ImageButton
 import android.widget.TextView
+import android.widget.Toast
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_urlinput.*
+import kotlinx.android.synthetic.main.fragment_urlinput.menuView
 import kotlinx.android.synthetic.main.fragment_urlinput.view.*
+import kotlinx.android.synthetic.main.toolbar.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Dispatchers.IO
@@ -62,7 +70,7 @@ import org.mozilla.focus.utils.UrlUtils
 import org.mozilla.focus.utils.ViewUtils
 import org.mozilla.focus.viewmodel.MainViewModel
 import org.mozilla.focus.whatsnew.WhatsNew
-import java.util.Objects
+import java.util.*
 import kotlin.coroutines.CoroutineContext
 
 class FocusCrashException : Exception()
@@ -84,6 +92,7 @@ class UrlInputFragment :
 
         private const val duckDuckGo = "DuckDuckGo"
 
+        private val REQUEST_CODE = 1
         private val ARGUMENT_ANIMATION = "animation"
         private val ARGUMENT_X = "x"
         private val ARGUMENT_Y = "y"
@@ -178,6 +187,38 @@ class UrlInputFragment :
         }
     }
 
+    private fun speak() {
+
+        val mIntent = Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH)
+        mIntent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM)
+
+        mIntent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, Locale.getDefault())
+        mIntent.putExtra(RecognizerIntent.EXTRA_PROMPT,"Hi Speak Something")
+
+        try {
+            startActivityForResult(mIntent,REQUEST_CODE)
+
+        }catch (e : java.lang.Exception){
+
+            Toast.makeText(activity,e.message,Toast.LENGTH_SHORT).show()
+
+        }
+
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        when(requestCode){
+            REQUEST_CODE -> {
+                if(resultCode == Activity.RESULT_OK && data != null){
+                    val result = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS)
+                    urlView?.setText(result[0])
+                    showKeyboard()
+                }
+            }
+        }
+    }
+
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
@@ -196,6 +237,7 @@ class UrlInputFragment :
             }
         })
     }
+
 
     override fun onResume() {
         super.onResume()
@@ -296,7 +338,7 @@ class UrlInputFragment :
         View? = inflater.inflate(R.layout.fragment_urlinput, container, false)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        listOf(dismissView, clearView).forEach { it.setOnClickListener(this) }
+        listOf(dismissView, clearView , mice).forEach { it.setOnClickListener(this) }
 
         urlView?.setOnFilterListener(::onFilter)
         urlView?.setOnTextChangeListener(::onTextChange)
@@ -420,6 +462,8 @@ class UrlInputFragment :
     override fun onClick(view: View) {
         when (view.id) {
             R.id.clearView -> clear()
+
+            R.id.mice -> speak()
 
             R.id.dismissView -> if (isOverlay) {
                 animateAndDismiss()

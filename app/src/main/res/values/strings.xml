@@ -186,6 +186,7 @@
 
     <!-- Text that is shown below a "switch" preference that is disabled. -->
     <string name="preference_state_off">Off</string>
+    <string name="Microphone">Microphone</string>
 
     <!-- Item in settings that will open a new preference screen for configuring the URL autocomplete behavior. -->
     <string name="preference_subitem_autocomplete">URL Autocomplete</string>
