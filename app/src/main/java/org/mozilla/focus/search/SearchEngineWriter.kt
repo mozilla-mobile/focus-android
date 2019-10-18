@@ -6,7 +6,7 @@ package org.mozilla.focus.search
 
 import android.graphics.Bitmap
 import android.util.Log
-import org.mozilla.focus.utils.BitmapUtils
+import org.mozilla.focus.utils.getBase64EncodedDataUriFromBitmap
 import org.w3c.dom.Document
 import java.io.StringWriter
 import javax.xml.parsers.DocumentBuilderFactory
@@ -36,7 +36,7 @@ internal class SearchEngineWriter {
                 val imageElement = document.createElement("Image")
                 imageElement.setAttribute("width", "16")
                 imageElement.setAttribute("height", "16")
-                imageElement.textContent = BitmapUtils.getBase64EncodedDataUriFromBitmap(iconBitmap)
+                imageElement.textContent = iconBitmap.getBase64EncodedDataUriFromBitmap()
                 rootElement.appendChild(imageElement)
 
                 val descriptionElement = document.createElement("Description")
