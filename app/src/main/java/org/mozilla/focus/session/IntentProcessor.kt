@@ -100,7 +100,7 @@ class IntentProcessor(
                     return null
                 }
 
-                return if (!UrlUtils.isUrl(dataString)) {
+                return if (!UrlUtils.isUrl(dataString!!)) {
                     val bestURL = WebURLFinder(dataString).bestWebURL()
                     if (!TextUtils.isEmpty(bestURL)) {
                         createSession(Session.Source.ACTION_SEND, bestURL ?: "")

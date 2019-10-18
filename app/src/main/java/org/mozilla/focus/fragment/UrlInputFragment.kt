@@ -717,7 +717,7 @@ class UrlInputFragment :
         val url = if (isUrl)
             UrlUtils.normalize(input)
         else
-            UrlUtils.createSearchUrl(context, input)
+            UrlUtils.createSearchUrl(requireNotNull(context), input)
 
         val searchTerms = if (isUrl)
             null
@@ -728,11 +728,11 @@ class UrlInputFragment :
 
     private fun onSearch(query: String, isSuggestion: Boolean = false, alwaysSearch: Boolean = false) {
         if (alwaysSearch) {
-            openUrl(UrlUtils.createSearchUrl(context, query), query)
+            openUrl(UrlUtils.createSearchUrl(requireNotNull(context), query), query)
         } else {
             val searchTerms = if (UrlUtils.isUrl(query)) null else query
             val searchUrl =
-                if (searchTerms != null) UrlUtils.createSearchUrl(context, searchTerms) else UrlUtils.normalize(query)
+                if (searchTerms != null) UrlUtils.createSearchUrl(requireNotNull(context), searchTerms) else UrlUtils.normalize(query)
 
             openUrl(searchUrl, searchTerms)
         }

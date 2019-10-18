@@ -134,7 +134,6 @@ public class UrlUtilsTest {
 
     @Test
     public void isHttpOrHttpsUrl() {
-        assertFalse(UrlUtils.isHttpOrHttps(null));
         assertFalse(UrlUtils.isHttpOrHttps(""));
         assertFalse(UrlUtils.isHttpOrHttps("     "));
         assertFalse(UrlUtils.isHttpOrHttps("mozilla.org"));

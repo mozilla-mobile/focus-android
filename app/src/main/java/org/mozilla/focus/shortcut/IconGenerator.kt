@@ -148,7 +148,11 @@ class IconGenerator {
             }
 
             // Strip common prefixes that we do not want to use to determine the representative characters
-            return UrlUtils.stripCommonSubdomains(snippet)
+            return if (snippet == null) {
+                return null
+            } else {
+                UrlUtils.stripCommonSubdomains(snippet)
+            }
         }
     }
 }
