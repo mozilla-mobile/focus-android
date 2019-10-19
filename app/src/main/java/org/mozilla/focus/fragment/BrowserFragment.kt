@@ -773,7 +773,7 @@ class BrowserFragment : WebFragment(), LifecycleObserver, View.OnClickListener,
         } catch (e: IllegalStateException) {
             // It can happen that at this point in time the activity is already in the background
             // and onSaveInstanceState() has already been called. Fragment transactions are not
-            // allowed after that anymore. It's probably safe to guess that the user might not
+            // allowed after thatBrowserFragment anymore. It's probably safe to guess that the user might not
             // be interested in adding to homescreen now.
         }
     }
@@ -1155,7 +1155,9 @@ class BrowserFragment : WebFragment(), LifecycleObserver, View.OnClickListener,
 
                 val url = webView.url
                 val title = webView.title
-                showAddToHomescreenDialog(url, title)
+                if (title != null) {
+                    showAddToHomescreenDialog(url, title)
+                }
             }
 
             R.id.security_info -> if (!crashReporterIsVisible()) { showSecurityPopUp() }
