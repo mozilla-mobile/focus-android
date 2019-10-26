@@ -6,10 +6,12 @@ package org.mozilla.focus.fragment
 
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
+
 import android.app.Activity
 import android.content.Intent
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+
 import android.content.SharedPreferences
 import android.content.res.Configuration
 import android.graphics.drawable.TransitionDrawable
@@ -27,6 +29,7 @@ import android.view.ViewGroup
 import android.webkit.URLUtil
 import android.widget.FrameLayout
 import android.widget.TextView
+
 import android.widget.Toast
 import androidx.core.app.ActivityCompat.startActivityForResult
 import kotlinx.android.synthetic.main.fragment_urlinput.*
@@ -65,7 +68,6 @@ import org.mozilla.focus.utils.StatusBarUtils
 import org.mozilla.focus.utils.SupportUtils
 import org.mozilla.focus.utils.UrlUtils
 import org.mozilla.focus.utils.ViewUtils
-import org.mozilla.focus.viewmodel.MainViewModel
 import org.mozilla.focus.whatsnew.WhatsNew
 import java.util.*
 import kotlin.coroutines.CoroutineContext
@@ -164,7 +166,6 @@ class UrlInputFragment :
     private var isAnimating: Boolean = false
 
     private var session: Session? = null
-    private var model: MainViewModel? = null
 
     private val isOverlay: Boolean
         get() = session != null
@@ -172,7 +173,6 @@ class UrlInputFragment :
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        model = ViewModelProviders.of(requireActivity()).get(MainViewModel::class.java)
         searchSuggestionsViewModel = ViewModelProviders.of(this).get(SearchSuggestionsViewModel::class.java)
 
         PreferenceManager.getDefaultSharedPreferences(context)
@@ -718,7 +718,6 @@ class UrlInputFragment :
 
             ViewUtils.hideKeyboard(urlView)
 
-            if (handleExperimentsTrigger(input)) return
             if (handleL10NTrigger(input)) return
 
             val (isUrl, url, searchTerms) = normalizeUrlAndSearchTerms(input)
@@ -751,14 +750,6 @@ class UrlInputFragment :
 
         if (triggerHandled) clear()
         return triggerHandled
-    }
-
-    private fun handleExperimentsTrigger(input: String): Boolean {
-        if (input == "focus:test") {
-            model?.showExperiments()
-            return true
-        }
-        return false
     }
 
     private fun handleCrashTrigger(input: String) {
