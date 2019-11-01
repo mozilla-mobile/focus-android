@@ -181,6 +181,6 @@ public class UrlUtils {
 
     public static boolean isLocalizedContent(@Nullable String url) {
         return url != null &&
-            (url.equals(LocalizedContent.URL_ABOUT) || url.equals(LocalizedContent.URL_RIGHTS) || url.equals("about:blank"));
+            (url.equals(LocalizedContent.URL_ABOUT) || url.equals(LocalizedContent.URL_RIGHTS) || url.startsWith("about:"));
     }
 }
