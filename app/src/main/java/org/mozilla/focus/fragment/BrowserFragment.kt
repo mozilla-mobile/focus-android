@@ -833,9 +833,11 @@ class BrowserFragment : WebFragment(), LifecycleObserver, View.OnClickListener,
             pendingDownload = null
         }
 
-        StatusBarUtils.getStatusBarHeight(statusBar) { statusBarHeight ->
-            statusBar!!.layoutParams.height = statusBarHeight
-        }
+        StatusBarUtils.getStatusBarHeight(statusBar, object : StatusBarUtils.StatusBarHeightListener {
+            override fun onStatusBarHeightFetched(statusBarHeight: Int) {
+                statusBar!!.layoutParams.height = statusBarHeight
+            }
+        })
 
         if (Biometrics.isBiometricsEnabled(requireContext())) {
             if (biometricController == null) {

@@ -132,14 +132,16 @@ class FirstrunFragment : Fragment(), View.OnClickListener {
 
     override fun onResume() {
         super.onResume()
-        StatusBarUtils.getStatusBarHeight(background) { statusBarHeight ->
-            background!!.setPadding(
-                0,
-                statusBarHeight,
-                0,
-                0
-            )
-        }
+        StatusBarUtils.getStatusBarHeight(background, object : StatusBarUtils.StatusBarHeightListener {
+            override fun onStatusBarHeightFetched(statusBarHeight: Int) {
+                background!!.setPadding(
+                        0,
+                        statusBarHeight,
+                        0,
+                        0
+                )
+            }
+        })
     }
 
     companion object {

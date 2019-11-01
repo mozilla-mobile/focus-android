@@ -209,9 +209,11 @@ class UrlInputFragment :
             customDomainsProvider.initialize(it.applicationContext)
         }
 
-        StatusBarUtils.getStatusBarHeight(keyboardLinearLayout) {
-            adjustViewToStatusBarHeight(it)
-        }
+        StatusBarUtils.getStatusBarHeight(keyboardLinearLayout, object : StatusBarUtils.StatusBarHeightListener {
+            override fun onStatusBarHeightFetched(statusBarHeight: Int) {
+                adjustViewToStatusBarHeight(statusBarHeight)
+            }
+        })
     }
 
     override fun onPause() {
