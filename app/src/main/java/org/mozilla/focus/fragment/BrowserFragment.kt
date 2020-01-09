@@ -162,6 +162,8 @@ class BrowserFragment : WebFragment(), LifecycleObserver, View.OnClickListener,
 
     private var biometricController: BiometricAuthenticationHandler? = null
 
+    var remember: Boolean = false
+
     private var job = Job()
     override val coroutineContext: CoroutineContext
         get() = job + Dispatchers.Main
@@ -170,7 +172,7 @@ class BrowserFragment : WebFragment(), LifecycleObserver, View.OnClickListener,
     // but sometimes it's null, and sometimes it returns a null URL. Sometimes it returns a data:
     // URL for error pages. The URL we show in the toolbar is (A) always correct and (B) what the
     // user is probably expecting to share, so lets use that here:
-    val url: String
+    public val url: String
         get() = urlView!!.text.toString()
 
     var openedFromExternalLink: Boolean = false
@@ -351,6 +353,7 @@ class BrowserFragment : WebFragment(), LifecycleObserver, View.OnClickListener,
     private fun initialiseNormalBrowserUi(view: View) {
         val eraseButton = view.findViewById<FloatingEraseButton>(R.id.erase)
         eraseButton.setOnClickListener(this)
+        eraseButton.setOnLongClickListener(this)
 
         urlView!!.setOnClickListener(this)
 
@@ -1301,17 +1304,22 @@ class BrowserFragment : WebFragment(), LifecycleObserver, View.OnClickListener,
 
     override fun onLongClick(view: View): Boolean {
         // Detect long clicks on display_url
-        if (view.id == R.id.display_url) {
-            val context = activity ?: return false
+        when (view.id) {
+            R.id.display_url -> {
 
-            if (session.isCustomTabSession()) {
-                val clipBoard = context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
-                val uri = Uri.parse(url)
-                clipBoard.primaryClip = ClipData.newRawUri("Uri", uri)
-                Toast.makeText(context, getString(R.string.custom_tab_copy_url_action), Toast.LENGTH_SHORT).show()
+                val context = activity ?: return false
+
+                if (session.isCustomTabSession()) {
+                    val clipBoard = context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+                    val uri = Uri.parse(url)
+                    clipBoard.primaryClip = ClipData.newRawUri("Uri", uri)
+                    Toast.makeText(context, getString(R.string.custom_tab_copy_url_action), Toast.LENGTH_SHORT).show()
+                }
+            }
+            R.id.erase -> {
+                remember = true
             }
         }
-
         return false
     }
 

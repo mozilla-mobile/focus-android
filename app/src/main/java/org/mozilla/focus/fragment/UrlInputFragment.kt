@@ -76,29 +76,31 @@ class UrlInputFragment :
     SharedPreferences.OnSharedPreferenceChangeListener,
     CoroutineScope {
     companion object {
-        @JvmField
-        val FRAGMENT_TAG = "url_input"
+        const val FRAGMENT_TAG = "url_input"
 
         private const val duckDuckGo = "DuckDuckGo"
 
-        private val ARGUMENT_ANIMATION = "animation"
-        private val ARGUMENT_X = "x"
-        private val ARGUMENT_Y = "y"
-        private val ARGUMENT_WIDTH = "width"
-        private val ARGUMENT_HEIGHT = "height"
+        private const val ARGUMENT_ANIMATION = "animation"
+        private const val ARGUMENT_X = "x"
+        private const val ARGUMENT_Y = "y"
+        private const val ARGUMENT_WIDTH = "width"
+        private const val ARGUMENT_HEIGHT = "height"
 
-        private val ARGUMENT_SESSION_UUID = "sesssion_uuid"
+        private const val ARGUMENT_SESSION_UUID = "sesssion_uuid"
 
-        private val ANIMATION_BROWSER_SCREEN = "browser_screen"
+        private const val ARGUMENT_REMEMBERED_URL = "url"
 
-        private val ANIMATION_DURATION = 200
-        private val TIPS_ALPHA = 0.65f
+        private const val ANIMATION_BROWSER_SCREEN = "browser_screen"
+
+        private const val ANIMATION_DURATION = 200
+        private const val TIPS_ALPHA = 0.65f
 
         private lateinit var searchSuggestionsViewModel: SearchSuggestionsViewModel
 
         @JvmStatic
-        fun createWithoutSession(): UrlInputFragment {
+        fun createWithoutSession(url: String?): UrlInputFragment {
             val arguments = Bundle()
+            arguments.putString(ARGUMENT_REMEMBERED_URL, url)
 
             val fragment = UrlInputFragment()
             fragment.arguments = arguments
@@ -293,6 +295,7 @@ class UrlInputFragment :
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         listOf(dismissView, clearView).forEach { it.setOnClickListener(this) }
 
+        urlView?.setText(arguments?.getString(ARGUMENT_REMEMBERED_URL))
         urlView?.setOnFilterListener(::onFilter)
         urlView?.setOnTextChangeListener(::onTextChange)
         urlView?.imeOptions = urlView.imeOptions or ViewUtils.IME_FLAG_NO_PERSONALIZED_LEARNING

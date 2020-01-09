@@ -135,11 +135,11 @@ open class MainActivity : LocaleAwareAppCompatActivity() {
 
         val fragmentManager = supportFragmentManager
         val browserFragment =
-            fragmentManager.findFragmentByTag(BrowserFragment.FRAGMENT_TAG) as BrowserFragment?
+                fragmentManager.findFragmentByTag(BrowserFragment.FRAGMENT_TAG) as BrowserFragment?
         browserFragment?.cancelAnimation()
 
         val urlInputFragment =
-            fragmentManager.findFragmentByTag(UrlInputFragment.FRAGMENT_TAG) as UrlInputFragment?
+                fragmentManager.findFragmentByTag(UrlInputFragment.FRAGMENT_TAG) as UrlInputFragment?
         urlInputFragment?.cancelAnimation()
 
         super.onPause()
@@ -206,6 +206,7 @@ open class MainActivity : LocaleAwareAppCompatActivity() {
         val fragmentManager = supportFragmentManager
         val browserFragment = fragmentManager.findFragmentByTag(BrowserFragment.FRAGMENT_TAG) as BrowserFragment?
 
+
         val isShowingBrowser = browserFragment != null
         val crashReporterIsVisible = browserFragment?.crashReporterIsVisible() ?: false
 
@@ -213,6 +214,14 @@ open class MainActivity : LocaleAwareAppCompatActivity() {
             ViewUtils.showBrandedSnackbar(findViewById(android.R.id.content),
                     R.string.feedback_erase,
                     resources.getInteger(R.integer.erase_snackbar_delay))
+        }
+
+        val rememberedUrl = browserFragment?.let { browser ->
+            when {
+                browser.remember -> browser.url
+                else -> null
+
+            }
         }
 
         // We add the url input fragment to the layout if it doesn't exist yet.
@@ -240,7 +249,7 @@ open class MainActivity : LocaleAwareAppCompatActivity() {
         // Ideally we'd make it possible to pause observers while the app is in the background:
         // https://github.com/mozilla-mobile/android-components/issues/876
         transaction
-                .replace(R.id.container, UrlInputFragment.createWithoutSession(), UrlInputFragment.FRAGMENT_TAG)
+                .replace(R.id.container, UrlInputFragment.createWithoutSession(rememberedUrl), UrlInputFragment.FRAGMENT_TAG)
                 .commitAllowingStateLoss()
     }
 
@@ -265,14 +274,14 @@ open class MainActivity : LocaleAwareAppCompatActivity() {
         val isNewSession = previousSessionCount < components.sessionManager.sessions.count() && previousSessionCount > 0
 
         if ((currentSession.source == Session.Source.ACTION_SEND ||
-                currentSession.source == Session.Source.HOME_SCREEN) && isNewSession) {
+                        currentSession.source == Session.Source.HOME_SCREEN) && isNewSession) {
             browserFragment.openedFromExternalLink = true
         }
 
         fragmentManager
                 .beginTransaction()
                 .replace(R.id.container, browserFragment, BrowserFragment.FRAGMENT_TAG)
-            .commitAllowingStateLoss()
+                .commitAllowingStateLoss()
 
         previousSessionCount = components.sessionManager.sessions.count()
     }
@@ -288,7 +297,7 @@ open class MainActivity : LocaleAwareAppCompatActivity() {
         val fragmentManager = supportFragmentManager
 
         val sessionsSheetFragment = fragmentManager.findFragmentByTag(
-            SessionsSheetFragment.FRAGMENT_TAG) as SessionsSheetFragment?
+                SessionsSheetFragment.FRAGMENT_TAG) as SessionsSheetFragment?
         if (sessionsSheetFragment != null &&
                 sessionsSheetFragment.isVisible &&
                 sessionsSheetFragment.onBackPressed()) {
