@@ -103,8 +103,7 @@ import org.mozilla.focus.webview.matcher.util.FocusString;
         return new Trie(Character.MIN_VALUE, null);
     }
 
-    // Subclasses must override to provide their node implementation
-    protected Trie createNode(final char character, final Trie parent) {
-        return new Trie(character, parent);
-    }
+    protected static Trie createNode(final char character, final Trie parent) {
+		return new Trie(character, parent);
+	}
 }
