@@ -158,12 +158,38 @@ public class FloatingEraseButton extends FloatingActionButton {
                 // It usually identifies the class or activity where the log call occurs.
                 Log.i("aa", "isDrag=" + isDrag + "getX=" + getX() + ";getY=" + getY() + ";parentWidth=" + rangeWidth);
                 break;
+
             // unpressed button
+            case MotionEvent.ACTION_UP:
+                if (!isNotDrag()) {
+                    // recovery from press
+                    setPressed(false);
+                    if (rawX >= rangeWidth / 2) {
+                        // attract right
+                        animate().setInterpolator(new DecelerateInterpolator())
+                                .setDuration(500)
+                                // keep 50 pixel away from the edge
+                                .xBy(rangeWidth - getWidth() - getX() - 50)
+                                .start();
+                    } else {
+                        // attract left
+                        ObjectAnimator oa = ObjectAnimator.ofFloat(this, "x", getX(), 50);
+                        oa.setInterpolator(new DecelerateInterpolator());
+                        oa.setDuration(500);
+                        oa.start();
+                    }
+                }
+                break;
 
             default:
                 break;
         }
         // if drag then update session otherwise pass
-        return super.onTouchEvent(event);
+        return !isNotDrag() || super.onTouchEvent(event);
+    }
+
+    // check is drag or not
+    private boolean isNotDrag() {
+        return !isDrag && (getX() == 0 || (getX() == rangeWidth - getWidth()));
     }
 }
