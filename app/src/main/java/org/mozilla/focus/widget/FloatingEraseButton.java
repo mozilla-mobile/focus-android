@@ -185,7 +185,7 @@ public class FloatingEraseButton extends FloatingActionButton {
                 break;
         }
         // if drag then update session otherwise pass
-        return !isNotDrag() || super.onTouchEvent(event);
+        return isNotDrag() || super.onTouchEvent(event);
     }
 
     // check is drag or not
