@@ -2,6 +2,7 @@ package org.mozilla.focus.settings
 
 import android.app.Activity
 import android.content.Context
+import android.content.Intent
 import android.graphics.Paint
 import androidx.core.content.ContextCompat
 import androidx.preference.PreferenceViewHolder
@@ -10,12 +11,15 @@ import android.util.AttributeSet
 import android.view.ContextThemeWrapper
 import android.view.View
 import android.widget.TextView
+import androidx.core.content.ContextCompat.startActivity
+import com.facebook.stetho.inspector.elements.android.AccessibilityNodeInfoWrapper.getDescription
 import mozilla.components.browser.session.Session
 import org.mozilla.focus.R
+import org.mozilla.focus.activity.InfoActivity
 import org.mozilla.focus.ext.components
 
 abstract class LearnMoreSwitchPreference(context: Context?, attrs: AttributeSet?) :
-    SwitchPreferenceCompat(context, attrs) {
+        SwitchPreferenceCompat(context, attrs) {
 
     init {
         layoutResource = R.layout.preference_switch_learn_more
@@ -36,19 +40,15 @@ abstract class LearnMoreSwitchPreference(context: Context?, attrs: AttributeSet?
         learnMoreLink.setOnClickListener {
             // This is a hardcoded link: if we ever end up needing more of these links, we should
             // move the link into an xml parameter, but there's no advantage to making it configurable now.
-            val session = Session(getLearnMoreUrl(), source = Session.Source.MENU)
-            context.components.sessionManager.add(session, selected = true)
-            if (context is ContextThemeWrapper) {
-                if ((context as ContextThemeWrapper).baseContext is Activity) {
-                    ((context as ContextThemeWrapper).baseContext as Activity).finish()
-                }
-            } else {
-                (context as? Activity)?.finish()
-            }
+            val intent = InfoActivity.getIntentFor(context!!,
+                    getLearnMoreUrl(), getPreferenceTitle())
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            intent.addFlags(Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS)
+            context.startActivity(intent)
         }
 
         val backgroundDrawableArray =
-            context.obtainStyledAttributes(intArrayOf(R.attr.selectableItemBackground))
+                context.obtainStyledAttributes(intArrayOf(R.attr.selectableItemBackground))
         val backgroundDrawable = backgroundDrawableArray.getDrawable(0)
         backgroundDrawableArray.recycle()
         learnMoreLink.background = backgroundDrawable
@@ -57,4 +57,6 @@ abstract class LearnMoreSwitchPreference(context: Context?, attrs: AttributeSet?
     open fun getDescription(): String? = null
 
     abstract fun getLearnMoreUrl(): String
+
+    abstract fun getPreferenceTitle(): String
 }

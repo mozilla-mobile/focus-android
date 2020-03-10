@@ -6,6 +6,8 @@ package org.mozilla.focus.autocomplete
 
 import android.content.Context
 import android.util.AttributeSet
+import org.mozilla.focus.R
+import org.mozilla.focus.R.string.preference_subitem_autocomplete
 import org.mozilla.focus.settings.LearnMoreSwitchPreference
 import org.mozilla.focus.utils.SupportUtils
 
@@ -13,8 +15,9 @@ import org.mozilla.focus.utils.SupportUtils
  * Switch preference for enabling/disabling autocompletion for custom domains entered by the user.
  */
 class AutocompleteCustomDomainsPreference(
-    context: Context?,
-    attrs: AttributeSet?
+        context: Context?,
+        attrs: AttributeSet?
 ) : LearnMoreSwitchPreference(context, attrs) {
     override fun getLearnMoreUrl() = SupportUtils.getSumoURLForTopic(context, SupportUtils.SumoTopic.AUTOCOMPLETE)
+    override fun getPreferenceTitle(): String = context.getString(preference_subitem_autocomplete)
 }

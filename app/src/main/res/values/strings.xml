@@ -169,6 +169,8 @@
 
     <string name="preference_category_search">Search</string>
 
+    <string name="preference_category_search_suggestions">Search Suggestions</string>
+
     <!-- Title of "switch" preference that enables/disables search suggestions -->
     <string name="preference_show_search_suggestions">Get search suggestions</string>
     <!-- Description of the preference that enables/disables search suggestions

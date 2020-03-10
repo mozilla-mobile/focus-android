@@ -9,6 +9,7 @@ package org.mozilla.focus.widget
 import android.content.Context
 import android.util.AttributeSet
 import org.mozilla.focus.R
+import org.mozilla.focus.R.string.preference_mozilla_telemetry2
 import org.mozilla.focus.settings.LearnMoreSwitchPreference
 import org.mozilla.focus.telemetry.CrashReporterWrapper
 import org.mozilla.focus.telemetry.TelemetryWrapper
@@ -19,7 +20,7 @@ import org.mozilla.telemetry.TelemetryHolder
  * Switch preference for enabling/disabling telemetry
  */
 internal class TelemetrySwitchPreference(context: Context?, attrs: AttributeSet?) :
-    LearnMoreSwitchPreference(context, attrs) {
+        LearnMoreSwitchPreference(context, attrs) {
 
     init {
         if (context != null) {
@@ -37,12 +38,14 @@ internal class TelemetrySwitchPreference(context: Context?, attrs: AttributeSet?
 
     override fun getDescription(): String? {
         return context.resources.getString(
-            R.string.preference_mozilla_telemetry_summary2,
-            context.resources.getString(R.string.app_name)
+                R.string.preference_mozilla_telemetry_summary2,
+                context.resources.getString(R.string.app_name)
         )
     }
 
     override fun getLearnMoreUrl(): String {
         return SupportUtils.getSumoURLForTopic(context, SupportUtils.SumoTopic.USAGE_DATA)
     }
+
+    override fun getPreferenceTitle(): String = context.getString(preference_mozilla_telemetry2)
 }
