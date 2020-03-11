@@ -24,6 +24,7 @@ import android.os.Build
 import android.os.Bundle
 import android.os.Environment
 import android.preference.PreferenceManager
+import android.provider.DocumentsContract
 import androidx.annotation.RequiresApi
 import com.google.android.material.appbar.AppBarLayout
 import androidx.coordinatorlayout.widget.CoordinatorLayout
@@ -480,6 +481,19 @@ class BrowserFragment : WebFragment(), LifecycleObserver, View.OnClickListener,
         }
     }
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        when (requestCode) {
+            9999 -> {
+                Log.i("Test", "Result URI " + data!!.data)
+                val uri = data.data
+                val docUri = DocumentsContract.buildDocumentUriUsingTree(uri,
+                        DocumentsContract.getTreeDocumentId(uri))
+                var path = docUri.path
+                Path.DIRECTORY_DOWNLOADS = path
+            }
+        }
+    }
+
     @Suppress("ComplexMethod")
     override fun createCallback(): IWebView.Callback {
         return SessionCallbackProxy(session, object : IWebView.Callback {
@@ -582,6 +596,9 @@ class BrowserFragment : WebFragment(), LifecycleObserver, View.OnClickListener,
                 ) {
                     // Long press image displays its own dialog and we handle other download cases here
                     if (!isDownloadFromLongPressImage(download)) {
+                        val i = Intent(Intent.ACTION_OPEN_DOCUMENT_TREE)
+                        i.addCategory(Intent.CATEGORY_DEFAULT)
+                        startActivityForResult(Intent.createChooser(i, "Choose directory"), 9999)
                         showDownloadPromptDialog(download)
                     } else {
                         // Download dialog has already been shown from long press on image. Proceed with download.
@@ -780,8 +797,25 @@ class BrowserFragment : WebFragment(), LifecycleObserver, View.OnClickListener,
 
     override fun onFinishDownloadDialog(download: Download?, shouldDownload: Boolean) {
         if (shouldDownload) {
-            queueDownload(download)
+            if (download != null) {
+                var newDownload = updatePath(download)
+                queueDownload(newDownload)
+            } else {
+                queueDownload(download)
+            }
         }
+    }
+
+    private fun updatePath(download: Download): Download? {
+        var newDownload = Download(download.url,
+                download.userAgent,
+                download.contentDisposition,
+                download.mimeType,
+                download.contentLength,
+                Path.parser(Path.DIRECTORY_DOWNLOADS),
+                download.fileName)
+        Path.reset()
+        return newDownload
     }
 
     override fun biometricCreateNewSessionWithLink() {
