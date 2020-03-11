@@ -24,6 +24,7 @@ import android.os.Build
 import android.os.Bundle
 import android.os.Environment
 import android.preference.PreferenceManager
+import android.provider.DocumentsContract
 import androidx.annotation.RequiresApi
 import com.google.android.material.appbar.AppBarLayout
 import androidx.coordinatorlayout.widget.CoordinatorLayout
@@ -480,6 +481,19 @@ class BrowserFragment : WebFragment(), LifecycleObserver, View.OnClickListener,
         }
     }
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        when (requestCode) {
+            9999 -> {
+                Log.i("Test", "Result URI " + data!!.data)
+                val uri = data.data
+                val docUri = DocumentsContract.buildDocumentUriUsingTree(uri,
+                        DocumentsContract.getTreeDocumentId(uri))
+                var path = docUri.path
+                print(path)
+            }
+        }
+    }
+
     @Suppress("ComplexMethod")
     override fun createCallback(): IWebView.Callback {
         return SessionCallbackProxy(session, object : IWebView.Callback {
@@ -575,6 +589,9 @@ class BrowserFragment : WebFragment(), LifecycleObserver, View.OnClickListener,
             }
 
             override fun onDownloadStart(download: Download) {
+                val i = Intent(Intent.ACTION_OPEN_DOCUMENT_TREE)
+                i.addCategory(Intent.CATEGORY_DEFAULT)
+                startActivityForResult(Intent.createChooser(i, "Choose directory"), 9999)
                 if (PackageManager.PERMISSION_GRANTED == ContextCompat.checkSelfPermission(
                         requireContext(),
                         Manifest.permission.WRITE_EXTERNAL_STORAGE
