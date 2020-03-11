@@ -7,7 +7,6 @@ package org.mozilla.focus.activity;
 
 import android.content.Context;
 import android.preference.PreferenceManager;
-
 import androidx.test.InstrumentationRegistry;
 import androidx.test.rule.ActivityTestRule;
 import androidx.test.runner.AndroidJUnit4;
@@ -110,7 +109,7 @@ public class AccessSettingsTest {
         try {
             searchHeading.click();
         } catch (UiObjectNotFoundException E) {
-            fail("Unable to find search heading on in settings menu");
+            fail("Unable to find search heading in settings menu");
         }
 
         try {
