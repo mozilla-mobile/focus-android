@@ -589,9 +589,6 @@ class BrowserFragment : WebFragment(), LifecycleObserver, View.OnClickListener,
             }
 
             override fun onDownloadStart(download: Download) {
-                val i = Intent(Intent.ACTION_OPEN_DOCUMENT_TREE)
-                i.addCategory(Intent.CATEGORY_DEFAULT)
-                startActivityForResult(Intent.createChooser(i, "Choose directory"), 9999)
                 if (PackageManager.PERMISSION_GRANTED == ContextCompat.checkSelfPermission(
                         requireContext(),
                         Manifest.permission.WRITE_EXTERNAL_STORAGE
@@ -599,6 +596,9 @@ class BrowserFragment : WebFragment(), LifecycleObserver, View.OnClickListener,
                 ) {
                     // Long press image displays its own dialog and we handle other download cases here
                     if (!isDownloadFromLongPressImage(download)) {
+                        val i = Intent(Intent.ACTION_OPEN_DOCUMENT_TREE)
+                        i.addCategory(Intent.CATEGORY_DEFAULT)
+                        startActivityForResult(Intent.createChooser(i, "Choose directory"), 9999)
                         showDownloadPromptDialog(download)
                     } else {
                         // Download dialog has already been shown from long press on image. Proceed with download.
