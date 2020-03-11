@@ -44,7 +44,6 @@ abstract class LearnMoreSwitchPreference(context: Context?, attrs: AttributeSet?
             val intent = InfoActivity.getIntentFor(context!!,
                     url, context.getString(R.string.enable_search_suggestion_subtitle_learnmore))
             context.startActivity(intent)
-            TelemetryWrapper.addSearchEngineLearnMoreEvent()
         }
 
         val backgroundDrawableArray =
