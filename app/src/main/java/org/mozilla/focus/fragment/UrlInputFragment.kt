@@ -158,6 +158,7 @@ class UrlInputFragment :
 
     private val isOverlay: Boolean
         get() = session != null
+    var result: DomainAutocompleteResult? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -673,7 +674,11 @@ class UrlInputFragment :
 
             val (isUrl, url, searchTerms) = normalizeUrlAndSearchTerms(input)
 
-            openUrl(url, searchTerms)
+            if (result != null && input == result?.text) {
+                openUrl(result!!.url, searchTerms)
+            } else {
+                openUrl(url, searchTerms)
+            }
 
             if (urlView.autocompleteResult != null) {
                 TelemetryWrapper.urlBarEvent(isUrl, urlView.autocompleteResult!!)
@@ -785,7 +790,6 @@ class UrlInputFragment :
         }
 
         view?.let {
-            var result: DomainAutocompleteResult? = null
             if (useCustom) {
                 result = customDomainsProvider.getAutocompleteSuggestion(searchText)
             }
@@ -796,7 +800,7 @@ class UrlInputFragment :
 
             if (result != null) {
                 view.applyAutocompleteResult(AutocompleteResult(
-                        result.text, result.source, result.totalItems, { result.url }))
+                        result!!.text, result!!.source, result!!.totalItems, { result!!.url }))
             } else {
                 view.noAutocompleteResult()
             }
