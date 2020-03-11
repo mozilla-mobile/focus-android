@@ -7,10 +7,12 @@ package org.mozilla.focus.activity;
 
 import android.content.Context;
 import android.preference.PreferenceManager;
+
 import androidx.test.InstrumentationRegistry;
 import androidx.test.rule.ActivityTestRule;
 import androidx.test.runner.AndroidJUnit4;
 import androidx.test.uiautomator.UiObject;
+import androidx.test.uiautomator.UiObjectNotFoundException;
 import androidx.test.uiautomator.UiSelector;
 
 import org.junit.After;
@@ -20,6 +22,7 @@ import org.junit.runner.RunWith;
 import org.mozilla.focus.helpers.TestHelper;
 
 import static junit.framework.Assert.assertTrue;
+import static junit.framework.Assert.fail;
 import static org.mozilla.focus.fragment.FirstrunFragment.FIRSTRUN_PREF;
 import static org.mozilla.focus.helpers.EspressoHelper.openSettings;
 import static org.mozilla.focus.helpers.TestHelper.waitingTime;
@@ -85,5 +88,39 @@ public class AccessSettingsTest {
         assertTrue(searchHeading.exists());
         assertTrue(privacyHeading.exists());
         assertTrue(mozHeading.exists());
+    }
+
+    @Test
+    public void BackRedirectionOnLearnMoreTest() {
+        UiObject searchHeading = TestHelper.mDevice.findObject(new UiSelector()
+                .text("Search")
+                .resourceId("android:id/title"));
+
+        UiObject learnMoreButton = TestHelper.mDevice.findObject(new UiSelector()
+                .text("Learn more"));
+
+        UiObject searchActionBar = TestHelper.mDevice.findObject(new UiSelector()
+                .text("Search"));
+
+        TestHelper.inlineAutocompleteEditText.waitForExists(waitingTime);
+        openSettings();
+
+        searchHeading.waitForExists(waitingTime);
+
+        try {
+            searchHeading.click();
+        } catch (UiObjectNotFoundException E) {
+            fail("Unable to find search heading on in settings menu");
+        }
+
+        try {
+            learnMoreButton.click();
+        } catch (UiObjectNotFoundException E) {
+            fail("Unable to find learn more button within Search submenu");
+        }
+
+        TestHelper.pressBackKey();
+        assertTrue(searchActionBar.exists());
+
     }
 }
