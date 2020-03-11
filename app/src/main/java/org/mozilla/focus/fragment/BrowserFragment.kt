@@ -489,7 +489,7 @@ class BrowserFragment : WebFragment(), LifecycleObserver, View.OnClickListener,
                 val docUri = DocumentsContract.buildDocumentUriUsingTree(uri,
                         DocumentsContract.getTreeDocumentId(uri))
                 var path = docUri.path
-                print(path)
+                Path.DIRECTORY_DOWNLOADS = path
             }
         }
     }
@@ -797,7 +797,19 @@ class BrowserFragment : WebFragment(), LifecycleObserver, View.OnClickListener,
 
     override fun onFinishDownloadDialog(download: Download?, shouldDownload: Boolean) {
         if (shouldDownload) {
-            queueDownload(download)
+            if (download != null) {
+                var newDownload = Download(download.url,
+                        download.userAgent,
+                        download.contentDisposition,
+                        download.mimeType,
+                        download.contentLength,
+                        //Path.DIRECTORY_DOWNLOADS,
+                        "Download/new",
+                        download.fileName)
+                queueDownload(newDownload)
+            } else {
+                queueDownload(download)
+            }
         }
     }
 
