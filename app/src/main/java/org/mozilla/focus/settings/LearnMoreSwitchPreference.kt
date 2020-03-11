@@ -13,6 +13,10 @@ import android.widget.TextView
 import mozilla.components.browser.session.Session
 import org.mozilla.focus.R
 import org.mozilla.focus.ext.components
+import android.util.Log
+import org.mozilla.focus.activity.InfoActivity
+import org.mozilla.focus.telemetry.TelemetryWrapper
+import org.mozilla.focus.utils.SupportUtils
 
 abstract class LearnMoreSwitchPreference(context: Context?, attrs: AttributeSet?) :
     SwitchPreferenceCompat(context, attrs) {
@@ -36,15 +40,11 @@ abstract class LearnMoreSwitchPreference(context: Context?, attrs: AttributeSet?
         learnMoreLink.setOnClickListener {
             // This is a hardcoded link: if we ever end up needing more of these links, we should
             // move the link into an xml parameter, but there's no advantage to making it configurable now.
-            val session = Session(getLearnMoreUrl(), source = Session.Source.MENU)
-            context.components.sessionManager.add(session, selected = true)
-            if (context is ContextThemeWrapper) {
-                if ((context as ContextThemeWrapper).baseContext is Activity) {
-                    ((context as ContextThemeWrapper).baseContext as Activity).finish()
-                }
-            } else {
-                (context as? Activity)?.finish()
-            }
+            val url = getLearnMoreUrl()
+            val intent = InfoActivity.getIntentFor(context!!,
+                    url, context.getString(R.string.enable_search_suggestion_subtitle_learnmore))
+            context.startActivity(intent)
+            TelemetryWrapper.addSearchEngineLearnMoreEvent()
         }
 
         val backgroundDrawableArray =
