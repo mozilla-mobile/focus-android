@@ -21,6 +21,7 @@ import kotlinx.coroutines.Dispatchers.Main
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import mozilla.components.browser.search.SearchEngine
+import org.mozilla.focus.Components
 import org.mozilla.focus.R
 import org.mozilla.focus.ext.components
 import org.mozilla.focus.utils.Settings
@@ -47,8 +48,8 @@ abstract class SearchEngineListPreference : Preference, CoroutineScope {
         super.onBindViewHolder(holder)
         searchEngineGroup = holder!!.itemView.findViewById(R.id.search_engine_group)
         val context = searchEngineGroup!!.context
-
-        searchEngines = context.components.searchEngineManager.getSearchEngines(context)
+        val components: Components by lazy { Components() }
+        searchEngines = components.searchEngineManager.getSearchEngines(context)
             .sortedBy { it.name }
 
         refreshSearchEngineViews(context)
@@ -63,7 +64,8 @@ abstract class SearchEngineListPreference : Preference, CoroutineScope {
 
     fun refetchSearchEngines() {
         launch(Main) {
-            searchEngines = context.components.searchEngineManager
+            val components: Components by lazy { Components() }
+            searchEngines = components.searchEngineManager
                     .loadAsync(this@SearchEngineListPreference.context)
                     .await()
                     .list
@@ -79,8 +81,8 @@ abstract class SearchEngineListPreference : Preference, CoroutineScope {
             // so searchEngineGroup is not set yet.
             return
         }
-
-        val defaultSearchEngine = context.components.searchEngineManager.getDefaultSearchEngine(
+        val components: Components by lazy { Components() }
+        val defaultSearchEngine = components.searchEngineManager.getDefaultSearchEngine(
                 context,
                 Settings.getInstance(context).defaultSearchEngineName
         ).identifier

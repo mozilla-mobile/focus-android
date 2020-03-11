@@ -20,6 +20,7 @@ import mozilla.components.lib.fetch.httpurlconnection.HttpURLConnectionClient
 import mozilla.components.ui.autocomplete.InlineAutocompleteEditText
 import org.json.JSONObject
 import org.mozilla.focus.BuildConfig
+import org.mozilla.focus.Components
 import org.mozilla.focus.R
 import org.mozilla.focus.ext.components
 import org.mozilla.focus.search.CustomSearchEngineStore
@@ -504,7 +505,8 @@ object TelemetryWrapper {
     }
 
     private fun getDefaultSearchEngineIdentifierForTelemetry(context: Context): String {
-        val searchEngine = context.components.searchEngineManager.getDefaultSearchEngine(
+        val components: Components by lazy { Components() }
+        val searchEngine = components.searchEngineManager.getDefaultSearchEngine(
             context,
             Settings.getInstance(context).defaultSearchEngineName
         ).identifier

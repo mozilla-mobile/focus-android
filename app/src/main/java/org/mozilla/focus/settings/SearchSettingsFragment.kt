@@ -6,6 +6,7 @@ package org.mozilla.focus.settings
 
 import android.content.SharedPreferences
 import android.os.Bundle
+import androidx.fragment.app.FragmentTransaction
 import androidx.preference.Preference
 import org.mozilla.focus.R
 import org.mozilla.focus.autocomplete.AutocompleteSettingsFragment
@@ -46,6 +47,8 @@ class SearchSettingsFragment : BaseSettingsFragment(),
     }
 
     override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences, key: String) {
+        var reloadFragment = fragmentManager!!.beginTransaction()
+        reloadFragment.detach(this).attach(this).commit()
         TelemetryWrapper.settingsEvent(key, sharedPreferences.all[key].toString())
     }
 

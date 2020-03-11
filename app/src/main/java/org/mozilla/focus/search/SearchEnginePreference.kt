@@ -9,6 +9,7 @@ import android.content.Context
 import android.content.SharedPreferences
 import androidx.preference.Preference
 import android.util.AttributeSet
+import org.mozilla.focus.Components
 import org.mozilla.focus.R
 import org.mozilla.focus.ext.components
 import org.mozilla.focus.utils.Settings
@@ -43,9 +44,9 @@ class SearchEnginePreference : Preference, SharedPreferences.OnSharedPreferenceC
             summary = defaultSearchEngineName
         }
     }
-
+    private val components: Components by lazy { Components() }
     private val defaultSearchEngineName: String
-        get() = context.components.searchEngineManager.getDefaultSearchEngine(
+        get() = components.searchEngineManager.getDefaultSearchEngine(
                 getContext(),
                 Settings.getInstance(context).defaultSearchEngineName).name
 }

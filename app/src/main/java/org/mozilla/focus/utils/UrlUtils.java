@@ -12,6 +12,8 @@ import androidx.annotation.Nullable;
 import android.text.TextUtils;
 import android.webkit.URLUtil;
 import mozilla.components.browser.search.SearchEngine;
+
+import org.mozilla.focus.Components;
 import org.mozilla.focus.browser.LocalizedContent;
 import org.mozilla.focus.ext.ContextKt;
 
@@ -61,9 +63,8 @@ public class UrlUtils {
 
     public static String createSearchUrl(Context context, String searchTerm) {
         final String defaultIdentifier = Settings.getInstance(context).getDefaultSearchEngineName();
-
-        final SearchEngine searchEngine = ContextKt.getComponents(context).getSearchEngineManager()
-                .getDefaultSearchEngine(context, defaultIdentifier);
+        Components components = new Components();
+        final SearchEngine searchEngine = components.getSearchEngineManager().getDefaultSearchEngine(context, defaultIdentifier);
 
         return searchEngine.buildSearchUrl(searchTerm);
     }
