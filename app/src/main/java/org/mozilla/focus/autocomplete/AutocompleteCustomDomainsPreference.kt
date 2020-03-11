@@ -6,7 +6,6 @@ package org.mozilla.focus.autocomplete
 
 import android.content.Context
 import android.util.AttributeSet
-import org.mozilla.focus.R
 import org.mozilla.focus.R.string.preference_subitem_autocomplete
 import org.mozilla.focus.settings.LearnMoreSwitchPreference
 import org.mozilla.focus.utils.SupportUtils

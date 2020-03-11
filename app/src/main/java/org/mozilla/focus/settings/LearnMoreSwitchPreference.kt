@@ -1,22 +1,16 @@
 package org.mozilla.focus.settings
 
-import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.graphics.Paint
+import android.util.AttributeSet
+import android.view.View
+import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.preference.PreferenceViewHolder
 import androidx.preference.SwitchPreferenceCompat
-import android.util.AttributeSet
-import android.view.ContextThemeWrapper
-import android.view.View
-import android.widget.TextView
-import androidx.core.content.ContextCompat.startActivity
-import com.facebook.stetho.inspector.elements.android.AccessibilityNodeInfoWrapper.getDescription
-import mozilla.components.browser.session.Session
 import org.mozilla.focus.R
 import org.mozilla.focus.activity.InfoActivity
-import org.mozilla.focus.ext.components
 
 abstract class LearnMoreSwitchPreference(context: Context?, attrs: AttributeSet?) :
         SwitchPreferenceCompat(context, attrs) {
