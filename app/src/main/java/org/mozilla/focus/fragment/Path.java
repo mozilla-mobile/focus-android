@@ -5,6 +5,10 @@ import android.os.Environment;
 public class Path {
   public static String DIRECTORY_DOWNLOADS = "Download";
 
+  public static void reset() {
+    DIRECTORY_DOWNLOADS = "Download";
+  }
+
   public static String parser(String path) {
     int root = path.lastIndexOf("/0");
     if (root != -1) {

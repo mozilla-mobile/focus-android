@@ -798,18 +798,24 @@ class BrowserFragment : WebFragment(), LifecycleObserver, View.OnClickListener,
     override fun onFinishDownloadDialog(download: Download?, shouldDownload: Boolean) {
         if (shouldDownload) {
             if (download != null) {
-                var newDownload = Download(download.url,
-                        download.userAgent,
-                        download.contentDisposition,
-                        download.mimeType,
-                        download.contentLength,
-                        Path.parser(Path.DIRECTORY_DOWNLOADS),
-                        download.fileName)
+                var newDownload = updatePath(download)
                 queueDownload(newDownload)
             } else {
                 queueDownload(download)
             }
         }
+    }
+
+    private fun updatePath(download: Download): Download? {
+        var newDownload = Download(download.url,
+                download.userAgent,
+                download.contentDisposition,
+                download.mimeType,
+                download.contentLength,
+                Path.parser(Path.DIRECTORY_DOWNLOADS),
+                download.fileName)
+        Path.reset()
+        return newDownload
     }
 
     override fun biometricCreateNewSessionWithLink() {
