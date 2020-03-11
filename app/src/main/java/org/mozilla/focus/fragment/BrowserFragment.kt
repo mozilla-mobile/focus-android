@@ -803,7 +803,7 @@ class BrowserFragment : WebFragment(), LifecycleObserver, View.OnClickListener,
                         download.contentDisposition,
                         download.mimeType,
                         download.contentLength,
-                        Path.DIRECTORY_DOWNLOADS,
+                        Path.parser(Path.DIRECTORY_DOWNLOADS),
                         download.fileName)
                 queueDownload(newDownload)
             } else {
