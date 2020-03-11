@@ -140,7 +140,7 @@ public class EraseAllUserDataTest {
     }
 
     @Test
-    public void systemBarHomeViewTest() throws UiObjectNotFoundException {
+    public void systemBarHomeViewTest() throws UiObjectNotFoundException  {
 
         // Initialize UiDevice instance
         final int LAUNCH_TIMEOUT = 5000;
@@ -162,7 +162,7 @@ public class EraseAllUserDataTest {
         final String launcherPackage = TestHelper.mDevice.getLauncherPackageName();
         assertThat(launcherPackage, notNullValue());
         TestHelper.mDevice.wait(Until.hasObject(By.pkg(launcherPackage).depth(0)),
-            LAUNCH_TIMEOUT);
+                LAUNCH_TIMEOUT);
 
         // Launch the app
         mActivityTestRule.launchActivity(new Intent(Intent.ACTION_MAIN));
