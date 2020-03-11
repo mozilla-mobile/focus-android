@@ -47,8 +47,6 @@ class SearchSettingsFragment : BaseSettingsFragment(),
     }
 
     override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences, key: String) {
-        var reloadFragment = fragmentManager!!.beginTransaction()
-        reloadFragment.detach(this).attach(this).commit()
         TelemetryWrapper.settingsEvent(key, sharedPreferences.all[key].toString())
     }
 

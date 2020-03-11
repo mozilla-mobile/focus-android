@@ -239,6 +239,11 @@ class ManualAddSearchEngineSettingsFragment : BaseSettingsFragment() {
                 Snackbar.make(fragment.view!!, R.string.search_add_confirmation, Snackbar.LENGTH_SHORT).show()
                 Settings.getInstance(fragment.activity!!).setDefaultSearchEngineByName(engineName)
                 fragment.fragmentManager!!.popBackStack()
+                // Reload the SearchSettingsFragment to refresh the default search engine selected, then navigate to InstalledSearchEnginesSettingsFragment
+                fragment.fragmentManager!!.popBackStack()
+                fragment.fragmentManager!!.popBackStack()
+                fragment.navigateToFragment(SearchSettingsFragment.newInstance())
+                fragment.navigateToFragment(InstalledSearchEnginesSettingsFragment.newInstance())
             } else {
                 showServerError(fragment)
             }
