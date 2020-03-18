@@ -466,8 +466,7 @@ class BrowserFragment : WebFragment(), LifecycleObserver, View.OnClickListener,
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         when (requestCode) {
             REQUEST_CODE -> {
-                Log.i("Test", "Result URI " + data!!.data)
-                val uri = data.data
+                val uri = data!!.data
                 val docUri = DocumentsContract.buildDocumentUriUsingTree(uri,
                         DocumentsContract.getTreeDocumentId(uri))
                 var path = docUri.path
