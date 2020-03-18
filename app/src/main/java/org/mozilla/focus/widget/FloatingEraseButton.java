@@ -43,6 +43,8 @@ public class FloatingEraseButton extends FloatingActionButton {
     private int startY;
     // state of dragging
     private boolean isDrag;
+    final static public int EDGEDIS = 50;
+    final static public int DURATION = 500;
 
     public void updateSessionsCount(int tabCount) {
         final CoordinatorLayout.LayoutParams params = (CoordinatorLayout.LayoutParams) getLayoutParams();
@@ -143,8 +145,8 @@ public class FloatingEraseButton extends FloatingActionButton {
                 }
                 if (getY() < 0) {
                     y = 0;
-                } else if (getY() + getHeight() > rangeHeight - 50) {
-                    y = rangeHeight - getHeight() - 50;
+                } else if (getY() + getHeight() > rangeHeight - EDGEDIS) {
+                    y = rangeHeight - getHeight() - EDGEDIS;
                 }
                 // Set the position of the button after dragging
                 setX(x);
@@ -167,15 +169,15 @@ public class FloatingEraseButton extends FloatingActionButton {
                     if (rawX >= rangeWidth / 2) {
                         // attract right
                         animate().setInterpolator(new DecelerateInterpolator())
-                                .setDuration(500)
+                                .setDuration(DURATION)
                                 // keep 50 pixel away from the edge
-                                .xBy(rangeWidth - getWidth() - getX() - 50)
+                                .xBy(rangeWidth - getWidth() - getX() - EDGEDIS)
                                 .start();
                     } else {
                         // attract left
-                        ObjectAnimator oa = ObjectAnimator.ofFloat(this, "x", getX(), 50);
+                        ObjectAnimator oa = ObjectAnimator.ofFloat(this, "x", getX(), EDGEDIS);
                         oa.setInterpolator(new DecelerateInterpolator());
-                        oa.setDuration(500);
+                        oa.setDuration(DURATION);
                         oa.start();
                     }
                 }
@@ -190,6 +192,6 @@ public class FloatingEraseButton extends FloatingActionButton {
 
     // check is drag or not
     private boolean isNotDrag() {
-        return !isDrag && (getX() == 50 || (getX() == rangeWidth - getWidth() - 50));
+        return !isDrag && (getX() == EDGEDIS || (getX() == rangeWidth - getWidth() - EDGEDIS));
     }
 }
