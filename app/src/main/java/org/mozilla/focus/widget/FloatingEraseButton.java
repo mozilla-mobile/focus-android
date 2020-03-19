@@ -154,11 +154,6 @@ public class FloatingEraseButton extends FloatingActionButton {
                 // update the start position during dragging
                 startX = rawX;
                 startY = rawY;
-                // Send a INFO log message and log the exception.
-                // Log.i (tag, msg)
-                // tag: Used to identify the source of a log message.
-                // It usually identifies the class or activity where the log call occurs.
-                Log.i("aa", "isDrag=" + isDrag + "getX=" + getX() + ";getY=" + getY() + ";parentWidth=" + rangeWidth);
                 break;
 
             // unpressed button
