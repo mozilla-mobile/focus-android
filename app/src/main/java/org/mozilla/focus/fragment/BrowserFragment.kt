@@ -7,7 +7,14 @@ package org.mozilla.focus.fragment
 import android.Manifest
 import android.app.DownloadManager
 import android.app.PendingIntent
-import android.content.*
+import androidx.lifecycle.LifecycleObserver
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ProcessLifecycleOwner
+import android.content.ClipData
+import android.content.ClipboardManager
+import android.content.Context
+import android.content.Intent
+import android.content.IntentFilter
 import android.content.pm.PackageManager
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
@@ -18,26 +25,31 @@ import android.os.Bundle
 import android.os.Environment
 import android.preference.PreferenceManager
 import android.provider.DocumentsContract
+import androidx.annotation.RequiresApi
+import com.google.android.material.appbar.AppBarLayout
+import androidx.coordinatorlayout.widget.CoordinatorLayout
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import android.text.Editable
 import android.text.TextUtils
 import android.text.TextWatcher
 import android.util.Log
-import android.view.*
+import android.view.Gravity
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.view.WindowManager
 import android.view.accessibility.AccessibilityEvent
 import android.view.accessibility.AccessibilityManager
 import android.view.inputmethod.EditorInfo
 import android.webkit.CookieManager
 import android.webkit.URLUtil
-import android.widget.*
-import androidx.annotation.RequiresApi
-import androidx.coordinatorlayout.widget.CoordinatorLayout
-import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
-import androidx.lifecycle.LifecycleObserver
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ProcessLifecycleOwner
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-import com.google.android.material.appbar.AppBarLayout
+import android.widget.FrameLayout
+import android.widget.ImageButton
+import android.widget.ImageView
+import android.widget.TextView
+import android.widget.Toast
 import kotlinx.android.synthetic.main.browser_display_toolbar.*
 import kotlinx.android.synthetic.main.fragment_browser.*
 import kotlinx.coroutines.CoroutineScope
@@ -76,7 +88,13 @@ import org.mozilla.focus.session.removeAndCloseSession
 import org.mozilla.focus.session.ui.SessionsSheetFragment
 import org.mozilla.focus.telemetry.CrashReporterWrapper
 import org.mozilla.focus.telemetry.TelemetryWrapper
-import org.mozilla.focus.utils.*
+import org.mozilla.focus.utils.AppConstants
+import org.mozilla.focus.utils.Browsers
+import org.mozilla.focus.utils.Features
+import org.mozilla.focus.utils.StatusBarUtils
+import org.mozilla.focus.utils.SupportUtils
+import org.mozilla.focus.utils.UrlUtils
+import org.mozilla.focus.utils.ViewUtils
 import org.mozilla.focus.web.Download
 import org.mozilla.focus.web.HttpAuthenticationDialogBuilder
 import org.mozilla.focus.web.IWebView
@@ -465,8 +483,9 @@ class BrowserFragment : WebFragment(), LifecycleObserver, View.OnClickListener,
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         when (requestCode) {
-            REQUEST_CODE -> {
-                val uri = data!!.data
+            9999 -> {
+                Log.i("Test", "Result URI " + data!!.data)
+                val uri = data.data
                 val docUri = DocumentsContract.buildDocumentUriUsingTree(uri,
                         DocumentsContract.getTreeDocumentId(uri))
                 var path = docUri.path
@@ -570,6 +589,9 @@ class BrowserFragment : WebFragment(), LifecycleObserver, View.OnClickListener,
             }
 
             override fun onDownloadStart(download: Download) {
+                val i = Intent(Intent.ACTION_OPEN_DOCUMENT_TREE)
+                i.addCategory(Intent.CATEGORY_DEFAULT)
+                startActivityForResult(Intent.createChooser(i, "Choose directory"), 9999)
                 if (PackageManager.PERMISSION_GRANTED == ContextCompat.checkSelfPermission(
                         requireContext(),
                         Manifest.permission.WRITE_EXTERNAL_STORAGE
@@ -577,9 +599,6 @@ class BrowserFragment : WebFragment(), LifecycleObserver, View.OnClickListener,
                 ) {
                     // Long press image displays its own dialog and we handle other download cases here
                     if (!isDownloadFromLongPressImage(download)) {
-                        val i = Intent(Intent.ACTION_OPEN_DOCUMENT_TREE)
-                        i.addCategory(Intent.CATEGORY_DEFAULT)
-                        startActivityForResult(Intent.createChooser(i, "Choose directory"), REQUEST_CODE)
                         showDownloadPromptDialog(download)
                     } else {
                         // Download dialog has already been shown from long press on image. Proceed with download.
@@ -1507,8 +1526,6 @@ class BrowserFragment : WebFragment(), LifecycleObserver, View.OnClickListener,
         private const val RESTORE_KEY_DOWNLOAD = "download"
 
         private const val INITIAL_PROGRESS = 5
-
-        private const val REQUEST_CODE = 9999
 
         @JvmStatic
         fun createForSession(session: Session): BrowserFragment {
