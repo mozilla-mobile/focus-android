@@ -38,9 +38,7 @@ class SearchSuggestionsViewModel(application: Application) : AndroidViewModel(ap
         private set
 
     init {
-
         fetcher = SearchSuggestionsFetcher(preferences.getSearchEngine())
-
 
         suggestions = map(fetcher.results) { result ->
             val style = StyleSpan(Typeface.BOLD)

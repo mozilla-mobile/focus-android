@@ -46,7 +46,7 @@ class SearchSuggestionsFetcher(searchEngine: SearchEngine) : CoroutineScope {
         updateSearchEngine(searchEngine)
         launch(IO) {
             debounce(THROTTLE_AMOUNT, fetchChannel)
-                    .consumeEach { getSuggestions(it) }
+                .consumeEach { getSuggestions(it) }
         }
     }
 
