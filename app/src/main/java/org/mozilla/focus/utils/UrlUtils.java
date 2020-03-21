@@ -17,8 +17,28 @@ import org.mozilla.focus.ext.ContextKt;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.HashMap;
 
 public class UrlUtils {
+
+    public static final HashMap<String, String> searchEngineShortcutsMap = new HashMap<String, String>() {
+        {
+            put("@google", "Google");
+            put("@amazon", "Amazon.com");
+            put("@duckduckgo", "DuckDuckGo");
+            put("@twitter", "Twitter");
+            put("@wikipedia", "Wikipedia");
+        }
+    };
+
+    public static String[] splitShortcutFromQuery(String query) {
+        if (query.contains("@")){
+            return query.split(" ", 2);
+        }
+
+        return null;
+    }
+
     public static String normalize(@NonNull String input) {
         String trimmedInput = input.trim();
         Uri uri = Uri.parse(trimmedInput);

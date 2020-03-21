@@ -712,30 +712,56 @@ class UrlInputFragment :
     private fun normalizeUrlAndSearchTerms(input: String): Triple<Boolean, String, String?> {
         val isUrl = UrlUtils.isUrl(input)
 
+        val shortCutAndQuery = UrlUtils.splitShortcutFromQuery(input)
+
         val url = if (isUrl)
             UrlUtils.normalize(input)
-        else
+        else if (shortCutAndQuery != null && getURLForSearchEngineShortcut(shortCutAndQuery[0], shortCutAndQuery[1]) != null){
+            getURLForSearchEngineShortcut(shortCutAndQuery[0], shortCutAndQuery[1])!!
+        } else {
             UrlUtils.createSearchUrl(context, input)
+        }
 
         val searchTerms = if (isUrl)
             null
         else
             input.trim { it <= ' ' }
+
         return Triple(isUrl, url, searchTerms)
     }
 
     private fun onSearch(query: String, isSuggestion: Boolean = false, alwaysSearch: Boolean = false) {
-        if (alwaysSearch) {
-            openUrl(UrlUtils.createSearchUrl(context, query), query)
-        } else {
-            val searchTerms = if (UrlUtils.isUrl(query)) null else query
-            val searchUrl =
-                if (searchTerms != null) UrlUtils.createSearchUrl(context, searchTerms) else UrlUtils.normalize(query)
+        val shortCutAndQuery = UrlUtils.splitShortcutFromQuery(query)
 
-            openUrl(searchUrl, searchTerms)
+        if (shortCutAndQuery != null) {
+            val shortcut = shortCutAndQuery[0] + " "
+            urlView.setText(shortcut)
+            urlView.setSelection(shortcut.length)
+        } else {
+            if (alwaysSearch) {
+                openUrl(UrlUtils.createSearchUrl(context, query), query)
+            } else {
+                val searchTerms = if (UrlUtils.isUrl(query)) null else query
+                val searchUrl =
+                        if (searchTerms != null) UrlUtils.createSearchUrl(context, searchTerms) else UrlUtils.normalize(query)
+
+                openUrl(searchUrl, searchTerms)
+            }
         }
 
         TelemetryWrapper.searchSelectEvent(isSuggestion)
+    }
+
+    private fun getURLForSearchEngineShortcut(shortcut: String, actualQuery: String): String? {
+
+        val currSearchEngine = UrlUtils.searchEngineShortcutsMap[shortcut]
+
+        if (currSearchEngine != null) {
+            setCurrentSearchEngineByName(currSearchEngine)
+            return requireComponents.searchEngineManager.getDefaultSearchEngine(context!!, currSearchEngine).buildSearchUrl(actualQuery)
+        }
+
+        return null
     }
 
     private fun openUrl(url: String, searchTerms: String?) {
@@ -835,6 +861,7 @@ class UrlInputFragment :
     fun setCurrentSearchEngineByName(name: String) {
         // if name is empty returns the default search engine, or else returns the given search engine
         // Should be called when a search engine underneath the urlView is selected
+
         searchSuggestionsViewModel.setCurrentSearchEngine(requireComponents.searchEngineManager.getDefaultSearchEngine(context!!, name))
     }
 }

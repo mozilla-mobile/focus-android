@@ -21,6 +21,7 @@ import okhttp3.OkHttpClient
 import okhttp3.Request
 import org.mozilla.focus.utils.debounce
 import kotlin.coroutines.CoroutineContext
+import org.mozilla.focus.utils.UrlUtils
 
 class SearchSuggestionsFetcher(searchEngine: SearchEngine) : CoroutineScope {
     private var job = Job()
@@ -61,7 +62,7 @@ class SearchSuggestionsFetcher(searchEngine: SearchEngine) : CoroutineScope {
 
     private suspend fun getSuggestions(query: String) = coroutineScope {
         val suggestions = try {
-            client?.getSuggestions(query) ?: listOf()
+            checkSearchEngineShortcut(query) ?: client?.getSuggestions(query) ?: listOf()
         } catch (ex: SearchSuggestionClient.ResponseParserException) {
             listOf<String>()
         } catch (ex: SearchSuggestionClient.FetchException) {
@@ -71,6 +72,20 @@ class SearchSuggestionsFetcher(searchEngine: SearchEngine) : CoroutineScope {
         launch(Main) {
             _results.value = SuggestionResult(query, suggestions)
         }
+    }
+
+    private fun checkSearchEngineShortcut(query: String): List<String>?{
+        val searchEngineShortcut = UrlUtils.splitShortcutFromQuery(query)[0]
+
+        if (searchEngineShortcut != null) {
+            val matchingSearchEngines = UrlUtils.searchEngineShortcutsMap.keys.toList().filter { (it).startsWith(searchEngineShortcut) }
+            if (matchingSearchEngines.isEmpty())
+                return null
+
+            return matchingSearchEngines
+        }
+
+        return null
     }
 
     private fun fetch(url: String): String? {
