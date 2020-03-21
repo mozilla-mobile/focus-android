@@ -378,8 +378,7 @@ class UrlInputFragment :
         super.onStart()
 
         activity?.let {
-            if (Settings.getInstance(it.applicationContext).shouldShowFirstrun()) return@onStart
-        }
+            if (Settings.getInstance(it.applicationContext).shouldShowFirstrun()) return@onStart }
         showKeyboard()
     }
 
