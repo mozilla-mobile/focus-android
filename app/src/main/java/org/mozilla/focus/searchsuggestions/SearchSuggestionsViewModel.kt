@@ -13,6 +13,7 @@ import android.graphics.Typeface
 import android.text.Spannable
 import android.text.SpannableStringBuilder
 import android.text.style.StyleSpan
+import mozilla.components.browser.search.SearchEngine
 
 sealed class State {
     data class Disabled(val givePrompt: Boolean) : State()
@@ -23,6 +24,7 @@ sealed class State {
 class SearchSuggestionsViewModel(application: Application) : AndroidViewModel(application) {
     private val fetcher: SearchSuggestionsFetcher
     private val preferences: SearchSuggestionsPreferences = SearchSuggestionsPreferences(application)
+    private var currentSearchEngine: SearchEngine
 
     private val _selectedSearchSuggestion = MutableLiveData<String>()
     val selectedSearchSuggestion: LiveData<String> = _selectedSearchSuggestion
@@ -38,7 +40,10 @@ class SearchSuggestionsViewModel(application: Application) : AndroidViewModel(ap
         private set
 
     init {
-        fetcher = SearchSuggestionsFetcher(preferences.getSearchEngine())
+        currentSearchEngine = preferences.getSearchEngine()
+
+        fetcher = SearchSuggestionsFetcher(currentSearchEngine)
+
 
         suggestions = map(fetcher.results) { result ->
             val style = StyleSpan(Typeface.BOLD)
@@ -50,6 +55,11 @@ class SearchSuggestionsViewModel(application: Application) : AndroidViewModel(ap
                 }
             }
         }
+    }
+
+    fun setCurrentSearchEngine(searchEngine: SearchEngine) {
+        currentSearchEngine = searchEngine
+        fetcher.updateSearchEngine(currentSearchEngine)
     }
 
     fun selectSearchSuggestion(suggestion: String, alwaysSearch: Boolean = false) {

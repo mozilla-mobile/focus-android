@@ -831,4 +831,10 @@ class UrlInputFragment :
     override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences, key: String) {
         if (key == activity?.getString(R.string.pref_key_homescreen_tips)) { updateTipsLabel() }
     }
+
+    fun setCurrentSearchEngineByName(name: String) {
+        // if name is empty returns the default search engine, or else returns the given search engine
+        // Should be called when a search engine underneath the urlView is selected
+        searchSuggestionsViewModel.setCurrentSearchEngine(requireComponents.searchEngineManager.getDefaultSearchEngine(context!!, name))
+    }
 }
