@@ -71,10 +71,10 @@ class FocusCrashException : Exception()
 // Therefore we ignore those violations for now.
 @Suppress("LargeClass", "TooManyFunctions")
 class UrlInputFragment :
-    LocaleAwareFragment(),
-    View.OnClickListener,
-    SharedPreferences.OnSharedPreferenceChangeListener,
-    CoroutineScope {
+        LocaleAwareFragment(),
+        View.OnClickListener,
+        SharedPreferences.OnSharedPreferenceChangeListener,
+        CoroutineScope {
     companion object {
         @JvmField
         val FRAGMENT_TAG = "url_input"
@@ -165,7 +165,7 @@ class UrlInputFragment :
         searchSuggestionsViewModel = ViewModelProviders.of(this).get(SearchSuggestionsViewModel::class.java)
 
         PreferenceManager.getDefaultSharedPreferences(context)
-            .registerOnSharedPreferenceChangeListener(this)
+                .registerOnSharedPreferenceChangeListener(this)
 
         // Get session from session manager if there's a session UUID in the fragment's arguments
         arguments?.getString(ARGUMENT_SESSION_UUID)?.let { id ->
@@ -288,7 +288,7 @@ class UrlInputFragment :
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?):
-        View? = inflater.inflate(R.layout.fragment_urlinput, container, false)
+            View? = inflater.inflate(R.layout.fragment_urlinput, container, false)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         listOf(dismissView, clearView).forEach { it.setOnClickListener(this) }
@@ -319,17 +319,17 @@ class UrlInputFragment :
         urlView?.setOnCommitListener(::onCommit)
 
         val geckoViewAndDDG: Boolean =
-            Settings.getInstance(requireContext()).defaultSearchEngineName == duckDuckGo &&
-                    AppConstants.isGeckoBuild
+                Settings.getInstance(requireContext()).defaultSearchEngineName == duckDuckGo &&
+                        AppConstants.isGeckoBuild
 
         session?.let {
             urlView?.setText(
-                if (it.isSearch &&
-                    !geckoViewAndDDG &&
-                    Features.SEARCH_TERMS_OR_URL
-                )
-                    it.searchTerms else
-                    it.url
+                    if (it.isSearch &&
+                            !geckoViewAndDDG &&
+                            Features.SEARCH_TERMS_OR_URL
+                    )
+                        it.searchTerms else
+                        it.url
             )
 
             clearView?.visibility = View.VISIBLE
@@ -378,7 +378,8 @@ class UrlInputFragment :
         super.onStart()
 
         activity?.let {
-            if (Settings.getInstance(it.applicationContext).shouldShowFirstrun()) return@onStart }
+            if (Settings.getInstance(it.applicationContext).shouldShowFirstrun()) return@onStart
+        }
         showKeyboard()
     }
 
@@ -571,31 +572,31 @@ class UrlInputFragment :
 
             // Let the URL input use the full width/height and then shrink to the actual size
             urlInputBackgroundView.animate()
-                .setDuration(ANIMATION_DURATION.toLong())
-                .scaleX(if (reverse) widthScale else 1f)
-                .scaleY(if (reverse) heightScale else 1f)
-                .alpha((if (reverse && isOverlay) 0 else 1).toFloat())
-                .translationX(if (reverse) -xyOffset else 0f)
-                .translationY(if (reverse) -xyOffset else 0f)
-                .setListener(object : AnimatorListenerAdapter() {
-                    override fun onAnimationStart(animation: Animator) {
-                        if (reverse) {
-                            clearView?.alpha = 0f
-                        }
-                    }
-
-                    override fun onAnimationEnd(animation: Animator) {
-                        if (reverse) {
-                            if (isOverlay) {
-                                dismiss()
+                    .setDuration(ANIMATION_DURATION.toLong())
+                    .scaleX(if (reverse) widthScale else 1f)
+                    .scaleY(if (reverse) heightScale else 1f)
+                    .alpha((if (reverse && isOverlay) 0 else 1).toFloat())
+                    .translationX(if (reverse) -xyOffset else 0f)
+                    .translationY(if (reverse) -xyOffset else 0f)
+                    .setListener(object : AnimatorListenerAdapter() {
+                        override fun onAnimationStart(animation: Animator) {
+                            if (reverse) {
+                                clearView?.alpha = 0f
                             }
-                        } else {
-                            clearView?.alpha = 1f
                         }
 
-                        isAnimating = false
-                    }
-                })
+                        override fun onAnimationEnd(animation: Animator) {
+                            if (reverse) {
+                                if (isOverlay) {
+                                    dismiss()
+                                }
+                            } else {
+                                clearView?.alpha = 1f
+                            }
+
+                            isAnimating = false
+                        }
+                    })
         }
 
         // We only need to animate the toolbar if we are an overlay.
@@ -614,8 +615,8 @@ class UrlInputFragment :
             if (urlView != null) {
                 // The URL moves from the right (at least if the lock is visible) to it's actual position
                 urlView.animate()
-                    .setDuration(ANIMATION_DURATION.toLong())
-                    .translationX((if (reverse) leftDelta else 0).toFloat())
+                        .setDuration(ANIMATION_DURATION.toLong())
+                        .translationX((if (reverse) leftDelta else 0).toFloat())
             }
         }
 
@@ -648,9 +649,9 @@ class UrlInputFragment :
         // this transaction is committed. To avoid this we commit while allowing a state loss here.
         // We do not save any state in this fragment (It's getting destroyed) so this should not be a problem.
         activity?.supportFragmentManager
-            ?.beginTransaction()
-            ?.remove(this)
-            ?.commitAllowingStateLoss()
+                ?.beginTransaction()
+                ?.remove(this)
+                ?.commitAllowingStateLoss()
     }
 
     private fun onCommit() {
@@ -716,7 +717,7 @@ class UrlInputFragment :
 
         val url = if (isUrl)
             UrlUtils.normalize(input)
-        else if (shortCutAndQuery != null && getURLForSearchEngineShortcut(shortCutAndQuery[0], shortCutAndQuery[1]) != null){
+        else if (shortCutAndQuery != null && getURLForSearchEngineShortcut(shortCutAndQuery[0], shortCutAndQuery[1]) != null) {
             getURLForSearchEngineShortcut(shortCutAndQuery[0], shortCutAndQuery[1])!!
         } else {
             UrlUtils.createSearchUrl(context, input)
@@ -757,7 +758,6 @@ class UrlInputFragment :
         val currSearchEngine = UrlUtils.searchEngineShortcutsMap[shortcut]
 
         if (currSearchEngine != null) {
-            setCurrentSearchEngineByName(currSearchEngine)
             return requireComponents.searchEngineManager.getDefaultSearchEngine(context!!, currSearchEngine).buildSearchUrl(actualQuery)
         }
 
@@ -784,8 +784,8 @@ class UrlInputFragment :
 
             // And this fragment can be removed again.
             fragmentManager.beginTransaction()
-                .remove(this)
-                .commit()
+                    .remove(this)
+                    .commit()
         } else {
             val session = Session(url, source = Session.Source.USER_ENTERED)
             if (!searchTerms.isNullOrEmpty()) {
@@ -855,13 +855,9 @@ class UrlInputFragment :
     }
 
     override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences, key: String) {
-        if (key == activity?.getString(R.string.pref_key_homescreen_tips)) { updateTipsLabel() }
+        if (key == activity?.getString(R.string.pref_key_homescreen_tips)) {
+            updateTipsLabel()
+        }
     }
 
-    fun setCurrentSearchEngineByName(name: String) {
-        // if name is empty returns the default search engine, or else returns the given search engine
-        // Should be called when a search engine underneath the urlView is selected
-
-        searchSuggestionsViewModel.setCurrentSearchEngine(requireComponents.searchEngineManager.getDefaultSearchEngine(context!!, name))
-    }
 }

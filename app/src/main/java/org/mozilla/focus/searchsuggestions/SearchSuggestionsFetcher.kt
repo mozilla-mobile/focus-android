@@ -46,12 +46,14 @@ class SearchSuggestionsFetcher(searchEngine: SearchEngine) : CoroutineScope {
         updateSearchEngine(searchEngine)
         launch(IO) {
             debounce(THROTTLE_AMOUNT, fetchChannel)
-                .consumeEach { getSuggestions(it) }
+                    .consumeEach { getSuggestions(it) }
         }
     }
 
     fun requestSuggestions(query: String) {
-        if (query.isBlank()) { _results.value = SuggestionResult(query, listOf()); return }
+        if (query.isBlank()) {
+            _results.value = SuggestionResult(query, listOf()); return
+        }
         fetchChannel.offer(query)
     }
 
@@ -74,11 +76,12 @@ class SearchSuggestionsFetcher(searchEngine: SearchEngine) : CoroutineScope {
         }
     }
 
-    private fun checkSearchEngineShortcut(query: String): List<String>?{
+    private fun checkSearchEngineShortcut(query: String): List<String>? {
         val searchEngineShortcut = UrlUtils.splitShortcutFromQuery(query)[0]
 
         if (searchEngineShortcut != null) {
-            val matchingSearchEngines = UrlUtils.searchEngineShortcutsMap.keys.toList().filter { (it).startsWith(searchEngineShortcut) }
+            val matchingSearchEngines = UrlUtils.searchEngineShortcutsMap.keys.toList()
+                    .filter { (it).startsWith(searchEngineShortcut) }
             if (matchingSearchEngines.isEmpty())
                 return null
 
