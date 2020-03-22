@@ -3,14 +3,17 @@ package org.mozilla.focus.utils;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import androidx.test.core.app.ApplicationProvider;
+import mozilla.components.browser.search.SearchEngine;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mozilla.focus.browser.LocalizedContent;
+import org.mozilla.focus.ext.ContextKt;
 import org.robolectric.RobolectricTestRunner;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
@@ -170,17 +173,33 @@ public class UrlUtilsTest {
     @Test
     public void testGetURLForSearchEngineShortcut() {
         Context context = ApplicationProvider.getApplicationContext();
+        SearchEngine searchEngine;
+        String searchQuery = "search";
 
-        assertEquals("https://www.amazon.com/gp/aw/s?k=books&sourceid=Mozilla-search&tag=mozilla-20",
-                UrlUtils.getURLForSearchEngineShortcut(context, "@amazon", "books"));
-        assertEquals("https://www.google.com/search?q=search%20query&ie=utf-8&oe=utf-8&client=firefox-b-1-m",
-                UrlUtils.getURLForSearchEngineShortcut(context, "@google", "search query"));
-        assertEquals("https://duckduckgo.com/?q=search%20query&t=fpas",
-                UrlUtils.getURLForSearchEngineShortcut(context, "@duckduckgo", "search query"));
-        assertEquals("https://mobile.twitter.com/search/?q=tweets",
-                UrlUtils.getURLForSearchEngineShortcut(context, "@twitter", "tweets"));
-        assertEquals("https://en.wikipedia.org/wiki/Special:Search?search=wiki%20search&sourceid=Mozilla-search",
-                UrlUtils.getURLForSearchEngineShortcut(context, "@wikipedia", "wiki search"));
+        searchEngine = ContextKt.getComponents(context).getSearchEngineManager()
+                .getDefaultSearchEngine(context, "Google");
+        assertEquals(searchEngine.buildSearchUrl(searchQuery),
+                UrlUtils.getURLForSearchEngineShortcut(context, "@google", searchQuery));
+
+        searchEngine = ContextKt.getComponents(context).getSearchEngineManager()
+                .getDefaultSearchEngine(context, "Amazon.com");
+        assertEquals(searchEngine.buildSearchUrl(searchQuery),
+                UrlUtils.getURLForSearchEngineShortcut(context, "@amazon", searchQuery));
+
+        searchEngine = ContextKt.getComponents(context).getSearchEngineManager()
+                .getDefaultSearchEngine(context, "DuckDuckGo");
+        assertEquals(searchEngine.buildSearchUrl(searchQuery),
+                UrlUtils.getURLForSearchEngineShortcut(context, "@duckduckgo", searchQuery));
+
+        searchEngine = ContextKt.getComponents(context).getSearchEngineManager()
+                .getDefaultSearchEngine(context, "Twitter");
+        assertEquals(searchEngine.buildSearchUrl(searchQuery),
+                UrlUtils.getURLForSearchEngineShortcut(context, "@twitter", searchQuery));
+
+        searchEngine = ContextKt.getComponents(context).getSearchEngineManager()
+                .getDefaultSearchEngine(context, "Wikipedia");
+        assertEquals(searchEngine.buildSearchUrl(searchQuery),
+                UrlUtils.getURLForSearchEngineShortcut(context, "@wikipedia", searchQuery));
 
         assertNull(UrlUtils.getURLForSearchEngineShortcut(context, "@amazo", "invalid"));
         assertNull(UrlUtils.getURLForSearchEngineShortcut(context, "@googles", "invalid two"));
@@ -189,6 +208,7 @@ public class UrlUtilsTest {
     @Test
     public void testSplitShortcutFromQuery() {
         String[] splitQuery = UrlUtils.splitShortcutFromQuery("@amazon books search");
+        assertNotNull(splitQuery);
         assertEquals("@amazon", splitQuery[0]);
         assertEquals("books search", splitQuery[1]);
 
