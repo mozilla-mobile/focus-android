@@ -32,8 +32,9 @@ public class UrlUtils {
     };
 
     public static String[] splitShortcutFromQuery(String query) {
-        if (query.contains("@")){
-            return query.split(" ", 2);
+        String[] splitQuery = query.split(" ", 2);
+        if (splitQuery.length == 2 && splitQuery[0].startsWith("@")){
+            return splitQuery;
         }
 
         return null;

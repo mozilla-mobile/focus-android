@@ -731,10 +731,8 @@ class UrlInputFragment :
     }
 
     private fun onSearch(query: String, isSuggestion: Boolean = false, alwaysSearch: Boolean = false) {
-        val shortCutAndQuery = UrlUtils.splitShortcutFromQuery(query)
-
-        if (shortCutAndQuery != null) {
-            val shortcut = shortCutAndQuery[0] + " "
+        if (UrlUtils.searchEngineShortcutsMap.containsKey(query)) {
+            val shortcut = ("$query ")
             urlView.setText(shortcut)
             urlView.setSelection(shortcut.length)
         } else {

@@ -77,19 +77,12 @@ class SearchSuggestionsFetcher(searchEngine: SearchEngine) : CoroutineScope {
     }
 
     private fun checkSearchEngineShortcut(query: String): List<String>? {
-        val searchEngineShortcutAndQuery = UrlUtils.splitShortcutFromQuery(query)
+        val matchingSearchEngines = UrlUtils.searchEngineShortcutsMap.keys.toList()
+                .filter { (it).startsWith(query.split(" ")[0]) }
+        if (matchingSearchEngines.isEmpty())
+            return null
 
-        if (searchEngineShortcutAndQuery != null) {
-            val searchEngineShortcut = searchEngineShortcutAndQuery[0]
-            val matchingSearchEngines = UrlUtils.searchEngineShortcutsMap.keys.toList()
-                    .filter { (it).startsWith(searchEngineShortcut) }
-            if (matchingSearchEngines.isEmpty())
-                return null
-
-            return matchingSearchEngines
-        }
-
-        return null
+        return matchingSearchEngines
     }
 
     private fun fetch(url: String): String? {
