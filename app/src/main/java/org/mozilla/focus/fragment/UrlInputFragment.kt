@@ -41,6 +41,7 @@ import mozilla.components.support.utils.ThreadUtils
 import mozilla.components.ui.autocomplete.InlineAutocompleteEditText
 import mozilla.components.ui.autocomplete.InlineAutocompleteEditText.AutocompleteResult
 import org.mozilla.focus.R
+import org.mozilla.focus.ext.components
 import org.mozilla.focus.ext.isSearch
 import org.mozilla.focus.ext.requireComponents
 import org.mozilla.focus.locale.LocaleAwareAppCompatActivity
@@ -717,10 +718,7 @@ class UrlInputFragment :
         val searchShortcutUrl = if (shortcutAndQuery != null){
             val shortcut = shortcutAndQuery[0]
             val actualQuery = shortcutAndQuery[1]
-            val currSearchEngine = getSearchEngineForShortcut(shortcut)
-            if (currSearchEngine != null)
-                UrlUtils.getURLForSearchEngineShortcut(currSearchEngine, actualQuery)
-            else null
+            UrlUtils.getURLForSearchEngineShortcut(context, shortcut, actualQuery)
         } else null
 
         val url = if (isUrl)
@@ -752,15 +750,6 @@ class UrlInputFragment :
         }
 
         TelemetryWrapper.searchSelectEvent(isSuggestion)
-    }
-
-    private fun getSearchEngineForShortcut(shortcut: String): SearchEngine? {
-        val currSearchEngineName = UrlUtils.searchEngineShortcutsMap[shortcut]
-        if (currSearchEngineName != null) {
-            return requireComponents.searchEngineManager.getDefaultSearchEngine(context!!, currSearchEngineName)
-        }
-
-        return null
     }
 
     private fun openUrl(url: String, searchTerms: String?) {
@@ -854,9 +843,6 @@ class UrlInputFragment :
     }
 
     override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences, key: String) {
-        if (key == activity?.getString(R.string.pref_key_homescreen_tips)) {
-            updateTipsLabel()
-        }
+        if (key == activity?.getString(R.string.pref_key_homescreen_tips)) { updateTipsLabel() }
     }
-
 }

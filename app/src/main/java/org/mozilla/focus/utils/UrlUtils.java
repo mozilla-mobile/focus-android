@@ -31,8 +31,16 @@ public class UrlUtils {
         }
     };
 
-    public static String getURLForSearchEngineShortcut(SearchEngine engine, String actualQuery) {
-        return engine.buildSearchUrl(actualQuery);
+    public static String getURLForSearchEngineShortcut(Context context, String shortcut, String actualQuery) {
+        String currSearchEngineName = searchEngineShortcutsMap.get(shortcut);
+        if (currSearchEngineName != null) {
+            final SearchEngine searchEngine = ContextKt.getComponents(context).getSearchEngineManager()
+                    .getDefaultSearchEngine(context, currSearchEngineName);
+
+            return searchEngine.buildSearchUrl(actualQuery);
+        }
+
+        return null;
     }
 
     public static String[] splitShortcutFromQuery(String query) {
