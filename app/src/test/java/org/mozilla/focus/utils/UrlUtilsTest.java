@@ -1,6 +1,8 @@
 package org.mozilla.focus.utils;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
+import androidx.test.core.app.ApplicationProvider;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -9,6 +11,7 @@ import org.robolectric.RobolectricTestRunner;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 @RunWith(RobolectricTestRunner.class)
@@ -163,4 +166,34 @@ public class UrlUtilsTest {
         assertTrue(UrlUtils.isLocalizedContent(LocalizedContent.URL_ABOUT));
         assertTrue(UrlUtils.isLocalizedContent(LocalizedContent.URL_RIGHTS));
     }
+
+    @Test
+    public void testGetURLForSearchEngineShortcut() {
+        Context context = ApplicationProvider.getApplicationContext();
+
+        assertEquals("https://www.amazon.com/gp/aw/s?k=books&sourceid=Mozilla-search&tag=mozilla-20",
+                UrlUtils.getURLForSearchEngineShortcut(context, "@amazon", "books"));
+        assertEquals("https://www.google.com/search?q=search%20query&ie=utf-8&oe=utf-8&client=firefox-b-1-m",
+                UrlUtils.getURLForSearchEngineShortcut(context, "@google", "search query"));
+        assertEquals("https://duckduckgo.com/?q=search%20query&t=fpas",
+                UrlUtils.getURLForSearchEngineShortcut(context, "@duckduckgo", "search query"));
+        assertEquals("https://mobile.twitter.com/search/?q=tweets",
+                UrlUtils.getURLForSearchEngineShortcut(context, "@twitter", "tweets"));
+        assertEquals("https://en.wikipedia.org/wiki/Special:Search?search=wiki%20search&sourceid=Mozilla-search",
+                UrlUtils.getURLForSearchEngineShortcut(context, "@wikipedia", "wiki search"));
+
+        assertNull(UrlUtils.getURLForSearchEngineShortcut(context, "@amazo", "invalid"));
+        assertNull(UrlUtils.getURLForSearchEngineShortcut(context, "@googles", "invalid two"));
+    }
+
+    @Test
+    public void testSplitShortcutFromQuery() {
+        String[] splitQuery = UrlUtils.splitShortcutFromQuery("@amazon books search");
+        assertEquals("@amazon", splitQuery[0]);
+        assertEquals("books search", splitQuery[1]);
+
+        assertNull(UrlUtils.splitShortcutFromQuery("@amazon"));
+        assertNull(UrlUtils.splitShortcutFromQuery("amazon books"));
+    }
+
 }
