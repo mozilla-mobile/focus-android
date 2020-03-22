@@ -52,6 +52,17 @@ public class UrlUtils {
         return null;
     }
 
+    public static SearchEngine getSearchEngine(Context context, String query) {
+        String[] splitQuery = query.split(" ");
+        String currSearchEngineName = searchEngineShortcutsMap.get(splitQuery[0]);
+        if (currSearchEngineName == null) return null;
+
+        return ContextKt
+                .getComponents(context)
+                .getSearchEngineManager()
+                .getDefaultSearchEngine(context, currSearchEngineName);
+    }
+
     public static String normalize(@NonNull String input) {
         String trimmedInput = input.trim();
         Uri uri = Uri.parse(trimmedInput);
@@ -72,6 +83,11 @@ public class UrlUtils {
         String trimmedUrl = url.trim();
         return !trimmedUrl.contains(" ") && (trimmedUrl.contains(".") || trimmedUrl.contains(":"));
 
+    }
+
+    public static boolean isSearchShortcut(String suggestion) {
+        String[] splitQuery = suggestion.split(" ", 2);
+        return searchEngineShortcutsMap.containsKey(splitQuery[0]);
     }
 
     public static boolean isValidSearchQueryUrl(String url) {

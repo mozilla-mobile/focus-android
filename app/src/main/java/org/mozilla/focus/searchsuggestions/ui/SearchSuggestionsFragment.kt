@@ -4,9 +4,11 @@
 
 package org.mozilla.focus.searchsuggestions.ui
 
+import android.content.res.Resources
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import android.graphics.Color
+import android.graphics.drawable.BitmapDrawable
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import androidx.core.content.ContextCompat
@@ -277,8 +279,15 @@ private class SuggestionViewHolder(
             icon?.setBounds(0, 0, size, size)
             suggestionText.contentDescription = suggestionText.text
             suggestionText.setCompoundDrawables(icon, null, null, null)
-        } else {
-            val icon = ContextCompat.getDrawable(itemView.context, R.drawable.ic_search)
+        }
+        else {
+            val icon = if (UrlUtils.isSearchShortcut(suggestionText.text.toString())) {
+                val searchEngine = UrlUtils.getSearchEngine(itemView.context, suggestionText.text.toString())
+                BitmapDrawable(itemView.context.resources, searchEngine.icon)
+            } else {
+                ContextCompat.getDrawable(itemView.context, R.drawable.ic_search)
+            }
+
             icon?.setBounds(0, 0, size, size)
             suggestionText.contentDescription = itemView.context.getString(R.string.search_hint, suggestionText.text)
             suggestionText.setCompoundDrawables(icon, null, null, null)
