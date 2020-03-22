@@ -31,6 +31,10 @@ public class UrlUtils {
         }
     };
 
+    public static String getURLForSearchEngineShortcut(SearchEngine engine, String actualQuery) {
+        return engine.buildSearchUrl(actualQuery);
+    }
+
     public static String[] splitShortcutFromQuery(String query) {
         String[] splitQuery = query.split(" ", 2);
         if (splitQuery.length == 2 && splitQuery[0].startsWith("@")){

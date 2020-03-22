@@ -36,6 +36,7 @@ import mozilla.components.browser.domains.autocomplete.CustomDomainsProvider
 import mozilla.components.browser.domains.autocomplete.DomainAutocompleteResult
 import mozilla.components.browser.domains.autocomplete.ShippedDomainsProvider
 import mozilla.components.browser.session.Session
+import mozilla.components.browser.search.SearchEngine
 import mozilla.components.support.utils.ThreadUtils
 import mozilla.components.ui.autocomplete.InlineAutocompleteEditText
 import mozilla.components.ui.autocomplete.InlineAutocompleteEditText.AutocompleteResult
@@ -712,21 +713,24 @@ class UrlInputFragment :
     private fun normalizeUrlAndSearchTerms(input: String): Triple<Boolean, String, String?> {
         val isUrl = UrlUtils.isUrl(input)
 
-        val shortCutAndQuery = UrlUtils.splitShortcutFromQuery(input)
+        val shortcutAndQuery = UrlUtils.splitShortcutFromQuery(input)
+        val searchShortcutUrl = if (shortcutAndQuery != null){
+            val shortcut = shortcutAndQuery[0]
+            val actualQuery = shortcutAndQuery[1]
+            val currSearchEngine = getSearchEngineForShortcut(shortcut)
+            if (currSearchEngine != null)
+                UrlUtils.getURLForSearchEngineShortcut(currSearchEngine, actualQuery)
+            else null
+        } else null
 
         val url = if (isUrl)
             UrlUtils.normalize(input)
-        else if (shortCutAndQuery != null && getURLForSearchEngineShortcut(shortCutAndQuery[0], shortCutAndQuery[1]) != null) {
-            getURLForSearchEngineShortcut(shortCutAndQuery[0], shortCutAndQuery[1])!!
-        } else {
-            UrlUtils.createSearchUrl(context, input)
-        }
+        else searchShortcutUrl ?: UrlUtils.createSearchUrl(context, input)
 
         val searchTerms = if (isUrl)
             null
         else
             input.trim { it <= ' ' }
-
         return Triple(isUrl, url, searchTerms)
     }
 
@@ -750,12 +754,10 @@ class UrlInputFragment :
         TelemetryWrapper.searchSelectEvent(isSuggestion)
     }
 
-    private fun getURLForSearchEngineShortcut(shortcut: String, actualQuery: String): String? {
-
-        val currSearchEngine = UrlUtils.searchEngineShortcutsMap[shortcut]
-
-        if (currSearchEngine != null) {
-            return requireComponents.searchEngineManager.getDefaultSearchEngine(context!!, currSearchEngine).buildSearchUrl(actualQuery)
+    private fun getSearchEngineForShortcut(shortcut: String): SearchEngine? {
+        val currSearchEngineName = UrlUtils.searchEngineShortcutsMap[shortcut]
+        if (currSearchEngineName != null) {
+            return requireComponents.searchEngineManager.getDefaultSearchEngine(context!!, currSearchEngineName)
         }
 
         return null

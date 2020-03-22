@@ -51,9 +51,7 @@ class SearchSuggestionsFetcher(searchEngine: SearchEngine) : CoroutineScope {
     }
 
     fun requestSuggestions(query: String) {
-        if (query.isBlank()) {
-            _results.value = SuggestionResult(query, listOf()); return
-        }
+        if (query.isBlank()) { _results.value = SuggestionResult(query, listOf()); return }
         fetchChannel.offer(query)
     }
 
