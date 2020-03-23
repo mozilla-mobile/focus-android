@@ -70,7 +70,7 @@
                 app:fabSize="normal"
                 app:layout_dodgeInsetEdges="bottom"/>
 
-            <org.mozilla.focus.widget.FloatingEraseButton
+            <org.mozilla.focus.widget.FloatingExpandButton
                 android:id="@+id/erase"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

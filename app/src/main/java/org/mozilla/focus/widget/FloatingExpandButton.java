@@ -23,7 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 import org.mozilla.focus.R;
 
-public class FloatingEraseButton extends FloatingActionButton {
+public class FloatingExpandButton extends FloatingActionButton {
     private boolean keepHidden;
     private List<SubActionButton> subButtons = new ArrayList<>();
 
@@ -35,15 +35,15 @@ public class FloatingEraseButton extends FloatingActionButton {
         this.subButtons.add(subButton);
     }
 
-    public FloatingEraseButton(Context context) {
+    public FloatingExpandButton(Context context) {
         super(context);
     }
 
-    public FloatingEraseButton(Context context, AttributeSet attrs) {
+    public FloatingExpandButton(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
 
-    public FloatingEraseButton(Context context, AttributeSet attrs, int defStyleAttr) {
+    public FloatingExpandButton(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
     }
 

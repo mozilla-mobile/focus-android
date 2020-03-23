@@ -39,7 +39,6 @@ import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
-import android.view.View.GONE
 import android.view.ViewGroup
 import android.view.WindowManager
 import android.view.accessibility.AccessibilityEvent
@@ -103,7 +102,7 @@ import org.mozilla.focus.web.Download
 import org.mozilla.focus.web.HttpAuthenticationDialogBuilder
 import org.mozilla.focus.web.IWebView
 import org.mozilla.focus.widget.AnimatedProgressBar
-import org.mozilla.focus.widget.FloatingEraseButton
+import org.mozilla.focus.widget.FloatingExpandButton
 import org.mozilla.focus.widget.FloatingSessionsButton
 import java.lang.ref.WeakReference
 import java.net.MalformedURLException
@@ -354,39 +353,45 @@ class BrowserFragment : WebFragment(), LifecycleObserver, View.OnClickListener,
     }
 
     private fun initialiseNormalBrowserUi(view: View) {
-        val eraseButton = view.findViewById<FloatingEraseButton>(R.id.erase)
+        // initialise a draggable erase button
+        val expandButton = view.findViewById<FloatingExpandButton>(R.id.erase)
+        // replace the ui become expand button
         val closeIcon = DrawableUtils.loadAndTintDrawable(requireContext(), R.drawable.ic_close, Color.WHITE)
-        eraseButton.setImageDrawable(closeIcon)
+        expandButton.setImageDrawable(closeIcon)
 
+        // initialise erase subButton
         val deleteIcon = DrawableUtils.loadAndTintDrawable(requireContext(), R.drawable.ic_delete, Color.BLACK)
         val itemBuilder: SubActionButton.Builder = SubActionButton.Builder(activity)
         val itemIcon = ImageView(context)
         itemIcon.setImageDrawable(deleteIcon);
-        val button1 = itemBuilder.setContentView(itemIcon).build()
-        button1.id = R.id.erase
-        button1.setOnClickListener(this)
+        val eraseButton = itemBuilder.setContentView(itemIcon).build()
+        eraseButton.id = R.id.erase
+        eraseButton.setOnClickListener(this)
 
-        eraseButton.addSubButton(button1);
+        // add erase subButton to expandButton
+        expandButton.addSubButton(eraseButton);
 
+        // initialise actionMenu with animation attributes
         val actionMenu: FloatingActionMenu = FloatingActionMenu.Builder(activity)
-                .addSubActionView(button1)
+                .addSubActionView(eraseButton)
                 .setStartAngle(-90)
                 .setEndAngle(0)
-                .attachTo(eraseButton)
+                .attachTo(expandButton)
                 .build()
 
+        // add listener to actionMenu when its close or open
         actionMenu.setStateChangeListener(object : FloatingActionMenu.MenuStateChangeListener {
             override fun onMenuOpened(menu: FloatingActionMenu?) {
-                eraseButton.rotation = 0f
+                expandButton.rotation = 0f
                 val pvhR: PropertyValuesHolder = PropertyValuesHolder.ofFloat(View.ROTATION, 45f)
-                val animation: ObjectAnimator = ObjectAnimator.ofPropertyValuesHolder(eraseButton, pvhR)
+                val animation: ObjectAnimator = ObjectAnimator.ofPropertyValuesHolder(expandButton, pvhR)
                 animation.start();
             }
 
             override fun onMenuClosed(menu: FloatingActionMenu?) {
-                eraseButton.rotation = 45f
+                expandButton.rotation = 45f
                 val pvhR: PropertyValuesHolder = PropertyValuesHolder.ofFloat(View.ROTATION, 0f)
-                val animation: ObjectAnimator = ObjectAnimator.ofPropertyValuesHolder(eraseButton, pvhR)
+                val animation: ObjectAnimator = ObjectAnimator.ofPropertyValuesHolder(expandButton, pvhR)
                 animation.start();
             }
         })
@@ -401,22 +406,22 @@ class BrowserFragment : WebFragment(), LifecycleObserver, View.OnClickListener,
         sessionManager.register(object : SessionManager.Observer {
             override fun onSessionAdded(session: Session) {
                 tabsButton.updateSessionsCount(sessionManager.sessions.size)
-                eraseButton.updateSessionsCount(sessionManager.sessions.size)
+                expandButton.updateSessionsCount(sessionManager.sessions.size)
             }
 
             override fun onSessionRemoved(session: Session) {
                 tabsButton.updateSessionsCount(sessionManager.sessions.size)
-                eraseButton.updateSessionsCount(sessionManager.sessions.size)
+                expandButton.updateSessionsCount(sessionManager.sessions.size)
             }
 
             override fun onAllSessionsRemoved() {
                 tabsButton.updateSessionsCount(sessionManager.sessions.size)
-                eraseButton.updateSessionsCount(sessionManager.sessions.size)
+                expandButton.updateSessionsCount(sessionManager.sessions.size)
             }
         })
 
         tabsButton.updateSessionsCount(sessionManager.sessions.size)
-        eraseButton.updateSessionsCount(sessionManager.sessions.size)
+        expandButton.updateSessionsCount(sessionManager.sessions.size)
     }
 
     private fun initialiseCustomTabUi(view: View) {
@@ -428,7 +433,7 @@ class BrowserFragment : WebFragment(), LifecycleObserver, View.OnClickListener,
         // - View.GONE: doesn't work because the layout-behaviour makes the FAB visible again when scrolling.
         // - Adding at runtime: works, but then we need to use a separate layout file (and you need
         //   to set some attributes programatically, same as ViewStub).
-        val erase = view.findViewById<FloatingEraseButton>(R.id.erase)
+        val erase = view.findViewById<FloatingExpandButton>(R.id.erase)
         val eraseContainer = erase.parent as ViewGroup
         eraseContainer.removeView(erase)
 
