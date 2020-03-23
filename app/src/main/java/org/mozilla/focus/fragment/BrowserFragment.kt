@@ -356,7 +356,6 @@ class BrowserFragment : WebFragment(), LifecycleObserver, View.OnClickListener,
         val eraseButton = view.findViewById<FloatingEraseButton>(R.id.erase)
         val closeIcon = DrawableUtils.loadAndTintDrawable(requireContext(), R.drawable.ic_close, Color.WHITE)
         eraseButton.setImageDrawable(closeIcon)
-        eraseButton.setOnClickListener(this)
 
         val deleteIcon = DrawableUtils.loadAndTintDrawable(requireContext(), R.drawable.ic_delete, Color.BLACK)
         val itemBuilder: SubActionButton.Builder = SubActionButton.Builder(activity)
@@ -405,6 +404,8 @@ class BrowserFragment : WebFragment(), LifecycleObserver, View.OnClickListener,
             override fun onSessionRemoved(session: Session) {
                 tabsButton.updateSessionsCount(sessionManager.sessions.size)
                 eraseButton.updateSessionsCount(sessionManager.sessions.size)
+                val eraseContainer = button1.parent as ViewGroup
+                eraseContainer.removeView(button1)
             }
 
             override fun onAllSessionsRemoved() {
