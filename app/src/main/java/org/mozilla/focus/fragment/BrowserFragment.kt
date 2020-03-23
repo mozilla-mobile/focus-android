@@ -366,7 +366,7 @@ class BrowserFragment : WebFragment(), LifecycleObserver, View.OnClickListener,
         button1.id = R.id.erase
         button1.setOnClickListener(this)
 
-        eraseButton.subButton = button1;
+        eraseButton.addSubButton(button1);
 
         val actionMenu: FloatingActionMenu = FloatingActionMenu.Builder(activity)
                 .addSubActionView(button1)

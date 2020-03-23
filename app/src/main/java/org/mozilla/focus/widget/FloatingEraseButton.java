@@ -19,18 +19,20 @@ import android.view.animation.AnimationUtils;
 import android.util.Log;
 
 import com.oguzdev.circularfloatingactionmenu.library.SubActionButton;
+import java.util.ArrayList;
+import java.util.List;
 import org.mozilla.focus.R;
 
 public class FloatingEraseButton extends FloatingActionButton {
     private boolean keepHidden;
-    private SubActionButton subButton;
+    private List<SubActionButton> subButtons = new ArrayList<>();
 
-    public SubActionButton getSubButton() {
-        return subButton;
+    public List<SubActionButton> getSubButton() {
+        return subButtons;
     }
 
-    public void setSubButton(SubActionButton subButton) {
-        this.subButton = subButton;
+    public void addSubButton(SubActionButton subButton) {
+        this.subButtons.add(subButton);
     }
 
     public FloatingEraseButton(Context context) {
@@ -96,12 +98,18 @@ public class FloatingEraseButton extends FloatingActionButton {
         }
 
         if (visibility == View.VISIBLE) {
-            if (subButton != null)
-                subButton.setVisibility(visibility);
+            if (subButtons != null && subButtons.size() != 0)
+                this.setSubVisibility(subButtons, visibility);
             show();
         } else {
-            subButton.setVisibility(visibility);
+            this.setSubVisibility(subButtons, visibility);
             hide();
+        }
+    }
+
+    private void setSubVisibility(List<SubActionButton> subButtons, int visibility) {
+        for (SubActionButton subButton : subButtons) {
+            subButton.setVisibility(visibility);
         }
     }
 
