@@ -5,6 +5,8 @@
 package org.mozilla.focus.fragment
 
 import android.Manifest
+import android.animation.ObjectAnimator
+import android.animation.PropertyValuesHolder
 import android.app.DownloadManager
 import android.app.PendingIntent
 import androidx.lifecycle.LifecycleObserver
@@ -49,6 +51,8 @@ import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import com.oguzdev.circularfloatingactionmenu.library.FloatingActionMenu
+import com.oguzdev.circularfloatingactionmenu.library.SubActionButton
 import kotlinx.android.synthetic.main.browser_display_toolbar.*
 import kotlinx.android.synthetic.main.fragment_browser.*
 import kotlinx.coroutines.CoroutineScope
@@ -350,7 +354,41 @@ class BrowserFragment : WebFragment(), LifecycleObserver, View.OnClickListener,
 
     private fun initialiseNormalBrowserUi(view: View) {
         val eraseButton = view.findViewById<FloatingEraseButton>(R.id.erase)
+        val closeIcon = DrawableUtils.loadAndTintDrawable(requireContext(), R.drawable.ic_close, Color.WHITE)
+        eraseButton.setImageDrawable(closeIcon)
         eraseButton.setOnClickListener(this)
+
+        val deleteIcon = DrawableUtils.loadAndTintDrawable(requireContext(), R.drawable.ic_delete, Color.BLACK)
+        val itemBuilder: SubActionButton.Builder = SubActionButton.Builder(activity)
+        val itemIcon = ImageView(context)
+        itemIcon.setImageDrawable(deleteIcon);
+        val button1 = itemBuilder.setContentView(itemIcon).build()
+        button1.id = R.id.erase
+        button1.setOnClickListener(this)
+
+        val actionMenu: FloatingActionMenu = FloatingActionMenu.Builder(activity)
+                .addSubActionView(button1)
+                .setStartAngle(-90)
+                .setEndAngle(0)
+                .attachTo(eraseButton)
+                .build()
+
+        actionMenu.setStateChangeListener(object : FloatingActionMenu.MenuStateChangeListener {
+            override fun onMenuOpened(menu: FloatingActionMenu?) {
+                eraseButton.rotation = 0f
+                val pvhR: PropertyValuesHolder = PropertyValuesHolder.ofFloat(View.ROTATION, 45f)
+                val animation: ObjectAnimator = ObjectAnimator.ofPropertyValuesHolder(eraseButton, pvhR)
+                animation.start();
+            }
+
+            override fun onMenuClosed(menu: FloatingActionMenu?) {
+                eraseButton.rotation = 45f
+                val pvhR: PropertyValuesHolder = PropertyValuesHolder.ofFloat(View.ROTATION, 0f)
+                val animation: ObjectAnimator = ObjectAnimator.ofPropertyValuesHolder(eraseButton, pvhR)
+                animation.start();
+            }
+        })
+
 
         urlView!!.setOnClickListener(this)
 
