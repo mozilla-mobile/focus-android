@@ -39,6 +39,7 @@ import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.GONE
 import android.view.ViewGroup
 import android.view.WindowManager
 import android.view.accessibility.AccessibilityEvent
@@ -365,6 +366,8 @@ class BrowserFragment : WebFragment(), LifecycleObserver, View.OnClickListener,
         button1.id = R.id.erase
         button1.setOnClickListener(this)
 
+        eraseButton.subButton = button1;
+
         val actionMenu: FloatingActionMenu = FloatingActionMenu.Builder(activity)
                 .addSubActionView(button1)
                 .setStartAngle(-90)
@@ -404,8 +407,6 @@ class BrowserFragment : WebFragment(), LifecycleObserver, View.OnClickListener,
             override fun onSessionRemoved(session: Session) {
                 tabsButton.updateSessionsCount(sessionManager.sessions.size)
                 eraseButton.updateSessionsCount(sessionManager.sessions.size)
-                val eraseContainer = button1.parent as ViewGroup
-                eraseContainer.removeView(button1)
             }
 
             override fun onAllSessionsRemoved() {
