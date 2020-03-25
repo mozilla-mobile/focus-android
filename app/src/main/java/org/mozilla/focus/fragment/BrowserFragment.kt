@@ -51,7 +51,6 @@ import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
-import com.oguzdev.circularfloatingactionmenu.library.FloatingActionMenu
 import com.oguzdev.circularfloatingactionmenu.library.SubActionButton
 import kotlinx.android.synthetic.main.browser_display_toolbar.*
 import kotlinx.android.synthetic.main.fragment_browser.*
@@ -103,6 +102,7 @@ import org.mozilla.focus.web.Download
 import org.mozilla.focus.web.HttpAuthenticationDialogBuilder
 import org.mozilla.focus.web.IWebView
 import org.mozilla.focus.widget.AnimatedProgressBar
+import org.mozilla.focus.widget.FloatingActionMenu
 import org.mozilla.focus.widget.FloatingExpandButton
 import org.mozilla.focus.widget.FloatingSessionsButton
 import java.lang.ref.WeakReference
