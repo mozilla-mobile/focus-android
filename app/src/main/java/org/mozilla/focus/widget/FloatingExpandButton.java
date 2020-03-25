@@ -57,6 +57,8 @@ public class FloatingExpandButton extends FloatingActionButton {
     private boolean isDrag;
     final static public int EDGEDIS = 50;
     final static public int DURATION = 500;
+    // first time operate
+    private boolean firstPress = true;
 
     public void updateSessionsCount(int tabCount) {
         final CoordinatorLayout.LayoutParams params = (CoordinatorLayout.LayoutParams) getLayoutParams();
@@ -202,8 +204,17 @@ public class FloatingExpandButton extends FloatingActionButton {
             default:
                 break;
         }
+        if (firstPress) {
+            callOnClick();
+            firstPress = false;
+        }
         // if drag then update session otherwise pass
         return !isNotDrag() || super.onTouchEvent(event);
+    }
+
+    @Override
+    public boolean callOnClick() {
+        return super.callOnClick();
     }
 
     // check is drag or not
