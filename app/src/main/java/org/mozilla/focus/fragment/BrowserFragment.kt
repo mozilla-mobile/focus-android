@@ -400,8 +400,8 @@ class BrowserFragment : WebFragment(), LifecycleObserver, View.OnClickListener,
                 .addSubActionView(eraseButton)
                 .addSubActionView(refreshButton)
                 .addSubActionView(backButton)
-                .setStartAngle(-90)
-                .setEndAngle(0)
+                .setStartAngle(-180)
+                .setEndAngle(-90)
                 .attachTo(expandButton)
                 .build()
 

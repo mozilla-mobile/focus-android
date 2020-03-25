@@ -59,8 +59,6 @@ public class FloatingExpandButton extends FloatingActionButton {
     final static public int DURATION = 500;
     // first time operate
     private boolean firstPress = true;
-    // Left or right
-    private boolean onLeft = false;
     private FloatingActionMenu actionMenu;
 
     public void addActionMenu(FloatingActionMenu menu) {
@@ -193,9 +191,13 @@ public class FloatingExpandButton extends FloatingActionButton {
                     // recovery from press
                     setPressed(false);
                     if (rawX >= rangeWidth / 2) {
-//                        setOnLeft(false);
-                        this.actionMenu.setStartAngle(90);
-                        this.actionMenu.setEndAngle(0);
+                        if (rawY <= rangeHeight / 2){
+                            this.actionMenu.setStartAngle(90);
+                            this.actionMenu.setEndAngle(180);
+                        } else {
+                            this.actionMenu.setStartAngle(-180);
+                            this.actionMenu.setEndAngle(-90);
+                        }
                         // attract right
                         animate().setInterpolator(new DecelerateInterpolator())
                                 .setDuration(DURATION)
@@ -203,9 +205,13 @@ public class FloatingExpandButton extends FloatingActionButton {
                                 .xBy(rangeWidth - getWidth() - getX() - EDGEDIS)
                                 .start();
                     } else {
-//                        setOnLeft(true);
-                        this.actionMenu.setStartAngle(-90);
-                        this.actionMenu.setEndAngle(0);
+                        if (rawY <= rangeHeight / 2){
+                            this.actionMenu.setStartAngle(90);
+                            this.actionMenu.setEndAngle(0);
+                        } else {
+                            this.actionMenu.setStartAngle(0);
+                            this.actionMenu.setEndAngle(-90);
+                        }
                         // attract left
                         ObjectAnimator oa = ObjectAnimator.ofFloat(this, "x", getX(), EDGEDIS);
                         oa.setInterpolator(new DecelerateInterpolator());
@@ -234,13 +240,5 @@ public class FloatingExpandButton extends FloatingActionButton {
     // check is drag or not
     private boolean isNotDrag() {
         return !isDrag && (getX() == EDGEDIS || (getX() == rangeWidth - getWidth() - EDGEDIS));
-    }
-
-    public boolean isOnLeft() {
-        return onLeft;
-    }
-
-    public void setOnLeft(boolean onLeft) {
-        this.onLeft = onLeft;
     }
 }
