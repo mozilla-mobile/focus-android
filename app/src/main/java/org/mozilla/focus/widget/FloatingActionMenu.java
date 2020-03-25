@@ -1,8 +1,3 @@
-//
-// Source code recreated from a .class file by IntelliJ IDEA
-// (powered by Fernflower decompiler)
-//
-
 package org.mozilla.focus.widget;
 
 import android.app.Activity;
@@ -18,8 +13,6 @@ import android.view.ViewGroup;
 import android.view.View.OnClickListener;
 import android.widget.FrameLayout.LayoutParams;
 import com.oguzdev.circularfloatingactionmenu.library.R.dimen;
-import com.oguzdev.circularfloatingactionmenu.library.animation.DefaultAnimationHandler;
-import com.oguzdev.circularfloatingactionmenu.library.animation.MenuAnimationHandler;
 import java.util.ArrayList;
 import java.util.Iterator;
 
