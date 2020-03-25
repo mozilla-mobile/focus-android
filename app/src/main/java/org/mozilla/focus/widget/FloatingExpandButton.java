@@ -111,6 +111,7 @@ public class FloatingExpandButton extends FloatingActionButton {
                 this.setSubVisibility(subButtons, visibility);
             show();
         } else {
+            this.actionMenu.close(true);
             this.setSubVisibility(subButtons, visibility);
             hide();
         }
