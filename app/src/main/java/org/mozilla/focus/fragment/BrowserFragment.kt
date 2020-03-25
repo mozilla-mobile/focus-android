@@ -374,14 +374,18 @@ class BrowserFragment : WebFragment(), LifecycleObserver, View.OnClickListener,
         val refreshBuilder : SubActionButton.Builder = SubActionButton.Builder(activity)
         val refreshItemIcon = ImageView(context)
         refreshItemIcon.setImageDrawable(refreshIcon);
+        val refreshButton = refreshBuilder.setContentView(refreshItemIcon).build()
+        refreshButton.id = R.id.refresh
+        refreshButton.setOnClickListener(this)
+
 
         val backIcon = DrawableUtils.loadAndTintDrawable(requireContext(), R.drawable.ic_back, Color.BLACK)
         val backBuilder : SubActionButton.Builder = SubActionButton.Builder(activity)
         val backItemIcon = ImageView(context)
         backItemIcon.setImageDrawable(backIcon);
-
-        val refreshButton = refreshBuilder.setContentView(refreshItemIcon).build()
         val backButton = backBuilder.setContentView(backItemIcon).build()
+        backButton.id = R.id.back
+        backButton.setOnClickListener(this)
 
         // add erase subButton to expandButton
         expandButton.addSubButton(eraseButton);
