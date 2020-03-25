@@ -391,45 +391,24 @@ class BrowserFragment : WebFragment(), LifecycleObserver, View.OnClickListener,
 
         val actionMenu: FloatingActionMenu;
         // initialise actionMenu with animation attributes
-        if (expandButton.isOnLeft){
-            actionMenu = FloatingActionMenu.Builder(activity)
-                    .addSubActionView(eraseButton)
-                    .addSubActionView(refreshButton)
-                    .addSubActionView(backButton)
-                    .setStartAngle(-90)
-                    .setEndAngle(0)
-                    .attachTo(expandButton)
-                    .build()
-        } else{
-            actionMenu = FloatingActionMenu.Builder(activity)
-                    .addSubActionView(eraseButton)
-                    .addSubActionView(refreshButton)
-                    .addSubActionView(backButton)
-                    .setStartAngle(90)
-                    .setEndAngle(0)
-                    .attachTo(expandButton)
-                    .build()
-        }
 
+        actionMenu = FloatingActionMenu.Builder(activity)
+                .addSubActionView(eraseButton)
+                .addSubActionView(refreshButton)
+                .addSubActionView(backButton)
+                .setStartAngle(-90)
+                .setEndAngle(0)
+                .attachTo(expandButton)
+                .build()
 
-
+        expandButton.addActionMenu(actionMenu);
         // add listener to actionMenu when its close or open
         actionMenu.setStateChangeListener(object : FloatingActionMenu.MenuStateChangeListener {
             override fun onMenuOpened(menu: FloatingActionMenu?) {
-                if (expandButton.isOnLeft){
-                    println("left");
-                    expandButton.rotation = 0f
-                    val pvhR: PropertyValuesHolder = PropertyValuesHolder.ofFloat(View.ROTATION, 45f)
-                    val animation: ObjectAnimator = ObjectAnimator.ofPropertyValuesHolder(expandButton, pvhR)
-                    animation.start();
-                }else{
-                    println("right");
-                    expandButton.rotation = 0f
-                    val pvhR: PropertyValuesHolder = PropertyValuesHolder.ofFloat(View.ROTATION, 45f)
-                    val animation: ObjectAnimator = ObjectAnimator.ofPropertyValuesHolder(expandButton, pvhR)
-                    animation.start();
-                }
-
+                expandButton.rotation = 0f
+                val pvhR: PropertyValuesHolder = PropertyValuesHolder.ofFloat(View.ROTATION, 45f)
+                val animation: ObjectAnimator = ObjectAnimator.ofPropertyValuesHolder(expandButton, pvhR)
+                animation.start();
             }
 
             override fun onMenuClosed(menu: FloatingActionMenu?) {
