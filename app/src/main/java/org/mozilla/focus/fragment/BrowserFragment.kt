@@ -424,8 +424,8 @@ class BrowserFragment : WebFragment(), LifecycleObserver, View.OnClickListener,
                     animation.start();
                 }else{
                     println("right");
-                    expandButton.rotation = 45f
-                    val pvhR: PropertyValuesHolder = PropertyValuesHolder.ofFloat(View.ROTATION, 90f)
+                    expandButton.rotation = 0f
+                    val pvhR: PropertyValuesHolder = PropertyValuesHolder.ofFloat(View.ROTATION, 45f)
                     val animation: ObjectAnimator = ObjectAnimator.ofPropertyValuesHolder(expandButton, pvhR)
                     animation.start();
                 }
