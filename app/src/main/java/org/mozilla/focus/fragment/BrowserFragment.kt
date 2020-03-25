@@ -55,6 +55,7 @@ import com.oguzdev.circularfloatingactionmenu.library.FloatingActionMenu
 import com.oguzdev.circularfloatingactionmenu.library.SubActionButton
 import kotlinx.android.synthetic.main.browser_display_toolbar.*
 import kotlinx.android.synthetic.main.fragment_browser.*
+import kotlinx.android.synthetic.main.menu_blocking_switch.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -368,24 +369,67 @@ class BrowserFragment : WebFragment(), LifecycleObserver, View.OnClickListener,
         eraseButton.id = R.id.erase
         eraseButton.setOnClickListener(this)
 
+
+        val refreshIcon = DrawableUtils.loadAndTintDrawable(requireContext(), R.drawable.ic_refresh, Color.BLACK)
+        val refreshBuilder : SubActionButton.Builder = SubActionButton.Builder(activity)
+        val refreshItemIcon = ImageView(context)
+        refreshItemIcon.setImageDrawable(refreshIcon);
+
+        val backIcon = DrawableUtils.loadAndTintDrawable(requireContext(), R.drawable.ic_back, Color.BLACK)
+        val backBuilder : SubActionButton.Builder = SubActionButton.Builder(activity)
+        val backItemIcon = ImageView(context)
+        backItemIcon.setImageDrawable(backIcon);
+
+        val refreshButton = refreshBuilder.setContentView(refreshItemIcon).build()
+        val backButton = backBuilder.setContentView(backItemIcon).build()
+
         // add erase subButton to expandButton
         expandButton.addSubButton(eraseButton);
+        expandButton.addSubButton(refreshButton);
+        expandButton.addSubButton(backButton);
 
+
+        val actionMenu: FloatingActionMenu;
         // initialise actionMenu with animation attributes
-        val actionMenu: FloatingActionMenu = FloatingActionMenu.Builder(activity)
-                .addSubActionView(eraseButton)
-                .setStartAngle(-90)
-                .setEndAngle(0)
-                .attachTo(expandButton)
-                .build()
+        if (expandButton.isOnLeft){
+            actionMenu = FloatingActionMenu.Builder(activity)
+                    .addSubActionView(eraseButton)
+                    .addSubActionView(refreshButton)
+                    .addSubActionView(backButton)
+                    .setStartAngle(-90)
+                    .setEndAngle(0)
+                    .attachTo(expandButton)
+                    .build()
+        } else{
+            actionMenu = FloatingActionMenu.Builder(activity)
+                    .addSubActionView(eraseButton)
+                    .addSubActionView(refreshButton)
+                    .addSubActionView(backButton)
+                    .setStartAngle(90)
+                    .setEndAngle(0)
+                    .attachTo(expandButton)
+                    .build()
+        }
+
+
 
         // add listener to actionMenu when its close or open
         actionMenu.setStateChangeListener(object : FloatingActionMenu.MenuStateChangeListener {
             override fun onMenuOpened(menu: FloatingActionMenu?) {
-                expandButton.rotation = 0f
-                val pvhR: PropertyValuesHolder = PropertyValuesHolder.ofFloat(View.ROTATION, 45f)
-                val animation: ObjectAnimator = ObjectAnimator.ofPropertyValuesHolder(expandButton, pvhR)
-                animation.start();
+                if (expandButton.isOnLeft){
+                    println("left");
+                    expandButton.rotation = 0f
+                    val pvhR: PropertyValuesHolder = PropertyValuesHolder.ofFloat(View.ROTATION, 45f)
+                    val animation: ObjectAnimator = ObjectAnimator.ofPropertyValuesHolder(expandButton, pvhR)
+                    animation.start();
+                }else{
+                    println("right");
+                    expandButton.rotation = 45f
+                    val pvhR: PropertyValuesHolder = PropertyValuesHolder.ofFloat(View.ROTATION, 90f)
+                    val animation: ObjectAnimator = ObjectAnimator.ofPropertyValuesHolder(expandButton, pvhR)
+                    animation.start();
+                }
+
             }
 
             override fun onMenuClosed(menu: FloatingActionMenu?) {

@@ -59,6 +59,8 @@ public class FloatingExpandButton extends FloatingActionButton {
     final static public int DURATION = 500;
     // first time operate
     private boolean firstPress = true;
+    // Left or right
+    private boolean onLeft = false;
 
     public void updateSessionsCount(int tabCount) {
         final CoordinatorLayout.LayoutParams params = (CoordinatorLayout.LayoutParams) getLayoutParams();
@@ -185,6 +187,7 @@ public class FloatingExpandButton extends FloatingActionButton {
                     // recovery from press
                     setPressed(false);
                     if (rawX >= rangeWidth / 2) {
+                        setOnLeft(false);
                         // attract right
                         animate().setInterpolator(new DecelerateInterpolator())
                                 .setDuration(DURATION)
@@ -192,6 +195,7 @@ public class FloatingExpandButton extends FloatingActionButton {
                                 .xBy(rangeWidth - getWidth() - getX() - EDGEDIS)
                                 .start();
                     } else {
+                        setOnLeft(true);
                         // attract left
                         ObjectAnimator oa = ObjectAnimator.ofFloat(this, "x", getX(), EDGEDIS);
                         oa.setInterpolator(new DecelerateInterpolator());
@@ -220,5 +224,13 @@ public class FloatingExpandButton extends FloatingActionButton {
     // check is drag or not
     private boolean isNotDrag() {
         return !isDrag && (getX() == EDGEDIS || (getX() == rangeWidth - getWidth() - EDGEDIS));
+    }
+
+    public boolean isOnLeft() {
+        return onLeft;
+    }
+
+    public void setOnLeft(boolean onLeft) {
+        this.onLeft = onLeft;
     }
 }
