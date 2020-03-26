@@ -400,8 +400,8 @@ class BrowserFragment : WebFragment(), LifecycleObserver, View.OnClickListener,
                 .addSubActionView(eraseButton)
                 .addSubActionView(refreshButton)
                 .addSubActionView(backButton)
-                .setStartAngle(-180)
-                .setEndAngle(-90)
+                .setStartAngle(MINUS_ONE_HUNDRED_EIGHTY_DEG)
+                .setEndAngle(MINUS_NIGHTY_DEG)
                 .attachTo(expandButton)
                 .build()
 
@@ -1564,6 +1564,9 @@ class BrowserFragment : WebFragment(), LifecycleObserver, View.OnClickListener,
         private const val RESTORE_KEY_DOWNLOAD = "download"
 
         private const val INITIAL_PROGRESS = 5
+
+        private const val MINUS_ONE_HUNDRED_EIGHTY_DEG = -180
+        private const val MINUS_NIGHTY_DEG = -90
 
         @JvmStatic
         fun createForSession(session: Session): BrowserFragment {

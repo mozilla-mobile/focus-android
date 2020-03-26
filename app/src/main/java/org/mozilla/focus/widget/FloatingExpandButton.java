@@ -60,6 +60,11 @@ public class FloatingExpandButton extends FloatingActionButton {
     // first time operate
     private boolean firstPress = true;
     private FloatingActionMenu actionMenu;
+    final static private int ZERO_DEG = 0;
+    final static private int NIGHT_DEG = 90;
+    final static private int MINUS_NIGHT_DEG = -90;
+    final static private int ONE_HUNDRED_EIGHTY_DEG = 180;
+    final static private int MINUS_ONE_HUNDRED_EIGHTY_DEG = -180;
 
     public void addActionMenu(FloatingActionMenu menu) {
         this.actionMenu = menu;
@@ -192,11 +197,11 @@ public class FloatingExpandButton extends FloatingActionButton {
                     setPressed(false);
                     if (rawX >= rangeWidth / 2) {
                         if (rawY <= rangeHeight / 2){
-                            this.actionMenu.setStartAngle(90);
-                            this.actionMenu.setEndAngle(180);
+                            this.actionMenu.setStartAngle(NIGHT_DEG);
+                            this.actionMenu.setEndAngle(ONE_HUNDRED_EIGHTY_DEG);
                         } else {
-                            this.actionMenu.setStartAngle(-180);
-                            this.actionMenu.setEndAngle(-90);
+                            this.actionMenu.setStartAngle(MINUS_ONE_HUNDRED_EIGHTY_DEG);
+                            this.actionMenu.setEndAngle(MINUS_NIGHT_DEG);
                         }
                         // attract right
                         animate().setInterpolator(new DecelerateInterpolator())
@@ -206,11 +211,11 @@ public class FloatingExpandButton extends FloatingActionButton {
                                 .start();
                     } else {
                         if (rawY <= rangeHeight / 2){
-                            this.actionMenu.setStartAngle(90);
-                            this.actionMenu.setEndAngle(0);
+                            this.actionMenu.setStartAngle(NIGHT_DEG);
+                            this.actionMenu.setEndAngle(ZERO_DEG);
                         } else {
-                            this.actionMenu.setStartAngle(0);
-                            this.actionMenu.setEndAngle(-90);
+                            this.actionMenu.setStartAngle(ZERO_DEG);
+                            this.actionMenu.setEndAngle(MINUS_NIGHT_DEG);
                         }
                         // attract left
                         ObjectAnimator oa = ObjectAnimator.ofFloat(this, "x", getX(), EDGEDIS);
