@@ -54,7 +54,6 @@ import android.widget.Toast
 import com.oguzdev.circularfloatingactionmenu.library.SubActionButton
 import kotlinx.android.synthetic.main.browser_display_toolbar.*
 import kotlinx.android.synthetic.main.fragment_browser.*
-import kotlinx.android.synthetic.main.menu_blocking_switch.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -360,46 +359,12 @@ class BrowserFragment : WebFragment(), LifecycleObserver, View.OnClickListener,
         val closeIcon = DrawableUtils.loadAndTintDrawable(requireContext(), R.drawable.ic_close, Color.WHITE)
         expandButton.setImageDrawable(closeIcon)
 
-        // initialise erase subButton
-        val deleteIcon = DrawableUtils.loadAndTintDrawable(requireContext(), R.drawable.ic_delete, Color.BLACK)
-        val itemBuilder: SubActionButton.Builder = SubActionButton.Builder(activity)
-        val itemIcon = ImageView(context)
-        itemIcon.setImageDrawable(deleteIcon);
-        val eraseButton = itemBuilder.setContentView(itemIcon).build()
-        eraseButton.id = R.id.erase
-        eraseButton.setOnClickListener(this)
-
-
-        val refreshIcon = DrawableUtils.loadAndTintDrawable(requireContext(), R.drawable.ic_refresh, Color.BLACK)
-        val refreshBuilder : SubActionButton.Builder = SubActionButton.Builder(activity)
-        val refreshItemIcon = ImageView(context)
-        refreshItemIcon.setImageDrawable(refreshIcon);
-        val refreshButton = refreshBuilder.setContentView(refreshItemIcon).build()
-        refreshButton.id = R.id.refresh
-        refreshButton.setOnClickListener(this)
-
-
-        val backIcon = DrawableUtils.loadAndTintDrawable(requireContext(), R.drawable.ic_back, Color.BLACK)
-        val backBuilder : SubActionButton.Builder = SubActionButton.Builder(activity)
-        val backItemIcon = ImageView(context)
-        backItemIcon.setImageDrawable(backIcon);
-        val backButton = backBuilder.setContentView(backItemIcon).build()
-        backButton.id = R.id.back
-        backButton.setOnClickListener(this)
-
-        // add erase subButton to expandButton
-        expandButton.addSubButton(eraseButton);
-        expandButton.addSubButton(refreshButton);
-        expandButton.addSubButton(backButton);
-
-
         val actionMenu: FloatingActionMenu;
         // initialise actionMenu with animation attributes
-
         actionMenu = FloatingActionMenu.Builder(activity)
-                .addSubActionView(eraseButton)
-                .addSubActionView(refreshButton)
-                .addSubActionView(backButton)
+                .addSubActionView(initialiseSubButton(SubButton.DELETE, expandButton))
+                .addSubActionView(initialiseSubButton(SubButton.REFRESH, expandButton))
+                .addSubActionView(initialiseSubButton(SubButton.BACK, expandButton))
                 .setStartAngle(-180)
                 .setEndAngle(-90)
                 .attachTo(expandButton)
@@ -449,6 +414,34 @@ class BrowserFragment : WebFragment(), LifecycleObserver, View.OnClickListener,
 
         tabsButton.updateSessionsCount(sessionManager.sessions.size)
         expandButton.updateSessionsCount(sessionManager.sessions.size)
+    }
+
+    private fun initialiseSubButton(buttonType : SubButton, expandButton : FloatingExpandButton) : SubActionButton
+    {
+        // initialiseSubButton based on the button type
+        var type = R.drawable.ic_back;
+        var id = R.id.back;
+
+        if (buttonType == SubButton.DELETE) {
+            type = R.drawable.ic_delete;
+            id = R.id.erase;
+        }
+        else if (buttonType == SubButton.REFRESH) {
+            type = R.drawable.ic_refresh;
+            id = R.id.refresh;
+        }
+
+        val icon = DrawableUtils.loadAndTintDrawable(requireContext(), type, Color.BLACK)
+        val itemBuilder: SubActionButton.Builder = SubActionButton.Builder(activity)
+        val itemIcon = ImageView(context)
+        itemIcon.setImageDrawable(icon);
+        val button = itemBuilder.setContentView(itemIcon).build()
+        button.id = id;
+        button.setOnClickListener(this)
+        // add erase subButton to expandButton
+        expandButton.addSubButton(button);
+
+        return button;
     }
 
     private fun initialiseCustomTabUi(view: View) {
@@ -1574,6 +1567,11 @@ class BrowserFragment : WebFragment(), LifecycleObserver, View.OnClickListener,
             fragment.arguments = arguments
 
             return fragment
+        }
+
+        // SubButton Type
+        enum class  SubButton {
+            DELETE, REFRESH, BACK
         }
     }
 }

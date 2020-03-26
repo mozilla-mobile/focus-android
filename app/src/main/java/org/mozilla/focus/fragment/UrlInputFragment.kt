@@ -170,6 +170,7 @@ class UrlInputFragment :
         // Get session from session manager if there's a session UUID in the fragment's arguments
         arguments?.getString(ARGUMENT_SESSION_UUID)?.let { id ->
             session = requireComponents.sessionManager.findSessionById(id)
+
         }
     }
 
