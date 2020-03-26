@@ -55,8 +55,8 @@ public class FloatingExpandButton extends FloatingActionButton {
     private int startY;
     // state of dragging
     private boolean isDrag;
-    final static public int EDGEDIS = 50;
-    final static public int DURATION = 500;
+    final static private int EDGEDIS = 50;
+    final static private int DURATION = 500;
     // first time operate
     private boolean firstPress = true;
     private FloatingActionMenu actionMenu;
