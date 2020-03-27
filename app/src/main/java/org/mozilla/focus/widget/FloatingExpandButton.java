@@ -166,7 +166,7 @@ public class FloatingExpandButton extends FloatingActionButton {
                     int disY = rawY - startY;
                     int distance = (int) Math.sqrt(disX * disX + disY * disY);
                     // special case if the distance is 0 end dragging set the state to false
-                    if (distance == 0) {
+                    if (distance <= EDGEDIS) {
                         isDrag = false;
                         //break;
                     }
