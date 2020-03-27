@@ -31,6 +31,7 @@ public class FloatingExpandButton extends FloatingActionButton {
         return subButtons;
     }
 
+
     public void addSubButton(SubActionButton subButton) {
         this.subButtons.add(subButton);
     }
@@ -129,6 +130,7 @@ public class FloatingExpandButton extends FloatingActionButton {
     // override onToucheVent so that button can listen the touch inputs (press/unpressed/drag)
     @Override
     public boolean onTouchEvent(MotionEvent event) {
+
         // catch the touch position
         int rawX = (int) event.getRawX();
         int rawY = (int) event.getRawY();
@@ -152,43 +154,46 @@ public class FloatingExpandButton extends FloatingActionButton {
                 break;
             // dragging the button
             case MotionEvent.ACTION_MOVE:
-                // if the range is valid then start drag the button else break
-                if (rangeHeight <= 0 || rangeWidth == 0) {
-                    isDrag = false;
-                    break;
-                } else {
-                    isDrag = true;
+                if(!this.actionMenu.isOpen()){
+                    if (rangeHeight <= 0 || rangeWidth == 0) {
+                        isDrag = false;
+                        // break;
+                    } else {
+                        isDrag = true;
+                    }
+                    // calculate the distance of x and y from start location
+                    int disX = rawX - startX;
+                    int disY = rawY - startY;
+                    int distance = (int) Math.sqrt(disX * disX + disY * disY);
+                    // special case if the distance is 0 end dragging set the state to false
+                    if (distance == 0) {
+                        isDrag = false;
+                        //break;
+                    }
+                    // button size included
+                    float x = getX() + disX;
+                    float y = getY() + disY;
+                    // test if reached the edge: left up right down
+                    if (x < 0) {
+                        x = 0;
+                    } else if (x > rangeWidth - getWidth()) {
+                        x = rangeWidth - getWidth();
+                    }
+                    if (getY() < 0) {
+                        y = 0;
+                    } else if (getY() + getHeight() > rangeHeight - EDGEDIS) {
+                        y = rangeHeight - getHeight() - EDGEDIS;
+                    }
+                    // Set the position of the button after dragging
+                    setX(x);
+                    setY(y);
+                    // update the start position during dragging
+                    startX = rawX;
+                    startY = rawY;
+                    //break;
+                    return false;
                 }
-                // calculate the distance of x and y from start location
-                int disX = rawX - startX;
-                int disY = rawY - startY;
-                int distance = (int) Math.sqrt(disX * disX + disY * disY);
-                // special case if the distance is 0 end dragging set the state to false
-                if (distance == 0) {
-                    isDrag = false;
-                    break;
-                }
-                // button size included
-                float x = getX() + disX;
-                float y = getY() + disY;
-                // test if reached the edge: left up right down
-                if (x < 0) {
-                    x = 0;
-                } else if (x > rangeWidth - getWidth()) {
-                    x = rangeWidth - getWidth();
-                }
-                if (getY() < 0) {
-                    y = 0;
-                } else if (getY() + getHeight() > rangeHeight - EDGEDIS) {
-                    y = rangeHeight - getHeight() - EDGEDIS;
-                }
-                // Set the position of the button after dragging
-                setX(x);
-                setY(y);
-                // update the start position during dragging
-                startX = rawX;
-                startY = rawY;
-                break;
+
 
             // unpressed button
             case MotionEvent.ACTION_UP:
