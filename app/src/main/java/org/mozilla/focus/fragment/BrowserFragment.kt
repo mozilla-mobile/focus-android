@@ -1147,7 +1147,7 @@ class BrowserFragment : WebFragment(), LifecycleObserver, View.OnClickListener,
             }
 
             R.id.back -> {
-                goBack()
+                onBackPressed()
             }
 
             R.id.forward -> {
