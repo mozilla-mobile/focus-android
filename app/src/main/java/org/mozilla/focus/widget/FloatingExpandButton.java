@@ -18,20 +18,32 @@ import android.view.animation.AnimationUtils;
 
 import android.util.Log;
 
+import com.oguzdev.circularfloatingactionmenu.library.SubActionButton;
+import java.util.ArrayList;
+import java.util.List;
 import org.mozilla.focus.R;
 
-public class FloatingEraseButton extends FloatingActionButton {
+public class FloatingExpandButton extends FloatingActionButton {
     private boolean keepHidden;
+    private List<SubActionButton> subButtons = new ArrayList<>();
 
-    public FloatingEraseButton(Context context) {
+    public List<SubActionButton> getSubButton() {
+        return subButtons;
+    }
+
+    public void addSubButton(SubActionButton subButton) {
+        this.subButtons.add(subButton);
+    }
+
+    public FloatingExpandButton(Context context) {
         super(context);
     }
 
-    public FloatingEraseButton(Context context, AttributeSet attrs) {
+    public FloatingExpandButton(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
 
-    public FloatingEraseButton(Context context, AttributeSet attrs, int defStyleAttr) {
+    public FloatingExpandButton(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
     }
 
@@ -45,6 +57,13 @@ public class FloatingEraseButton extends FloatingActionButton {
     private boolean isDrag;
     final static public int EDGEDIS = 50;
     final static public int DURATION = 500;
+    // first time operate
+    private boolean firstPress = true;
+    private FloatingActionMenu actionMenu;
+
+    public void addActionMenu(FloatingActionMenu menu) {
+        this.actionMenu = menu;
+    }
 
     public void updateSessionsCount(int tabCount) {
         final CoordinatorLayout.LayoutParams params = (CoordinatorLayout.LayoutParams) getLayoutParams();
@@ -86,9 +105,19 @@ public class FloatingEraseButton extends FloatingActionButton {
         }
 
         if (visibility == View.VISIBLE) {
+            if (subButtons != null && subButtons.size() != 0)
+                this.setSubVisibility(subButtons, visibility);
             show();
         } else {
+            this.actionMenu.close(true);
+            this.setSubVisibility(subButtons, visibility);
             hide();
+        }
+    }
+
+    private void setSubVisibility(List<SubActionButton> subButtons, int visibility) {
+        for (SubActionButton subButton : subButtons) {
+            subButton.setVisibility(visibility);
         }
     }
 
@@ -162,6 +191,13 @@ public class FloatingEraseButton extends FloatingActionButton {
                     // recovery from press
                     setPressed(false);
                     if (rawX >= rangeWidth / 2) {
+                        if (rawY <= rangeHeight / 2){
+                            this.actionMenu.setStartAngle(90);
+                            this.actionMenu.setEndAngle(180);
+                        } else {
+                            this.actionMenu.setStartAngle(-180);
+                            this.actionMenu.setEndAngle(-90);
+                        }
                         // attract right
                         animate().setInterpolator(new DecelerateInterpolator())
                                 .setDuration(DURATION)
@@ -169,6 +205,13 @@ public class FloatingEraseButton extends FloatingActionButton {
                                 .xBy(rangeWidth - getWidth() - getX() - EDGEDIS)
                                 .start();
                     } else {
+                        if (rawY <= rangeHeight / 2){
+                            this.actionMenu.setStartAngle(90);
+                            this.actionMenu.setEndAngle(0);
+                        } else {
+                            this.actionMenu.setStartAngle(0);
+                            this.actionMenu.setEndAngle(-90);
+                        }
                         // attract left
                         ObjectAnimator oa = ObjectAnimator.ofFloat(this, "x", getX(), EDGEDIS);
                         oa.setInterpolator(new DecelerateInterpolator());
@@ -181,8 +224,17 @@ public class FloatingEraseButton extends FloatingActionButton {
             default:
                 break;
         }
+        if (firstPress) {
+            callOnClick();
+            firstPress = false;
+        }
         // if drag then update session otherwise pass
         return !isNotDrag() || super.onTouchEvent(event);
+    }
+
+    @Override
+    public boolean callOnClick() {
+        return super.callOnClick();
     }
 
     // check is drag or not
