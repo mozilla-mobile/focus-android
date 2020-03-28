@@ -58,8 +58,6 @@ public class FloatingExpandButton extends FloatingActionButton {
     private boolean isDrag;
     final static private int EDGEDIS = 50;
     final static private int DURATION = 500;
-    // first time operate
-    private boolean firstPress = true;
     private FloatingActionMenu actionMenu;
     final static private int ZERO_DEG = 0;
     final static private int NIGHT_DEG = 90;
@@ -233,10 +231,6 @@ public class FloatingExpandButton extends FloatingActionButton {
 
             default:
                 break;
-        }
-        if (firstPress) {
-            callOnClick();
-            firstPress = false;
         }
         // if drag then update session otherwise pass
         return !isNotDrag() || super.onTouchEvent(event);
