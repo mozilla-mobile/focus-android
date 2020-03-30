@@ -16,9 +16,7 @@ import android.view.View;
 import android.view.accessibility.AccessibilityManager;
 import android.view.animation.AnimationUtils;
 
-import android.util.Log;
 
-import com.oguzdev.circularfloatingactionmenu.library.SubActionButton;
 import java.util.ArrayList;
 import java.util.List;
 import org.mozilla.focus.R;
