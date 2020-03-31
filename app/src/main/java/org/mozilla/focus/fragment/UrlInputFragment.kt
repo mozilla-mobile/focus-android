@@ -713,7 +713,7 @@ class UrlInputFragment :
         val isUrl = UrlUtils.isUrl(input)
 
         val shortcutAndQuery = UrlUtils.splitShortcutFromQuery(input)
-        val searchShortcutUrl = if (shortcutAndQuery != null){
+        val searchShortcutUrl = if (shortcutAndQuery != null) {
             val shortcut = shortcutAndQuery[0]
             val actualQuery = shortcutAndQuery[1]
             UrlUtils.getURLForSearchEngineShortcut(context, shortcut, actualQuery)
@@ -741,14 +741,11 @@ class UrlInputFragment :
             } else {
                 val searchTerms = if (UrlUtils.isUrl(query)) null else query
                 val searchUrl =
-                        if (searchTerms != null)
-                        {
+                        if (searchTerms != null) {
                             UrlUtils.createSearchUrl(context, searchTerms)
-                        }
-                        else {
+                        } else {
                             UrlUtils.normalize(query)
                         }
-
 
                 openUrl(searchUrl, searchTerms)
             }

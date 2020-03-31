@@ -4,7 +4,6 @@
 
 package org.mozilla.focus.searchsuggestions.ui
 
-import android.content.res.Resources
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import android.graphics.Color
@@ -279,8 +278,7 @@ private class SuggestionViewHolder(
             icon?.setBounds(0, 0, size, size)
             suggestionText.contentDescription = suggestionText.text
             suggestionText.setCompoundDrawables(icon, null, null, null)
-        }
-        else {
+        } else {
             val icon = if (UrlUtils.isSearchShortcut(suggestionText.text.toString())) {
                 val searchEngine = UrlUtils.getSearchEngine(itemView.context, suggestionText.text.toString())
                 BitmapDrawable(itemView.context.resources, searchEngine.icon)
