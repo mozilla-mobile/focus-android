@@ -741,7 +741,14 @@ class UrlInputFragment :
             } else {
                 val searchTerms = if (UrlUtils.isUrl(query)) null else query
                 val searchUrl =
-                        if (searchTerms != null) UrlUtils.createSearchUrl(context, searchTerms) else UrlUtils.normalize(query)
+                        if (searchTerms != null)
+                        {
+                            UrlUtils.createSearchUrl(context, searchTerms)
+                        }
+                        else {
+                            UrlUtils.normalize(query)
+                        }
+
 
                 openUrl(searchUrl, searchTerms)
             }
