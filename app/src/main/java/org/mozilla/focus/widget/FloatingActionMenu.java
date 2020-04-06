@@ -27,6 +27,18 @@ public class FloatingActionMenu {
   private boolean animated;
   private boolean open;
 
+  public View getMainActionView() {
+    return mainActionView;
+  }
+
+  public int getStartAngle() {
+    return startAngle;
+  }
+
+  public int getEndAngle() {
+    return endAngle;
+  }
+
   public FloatingActionMenu(View mainActionView, int startAngle, int endAngle, int radius, ArrayList<FloatingActionMenu.Item> subActionItems, MenuAnimationHandler animationHandler, boolean animated, FloatingActionMenu.MenuStateChangeListener stateChangeListener) {
     this.mainActionView = mainActionView;
     this.startAngle = startAngle;
