@@ -375,13 +375,13 @@ class BrowserFragment : WebFragment(), LifecycleObserver, View.OnClickListener,
         actionMenu.setStateChangeListener(object : FloatingActionMenu.MenuStateChangeListener {
             override fun onMenuOpened(menu: FloatingActionMenu?) {
                 expandButton.rotation = 0f
-                val pvhR: PropertyValuesHolder = PropertyValuesHolder.ofFloat(View.ROTATION, 45f)
+                val pvhR: PropertyValuesHolder = PropertyValuesHolder.ofFloat(View.ROTATION, ROTATE_ANGLE)
                 val animation: ObjectAnimator = ObjectAnimator.ofPropertyValuesHolder(expandButton, pvhR)
                 animation.start();
             }
 
             override fun onMenuClosed(menu: FloatingActionMenu?) {
-                expandButton.rotation = 45f
+                expandButton.rotation = ROTATE_ANGLE
                 val pvhR: PropertyValuesHolder = PropertyValuesHolder.ofFloat(View.ROTATION, 0f)
                 val animation: ObjectAnimator = ObjectAnimator.ofPropertyValuesHolder(expandButton, pvhR)
                 animation.start();
@@ -1560,6 +1560,8 @@ class BrowserFragment : WebFragment(), LifecycleObserver, View.OnClickListener,
 
         private const val MINUS_ONE_HUNDRED_EIGHTY_DEG = -180
         private const val MINUS_NIGHTY_DEG = -90
+
+        private const val ROTATE_ANGLE = 45f
 
         @JvmStatic
         fun createForSession(session: Session): BrowserFragment {
