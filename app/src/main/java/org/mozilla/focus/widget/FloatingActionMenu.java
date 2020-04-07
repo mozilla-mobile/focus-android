@@ -204,7 +204,7 @@ public class FloatingActionMenu {
   }
 
   public View getActivityContentView() {
-    return ((Activity)this.mainActionView.getContext()).getWindow().getDecorView().findViewById(16908290);
+    return ((Activity)this.mainActionView.getContext()).getWindow().getDecorView().findViewById(android.R.id.content);
   }
 
   private Point getScreenSize() {
@@ -268,7 +268,7 @@ public class FloatingActionMenu {
     }
 
     public FloatingActionMenu.Builder addSubActionView(int resId, Context context) {
-      LayoutInflater inflater = (LayoutInflater)context.getSystemService("layout_inflater");
+      LayoutInflater inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
       View view = inflater.inflate(resId, (ViewGroup)null, false);
       view.measure(0, 0);
       return this.addSubActionView(view, view.getMeasuredWidth(), view.getMeasuredHeight());
