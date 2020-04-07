@@ -99,7 +99,11 @@ import org.mozilla.focus.utils.ViewUtils
 import org.mozilla.focus.web.Download
 import org.mozilla.focus.web.HttpAuthenticationDialogBuilder
 import org.mozilla.focus.web.IWebView
-import org.mozilla.focus.widget.*
+import org.mozilla.focus.widget.AnimatedProgressBar
+import org.mozilla.focus.widget.FloatingSessionsButton
+import org.mozilla.focus.widget.FloatingActionMenu
+import org.mozilla.focus.widget.SubActionButton
+import org.mozilla.focus.widget.FloatingExpandButton
 import java.lang.ref.WeakReference
 import java.net.MalformedURLException
 import java.net.URL
