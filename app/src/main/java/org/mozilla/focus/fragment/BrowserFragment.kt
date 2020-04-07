@@ -359,7 +359,7 @@ class BrowserFragment : WebFragment(), LifecycleObserver, View.OnClickListener,
         val closeIcon = DrawableUtils.loadAndTintDrawable(requireContext(), R.drawable.ic_close, Color.WHITE)
         expandButton.setImageDrawable(closeIcon)
 
-        val actionMenu: FloatingActionMenu;
+        val actionMenu: FloatingActionMenu
         // initialise actionMenu with animation attributes
         actionMenu = FloatingActionMenu.Builder(activity)
                 .addSubActionView(initialiseSubButton(SubButton.DELETE, expandButton))
@@ -370,24 +370,23 @@ class BrowserFragment : WebFragment(), LifecycleObserver, View.OnClickListener,
                 .attachTo(expandButton)
                 .build()
 
-        expandButton.addActionMenu(actionMenu);
+        expandButton.addActionMenu(actionMenu)
         // add listener to actionMenu when its close or open
         actionMenu.setStateChangeListener(object : FloatingActionMenu.MenuStateChangeListener {
             override fun onMenuOpened(menu: FloatingActionMenu?) {
                 expandButton.rotation = 0f
                 val pvhR: PropertyValuesHolder = PropertyValuesHolder.ofFloat(View.ROTATION, ROTATE_ANGLE)
                 val animation: ObjectAnimator = ObjectAnimator.ofPropertyValuesHolder(expandButton, pvhR)
-                animation.start();
+                animation.start()
             }
 
             override fun onMenuClosed(menu: FloatingActionMenu?) {
                 expandButton.rotation = ROTATE_ANGLE
                 val pvhR: PropertyValuesHolder = PropertyValuesHolder.ofFloat(View.ROTATION, 0f)
                 val animation: ObjectAnimator = ObjectAnimator.ofPropertyValuesHolder(expandButton, pvhR)
-                animation.start();
+                animation.start()
             }
         })
-
 
         urlView!!.setOnClickListener(this)
 
@@ -416,32 +415,30 @@ class BrowserFragment : WebFragment(), LifecycleObserver, View.OnClickListener,
         expandButton.updateSessionsCount(sessionManager.sessions.size)
     }
 
-    private fun initialiseSubButton(buttonType : SubButton, expandButton : FloatingExpandButton) : SubActionButton
+    private fun initialiseSubButton(buttonType: SubButton, expandButton: FloatingExpandButton): SubActionButton
     {
         // initialiseSubButton based on the button type
-        var type = R.drawable.ic_back;
-        var id = R.id.back;
+        var type = R.drawable.ic_back
+        var id = R.id.back
 
         if (buttonType == SubButton.DELETE) {
-            type = R.drawable.ic_delete;
-            id = R.id.erase;
+            type = R.drawable.ic_delete
+            id = R.id.erase
         }
-        else if (buttonType == SubButton.REFRESH) {
-            type = R.drawable.ic_refresh;
-            id = R.id.refresh;
+        if (buttonType == SubButton.REFRESH) {
+            type = R.drawable.ic_refresh
+            id = R.id.refresh
         }
-
         val icon = DrawableUtils.loadAndTintDrawable(requireContext(), type, Color.BLACK)
         val itemBuilder: SubActionButton.Builder = SubActionButton.Builder(activity)
         val itemIcon = ImageView(context)
-        itemIcon.setImageDrawable(icon);
+        itemIcon.setImageDrawable(icon)
         val button = itemBuilder.setContentView(itemIcon).build()
-        button.id = id;
+        button.id = id
         button.setOnClickListener(this)
         // add erase subButton to expandButton
-        expandButton.addSubButton(button);
-
-        return button;
+        expandButton.addSubButton(button)
+        return button
     }
 
     private fun initialiseCustomTabUi(view: View) {
@@ -1575,7 +1572,7 @@ class BrowserFragment : WebFragment(), LifecycleObserver, View.OnClickListener,
         }
 
         // SubButton Type
-        enum class  SubButton {
+        enum class SubButton {
             DELETE, REFRESH, BACK
         }
     }
