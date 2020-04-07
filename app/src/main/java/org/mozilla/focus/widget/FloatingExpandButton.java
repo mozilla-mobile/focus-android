@@ -54,6 +54,8 @@ public class FloatingExpandButton extends FloatingActionButton {
     private int startY;
     // state of dragging
     private boolean isDrag;
+    private int rawX;
+    private int rawY;
     final static private int EDGEDIS = 50;
     final static private int DURATION = 500;
     private FloatingActionMenu actionMenu;
@@ -67,6 +69,18 @@ public class FloatingExpandButton extends FloatingActionButton {
         this.actionMenu = menu;
     }
 
+    public FloatingActionMenu getActionMenu(){return this.actionMenu;}
+
+    public int getStartX(){
+        return startX;
+    }
+    public int getStartY(){
+        return startY;
+    }
+
+    public int getEdgedis(){
+        return EDGEDIS;
+    }
     public void updateSessionsCount(int tabCount) {
         final CoordinatorLayout.LayoutParams params = (CoordinatorLayout.LayoutParams) getLayoutParams();
         final FloatingActionButtonBehavior behavior = (FloatingActionButtonBehavior) params.getBehavior();
@@ -123,13 +137,31 @@ public class FloatingExpandButton extends FloatingActionButton {
         }
     }
 
+    public void updateRanges(){
+        // Gets the parent of this button which is the range of movement.
+        ViewGroup parent;
+        if (getParent() != null) {
+            parent = (ViewGroup) getParent();
+            // get the range of height and width
+            rangeHeight = parent.getHeight();
+            rangeWidth = parent.getWidth();
+        }
+    }
+
+    public int getRangeHeight(){
+        return rangeHeight;
+    }
+
+    public int getRangeWidth(){
+        return rangeWidth;
+    }
     // override onToucheVent so that button can listen the touch inputs (press/unpressed/drag)
     @Override
     public boolean onTouchEvent(MotionEvent event) {
 
         // catch the touch position
-        int rawX = (int) event.getRawX();
-        int rawY = (int) event.getRawY();
+        rawX = (int) event.getRawX();
+        rawY = (int) event.getRawY();
         switch (event.getAction() & MotionEvent.ACTION_MASK) {
             // press the button
             case MotionEvent.ACTION_DOWN:
@@ -139,91 +171,46 @@ public class FloatingExpandButton extends FloatingActionButton {
                 // save the start location of button
                 startX = rawX;
                 startY = rawY;
-                // Gets the parent of this button which is the range of movement.
-                ViewGroup parent;
-                if (getParent() != null) {
-                    parent = (ViewGroup) getParent();
-                    // get the range of height and width
-                    rangeHeight = parent.getHeight();
-                    rangeWidth = parent.getWidth();
-                }
+                updateRanges();
                 break;
             // dragging the button
             case MotionEvent.ACTION_MOVE:
                 if(!this.actionMenu.isOpen()){
                     if (rangeHeight <= 0 || rangeWidth == 0) {
                         isDrag = false;
-                        // break;
+                        break;
                     } else {
                         isDrag = true;
                     }
+
                     // calculate the distance of x and y from start location
                     int disX = rawX - startX;
                     int disY = rawY - startY;
                     int distance = (int) Math.sqrt(disX * disX + disY * disY);
+
                     // special case if the distance is 0 end dragging set the state to false
                     if (distance <= EDGEDIS) {
                         isDrag = false;
-                        //break;
+                        break;
                     }
+
                     // button size included
                     float x = getX() + disX;
                     float y = getY() + disY;
-                    // test if reached the edge: left up right down
-                    if (x < 0) {
-                        x = 0;
-                    } else if (x > rangeWidth - getWidth()) {
-                        x = rangeWidth - getWidth();
-                    }
-                    if (getY() < 0) {
-                        y = 0;
-                    } else if (getY() + getHeight() > rangeHeight - EDGEDIS) {
-                        y = rangeHeight - getHeight() - EDGEDIS;
-                    }
-                    // Set the position of the button after dragging
-                    setX(x);
-                    setY(y);
-                    // update the start position during dragging
-                    startX = rawX;
-                    startY = rawY;
+                    setDragLocation(x, y);
+
+
                     //break;
                     return false;
                 }
 
 
-            // unpressed button
+                // unpressed button
             case MotionEvent.ACTION_UP:
                 if (!isNotDrag()) {
                     // recovery from press
                     setPressed(false);
-                    if (rawX >= rangeWidth / 2) {
-                        if (rawY <= rangeHeight / 2){
-                            this.actionMenu.setStartAngle(NIGHT_DEG);
-                            this.actionMenu.setEndAngle(ONE_HUNDRED_EIGHTY_DEG);
-                        } else {
-                            this.actionMenu.setStartAngle(MINUS_ONE_HUNDRED_EIGHTY_DEG);
-                            this.actionMenu.setEndAngle(MINUS_NIGHT_DEG);
-                        }
-                        // attract right
-                        animate().setInterpolator(new DecelerateInterpolator())
-                                .setDuration(DURATION)
-                                // keep 50 pixel away from the edge
-                                .xBy(rangeWidth - getWidth() - getX() - EDGEDIS)
-                                .start();
-                    } else {
-                        if (rawY <= rangeHeight / 2){
-                            this.actionMenu.setStartAngle(NIGHT_DEG);
-                            this.actionMenu.setEndAngle(ZERO_DEG);
-                        } else {
-                            this.actionMenu.setStartAngle(ZERO_DEG);
-                            this.actionMenu.setEndAngle(MINUS_NIGHT_DEG);
-                        }
-                        // attract left
-                        ObjectAnimator oa = ObjectAnimator.ofFloat(this, "x", getX(), EDGEDIS);
-                        oa.setInterpolator(new DecelerateInterpolator());
-                        oa.setDuration(DURATION);
-                        oa.start();
-                    }
+                    attractToClosestSide(rawX, rawY);
                 }
                 break;
 
@@ -232,6 +219,60 @@ public class FloatingExpandButton extends FloatingActionButton {
         }
         // if drag then update session otherwise pass
         return !isNotDrag() || super.onTouchEvent(event);
+    }
+    public void setLocation(float x, float y){
+        setX(x);
+        setY(y);
+    }
+
+    public void setDragLocation(float x, float y){
+        // test if reached the edge: left up right down
+        if (x < 0) {
+            x = 0;
+        } else if (x > rangeWidth - getWidth()) {
+            x = rangeWidth - getWidth();
+        }
+        if (y < 0) {
+            y = 0;
+        } else if (y > rangeHeight - EDGEDIS- getHeight()) {
+            y = rangeHeight - getHeight() - EDGEDIS;
+        }
+        // Set the position of the button after dragging
+        setLocation(x,y);
+        // update the start position during dragging
+        startX = rawX;
+        startY = rawY;
+    }
+
+    public void attractToClosestSide(float x, float y){
+        if (x >= rangeWidth / 2) {
+            if (y <= rangeHeight / 2){
+                this.actionMenu.setStartAngle(NIGHT_DEG);
+                this.actionMenu.setEndAngle(ONE_HUNDRED_EIGHTY_DEG);
+            } else {
+                this.actionMenu.setStartAngle(MINUS_ONE_HUNDRED_EIGHTY_DEG);
+                this.actionMenu.setEndAngle(MINUS_NIGHT_DEG);
+            }
+            // attract right
+            animate().setInterpolator(new DecelerateInterpolator())
+                    .setDuration(DURATION)
+                    // keep 50 pixel away from the edge
+                    .xBy(rangeWidth - getWidth() - getX() - EDGEDIS)
+                    .start();
+        } else {
+            if (y <= rangeHeight / 2){
+                this.actionMenu.setStartAngle(NIGHT_DEG);
+                this.actionMenu.setEndAngle(ZERO_DEG);
+            } else {
+                this.actionMenu.setStartAngle(ZERO_DEG);
+                this.actionMenu.setEndAngle(MINUS_NIGHT_DEG);
+            }
+            // attract left
+            ObjectAnimator oa = ObjectAnimator.ofFloat(this, "x", getX(), EDGEDIS);
+            oa.setInterpolator(new DecelerateInterpolator());
+            oa.setDuration(DURATION);
+            oa.start();
+        }
     }
 
     @Override
