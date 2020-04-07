@@ -12,7 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.View.OnClickListener;
 import android.widget.FrameLayout.LayoutParams;
-import com.oguzdev.circularfloatingactionmenu.library.R.dimen;
+import org.mozilla.focus.R.dimen;
 import java.util.ArrayList;
 import java.util.Iterator;
 

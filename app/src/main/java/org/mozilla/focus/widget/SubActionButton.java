@@ -10,8 +10,8 @@ import android.graphics.drawable.Drawable;
 import android.os.Build.VERSION;
 import android.view.View;
 import android.widget.FrameLayout;
-import com.oguzdev.circularfloatingactionmenu.library.R.dimen;
-import com.oguzdev.circularfloatingactionmenu.library.R.drawable;
+import org.mozilla.focus.R.dimen;
+import org.mozilla.focus.R.drawable;
 
 public class SubActionButton extends FrameLayout {
   public static final int THEME_LIGHT = 0;

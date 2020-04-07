@@ -142,7 +142,6 @@ tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {
 }
 
 dependencies {
-    implementation 'com.oguzdev:CircularFloatingActionMenu:1.0.2'
     implementation "androidx.appcompat:appcompat:$support_libraries_version"
     implementation "androidx.browser:browser:$support_libraries_version"
     implementation "androidx.core:core-ktx:1.1.0"
