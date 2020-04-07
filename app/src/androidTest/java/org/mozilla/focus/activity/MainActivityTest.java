@@ -1,7 +1,6 @@
 package org.mozilla.focus.activity;
 
 
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
@@ -24,7 +23,6 @@ import org.hamcrest.TypeSafeMatcher;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -37,7 +35,6 @@ import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.action.ViewActions.closeSoftKeyboard;
 import static androidx.test.espresso.action.ViewActions.pressImeActionButton;
 import static androidx.test.espresso.action.ViewActions.replaceText;
-import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withContentDescription;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
@@ -53,7 +50,7 @@ public class MainActivityTest {
 
     @Before
     public void setup(){
-        //in case focus is being opeend for the first time (we need to skip user instructions)
+        //in case focus is being open for the first time (we need to skip user instructions)
         try{
             ViewInteraction appCompatButton = onView(
                     allOf(withId(R.id.skip), withText("Skip"),
@@ -185,34 +182,33 @@ public class MainActivityTest {
         delay(10000);
     }
 
-     @After
-     public void tearDown(){
-         //open pie menu
-         ViewInteraction floatingExpandButton = onView(
-                 allOf(withId(R.id.erase), withContentDescription("Erase browsing history"),
-                         childAtPosition(
-                                 allOf(withId(R.id.main_content),
-                                         childAtPosition(
-                                                 withId(R.id.browser_container),
-                                                 1)),
-                                 4),
-                         isDisplayed()));
-         floatingExpandButton.perform(click());
+    @After
+    public void tearDown(){
+        //open pie menu
+        ViewInteraction floatingExpandButton = onView(
+                allOf(withId(R.id.erase), withContentDescription("Erase browsing history"),
+                        childAtPosition(
+                                allOf(withId(R.id.main_content),
+                                        childAtPosition(
+                                                withId(R.id.browser_container),
+                                                1)),
+                                4),
+                        isDisplayed()));
+        floatingExpandButton.perform(click());
 
-         //erase browsing history, to go back to main screen
-         ViewInteraction subActionButton = onView(
-                 allOf(withId(R.id.erase),
-                         childAtPosition(
-                                 allOf(withId(android.R.id.content),
-                                         childAtPosition(
-                                                 withId(R.id.action_bar_root),
-                                                 1)),
-                                 1),
-                         isDisplayed()));
+        //erase browsing history, to go back to main screen
+        ViewInteraction subActionButton = onView(
+                allOf(withId(R.id.erase),
+                        childAtPosition(
+                                allOf(withId(android.R.id.content),
+                                        childAtPosition(
+                                                withId(R.id.action_bar_root),
+                                                1)),
+                                1),
+                        isDisplayed()));
          subActionButton.perform(click());
+    }
 
-
-     }
     public static ViewAction swipe() {
         return new GeneralSwipeAction(Swipe.FAST, GeneralLocation.BOTTOM_RIGHT,
                 GeneralLocation.TOP_CENTER, Press.FINGER);
