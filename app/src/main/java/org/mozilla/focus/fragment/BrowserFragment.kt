@@ -110,9 +110,9 @@ import kotlin.coroutines.CoroutineContext
  */
 @Suppress("LargeClass", "TooManyFunctions")
 class BrowserFragment : WebFragment(), LifecycleObserver, View.OnClickListener,
-    DownloadDialogFragment.DownloadDialogListener, View.OnLongClickListener,
-    BiometricAuthenticationDialogFragment.BiometricAuthenticationListener,
-    CoroutineScope {
+        DownloadDialogFragment.DownloadDialogListener, View.OnLongClickListener,
+        BiometricAuthenticationDialogFragment.BiometricAuthenticationListener,
+        CoroutineScope {
 
     private var pendingDownload: Download? = null
     private var backgroundTransitionGroup: TransitionDrawableGroup? = null
@@ -185,13 +185,15 @@ class BrowserFragment : WebFragment(), LifecycleObserver, View.OnClickListener,
         super.onCreate(savedInstanceState)
         ProcessLifecycleOwner.get().lifecycle.addObserver(this)
 
-        val sessionUUID = arguments!!.getString(ARGUMENT_SESSION_UUID) ?: throw IllegalAccessError("No session exists")
+        val sessionUUID = arguments!!.getString(ARGUMENT_SESSION_UUID)
+                ?: throw IllegalAccessError("No session exists")
 
-        session = requireComponents.sessionManager.findSessionById(sessionUUID) ?: Session("about:blank")
+        session = requireComponents.sessionManager.findSessionById(sessionUUID)
+                ?: Session("about:blank")
 
         findInPageCoordinator.matches.observe(
-            this,
-            Observer { matches -> updateFindInPageResult(matches!!.first, matches.second) })
+                this,
+                Observer { matches -> updateFindInPageResult(matches!!.first, matches.second) })
     }
 
     override fun onPause() {
@@ -260,17 +262,17 @@ class BrowserFragment : WebFragment(), LifecycleObserver, View.OnClickListener,
         findInPageResultTextView = view.findViewById(R.id.resultText)
 
         findInPageQuery!!.addTextChangedListener(
-            object : TextWatcher {
-                override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
+                object : TextWatcher {
+                    override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
 
-                override fun afterTextChanged(s: Editable) {}
+                    override fun afterTextChanged(s: Editable) {}
 
-                override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
-                    if (!TextUtils.isEmpty(s)) {
-                        getWebView()?.findAllAsync(s.toString())
+                    override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
+                        if (!TextUtils.isEmpty(s)) {
+                            getWebView()?.findAllAsync(s.toString())
+                        }
                     }
                 }
-            }
         )
         findInPageQuery!!.setOnClickListener(this)
         findInPageQuery!!.setOnEditorActionListener { _, actionId, _ ->
@@ -453,11 +455,11 @@ class BrowserFragment : WebFragment(), LifecycleObserver, View.OnClickListener,
             val shareButton = view.findViewById<ImageButton>(R.id.customtab_actionbutton)
             shareButton.visibility = View.VISIBLE
             shareButton.setImageDrawable(
-                DrawableUtils.loadAndTintDrawable(
-                    requireContext(),
-                    R.drawable.ic_share,
-                    textColor
-                )
+                    DrawableUtils.loadAndTintDrawable(
+                            requireContext(),
+                            R.drawable.ic_share,
+                            textColor
+                    )
             )
             shareButton.contentDescription = getString(R.string.menu_share)
             shareButton.setOnClickListener { shareCurrentUrl() }
@@ -505,9 +507,9 @@ class BrowserFragment : WebFragment(), LifecycleObserver, View.OnClickListener,
 
             override fun onHttpAuthRequest(callback: IWebView.HttpAuthCallback, host: String, realm: String) {
                 val builder = HttpAuthenticationDialogBuilder.Builder(activity, host, realm)
-                    .setOkListener { _, _, username, password -> callback.proceed(username, password) }
-                    .setCancelListener { callback.cancel() }
-                    .build()
+                        .setOkListener { _, _, username, password -> callback.proceed(username, password) }
+                        .setCancelListener { callback.cancel() }
+                        .build()
 
                 builder.createDialog()
                 builder.show()
@@ -530,7 +532,7 @@ class BrowserFragment : WebFragment(), LifecycleObserver, View.OnClickListener,
 
                     // Add view to video container and make it visible
                     val params = FrameLayout.LayoutParams(
-                        ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT
+                            ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT
                     )
                     videoContainer!!.addView(view, params)
                     videoContainer!!.visibility = View.VISIBLE
@@ -576,9 +578,9 @@ class BrowserFragment : WebFragment(), LifecycleObserver, View.OnClickListener,
 
             override fun onDownloadStart(download: Download) {
                 if (PackageManager.PERMISSION_GRANTED == ContextCompat.checkSelfPermission(
-                        requireContext(),
-                        Manifest.permission.WRITE_EXTERNAL_STORAGE
-                    )
+                                requireContext(),
+                                Manifest.permission.WRITE_EXTERNAL_STORAGE
+                        )
                 ) {
                     // Long press image displays its own dialog and we handle other download cases here
                     if (!isDownloadFromLongPressImage(download)) {
@@ -595,9 +597,9 @@ class BrowserFragment : WebFragment(), LifecycleObserver, View.OnClickListener,
                     pendingDownload = download
 
                     ActivityCompat.requestPermissions(
-                        activity,
-                        arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE),
-                        REQUEST_CODE_STORAGE_PERMISSION
+                            activity,
+                            arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE),
+                            REQUEST_CODE_STORAGE_PERMISSION
                     )
                 }
             }
@@ -623,11 +625,11 @@ class BrowserFragment : WebFragment(), LifecycleObserver, View.OnClickListener,
         val window = activity.window
         window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
         window.decorView.systemUiVisibility = (View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-            or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-            or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-            or View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
-            or View.SYSTEM_UI_FLAG_FULLSCREEN
-            or View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY)
+                or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                or View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                or View.SYSTEM_UI_FLAG_FULLSCREEN
+                or View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY)
     }
 
     /**
@@ -706,7 +708,9 @@ class BrowserFragment : WebFragment(), LifecycleObserver, View.OnClickListener,
         val crashReporterFragment = CrashReporterFragment.create()
 
         crashReporterFragment.onCloseTabPressed = { sendCrashReport ->
-            if (sendCrashReport) { CrashReporterWrapper.submitCrash(crash) }
+            if (sendCrashReport) {
+                CrashReporterWrapper.submitCrash(crash)
+            }
             erase()
             hideCrashReporter()
         }
@@ -759,16 +763,16 @@ class BrowserFragment : WebFragment(), LifecycleObserver, View.OnClickListener,
         }
 
         val addToHomescreenDialogFragment = AddToHomescreenDialogFragment.newInstance(
-            url,
-            title,
-            session.trackerBlockingEnabled,
-            session.shouldRequestDesktopSite
+                url,
+                title,
+                session.trackerBlockingEnabled,
+                session.shouldRequestDesktopSite
         )
 
         try {
             addToHomescreenDialogFragment.show(
-                fragmentManager,
-                AddToHomescreenDialogFragment.FRAGMENT_TAG
+                    fragmentManager,
+                    AddToHomescreenDialogFragment.FRAGMENT_TAG
             )
         } catch (e: IllegalStateException) {
             // It can happen that at this point in time the activity is already in the background
@@ -822,9 +826,9 @@ class BrowserFragment : WebFragment(), LifecycleObserver, View.OnClickListener,
         requireContext().registerReceiver(downloadBroadcastReceiver, filter)
 
         if (pendingDownload != null && PackageManager.PERMISSION_GRANTED == ContextCompat.checkSelfPermission(
-                requireContext(),
-                Manifest.permission.WRITE_EXTERNAL_STORAGE
-            )
+                        requireContext(),
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE
+                )
         ) {
             // There's a pending download (waiting for the storage permission) and now we have the
             // missing permission: Show the dialog to ask whether the user wants to actually proceed
@@ -870,8 +874,8 @@ class BrowserFragment : WebFragment(), LifecycleObserver, View.OnClickListener,
 
             try {
                 biometricController!!.biometricFragment!!.show(
-                    fragmentManager,
-                    BiometricAuthenticationDialogFragment.FRAGMENT_TAG
+                        fragmentManager,
+                        BiometricAuthenticationDialogFragment.FRAGMENT_TAG
                 )
             } catch (e: IllegalStateException) {
                 // It can happen that at this point in time the activity is already in the background
@@ -895,21 +899,21 @@ class BrowserFragment : WebFragment(), LifecycleObserver, View.OnClickListener,
             download.fileName
         else
             DownloadUtils.guessFileName(
-                download.contentDisposition,
-                null,
-                download.url,
-                download.mimeType
+                    download.contentDisposition,
+                    null,
+                    download.url,
+                    download.mimeType
             )
 
         val request = DownloadManager.Request(Uri.parse(download.url))
-            .addRequestHeader("Referer", url)
-            .setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
-            .setMimeType(download.mimeType)
+                .addRequestHeader("Referer", url)
+                .setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
+                .setMimeType(download.mimeType)
 
         if (!AppConstants.isGeckoBuild) {
             val cookie = CookieManager.getInstance().getCookie(download.url)
             request.addRequestHeader("Cookie", cookie)
-                .addRequestHeader("User-Agent", download.userAgent)
+                    .addRequestHeader("User-Agent", download.userAgent)
         }
 
         try {
@@ -1025,12 +1029,12 @@ class BrowserFragment : WebFragment(), LifecycleObserver, View.OnClickListener,
                     !crashReporterIsVisible() &&
                     requireComponents.sessionManager.findSessionById(session.id) != null) {
                 val urlFragment = UrlInputFragment
-                    .createWithSession(session, urlView!!)
+                        .createWithSession(session, urlView!!)
 
                 requireActivity().supportFragmentManager
-                    .beginTransaction()
-                    .add(R.id.container, urlFragment, UrlInputFragment.FRAGMENT_TAG)
-                    .commit()
+                        .beginTransaction()
+                        .add(R.id.container, urlFragment, UrlInputFragment.FRAGMENT_TAG)
+                        .commit()
             }
 
             R.id.erase -> {
@@ -1041,9 +1045,9 @@ class BrowserFragment : WebFragment(), LifecycleObserver, View.OnClickListener,
 
             R.id.tabs -> {
                 requireActivity().supportFragmentManager
-                    .beginTransaction()
-                    .add(R.id.container, SessionsSheetFragment(), SessionsSheetFragment.FRAGMENT_TAG)
-                    .commit()
+                        .beginTransaction()
+                        .add(R.id.container, SessionsSheetFragment(), SessionsSheetFragment.FRAGMENT_TAG)
+                        .commit()
 
                 TelemetryWrapper.openTabsTrayEvent()
             }
@@ -1098,9 +1102,9 @@ class BrowserFragment : WebFragment(), LifecycleObserver, View.OnClickListener,
                 val browsers = Browsers(requireContext(), url)
 
                 val defaultBrowser = browsers.defaultBrowser
-                    ?: throw IllegalStateException("<Open with \$Default> was shown when no default browser is set")
-                    // We only add this menu item when a third party default exists, in
-                    // BrowserMenuAdapter.initializeMenu()
+                        ?: throw IllegalStateException("<Open with \$Default> was shown when no default browser is set")
+                // We only add this menu item when a third party default exists, in
+                // BrowserMenuAdapter.initializeMenu()
 
                 val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
                 intent.setPackage(defaultBrowser.packageName)
@@ -1123,9 +1127,9 @@ class BrowserFragment : WebFragment(), LifecycleObserver, View.OnClickListener,
                     InstallFirefoxActivity.resolveAppStore(requireContext())
 
                 val fragment = OpenWithFragment.newInstance(
-                    apps,
-                    url,
-                    store
+                        apps,
+                        url,
+                        store
                 )
                 fragment.show(fragmentManager!!, OpenWithFragment.FRAGMENT_TAG)
 
@@ -1156,10 +1160,16 @@ class BrowserFragment : WebFragment(), LifecycleObserver, View.OnClickListener,
 
                 val url = webView.url
                 val title = webView.title
-                showAddToHomescreenDialog(url, title)
+                if (url.equals("about:blank")) {
+                    showAddToHomescreenDialog(url, "about:blank")
+                } else {
+                    showAddToHomescreenDialog(url, title)
+                }
             }
 
-            R.id.security_info -> if (!crashReporterIsVisible()) { showSecurityPopUp() }
+            R.id.security_info -> if (!crashReporterIsVisible()) {
+                showSecurityPopUp()
+            }
 
             R.id.report_site_issue -> {
                 val reportUrl = String.format(SupportUtils.REPORT_SITE_ISSUE_URL, url)
@@ -1240,26 +1250,26 @@ class BrowserFragment : WebFragment(), LifecycleObserver, View.OnClickListener,
         webView?.setBlockingEnabled(enabled)
 
         statusBar!!.setBackgroundResource(if (enabled)
-                R.drawable.animated_background
-            else
-                R.drawable.animated_background_disabled
+            R.drawable.animated_background
+        else
+            R.drawable.animated_background_disabled
         )
 
         backgroundTransitionGroup = if (!session.isCustomTabSession()) {
             // Only update the toolbar background if this is not a custom tab. Custom tabs set their
             // own color and we do not want to override this here.
             urlBar!!.setBackgroundResource(if (enabled)
-                    R.drawable.animated_background
-                else
-                    R.drawable.animated_background_disabled)
+                R.drawable.animated_background
+            else
+                R.drawable.animated_background_disabled)
 
             TransitionDrawableGroup(
-                urlBar!!.background as TransitionDrawable,
-                statusBar!!.background as TransitionDrawable
+                    urlBar!!.background as TransitionDrawable,
+                    statusBar!!.background as TransitionDrawable
             )
         } else {
             TransitionDrawableGroup(
-                statusBar!!.background as TransitionDrawable
+                    statusBar!!.background as TransitionDrawable
             )
         }
     }
@@ -1267,10 +1277,10 @@ class BrowserFragment : WebFragment(), LifecycleObserver, View.OnClickListener,
     fun setShouldRequestDesktop(enabled: Boolean) {
         if (enabled) {
             PreferenceManager.getDefaultSharedPreferences(context).edit()
-                .putBoolean(
-                    requireContext().getString(R.string.has_requested_desktop),
-                    true
-                ).apply()
+                    .putBoolean(
+                            requireContext().getString(R.string.has_requested_desktop),
+                            true
+                    ).apply()
         }
 
         getWebView()?.setRequestDesktop(enabled)
@@ -1342,13 +1352,13 @@ class BrowserFragment : WebFragment(), LifecycleObserver, View.OnClickListener,
 
     override fun applyLocale() {
         activity?.supportFragmentManager
-            ?.beginTransaction()
-            ?.replace(
-                R.id.container,
-                BrowserFragment.createForSession(requireNotNull(session)),
-                BrowserFragment.FRAGMENT_TAG
-            )
-            ?.commit()
+                ?.beginTransaction()
+                ?.replace(
+                        R.id.container,
+                        BrowserFragment.createForSession(requireNotNull(session)),
+                        BrowserFragment.FRAGMENT_TAG
+                )
+                ?.commit()
     }
 
     private fun updateSecurityIcon(session: Session, securityInfo: Session.SecurityInfo = session.securityInfo) {
@@ -1389,14 +1399,14 @@ class BrowserFragment : WebFragment(), LifecycleObserver, View.OnClickListener,
             }
 
             val visibleString = String.format(
-                context.getString(R.string.find_in_page_result),
-                actualActiveMatchOrdinal,
-                numberOfMatches)
+                    context.getString(R.string.find_in_page_result),
+                    actualActiveMatchOrdinal,
+                    numberOfMatches)
 
             val accessibleString = String.format(
-                context.getString(R.string.find_in_page_result),
-                actualActiveMatchOrdinal,
-                numberOfMatches)
+                    context.getString(R.string.find_in_page_result),
+                    actualActiveMatchOrdinal,
+                    numberOfMatches)
 
             findInPageResultTextView!!.text = visibleString
             findInPageResultTextView!!.contentDescription = accessibleString
@@ -1451,7 +1461,7 @@ class BrowserFragment : WebFragment(), LifecycleObserver, View.OnClickListener,
             }
 
             val isException =
-                host != null && ExceptionDomains.load(requireContext()).contains(host)
+                    host != null && ExceptionDomains.load(requireContext()).contains(host)
             getWebView()?.setBlockingEnabled(!isException)
 
             urlView?.text = UrlUtils.stripUserInfo(url)
