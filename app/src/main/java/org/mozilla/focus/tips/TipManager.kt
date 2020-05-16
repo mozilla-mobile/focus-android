@@ -228,6 +228,7 @@ object TipManager {
 
         if (!listInitialized || currentLocale != locale) {
             locale = currentLocale
+            listOfTips.clear()
             populateListOfTips(context)
             listInitialized = true
         }
