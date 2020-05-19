@@ -9,13 +9,10 @@ import android.os.Bundle
 import androidx.preference.Preference
 import mozilla.components.browser.session.Session
 import org.mozilla.focus.R
-import org.mozilla.focus.activity.InfoActivity
+import org.mozilla.focus.browser.LocalizedContent
 import org.mozilla.focus.ext.components
 import org.mozilla.focus.telemetry.TelemetryWrapper
-import org.mozilla.focus.utils.AppConstants
-import org.mozilla.focus.utils.SupportUtils
-import org.mozilla.focus.utils.homeScreenTipsExperimentDescriptor
-import org.mozilla.focus.utils.isInExperiment
+import org.mozilla.focus.utils.*
 
 class MozillaSettingsFragment : BaseSettingsFragment(),
     SharedPreferences.OnSharedPreferenceChangeListener {
@@ -51,17 +48,19 @@ class MozillaSettingsFragment : BaseSettingsFragment(),
 
         when (preference.key) {
             resources.getString(R.string.pref_key_about) -> run {
-                val intent = InfoActivity.getAboutIntent(requireContext())
-                startActivity(intent)
+                val session = createTab(LocalizedContent.URL_ABOUT, source = Session.Source.MENU)
+                activity.components.sessionManager.add(session, true)
+                activity.finish()
             }
             resources.getString(R.string.pref_key_help) -> run {
-                val session = Session(SupportUtils.HELP_URL, source = Session.Source.MENU)
+                val session = createTab(SupportUtils.HELP_URL, source = Session.Source.MENU)
                 activity.components.sessionManager.add(session, true)
                 activity.finish()
             }
             resources.getString(R.string.pref_key_rights) -> run {
-                val intent = InfoActivity.getRightsIntent(requireContext())
-                startActivity(intent)
+                val session = createTab(LocalizedContent.URL_RIGHTS, source = Session.Source.MENU)
+                activity.components.sessionManager.add(session, true)
+                activity.finish()
             }
             resources.getString(R.string.pref_key_privacy_notice) -> {
                 val url = if (AppConstants.isKlarBuild)
@@ -69,7 +68,7 @@ class MozillaSettingsFragment : BaseSettingsFragment(),
                 else
                     SupportUtils.PRIVACY_NOTICE_URL
 
-                val session = Session(url, source = Session.Source.MENU)
+                val session = createTab(url, source = Session.Source.MENU)
                 activity.components.sessionManager.add(session, true)
                 activity.finish()
             }

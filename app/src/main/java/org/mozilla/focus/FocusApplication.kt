@@ -20,6 +20,8 @@ import mozilla.components.service.fretboard.source.kinto.KintoExperimentSource
 import mozilla.components.service.fretboard.storage.flatfile.FlatFileExperimentStorage
 import mozilla.components.support.base.log.Log
 import mozilla.components.support.base.log.sink.AndroidLogSink
+import mozilla.components.support.ktx.android.content.isMainProcess
+import org.mozilla.focus.engine.EngineSharedPreferencesListener
 import org.mozilla.focus.locale.LocaleAwareApplication
 import org.mozilla.focus.session.NotificationSessionObserver
 import org.mozilla.focus.session.VisibilityLifeCycleCallback
@@ -34,7 +36,6 @@ import org.mozilla.focus.utils.EXPERIMENTS_COLLECTION_NAME
 import org.mozilla.focus.utils.EXPERIMENTS_JSON_FILENAME
 import org.mozilla.focus.utils.StethoWrapper
 import org.mozilla.focus.web.CleanupSessionObserver
-import org.mozilla.focus.web.WebViewProvider
 import java.io.File
 import kotlin.coroutines.CoroutineContext
 
@@ -45,7 +46,7 @@ class FocusApplication : LocaleAwareApplication(), CoroutineScope {
     override val coroutineContext: CoroutineContext
         get() = job + Dispatchers.Main
 
-    val components: Components by lazy { Components() }
+    val components: Components by lazy { Components(this) }
 
     var visibilityLifeCycleCallback: VisibilityLifeCycleCallback? = null
         private set
@@ -53,38 +54,43 @@ class FocusApplication : LocaleAwareApplication(), CoroutineScope {
     override fun onCreate() {
         super.onCreate()
 
-        Log.addSink(AndroidLogSink("Focus"))
-        CrashReporterWrapper.init(this)
+        // TODO: Figure out what to do in child processes..
+        if (isMainProcess()) {
+            Log.addSink(AndroidLogSink("Focus"))
+            CrashReporterWrapper.init(this)
 
-        StethoWrapper.init(this)
+            StethoWrapper.init(this)
 
-        PreferenceManager.setDefaultValues(this, R.xml.settings, false)
+            PreferenceManager.setDefaultValues(this, R.xml.settings, false)
 
-        TelemetryWrapper.init(this)
-        loadExperiments()
+            TelemetryWrapper.init(this)
+            loadExperiments()
 
-        enableStrictMode()
+            enableStrictMode()
 
-        components.searchEngineManager.apply {
-            launch(IO) {
-                loadAsync(this@FocusApplication).await()
+            components.searchEngineManager.apply {
+                launch(IO) {
+                    loadAsync(this@FocusApplication).await()
+                }
+
+                registerForLocaleUpdates(this@FocusApplication)
             }
 
-            registerForLocaleUpdates(this@FocusApplication)
+            AdjustHelper.setupAdjustIfNeeded(this@FocusApplication)
+
+            visibilityLifeCycleCallback = VisibilityLifeCycleCallback(this@FocusApplication)
+            registerActivityLifecycleCallbacks(visibilityLifeCycleCallback)
+
+            components.sessionManager.apply {
+                register(NotificationSessionObserver(this@FocusApplication))
+                register(TelemetrySessionObserver())
+                register(CleanupSessionObserver(this@FocusApplication))
+            }
+
+            launch(IO) { fretboard.updateExperiments() }
+
+            components.engine.warmUp()
         }
-
-        AdjustHelper.setupAdjustIfNeeded(this@FocusApplication)
-
-        visibilityLifeCycleCallback = VisibilityLifeCycleCallback(this@FocusApplication)
-        registerActivityLifecycleCallbacks(visibilityLifeCycleCallback)
-
-        components.sessionManager.apply {
-            register(NotificationSessionObserver(this@FocusApplication))
-            register(TelemetrySessionObserver())
-            register(CleanupSessionObserver(this@FocusApplication))
-        }
-
-        launch(IO) { fretboard.updateExperiments() }
     }
 
     private fun loadExperiments() {
@@ -100,7 +106,6 @@ class FocusApplication : LocaleAwareApplication(), CoroutineScope {
             })
         fretboard.loadExperiments()
         TelemetryWrapper.recordActiveExperiments(this)
-        WebViewProvider.determineEngine()
     }
 
     private fun enableStrictMode() {

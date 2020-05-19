@@ -19,7 +19,6 @@ import android.view.ViewGroup
 import android.widget.EditText
 import org.mozilla.focus.R
 import org.mozilla.focus.R.string.action_option_add_search_engine
-import org.mozilla.focus.activity.InfoActivity
 import org.mozilla.focus.search.CustomSearchEngineStore
 import org.mozilla.focus.search.ManualAddSearchEnginePreference
 import org.mozilla.focus.telemetry.TelemetryWrapper
@@ -84,12 +83,14 @@ class ManualAddSearchEngineSettingsFragment : BaseSettingsFragment() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         val openLearnMore = {
+            /*
             val url = SupportUtils.getSumoURLForTopic(context!!,
                     SupportUtils.SumoTopic.ADD_SEARCH_ENGINE)
             val intent = InfoActivity.getIntentFor(context!!,
                     url, getString(action_option_add_search_engine))
             startActivity(intent)
             TelemetryWrapper.addSearchEngineLearnMoreEvent()
+             */
         }
 
         val saveSearchEngine = {

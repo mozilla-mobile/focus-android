@@ -12,10 +12,12 @@ import android.util.AttributeSet
 import android.view.View
 import mozilla.components.browser.session.Session
 import mozilla.components.browser.session.SessionManager
+import mozilla.components.concept.engine.EngineView
 import mozilla.components.lib.crash.Crash
 import mozilla.components.support.utils.SafeIntent
 import org.mozilla.focus.R
 import org.mozilla.focus.biometrics.Biometrics
+import org.mozilla.focus.engine.EngineSharedPreferencesListener
 import org.mozilla.focus.ext.components
 import org.mozilla.focus.fragment.BrowserFragment
 import org.mozilla.focus.fragment.FirstrunFragment
@@ -31,8 +33,6 @@ import org.mozilla.focus.utils.ExperimentsSyncService
 import org.mozilla.focus.utils.Settings
 import org.mozilla.focus.utils.SupportUtils
 import org.mozilla.focus.utils.ViewUtils
-import org.mozilla.focus.web.IWebView
-import org.mozilla.focus.web.WebViewProvider
 
 @Suppress("TooManyFunctions")
 open class MainActivity : LocaleAwareAppCompatActivity() {
@@ -72,7 +72,10 @@ open class MainActivity : LocaleAwareAppCompatActivity() {
 
         registerSessionObserver()
 
-        WebViewProvider.preload(this)
+        // Did before: sendTelemetryEventOnSwitchToGecko(context)
+        // WebViewProvider.preload(this)
+
+
 
         val launchCount = Settings.getInstance(this).getAppLaunchCount()
         PreferenceManager.getDefaultSharedPreferences(this)
@@ -89,24 +92,18 @@ open class MainActivity : LocaleAwareAppCompatActivity() {
 
             override fun onAllSessionsRemoved() {
                 showUrlInputScreen()
-
-                WebViewProvider.performNewBrowserSessionCleanup()
             }
 
             override fun onSessionRemoved(session: Session) {
                 previousSessionCount = components.sessionManager.sessions.count()
                 if (!isCustomTabMode && components.sessionManager.sessions.isEmpty()) {
                     showUrlInputScreen()
-
-                    WebViewProvider.performNewBrowserSessionCleanup()
                 }
             }
         }, owner = this)
 
         if (!isCustomTabMode && components.sessionManager.sessions.isEmpty()) {
             showUrlInputScreen()
-
-            WebViewProvider.performNewBrowserSessionCleanup()
         } else {
             showBrowserScreenForCurrentSession()
         }
@@ -129,10 +126,6 @@ open class MainActivity : LocaleAwareAppCompatActivity() {
     }
 
     override fun onPause() {
-        if (isFinishing) {
-            WebViewProvider.performCleanup(this)
-        }
-
         val fragmentManager = supportFragmentManager
         val browserFragment =
             fragmentManager.findFragmentByTag(BrowserFragment.FRAGMENT_TAG) as BrowserFragment?
@@ -281,9 +274,9 @@ open class MainActivity : LocaleAwareAppCompatActivity() {
     }
 
     override fun onCreateView(name: String, context: Context, attrs: AttributeSet): View? {
-        return if (name == IWebView::class.java.name) {
+        return if (name == EngineView::class.java.name) {
             // Inject our implementation of IWebView from the WebViewProvider.
-            WebViewProvider.create(this, attrs)
+            components.engine.createView(context, attrs).asView()
         } else super.onCreateView(name, context, attrs)
     }
 

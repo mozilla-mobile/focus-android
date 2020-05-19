@@ -15,9 +15,9 @@ import mozilla.components.feature.customtabs.isCustomTabIntent
 import mozilla.components.support.utils.SafeIntent
 import mozilla.components.support.utils.WebURLFinder
 import org.mozilla.focus.activity.TextActionActivity
-import org.mozilla.focus.ext.shouldRequestDesktopSite
 import org.mozilla.focus.shortcut.HomeScreen
 import org.mozilla.focus.utils.UrlUtils
+import org.mozilla.focus.utils.createTab
 
 /**
  * Implementation moved from Focus SessionManager. To be replaced with SessionIntentProcessor from feature-session
@@ -120,13 +120,13 @@ class IntentProcessor(
     }
 
     private fun createSession(source: Session.Source, url: String): Session {
-        return Session(url, source = source).apply {
+        return createTab(url, source = source).apply {
             sessionManager.add(this, selected = true)
         }
     }
 
     private fun createSearchSession(source: Session.Source, url: String, searchTerms: String): Session {
-        return Session(url, source = source).apply {
+        return createTab(url, source = source).apply {
             this.searchTerms = searchTerms
             sessionManager.add(this, selected = true)
         }
@@ -134,12 +134,12 @@ class IntentProcessor(
 
     private fun createSession(source: Session.Source, intent: SafeIntent, url: String): Session {
         return if (isCustomTabIntent(intent.unsafe)) {
-            Session(url, source = Session.Source.CUSTOM_TAB).apply {
+            createTab(url, source = Session.Source.CUSTOM_TAB).apply {
                 customTabConfig = createCustomTabConfigFromIntent(intent.unsafe, context.resources)
                 sessionManager.add(this, selected = false)
             }
         } else {
-            Session(url, source = source).apply {
+            createTab(url, source = source).apply {
                 sessionManager.add(this, selected = true)
             }
         }
@@ -153,14 +153,14 @@ class IntentProcessor(
         requestDesktop: Boolean
     ): Session {
         val session = if (isCustomTabIntent(intent)) {
-            Session(url, source = Session.Source.CUSTOM_TAB).apply {
+            createTab(url, source = Session.Source.CUSTOM_TAB).apply {
                 customTabConfig = createCustomTabConfigFromIntent(intent.unsafe, context.resources)
             }
         } else {
-            Session(url, source = source)
+            createTab(url, source = source)
         }
         session.trackerBlockingEnabled = blockingEnabled
-        session.shouldRequestDesktopSite = requestDesktop
+        session.desktopMode = requestDesktop
 
         sessionManager.add(session, selected = !session.isCustomTabSession())
 

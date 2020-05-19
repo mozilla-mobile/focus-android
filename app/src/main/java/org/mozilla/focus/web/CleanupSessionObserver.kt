@@ -9,17 +9,18 @@ import mozilla.components.browser.session.Session
 import mozilla.components.browser.session.SessionManager
 import org.mozilla.focus.ext.components
 
+// TODO: Maybe do this as middleware?
 class CleanupSessionObserver(
     private val context: Context
 ) : SessionManager.Observer {
 
     override fun onSessionRemoved(session: Session) {
         if (context.components.sessionManager.sessions.isEmpty()) {
-            WebViewProvider.performCleanup(context)
+            // WebViewProvider.performCleanup(context)
         }
     }
 
     override fun onAllSessionsRemoved() {
-        WebViewProvider.performCleanup(context)
+        // WebViewProvider.performCleanup(context)
     }
 }

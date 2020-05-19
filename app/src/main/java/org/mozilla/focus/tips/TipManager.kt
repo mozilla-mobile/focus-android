@@ -25,11 +25,7 @@ import org.mozilla.focus.ext.components
 import org.mozilla.focus.locale.LocaleAwareAppCompatActivity
 import org.mozilla.focus.locale.LocaleManager
 import org.mozilla.focus.telemetry.TelemetryWrapper
-import org.mozilla.focus.utils.Browsers
-import org.mozilla.focus.utils.Settings
-import org.mozilla.focus.utils.SupportUtils
-import org.mozilla.focus.utils.homeScreenTipsExperimentDescriptor
-import org.mozilla.focus.utils.isInExperiment
+import org.mozilla.focus.utils.*
 import java.util.Locale
 import java.util.Random
 
@@ -44,7 +40,7 @@ class Tip(val id: Int, val text: String, val shouldDisplay: () -> Boolean, val d
             val url = SupportUtils.getSumoURLForTopic(context, SupportUtils.SumoTopic.ALLOWLIST)
 
             val deepLink = {
-                val session = Session(url, source = Session.Source.MENU)
+                val session = createTab(url, source = Session.Source.MENU)
                 context.components.sessionManager.add(session, selected = true)
                 TelemetryWrapper.pressTipEvent(id)
             }
@@ -76,7 +72,7 @@ class Tip(val id: Int, val text: String, val shouldDisplay: () -> Boolean, val d
                     "https://support.mozilla.org/en-US/kb/add-web-page-shortcuts-your-home-screen"
 
             val deepLinkAddToHomescreen = {
-                val session = Session(homescreenURL, source = Session.Source.MENU)
+                val session = createTab(homescreenURL, source = Session.Source.MENU)
                 context.components.sessionManager.add(session, selected = true)
                 TelemetryWrapper.pressTipEvent(id)
             }
@@ -123,7 +119,7 @@ class Tip(val id: Int, val text: String, val shouldDisplay: () -> Boolean, val d
             }
 
             val deepLinkAutocompleteUrl = {
-                val session = Session(autocompleteURL, source = Session.Source.MENU)
+                val session = createTab(autocompleteURL, source = Session.Source.MENU)
                 context.components.sessionManager.add(session, selected = true)
                 TelemetryWrapper.pressTipEvent(id)
             }
@@ -142,7 +138,7 @@ class Tip(val id: Int, val text: String, val shouldDisplay: () -> Boolean, val d
             }
 
             val deepLinkOpenInNewTab = {
-                val session = Session(newTabURL, source = Session.Source.MENU)
+                val session = createTab(newTabURL, source = Session.Source.MENU)
                 context.components.sessionManager.add(session, selected = true)
                 TelemetryWrapper.pressTipEvent(id)
             }
@@ -161,7 +157,7 @@ class Tip(val id: Int, val text: String, val shouldDisplay: () -> Boolean, val d
             }
 
             val deepLinkRequestDesktop = {
-                val session = Session(requestDesktopURL, source = Session.Source.MENU)
+                val session = createTab(requestDesktopURL, source = Session.Source.MENU)
                 context.components.sessionManager.add(session, selected = true)
                 TelemetryWrapper.pressTipEvent(id)
             }

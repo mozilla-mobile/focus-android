@@ -6,29 +6,62 @@ package org.mozilla.focus
 
 import android.content.Context
 import android.util.AttributeSet
+import android.util.Log
 import mozilla.components.browser.search.SearchEngineManager
 import mozilla.components.browser.search.provider.AssetsSearchEngineProvider
 import mozilla.components.browser.search.provider.localization.LocaleSearchLocalizationProvider
 import mozilla.components.browser.session.Session
 import mozilla.components.browser.session.SessionManager
+import mozilla.components.browser.state.store.BrowserStore
 import mozilla.components.concept.engine.DefaultSettings
 import mozilla.components.concept.engine.Engine
 import mozilla.components.concept.engine.EngineSession
 import mozilla.components.concept.engine.EngineSessionState
 import mozilla.components.concept.engine.EngineView
-import mozilla.components.concept.engine.Settings
 import mozilla.components.concept.engine.utils.EngineVersion
+import mozilla.components.feature.contextmenu.ContextMenuUseCases
+import mozilla.components.feature.session.SessionUseCases
+import mozilla.components.feature.session.SettingsUseCases
+import mozilla.components.feature.tabs.TabsUseCases
 import org.json.JSONObject
+import org.mozilla.focus.components.EngineProvider
+import org.mozilla.focus.engine.LocalizedContentInterceptor
+import org.mozilla.focus.ext.requireComponents
 import org.mozilla.focus.search.BingSearchEngineFilter
 import org.mozilla.focus.search.CustomSearchEngineProvider
 import org.mozilla.focus.search.HiddenSearchEngineFilter
+import org.mozilla.focus.utils.Settings
 
 /**
  * Helper object for lazily initializing components.
  */
-class Components {
+class Components(
+    context: Context
+) {
+    val engineDefaultSettings by lazy {
+        DefaultSettings(
+            requestInterceptor = LocalizedContentInterceptor(context),
+            trackingProtectionPolicy = Settings.getInstance(context).createTrackingProtectionPolicy()
+        )
+    }
+
+    // TODO: Add actual settings
+    val engine: Engine by lazy {
+        EngineProvider.createEngine(context, engineDefaultSettings)
+    }
+
+    val settingsUseCases by lazy { SettingsUseCases(engine.settings, sessionManager) }
+
+    val store: BrowserStore by lazy { BrowserStore() }
+
+    val sessionUseCases: SessionUseCases by lazy { SessionUseCases(sessionManager) }
+
+    val tabsUseCases: TabsUseCases by lazy { TabsUseCases(sessionManager) }
+
+    val contextMenuUseCases: ContextMenuUseCases by lazy { ContextMenuUseCases(sessionManager, store) }
+
     val sessionManager by lazy {
-        SessionManager(DummyEngine()).apply {
+        SessionManager(engine, store).apply {
             register(SessionSetupObserver())
         }
     }
@@ -42,35 +75,6 @@ class Components {
         val customProvider = CustomSearchEngineProvider()
 
         SearchEngineManager(listOf(assetsProvider, customProvider))
-    }
-}
-
-/**
- * We are not using an "Engine" implementation yet. Therefore we create this dummy that we pass to
- * the <code>SessionManager</code> for now.
- */
-private class DummyEngine : Engine {
-    override val version: EngineVersion = EngineVersion(1, 0, 0)
-    override val settings: Settings = DefaultSettings()
-
-    override fun createSession(private: Boolean, contextId: String?): EngineSession {
-        throw NotImplementedError()
-    }
-
-    override fun createSessionState(json: JSONObject): EngineSessionState {
-        throw NotImplementedError()
-    }
-
-    override fun createView(context: Context, attrs: AttributeSet?): EngineView {
-        throw NotImplementedError()
-    }
-
-    override fun name(): String {
-        throw NotImplementedError()
-    }
-
-    override fun speculativeConnect(url: String) {
-        throw NotImplementedError()
     }
 }
 
