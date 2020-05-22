@@ -7,7 +7,6 @@ package org.mozilla.focus.utils
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.ObsoleteCoroutinesApi
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.channels.ReceiveChannel
 import kotlinx.coroutines.channels.consumeEach
@@ -22,8 +21,7 @@ import kotlinx.coroutines.launch
  * @param channel the channel to debounce
  * @return a throttled channel
  */
-@ObsoleteCoroutinesApi
-@ExperimentalCoroutinesApi
+@OptIn(ExperimentalCoroutinesApi::class)
 fun <T> CoroutineScope.debounce(time: Long, channel: ReceiveChannel<T>): ReceiveChannel<T> =
     produce(coroutineContext, Channel.CONFLATED) {
         var job: Job? = null
