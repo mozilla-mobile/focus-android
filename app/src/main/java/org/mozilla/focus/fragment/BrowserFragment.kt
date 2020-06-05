@@ -38,7 +38,6 @@ import mozilla.components.browser.session.SessionManager
 import mozilla.components.browser.state.selector.findTab
 import mozilla.components.concept.engine.Engine
 import mozilla.components.concept.engine.EngineView
-import mozilla.components.concept.engine.content.blocking.Tracker
 import mozilla.components.feature.contextmenu.ContextMenuCandidate
 import mozilla.components.feature.contextmenu.ContextMenuFeature
 import mozilla.components.feature.findinpage.FindInPageFeature
@@ -131,9 +130,6 @@ class BrowserFragment : LocaleAwareFragment(), LifecycleObserver, View.OnClickLi
      */
     private var browserContainer: View? = null
 
-    // TODO: Fullscreen feature
-    // private var fullscreenCallback: IWebView.FullscreenCallback? = null
-
     private var manager: DownloadManager? = null
 
     private var downloadBroadcastReceiver: DownloadBroadcastReceiver? = null
@@ -165,8 +161,6 @@ class BrowserFragment : LocaleAwareFragment(), LifecycleObserver, View.OnClickLi
         val sessionUUID = arguments!!.getString(ARGUMENT_SESSION_UUID) ?: throw IllegalAccessError("No session exists")
 
         session = requireComponents.sessionManager.findSessionById(sessionUUID) ?: createTab("about:blank")
-
-        Log.w("SKDBG", "Creating fragment for session: $sessionUUID")
 
         findInPageCoordinator.matches.observe(
             this,
@@ -244,12 +238,6 @@ class BrowserFragment : LocaleAwareFragment(), LifecycleObserver, View.OnClickLi
         } else {
             initialiseNormalBrowserUi(view)
         }
-
-        // Pre-calculate the height of the find in page UI so that we can accurately add padding
-        // to the WebView when we present it.
-
-        // findInPageView!!.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED)
-        // findInPageViewHeight = findInPageView!!.measuredHeight
 
         // TODO: Update correctly somewhere...
         setBlockingUI(true)
@@ -543,132 +531,6 @@ class BrowserFragment : LocaleAwareFragment(), LifecycleObserver, View.OnClickLi
             outState.putParcelable(RESTORE_KEY_DOWNLOAD, pendingDownload)
         }
     }
-
-    /*
-    @Suppress("ComplexMethod")
-    override fun createCallback(): IWebView.Callback {
-        return SessionCallbackProxy(session, object : IWebView.Callback {
-            override fun onPageStarted(url: String) {}
-
-            override fun onPageFinished(isSecure: Boolean) {}
-
-            override fun onSecurityChanged(isSecure: Boolean, host: String, organization: String) {}
-
-            override fun onURLChanged(url: String) {}
-
-            override fun onTitleChanged(title: String) {}
-
-            override fun onRequest(isTriggeredByUserGesture: Boolean) {}
-
-            override fun onProgress(progress: Int) {}
-
-            override fun countBlockedTracker() {}
-
-            override fun resetBlockedTrackers() {}
-
-            override fun onBlockingStateChanged(isBlockingEnabled: Boolean) {}
-
-            override fun onHttpAuthRequest(callback: IWebView.HttpAuthCallback, host: String, realm: String) {
-                val builder = HttpAuthenticationDialogBuilder.Builder(activity, host, realm)
-                    .setOkListener { _, _, username, password -> callback.proceed(username, password) }
-                    .setCancelListener { callback.cancel() }
-                    .build()
-
-                builder.createDialog()
-                builder.show()
-            }
-
-            override fun onRequestDesktopStateChanged(shouldRequestDesktop: Boolean) {}
-
-            override fun onLongPress(hitTarget: IWebView.HitTarget) {
-                WebContextMenu.show(requireActivity(), this, hitTarget, session)
-            }
-
-            override fun onEnterFullScreen(callback: IWebView.FullscreenCallback, view: View?) {
-                fullscreenCallback = callback
-                isFullscreen = true
-
-                // View is passed in as null for GeckoView fullscreen
-                if (view != null) {
-                    // Hide browser UI and web content
-                    browserContainer!!.visibility = View.INVISIBLE
-
-                    // Add view to video container and make it visible
-                    val params = FrameLayout.LayoutParams(
-                        ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT
-                    )
-                    videoContainer!!.addView(view, params)
-                    videoContainer!!.visibility = View.VISIBLE
-
-                    // Switch to immersive mode: Hide system bars other UI controls
-                    switchToImmersiveMode()
-                } else {
-                    appbar?.setExpanded(false, true)
-                    (getWebView() as? NestedGeckoView)?.isNestedScrollingEnabled = false
-                    // Hide status bar when entering fullscreen with GeckoView
-                    statusBar!!.visibility = View.GONE
-                    // Switch to immersive mode: Hide system bars other UI controls
-                    switchToImmersiveMode()
-                }
-            }
-
-            override fun onExitFullScreen() {
-                if (AppConstants.isGeckoBuild) {
-                    appbar?.setExpanded(true, true)
-                    (getWebView() as? NestedGeckoView)?.isNestedScrollingEnabled = true
-                }
-
-                isFullscreen = false
-
-                // Remove custom video views and hide container
-                videoContainer!!.removeAllViews()
-                videoContainer!!.visibility = View.GONE
-
-                // Show browser UI and web content again
-                browserContainer!!.visibility = View.VISIBLE
-
-                // Show status bar again (hidden in GeckoView versions)
-                statusBar!!.visibility = View.VISIBLE
-
-                exitImmersiveModeIfNeeded()
-
-                // Notify renderer that we left fullscreen mode.
-                if (fullscreenCallback != null) {
-                    fullscreenCallback!!.fullScreenExited()
-                    fullscreenCallback = null
-                }
-            }
-
-            override fun onDownloadStart(download: Download) {
-                if (PackageManager.PERMISSION_GRANTED == ContextCompat.checkSelfPermission(
-                        requireContext(),
-                        Manifest.permission.WRITE_EXTERNAL_STORAGE
-                    )
-                ) {
-                    // Long press image displays its own dialog and we handle other download cases here
-                    if (!isDownloadFromLongPressImage(download)) {
-                        showDownloadPromptDialog(download)
-                    } else {
-                        // Download dialog has already been shown from long press on image. Proceed with download.
-                        queueDownload(download)
-                    }
-                } else {
-                    // We do not have the permission to write to the external storage. Request the permission and start
-                    // the  download from onRequestPermissionsResult().
-                    val activity = activity ?: return
-
-                    pendingDownload = download
-
-                    ActivityCompat.requestPermissions(
-                        activity,
-                        arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE),
-                        REQUEST_CODE_STORAGE_PERMISSION
-                    )
-                }
-            }
-        })
-    }
-     */
 
     /**
      * Hide system bars. They can be revealed temporarily with system gestures, such as swiping from
@@ -1111,7 +973,7 @@ class BrowserFragment : LocaleAwareFragment(), LifecycleObserver, View.OnClickLi
 
                 requireComponents.sessionManager.select(session)
 
-                // TODOL Switching from custom tab to browser
+                // TODO: Switching from custom tab to browser
                 /*
                 val webView = getWebView()
                 webView?.releaseGeckoSession()
@@ -1263,7 +1125,6 @@ class BrowserFragment : LocaleAwareFragment(), LifecycleObserver, View.OnClickLi
                 ).apply()
         }
 
-        // getWebView()?.setRequestDesktop(enabled)
         requireComponents.sessionUseCases.requestDesktopSite(enabled, session)
     }
 
@@ -1312,29 +1173,6 @@ class BrowserFragment : LocaleAwareFragment(), LifecycleObserver, View.OnClickLi
             )
             ?.commit()
     }
-
-    /*
-    private fun updateSecurityIcon(session: Session, securityInfo: Session.SecurityInfo = session.securityInfo) {
-        if (crashReporterIsVisible()) return
-        val securityView = securityView ?: return
-
-        if (!session.loading) {
-            if (securityInfo.secure) {
-                securityView.setImageResource(R.drawable.ic_lock)
-            } else {
-                if (URLUtil.isHttpUrl(url)) {
-                    // HTTP site
-                    securityView.setImageResource(R.drawable.ic_internet)
-                } else {
-                    // Certificate is bad
-                    securityView.setImageResource(R.drawable.ic_warning)
-                }
-            }
-        } else {
-            securityView.setImageResource(R.drawable.ic_internet)
-        }
-    }
-     */
 
     fun handleTabCrash(crash: Crash) {
         showCrashReporter(crash)
