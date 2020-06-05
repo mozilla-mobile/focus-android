@@ -117,6 +117,7 @@ class BrowserFragment : LocaleAwareFragment(), LifecycleObserver, View.OnClickLi
     private val loadingBinding = ViewBoundFeatureWrapper<LoadingBinding>()
     private val progressBinding = ViewBoundFeatureWrapper<ProgressBinding>()
     private val menuBinding = ViewBoundFeatureWrapper<MenuBinding>()
+    private val toolbarButtonBinding = ViewBoundFeatureWrapper<ToolbarButtonBinding>()
 
     /**
      * Container for custom video views shown in fullscreen mode.
@@ -129,11 +130,6 @@ class BrowserFragment : LocaleAwareFragment(), LifecycleObserver, View.OnClickLi
      * Container containing the browser chrome and web content.
      */
     private var browserContainer: View? = null
-
-    private var forwardButton: View? = null
-    private var backButton: View? = null
-    private var refreshButton: View? = null
-    private var stopButton: View? = null
 
     // TODO: Fullscreen feature
     // private var fullscreenCallback: IWebView.FullscreenCallback? = null
@@ -228,18 +224,6 @@ class BrowserFragment : LocaleAwareFragment(), LifecycleObserver, View.OnClickLi
         toolbarView = view.findViewById<DisplayToolbar>(R.id.appbar)
 
         LoadTimeObserver.addObservers(session, this)
-
-        refreshButton = view.findViewById(R.id.refresh)
-        refreshButton?.let { it.setOnClickListener(this) }
-
-        stopButton = view.findViewById(R.id.stop)
-        stopButton?.let { it.setOnClickListener(this) }
-
-        forwardButton = view.findViewById(R.id.forward)
-        forwardButton?.let { it.setOnClickListener(this) }
-
-        backButton = view.findViewById(R.id.back)
-        backButton?.let { it.setOnClickListener(this) }
 
         val blockIcon = view.findViewById<View>(R.id.block_image) as ImageView
         blockIcon.setImageResource(R.drawable.ic_tracking_protection_disabled)
@@ -371,6 +355,31 @@ class BrowserFragment : LocaleAwareFragment(), LifecycleObserver, View.OnClickLi
             owner = this,
             view = progressView
         )
+
+        val refreshButton: View? = view.findViewById(R.id.refresh)
+        val stopButton: View? = view.findViewById(R.id.stop)
+        val forwardButton: View? = view.findViewById(R.id.forward)
+        val backButton: View? = view.findViewById(R.id.back)
+
+        if (refreshButton != null && stopButton != null && forwardButton != null && backButton != null) {
+            toolbarButtonBinding.set(
+                ToolbarButtonBinding(
+                    components.store,
+                    session.id,
+                    forwardButton,
+                    backButton,
+                    refreshButton,
+                    stopButton
+                ),
+                owner = this,
+                view = forwardButton
+            )
+
+            refreshButton.setOnClickListener(this)
+            stopButton.setOnClickListener(this)
+            forwardButton.setOnClickListener(this)
+            backButton.setOnClickListener(this)
+        }
 
         manager = requireContext().getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
         downloadBroadcastReceiver = DownloadBroadcastReceiver(browserContainer, manager)
@@ -1210,32 +1219,6 @@ class BrowserFragment : LocaleAwareFragment(), LifecycleObserver, View.OnClickLi
 
             else -> throw IllegalArgumentException("Unhandled menu item in BrowserFragment")
         }
-    }
-
-    @Suppress("MagicNumber")
-    private fun updateToolbarButtonStates(isLoading: Boolean) {
-        @Suppress("ComplexCondition")
-        if (forwardButton == null || backButton == null || refreshButton == null || stopButton == null) {
-            return
-        }
-
-        // TODO: Tablets
-        isLoading.hashCode()
-
-        /*
-        val webView = getWebView() ?: return
-
-        val canGoForward = webView.canGoForward()
-        val canGoBack = webView.canGoBack()
-
-        forwardButton!!.isEnabled = canGoForward
-        forwardButton!!.alpha = if (canGoForward) 1.0f else 0.5f
-        backButton!!.isEnabled = canGoBack
-        backButton!!.alpha = if (canGoBack) 1.0f else 0.5f
-
-        refreshButton!!.visibility = if (isLoading) View.GONE else View.VISIBLE
-        stopButton!!.visibility = if (isLoading) View.VISIBLE else View.GONE
-         */
     }
 
     fun setBlockingUI(enabled: Boolean) {
