@@ -22,6 +22,7 @@ import mozilla.components.concept.engine.utils.EngineVersion
 import mozilla.components.feature.contextmenu.ContextMenuUseCases
 import mozilla.components.feature.session.SessionUseCases
 import mozilla.components.feature.session.SettingsUseCases
+import mozilla.components.feature.session.TrackingProtectionUseCases
 import mozilla.components.feature.tabs.TabsUseCases
 import org.json.JSONObject
 import org.mozilla.focus.components.EngineProvider
@@ -50,6 +51,8 @@ class Components(
         EngineProvider.createEngine(context, engineDefaultSettings)
     }
 
+    val trackingProtectionUseCases by lazy { TrackingProtectionUseCases(sessionManager, engine) }
+
     val settingsUseCases by lazy { SettingsUseCases(engine.settings, sessionManager) }
 
     val store: BrowserStore by lazy { BrowserStore() }
@@ -61,9 +64,7 @@ class Components(
     val contextMenuUseCases: ContextMenuUseCases by lazy { ContextMenuUseCases(sessionManager, store) }
 
     val sessionManager by lazy {
-        SessionManager(engine, store).apply {
-            register(SessionSetupObserver())
-        }
+        SessionManager(engine, store)
     }
 
     val searchEngineManager by lazy {
@@ -75,18 +76,5 @@ class Components(
         val customProvider = CustomSearchEngineProvider()
 
         SearchEngineManager(listOf(assetsProvider, customProvider))
-    }
-}
-
-/**
- * This is a workaround for setting up the Session object. Once we use browser-engine we can just setup the Engine to
- * use specific default settings. For now we need to manually update every created Session model to reflect what Focus
- * expects as default.
- */
-class SessionSetupObserver : SessionManager.Observer {
-    override fun onSessionAdded(session: Session) {
-        // Tracking protection is enabled by default for every tab. Instead of setting up the engine we modify Session
-        // here and IWebView will get its default behavior from Session.
-        session.trackerBlockingEnabled = true
     }
 }

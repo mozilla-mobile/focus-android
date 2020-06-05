@@ -11,8 +11,8 @@ import androidx.preference.Preference
 import androidx.preference.SwitchPreferenceCompat
 import org.mozilla.focus.R
 import org.mozilla.focus.biometrics.Biometrics
-import org.mozilla.focus.exceptions.ExceptionDomains
 import org.mozilla.focus.exceptions.ExceptionsListFragment
+import org.mozilla.focus.ext.requireComponents
 import org.mozilla.focus.telemetry.TelemetryWrapper
 import org.mozilla.focus.utils.AppConstants
 import org.mozilla.focus.widget.CookiesPreference
@@ -104,8 +104,10 @@ class PrivacySecuritySettingsFragment : BaseSettingsFragment(),
 
     private fun updateExceptionSettingAvailability() {
         val exceptionsPreference = findPreference(getString(R.string.pref_key_screen_exceptions))
-        if (ExceptionDomains.load(requireContext()).isEmpty()) {
-            exceptionsPreference.isEnabled = false
+        exceptionsPreference.isEnabled = false
+
+        requireComponents.trackingProtectionUseCases.fetchExceptions.invoke { exceptions ->
+            exceptionsPreference.isEnabled = exceptions.isNotEmpty()
         }
     }
 
