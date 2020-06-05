@@ -11,7 +11,6 @@ import android.content.*
 import android.content.pm.PackageManager
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
-import android.graphics.drawable.TransitionDrawable
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -53,7 +52,6 @@ import mozilla.components.support.utils.DrawableUtils
 import org.mozilla.focus.R
 import org.mozilla.focus.activity.InstallFirefoxActivity
 import org.mozilla.focus.activity.MainActivity
-import org.mozilla.focus.animation.TransitionDrawableGroup
 import org.mozilla.focus.biometrics.BiometricAuthenticationDialogFragment
 import org.mozilla.focus.biometrics.BiometricAuthenticationHandler
 import org.mozilla.focus.biometrics.Biometrics
@@ -92,7 +90,6 @@ class BrowserFragment : LocaleAwareFragment(), LifecycleObserver, View.OnClickLi
     CoroutineScope {
 
     private var pendingDownload: Download? = null
-    private var backgroundTransitionGroup: TransitionDrawableGroup? = null
     private var urlView: TextView? = null
     private var blockView: FrameLayout? = null
     private var securityView: ImageView? = null
@@ -117,6 +114,7 @@ class BrowserFragment : LocaleAwareFragment(), LifecycleObserver, View.OnClickLi
     private val progressBinding = ViewBoundFeatureWrapper<ProgressBinding>()
     private val menuBinding = ViewBoundFeatureWrapper<MenuBinding>()
     private val toolbarButtonBinding = ViewBoundFeatureWrapper<ToolbarButtonBinding>()
+    private val blockingThemeBinding = ViewBoundFeatureWrapper<BlockingThemeBinding>()
 
     /**
      * Container for custom video views shown in fullscreen mode.
@@ -239,9 +237,6 @@ class BrowserFragment : LocaleAwareFragment(), LifecycleObserver, View.OnClickLi
             initialiseNormalBrowserUi(view)
         }
 
-        // TODO: Update correctly somewhere...
-        setBlockingUI(true)
-
         return view
     }
 
@@ -326,9 +321,7 @@ class BrowserFragment : LocaleAwareFragment(), LifecycleObserver, View.OnClickLi
             LoadingBinding(
                 components.store,
                 session.id,
-                { backgroundTransitionGroup!! },
-                progressView,
-                blockView!!
+                progressView
             ),
             owner = this,
             view = view
@@ -342,6 +335,18 @@ class BrowserFragment : LocaleAwareFragment(), LifecycleObserver, View.OnClickLi
             ),
             owner = this,
             view = progressView
+        )
+
+        blockingThemeBinding.set(
+            BlockingThemeBinding(
+                components.store,
+                session,
+                statusBar!!,
+                urlBar!!,
+                blockView!!
+            ),
+            owner = this,
+            view = statusBar!!
         )
 
         val refreshButton: View? = view.findViewById(R.id.refresh)
@@ -1080,39 +1085,6 @@ class BrowserFragment : LocaleAwareFragment(), LifecycleObserver, View.OnClickLi
             }
 
             else -> throw IllegalArgumentException("Unhandled menu item in BrowserFragment")
-        }
-    }
-
-    fun setBlockingUI(enabled: Boolean) {
-        enabled.hashCode()
-
-        /*
-        val webView = getWebView()
-        webView?.setBlockingEnabled(enabled)
-        */
-
-        statusBar!!.setBackgroundResource(if (enabled)
-                R.drawable.animated_background
-            else
-                R.drawable.animated_background_disabled
-        )
-
-        backgroundTransitionGroup = if (!session.isCustomTabSession()) {
-            // Only update the toolbar background if this is not a custom tab. Custom tabs set their
-            // own color and we do not want to override this here.
-            urlBar!!.setBackgroundResource(if (enabled)
-                    R.drawable.animated_background
-                else
-                    R.drawable.animated_background_disabled)
-
-            TransitionDrawableGroup(
-                urlBar!!.background as TransitionDrawable,
-                statusBar!!.background as TransitionDrawable
-            )
-        } else {
-            TransitionDrawableGroup(
-                statusBar!!.background as TransitionDrawable
-            )
         }
     }
 

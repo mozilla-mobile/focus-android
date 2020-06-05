@@ -20,7 +20,6 @@ import org.mozilla.focus.R.string.tip_open_in_new_tab
 import org.mozilla.focus.R.string.tip_request_desktop
 import org.mozilla.focus.R.string.tip_set_default_browser
 import org.mozilla.focus.R.string.tip_take_survey
-import org.mozilla.focus.exceptions.ExceptionDomains
 import org.mozilla.focus.ext.components
 import org.mozilla.focus.locale.LocaleAwareAppCompatActivity
 import org.mozilla.focus.locale.LocaleManager
@@ -46,7 +45,9 @@ class Tip(val id: Int, val text: String, val shouldDisplay: () -> Boolean, val d
             }
 
             val shouldDisplayAllowListTip = {
-                ExceptionDomains.load(context).isEmpty()
+                // TODO: How to make this async?
+                // ExceptionDomains.load(context).isEmpty()
+                false
             }
 
             return Tip(id, name, shouldDisplayAllowListTip, deepLink)
