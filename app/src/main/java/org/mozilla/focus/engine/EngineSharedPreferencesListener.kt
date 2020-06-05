@@ -6,17 +6,17 @@ package org.mozilla.focus.engine
 
 import android.content.Context
 import android.content.SharedPreferences
-import android.util.Log
 import org.mozilla.focus.R
 import org.mozilla.focus.ext.components
 import org.mozilla.focus.utils.Settings
 
+/**
+ * SharedPreference listener that will update the engine whenever the user changes settings.
+ */
 class EngineSharedPreferencesListener(
     private val context: Context
 ) : SharedPreferences.OnSharedPreferenceChangeListener {
     override fun onSharedPreferenceChanged(preferences: SharedPreferences, key: String) {
-        Log.w("SKDBG", "onSharedPreferenceChanged() $key")
-
         when (key) {
             context.getString(R.string.pref_key_privacy_block_social),
             context.getString(R.string.pref_key_privacy_block_ads),
@@ -27,8 +27,6 @@ class EngineSharedPreferencesListener(
     }
 
     private fun updateTrackingProtectionPolicy() {
-        Log.w("SKDBG", "updateTrackingProtectionPolicy() ${Thread.currentThread().name}")
-
         val policy = Settings.getInstance(context).createTrackingProtectionPolicy()
         val components = context.components
 
