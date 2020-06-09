@@ -12,6 +12,7 @@ import mozilla.components.browser.session.SessionManager
 import mozilla.components.browser.state.store.BrowserStore
 import mozilla.components.concept.engine.DefaultSettings
 import mozilla.components.concept.engine.Engine
+import mozilla.components.concept.engine.EngineSession
 import mozilla.components.feature.contextmenu.ContextMenuUseCases
 import mozilla.components.feature.session.SessionUseCases
 import mozilla.components.feature.session.SettingsUseCases
@@ -31,14 +32,18 @@ class Components(
     context: Context
 ) {
     val engineDefaultSettings by lazy {
+        val settings = Settings.getInstance(context)
+
         DefaultSettings(
             requestInterceptor = LocalizedContentInterceptor(context),
-            trackingProtectionPolicy = Settings.getInstance(context).createTrackingProtectionPolicy()
+            trackingProtectionPolicy = settings.createTrackingProtectionPolicy()
         )
     }
 
     val engine: Engine by lazy {
-        EngineProvider.createEngine(context, engineDefaultSettings)
+        EngineProvider.createEngine(context, engineDefaultSettings).apply {
+            Settings.getInstance(context).setupSafeBrowsing(this)
+        }
     }
 
     val trackingProtectionUseCases by lazy { TrackingProtectionUseCases(sessionManager, engine) }

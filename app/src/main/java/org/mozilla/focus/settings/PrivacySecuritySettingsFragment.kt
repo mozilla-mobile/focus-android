@@ -34,9 +34,6 @@ class PrivacySecuritySettingsFragment : BaseSettingsFragment(),
             preferenceScreen.removePreference(biometricPreference)
         }
 
-        val safeBrowsingPreference =
-            findPreference(getString(R.string.pref_key_category_safe_browsing))
-        preferenceScreen.removePreference(safeBrowsingPreference)
         val cookiesPreference =
             findPreference(getString(R.string.pref_key_performance_enable_cookies)) as CookiesPreference
 
