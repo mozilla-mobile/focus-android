@@ -9,7 +9,6 @@ import android.view.View
 import androidx.collection.ArrayMap
 import org.mozilla.focus.R
 import org.mozilla.focus.locale.Locales
-import org.mozilla.focus.utils.AppConstants.isGeckoBuild
 import org.mozilla.focus.utils.HtmlLoader
 import org.mozilla.focus.utils.SupportUtils.manifestoURL
 import org.mozilla.geckoview.BuildConfig
@@ -30,7 +29,7 @@ object LocalizedContent {
         val learnMoreURL = manifestoURL
         var aboutVersion = ""
         try {
-            val engineIndicator = if (isGeckoBuild) " \uD83E\uDD8E " + BuildConfig.MOZ_APP_VERSION + "-" + BuildConfig.MOZ_APP_BUILDID else ""
+            val engineIndicator = BuildConfig.MOZ_APP_VERSION + "-" + BuildConfig.MOZ_APP_BUILDID
             val packageInfo = context.packageManager.getPackageInfo(context.packageName, 0)
             @Suppress("DEPRECATION")
             aboutVersion = String.format("%s (Build #%s)", packageInfo.versionName, packageInfo.versionCode.toString() + engineIndicator)
