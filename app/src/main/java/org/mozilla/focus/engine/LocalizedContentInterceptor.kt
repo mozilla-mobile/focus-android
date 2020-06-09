@@ -5,9 +5,13 @@
 package org.mozilla.focus.engine
 
 import android.content.Context
+import android.widget.Toast
+import mozilla.components.browser.errorpages.ErrorPages
+import mozilla.components.browser.errorpages.ErrorType
 import mozilla.components.concept.engine.EngineSession
 import mozilla.components.concept.engine.request.RequestInterceptor
 import org.mozilla.focus.browser.LocalizedContent
+import org.mozilla.focus.webview.ErrorPage
 
 class LocalizedContentInterceptor(
     private val context: Context
@@ -24,5 +28,10 @@ class LocalizedContentInterceptor(
 
             else -> null
         }
+    }
+
+    override fun onErrorRequest(session: EngineSession, errorType: ErrorType, uri: String?): RequestInterceptor.ErrorResponse? {
+        val errorPage = ErrorPages.createUrlEncodedErrorPage(context, errorType, uri)
+        return RequestInterceptor.ErrorResponse.Uri(errorPage)
     }
 }

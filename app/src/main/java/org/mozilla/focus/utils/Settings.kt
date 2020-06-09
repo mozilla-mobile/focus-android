@@ -8,9 +8,11 @@ import android.content.Context
 import android.content.SharedPreferences
 import android.content.res.Resources
 import android.preference.PreferenceManager
+import mozilla.components.concept.engine.Engine
 import mozilla.components.concept.engine.EngineSession
 import org.mozilla.focus.R
 import org.mozilla.focus.engine.EngineSharedPreferencesListener
+import org.mozilla.focus.ext.components
 import org.mozilla.focus.fragment.FirstrunFragment
 import org.mozilla.focus.searchsuggestions.SearchSuggestionsPreferences
 
@@ -74,6 +76,14 @@ class Settings private constructor(
             trackingCategories = trackingCategories.toTypedArray(),
             strictSocialTrackingProtection = shouldBlockSocialTrackers()
         )
+    }
+
+    fun setupSafeBrowsing(engine: Engine) {
+        if (shouldUseSafeBrowsing()) {
+            engine.settings.safeBrowsingPolicy = arrayOf(EngineSession.SafeBrowsingPolicy.RECOMMENDED)
+        } else {
+            engine.settings.safeBrowsingPolicy = arrayOf(EngineSession.SafeBrowsingPolicy.NONE)
+        }
     }
 
     private val resources: Resources = context.resources

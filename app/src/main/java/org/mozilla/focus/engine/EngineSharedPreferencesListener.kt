@@ -23,6 +23,9 @@ class EngineSharedPreferencesListener(
             context.getString(R.string.pref_key_privacy_block_analytics),
             context.getString(R.string.pref_key_privacy_block_other) ->
                 updateTrackingProtectionPolicy()
+
+            context.getString(R.string.pref_key_safe_browsing) ->
+                updateSafeBrowsingPolicy()
         }
     }
 
@@ -32,5 +35,9 @@ class EngineSharedPreferencesListener(
 
         components.engineDefaultSettings.trackingProtectionPolicy = policy
         components.settingsUseCases.updateTrackingProtection(policy)
+    }
+
+    private fun updateSafeBrowsingPolicy() {
+        Settings.getInstance(context).setupSafeBrowsing(context.components.engine)
     }
 }
