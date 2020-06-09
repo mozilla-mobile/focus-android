@@ -8,7 +8,6 @@ import android.content.Context
 import android.content.SharedPreferences
 import android.content.res.Resources
 import android.preference.PreferenceManager
-import android.util.Log
 import mozilla.components.concept.engine.EngineSession
 import org.mozilla.focus.R
 import org.mozilla.focus.engine.EngineSharedPreferencesListener
@@ -35,7 +34,6 @@ class Settings private constructor(
         }
     }
 
-    // TODO: Document
     private val preferencesListener = EngineSharedPreferencesListener(context)
 
     private val preferences: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(context).apply {
@@ -57,8 +55,6 @@ class Settings private constructor(
         if (shouldBlockOtherTrackers()) {
             trackingCategories.add(EngineSession.TrackingProtectionPolicy.TrackingCategory.SCRIPTS_AND_SUB_RESOURCES)
         }
-
-        Log.w("SKDBG", "CATEGORIES: $trackingCategories")
 
         val cookiePolicy = when (shouldBlockCookiesValue()) {
             context.getString(R.string.preference_privacy_should_block_cookies_yes_option) ->
@@ -120,23 +116,13 @@ class Settings private constructor(
                 false)
 
     fun shouldBlockCookiesValue(): String =
-        if (AppConstants.isGeckoBuild) {
-            preferences.getString(
-                getPreferenceKey(
-                    R.string
-                        .pref_key_performance_enable_cookies
-                ),
-                resources.getString(R.string.preference_privacy_should_block_cookies_third_party_tracker_cookies_option)
-            )!!
-        } else {
-            preferences.getString(
-                getPreferenceKey(
-                    R.string
-                        .pref_key_performance_enable_cookies
-                ),
-                resources.getString(R.string.preference_privacy_should_block_cookies_no_option)
-            )!!
-        }
+        preferences.getString(
+            getPreferenceKey(
+                R.string
+                    .pref_key_performance_enable_cookies
+            ),
+            resources.getString(R.string.preference_privacy_should_block_cookies_third_party_tracker_cookies_option)
+        )!!
 
     fun shouldBlockCookies(): Boolean =
             shouldBlockCookiesValue() == resources.getString(

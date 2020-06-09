@@ -822,12 +822,6 @@ class BrowserFragment : LocaleAwareFragment(), LifecycleObserver, View.OnClickLi
             .setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
             .setMimeType(download.mimeType)
 
-        if (!AppConstants.isGeckoBuild) {
-            val cookie = CookieManager.getInstance().getCookie(download.url)
-            request.addRequestHeader("Cookie", cookie)
-                .addRequestHeader("User-Agent", download.userAgent)
-        }
-
         try {
             request.setDestinationInExternalPublicDir(download.destinationDirectory, fileName)
         } catch (e: IllegalStateException) {

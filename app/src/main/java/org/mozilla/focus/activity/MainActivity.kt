@@ -223,11 +223,7 @@ open class MainActivity : LocaleAwareAppCompatActivity() {
         val shouldAnimate = isShowingBrowser && browserFragment!!.isResumed
 
         if (shouldAnimate) {
-            if (AppConstants.isGeckoBuild) {
-                transaction.setCustomAnimations(0, R.anim.erase_animation_gv)
-            } else {
-                transaction.setCustomAnimations(0, R.anim.erase_animation)
-            }
+            transaction.setCustomAnimations(0, R.anim.erase_animation)
         }
 
         // Currently this callback can get invoked while the app is in the background. Therefore we are using

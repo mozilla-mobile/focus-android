@@ -311,14 +311,13 @@ class UrlInputFragment :
 
         urlView?.setOnCommitListener(::onCommit)
 
-        val geckoViewAndDDG: Boolean =
-            Settings.getInstance(requireContext()).defaultSearchEngineName == duckDuckGo &&
-                    AppConstants.isGeckoBuild
+        val isDDG: Boolean =
+            Settings.getInstance(requireContext()).defaultSearchEngineName == duckDuckGo
 
         session?.let {
             urlView?.setText(
                 if (it.isSearch &&
-                    !geckoViewAndDDG &&
+                    !isDDG &&
                     Features.SEARCH_TERMS_OR_URL
                 )
                     it.searchTerms else
