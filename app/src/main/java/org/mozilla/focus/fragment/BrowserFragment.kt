@@ -1318,7 +1318,7 @@ class BrowserFragment : WebFragment(), LifecycleObserver, View.OnClickListener,
 
     private fun showFindInPage() {
         findInPageView!!.visibility = View.VISIBLE
-        findInPageQuery!!.requestFocus()
+        
 
         val params = swipeRefresh!!.layoutParams as CoordinatorLayout.LayoutParams
         params.bottomMargin = findInPageViewHeight
