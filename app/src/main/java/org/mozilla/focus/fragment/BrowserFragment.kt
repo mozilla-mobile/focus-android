@@ -20,7 +20,6 @@ import android.util.Log
 import android.view.*
 import android.view.accessibility.AccessibilityEvent
 import android.view.accessibility.AccessibilityManager
-import android.webkit.CookieManager
 import android.widget.*
 import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
@@ -41,10 +40,12 @@ import mozilla.components.feature.contextmenu.ContextMenuCandidate
 import mozilla.components.feature.contextmenu.ContextMenuFeature
 import mozilla.components.feature.findinpage.FindInPageFeature
 import mozilla.components.feature.findinpage.view.FindInPageBar
+import mozilla.components.feature.prompts.PromptFeature
 import mozilla.components.feature.session.FullScreenFeature
 import mozilla.components.feature.session.SessionFeature
 import mozilla.components.feature.session.SessionUseCases
 import mozilla.components.lib.crash.Crash
+import mozilla.components.support.base.feature.PermissionsFeature
 import mozilla.components.support.base.feature.ViewBoundFeatureWrapper
 import mozilla.components.support.utils.ColorUtils
 import mozilla.components.support.utils.DownloadUtils
@@ -73,6 +74,8 @@ import org.mozilla.focus.session.ui.SessionsSheetFragment
 import org.mozilla.focus.telemetry.CrashReporterWrapper
 import org.mozilla.focus.telemetry.TelemetryWrapper
 import org.mozilla.focus.utils.*
+import org.mozilla.focus.utils.AppPermissionCodes.REQUEST_CODE_PROMPT_PERMISSIONS
+import org.mozilla.focus.utils.AppPermissionCodes.REQUEST_CODE_STORAGE_PERMISSION
 import org.mozilla.focus.web.Download
 import org.mozilla.focus.widget.AnimatedProgressBar
 import org.mozilla.focus.widget.FloatingEraseButton
@@ -106,6 +109,7 @@ class BrowserFragment : LocaleAwareFragment(), LifecycleObserver, View.OnClickLi
     private val sessionFeature = ViewBoundFeatureWrapper<SessionFeature>()
     private val findInPageFeature = ViewBoundFeatureWrapper<FindInPageFeature>()
     private val fullScreenFeature = ViewBoundFeatureWrapper<FullScreenFeature>()
+    private val promptFeature = ViewBoundFeatureWrapper<PromptFeature>()
     private val contextMenuIntegration = ViewBoundFeatureWrapper<ContextMenuFeature>()
 
     private val urlBinding = ViewBoundFeatureWrapper<UrlBinding>()
@@ -285,6 +289,16 @@ class BrowserFragment : LocaleAwareFragment(), LifecycleObserver, View.OnClickLi
             components.sessionUseCases,
             engineView!!,
             session.id
+        ), this, view)
+
+        promptFeature.set(PromptFeature(
+            fragment = this,
+            store = components.store,
+            customTabId = session.id,
+            fragmentManager = requireFragmentManager(),
+            onNeedToRequestPermissions = { permissions ->
+                requestPermissions(permissions, REQUEST_CODE_PROMPT_PERMISSIONS)
+            }
         ), this, view)
 
         urlBinding.set(
@@ -580,6 +594,17 @@ class BrowserFragment : LocaleAwareFragment(), LifecycleObserver, View.OnClickLi
     }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
+        val feature: PermissionsFeature? = when (requestCode) {
+            REQUEST_CODE_PROMPT_PERMISSIONS -> promptFeature.get()
+            else -> null
+        }
+        if (feature != null) {
+            feature.onPermissionsResult(permissions, grantResults)
+            return
+        }
+
+        // TODO remove this when we use the download feature.
+        // https://github.com/mozilla-mobile/focus-android/issues/4561
         if (requestCode != REQUEST_CODE_STORAGE_PERMISSION) {
             return
         }
@@ -592,6 +617,10 @@ class BrowserFragment : LocaleAwareFragment(), LifecycleObserver, View.OnClickLi
         // The actual download dialog will be shown from onResume(). If this activity/fragment is
         // getting restored then we need to 'resume' first before we can show a dialog (attaching
         // another fragment).
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        promptFeature.withFeature { it.onActivityResult(requestCode, resultCode, data) }
     }
 
     internal fun showDownloadPromptDialog(download: Download) {
@@ -1147,7 +1176,6 @@ class BrowserFragment : LocaleAwareFragment(), LifecycleObserver, View.OnClickLi
     companion object {
         const val FRAGMENT_TAG = "browser"
 
-        private const val REQUEST_CODE_STORAGE_PERMISSION = 101
         private const val ARGUMENT_SESSION_UUID = "sessionUUID"
         private const val RESTORE_KEY_DOWNLOAD = "download"
 
