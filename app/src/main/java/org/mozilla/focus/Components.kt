@@ -37,7 +37,8 @@ class Components(
         DefaultSettings(
             requestInterceptor = LocalizedContentInterceptor(context),
             trackingProtectionPolicy = settings.createTrackingProtectionPolicy(),
-            javascriptEnabled = !settings.shouldBlockJavaScript()
+            javascriptEnabled = !settings.shouldBlockJavaScript(),
+            remoteDebuggingEnabled = settings.shouldEnableRemoteDebugging()
         )
     }
 

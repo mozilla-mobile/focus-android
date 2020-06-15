@@ -29,6 +29,9 @@ class EngineSharedPreferencesListener(
 
             context.getString(R.string.pref_key_performance_block_javascript) ->
                 updateJavaScriptSetting()
+
+            context.getString(R.string.pref_key_remote_debugging) ->
+                updateRemoteDebugging()
         }
     }
 
@@ -50,5 +53,10 @@ class EngineSharedPreferencesListener(
 
         components.engineDefaultSettings.javascriptEnabled = !settings.shouldBlockJavaScript()
         components.engine.settings.javascriptEnabled = !settings.shouldBlockJavaScript()
+    }
+
+    private fun updateRemoteDebugging() {
+        context.components.engine.settings.remoteDebuggingEnabled =
+            Settings.getInstance(context).shouldEnableRemoteDebugging()
     }
 }
