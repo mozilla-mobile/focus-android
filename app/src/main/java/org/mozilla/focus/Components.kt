@@ -36,7 +36,8 @@ class Components(
 
         DefaultSettings(
             requestInterceptor = LocalizedContentInterceptor(context),
-            trackingProtectionPolicy = settings.createTrackingProtectionPolicy()
+            trackingProtectionPolicy = settings.createTrackingProtectionPolicy(),
+            javascriptEnabled = !settings.shouldBlockJavaScript()
         )
     }
 

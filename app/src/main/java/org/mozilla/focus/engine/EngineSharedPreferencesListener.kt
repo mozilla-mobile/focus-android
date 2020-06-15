@@ -26,6 +26,9 @@ class EngineSharedPreferencesListener(
 
             context.getString(R.string.pref_key_safe_browsing) ->
                 updateSafeBrowsingPolicy()
+
+            context.getString(R.string.pref_key_performance_block_javascript) ->
+                updateJavaScriptSetting()
         }
     }
 
@@ -39,5 +42,13 @@ class EngineSharedPreferencesListener(
 
     private fun updateSafeBrowsingPolicy() {
         Settings.getInstance(context).setupSafeBrowsing(context.components.engine)
+    }
+
+    private fun updateJavaScriptSetting() {
+        val settings = Settings.getInstance(context)
+        val components = context.components
+
+        components.engineDefaultSettings.javascriptEnabled = !settings.shouldBlockJavaScript()
+        components.engine.settings.javascriptEnabled = !settings.shouldBlockJavaScript()
     }
 }
