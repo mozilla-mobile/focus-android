@@ -111,7 +111,6 @@ class BrowserFragment :
     CoroutineScope {
 
     private var urlView: TextView? = null
-    private var blockView: FrameLayout? = null
     private var securityView: ImageView? = null
     private var statusBar: View? = null
     private var urlBar: View? = null
@@ -198,8 +197,6 @@ class BrowserFragment :
         val blockIcon = view.findViewById<View>(R.id.block_image) as ImageView
         blockIcon.setImageResource(R.drawable.ic_tracking_protection_disabled)
 
-        blockView = view.findViewById<View>(R.id.block) as FrameLayout
-
         securityView = view.findViewById(R.id.security_info)
 
         securityView!!.setImageResource(R.drawable.ic_internet)
@@ -224,6 +221,7 @@ class BrowserFragment :
 
         val progressView = view.findViewById<View>(R.id.progress) as AnimatedProgressBar
         val menuView = view.findViewById<View>(R.id.menuView) as ImageButton
+        val blockView = view.findViewById<View>(R.id.block) as FrameLayout
 
         findInPageIntegration.set(FindInPageIntegration(
             components.store,
@@ -344,7 +342,7 @@ class BrowserFragment :
                 session,
                 statusBar!!,
                 urlBar!!,
-                blockView!!
+                blockView
             ),
             owner = this,
             view = statusBar!!
