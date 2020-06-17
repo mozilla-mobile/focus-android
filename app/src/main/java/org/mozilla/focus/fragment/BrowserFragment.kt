@@ -16,6 +16,7 @@ import android.preference.PreferenceManager
 import android.view.*
 import android.view.accessibility.AccessibilityEvent
 import android.view.accessibility.AccessibilityManager
+import android.webkit.MimeTypeMap
 import android.widget.*
 import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
@@ -680,12 +681,23 @@ class BrowserFragment :
         )
 
         snackbar.setAction(context!!.getString(R.string.download_snackbar_open)) {
-            AbstractFetchDownloadService.openFile(
+            val opened = AbstractFetchDownloadService.openFile(
                 context = requireContext(),
                 contentType = state.contentType,
                 filePath = state.filePath
             )
+
+            if (!opened) {
+                val extension = MimeTypeMap.getFileExtensionFromUrl(state.filePath)
+
+                Toast.makeText(
+                    context,
+                    getString(mozilla.components.feature.downloads.R.string.mozac_feature_downloads_open_not_supported, extension),
+                    Toast.LENGTH_LONG
+                ).show()
+            }
         }
+
         snackbar.setActionTextColor(ContextCompat.getColor(context!!, R.color.snackbarActionText))
 
         snackbar.show()
