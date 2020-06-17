@@ -56,7 +56,7 @@ class Components(
 
     val trackingProtectionUseCases by lazy { TrackingProtectionUseCases(sessionManager, engine) }
 
-    val settingsUseCases by lazy { SettingsUseCases(engine.settings, sessionManager) }
+    val settingsUseCases by lazy { SettingsUseCases(engine, sessionManager) }
 
     val store: BrowserStore by lazy {
         BrowserStore(
