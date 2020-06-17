@@ -6,8 +6,10 @@ package org.mozilla.focus.components
 
 import android.content.Context
 import mozilla.components.browser.engine.gecko.GeckoEngine
+import mozilla.components.browser.engine.gecko.fetch.GeckoViewFetchClient
 import mozilla.components.concept.engine.DefaultSettings
 import mozilla.components.concept.engine.Engine
+import mozilla.components.concept.fetch.Client
 import mozilla.components.lib.crash.handler.CrashHandlerService
 import org.mozilla.geckoview.GeckoRuntime
 import org.mozilla.geckoview.GeckoRuntimeSettings
@@ -33,5 +35,10 @@ object EngineProvider {
         val runtime = getOrCreateRuntime(context)
 
         return GeckoEngine(context, defaultSettings, runtime)
+    }
+
+    fun createClient(context: Context): Client {
+        val runtime = getOrCreateRuntime(context)
+        return GeckoViewFetchClient(context, runtime)
     }
 }

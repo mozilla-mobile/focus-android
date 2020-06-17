@@ -4,19 +4,15 @@
 
 package org.mozilla.focus.fragment
 
-import android.Manifest
 import android.app.DownloadManager
 import android.app.PendingIntent
 import android.content.*
-import android.content.pm.PackageManager
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.preference.PreferenceManager
-import android.text.TextUtils
-import android.util.Log
 import android.view.*
 import android.view.accessibility.AccessibilityEvent
 import android.view.accessibility.AccessibilityManager
@@ -27,6 +23,7 @@ import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ProcessLifecycleOwner
 import com.google.android.material.appbar.AppBarLayout
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_browser.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -34,10 +31,14 @@ import kotlinx.coroutines.Job
 import mozilla.components.browser.session.Session
 import mozilla.components.browser.session.SessionManager
 import mozilla.components.browser.state.selector.findTab
+import mozilla.components.browser.state.state.content.DownloadState
 import mozilla.components.concept.engine.Engine
 import mozilla.components.concept.engine.EngineView
 import mozilla.components.feature.contextmenu.ContextMenuCandidate
 import mozilla.components.feature.contextmenu.ContextMenuFeature
+import mozilla.components.feature.downloads.AbstractFetchDownloadService
+import mozilla.components.feature.downloads.DownloadsFeature
+import mozilla.components.feature.downloads.manager.FetchDownloadManager
 import mozilla.components.feature.findinpage.FindInPageFeature
 import mozilla.components.feature.findinpage.view.FindInPageBar
 import mozilla.components.feature.prompts.PromptFeature
@@ -48,7 +49,6 @@ import mozilla.components.lib.crash.Crash
 import mozilla.components.support.base.feature.PermissionsFeature
 import mozilla.components.support.base.feature.ViewBoundFeatureWrapper
 import mozilla.components.support.utils.ColorUtils
-import mozilla.components.support.utils.DownloadUtils
 import mozilla.components.support.utils.DrawableUtils
 import org.mozilla.focus.R
 import org.mozilla.focus.activity.InstallFirefoxActivity
@@ -56,9 +56,9 @@ import org.mozilla.focus.activity.MainActivity
 import org.mozilla.focus.biometrics.BiometricAuthenticationDialogFragment
 import org.mozilla.focus.biometrics.BiometricAuthenticationHandler
 import org.mozilla.focus.biometrics.Biometrics
-import org.mozilla.focus.broadcastreceiver.DownloadBroadcastReceiver
 import org.mozilla.focus.browser.DisplayToolbar
 import org.mozilla.focus.browser.binding.*
+import org.mozilla.focus.downloads.DownloadService
 import org.mozilla.focus.ext.isSearch
 import org.mozilla.focus.ext.requireComponents
 import org.mozilla.focus.findinpage.FindInPageCoordinator
@@ -73,10 +73,12 @@ import org.mozilla.focus.session.removeAndCloseSession
 import org.mozilla.focus.session.ui.SessionsSheetFragment
 import org.mozilla.focus.telemetry.CrashReporterWrapper
 import org.mozilla.focus.telemetry.TelemetryWrapper
-import org.mozilla.focus.utils.*
+import org.mozilla.focus.utils.AppPermissionCodes.REQUEST_CODE_DOWNLOAD_PERMISSIONS
 import org.mozilla.focus.utils.AppPermissionCodes.REQUEST_CODE_PROMPT_PERMISSIONS
-import org.mozilla.focus.utils.AppPermissionCodes.REQUEST_CODE_STORAGE_PERMISSION
-import org.mozilla.focus.web.Download
+import org.mozilla.focus.utils.Browsers
+import org.mozilla.focus.utils.StatusBarUtils
+import org.mozilla.focus.utils.SupportUtils
+import org.mozilla.focus.utils.createTab
 import org.mozilla.focus.widget.AnimatedProgressBar
 import org.mozilla.focus.widget.FloatingEraseButton
 import org.mozilla.focus.widget.FloatingSessionsButton
@@ -87,12 +89,14 @@ import kotlin.coroutines.CoroutineContext
  * Fragment for displaying the browser UI.
  */
 @Suppress("LargeClass", "TooManyFunctions")
-class BrowserFragment : LocaleAwareFragment(), LifecycleObserver, View.OnClickListener,
-    DownloadDialogFragment.DownloadDialogListener, View.OnLongClickListener,
+class BrowserFragment :
+    LocaleAwareFragment(),
+    LifecycleObserver,
+    View.OnClickListener,
+    View.OnLongClickListener,
     BiometricAuthenticationDialogFragment.BiometricAuthenticationListener,
     CoroutineScope {
 
-    private var pendingDownload: Download? = null
     private var urlView: TextView? = null
     private var blockView: FrameLayout? = null
     private var securityView: ImageView? = null
@@ -111,6 +115,7 @@ class BrowserFragment : LocaleAwareFragment(), LifecycleObserver, View.OnClickLi
     private val fullScreenFeature = ViewBoundFeatureWrapper<FullScreenFeature>()
     private val promptFeature = ViewBoundFeatureWrapper<PromptFeature>()
     private val contextMenuIntegration = ViewBoundFeatureWrapper<ContextMenuFeature>()
+    private val downloadsFeature = ViewBoundFeatureWrapper<DownloadsFeature>()
 
     private val urlBinding = ViewBoundFeatureWrapper<UrlBinding>()
     private val securityInfoBinding = ViewBoundFeatureWrapper<SecurityInfoBinding>()
@@ -133,8 +138,6 @@ class BrowserFragment : LocaleAwareFragment(), LifecycleObserver, View.OnClickLi
     private var browserContainer: View? = null
 
     private var manager: DownloadManager? = null
-
-    private var downloadBroadcastReceiver: DownloadBroadcastReceiver? = null
 
     private val findInPageCoordinator = FindInPageCoordinator()
 
@@ -177,8 +180,6 @@ class BrowserFragment : LocaleAwareFragment(), LifecycleObserver, View.OnClickLi
             view!!.alpha = 0f
         }
 
-        requireContext().unregisterReceiver(downloadBroadcastReceiver)
-
         if (isFullscreen) {
             // getWebView()?.exitFullscreen()
         }
@@ -198,12 +199,6 @@ class BrowserFragment : LocaleAwareFragment(), LifecycleObserver, View.OnClickLi
 
     @Suppress("LongMethod", "ComplexMethod")
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        if (savedInstanceState != null && savedInstanceState.containsKey(RESTORE_KEY_DOWNLOAD)) {
-            // If this activity was destroyed before we could start a download (e.g. because we were waiting for a
-            // permission) then restore the download object.
-            pendingDownload = savedInstanceState.getParcelable(RESTORE_KEY_DOWNLOAD)
-        }
-
         val view = inflater.inflate(R.layout.fragment_browser, container, false)
 
         videoContainer = view.findViewById<View>(R.id.video_container) as ViewGroup
@@ -301,6 +296,24 @@ class BrowserFragment : LocaleAwareFragment(), LifecycleObserver, View.OnClickLi
             }
         ), this, view)
 
+        downloadsFeature.set(DownloadsFeature(
+            requireContext().applicationContext,
+            components.store,
+            components.downloadsUseCases,
+                fragmentManager = childFragmentManager,
+                downloadManager = FetchDownloadManager(
+                        requireContext().applicationContext,
+                        components.store,
+                        DownloadService::class
+                ),
+                onNeedToRequestPermissions = { permissions ->
+                    requestPermissions(permissions, REQUEST_CODE_DOWNLOAD_PERMISSIONS)
+                },
+                onDownloadStopped = { state, _, status ->
+                    showDownloadSnackbar(state, status)
+                }
+        ), this, view)
+
         urlBinding.set(
             UrlBinding(
                 components.store,
@@ -389,7 +402,6 @@ class BrowserFragment : LocaleAwareFragment(), LifecycleObserver, View.OnClickLi
         }
 
         manager = requireContext().getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
-        downloadBroadcastReceiver = DownloadBroadcastReceiver(browserContainer, manager)
     }
 
     @RequiresApi(Build.VERSION_CODES.P)
@@ -541,16 +553,6 @@ class BrowserFragment : LocaleAwareFragment(), LifecycleObserver, View.OnClickLi
         menuView!!.setImageDrawable(menuIcon)
     }
 
-    override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
-
-        if (pendingDownload != null) {
-            // We were not able to start this download yet (waiting for a permission). Save this download
-            // so that we can start it once we get restored and receive the permission.
-            outState.putParcelable(RESTORE_KEY_DOWNLOAD, pendingDownload)
-        }
-    }
-
     /**
      * Hide system bars. They can be revealed temporarily with system gestures, such as swiping from
      * the top of the screen. These transient system bars will overlay app’s content, may have some
@@ -596,55 +598,15 @@ class BrowserFragment : LocaleAwareFragment(), LifecycleObserver, View.OnClickLi
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
         val feature: PermissionsFeature? = when (requestCode) {
             REQUEST_CODE_PROMPT_PERMISSIONS -> promptFeature.get()
+            REQUEST_CODE_DOWNLOAD_PERMISSIONS -> downloadsFeature.get()
             else -> null
         }
-        if (feature != null) {
-            feature.onPermissionsResult(permissions, grantResults)
-            return
-        }
 
-        // TODO remove this when we use the download feature.
-        // https://github.com/mozilla-mobile/focus-android/issues/4561
-        if (requestCode != REQUEST_CODE_STORAGE_PERMISSION) {
-            return
-        }
-
-        if (grantResults.isEmpty() || grantResults[0] != PackageManager.PERMISSION_GRANTED) {
-            // We didn't get the storage permission: We are not able to start this download.
-            pendingDownload = null
-        }
-
-        // The actual download dialog will be shown from onResume(). If this activity/fragment is
-        // getting restored then we need to 'resume' first before we can show a dialog (attaching
-        // another fragment).
+        feature?.onPermissionsResult(permissions, grantResults)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         promptFeature.withFeature { it.onActivityResult(requestCode, resultCode, data) }
-    }
-
-    internal fun showDownloadPromptDialog(download: Download) {
-        val fragmentManager = childFragmentManager
-
-        if (fragmentManager.findFragmentByTag(DownloadDialogFragment.FRAGMENT_TAG) != null) {
-            // We are already displaying a download dialog fragment (Probably a restored fragment).
-            // No need to show another one.
-            return
-        }
-
-        val downloadDialogFragment = DownloadDialogFragment.newInstance(download)
-
-        try {
-            downloadDialogFragment.show(fragmentManager, DownloadDialogFragment.FRAGMENT_TAG)
-        } catch (e: IllegalStateException) {
-            // It can happen that at this point in time the activity is already in the background
-            // and onSaveInstanceState() has already been called. Fragment transactions are not
-            // allowed after that anymore. It's probably safe to guess that the user might not
-            // be interested in the download at this point. So we could just *not* show the dialog.
-            // Unfortunately we can't call commitAllowingStateLoss() because committing the
-            // transaction is happening inside the DialogFragment code. Therefore we just swallow
-            // the exception here. Gulp!
-        }
     }
 
     private fun showCrashReporter(crash: Crash) {
@@ -702,6 +664,33 @@ class BrowserFragment : LocaleAwareFragment(), LifecycleObserver, View.OnClickLi
         it.findFragmentByTag(CrashReporterFragment.FRAGMENT_TAG)?.isVisible ?: false
     }
 
+    private fun showDownloadSnackbar(
+        state: DownloadState,
+        status: AbstractFetchDownloadService.DownloadJobStatus
+    ) {
+        if (status != AbstractFetchDownloadService.DownloadJobStatus.COMPLETED) {
+            // We currently only show an in-app snackbar for completed downloads.
+            return
+        }
+
+        val snackbar = Snackbar.make(
+            browserContainer!!,
+            String.format(context!!.getString(R.string.download_snackbar_finished), state.fileName),
+            Snackbar.LENGTH_LONG
+        )
+
+        snackbar.setAction(context!!.getString(R.string.download_snackbar_open)) {
+            AbstractFetchDownloadService.openFile(
+                context = requireContext(),
+                contentType = state.contentType,
+                filePath = state.filePath
+            )
+        }
+        snackbar.setActionTextColor(ContextCompat.getColor(context!!, R.color.snackbarActionText))
+
+        snackbar.show()
+    }
+
     internal fun showAddToHomescreenDialog(url: String, title: String) {
         val fragmentManager = childFragmentManager
 
@@ -731,12 +720,6 @@ class BrowserFragment : LocaleAwareFragment(), LifecycleObserver, View.OnClickLi
         }
     }
 
-    override fun onFinishDownloadDialog(download: Download?, shouldDownload: Boolean) {
-        if (shouldDownload) {
-            queueDownload(download)
-        }
-    }
-
     override fun biometricCreateNewSessionWithLink() {
         for (session in requireComponents.sessionManager.sessions) {
             if (session != requireComponents.sessionManager.selectedSession) {
@@ -761,21 +744,6 @@ class BrowserFragment : LocaleAwareFragment(), LifecycleObserver, View.OnClickLi
 
         if (job.isCancelled) {
             job = Job()
-        }
-
-        val filter = IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE)
-        requireContext().registerReceiver(downloadBroadcastReceiver, filter)
-
-        if (pendingDownload != null && PackageManager.PERMISSION_GRANTED == ContextCompat.checkSelfPermission(
-                requireContext(),
-                Manifest.permission.WRITE_EXTERNAL_STORAGE
-            )
-        ) {
-            // There's a pending download (waiting for the storage permission) and now we have the
-            // missing permission: Show the dialog to ask whether the user wants to actually proceed
-            // with downloading this file.
-            showDownloadPromptDialog(pendingDownload!!)
-            pendingDownload = null
         }
 
         StatusBarUtils.getStatusBarHeight(statusBar) { statusBarHeight ->
@@ -825,47 +793,6 @@ class BrowserFragment : LocaleAwareFragment(), LifecycleObserver, View.OnClickLi
             }
         } else {
             view!!.alpha = 1f
-        }
-    }
-
-    /**
-     * Use Android's Download Manager to queue this download.
-     */
-    private fun queueDownload(download: Download?) {
-        if (download == null) {
-            return
-        }
-
-        val fileName = if (!TextUtils.isEmpty(download.fileName))
-            download.fileName
-        else
-            DownloadUtils.guessFileName(
-                download.contentDisposition,
-                null,
-                download.url,
-                download.mimeType
-            )
-
-        val request = DownloadManager.Request(Uri.parse(download.url))
-            .addRequestHeader("Referer", url)
-            .setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
-            .setMimeType(download.mimeType)
-
-        try {
-            request.setDestinationInExternalPublicDir(download.destinationDirectory, fileName)
-        } catch (e: IllegalStateException) {
-            Log.e(FRAGMENT_TAG, "Cannot create download directory")
-            return
-        }
-
-        request.allowScanningByMediaScanner()
-
-        @Suppress("TooGenericExceptionCaught")
-        try {
-            val downloadReference = manager!!.enqueue(request)
-            downloadBroadcastReceiver!!.addQueuedDownload(downloadReference)
-        } catch (e: RuntimeException) {
-            Log.e(FRAGMENT_TAG, "Download failed: $e")
         }
     }
 
@@ -1177,7 +1104,6 @@ class BrowserFragment : LocaleAwareFragment(), LifecycleObserver, View.OnClickLi
         const val FRAGMENT_TAG = "browser"
 
         private const val ARGUMENT_SESSION_UUID = "sessionUUID"
-        private const val RESTORE_KEY_DOWNLOAD = "download"
 
         @JvmStatic
         fun createForSession(session: Session): BrowserFragment {
