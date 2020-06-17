@@ -136,11 +136,6 @@ class BrowserFragment :
     private val toolbarButtonBinding = ViewBoundFeatureWrapper<ToolbarButtonBinding>()
     private val blockingThemeBinding = ViewBoundFeatureWrapper<BlockingThemeBinding>()
 
-    /**
-     * Container containing the browser chrome and web content.
-     */
-    private var browserContainer: View? = null
-
     private var biometricController: BiometricAuthenticationHandler? = null
 
     private var job = Job()
@@ -187,8 +182,6 @@ class BrowserFragment :
     @Suppress("LongMethod", "ComplexMethod")
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_browser, container, false)
-
-        browserContainer = view.findViewById(R.id.browser_container)
 
         urlBar = view.findViewById(R.id.urlbar)
         statusBar = view.findViewById(R.id.status_bar_background)
@@ -657,7 +650,7 @@ class BrowserFragment :
         }
 
         val snackbar = Snackbar.make(
-            browserContainer!!,
+            view!!,
             String.format(context!!.getString(R.string.download_snackbar_finished), state.fileName),
             Snackbar.LENGTH_LONG
         )
