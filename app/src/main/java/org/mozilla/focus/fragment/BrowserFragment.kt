@@ -4,24 +4,33 @@
 
 package org.mozilla.focus.fragment
 
-import android.app.DownloadManager
 import android.app.PendingIntent
-import android.content.*
+import android.content.ClipData
+import android.content.ClipboardManager
+import android.content.Context
+import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.preference.PreferenceManager
-import android.view.*
+import android.view.Gravity
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.view.WindowManager
 import android.view.accessibility.AccessibilityEvent
 import android.view.accessibility.AccessibilityManager
 import android.webkit.MimeTypeMap
-import android.widget.*
+import android.widget.FrameLayout
+import android.widget.ImageButton
+import android.widget.ImageView
+import android.widget.TextView
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.LifecycleObserver
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ProcessLifecycleOwner
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.snackbar.Snackbar
@@ -58,11 +67,16 @@ import org.mozilla.focus.biometrics.BiometricAuthenticationDialogFragment
 import org.mozilla.focus.biometrics.BiometricAuthenticationHandler
 import org.mozilla.focus.biometrics.Biometrics
 import org.mozilla.focus.browser.DisplayToolbar
-import org.mozilla.focus.browser.binding.*
+import org.mozilla.focus.browser.binding.BlockingThemeBinding
+import org.mozilla.focus.browser.binding.LoadingBinding
+import org.mozilla.focus.browser.binding.MenuBinding
+import org.mozilla.focus.browser.binding.ProgressBinding
+import org.mozilla.focus.browser.binding.SecurityInfoBinding
+import org.mozilla.focus.browser.binding.ToolbarButtonBinding
+import org.mozilla.focus.browser.binding.UrlBinding
 import org.mozilla.focus.downloads.DownloadService
 import org.mozilla.focus.ext.isSearch
 import org.mozilla.focus.ext.requireComponents
-import org.mozilla.focus.findinpage.FindInPageCoordinator
 import org.mozilla.focus.locale.LocaleAwareAppCompatActivity
 import org.mozilla.focus.locale.LocaleAwareFragment
 import org.mozilla.focus.menu.browser.BrowserMenu
@@ -138,10 +152,6 @@ class BrowserFragment :
      */
     private var browserContainer: View? = null
 
-    private var manager: DownloadManager? = null
-
-    private val findInPageCoordinator = FindInPageCoordinator()
-
     private var biometricController: BiometricAuthenticationHandler? = null
 
     private var job = Job()
@@ -167,10 +177,6 @@ class BrowserFragment :
         val sessionUUID = arguments!!.getString(ARGUMENT_SESSION_UUID) ?: throw IllegalAccessError("No session exists")
 
         session = requireComponents.sessionManager.findSessionById(sessionUUID) ?: createTab("about:blank")
-
-        findInPageCoordinator.matches.observe(
-            this,
-            Observer { _ ->  })
     }
 
     override fun onPause() {
@@ -401,8 +407,6 @@ class BrowserFragment :
             forwardButton.setOnClickListener(this)
             backButton.setOnClickListener(this)
         }
-
-        manager = requireContext().getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
     }
 
     @RequiresApi(Build.VERSION_CODES.P)

@@ -17,7 +17,6 @@ import mozilla.components.lib.crash.Crash
 import mozilla.components.support.utils.SafeIntent
 import org.mozilla.focus.R
 import org.mozilla.focus.biometrics.Biometrics
-import org.mozilla.focus.engine.EngineSharedPreferencesListener
 import org.mozilla.focus.ext.components
 import org.mozilla.focus.fragment.BrowserFragment
 import org.mozilla.focus.fragment.FirstrunFragment
@@ -28,7 +27,6 @@ import org.mozilla.focus.session.removeAndCloseAllSessions
 import org.mozilla.focus.session.ui.SessionsSheetFragment
 import org.mozilla.focus.shortcut.HomeScreen
 import org.mozilla.focus.telemetry.TelemetryWrapper
-import org.mozilla.focus.utils.AppConstants
 import org.mozilla.focus.utils.ExperimentsSyncService
 import org.mozilla.focus.utils.Settings
 import org.mozilla.focus.utils.SupportUtils
@@ -71,11 +69,6 @@ open class MainActivity : LocaleAwareAppCompatActivity() {
         }
 
         registerSessionObserver()
-
-        // Did before: sendTelemetryEventOnSwitchToGecko(context)
-        // WebViewProvider.preload(this)
-
-
 
         val launchCount = Settings.getInstance(this).getAppLaunchCount()
         PreferenceManager.getDefaultSharedPreferences(this)

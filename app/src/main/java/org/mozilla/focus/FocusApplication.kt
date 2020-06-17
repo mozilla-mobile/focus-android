@@ -21,7 +21,6 @@ import mozilla.components.service.fretboard.storage.flatfile.FlatFileExperimentS
 import mozilla.components.support.base.log.Log
 import mozilla.components.support.base.log.sink.AndroidLogSink
 import mozilla.components.support.ktx.android.content.isMainProcess
-import org.mozilla.focus.engine.EngineSharedPreferencesListener
 import org.mozilla.focus.locale.LocaleAwareApplication
 import org.mozilla.focus.session.NotificationSessionObserver
 import org.mozilla.focus.session.VisibilityLifeCycleCallback

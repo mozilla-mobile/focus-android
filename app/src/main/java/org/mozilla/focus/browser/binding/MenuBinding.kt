@@ -14,7 +14,7 @@ class MenuBinding(
     store: BrowserStore,
     private val tabId: String?,
     private val menuGetter: () -> BrowserMenu?
-): AbstractBinding(store) {
+) : AbstractBinding(store) {
     override suspend fun onState(flow: Flow<BrowserState>) {
         flow.mapNotNull { state -> state.findTabOrCustomTabOrSelectedTab(tabId) }
             .ifAnyChanged { tab -> arrayOf(tab.trackingProtection.blockedTrackers, tab.content.loading) }

@@ -7,8 +7,8 @@ package org.mozilla.focus.utils
 import mozilla.components.browser.session.Session
 
 fun createTab(
-   url: String,
-   source: Session.Source = Session.Source.NONE
+    url: String,
+    source: Session.Source = Session.Source.NONE
 ): Session {
     // TODO: Creating a non-private Session as a workaround here. This needs to be an actual private
     // session before we can land this. With a private session we are currently not able to save

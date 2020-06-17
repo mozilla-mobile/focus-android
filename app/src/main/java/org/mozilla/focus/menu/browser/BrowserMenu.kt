@@ -16,7 +16,6 @@ import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import mozilla.components.browser.state.state.CustomTabConfig
-import mozilla.components.browser.state.store.BrowserStore
 import org.mozilla.focus.R
 import org.mozilla.focus.fragment.BrowserFragment
 import org.mozilla.focus.utils.ViewUtils.isRTL
