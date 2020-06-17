@@ -111,7 +111,6 @@ class BrowserFragment :
     CoroutineScope {
 
     private var urlView: TextView? = null
-    private var securityView: ImageView? = null
     private var statusBar: View? = null
     private var urlBar: View? = null
     private var popupTint: FrameLayout? = null
@@ -197,12 +196,6 @@ class BrowserFragment :
         val blockIcon = view.findViewById<View>(R.id.block_image) as ImageView
         blockIcon.setImageResource(R.drawable.ic_tracking_protection_disabled)
 
-        securityView = view.findViewById(R.id.security_info)
-
-        securityView!!.setImageResource(R.drawable.ic_internet)
-
-        securityView!!.setOnClickListener(this)
-
         if (session.isCustomTabSession()) {
             initialiseCustomTabUi(view)
         } else {
@@ -222,6 +215,7 @@ class BrowserFragment :
         val progressView = view.findViewById<View>(R.id.progress) as AnimatedProgressBar
         val menuView = view.findViewById<View>(R.id.menuView) as ImageButton
         val blockView = view.findViewById<View>(R.id.block) as FrameLayout
+        val securityView = view.findViewById<ImageView>(R.id.security_info)
 
         findInPageIntegration.set(FindInPageIntegration(
             components.store,
@@ -308,12 +302,13 @@ class BrowserFragment :
 
         securityInfoBinding.set(
             SecurityInfoBinding(
+                this,
                 components.store,
                 session.id,
                 securityView!!
             ),
             owner = this,
-            view = securityView!!
+            view = securityView
         )
 
         loadingBinding.set(
@@ -517,7 +512,7 @@ class BrowserFragment :
         }
 
         // We need to tint some icons.. We already tinted the close button above. Let's tint our other icons too.
-        securityView!!.setColorFilter(textColor)
+        securityInfoBinding.get()?.updateColorFilter(textColor)
 
         val menuIcon = DrawableUtils.loadAndTintDrawable(requireContext(), R.drawable.ic_menu, textColor)
         menuBinding.get()?.updateIcon(menuIcon)
@@ -605,7 +600,7 @@ class BrowserFragment :
         crash_container.visibility = View.VISIBLE
         tabs.hide()
         erase.hide()
-        securityView?.setImageResource(R.drawable.ic_firefox)
+        securityInfoBinding.get()?.updateIcon(R.drawable.ic_firefox)
         menuBinding.get()?.hideMenuButton()
         urlView?.text = requireContext().getString(R.string.tab_crash_report_title)
     }
@@ -623,7 +618,7 @@ class BrowserFragment :
         crash_container.visibility = View.GONE
         tabs.show()
         erase.show()
-        securityView?.setImageResource(R.drawable.ic_internet)
+        securityInfoBinding.get()?.updateIcon(R.drawable.ic_internet)
         menuBinding.get()?.showMenuButton()
         urlView?.text = session.let {
             if (it.isSearch) it.searchTerms else it.url
@@ -989,8 +984,6 @@ class BrowserFragment :
                 )
             }
 
-            R.id.security_info -> if (!crashReporterIsVisible()) { showSecurityPopUp() }
-
             R.id.report_site_issue -> {
                 val reportUrl = String.format(SupportUtils.REPORT_SITE_ISSUE_URL, url)
                 val session = createTab(reportUrl, source = Session.Source.MENU)
@@ -1023,7 +1016,11 @@ class BrowserFragment :
         requireComponents.sessionUseCases.requestDesktopSite(enabled, session)
     }
 
-    private fun showSecurityPopUp() {
+    fun showSecurityPopUp() {
+        if (crashReporterIsVisible()) {
+            return
+        }
+
         // Don't show Security Popup if the page is loading
         if (session.loading) {
             return
