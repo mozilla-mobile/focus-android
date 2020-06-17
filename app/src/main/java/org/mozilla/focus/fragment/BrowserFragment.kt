@@ -79,7 +79,6 @@ import org.mozilla.focus.ext.isSearch
 import org.mozilla.focus.ext.requireComponents
 import org.mozilla.focus.locale.LocaleAwareAppCompatActivity
 import org.mozilla.focus.locale.LocaleAwareFragment
-import org.mozilla.focus.menu.browser.BrowserMenu
 import org.mozilla.focus.observer.LoadTimeObserver
 import org.mozilla.focus.open.OpenWithFragment
 import org.mozilla.focus.popup.PopupUtils
@@ -97,7 +96,6 @@ import org.mozilla.focus.utils.createTab
 import org.mozilla.focus.widget.AnimatedProgressBar
 import org.mozilla.focus.widget.FloatingEraseButton
 import org.mozilla.focus.widget.FloatingSessionsButton
-import java.lang.ref.WeakReference
 import kotlin.coroutines.CoroutineContext
 
 /**
@@ -115,11 +113,9 @@ class BrowserFragment :
     private var urlView: TextView? = null
     private var blockView: FrameLayout? = null
     private var securityView: ImageView? = null
-    private var menuView: ImageButton? = null
     private var statusBar: View? = null
     private var urlBar: View? = null
     private var popupTint: FrameLayout? = null
-    private var menuWeakReference: WeakReference<BrowserMenu>? = WeakReference<BrowserMenu>(null)
 
     private var toolbarView: DisplayToolbar? = null
     private var findInPageView: FindInPageBar? = null
@@ -139,13 +135,6 @@ class BrowserFragment :
     private val menuBinding = ViewBoundFeatureWrapper<MenuBinding>()
     private val toolbarButtonBinding = ViewBoundFeatureWrapper<ToolbarButtonBinding>()
     private val blockingThemeBinding = ViewBoundFeatureWrapper<BlockingThemeBinding>()
-
-    /**
-     * Container for custom video views shown in fullscreen mode.
-     */
-    private var videoContainer: ViewGroup? = null
-
-    private var isFullscreen: Boolean = false
 
     /**
      * Container containing the browser chrome and web content.
@@ -187,16 +176,7 @@ class BrowserFragment :
             view!!.alpha = 0f
         }
 
-        if (isFullscreen) {
-            // getWebView()?.exitFullscreen()
-        }
-
-        val menu = menuWeakReference!!.get()
-        if (menu != null) {
-            menu.dismiss()
-
-            menuWeakReference!!.clear()
-        }
+        menuBinding.get()?.pause()
     }
 
     override fun onStop() {
@@ -208,7 +188,6 @@ class BrowserFragment :
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_browser, container, false)
 
-        videoContainer = view.findViewById<View>(R.id.video_container) as ViewGroup
         browserContainer = view.findViewById(R.id.browser_container)
 
         urlBar = view.findViewById(R.id.urlbar)
@@ -234,9 +213,6 @@ class BrowserFragment :
 
         securityView!!.setOnClickListener(this)
 
-        menuView = view.findViewById<View>(R.id.menuView) as ImageButton
-        menuView!!.setOnClickListener(this)
-
         if (session.isCustomTabSession()) {
             initialiseCustomTabUi(view)
         } else {
@@ -256,6 +232,7 @@ class BrowserFragment :
         engineView = (view.findViewById<View>(R.id.webview) as EngineView)
 
         val progressView = view.findViewById<View>(R.id.progress) as AnimatedProgressBar
+        val menuView = view.findViewById<View>(R.id.menuView) as ImageButton
 
         findInPageFeature.set(FindInPageFeature(
                 components.store,
@@ -333,9 +310,10 @@ class BrowserFragment :
 
         menuBinding.set(
             MenuBinding(
+                this,
                 components.store,
                 session.id,
-                menuGetter = { menuWeakReference?.get() }
+                menuView
             ),
             owner = this,
             view = view
@@ -555,7 +533,7 @@ class BrowserFragment :
         securityView!!.setColorFilter(textColor)
 
         val menuIcon = DrawableUtils.loadAndTintDrawable(requireContext(), R.drawable.ic_menu, textColor)
-        menuView!!.setImageDrawable(menuIcon)
+        menuBinding.get()?.updateIcon(menuIcon)
     }
 
     /**
@@ -641,7 +619,7 @@ class BrowserFragment :
         tabs.hide()
         erase.hide()
         securityView?.setImageResource(R.drawable.ic_firefox)
-        menuView?.visibility = View.GONE
+        menuBinding.get()?.hideMenuButton()
         urlView?.text = requireContext().getString(R.string.tab_crash_report_title)
     }
 
@@ -659,7 +637,7 @@ class BrowserFragment :
         tabs.show()
         erase.show()
         securityView?.setImageResource(R.drawable.ic_internet)
-        menuView?.visibility = View.VISIBLE
+        menuBinding.get()?.showMenuButton()
         urlView?.text = session.let {
             if (it.isSearch) it.searchTerms else it.url
         }
@@ -887,13 +865,6 @@ class BrowserFragment :
     @Suppress("ComplexMethod")
     override fun onClick(view: View) {
         when (view.id) {
-            R.id.menuView -> {
-                val menu = BrowserMenu(requireActivity(), this, session.customTabConfig)
-                menu.show(menuView!!)
-
-                menuWeakReference = WeakReference(menu)
-            }
-
             R.id.display_url -> if (
                     !crashReporterIsVisible() &&
                     requireComponents.sessionManager.findSessionById(session.id) != null) {
