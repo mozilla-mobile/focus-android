@@ -14,7 +14,7 @@ class ProgressBinding(
     store: BrowserStore,
     private val tabId: String?,
     private val progressView: AnimatedProgressBar
-): AbstractBinding(store) {
+) : AbstractBinding(store) {
     override suspend fun onState(flow: Flow<BrowserState>) {
         flow.mapNotNull { state -> state.findTabOrCustomTabOrSelectedTab(tabId) }
             .map { tab -> tab.content.progress }

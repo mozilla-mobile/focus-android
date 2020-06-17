@@ -10,21 +10,17 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Build
 import mozilla.components.browser.session.Session
-import org.mozilla.focus.R.string.app_name
-import org.mozilla.focus.R.string.tip_add_to_homescreen
-import org.mozilla.focus.R.string.tip_autocomplete_url
-import org.mozilla.focus.R.string.tip_disable_tips2
-import org.mozilla.focus.R.string.tip_disable_tracking_protection
-import org.mozilla.focus.R.string.tip_explain_allowlist
-import org.mozilla.focus.R.string.tip_open_in_new_tab
-import org.mozilla.focus.R.string.tip_request_desktop
-import org.mozilla.focus.R.string.tip_set_default_browser
-import org.mozilla.focus.R.string.tip_take_survey
+import org.mozilla.focus.R
 import org.mozilla.focus.ext.components
 import org.mozilla.focus.locale.LocaleAwareAppCompatActivity
 import org.mozilla.focus.locale.LocaleManager
 import org.mozilla.focus.telemetry.TelemetryWrapper
-import org.mozilla.focus.utils.*
+import org.mozilla.focus.utils.Browsers
+import org.mozilla.focus.utils.Settings
+import org.mozilla.focus.utils.SupportUtils
+import org.mozilla.focus.utils.createTab
+import org.mozilla.focus.utils.homeScreenTipsExperimentDescriptor
+import org.mozilla.focus.utils.isInExperiment
 import java.util.Locale
 import java.util.Random
 
@@ -34,7 +30,7 @@ class Tip(val id: Int, val text: String, val shouldDisplay: () -> Boolean, val d
         private const val FORCE_SHOW_DISABLE_TIPS_INTERVAL = 30
 
         fun createAllowlistTip(context: Context): Tip {
-            val id = tip_explain_allowlist
+            val id = R.string.tip_explain_allowlist
             val name = context.resources.getString(id)
             val url = SupportUtils.getSumoURLForTopic(context, SupportUtils.SumoTopic.ALLOWLIST)
 
@@ -54,7 +50,7 @@ class Tip(val id: Int, val text: String, val shouldDisplay: () -> Boolean, val d
         }
 
         fun createTrackingProtectionTip(context: Context): Tip {
-            val id = tip_disable_tracking_protection
+            val id = R.string.tip_disable_tracking_protection
             val name = context.resources.getString(id)
 
             val shouldDisplayTrackingProtection = {
@@ -67,7 +63,7 @@ class Tip(val id: Int, val text: String, val shouldDisplay: () -> Boolean, val d
         }
 
         fun createHomescreenTip(context: Context): Tip {
-            val id = tip_add_to_homescreen
+            val id = R.string.tip_add_to_homescreen
             val name = context.resources.getString(id)
             val homescreenURL =
                     "https://support.mozilla.org/en-US/kb/add-web-page-shortcuts-your-home-screen"
@@ -84,8 +80,8 @@ class Tip(val id: Int, val text: String, val shouldDisplay: () -> Boolean, val d
         }
 
         fun createDefaultBrowserTip(context: Context): Tip {
-            val appName = context.resources.getString(app_name)
-            val id = tip_set_default_browser
+            val appName = context.resources.getString(R.string.app_name)
+            val id = R.string.tip_set_default_browser
             val name = context.resources.getString(id, appName)
             val browsers = Browsers(context, Browsers.TRADITIONAL_BROWSER_URL)
 
@@ -110,7 +106,7 @@ class Tip(val id: Int, val text: String, val shouldDisplay: () -> Boolean, val d
         }
 
         fun createAutocompleteURLTip(context: Context): Tip {
-            val id = tip_autocomplete_url
+            val id = R.string.tip_autocomplete_url
             val name = context.resources.getString(id)
             val autocompleteURL =
                     "https://support.mozilla.org/en-US/kb/autocomplete-settings-firefox-focus-address-bar"
@@ -129,7 +125,7 @@ class Tip(val id: Int, val text: String, val shouldDisplay: () -> Boolean, val d
         }
 
         fun createOpenInNewTabTip(context: Context): Tip {
-            val id = tip_open_in_new_tab
+            val id = R.string.tip_open_in_new_tab
             val name = context.resources.getString(id)
             val newTabURL =
                     "https://support.mozilla.org/en-US/kb/open-new-tab-firefox-focus-android"
@@ -148,7 +144,7 @@ class Tip(val id: Int, val text: String, val shouldDisplay: () -> Boolean, val d
         }
 
         fun createRequestDesktopTip(context: Context): Tip {
-            val id = tip_request_desktop
+            val id = R.string.tip_request_desktop
             val name = context.resources.getString(id)
             val requestDesktopURL =
                     "https://support.mozilla.org/en-US/kb/switch-desktop-view-firefox-focus-android"
@@ -167,7 +163,7 @@ class Tip(val id: Int, val text: String, val shouldDisplay: () -> Boolean, val d
         }
 
         fun createDisableTipsTip(context: Context): Tip {
-            val id = tip_disable_tips2
+            val id = R.string.tip_disable_tips2
             val name = context.resources.getString(id)
 
             val shouldDisplayDisableTips = {
@@ -236,7 +232,7 @@ object TipManager {
 
         // Show the survey tip first
         for (tip in listOfTips) {
-            if (tip.id == tip_take_survey && tip.shouldDisplay()) {
+            if (tip.id == R.string.tip_take_survey && tip.shouldDisplay()) {
                 listOfTips.remove(tip)
                 return tip
             }
@@ -244,7 +240,7 @@ object TipManager {
 
         // Always show the disable tip if it's ready to be displayed
         for (tip in listOfTips) {
-            if (tip.id == tip_disable_tips2 && tip.shouldDisplay()) {
+            if (tip.id == R.string.tip_disable_tips2 && tip.shouldDisplay()) {
                 listOfTips.remove(tip)
                 return tip
             }

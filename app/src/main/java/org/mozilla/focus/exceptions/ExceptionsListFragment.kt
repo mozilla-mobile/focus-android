@@ -4,14 +4,9 @@
 
 package org.mozilla.focus.exceptions
 
-import androidx.fragment.app.Fragment
 import android.content.Context
 import android.graphics.Color
 import android.os.Bundle
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import androidx.recyclerview.widget.ItemTouchHelper
-import androidx.recyclerview.widget.ItemTouchHelper.SimpleCallback
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuInflater
@@ -22,13 +17,17 @@ import android.view.ViewGroup
 import android.widget.CheckBox
 import android.widget.CompoundButton
 import android.widget.TextView
+import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.ItemTouchHelper
+import androidx.recyclerview.widget.ItemTouchHelper.SimpleCallback
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.fragment_exceptions_domains.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.Dispatchers.Main
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import mozilla.components.concept.engine.content.blocking.TrackingProtectionException
 import org.mozilla.focus.R
@@ -36,9 +35,8 @@ import org.mozilla.focus.autocomplete.AutocompleteDomainFormatter
 import org.mozilla.focus.ext.components
 import org.mozilla.focus.ext.requireComponents
 import org.mozilla.focus.settings.BaseSettingsFragment
-import org.mozilla.focus.telemetry.TelemetryWrapper
-import java.util.Collections
 import org.mozilla.focus.utils.ViewUtils
+import java.util.Collections
 import kotlin.coroutines.CoroutineContext
 
 typealias DomainFormatter = (String) -> String

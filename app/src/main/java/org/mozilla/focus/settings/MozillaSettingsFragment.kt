@@ -12,7 +12,11 @@ import org.mozilla.focus.R
 import org.mozilla.focus.browser.LocalizedContent
 import org.mozilla.focus.ext.components
 import org.mozilla.focus.telemetry.TelemetryWrapper
-import org.mozilla.focus.utils.*
+import org.mozilla.focus.utils.AppConstants
+import org.mozilla.focus.utils.SupportUtils
+import org.mozilla.focus.utils.createTab
+import org.mozilla.focus.utils.homeScreenTipsExperimentDescriptor
+import org.mozilla.focus.utils.isInExperiment
 
 class MozillaSettingsFragment : BaseSettingsFragment(),
     SharedPreferences.OnSharedPreferenceChangeListener {

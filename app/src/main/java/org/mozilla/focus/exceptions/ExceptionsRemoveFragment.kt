@@ -10,7 +10,6 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import kotlinx.android.synthetic.main.fragment_exceptions_domains.*
 import kotlinx.coroutines.Dispatchers.Main
-import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import org.mozilla.focus.R
 import org.mozilla.focus.ext.components

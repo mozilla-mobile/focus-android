@@ -77,7 +77,6 @@ internal class BlockingItemViewHolder(
 
                 sessionUseCases.reload(fragment.session)
             }
-
         }, THUMB_ANIMATION_DURATION)
     }
 

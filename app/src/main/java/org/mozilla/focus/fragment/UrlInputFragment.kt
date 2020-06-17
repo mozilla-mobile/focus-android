@@ -50,7 +50,15 @@ import org.mozilla.focus.searchsuggestions.ui.SearchSuggestionsFragment
 import org.mozilla.focus.telemetry.TelemetryWrapper
 import org.mozilla.focus.tips.Tip
 import org.mozilla.focus.tips.TipManager
-import org.mozilla.focus.utils.*
+import org.mozilla.focus.utils.AppConstants
+import org.mozilla.focus.utils.Features
+import org.mozilla.focus.utils.OneShotOnPreDrawListener
+import org.mozilla.focus.utils.Settings
+import org.mozilla.focus.utils.StatusBarUtils
+import org.mozilla.focus.utils.SupportUtils
+import org.mozilla.focus.utils.UrlUtils
+import org.mozilla.focus.utils.ViewUtils
+import org.mozilla.focus.utils.createTab
 import org.mozilla.focus.whatsnew.WhatsNew
 import java.util.Objects
 import kotlin.coroutines.CoroutineContext
@@ -734,24 +742,6 @@ class UrlInputFragment :
         if (!searchTerms.isNullOrEmpty()) {
             session?.searchTerms = searchTerms
         }
-
-        //
-
-        // Replace all fragments with a fresh browser fragment. This means we either remove the
-        // HomeFragment with an UrlInputFragment on top or an old BrowserFragment with an
-        // UrlInputFragment.
-        //val browserFragment = fragmentManager.findFragmentByTag(BrowserFragment.FRAGMENT_TAG)
-
-        //if (browserFragment != null && browserFragment is BrowserFragment && browserFragment.isVisible) {
-            // Reuse existing visible fragment - in this case we know the user is already browsing.
-            // The fragment might exist if we "erased" a browsing session, hence we need to check
-            // for visibility in addition to existence.
-
-
-            // And this fragment can be removed again.
-        /*
-
-         */
 
         val fragmentManager = requireActivity().supportFragmentManager
 

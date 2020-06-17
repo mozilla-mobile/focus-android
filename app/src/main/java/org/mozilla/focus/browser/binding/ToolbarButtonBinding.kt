@@ -41,6 +41,5 @@ class ToolbarButtonBinding(
 
         refreshButton.visibility = if (isLoading) View.GONE else View.VISIBLE
         stopButton.visibility = if (isLoading) View.VISIBLE else View.GONE
-
     }
 }
