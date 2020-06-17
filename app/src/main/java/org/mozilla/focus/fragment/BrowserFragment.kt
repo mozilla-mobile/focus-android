@@ -49,7 +49,6 @@ import mozilla.components.feature.contextmenu.ContextMenuFeature
 import mozilla.components.feature.downloads.AbstractFetchDownloadService
 import mozilla.components.feature.downloads.DownloadsFeature
 import mozilla.components.feature.downloads.manager.FetchDownloadManager
-import mozilla.components.feature.findinpage.FindInPageFeature
 import mozilla.components.feature.findinpage.view.FindInPageBar
 import mozilla.components.feature.prompts.PromptFeature
 import mozilla.components.feature.session.FullScreenFeature
@@ -74,6 +73,7 @@ import org.mozilla.focus.browser.binding.ProgressBinding
 import org.mozilla.focus.browser.binding.SecurityInfoBinding
 import org.mozilla.focus.browser.binding.ToolbarButtonBinding
 import org.mozilla.focus.browser.binding.UrlBinding
+import org.mozilla.focus.browser.integration.FindInPageIntegration
 import org.mozilla.focus.downloads.DownloadService
 import org.mozilla.focus.ext.isSearch
 import org.mozilla.focus.ext.requireComponents
@@ -118,11 +118,11 @@ class BrowserFragment :
     private var popupTint: FrameLayout? = null
 
     private var toolbarView: DisplayToolbar? = null
-    private var findInPageView: FindInPageBar? = null
     private var engineView: EngineView? = null
 
+    private val findInPageIntegration = ViewBoundFeatureWrapper<FindInPageIntegration>()
+
     private val sessionFeature = ViewBoundFeatureWrapper<SessionFeature>()
-    private val findInPageFeature = ViewBoundFeatureWrapper<FindInPageFeature>()
     private val fullScreenFeature = ViewBoundFeatureWrapper<FullScreenFeature>()
     private val promptFeature = ViewBoundFeatureWrapper<PromptFeature>()
     private val contextMenuIntegration = ViewBoundFeatureWrapper<ContextMenuFeature>()
@@ -220,20 +220,16 @@ class BrowserFragment :
 
         val components = requireComponents
 
-        findInPageView = view.findViewById<FindInPageBar>(R.id.find_in_page)
-
         engineView = (view.findViewById<View>(R.id.webview) as EngineView)
 
         val progressView = view.findViewById<View>(R.id.progress) as AnimatedProgressBar
         val menuView = view.findViewById<View>(R.id.menuView) as ImageButton
 
-        findInPageFeature.set(FindInPageFeature(
-                components.store,
-            findInPageView!!,
-            engineView as EngineView
-        ) {
-            findInPageView?.visibility = View.GONE
-        }, this, view)
+        findInPageIntegration.set(FindInPageIntegration(
+            components.store,
+            view.findViewById<FindInPageBar>(R.id.find_in_page),
+            engineView!!
+        ), this, view)
 
         fullScreenFeature.set(FullScreenFeature(
             components.sessionManager,
@@ -785,7 +781,7 @@ class BrowserFragment :
 
     @Suppress("ComplexMethod")
     fun onBackPressed(): Boolean {
-        if (findInPageFeature.onBackPressed()) {
+        if (findInPageIntegration.onBackPressed()) {
             return true
         } else if (fullScreenFeature.onBackPressed()) {
             return true
@@ -1008,8 +1004,7 @@ class BrowserFragment :
             R.id.find_in_page -> {
                 val sessionState = requireComponents.store.state.findTab(session.id)
                 if (sessionState != null) {
-                    findInPageView?.visibility = View.VISIBLE
-                    findInPageFeature.get()?.bind(sessionState)
+                    findInPageIntegration.get()?.show(sessionState)
                 }
                 TelemetryWrapper.findInPageMenuEvent()
             }
