@@ -123,7 +123,7 @@ class BrowserFragment :
     private val sessionFeature = ViewBoundFeatureWrapper<SessionFeature>()
     private val fullScreenFeature = ViewBoundFeatureWrapper<FullScreenFeature>()
     private val promptFeature = ViewBoundFeatureWrapper<PromptFeature>()
-    private val contextMenuIntegration = ViewBoundFeatureWrapper<ContextMenuFeature>()
+    private val contextMenuFeature = ViewBoundFeatureWrapper<ContextMenuFeature>()
     private val downloadsFeature = ViewBoundFeatureWrapper<DownloadsFeature>()
 
     private val urlBinding = ViewBoundFeatureWrapper<UrlBinding>()
@@ -205,6 +205,7 @@ class BrowserFragment :
         return view
     }
 
+    @Suppress("ComplexCondition", "LongMethod")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -231,7 +232,7 @@ class BrowserFragment :
             ::fullScreenChanged
         ), this, view)
 
-        contextMenuIntegration.set(ContextMenuFeature(
+        contextMenuFeature.set(ContextMenuFeature(
             requireFragmentManager(),
             components.store,
             ContextMenuCandidate.defaultCandidates(
@@ -656,7 +657,10 @@ class BrowserFragment :
 
                 Toast.makeText(
                     context,
-                    getString(mozilla.components.feature.downloads.R.string.mozac_feature_downloads_open_not_supported, extension),
+                    getString(
+                        mozilla.components.feature.downloads.R.string.mozac_feature_downloads_open_not_supported,
+                        extension
+                    ),
                     Toast.LENGTH_LONG
                 ).show()
             }
@@ -772,7 +776,7 @@ class BrowserFragment :
         }
     }
 
-    @Suppress("ComplexMethod")
+    @Suppress("ComplexMethod", "ReturnCount")
     fun onBackPressed(): Boolean {
         if (findInPageIntegration.onBackPressed()) {
             return true
@@ -825,7 +829,8 @@ class BrowserFragment :
 
         requireComponents.sessionManager.removeAndCloseSession(session)
 
-        // TODO: Do we need to clear more data here?
+        // Temporary workaround until we get https://bugzilla.mozilla.org/show_bug.cgi?id=1644156
+        // See comment in TabUtils.createTab().
         requireComponents.engine.clearData(Engine.BrowsingData.all())
     }
 
@@ -893,16 +898,12 @@ class BrowserFragment :
             }
 
             R.id.open_in_firefox_focus -> {
+                // Release the session from this view so that it can immediately be rendered by a different view
+                engineView!!.release()
+
+                // Strip the CustomTabConfig to turn this Session into a regular tab and then select it
                 session.customTabConfig = null
-
                 requireComponents.sessionManager.select(session)
-
-                // TODO: Switching from custom tab to browser
-                /*
-                val webView = getWebView()
-                webView?.releaseGeckoSession()
-                webView?.saveWebViewState(session)
-                 */
 
                 val intent = Intent(context, MainActivity::class.java)
                 intent.action = Intent.ACTION_MAIN

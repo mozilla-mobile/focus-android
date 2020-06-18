@@ -43,7 +43,10 @@ class BrowserMenu(
 
         if (customTabConfig != null) {
             val brandingView = view.findViewById<TextView>(R.id.branding)
-            brandingView.text = context.getString(R.string.menu_custom_tab_branding, context.getString(R.string.app_name))
+            brandingView.text = context.getString(
+                R.string.menu_custom_tab_branding,
+                context.getString(R.string.app_name)
+            )
             brandingView.visibility = View.VISIBLE
         }
 

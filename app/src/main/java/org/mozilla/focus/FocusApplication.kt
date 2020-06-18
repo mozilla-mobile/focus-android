@@ -34,7 +34,6 @@ import org.mozilla.focus.utils.EXPERIMENTS_BUCKET_NAME
 import org.mozilla.focus.utils.EXPERIMENTS_COLLECTION_NAME
 import org.mozilla.focus.utils.EXPERIMENTS_JSON_FILENAME
 import org.mozilla.focus.utils.StethoWrapper
-import org.mozilla.focus.web.CleanupSessionObserver
 import java.io.File
 import kotlin.coroutines.CoroutineContext
 
@@ -53,11 +52,10 @@ class FocusApplication : LocaleAwareApplication(), CoroutineScope {
     override fun onCreate() {
         super.onCreate()
 
-        // TODO: Figure out what to do in child processes..
-        if (isMainProcess()) {
-            Log.addSink(AndroidLogSink("Focus"))
-            CrashReporterWrapper.init(this)
+        Log.addSink(AndroidLogSink("Focus"))
+        CrashReporterWrapper.init(this)
 
+        if (isMainProcess()) {
             StethoWrapper.init(this)
 
             PreferenceManager.setDefaultValues(this, R.xml.settings, false)
@@ -83,7 +81,6 @@ class FocusApplication : LocaleAwareApplication(), CoroutineScope {
             components.sessionManager.apply {
                 register(NotificationSessionObserver(this@FocusApplication))
                 register(TelemetrySessionObserver())
-                register(CleanupSessionObserver(this@FocusApplication))
             }
 
             launch(IO) { fretboard.updateExperiments() }

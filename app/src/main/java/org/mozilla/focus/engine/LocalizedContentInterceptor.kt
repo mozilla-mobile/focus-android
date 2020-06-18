@@ -14,7 +14,12 @@ import org.mozilla.focus.browser.LocalizedContent
 class LocalizedContentInterceptor(
     private val context: Context
 ) : RequestInterceptor {
-    override fun onLoadRequest(engineSession: EngineSession, uri: String, hasUserGesture: Boolean, isSameDomain: Boolean): RequestInterceptor.InterceptionResponse? {
+    override fun onLoadRequest(
+        engineSession: EngineSession,
+        uri: String,
+        hasUserGesture: Boolean,
+        isSameDomain: Boolean
+    ): RequestInterceptor.InterceptionResponse? {
         return when (uri) {
             LocalizedContent.URL_ABOUT -> RequestInterceptor.InterceptionResponse.Content(
                 LocalizedContent.loadAbout(context)
@@ -28,7 +33,11 @@ class LocalizedContentInterceptor(
         }
     }
 
-    override fun onErrorRequest(session: EngineSession, errorType: ErrorType, uri: String?): RequestInterceptor.ErrorResponse? {
+    override fun onErrorRequest(
+        session: EngineSession,
+        errorType: ErrorType,
+        uri: String?
+    ): RequestInterceptor.ErrorResponse? {
         val errorPage = ErrorPages.createUrlEncodedErrorPage(context, errorType, uri)
         return RequestInterceptor.ErrorResponse.Uri(errorPage)
     }

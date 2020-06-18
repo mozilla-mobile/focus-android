@@ -33,6 +33,7 @@ class ToolbarButtonBinding(
             }
     }
 
+    @Suppress("MagicNumber")
     private fun onTabChanged(canGoBack: Boolean, canGoForward: Boolean, isLoading: Boolean) {
         forwardButton.isEnabled = canGoForward
         forwardButton.alpha = if (canGoForward) 1.0f else 0.5f

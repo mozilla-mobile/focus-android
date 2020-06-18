@@ -10,7 +10,7 @@ fun createTab(
     url: String,
     source: Session.Source = Session.Source.NONE
 ): Session {
-    // TODO: Creating a non-private Session as a workaround here. This needs to be an actual private
+    // Creating a non-private Session as a workaround here. This needs to be an actual private
     // session before we can land this. With a private session we are currently not able to save
     // any tracking protection exceptions, see:
     // https://bugzilla.mozilla.org/show_bug.cgi?id=1644156

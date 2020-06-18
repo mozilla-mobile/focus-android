@@ -27,7 +27,9 @@ class BlockingThemeBinding(
     private val urlBar: View,
     private val blockView: View
 ) : AbstractBinding(store) {
-    private var backgroundTransitionGroup: TransitionDrawableGroup? = updateResources(session.isCustomTabSession(), true)
+    private var backgroundTransitionGroup: TransitionDrawableGroup? = updateResources(
+        session.isCustomTabSession(), enabled = true
+    )
     private var hasLoadedOnce = false
     private var trackingProtectionDisabled = false
 
