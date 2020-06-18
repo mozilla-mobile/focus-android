@@ -22,11 +22,19 @@ class LocalizedContentInterceptor(
     ): RequestInterceptor.InterceptionResponse? {
         return when (uri) {
             LocalizedContent.URL_ABOUT -> RequestInterceptor.InterceptionResponse.Content(
-                LocalizedContent.loadAbout(context)
+                LocalizedContent.loadAbout(context), encoding = "base64"
             )
 
             LocalizedContent.URL_RIGHTS -> RequestInterceptor.InterceptionResponse.Content(
-                LocalizedContent.loadRights(context)
+                LocalizedContent.loadRights(context), encoding = "base64"
+            )
+
+            LocalizedContent.URL_GPL -> RequestInterceptor.InterceptionResponse.Content(
+                LocalizedContent.loadGPL(context), encoding = "base64"
+            )
+
+            LocalizedContent.URL_LICENSES -> RequestInterceptor.InterceptionResponse.Content(
+                LocalizedContent.loadLicenses(context), encoding = "base64"
             )
 
             else -> null
@@ -41,4 +49,6 @@ class LocalizedContentInterceptor(
         val errorPage = ErrorPages.createUrlEncodedErrorPage(context, errorType, uri)
         return RequestInterceptor.ErrorResponse.Uri(errorPage)
     }
+
+    override fun interceptsAppInitiatedRequests() = true
 }
