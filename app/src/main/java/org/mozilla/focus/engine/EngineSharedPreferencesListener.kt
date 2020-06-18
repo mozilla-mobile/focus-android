@@ -32,6 +32,9 @@ class EngineSharedPreferencesListener(
 
             context.getString(R.string.pref_key_remote_debugging) ->
                 updateRemoteDebugging()
+
+            context.getString(R.string.pref_key_performance_block_webfonts) ->
+                updateWebFontsBlocking()
         }
     }
 
@@ -58,5 +61,13 @@ class EngineSharedPreferencesListener(
     private fun updateRemoteDebugging() {
         context.components.engine.settings.remoteDebuggingEnabled =
             Settings.getInstance(context).shouldEnableRemoteDebugging()
+    }
+
+    private fun updateWebFontsBlocking() {
+        val settings = Settings.getInstance(context)
+        val components = context.components
+
+        components.engineDefaultSettings.webFontsEnabled = !settings.shouldBlockWebFonts()
+        components.engine.settings.webFontsEnabled = !settings.shouldBlockWebFonts()
     }
 }
