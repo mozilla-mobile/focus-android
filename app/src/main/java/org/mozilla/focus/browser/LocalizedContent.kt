@@ -32,7 +32,11 @@ object LocalizedContent {
             val engineIndicator = BuildConfig.MOZ_APP_VERSION + "-" + BuildConfig.MOZ_APP_BUILDID
             val packageInfo = context.packageManager.getPackageInfo(context.packageName, 0)
             @Suppress("DEPRECATION")
-            aboutVersion = String.format("%s (Build #%s)", packageInfo.versionName, packageInfo.versionCode.toString() + engineIndicator)
+            aboutVersion = String.format(
+                "%s (Build #%s)",
+                packageInfo.versionName,
+                packageInfo.versionCode.toString() + engineIndicator
+            )
         } catch (e: PackageManager.NameNotFoundException) {
             // Nothing to do if we can't find the package name.
         }

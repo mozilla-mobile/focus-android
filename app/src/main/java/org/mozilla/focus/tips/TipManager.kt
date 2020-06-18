@@ -41,8 +41,13 @@ class Tip(val id: Int, val text: String, val shouldDisplay: () -> Boolean, val d
             }
 
             val shouldDisplayAllowListTip = {
-                // TODO: How to make this async?
-                // ExceptionDomains.load(context).isEmpty()
+                // Since the refactoring from a custom exception list to using the
+                // exceotion list in Gecko, this method always returns false. To
+                // determine whether we would like to show it, we'd need to query
+                // Gecko asynchronously. But since the TipManager calls all those
+                // methods synchronously, this is not really possible wihtout
+                // refactoring TipManager. At this time it is easier to just not
+                // show this tip.
                 false
             }
 
