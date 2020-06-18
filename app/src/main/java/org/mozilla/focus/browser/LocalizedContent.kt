@@ -18,6 +18,8 @@ object LocalizedContent {
     // a custom scheme.
     const val URL_ABOUT = "focus:about"
     const val URL_RIGHTS = "focus:rights"
+    const val URL_GPL = "focus:gpl"
+    const val URL_LICENSES = "focus:licenses"
 
     /**
      * Load the content for focus:about
@@ -58,9 +60,9 @@ object LocalizedContent {
         val appName = context.resources.getString(R.string.app_name)
         val mplUrl = "https://www.mozilla.org/en-US/MPL/"
         val trademarkPolicyUrl = "https://www.mozilla.org/foundation/trademarks/policy/"
-        val gplUrl = "gpl.html"
+        val gplUrl = "focus:gpl"
         val trackingProtectionUrl = "https://wiki.mozilla.org/Security/Tracking_protection#Lists"
-        val licensesUrl = "licenses.html"
+        val licensesUrl = "focus:licenses"
         val content1 = resources.getString(R.string.your_rights_content1, appName)
         substitutionMap["%your-rights-content1%"] = content1
         val content2 = resources.getString(R.string.your_rights_content2, appName, mplUrl)
@@ -73,6 +75,14 @@ object LocalizedContent {
         substitutionMap["%your-rights-content5%"] = content5
         putLayoutDirectionIntoMap(substitutionMap, context)
         return HtmlLoader.loadResourceFile(context, R.raw.rights, substitutionMap)
+    }
+
+    fun loadLicenses(context: Context): String {
+        return HtmlLoader.loadResourceFile(context, R.raw.licenses, emptyMap())
+    }
+
+    fun loadGPL(context: Context): String {
+        return HtmlLoader.loadResourceFile(context, R.raw.gpl, emptyMap())
     }
 
     private fun putLayoutDirectionIntoMap(substitutionMap: MutableMap<String, String>, context: Context) {
