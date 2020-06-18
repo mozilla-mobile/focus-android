@@ -16,6 +16,7 @@ import androidx.test.uiautomator.UiSelector;
 import junit.framework.Assert;
 
 import org.junit.After;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -34,6 +35,7 @@ import static org.mozilla.focus.fragment.FirstrunFragment.FIRSTRUN_PREF;
 import static org.mozilla.focus.helpers.TestHelper.waitingTime;
 
 @RunWith(AndroidJUnit4.class)
+@Ignore("This test was written specifically for WebView and needs to be adapted for GeckoView")
 public class LocalSessionStorageTest {
     public static final String SESSION_STORAGE_HIT = "Session storage has value";
     public static final String LOCAL_STORAGE_MISS = "Local storage empty";
@@ -53,9 +55,6 @@ public class LocalSessionStorageTest {
                     .edit()
                     .putBoolean(FIRSTRUN_PREF, true)
                     .apply();
-
-            // This test is for webview only. Debug is defaulted to Webview, and Klar is used for GV testing.
-            org.junit.Assume.assumeTrue(!AppConstants.INSTANCE.isGeckoBuild() && !AppConstants.INSTANCE.isKlarBuild());
 
             webServer = new MockWebServer();
 
