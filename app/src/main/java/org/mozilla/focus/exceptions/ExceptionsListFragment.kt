@@ -35,6 +35,7 @@ import org.mozilla.focus.autocomplete.AutocompleteDomainFormatter
 import org.mozilla.focus.ext.components
 import org.mozilla.focus.ext.requireComponents
 import org.mozilla.focus.settings.BaseSettingsFragment
+import org.mozilla.focus.telemetry.TelemetryWrapper
 import org.mozilla.focus.utils.ViewUtils
 import java.util.Collections
 import kotlin.coroutines.CoroutineContext
@@ -118,9 +119,7 @@ open class ExceptionsListFragment : Fragment(), CoroutineScope {
         removeAllExceptions.setOnClickListener {
             requireComponents.trackingProtectionUseCases.removeAllExceptions()
 
-            // val domains = ExceptionDomains.load(context!!)
-            // TelemetryWrapper.removeAllExceptionDomains(domains.size)
-            // ExceptionDomains.remove(context!!, domains)
+            TelemetryWrapper.removeAllExceptionDomains()
 
             fragmentManager!!.popBackStack()
         }
