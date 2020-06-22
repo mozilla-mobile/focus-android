@@ -107,9 +107,11 @@ open class ExceptionsListFragment : Fragment(), CoroutineScope {
     ): View = inflater.inflate(R.layout.fragment_exceptions_domains, container, false)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        val adapter = DomainListAdapter()
+
         exceptionList.layoutManager =
                 LinearLayoutManager(activity, RecyclerView.VERTICAL, false)
-        exceptionList.adapter = DomainListAdapter()
+        exceptionList.adapter = adapter
         exceptionList.setHasFixedSize(true)
 
         if (!isSelectionMode()) {
@@ -119,7 +121,7 @@ open class ExceptionsListFragment : Fragment(), CoroutineScope {
         removeAllExceptions.setOnClickListener {
             requireComponents.trackingProtectionUseCases.removeAllExceptions()
 
-            TelemetryWrapper.removeAllExceptionDomains()
+            TelemetryWrapper.removeAllExceptionDomains(adapter.itemCount)
 
             fragmentManager!!.popBackStack()
         }
