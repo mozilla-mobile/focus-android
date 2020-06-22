@@ -196,12 +196,6 @@ class BrowserFragment :
         val blockIcon = view.findViewById<View>(R.id.block_image) as ImageView
         blockIcon.setImageResource(R.drawable.ic_tracking_protection_disabled)
 
-        if (session.isCustomTabSession()) {
-            initialiseCustomTabUi(view)
-        } else {
-            initialiseNormalBrowserUi(view)
-        }
-
         return view
     }
 
@@ -367,6 +361,12 @@ class BrowserFragment :
             stopButton.setOnClickListener(this)
             forwardButton.setOnClickListener(this)
             backButton.setOnClickListener(this)
+        }
+
+        if (session.isCustomTabSession()) {
+            initialiseCustomTabUi(view)
+        } else {
+            initialiseNormalBrowserUi(view)
         }
     }
 
