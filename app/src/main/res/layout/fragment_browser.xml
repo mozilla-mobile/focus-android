@@ -94,17 +94,6 @@
                 mozac:findInPageResultCountTextColor="#ff000000"
                 android:visibility="gone" />
 
-            <!--
-            <include
-                android:id="@+id/find_in_page"
-                layout="@layout/find_in_page"
-                android:layout_height="wrap_content"
-                android:layout_width="match_parent"
-                android:layout_gravity="bottom"
-                android:visibility="gone"
-                app:layout_behavior="@string/appbar_scrolling_view_behavior"
-                app:layout_insetEdge="bottom"/>
-            -->
         </org.mozilla.focus.widget.ResizableKeyboardCoordinatorLayout>
     </LinearLayout>
 
