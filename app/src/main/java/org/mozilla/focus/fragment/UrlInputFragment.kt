@@ -829,6 +829,10 @@ class UrlInputFragment :
     }
 
     override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences, key: String) {
-        if (key == activity?.getString(R.string.pref_key_homescreen_tips)) { updateTipsLabel() }
+        if (key == activity?.getString(R.string.pref_key_locale)) {
+            updateTipsLabel()
+        } else if (key == activity?.getString(R.string.pref_key_homescreen_tips)) {
+            updateTipsLabel()
+        }
     }
 }
