@@ -923,6 +923,7 @@ class BrowserFragment : WebFragment(), LifecycleObserver, View.OnClickListener,
 	// files downloaded to directories not owned by the application will
 	// be scanned automatically
 	if (Build.VERSION.SDK_INT < Build.VERSION_CODES.Q) {
+	    @Suppress("DEPRECATION")
             request.allowScanningByMediaScanner()
 	}
 
