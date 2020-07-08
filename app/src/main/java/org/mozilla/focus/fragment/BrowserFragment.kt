@@ -1308,7 +1308,7 @@ class BrowserFragment : WebFragment(), LifecycleObserver, View.OnClickListener,
             if (session.isCustomTabSession()) {
                 val clipBoard = context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
                 val uri = Uri.parse(url)
-                clipBoard.primaryClip = ClipData.newRawUri("Uri", uri)
+                clipBoard.setPrimaryClip(ClipData.newRawUri("Uri", uri))
                 Toast.makeText(context, getString(R.string.custom_tab_copy_url_action), Toast.LENGTH_SHORT).show()
             }
         }

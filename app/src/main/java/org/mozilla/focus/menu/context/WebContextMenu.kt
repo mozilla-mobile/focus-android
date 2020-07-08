@@ -271,7 +271,7 @@ object WebContextMenu {
                     }
 
                     val clip = ClipData.newUri(dialog.context.contentResolver, "URI", uri)
-                    clipboard.primaryClip = clip
+                    clipboard.setPrimaryClip(clip)
                     true
                 }
                 else -> throw IllegalArgumentException("Unhandled menu item id=" + item.itemId)
