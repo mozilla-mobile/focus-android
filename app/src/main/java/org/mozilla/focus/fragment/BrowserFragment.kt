@@ -919,7 +919,12 @@ class BrowserFragment : WebFragment(), LifecycleObserver, View.OnClickListener,
             return
         }
 
-        request.allowScanningByMediaScanner()
+	// Starting in Q, allowScanningByMediaScanner is deprecated and
+	// files downloaded to directories not owned by the application will
+	// be scanned automatically
+	if (Build.VERSION.SDK_INT < Build.VERSION_CODES.Q) {
+            request.allowScanningByMediaScanner()
+	}
 
         @Suppress("TooGenericExceptionCaught")
         try {
