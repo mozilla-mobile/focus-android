@@ -188,7 +188,7 @@ class SystemWebView(context: Context, attrs: AttributeSet) : NestedWebView(conte
         this.setFindListener(findListener as WebView.FindListener)
     }
 
-    override fun loadUrl(url: String?) {
+    override fun loadUrl(url: String) {
         // We need to check external URL handling here - shouldOverrideUrlLoading() is only
         // called by webview when clicking on a link, and not when opening a new page for the
         // first time using loadUrl().
