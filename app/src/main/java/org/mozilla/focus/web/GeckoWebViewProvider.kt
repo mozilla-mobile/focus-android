@@ -708,7 +708,8 @@ class GeckoWebViewProvider : IWebViewProvider {
                             storage.save(it)
                         }
                     } catch (e: JSONException) {
-                        Log.e("getSnapshots failed", e.message)
+			logmsg = e.message ?: "deadbeef"
+                        Log.e("getSnapshots failed", logmsg)
                     }
                 }
 
