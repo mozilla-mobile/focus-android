@@ -30,7 +30,7 @@ class InfoActivity : LocaleAwareAppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_info)
-        url = intent.getStringExtra(EXTRA_URL)
+        url = intent.getStringExtra(EXTRA_URL) ?: "deadbeef"
         val title = intent.getStringExtra(EXTRA_TITLE)
         supportFragmentManager.beginTransaction()
             .replace(R.id.infofragment, InfoFragment.create(url))
