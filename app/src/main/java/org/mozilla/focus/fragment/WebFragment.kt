@@ -91,7 +91,7 @@ abstract class WebFragment : LocaleAwareFragment() {
         // about the new language. See issue #666.
 	val unneeded_context = getContext()
 	if (unneeded_context != null) {
-           val unneeded = WebView(getContext())
+           val unneeded = WebView(unneeded_context)
            unneeded.destroy()
 	}
     }
