@@ -10,6 +10,7 @@ import android.net.Uri;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import android.text.TextUtils;
+import android.util.Log;
 import android.webkit.URLUtil;
 import mozilla.components.browser.search.SearchEngine;
 import org.mozilla.focus.browser.LocalizedContent;
@@ -19,14 +20,19 @@ import java.net.URI;
 import java.net.URISyntaxException;
 
 public class UrlUtils {
+    /*
+    * getScheme for "en.wikipedia.org/wiki/Dracula:_Dead_and_Loving_It" returns "en.wikipedia.org/wiki/Dracula"
+    * Source : https://en.wikipedia.org/wiki/List_of_URI_schemes
+    * Schemes never contain capital letters and backslash
+    * */
     public static String normalize(@NonNull String input) {
         String trimmedInput = input.trim();
         Uri uri = Uri.parse(trimmedInput);
 
-        if (TextUtils.isEmpty(uri.getScheme())) {
+        String scheme = uri.getScheme();
+        if (scheme == null || TextUtils.isEmpty(scheme) || !scheme.equals(scheme.toLowerCase()) || scheme.contains("/")) {
             uri = Uri.parse("http://" + trimmedInput);
         }
-
         return uri.toString();
     }
 
