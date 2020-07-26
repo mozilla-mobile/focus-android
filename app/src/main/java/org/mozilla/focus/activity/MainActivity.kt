@@ -268,7 +268,7 @@ open class MainActivity : LocaleAwareAppCompatActivity() {
         val isNewSession = previousSessionCount < components.sessionManager.sessions.count() && previousSessionCount > 0
 
         if ((currentSession.source == Session.Source.ACTION_SEND ||
-                currentSession.source == Session.Source.HOME_SCREEN) && isNewSession) {
+                currentSession.source == Session.Source.HOME_SCREEN || currentSession.source == Session.Source.ACTION_VIEW) && isNewSession) {
             browserFragment.openedFromExternalLink = true
         }
 
