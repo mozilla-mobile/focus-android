@@ -251,7 +251,7 @@
   <string name="preference_safe_browsing_title">Potenziell gefährliche und betrügerische Websites blockieren</string>
   <string name="preference_safe_browsing_summary">Blockieren Sie gemeldete betrügerische Websites und solche, die Sie angreifen, Schadsoftware oder unerwünschte Software verteilen.</string>
   <string name="preference_exceptions">Ausnahmen</string>
-  <string name="preference_exceptions_description">Das Blockieren von Seitenelementen ist für diese Websites deaktiviert.</string>
+  <string name="preference_exceptions_description">Das Blockieren von Seitenelementen ist für diese Website deaktiviert.</string>
   <string name="preference_exceptions_menu_remove">Entfernen</string>
   <string name="preference_exceptions_remove_all_button_label">Alle Websites entfernen</string>
   <string name="tab_crash_report_title">Tab ist abgestürzt</string>
