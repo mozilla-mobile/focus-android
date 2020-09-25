@@ -189,7 +189,7 @@ public class LocaleListPreference extends ListPreference {
 
         String defaultLanguage = getContext().getString(R.string.preference_language_systemdefault);
         this.buildLocaleListTask = new BuildLocaleListTask(this, defaultLanguage,
-        characterValidator, LocaleManager.getPackagedLocaleTags(getContext()));
+                characterValidator, LocaleManager.getPackagedLocaleTags(getContext()));
         this.buildLocaleListTask.execute();
     }
 
@@ -216,44 +216,44 @@ public class LocaleListPreference extends ListPreference {
         }
 
         public LocaleDescriptor(Locale locale, String tag) {
-        this.tag = tag;
+            this.tag = tag;
 
-        final String displayName;
+            final String displayName;
 
-        if (languageCodeToNameMap.containsKey(locale.getLanguage())) {
-            displayName = languageCodeToNameMap.get(locale.getLanguage());
-        } else if (localeToNameMap.containsKey(locale.toLanguageTag())) {
-            displayName = localeToNameMap.get(locale.toLanguageTag());
-        } else {
-            displayName = locale.getDisplayName(locale);
-        }
-
-        if (TextUtils.isEmpty(displayName)) {
-            // There's nothing sane we can do.
-            Log.w(LOG_TAG, "Display name is empty. Using " + locale.toString());
-            this.nativeName = locale.toString();
-            return;
-        }
-
-        // For now, uppercase the first character of LTR locale names.
-        // This is pretty much what Android does. This is a reasonable hack
-        // for Bug 1014602, but it won't generalize to all locales.
-        final byte directionality = Character.getDirectionality(displayName.charAt(0));
-        if (directionality == Character.DIRECTIONALITY_LEFT_TO_RIGHT) {
-            String firstLetter = displayName.substring(0, 1);
-
-            // Android OS creates an instance of Transliterator to convert the first letter
-            // of the Greek locale. See CaseMapper.toUpperCase(Locale locale, String s, int count)
-            // Since it's already in upper case, we don't need it
-            if (!Character.isUpperCase(firstLetter.charAt(0))) {
-                firstLetter = firstLetter.toUpperCase(locale);
+            if (languageCodeToNameMap.containsKey(locale.getLanguage())) {
+                displayName = languageCodeToNameMap.get(locale.getLanguage());
+            } else if (localeToNameMap.containsKey(locale.toLanguageTag())) {
+                displayName = localeToNameMap.get(locale.toLanguageTag());
+            } else {
+                displayName = locale.getDisplayName(locale);
             }
-            this.nativeName = firstLetter + displayName.substring(1);
-            return;
-        }
 
-        this.nativeName = displayName;
-    }
+            if (TextUtils.isEmpty(displayName)) {
+                // There's nothing sane we can do.
+                Log.w(LOG_TAG, "Display name is empty. Using " + locale.toString());
+                this.nativeName = locale.toString();
+                return;
+            }
+
+            // For now, uppercase the first character of LTR locale names.
+            // This is pretty much what Android does. This is a reasonable hack
+            // for Bug 1014602, but it won't generalize to all locales.
+            final byte directionality = Character.getDirectionality(displayName.charAt(0));
+            if (directionality == Character.DIRECTIONALITY_LEFT_TO_RIGHT) {
+                String firstLetter = displayName.substring(0, 1);
+
+                // Android OS creates an instance of Transliterator to convert the first letter
+                // of the Greek locale. See CaseMapper.toUpperCase(Locale locale, String s, int count)
+                // Since it's already in upper case, we don't need it
+                if (!Character.isUpperCase(firstLetter.charAt(0))) {
+                    firstLetter = firstLetter.toUpperCase(locale);
+                }
+                this.nativeName = firstLetter + displayName.substring(1);
+                return;
+            }
+
+            this.nativeName = displayName;
+        }
 
         public String getTag() {
             return this.tag;
@@ -361,7 +361,7 @@ public class LocaleListPreference extends ListPreference {
         private final String systemDefaultLanguage;
 
         BuildLocaleListTask(LocaleListPreference listPreference, String systemDefaultLanguage,
-                CharacterValidator characterValidator, Collection<String> shippingLocales) {
+                            CharacterValidator characterValidator, Collection<String> shippingLocales) {
             this.characterValidator = characterValidator;
             this.shippingLocales = shippingLocales;
             this.systemDefaultLanguage = systemDefaultLanguage;
@@ -370,25 +370,25 @@ public class LocaleListPreference extends ListPreference {
 
         @Override
         protected Pair<String[], String[]> doInBackground(Void... voids) {
-        final LocaleDescriptor[] descriptors = getUsableLocales();
-        final int count = descriptors.length;
+            final LocaleDescriptor[] descriptors = getUsableLocales();
+            final int count = descriptors.length;
 
-        // We leave room for "System default".
-        final String[] entries = new String[count + 1];
-        final String[] values = new String[count + 1];
+            // We leave room for "System default".
+            final String[] entries = new String[count + 1];
+            final String[] values = new String[count + 1];
 
-        entries[0] = systemDefaultLanguage;
-        values[0] = "";
+            entries[0] = systemDefaultLanguage;
+            values[0] = "";
 
-        for (int i = 0; i < count; ++i) {
-        final String displayName = descriptors[i].getDisplayName();
-        final String tag = descriptors[i].getTag();
-        Log.v(LOG_TAG, displayName + " => " + tag);
-        entries[i + 1] = displayName;
-        values[i + 1] = tag;
-    }
-        return new Pair<>(entries, values);
-    }
+            for (int i = 0; i < count; ++i) {
+                final String displayName = descriptors[i].getDisplayName();
+                final String tag = descriptors[i].getTag();
+                Log.v(LOG_TAG, displayName + " => " + tag);
+                entries[i + 1] = displayName;
+                values[i + 1] = tag;
+            }
+            return new Pair<>(entries, values);
+        }
 
         /**
          * Not every locale we ship can be used on every device, due to
@@ -400,14 +400,14 @@ public class LocaleListPreference extends ListPreference {
             final int initialCount = shippingLocales.size();
             final Set<LocaleDescriptor> locales = new HashSet<>(initialCount);
             for (String tag : shippingLocales) {
-            final LocaleDescriptor descriptor = new LocaleDescriptor(tag);
-            if (!descriptor.isUsable(this.characterValidator)) {
-                Log.w(LOG_TAG, "Skipping locale " + tag + " on this device.");
-                continue;
-            }
+                final LocaleDescriptor descriptor = new LocaleDescriptor(tag);
+                if (!descriptor.isUsable(this.characterValidator)) {
+                    Log.w(LOG_TAG, "Skipping locale " + tag + " on this device.");
+                    continue;
+                }
 
-            locales.add(descriptor);
-        }
+                locales.add(descriptor);
+            }
             final int usableCount = locales.size();
             final LocaleDescriptor[] descriptors = locales.toArray(new LocaleDescriptor[usableCount]);
             Arrays.sort(descriptors, 0, usableCount);
