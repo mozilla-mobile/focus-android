@@ -7,19 +7,18 @@ package org.mozilla.focus.widget
 
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
-import android.content.Context
 import com.google.android.material.appbar.AppBarLayout
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import android.util.AttributeSet
 import android.view.View
+import kotlin.math.abs
 
 /**
  * A Behavior implementation that will hide/show a FloatingActionButton based on whether an AppBarLayout
  * is visible or not.
  */
 // This behavior is set from xml (fragment_browser.xml)
-class FloatingActionButtonBehavior(context: Context, attrs: AttributeSet) : CoordinatorLayout.Behavior<FloatingActionButton>(), AppBarLayout.OnOffsetChangedListener {
+class FloatingActionButtonBehavior : CoordinatorLayout.Behavior<FloatingActionButton>(), AppBarLayout.OnOffsetChangedListener {
 
     private var layout: AppBarLayout? = null
     private var button: FloatingActionButton? = null
@@ -65,7 +64,7 @@ class FloatingActionButtonBehavior(context: Context, attrs: AttributeSet) : Coor
 
         if (verticalOffset == 0 && !visible) {
             showButton()
-        } else if (Math.abs(verticalOffset) >= appBarLayout.totalScrollRange && visible) {
+        } else if (abs(verticalOffset) >= appBarLayout.totalScrollRange && visible) {
             hideButton()
         }
     }
