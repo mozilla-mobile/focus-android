@@ -22,7 +22,7 @@ import java.io.IOException
  * then this file can be removed.
  */
 
-class DrawableWrapper(val wrappedDrawable: Drawable) : Drawable() {
+open class DrawableWrapper(val wrappedDrawable: Drawable) : Drawable() {
 
     override fun draw(canvas: Canvas) {
         wrappedDrawable.draw(canvas)
