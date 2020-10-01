@@ -6,13 +6,13 @@
 package org.mozilla.focus.widget
 
 import android.content.Context
-import androidx.coordinatorlayout.widget.CoordinatorLayout
 import android.util.AttributeSet
+import android.widget.LinearLayout
 
 /**
  * A CoordinatorLayout implementation that resizes dynamically based on whether a keyboard is visible or not.
  */
-class ResizableKeyboardCoordinatorLayout @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0) : CoordinatorLayout(context, attrs, defStyleAttr) {
+class ResizableKeyboardLinearLayout @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0) : LinearLayout(context, attrs, defStyleAttr) {
     private val delegate: ResizableKeyboardViewDelegate
 
     init {
@@ -20,15 +20,19 @@ class ResizableKeyboardCoordinatorLayout @JvmOverloads constructor(context: Cont
         delegate = ResizableKeyboardViewDelegate(this, attrs!!)
     }
 
-    override fun onAttachedToWindow() {
+    public override fun onAttachedToWindow() {
         super.onAttachedToWindow()
 
         delegate.onAttachedToWindow()
     }
 
-    override fun onDetachedFromWindow() {
+    public override fun onDetachedFromWindow() {
         super.onDetachedFromWindow()
 
         delegate.onDetachedFromWindow()
+    }
+
+    fun reset() {
+        delegate.reset()
     }
 }
