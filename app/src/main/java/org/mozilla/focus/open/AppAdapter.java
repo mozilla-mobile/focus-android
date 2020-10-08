@@ -11,13 +11,15 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
 public class AppAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-    /* package */ static class App {
+    /* package */ public static class App {
         private final Context context;
         private final ActivityInfo info;
         private final String label;
@@ -41,7 +43,7 @@ public class AppAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         }
     }
 
-    /* package */ interface OnAppSelectedListener {
+    /* package */ public interface OnAppSelectedListener {
         void onAppSelected(App app);
     }
 
@@ -56,24 +58,20 @@ public class AppAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             apps.add(new App(context, info));
         }
 
-        Collections.sort(apps, new Comparator<App>() {
-            @Override
-            public int compare(App app1, App app2) {
-                return app1.getLabel().compareTo(app2.getLabel());
-            }
-        });
+        Collections.sort(apps, (app1, app2) -> app1.getLabel().compareTo(app2.getLabel()));
 
         this.apps = apps;
         this.store = store != null ? new App(context, store) : null;
     }
 
+    @NotNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         final LayoutInflater inflater = LayoutInflater.from(parent.getContext());
 
-        if (viewType == AppViewHolder.LAYOUT_ID) {
+        if (viewType == (int) AppViewHolder.LAYOUT_ID) {
             return new AppViewHolder(
-                    inflater.inflate(AppViewHolder.LAYOUT_ID, parent, false));
+                    inflater.inflate((int) AppViewHolder.LAYOUT_ID, parent, false));
         } else if (viewType == InstallBannerViewHolder.LAYOUT_ID) {
             return new InstallBannerViewHolder(
                     inflater.inflate(InstallBannerViewHolder.LAYOUT_ID, parent, false));
@@ -89,7 +87,7 @@ public class AppAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     @Override
     public int getItemViewType(int position) {
         if (position < apps.size()) {
-            return AppViewHolder.LAYOUT_ID;
+            return (int) AppViewHolder.LAYOUT_ID;
         } else {
             return InstallBannerViewHolder.LAYOUT_ID;
         }
@@ -99,7 +97,7 @@ public class AppAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         final int itemViewType = holder.getItemViewType();
 
-        if (itemViewType == AppViewHolder.LAYOUT_ID) {
+        if (itemViewType == (int) AppViewHolder.LAYOUT_ID) {
             bindApp(holder, position);
         } else if (itemViewType == InstallBannerViewHolder.LAYOUT_ID) {
             bindInstallBanner(holder);
