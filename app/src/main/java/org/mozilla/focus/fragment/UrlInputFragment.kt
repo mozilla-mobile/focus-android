@@ -10,7 +10,6 @@ import android.content.SharedPreferences
 import android.content.res.Configuration
 import android.graphics.drawable.TransitionDrawable
 import android.os.Bundle
-import android.preference.PreferenceManager
 import android.text.InputType
 import android.text.SpannableString
 import android.text.method.LinkMovementMethod
@@ -24,6 +23,7 @@ import android.widget.FrameLayout
 import android.widget.TextView
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.preference.PreferenceManager
 import kotlinx.android.synthetic.main.fragment_urlinput.*
 import kotlinx.android.synthetic.main.fragment_urlinput.view.*
 import kotlinx.coroutines.CoroutineScope
@@ -36,11 +36,13 @@ import mozilla.components.browser.domains.autocomplete.CustomDomainsProvider
 import mozilla.components.browser.domains.autocomplete.DomainAutocompleteResult
 import mozilla.components.browser.domains.autocomplete.ShippedDomainsProvider
 import mozilla.components.browser.session.Session
+import mozilla.components.browser.state.action.ContentAction
 import mozilla.components.browser.state.state.SessionState
 import mozilla.components.support.utils.ThreadUtils
 import mozilla.components.ui.autocomplete.InlineAutocompleteEditText
 import mozilla.components.ui.autocomplete.InlineAutocompleteEditText.AutocompleteResult
 import org.mozilla.focus.R
+import org.mozilla.focus.ext.contentState
 import org.mozilla.focus.ext.isSearch
 import org.mozilla.focus.ext.requireComponents
 import org.mozilla.focus.locale.LocaleAwareAppCompatActivity
@@ -324,12 +326,13 @@ class UrlInputFragment :
                     AppConstants.isGeckoBuild
 
         session?.let {
+            val contentState = requireComponents.store.contentState(it.id)
             urlView?.setText(
-                if (it.isSearch &&
+                if (contentState.isSearch &&
                     !geckoViewAndDDG &&
                     Features.SEARCH_TERMS_OR_URL
                 )
-                    it.searchTerms else
+                    contentState.searchTerms else
                     it.url
             )
 
@@ -741,7 +744,9 @@ class UrlInputFragment :
 
     private fun openUrl(url: String, searchTerms: String?) {
         if (!searchTerms.isNullOrEmpty()) {
-            session?.searchTerms = searchTerms
+            session?.let {
+                requireComponents.store.dispatch(ContentAction.UpdateSearchTermsAction(it.id, searchTerms))
+            }
         }
 
         val fragmentManager = requireActivity().supportFragmentManager
@@ -764,7 +769,7 @@ class UrlInputFragment :
         } else {
             val session = Session(url, source = SessionState.Source.USER_ENTERED)
             if (!searchTerms.isNullOrEmpty()) {
-                session.searchTerms = searchTerms
+                requireComponents.store.dispatch(ContentAction.UpdateSearchTermsAction(session.id, searchTerms))
             }
 
             requireComponents.sessionManager.add(session, selected = true)

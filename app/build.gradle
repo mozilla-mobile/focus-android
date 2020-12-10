@@ -6,15 +6,15 @@ apply plugin: 'kotlin-android-extensions'
 apply from: "$project.rootDir/tools/gradle/versionCode.gradle"
 
 android {
-    compileSdkVersion 28
+    compileSdkVersion 29
     buildToolsVersion '28.0.3'
     defaultConfig {
         applicationId "org.mozilla"
         minSdkVersion 21
-        targetSdkVersion 28
+        targetSdkVersion 29
         versionCode 11 // This versionCode is "frozen" for local builds. For "release" builds we
                        // override this with a generated versionCode at build time.
-        versionName "8.8.0"
+        versionName "8.11.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
         multiDexEnabled true
@@ -164,7 +164,7 @@ dependencies {
     implementation "org.mozilla.components:feature-customtabs:$mozilla_components_version"
     implementation "org.mozilla.components:lib-crash:$mozilla_components_version"
     implementation "org.mozilla.components:lib-fetch-httpurlconnection:$mozilla_components_version"
-    implementation "org.mozilla.components:service-telemetry:$mozilla_components_version"
+    implementation "org.mozilla.components:service-telemetry:$mozilla_components_version_telemetry"
     implementation "org.mozilla.components:service-fretboard:$mozilla_components_version", {
         exclude group: 'android.arch.work', module: 'work-runtime'
     }

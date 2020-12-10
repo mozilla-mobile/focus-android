@@ -12,12 +12,12 @@ import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
 import android.os.Parcelable
-import android.preference.PreferenceManager
 import android.text.TextUtils
 import android.util.AttributeSet
 import android.util.Log
 import android.view.View
 import android.webkit.WebSettings
+import androidx.preference.PreferenceManager
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -25,9 +25,9 @@ import mozilla.components.browser.errorpages.ErrorPages
 import mozilla.components.browser.errorpages.ErrorType
 import mozilla.components.browser.session.Session
 import mozilla.components.lib.crash.handler.CrashHandlerService
-import mozilla.components.support.ktx.android.util.Base64
 import org.mozilla.focus.R
 import org.mozilla.focus.browser.LocalizedContent
+import org.mozilla.focus.ext.savedGeckoSession
 import org.mozilla.focus.ext.savedWebViewState
 import org.mozilla.focus.gecko.GeckoViewPrompt
 import org.mozilla.focus.gecko.NestedGeckoView
@@ -94,6 +94,8 @@ class GeckoWebViewProvider : IWebViewProvider {
             }
             runtimeSettingsBuilder.contentBlocking(contentBlockingBuilder.build())
             runtimeSettingsBuilder.crashHandler(CrashHandlerService::class.java)
+            runtimeSettingsBuilder.consoleOutput(false)
+            runtimeSettingsBuilder.debugLogging(false)
 
             geckoRuntime =
                     GeckoRuntime.create(context.applicationContext, runtimeSettingsBuilder.build())
@@ -522,13 +524,12 @@ class GeckoWebViewProvider : IWebViewProvider {
                     uri: String?,
                     webRequestError: WebRequestError
                 ): GeckoResult<String> {
-                    ErrorPages.createErrorPage(
+                    val errorPage = ErrorPages.createUrlEncodedErrorPage(
                         context,
                         geckoErrorToErrorType(webRequestError.code),
                         uri
-                    ).apply {
-                        return GeckoResult.fromValue(Base64.encodeToUriString(this))
-                    }
+                    )
+                    return GeckoResult.fromValue(errorPage)
                 }
 
                 override fun onNewSession(
@@ -540,6 +541,13 @@ class GeckoWebViewProvider : IWebViewProvider {
                 }
 
                 override fun onLocationChange(session: GeckoSession, url: String?) {
+                    if (url == "about:blank") {
+                        // When we get about:blank from GV, our session observer had already updated
+                        // the toolbar to correct url and we incorrectly show the page url.
+                        // See also https://github.com/mozilla-mobile/android-components/issues/403
+                        Log.i(javaClass.simpleName, "Ignoring about:blank in onLocationChange")
+                        return
+                    }
                     var desiredUrl = url
                     // Save internal data: urls we should override to present focus:about, focus:rights
                     if (isLoadingInternalUrl) {
@@ -595,7 +603,7 @@ class GeckoWebViewProvider : IWebViewProvider {
 
         override fun restoreWebViewState(session: Session) {
             val stateData = session.savedWebViewState!!
-            val savedSession = stateData.getParcelable<GeckoSession>(GECKO_SESSION)!!
+            val savedSession = session.savedGeckoSession!!
 
             if (geckoSession != savedSession && !restored) {
                 // Tab changed, we need to close the default session and restore our saved session
@@ -612,9 +620,10 @@ class GeckoWebViewProvider : IWebViewProvider {
                     geckoSession.open(geckoRuntime!!)
                 }
                 setSession(geckoSession)
-            } else {
+            } else if (restored) {
                 // App was backgrounded and restored;
-                // GV restored the GeckoSession itself, but we need to restore our variables
+                geckoSession = savedSession
+                setSession(geckoSession)
                 canGoBack = stateData.getBoolean(CAN_GO_BACK, false)
                 canGoForward = stateData.getBoolean(CAN_GO_FORWARD, false)
                 isSecure = stateData.getBoolean(IS_SECURE, false)
@@ -635,13 +644,13 @@ class GeckoWebViewProvider : IWebViewProvider {
 
         override fun saveWebViewState(session: Session) {
             val sessionBundle = Bundle()
-            sessionBundle.putParcelable(GECKO_SESSION, geckoSession)
             sessionBundle.putBoolean(CAN_GO_BACK, canGoBack)
             sessionBundle.putBoolean(CAN_GO_FORWARD, canGoForward)
             sessionBundle.putBoolean(IS_SECURE, isSecure)
             sessionBundle.putString(WEBVIEW_TITLE, webViewTitle)
             sessionBundle.putString(CURRENT_URL, currentUrl)
             session.savedWebViewState = sessionBundle
+            session.savedGeckoSession = geckoSession
         }
 
         override fun getTitle(): String? {
@@ -692,7 +701,7 @@ class GeckoWebViewProvider : IWebViewProvider {
         ) {
             isLoadingInternalUrl = historyURL == LocalizedContent.URL_RIGHTS || historyURL ==
                     LocalizedContent.URL_ABOUT
-            geckoSession.loadData(data.toByteArray(Charsets.UTF_8), mimeType)
+            geckoSession.load(GeckoSession.Loader().data(data.toByteArray(Charsets.UTF_8), mimeType))
             currentUrl = historyURL
         }
 
@@ -723,7 +732,6 @@ class GeckoWebViewProvider : IWebViewProvider {
         const val PROGRESS_100 = 100
         const val CAN_GO_BACK = "canGoBack"
         const val CAN_GO_FORWARD = "canGoForward"
-        const val GECKO_SESSION = "geckoSession"
         const val IS_SECURE = "isSecure"
         const val WEBVIEW_TITLE = "webViewTitle"
         const val CURRENT_URL = "currentUrl"
