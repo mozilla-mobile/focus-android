@@ -8,12 +8,10 @@ package org.mozilla.focus.widget
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
 import android.animation.ValueAnimator
-import android.content.res.TypedArray
 import android.graphics.Rect
 import android.util.AttributeSet
 import android.view.View
 import android.view.ViewTreeObserver
-
 import org.mozilla.focus.R
 
 /**
@@ -21,7 +19,8 @@ import org.mozilla.focus.R
  * based on whether a keyboard is visible or not.
  *
  * Implementation based on:
- * https://github.com/mikepenz/MaterialDrawer/blob/master/library/src/main/java/com/mikepenz/materialdrawer/util/KeyboardUtil.java
+ * https://github.com/mikepenz/MaterialDrawer/blob/master/library/src/
+ *      main/java/com/mikepenz/materialdrawer/util/KeyboardUtil.java
  *
  * An optional viewToHideWhenActivated can be set: this is a View that will be hidden when the keyboard
  * is showing. That can be useful for things like FABs that you don't need when someone is typing.
@@ -29,7 +28,8 @@ import org.mozilla.focus.R
  * A View using this delegate needs to forward the calls to onAttachedToWindow() and onDetachedFromWindow()
  * to this class.
  */
-/* package */ internal class ResizableKeyboardViewDelegate/* package */(private val delegateView: View, attrs: AttributeSet) {
+/* package */ internal class ResizableKeyboardViewDelegate
+/* package */(private val delegateView: View, attrs: AttributeSet) {
     private val rect: Rect
     private var decorView: View? = null
 
@@ -37,6 +37,11 @@ import org.mozilla.focus.R
     private var viewToHide: View? = null
     private val shouldAnimate: Boolean
     private var isAnimating: Boolean = false
+
+    //Creating companion object to store constant variable
+    companion object {
+        private const val animateDuration: Long = 200
+    }
 
     private val layoutListener = ViewTreeObserver.OnGlobalLayoutListener {
         if (isAnimating) {
@@ -77,8 +82,10 @@ import org.mozilla.focus.R
                 0, 0)
 
         try {
-            idOfViewToHide = styleAttributeArray.getResourceId(R.styleable.ResizableKeyboardViewDelegate_viewToHideWhenActivated, -1)
-            shouldAnimate = styleAttributeArray.getBoolean(R.styleable.ResizableKeyboardViewDelegate_animate, false)
+            idOfViewToHide = styleAttributeArray.
+            getResourceId(R.styleable.ResizableKeyboardViewDelegate_viewToHideWhenActivated, -1)
+            shouldAnimate = styleAttributeArray.
+            getBoolean(R.styleable.ResizableKeyboardViewDelegate_animate, false)
         } finally {
             styleAttributeArray.recycle()
         }
@@ -112,10 +119,9 @@ import org.mozilla.focus.R
 
     private fun animateBottomPaddingTo(value: Int) {
         isAnimating = true
-
         val animator = ValueAnimator.ofInt(delegateView.paddingBottom, value)
         animator.addUpdateListener { animation -> delegateView.setPadding(0, 0, 0, animation.animatedValue as Int) }
-        animator.duration = 200
+        animator.duration = animateDuration
         animator.addListener(object : AnimatorListenerAdapter() {
             override fun onAnimationEnd(animation: Animator) {
                 isAnimating = false

@@ -7,10 +7,10 @@ package org.mozilla.focus.widget
 
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
-import com.google.android.material.appbar.AppBarLayout
-import androidx.coordinatorlayout.widget.CoordinatorLayout
-import com.google.android.material.floatingactionbutton.FloatingActionButton
 import android.view.View
+import androidx.coordinatorlayout.widget.CoordinatorLayout
+import com.google.android.material.appbar.AppBarLayout
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import kotlin.math.abs
 
 /**
@@ -18,7 +18,8 @@ import kotlin.math.abs
  * is visible or not.
  */
 // This behavior is set from xml (fragment_browser.xml)
-class FloatingActionButtonBehavior : CoordinatorLayout.Behavior<FloatingActionButton>(), AppBarLayout.OnOffsetChangedListener {
+class FloatingActionButtonBehavior : CoordinatorLayout.Behavior<FloatingActionButton>(),
+        AppBarLayout.OnOffsetChangedListener {
 
     private var layout: AppBarLayout? = null
     private var button: FloatingActionButton? = null

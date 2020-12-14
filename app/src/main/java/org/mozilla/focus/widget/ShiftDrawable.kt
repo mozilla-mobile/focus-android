@@ -8,7 +8,10 @@ import android.graphics.drawable.Drawable
 import android.view.animation.Interpolator
 import android.view.animation.LinearInterpolator
 
-class ShiftDrawable @JvmOverloads constructor(d: Drawable, duration: Int = DEFAULT_DURATION, interpolator: Interpolator? = LinearInterpolator()) : DrawableWrapper(d) {
+class ShiftDrawable @JvmOverloads constructor(d: Drawable,
+                                              duration: Int = DEFAULT_DURATION,
+                                              interpolator: Interpolator? = LinearInterpolator()
+) : DrawableWrapper(d) {
 
     private val mAnimator = ValueAnimator.ofFloat(0f, 1f)
     private val mVisibleRect = Rect()
@@ -81,7 +84,8 @@ class ShiftDrawable @JvmOverloads constructor(d: Drawable, duration: Int = DEFAU
 
         // draw round to head of progressbar. I know it looks stupid, don't blame me now.
         mPath = Path()
-        mPath!!.addRect(b.left.toFloat(), b.top.toFloat(), b.left + width - radius, b.height().toFloat(), Path.Direction.CCW)
+        mPath!!.addRect(b.left.toFloat(), b.top.toFloat(),
+                b.left + width - radius, b.height().toFloat(), Path.Direction.CCW)
         mPath!!.addCircle(b.left + width - radius, radius, radius, Path.Direction.CCW)
     }
 

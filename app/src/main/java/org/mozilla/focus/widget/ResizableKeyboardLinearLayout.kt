@@ -12,7 +12,11 @@ import android.widget.LinearLayout
 /**
  * A CoordinatorLayout implementation that resizes dynamically based on whether a keyboard is visible or not.
  */
-class ResizableKeyboardLinearLayout @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0) : LinearLayout(context, attrs, defStyleAttr) {
+class ResizableKeyboardLinearLayout @JvmOverloads constructor(
+        context: Context,
+        attrs: AttributeSet? = null,
+        defStyleAttr: Int = 0
+) : LinearLayout(context, attrs, defStyleAttr) {
     private val delegate: ResizableKeyboardViewDelegate
 
     init {
