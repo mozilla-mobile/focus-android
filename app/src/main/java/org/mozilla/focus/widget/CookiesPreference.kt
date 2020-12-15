@@ -5,9 +5,9 @@
 package org.mozilla.focus.widget
 
 import android.content.Context
+import android.util.AttributeSet
 import androidx.preference.ListPreference
 import androidx.preference.PreferenceViewHolder
-import android.util.AttributeSet
 import org.mozilla.focus.utils.Settings
 
 /**

@@ -6,9 +6,10 @@ import androidx.preference.Preference
 import org.mozilla.focus.R
 
 class AboutPreference @JvmOverloads constructor(
-        context: Context,
-        attrs: AttributeSet,
-        defStyleAttr: Int = 0) : Preference(context,
+    context: Context,
+    attrs: AttributeSet,
+    defStyleAttr: Int = 0
+) : Preference(context,
         attrs,
         defStyleAttr
 ) {

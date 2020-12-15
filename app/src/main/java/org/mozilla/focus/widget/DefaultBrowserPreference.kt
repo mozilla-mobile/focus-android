@@ -8,11 +8,10 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Build
-import androidx.preference.Preference
-import androidx.preference.PreferenceViewHolder
 import android.util.AttributeSet
 import android.widget.Switch
-
+import androidx.preference.Preference
+import androidx.preference.PreferenceViewHolder
 import org.mozilla.focus.R
 import org.mozilla.focus.telemetry.TelemetryWrapper
 import org.mozilla.focus.utils.Browsers

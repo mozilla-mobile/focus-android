@@ -12,13 +12,12 @@ import android.graphics.Canvas
 import android.graphics.Rect
 import android.graphics.drawable.Drawable
 import android.os.Build
-import androidx.core.view.ViewCompat
 import android.util.AttributeSet
 import android.view.View
 import android.view.animation.AnimationUtils
 import android.view.animation.LinearInterpolator
 import android.widget.ProgressBar
-
+import androidx.core.view.ViewCompat
 import org.mozilla.focus.R
 
 class AnimatedProgressBar : ProgressBar {

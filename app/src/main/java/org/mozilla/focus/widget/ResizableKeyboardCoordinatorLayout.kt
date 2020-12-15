@@ -13,9 +13,9 @@ import androidx.coordinatorlayout.widget.CoordinatorLayout
  * A CoordinatorLayout implementation that resizes dynamically based on whether a keyboard is visible or not.
  */
 class ResizableKeyboardCoordinatorLayout @JvmOverloads constructor(
-        context: Context,
-        attrs: AttributeSet? = null,
-        defStyleAttr: Int = 0
+    context: Context,
+    attrs: AttributeSet? = null,
+    defStyleAttr: Int = 0
 ) : CoordinatorLayout(context, attrs, defStyleAttr) {
     private val delegate: ResizableKeyboardViewDelegate
 

@@ -8,15 +8,15 @@ import android.graphics.drawable.Drawable
 import android.view.animation.Interpolator
 import android.view.animation.LinearInterpolator
 
-class ShiftDrawable @JvmOverloads constructor(d: Drawable,
-                                              duration: Int = DEFAULT_DURATION,
-                                              interpolator: Interpolator? = LinearInterpolator()
+class ShiftDrawable @JvmOverloads constructor(
+    d: Drawable,
+    duration: Int = DEFAULT_DURATION,
+    interpolator: Interpolator? = LinearInterpolator()
 ) : DrawableWrapper(d) {
 
     private val mAnimator = ValueAnimator.ofFloat(0f, 1f)
     private val mVisibleRect = Rect()
     private var mPath: Path? = null
-
 
     init {
         mAnimator.duration = duration.toLong()

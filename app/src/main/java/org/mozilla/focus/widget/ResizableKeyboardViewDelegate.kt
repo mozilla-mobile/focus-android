@@ -4,7 +4,6 @@
 
 package org.mozilla.focus.widget
 
-
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
 import android.animation.ValueAnimator
@@ -38,7 +37,7 @@ import org.mozilla.focus.R
     private val shouldAnimate: Boolean
     private var isAnimating: Boolean = false
 
-    //Creating companion object to store constant variable
+    // Creating companion object to store constant variable
     companion object {
         private const val animateDuration: Long = 200
     }
@@ -82,16 +81,16 @@ import org.mozilla.focus.R
                 0, 0)
 
         try {
-            idOfViewToHide = styleAttributeArray.
-            getResourceId(R.styleable.ResizableKeyboardViewDelegate_viewToHideWhenActivated, -1)
-            shouldAnimate = styleAttributeArray.
-            getBoolean(R.styleable.ResizableKeyboardViewDelegate_animate, false)
+            idOfViewToHide = styleAttributeArray
+            .getResourceId(R.styleable.ResizableKeyboardViewDelegate_viewToHideWhenActivated, -1)
+            shouldAnimate = styleAttributeArray
+            .getBoolean(R.styleable.ResizableKeyboardViewDelegate_animate, false)
         } finally {
             styleAttributeArray.recycle()
         }
     }
 
-    /* package */  fun onAttachedToWindow() {
+    /* package */ fun onAttachedToWindow() {
         delegateView.viewTreeObserver.addOnGlobalLayoutListener(layoutListener)
 
         if (idOfViewToHide != -1) {
@@ -99,13 +98,13 @@ import org.mozilla.focus.R
         }
     }
 
-    /* package */  fun onDetachedFromWindow() {
+    /* package */ fun onDetachedFromWindow() {
         delegateView.viewTreeObserver.removeOnGlobalLayoutListener(layoutListener)
 
         viewToHide = null
     }
 
-    /* package */  fun reset() {
+    /* package */ fun reset() {
         updateBottomPadding(0)
     }
 
@@ -129,7 +128,6 @@ import org.mozilla.focus.R
         })
         animator.start()
     }
-
 
     private fun calculateDifferenceBetweenHeightAndUsableArea(): Int {
         if (decorView == null) {
