@@ -90,8 +90,11 @@ abstract class WebFragment : LocaleAwareFragment() {
         }
         // We create and destroy a new WebView here to force the internal state of WebView to know
         // about the new language. See issue #666.
-        val unneeded = WebView(getContext())
-        unneeded.destroy()
+	val ctx = getContext()
+	if (ctx != null) {
+        	val unneeded = WebView(ctx)
+        	unneeded.destroy()
+	}
     }
 
     override fun onPause() {
