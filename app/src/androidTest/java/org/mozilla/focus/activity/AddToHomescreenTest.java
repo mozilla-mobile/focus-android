@@ -7,7 +7,8 @@ package org.mozilla.focus.activity;
 
 import android.content.Context;
 import android.os.Build;
-import android.preference.PreferenceManager;
+
+import androidx.preference.PreferenceManager;
 import androidx.test.InstrumentationRegistry;
 import androidx.test.rule.ActivityTestRule;
 import androidx.test.runner.AndroidJUnit4;
@@ -134,9 +135,6 @@ public class AddToHomescreenTest {
         TestHelper.pressEnterKey();
         TestHelper.progressBar.waitForExists(waitingTime);
         Assert.assertTrue(TestHelper.progressBar.waitUntilGone(webPageLoadwaitingTime));
-        if (!AppConstants.INSTANCE.isGeckoBuild()) {
-            TestHelper.waitForWebSiteTitleLoad();
-        }
 
         openAddtoHSDialog();
         // Add to Home screen dialog is now shown
@@ -185,9 +183,6 @@ public class AddToHomescreenTest {
         TestHelper.pressEnterKey();
         TestHelper.progressBar.waitForExists(waitingTime);
         Assert.assertTrue(TestHelper.progressBar.waitUntilGone(webPageLoadwaitingTime));
-        if (!AppConstants.INSTANCE.isGeckoBuild()) {
-            TestHelper.waitForWebSiteTitleLoad();
-        }
 
         openAddtoHSDialog();
 

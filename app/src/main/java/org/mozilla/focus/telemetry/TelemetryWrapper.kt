@@ -12,9 +12,9 @@ import android.content.Context
 import android.net.http.SslError
 import android.os.Build
 import android.os.StrictMode
-import android.preference.PreferenceManager
 import androidx.annotation.CheckResult
 import androidx.annotation.VisibleForTesting
+import androidx.preference.PreferenceManager
 import kotlinx.coroutines.runBlocking
 import mozilla.components.lib.fetch.httpurlconnection.HttpURLConnectionClient
 import mozilla.components.ui.autocomplete.InlineAutocompleteEditText
@@ -27,7 +27,6 @@ import org.mozilla.focus.utils.AppConstants
 import org.mozilla.focus.utils.MobileMetricsPingStorage
 import org.mozilla.focus.utils.Settings
 import org.mozilla.focus.utils.UrlUtils
-import org.mozilla.focus.utils.activeExperimentNames
 import org.mozilla.telemetry.Telemetry
 import org.mozilla.telemetry.TelemetryHolder
 import org.mozilla.telemetry.config.TelemetryConfiguration
@@ -256,8 +255,8 @@ object TelemetryWrapper {
                             resources.getString(R.string.pref_key_remote_debugging),
                             resources.getString(R.string.pref_key_homescreen_tips),
                             resources.getString(R.string.pref_key_open_new_tab),
-                            resources.getString(R.string.pref_key_show_search_suggestions),
-                            resources.getString(R.string.pref_key_fretboard_bucket_number))
+                            resources.getString(R.string.pref_key_show_search_suggestions)
+                    )
                     .setSettingsProvider(TelemetrySettingsProvider(context))
                     .setCollectionEnabled(telemetryEnabled)
                     .setUploadEnabled(telemetryEnabled)
@@ -734,9 +733,8 @@ object TelemetryWrapper {
             .queue()
     }
 
-    fun removeAllExceptionDomains(count: Int) {
+    fun removeAllExceptionDomains() {
         TelemetryEvent.create(Category.ACTION, Method.REMOVE_ALL, Object.ALLOWLIST)
-            .extra(Extra.TOTAL, count.toString())
             .queue()
     }
 
@@ -912,11 +910,6 @@ object TelemetryWrapper {
     @JvmStatic
     fun changeToGeckoEngineEvent() {
         TelemetryEvent.create(Category.ACTION, Method.CHANGE, Object.GECKO_ENGINE).queue()
-    }
-
-    @JvmStatic
-    fun recordActiveExperiments(context: Context) {
-        TelemetryHolder.get().recordActiveExperiments(context.activeExperimentNames)
     }
 
     @JvmStatic

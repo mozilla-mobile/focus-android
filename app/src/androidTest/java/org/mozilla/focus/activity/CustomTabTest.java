@@ -11,8 +11,8 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.net.Uri;
-import android.preference.PreferenceManager;
 import androidx.browser.customtabs.CustomTabsIntent;
+import androidx.preference.PreferenceManager;
 import androidx.test.InstrumentationRegistry;
 import androidx.test.espresso.Espresso;
 import androidx.test.espresso.web.webdriver.Locator;
@@ -91,11 +91,6 @@ public class CustomTabTest {
             Context appContext = InstrumentationRegistry.getInstrumentation()
                     .getTargetContext()
                     .getApplicationContext();
-            if (!AppConstants.INSTANCE.isGeckoBuild()) {
-                onWebView()
-                        .withElement(findElement(Locator.ID, TEST_PAGE_HEADER_ID))
-                        .check(webMatches(getText(), equalTo(TEST_PAGE_HEADER_TEXT)));
-            }
 
             // Verify action button is visible
             onView(withContentDescription(ACTION_BUTTON_DESCRIPTION))

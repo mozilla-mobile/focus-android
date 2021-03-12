@@ -21,11 +21,12 @@ object LoadTimeObserver {
         var startLoadTime: Long = 0
         var urlLoading: String? = null
 
+        @Suppress("DEPRECATION")
         session.register(object : Session.Observer {
             override fun onUrlChanged(session: Session, url: String) {
                 if ((urlLoading != null && urlLoading != url) || urlLoading == null) {
                     startLoadTime = SystemClock.elapsedRealtime()
-                    Log.i(LOG_TAG, "zerdatime $startLoadTime - url changed to $url, new page load start")
+                    Log.i(LOG_TAG, "zerdatime $startLoadTime - url changed, new page load start")
                     urlLoading = url
                 }
             }
