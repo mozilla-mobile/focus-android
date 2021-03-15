@@ -8,7 +8,6 @@ import android.os.Bundle
 import mozilla.components.browser.session.Session
 import mozilla.components.support.utils.SafeIntent
 import org.mozilla.focus.ext.components
-import org.mozilla.focus.session.removeAndCloseSession
 
 /**
  * The main entry point for "custom tabs" opened by third-party apps.
@@ -30,13 +29,6 @@ class CustomTabActivity : MainActivity() {
         customTabId = intent.getStringExtra(CUSTOM_TAB_ID)
             ?: throw IllegalAccessError("No custom tab id in intent")
 
-        // The session for this ID, no longer exists. This usually happens because we were gc-d
-        // and since we do not save custom tab sessions, the activity is re-created and we no longer
-        // have a session with us to restore. It's safer to finish the activity instead.
-        if (components.sessionManager.findSessionById(customTabId) == null) {
-            finish()
-        }
-
         super.onCreate(savedInstanceState)
     }
 
@@ -46,7 +38,7 @@ class CustomTabActivity : MainActivity() {
         if (isFinishing && customTabSession.isCustomTabSession()) {
             // This may not be a custom tab session anymore ("open in firefox focus"). So only remove it if this
             // activity is finishing and this is still a custom tab session.
-            components.sessionManager.removeAndCloseSession(customTabSession)
+            components.sessionManager.remove(customTabSession)
         }
     }
     companion object {

@@ -67,7 +67,7 @@ class SessionNotificationService : Service() {
             TelemetryWrapper.eraseTaskRemoved()
         }
 
-        components.sessionManager.removeAndCloseAllSessions()
+        components.tabsUseCases.removeAllTabs()
 
         stopForeground(true)
         stopSelf()

@@ -7,15 +7,21 @@ package org.mozilla.focus.telemetry
 import mozilla.components.browser.session.Session
 import mozilla.components.browser.session.SessionManager
 import mozilla.components.browser.state.state.CustomTabConfig
+import mozilla.components.browser.state.state.SessionState
+import mozilla.components.browser.state.store.BrowserStore
+import org.mozilla.focus.ext.contentState
 
-class TelemetrySessionObserver : SessionManager.Observer {
+class TelemetrySessionObserver(private val store: BrowserStore) : SessionManager.Observer {
     override fun onSessionAdded(session: Session) {
         when (session.source) {
-            Session.Source.ACTION_VIEW -> TelemetryWrapper.browseIntentEvent()
-            Session.Source.ACTION_SEND -> TelemetryWrapper.shareIntentEvent(session.searchTerms.isNotEmpty())
-            Session.Source.TEXT_SELECTION -> TelemetryWrapper.textSelectionIntentEvent()
-            Session.Source.HOME_SCREEN -> TelemetryWrapper.openHomescreenShortcutEvent()
-            Session.Source.CUSTOM_TAB -> TelemetryWrapper.customTabsIntentEvent(
+            SessionState.Source.ACTION_VIEW -> TelemetryWrapper.browseIntentEvent()
+            SessionState.Source.ACTION_SEND -> {
+                val contentState = store.contentState(session.id)
+                TelemetryWrapper.shareIntentEvent(contentState?.searchTerms?.isNotEmpty() == true)
+            }
+            SessionState.Source.TEXT_SELECTION -> TelemetryWrapper.textSelectionIntentEvent()
+            SessionState.Source.HOME_SCREEN -> TelemetryWrapper.openHomescreenShortcutEvent()
+            SessionState.Source.CUSTOM_TAB -> TelemetryWrapper.customTabsIntentEvent(
                     generateOptions(session.customTabConfig!!))
             else -> {
                 // For other session types we create events at the place where we create the sessions.

@@ -6,15 +6,15 @@ apply plugin: 'kotlin-android-extensions'
 apply from: "$project.rootDir/tools/gradle/versionCode.gradle"
 
 android {
-    compileSdkVersion 28
+    compileSdkVersion 29
     buildToolsVersion '28.0.3'
     defaultConfig {
         applicationId "org.mozilla"
         minSdkVersion 21
-        targetSdkVersion 28
+        targetSdkVersion 29
         versionCode 11 // This versionCode is "frozen" for local builds. For "release" builds we
                        // override this with a generated versionCode at build time.
-        versionName "8.5.0"
+        versionName "8.13.1"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
         multiDexEnabled true
@@ -135,7 +135,10 @@ android {
 }
 
 tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {
-        kotlinOptions.allWarningsAsErrors = true
+        kotlinOptions {
+            allWarningsAsErrors = true
+            freeCompilerArgs += "-Xuse-experimental=kotlinx.coroutines.ExperimentalCoroutinesApi"
+        }
 }
 
 dependencies {
@@ -154,6 +157,7 @@ dependencies {
     compileOnly 'net.jcip:jcip-annotations:1.0'
     implementation("com.google.code.findbugs:jsr305:3.0.2")
 
+    implementation "org.mozilla.components:browser-engine-gecko:$mozilla_components_version"
     implementation "org.mozilla.components:browser-domains:$mozilla_components_version"
     implementation "org.mozilla.components:browser-errorpages:$mozilla_components_version"
     implementation "org.mozilla.components:browser-search:$mozilla_components_version"
@@ -161,13 +165,17 @@ dependencies {
     implementation "org.mozilla.components:browser-state:$mozilla_components_version"
     implementation "org.mozilla.components:concept-engine:$mozilla_components_version"
     implementation "org.mozilla.components:concept-fetch:$mozilla_components_version"
+    implementation "org.mozilla.components:feature-app-links:$mozilla_components_version"
     implementation "org.mozilla.components:feature-customtabs:$mozilla_components_version"
+    implementation "org.mozilla.components:feature-contextmenu:$mozilla_components_version"
+    implementation "org.mozilla.components:feature-downloads:$mozilla_components_version"
+    implementation "org.mozilla.components:feature-findinpage:$mozilla_components_version"
+    implementation "org.mozilla.components:feature-prompts:$mozilla_components_version"
+    implementation "org.mozilla.components:feature-session:$mozilla_components_version"
+    implementation "org.mozilla.components:feature-tabs:$mozilla_components_version"
     implementation "org.mozilla.components:lib-crash:$mozilla_components_version"
     implementation "org.mozilla.components:lib-fetch-httpurlconnection:$mozilla_components_version"
-    implementation "org.mozilla.components:service-telemetry:$mozilla_components_version"
-    implementation "org.mozilla.components:service-fretboard:$mozilla_components_version", {
-        exclude group: 'android.arch.work', module: 'work-runtime'
-    }
+    implementation "org.mozilla.components:service-telemetry:$mozilla_components_version_telemetry"
     implementation "org.mozilla.components:support-ktx:$mozilla_components_version"
     implementation "org.mozilla.components:support-utils:$mozilla_components_version"
     implementation "org.mozilla.components:ui-autocomplete:$mozilla_components_version"
@@ -180,8 +188,6 @@ dependencies {
     focusImplementation 'com.adjust.sdk:adjust-android:4.11.4'
     focusImplementation 'com.android.installreferrer:installreferrer:1.1' // Required by Adjust
 
-    implementation "org.mozilla.components:browser-engine-gecko:$mozilla_components_version"
-    implementation "org.mozilla.geckoview:geckoview:$gecko_release_version"
     implementation "androidx.palette:palette:$support_libraries_version"
 
     testImplementation "org.junit.jupiter:junit-jupiter-api:5.3.1"
@@ -219,7 +225,6 @@ dependencies {
     androidTestImplementation 'androidx.test.uiautomator:uiautomator:2.2.0'
 
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
-    debugImplementation 'com.facebook.stetho:stetho:1.5.1'
 }
 // -------------------------------------------------------------------------------------------------
 //  Dynamically set versionCode (See tools/build/versionCode.gradle

@@ -10,7 +10,6 @@ import android.content.SharedPreferences
 import android.content.res.Configuration
 import android.graphics.drawable.TransitionDrawable
 import android.os.Bundle
-import android.preference.PreferenceManager
 import android.text.InputType
 import android.text.SpannableString
 import android.text.method.LinkMovementMethod
@@ -24,6 +23,7 @@ import android.widget.FrameLayout
 import android.widget.TextView
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.preference.PreferenceManager
 import kotlinx.android.synthetic.main.fragment_urlinput.*
 import kotlinx.android.synthetic.main.fragment_urlinput.view.*
 import kotlinx.coroutines.CoroutineScope
@@ -36,10 +36,13 @@ import mozilla.components.browser.domains.autocomplete.CustomDomainsProvider
 import mozilla.components.browser.domains.autocomplete.DomainAutocompleteResult
 import mozilla.components.browser.domains.autocomplete.ShippedDomainsProvider
 import mozilla.components.browser.session.Session
+import mozilla.components.browser.state.action.ContentAction
+import mozilla.components.browser.state.state.SessionState
 import mozilla.components.support.utils.ThreadUtils
 import mozilla.components.ui.autocomplete.InlineAutocompleteEditText
 import mozilla.components.ui.autocomplete.InlineAutocompleteEditText.AutocompleteResult
 import org.mozilla.focus.R
+import org.mozilla.focus.ext.contentState
 import org.mozilla.focus.ext.isSearch
 import org.mozilla.focus.ext.requireComponents
 import org.mozilla.focus.locale.LocaleAwareAppCompatActivity
@@ -107,10 +110,10 @@ class UrlInputFragment :
         }
 
         @JvmStatic
-        fun createWithSession(session: Session, urlView: View): UrlInputFragment {
+        fun createWithTab(tabId: String, urlView: View): UrlInputFragment {
             val arguments = Bundle()
 
-            arguments.putString(ARGUMENT_SESSION_UUID, session.id)
+            arguments.putString(ARGUMENT_SESSION_UUID, tabId)
             arguments.putString(ARGUMENT_ANIMATION, ANIMATION_BROWSER_SCREEN)
 
             val screenLocation = IntArray(2)
@@ -318,18 +321,20 @@ class UrlInputFragment :
 
         urlView?.setOnCommitListener(::onCommit)
 
-        val geckoViewAndDDG: Boolean =
-            Settings.getInstance(requireContext()).defaultSearchEngineName == duckDuckGo &&
-                    AppConstants.isGeckoBuild
+        val isDDG: Boolean =
+            Settings.getInstance(requireContext()).defaultSearchEngineName == duckDuckGo
 
         session?.let {
+            val contentState = requireComponents.store.contentState(it.id)
             urlView?.setText(
-                if (it.isSearch &&
-                    !geckoViewAndDDG &&
+                if (contentState?.isSearch == true &&
+                    !isDDG &&
                     Features.SEARCH_TERMS_OR_URL
-                )
-                    it.searchTerms else
+                ) {
+                    contentState.searchTerms
+                } else {
                     it.url
+                }
             )
 
             clearView?.visibility = View.VISIBLE
@@ -351,7 +356,7 @@ class UrlInputFragment :
                     ?.beginTransaction()
                     ?.replace(
                             R.id.container,
-                            UrlInputFragment.createWithSession(session!!, urlView),
+                            UrlInputFragment.createWithTab(session!!.id, urlView),
                             UrlInputFragment.FRAGMENT_TAG)
                     ?.commit()
         } else {
@@ -430,16 +435,16 @@ class UrlInputFragment :
                 WhatsNew.userViewedWhatsNew(it)
 
                 val url = SupportUtils.getSumoURLForTopic(it, SupportUtils.SumoTopic.WHATS_NEW)
-                val session = Session(url, source = Session.Source.MENU)
-
-                requireComponents.sessionManager.add(session, selected = true)
+                requireComponents.tabsUseCases.addPrivateTab(url, source = SessionState.Source.MENU)
             }
 
             R.id.settings -> (activity as LocaleAwareAppCompatActivity).openPreferences()
 
             R.id.help -> {
-                val session = Session(SupportUtils.HELP_URL, source = Session.Source.MENU)
-                requireComponents.sessionManager.add(session, selected = true)
+                requireComponents.tabsUseCases.addPrivateTab(
+                    SupportUtils.HELP_URL,
+                    source = SessionState.Source.MENU
+                )
             }
 
             else -> throw IllegalStateException("Unhandled view in onClick()")
@@ -664,7 +669,7 @@ class UrlInputFragment :
             }
         }
 
-        if (!input.trim { it <= ' ' }.isEmpty()) {
+        if (input.trim { it <= ' ' }.isNotEmpty()) {
             handleCrashTrigger(input)
 
             ViewUtils.hideKeyboard(urlView)
@@ -740,33 +745,29 @@ class UrlInputFragment :
 
     private fun openUrl(url: String, searchTerms: String?) {
         if (!searchTerms.isNullOrEmpty()) {
-            session?.searchTerms = searchTerms
+            session?.let {
+                requireComponents.store.dispatch(ContentAction.UpdateSearchTermsAction(it.id, searchTerms))
+            }
         }
 
         val fragmentManager = requireActivity().supportFragmentManager
 
-        // Replace all fragments with a fresh browser fragment. This means we either remove the
-        // HomeFragment with an UrlInputFragment on top or an old BrowserFragment with an
-        // UrlInputFragment.
-        val browserFragment = fragmentManager.findFragmentByTag(BrowserFragment.FRAGMENT_TAG)
+        if (session != null) {
+            requireComponents.sessionUseCases.loadUrl(url, session?.id)
 
-        if (browserFragment != null && browserFragment is BrowserFragment && browserFragment.isVisible) {
-            // Reuse existing visible fragment - in this case we know the user is already browsing.
-            // The fragment might exist if we "erased" a browsing session, hence we need to check
-            // for visibility in addition to existence.
-            browserFragment.loadUrl(url)
-
-            // And this fragment can be removed again.
             fragmentManager.beginTransaction()
                 .remove(this)
                 .commit()
         } else {
-            val session = Session(url, source = Session.Source.USER_ENTERED)
-            if (!searchTerms.isNullOrEmpty()) {
-                session.searchTerms = searchTerms
-            }
+            val tabId = requireComponents.tabsUseCases.addPrivateTab(
+                url,
+                source = SessionState.Source.USER_ENTERED,
+                selectTab = true
+            )
 
-            requireComponents.sessionManager.add(session, selected = true)
+            if (!searchTerms.isNullOrEmpty()) {
+                requireComponents.store.dispatch(ContentAction.UpdateSearchTermsAction(tabId, searchTerms))
+            }
         }
     }
 

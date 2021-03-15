@@ -6,7 +6,8 @@
 package org.mozilla.focus.activity;
 
 import android.content.Context;
-import android.preference.PreferenceManager;
+
+import androidx.preference.PreferenceManager;
 import androidx.test.InstrumentationRegistry;
 import androidx.test.rule.ActivityTestRule;
 import androidx.test.runner.AndroidJUnit4;
@@ -20,7 +21,6 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mozilla.focus.R;
-import org.mozilla.focus.exceptions.ExceptionDomains;
 import org.mozilla.focus.helpers.TestHelper;
 
 import static androidx.test.espresso.Espresso.onView;
@@ -65,8 +65,6 @@ public class URLExceptionTest {
                     .edit()
                     .putBoolean(FIRSTRUN_PREF, true)
                     .apply();
-
-            ExceptionDomains.INSTANCE.remove(appContext, ExceptionDomains.INSTANCE.load(appContext));
 
             // This test runs on both GV and WV.
             // Klar is used to test Geckoview. make sure it's set to Gecko

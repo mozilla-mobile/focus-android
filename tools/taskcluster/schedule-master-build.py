@@ -45,7 +45,7 @@ def generate_code_quality_task(buildTaskId):
     return taskcluster.slugId(), generate_task(
         name="(Focus for Android) Code quality",
         description="Run code quality tools on Focus/Klar for Android code base.",
-        command='echo "--" > .adjust_token && ./gradlew --no-daemon clean detektCheck ktlint lint pmd checkstyle spotbugs',
+        command='echo "--" > .adjust_token && ./gradlew --no-daemon clean detektCheck ktlint lint',
         dependencies=[buildTaskId])
 
 
@@ -83,8 +83,8 @@ def generate_ui_test_task(dependencies, engine="Klar", device="arm"):
 
     task_name = "(Focus for Android) UI tests - {0} {1}".format(engine, device)
     task_description = "Run UI tests for {0} build for Android.".format(engine, device)
-    build_dir = "assemble{0}Debug".format(assemble_engine, device.capitalize())
-    build_dir_test = "assemble{0}DebugAndroidTest".format(assemble_engine, device.capitalize())
+    build_dir = "assemble{0}{1}Debug".format(assemble_engine, device.capitalize())
+    build_dir_test = "assemble{0}{1}DebugAndroidTest".format(assemble_engine, device.capitalize())
     print('BUILD_DIR: {0}'.format(build_dir))
     print('BUILD_DIR_TEST: {0}'.format(build_dir_test))
     device = device.lower()
@@ -106,19 +106,6 @@ def generate_ui_test_task(dependencies, engine="Klar", device="arm"):
                 "expires": taskcluster.stringDate(taskcluster.fromNow('1 week'))
             }
         })
-
-
-# For GeckoView, upload nightly (it has release config) by default, all Release builds have WV
-def upload_apk_nimbledroid_task(dependencies):
-    return taskcluster.slugId(), generate_task(
-        name="(Focus for Android) Upload Debug APK to Nimbledroid",
-        description="Upload APKs to Nimbledroid for performance measurement and tracking.",
-        command=('echo "--" > .adjust_token'
-                 ' && ./gradlew --no-daemon clean assembleKlarArmNightly'
-                 ' && python tools/taskcluster/upload_apk_nimbledroid.py'),
-        dependencies=dependencies,
-        scopes=['secrets:get:project/focus/nimbledroid'],
-    )
 
 
 def generate_task(name, description, command, dependencies=[], artifacts={}, scopes=[], routes=[]):
@@ -145,7 +132,7 @@ def generate_task(name, description, command, dependencies=[], artifacts={}, sco
                 "taskclusterProxy": True
             },
             "maxRunTime": 7200,
-            "image": "mozillamobile/focus-android:1.2",
+            "image": "mozillamobile/focus-android:1.5",
             "command": [
                 "/bin/bash",
                 "--login",
@@ -187,5 +174,3 @@ if __name__ == "__main__":
     # uiWebviewX86TestTaskId, uiWebviewX86TestTask = generate_ui_test_task([unitTestTaskId, codeQualityTaskId], "Webview", "X86")
     # schedule_task(queue, uiWebviewX86TestTaskId, uiWebviewX86TestTask)
 
-    uploadNDTaskId, uploadNDTask = upload_apk_nimbledroid_task([unitTestTaskId, codeQualityTaskId])
-    schedule_task(queue, uploadNDTaskId, uploadNDTask)
