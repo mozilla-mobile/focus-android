@@ -14,11 +14,13 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.ViewGroup
 import android.widget.EditText
-import androidx.annotation.VisibleForTesting
 import androidx.annotation.WorkerThread
 import com.google.android.material.snackbar.Snackbar
+import mozilla.components.concept.fetch.Client
+import mozilla.components.concept.fetch.Request
+import mozilla.components.concept.fetch.Request.Redirect.FOLLOW
 import org.mozilla.focus.R
-import org.mozilla.focus.ext.components
+import org.mozilla.focus.ext.requireComponents
 import org.mozilla.focus.search.CustomSearchEngineStore
 import org.mozilla.focus.search.ManualAddSearchEnginePreference
 import org.mozilla.focus.telemetry.TelemetryWrapper
@@ -26,12 +28,11 @@ import org.mozilla.focus.utils.Settings
 import org.mozilla.focus.utils.SupportUtils
 import org.mozilla.focus.utils.UrlUtils
 import org.mozilla.focus.utils.ViewUtils
-import org.mozilla.focus.utils.createTab
 import java.io.IOException
 import java.lang.ref.WeakReference
-import java.net.HttpURLConnection
 import java.net.MalformedURLException
 import java.net.URL
+import java.util.concurrent.TimeUnit
 
 class ManualAddSearchEngineSettingsFragment : BaseSettingsFragment() {
     override fun onCreatePreferences(p0: Bundle?, p1: String?) {
@@ -84,11 +85,10 @@ class ManualAddSearchEngineSettingsFragment : BaseSettingsFragment() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         val openLearnMore = {
-            val session = createTab(
-                SupportUtils.getSumoURLForTopic(requireContext(), SupportUtils.SumoTopic.ADD_SEARCH_ENGINE)
+            requireComponents.tabsUseCases.addPrivateTab(
+                SupportUtils.getSumoURLForTopic(requireContext(), SupportUtils.SumoTopic.ADD_SEARCH_ENGINE),
+                selectTab = true
             )
-
-            components?.sessionManager?.add(session, selected = true)
 
             TelemetryWrapper.addSearchEngineLearnMoreEvent()
 
@@ -96,8 +96,8 @@ class ManualAddSearchEngineSettingsFragment : BaseSettingsFragment() {
         }
 
         val saveSearchEngine = {
-            val engineName = view!!.findViewById<EditText>(R.id.edit_engine_name).text.toString()
-            val searchQuery = view!!.findViewById<EditText>(R.id.edit_search_string).text.toString()
+            val engineName = requireView().findViewById<EditText>(R.id.edit_engine_name).text.toString()
+            val searchQuery = requireView().findViewById<EditText>(R.id.edit_search_string).text.toString()
 
             val pref = findManualAddSearchEnginePreference(R.string.pref_key_manual_add_search_engine)
             val engineValid = pref.validateEngineNameAndShowError(engineName)
@@ -107,7 +107,12 @@ class ManualAddSearchEngineSettingsFragment : BaseSettingsFragment() {
             if (isPartialSuccess) {
                 ViewUtils.hideKeyboard(view)
                 setUiIsValidatingAsync(true, item)
-                activeAsyncTask = ValidateSearchEngineAsyncTask(this, engineName, searchQuery).execute()
+                activeAsyncTask = ValidateSearchEngineAsyncTask(
+                    this,
+                    engineName,
+                    searchQuery,
+                    requireComponents.client
+                ).execute()
                 menuItemForActiveAsyncTask = item
             } else {
                 TelemetryWrapper.saveCustomSearchEngineEvent(false)
@@ -166,43 +171,39 @@ class ManualAddSearchEngineSettingsFragment : BaseSettingsFragment() {
     }
 
     companion object {
-        private val LOGTAG = "ManualAddSearchEngine"
-        private val SEARCH_QUERY_VALIDATION_TIMEOUT_MILLIS = 4000
-        private val VALID_RESPONSE_CODE_UPPER_BOUND = 300
+        private const val LOGTAG = "ManualAddSearchEngine"
+        private const val SEARCH_QUERY_VALIDATION_TIMEOUT_MILLIS = 4000
+        private const val VALID_RESPONSE_CODE_UPPER_BOUND = 300
         private const val DISABLED_ALPHA = 0.5f
         private const val LOADING_INDICATOR_DELAY: Long = 1000
 
-        @SuppressWarnings("DE_MIGHT_IGNORE")
         @WorkerThread
         @JvmStatic
-        @VisibleForTesting fun isValidSearchQueryURL(query: String): Boolean {
+        fun isValidSearchQueryURL(client: Client, query: String): Boolean {
             // we should share the code to substitute and normalize the search string (see SearchEngine.buildSearchUrl).
             val encodedTestQuery = Uri.encode("testSearchEngineValidation")
 
             val normalizedHttpsSearchURLStr = UrlUtils.normalize(query)
             val searchURLStr = normalizedHttpsSearchURLStr.replace("%s".toRegex(), encodedTestQuery)
-            val searchURL = try { URL(searchURLStr) } catch (e: MalformedURLException) {
+
+            try { URL(searchURLStr) } catch (e: MalformedURLException) {
                 // Don't log exception to avoid leaking URL.
                 Log.d(LOGTAG, "Failure to get response code from server: returning invalid search query")
                 return false
             }
 
-            val connection = searchURL.openConnection() as HttpURLConnection
-            connection.instanceFollowRedirects = true
-            connection.connectTimeout = SEARCH_QUERY_VALIDATION_TIMEOUT_MILLIS
-            connection.readTimeout = SEARCH_QUERY_VALIDATION_TIMEOUT_MILLIS
+            val request = Request(
+                url = searchURLStr,
+                connectTimeout = SEARCH_QUERY_VALIDATION_TIMEOUT_MILLIS.toLong() to TimeUnit.MILLISECONDS,
+                readTimeout = SEARCH_QUERY_VALIDATION_TIMEOUT_MILLIS.toLong() to TimeUnit.MILLISECONDS,
+                redirect = FOLLOW
+            )
 
             return try {
-                connection.responseCode < VALID_RESPONSE_CODE_UPPER_BOUND
+                client.fetch(request).status < VALID_RESPONSE_CODE_UPPER_BOUND
             } catch (e: IOException) {
                 Log.d(LOGTAG, "Failure to get response code from server: returning invalid search query")
                 false
-            } finally {
-                try { connection.inputStream.close() } catch (_: IOException) {
-                    Log.d(LOGTAG, "connection.inputStream failed to close")
-                }
-
-                connection.disconnect()
             }
         }
     }
@@ -211,13 +212,14 @@ class ManualAddSearchEngineSettingsFragment : BaseSettingsFragment() {
         constructor (
             fragment: ManualAddSearchEngineSettingsFragment,
             private val engineName: String,
-            private val query: String
+            private val query: String,
+            private val client: Client
         ) : AsyncTask<Void, Void, Boolean>() {
 
         private val fragmentWeakReference = WeakReference(fragment)
 
         override fun doInBackground(vararg p0: Void?): Boolean {
-            val isValidSearchQuery = isValidSearchQueryURL(query)
+            val isValidSearchQuery = isValidSearchQueryURL(client, query)
             TelemetryWrapper.saveCustomSearchEngineEvent(isValidSearchQuery)
 
             return isValidSearchQuery

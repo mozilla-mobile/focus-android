@@ -80,7 +80,7 @@ import org.mozilla.focus.locale.LocaleAwareFragment
 import org.mozilla.focus.observer.LoadTimeObserver
 import org.mozilla.focus.open.OpenWithFragment
 import org.mozilla.focus.popup.PopupUtils
-import org.mozilla.focus.session.ui.SessionsSheetFragment
+import org.mozilla.focus.session.ui.TabSheetFragment
 import org.mozilla.focus.telemetry.CrashReporterWrapper
 import org.mozilla.focus.telemetry.TelemetryWrapper
 import org.mozilla.focus.utils.AppPermissionCodes.REQUEST_CODE_DOWNLOAD_PERMISSIONS
@@ -157,7 +157,7 @@ class BrowserFragment :
 
         if (Biometrics.isBiometricsEnabled(requireContext())) {
             biometricController?.stopListening()
-            view!!.alpha = 0f
+            requireView().alpha = 0f
         }
 
         menuBinding.get()?.pause()
@@ -801,7 +801,7 @@ class BrowserFragment :
             R.id.tabs -> {
                 requireActivity().supportFragmentManager
                     .beginTransaction()
-                    .add(R.id.container, SessionsSheetFragment(), SessionsSheetFragment.FRAGMENT_TAG)
+                    .add(R.id.container, TabSheetFragment(), TabSheetFragment.FRAGMENT_TAG)
                     .commit()
 
                 TelemetryWrapper.openTabsTrayEvent()
@@ -897,15 +897,20 @@ class BrowserFragment :
             }
 
             R.id.help -> {
-                val session = createTab(SupportUtils.HELP_URL, source = SessionState.Source.MENU)
-                requireComponents.sessionManager.add(session, selected = true)
+                requireComponents.tabsUseCases.addPrivateTab(
+                    SupportUtils.HELP_URL,
+                    source = SessionState.Source.MENU,
+                    selectTab = true
+                )
             }
 
             R.id.help_trackers -> {
-                val url = SupportUtils.getSumoURLForTopic(context!!, SupportUtils.SumoTopic.TRACKERS)
-                val session = createTab(url, source = SessionState.Source.MENU)
-
-                requireComponents.sessionManager.add(session, selected = true)
+                val url = SupportUtils.getSumoURLForTopic(requireContext(), SupportUtils.SumoTopic.TRACKERS)
+                requireComponents.tabsUseCases.addPrivateTab(
+                    url,
+                    source = SessionState.Source.MENU,
+                    selectTab = true
+                )
             }
 
             R.id.add_to_homescreen -> {
@@ -916,8 +921,11 @@ class BrowserFragment :
 
             R.id.report_site_issue -> {
                 val reportUrl = String.format(SupportUtils.REPORT_SITE_ISSUE_URL, tab.content.url)
-                val session = createTab(reportUrl, source = SessionState.Source.MENU)
-                requireComponents.sessionManager.add(session, selected = true)
+                requireComponents.tabsUseCases.addPrivateTab(
+                    reportUrl,
+                    source = SessionState.Source.MENU,
+                    selectTab = true
+                )
 
                 TelemetryWrapper.reportSiteIssueEvent()
             }
@@ -1004,12 +1012,14 @@ class BrowserFragment :
 
         @JvmStatic
         fun createForSession(session: Session): BrowserFragment {
-            val arguments = Bundle()
-            arguments.putString(ARGUMENT_SESSION_UUID, session.id)
+            return createForTab(session.id)
+        }
 
+        fun createForTab(tabId: String): BrowserFragment {
             val fragment = BrowserFragment()
-            fragment.arguments = arguments
-
+            fragment.arguments = Bundle().apply {
+                putString(ARGUMENT_SESSION_UUID, tabId)
+            }
             return fragment
         }
     }

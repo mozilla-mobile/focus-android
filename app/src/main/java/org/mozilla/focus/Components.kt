@@ -30,6 +30,7 @@ import org.mozilla.focus.notification.PrivateNotificationMiddleware
 import org.mozilla.focus.search.BingSearchEngineFilter
 import org.mozilla.focus.search.CustomSearchEngineProvider
 import org.mozilla.focus.search.HiddenSearchEngineFilter
+import org.mozilla.focus.telemetry.TelemetryMiddleware
 import org.mozilla.focus.utils.Settings
 
 /**
@@ -37,7 +38,8 @@ import org.mozilla.focus.utils.Settings
  */
 class Components(
     context: Context,
-    private val engineOverride: Engine? = null
+    private val engineOverride: Engine? = null,
+    private val clientOverride: Client? = null
 ) {
     val engineDefaultSettings by lazy {
         val settings = Settings.getInstance(context)
@@ -57,7 +59,9 @@ class Components(
         }
     }
 
-    val client: Client by lazy { EngineProvider.createClient(context) }
+    val client: Client by lazy {
+        clientOverride ?: EngineProvider.createClient(context)
+    }
 
     val trackingProtectionUseCases by lazy { TrackingProtectionUseCases(store, engine) }
 
@@ -67,6 +71,7 @@ class Components(
         BrowserStore(
             middleware = listOf(
                 PrivateNotificationMiddleware(context),
+                TelemetryMiddleware(),
                 DownloadMiddleware(context, DownloadService::class.java)
             ) + EngineMiddleware.create(engine, ::findSessionById)
         )
