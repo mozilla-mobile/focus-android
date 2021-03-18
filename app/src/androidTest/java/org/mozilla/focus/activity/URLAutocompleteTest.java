@@ -13,14 +13,12 @@ import androidx.test.espresso.DataInteraction;
 import androidx.test.espresso.Espresso;
 import androidx.test.espresso.ViewInteraction;
 import androidx.test.rule.ActivityTestRule;
-import androidx.test.runner.AndroidJUnit4;
 import androidx.test.uiautomator.UiObjectNotFoundException;
 
 import org.junit.After;
 import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.mozilla.focus.R;
 import org.mozilla.focus.helpers.TestHelper;
 
@@ -47,8 +45,6 @@ import static org.mozilla.focus.helpers.EspressoHelper.openSettings;
 import static org.mozilla.focus.helpers.TestHelper.mDevice;
 import static org.mozilla.focus.helpers.TestHelper.waitingTime;
 
-// https://testrail.stage.mozaws.net/index.php?/cases/view/104577
-@RunWith(AndroidJUnit4.class)
 public class URLAutocompleteTest {
     private String site = "680news.com";
 
@@ -89,10 +85,6 @@ public class URLAutocompleteTest {
                     .edit()
                     .putBoolean(FIRSTRUN_PREF, true)
                     .apply();
-
-            // This test runs on both GV and WV.
-            // Klar is used to test Geckoview. make sure it's set to Gecko
-            TestHelper.selectGeckoForKlar();
         }
     };
 

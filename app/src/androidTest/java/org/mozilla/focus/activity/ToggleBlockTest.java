@@ -8,16 +8,14 @@ package org.mozilla.focus.activity;
 import android.content.Context;
 
 import androidx.preference.PreferenceManager;
-import androidx.test.InstrumentationRegistry;
 import androidx.test.espresso.IdlingRegistry;
+import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.rule.ActivityTestRule;
-import androidx.test.runner.AndroidJUnit4;
 
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.mozilla.focus.R;
 import org.mozilla.focus.helpers.SessionLoadedIdlingResource;
 import org.mozilla.focus.helpers.TestHelper;
@@ -43,7 +41,6 @@ import static org.mozilla.focus.helpers.TestHelper.waitingTime;
 
 // This test toggles blocking within the browser view
 // mozilla.org site has one google analytics tracker - tests will see whether this gets blocked properly
-@RunWith(AndroidJUnit4.class)
 public class ToggleBlockTest {
     private static final String TEST_PATH = "/";
     private MockWebServer webServer;
@@ -62,10 +59,6 @@ public class ToggleBlockTest {
                     .edit()
                     .putBoolean(FIRSTRUN_PREF, true)
                     .apply();
-
-            // This test runs on both GV and WV.
-            // Klar is used to test Geckoview. make sure it's set to Gecko
-            TestHelper.selectGeckoForKlar();
 
             webServer = new MockWebServer();
 

@@ -8,10 +8,9 @@ package org.mozilla.focus.activity;
 import android.content.Context;
 
 import androidx.preference.PreferenceManager;
-import androidx.test.InstrumentationRegistry;
 import androidx.test.filters.RequiresDevice;
+import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.rule.ActivityTestRule;
-import androidx.test.runner.AndroidJUnit4;
 import androidx.test.uiautomator.UiObject;
 import androidx.test.uiautomator.UiObjectNotFoundException;
 import androidx.test.uiautomator.UiSelector;
@@ -20,10 +19,8 @@ import org.junit.After;
 import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.mozilla.focus.R;
 import org.mozilla.focus.helpers.TestHelper;
-import org.mozilla.focus.utils.AppConstants;
 
 import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
@@ -33,7 +30,6 @@ import static org.mozilla.focus.fragment.FirstrunFragment.FIRSTRUN_PREF;
 import static org.mozilla.focus.helpers.TestHelper.waitingTime;
 
 // This test opens enters and invalid URL, and Focus should provide an appropriate error message
-@RunWith(AndroidJUnit4.class)
 @RequiresDevice
 @Ignore("This test was written specifically for WebView and needs to be adapted for GeckoView")
 public class BadURLTest {

@@ -8,9 +8,8 @@ package org.mozilla.focus.activity;
 import android.content.Context;
 
 import androidx.preference.PreferenceManager;
-import androidx.test.InstrumentationRegistry;
+import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.rule.ActivityTestRule;
-import androidx.test.runner.AndroidJUnit4;
 import androidx.test.uiautomator.UiObject;
 import androidx.test.uiautomator.UiObjectNotFoundException;
 import androidx.test.uiautomator.UiSelector;
@@ -19,9 +18,7 @@ import org.junit.After;
 import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.mozilla.focus.helpers.TestHelper;
-import org.mozilla.focus.utils.AppConstants;
 
 import java.io.IOException;
 
@@ -34,8 +31,6 @@ import static org.mozilla.focus.fragment.FirstrunFragment.FIRSTRUN_PREF;
 import static org.mozilla.focus.helpers.TestHelper.waitingTime;
 
 // This test opens share menu
-// https://testrail.stage.mozaws.net/index.php?/cases/view/47592
-@RunWith(AndroidJUnit4.class)
 @Ignore("This test was written specifically for WebView and needs to be adapted for GeckoView")
 public class ShareWebsiteTest {
     private static final String TEST_PATH = "/";

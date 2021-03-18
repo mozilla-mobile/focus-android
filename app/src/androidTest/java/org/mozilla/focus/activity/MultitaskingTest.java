@@ -7,26 +7,24 @@ package org.mozilla.focus.activity;
 import android.content.Context;
 
 import androidx.preference.PreferenceManager;
-import androidx.test.InstrumentationRegistry;
 import androidx.test.espresso.IdlingRegistry;
 import androidx.test.espresso.web.webdriver.Locator;
+import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.rule.ActivityTestRule;
-import androidx.test.runner.AndroidJUnit4;
 import androidx.test.uiautomator.By;
 import androidx.test.uiautomator.Until;
 
-import mozilla.components.browser.session.SessionManager;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.mozilla.focus.R;
 import org.mozilla.focus.ext.ContextKt;
 import org.mozilla.focus.helpers.SessionLoadedIdlingResource;
 import org.mozilla.focus.helpers.TestHelper;
 
+import mozilla.components.browser.session.SessionManager;
 import okhttp3.mockwebserver.MockWebServer;
 
 import static androidx.test.espresso.Espresso.onView;
@@ -34,7 +32,6 @@ import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withContentDescription;
-import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
 import static androidx.test.espresso.web.assertion.WebViewAssertions.webMatches;
 import static androidx.test.espresso.web.sugar.Web.onWebView;
@@ -53,7 +50,6 @@ import static org.mozilla.focus.helpers.TestHelper.createMockResponseFromAsset;
 /**
  * Open multiple sessions and verify that the UI looks like it should.
  */
-@RunWith(AndroidJUnit4.class)
 @Ignore("This test was written specifically for WebView and needs to be adapted for GeckoView")
 public class MultitaskingTest {
 
@@ -170,7 +166,7 @@ public class MultitaskingTest {
             assertTrue(TestHelper.inlineAutocompleteEditText.waitForExists(TestHelper.waitingTime));
 
             final SessionManager sessionManager = ContextKt.getComponents(
-                    InstrumentationRegistry.getTargetContext().getApplicationContext()).getSessionManager();
+                    InstrumentationRegistry.getInstrumentation().getTargetContext().getApplicationContext()).getSessionManager();
             assertTrue(sessionManager.getSessions().isEmpty());
         }
     }

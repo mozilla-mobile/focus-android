@@ -8,9 +8,8 @@ package org.mozilla.focus.activity;
 import android.content.Context;
 
 import androidx.preference.PreferenceManager;
-import androidx.test.InstrumentationRegistry;
+import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.rule.ActivityTestRule;
-import androidx.test.runner.AndroidJUnit4;
 import androidx.test.uiautomator.UiObject;
 import androidx.test.uiautomator.UiObjectNotFoundException;
 import androidx.test.uiautomator.UiScrollable;
@@ -19,7 +18,6 @@ import androidx.test.uiautomator.UiSelector;
 import org.junit.After;
 import org.junit.Rule;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.mozilla.focus.R;
 import org.mozilla.focus.helpers.TestHelper;
 
@@ -41,8 +39,6 @@ import static org.mozilla.focus.fragment.FirstrunFragment.FIRSTRUN_PREF;
 import static org.mozilla.focus.helpers.EspressoHelper.openSettings;
 import static org.mozilla.focus.helpers.TestHelper.mDevice;
 
-// https://testrail.stage.mozaws.net/index.php?/cases/view/104577
-@RunWith(AndroidJUnit4.class)
 public class URLExceptionTest {
     private String site = "680news.com";
 
@@ -65,10 +61,6 @@ public class URLExceptionTest {
                     .edit()
                     .putBoolean(FIRSTRUN_PREF, true)
                     .apply();
-
-            // This test runs on both GV and WV.
-            // Klar is used to test Geckoview. make sure it's set to Gecko
-            TestHelper.selectGeckoForKlar();
         }
     };
 
@@ -153,7 +145,7 @@ public class URLExceptionTest {
 
     private void removeException() {
         mDevice.waitForIdle();
-        openActionBarOverflowOrOptionsMenu(InstrumentationRegistry.getContext());
+        openActionBarOverflowOrOptionsMenu(InstrumentationRegistry.getInstrumentation().getContext());
         mDevice.waitForIdle();   // wait until dialog fully appears
         onView(withText("Remove"))
                 .perform(click());

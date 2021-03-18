@@ -9,9 +9,10 @@ import android.content.Context;
 import android.content.Intent;
 
 import androidx.preference.PreferenceManager;
-import androidx.test.InstrumentationRegistry;
+import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.rule.ActivityTestRule;
 import androidx.test.runner.AndroidJUnit4;
+import androidx.test.runner.AndroidJUnitRunner;
 import androidx.test.uiautomator.By;
 import androidx.test.uiautomator.UiObjectNotFoundException;
 import androidx.test.uiautomator.Until;
@@ -36,8 +37,6 @@ import static org.mozilla.focus.fragment.FirstrunFragment.FIRSTRUN_PREF;
 import static org.mozilla.focus.helpers.TestHelper.waitingTime;
 
 // This test erases URL and checks for message
-// https://testrail.stage.mozaws.net/index.php?/cases/view/40068
-@RunWith(AndroidJUnit4.class)
 public class EraseAllUserDataTest {
     private static final String TEST_PATH = "/";
     private MockWebServer webServer;
@@ -58,10 +57,6 @@ public class EraseAllUserDataTest {
                     .edit()
                     .putBoolean(FIRSTRUN_PREF, true)
                     .apply();
-
-            // This test runs on both GV and WV.
-            // Klar is used to test Geckoview. make sure it's set to Gecko
-            TestHelper.selectGeckoForKlar();
 
             webServer = new MockWebServer();
 

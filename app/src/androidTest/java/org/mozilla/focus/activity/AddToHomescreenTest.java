@@ -9,9 +9,9 @@ import android.content.Context;
 import android.os.Build;
 
 import androidx.preference.PreferenceManager;
-import androidx.test.InstrumentationRegistry;
+
+import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.rule.ActivityTestRule;
-import androidx.test.runner.AndroidJUnit4;
 import androidx.test.uiautomator.UiObject;
 import androidx.test.uiautomator.UiObjectNotFoundException;
 import androidx.test.uiautomator.UiSelector;
@@ -20,9 +20,7 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Rule;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.mozilla.focus.helpers.TestHelper;
-import org.mozilla.focus.utils.AppConstants;
 
 import java.io.IOException;
 
@@ -34,10 +32,7 @@ import static org.mozilla.focus.fragment.FirstrunFragment.FIRSTRUN_PREF;
 import static org.mozilla.focus.helpers.TestHelper.waitingTime;
 import static org.mozilla.focus.helpers.TestHelper.webPageLoadwaitingTime;
 
-// https://testrail.stage.mozaws.net/index.php?/cases/view/60852
-// includes:
-// https://testrail.stage.mozaws.net/index.php?/cases/view/40066
-@RunWith(AndroidJUnit4.class)
+// Tests adding a webpage or a search results page to the homescreen
 public class AddToHomescreenTest {
     private static final String TEST_PATH = "/";
     private MockWebServer webServer;
@@ -57,10 +52,6 @@ public class AddToHomescreenTest {
                     .edit()
                     .putBoolean(FIRSTRUN_PREF, true)
                     .apply();
-
-            // This test runs on both GV and WV.
-            // Klar is used to test Geckoview. make sure it's set to Gecko
-            TestHelper.selectGeckoForKlar();
 
             webServer = new MockWebServer();
             // note: requesting getPort() will automatically start the mock server,

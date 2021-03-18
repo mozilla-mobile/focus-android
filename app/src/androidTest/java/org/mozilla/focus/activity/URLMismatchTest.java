@@ -8,9 +8,8 @@ package org.mozilla.focus.activity;
 import android.content.Context;
 
 import androidx.preference.PreferenceManager;
-import androidx.test.InstrumentationRegistry;
+import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.rule.ActivityTestRule;
-import androidx.test.runner.AndroidJUnit4;
 import androidx.test.uiautomator.UiObject;
 import androidx.test.uiautomator.UiObjectNotFoundException;
 import androidx.test.uiautomator.UiSelector;
@@ -18,10 +17,10 @@ import androidx.test.uiautomator.UiSelector;
 import org.junit.After;
 import org.junit.Rule;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.mozilla.focus.R;
 import org.mozilla.focus.helpers.TestHelper;
 
+import static android.view.KeyEvent.KEYCODE_SPACE;
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.action.ViewActions.pressImeActionButton;
@@ -31,7 +30,6 @@ import static androidx.test.espresso.matcher.ViewMatchers.isDescendantOfA;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
-import static android.view.KeyEvent.KEYCODE_SPACE;
 import static junit.framework.Assert.assertTrue;
 import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.Matchers.containsString;
@@ -41,7 +39,6 @@ import static org.mozilla.focus.helpers.TestHelper.waitingTime;
 import static org.mozilla.focus.helpers.TestHelper.webPageLoadwaitingTime;
 
 // This test checks whether URL and displayed site are in sync
-@RunWith(AndroidJUnit4.class)
 public class URLMismatchTest {
 
     @Rule
@@ -58,10 +55,6 @@ public class URLMismatchTest {
                     .edit()
                     .putBoolean(FIRSTRUN_PREF, true)
                     .apply();
-
-            // This test runs on both GV and WV.
-            // Klar is used to test Geckoview. make sure it's set to Gecko
-            TestHelper.selectGeckoForKlar();
         }
     };
 

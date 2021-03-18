@@ -8,8 +8,8 @@ package org.mozilla.focus.helpers;
 import android.content.Context;
 import android.content.res.Resources;
 import androidx.annotation.NonNull;
-import androidx.test.InstrumentationRegistry;
 import androidx.test.espresso.ViewInteraction;
+import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.uiautomator.UiDevice;
 import androidx.test.uiautomator.UiObject;
 import androidx.test.uiautomator.UiObjectNotFoundException;
@@ -299,7 +299,7 @@ public final class TestHelper {
     }
 
     public static Buffer readTestAsset(String filename) throws IOException {
-        try (final InputStream stream = InstrumentationRegistry.getContext().getAssets().open(filename)) {
+        try (final InputStream stream = InstrumentationRegistry.getInstrumentation().getContext().getAssets().open(filename)) {
             return readStreamFile(stream);
         }
     }
@@ -337,13 +337,5 @@ public final class TestHelper {
 
     public static void waitForWebSiteTitleLoad() {
         onWebView(withText("focus test page"));
-    }
-
-    public static void selectGeckoForKlar() {
-        InstrumentationRegistry.getTargetContext().getSharedPreferences("mozilla.components.service.fretboard.overrides",
-                Context.MODE_PRIVATE)
-                .edit()
-                .putBoolean("use-gecko", AppConstants.INSTANCE.isKlarBuild())
-                .commit();
     }
 }

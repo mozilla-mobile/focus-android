@@ -10,9 +10,8 @@ import android.content.res.Configuration;
 import android.content.res.Resources;
 
 import androidx.preference.PreferenceManager;
-import androidx.test.InstrumentationRegistry;
+import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.rule.ActivityTestRule;
-import androidx.test.runner.AndroidJUnit4;
 import androidx.test.uiautomator.UiObject;
 import androidx.test.uiautomator.UiObjectNotFoundException;
 import androidx.test.uiautomator.UiScrollable;
@@ -25,7 +24,6 @@ import org.junit.Test;
 import org.junit.rules.TestRule;
 import org.junit.rules.TestWatcher;
 import org.junit.runner.Description;
-import org.junit.runner.RunWith;
 import org.mozilla.focus.helpers.TestHelper;
 
 import java.util.Locale;
@@ -39,8 +37,6 @@ import static org.mozilla.focus.helpers.TestHelper.mDevice;
 import static org.mozilla.focus.helpers.TestHelper.waitingTime;
 
 // This test checks all the headings in the Settings menu are there
-// https://testrail.stage.mozaws.net/index.php?/cases/view/47587
-@RunWith(AndroidJUnit4.class)
 public class SwitchLocaleTest {
 
     @Rule
@@ -59,10 +55,6 @@ public class SwitchLocaleTest {
                     .edit()
                     .putBoolean(FIRSTRUN_PREF, true)
                     .apply();
-
-            // This test runs on both GV and WV.
-            // Klar is used to test Geckoview. make sure it's set to Gecko
-            TestHelper.selectGeckoForKlar();
         }
     };
 

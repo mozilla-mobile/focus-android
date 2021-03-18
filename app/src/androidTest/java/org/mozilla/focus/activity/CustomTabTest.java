@@ -11,22 +11,19 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.net.Uri;
+
 import androidx.browser.customtabs.CustomTabsIntent;
 import androidx.preference.PreferenceManager;
-import androidx.test.InstrumentationRegistry;
 import androidx.test.espresso.Espresso;
-import androidx.test.espresso.web.webdriver.Locator;
+import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.rule.ActivityTestRule;
-import androidx.test.runner.AndroidJUnit4;
 
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.mozilla.focus.R;
 import org.mozilla.focus.helpers.TestHelper;
-import org.mozilla.focus.utils.AppConstants;
 
 import java.io.IOException;
 
@@ -40,15 +37,8 @@ import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withContentDescription;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
-import static androidx.test.espresso.web.assertion.WebViewAssertions.webMatches;
-import static androidx.test.espresso.web.sugar.Web.onWebView;
-import static androidx.test.espresso.web.webdriver.DriverAtoms.findElement;
-import static androidx.test.espresso.web.webdriver.DriverAtoms.getText;
-import static org.hamcrest.core.IsEqual.equalTo;
 import static org.mozilla.focus.fragment.FirstrunFragment.FIRSTRUN_PREF;
 
-
-@RunWith(AndroidJUnit4.class)
 public class CustomTabTest {
     private static final String MENU_ITEM_LABEL = "TestItem4223";
     private static final String ACTION_BUTTON_DESCRIPTION = "TestButton1337";

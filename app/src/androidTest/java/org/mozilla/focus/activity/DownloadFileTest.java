@@ -9,9 +9,8 @@ import android.content.Context;
 import android.os.Build;
 
 import androidx.preference.PreferenceManager;
-import androidx.test.InstrumentationRegistry;
+import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.rule.ActivityTestRule;
-import androidx.test.runner.AndroidJUnit4;
 import androidx.test.uiautomator.UiObject;
 import androidx.test.uiautomator.UiObjectNotFoundException;
 import androidx.test.uiautomator.UiSelector;
@@ -21,9 +20,7 @@ import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.mozilla.focus.helpers.TestHelper;
-import org.mozilla.focus.utils.AppConstants;
 
 import java.io.IOException;
 
@@ -33,7 +30,6 @@ import okhttp3.mockwebserver.MockWebServer;
 import static org.mozilla.focus.fragment.FirstrunFragment.FIRSTRUN_PREF;
 import static org.mozilla.focus.helpers.TestHelper.waitingTime;
 
-@RunWith(AndroidJUnit4.class)
 @Ignore("This test was written specifically for WebView and needs to be adapted for GeckoView")
 // https://testrail.stage.mozaws.net/index.php?/cases/view/53141
 public class DownloadFileTest {

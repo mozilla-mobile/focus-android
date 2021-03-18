@@ -8,24 +8,19 @@ package org.mozilla.focus.activity;
 import android.content.Context;
 
 import androidx.preference.PreferenceManager;
-import androidx.test.InstrumentationRegistry;
+import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.rule.ActivityTestRule;
-import androidx.test.runner.AndroidJUnit4;
 import androidx.test.uiautomator.UiObjectNotFoundException;
 
-import junit.framework.Assert;
-
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.Rule;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.mozilla.focus.helpers.TestHelper;
 
 import static org.mozilla.focus.fragment.FirstrunFragment.FIRSTRUN_PREF;
 import static org.mozilla.focus.helpers.TestHelper.waitingTime;
 
-// https://testrail.stage.mozaws.net/index.php?/cases/view/40062
-@RunWith(AndroidJUnit4.class)
 public class FirstRunDialogueTest {
 
     @Rule
@@ -44,10 +39,6 @@ public class FirstRunDialogueTest {
                     .edit()
                     .putBoolean(FIRSTRUN_PREF, false)
                     .apply();
-
-            // This test runs on both GV and WV.
-            // Klar is used to test Geckoview. make sure it's set to Gecko
-            TestHelper.selectGeckoForKlar();
         }
     };
 

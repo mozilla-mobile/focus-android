@@ -6,22 +6,20 @@
 package org.mozilla.focus.activity;
 
 import android.content.Context;
+
 import androidx.annotation.IdRes;
 import androidx.preference.PreferenceManager;
-import androidx.test.InstrumentationRegistry;
 import androidx.test.espresso.IdlingRegistry;
+import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.rule.ActivityTestRule;
-import androidx.test.runner.AndroidJUnit4;
 
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.mozilla.focus.R;
 import org.mozilla.focus.helpers.SessionLoadedIdlingResource;
-import org.mozilla.focus.utils.AppConstants;
 
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.Espresso.pressBack;
@@ -35,8 +33,6 @@ import static org.mozilla.focus.fragment.FirstrunFragment.FIRSTRUN_PREF;
 import static org.mozilla.focus.helpers.EspressoHelper.openMenu;
 
 // This test visits each page and checks whether some essential elements are being displayed
-// https://testrail.stage.mozaws.net/index.php?/cases/view/81664
-@RunWith(AndroidJUnit4.class)
 @Ignore("This test was written specifically for WebView and needs to be adapted for GeckoView")
 public class AccessAboutAndYourRightsPagesTest {
 
