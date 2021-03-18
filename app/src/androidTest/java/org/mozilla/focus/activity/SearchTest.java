@@ -6,35 +6,35 @@
 package org.mozilla.focus.activity;
 
 import android.content.Context;
+import android.widget.RadioButton;
 
 import androidx.preference.PreferenceManager;
-import androidx.test.InstrumentationRegistry;
+import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.rule.ActivityTestRule;
 import androidx.test.uiautomator.UiObject;
 import androidx.test.uiautomator.UiObjectNotFoundException;
 import androidx.test.uiautomator.UiScrollable;
 import androidx.test.uiautomator.UiSelector;
-import android.widget.RadioButton;
 
 import org.junit.After;
-import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.mozilla.focus.R;
 import org.mozilla.focus.helpers.TestHelper;
-import org.mozilla.focus.utils.AppConstants;
 
 import java.util.Arrays;
 
+import static android.view.KeyEvent.KEYCODE_SPACE;
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.matcher.ViewMatchers.isDescendantOfA;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
-import static android.view.KeyEvent.KEYCODE_SPACE;
+import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.assertFalse;
 import static junit.framework.Assert.assertTrue;
 import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.Matchers.containsString;
@@ -45,10 +45,8 @@ import static org.mozilla.focus.helpers.TestHelper.waitingTime;
 import static org.mozilla.focus.helpers.TestHelper.webPageLoadwaitingTime;
 
 // This test checks the search engine can be changed
-// https://testrail.stage.mozaws.net/index.php?/cases/view/47588
 @RunWith(Parameterized.class)
-@Ignore("This test was written specifically for WebView and needs to be adapted for GeckoView")
-public class ChangeSearchEngineTest {
+public class SearchTest {
     @Parameterized.Parameter
     public String mSearchEngine;
 
@@ -56,6 +54,9 @@ public class ChangeSearchEngineTest {
     public static Iterable<?> data() {
         return Arrays.asList("Google", "DuckDuckGo");
     }
+
+
+    String searchString = String.format("mozilla focus - %s Search", mSearchEngine);
 
     @Rule
     public ActivityTestRule<MainActivity> mActivityTestRule
@@ -81,34 +82,17 @@ public class ChangeSearchEngineTest {
     }
 
     @Test
-    public void SearchTest() throws UiObjectNotFoundException {
-        UiObject searchMenu = TestHelper.settingsMenu.getChild(new UiSelector()
-                .className("android.widget.LinearLayout")
-                .instance(2));
-
-        UiObject searchEngineSelectorLabel = searchMenu.getChild(new UiSelector()
-                .resourceId("android:id/title")
-                .text("Search")
-                .enabled(true));
-
-        String searchString = String.format("mozilla focus - %s Search", mSearchEngine);
-        UiObject googleWebView = TestHelper.mDevice.findObject(new UiSelector()
-                .description(searchString)
-                .className("android.webkit.WebView"));
-
+    public void searchWithSuggestionsOnTest() throws UiObjectNotFoundException {
         // Open [settings menu] and select Search
         assertTrue(TestHelper.inlineAutocompleteEditText.waitForExists(waitingTime));
         openSettings();
         TestHelper.settingsHeading.waitForExists(waitingTime);
-        searchEngineSelectorLabel.waitForExists(waitingTime);
-        searchEngineSelectorLabel.click();
+        searchSettingsMenu.waitForExists(waitingTime);
+        searchSettingsMenu.click();
 
         // Open [settings menu] > [search engine menu] and click "Search engine" label
-        UiObject defaultSearchEngineLabel = TestHelper.settingsMenu.getChild(new UiSelector()
-                .className("android.widget.LinearLayout")
-                .instance(0));
-        defaultSearchEngineLabel.waitForExists(waitingTime);
-        defaultSearchEngineLabel.click();
+        searchEngineSettings.waitForExists(waitingTime);
+        searchEngineSettings.click();
 
         // Open [settings menu] > [search engine menu] > [search engine list menu]
         // then select desired search engine
@@ -117,14 +101,14 @@ public class ChangeSearchEngineTest {
         UiObject defaultEngineSelection = searchEngineList.getChildByText(new UiSelector()
                 .className(RadioButton.class), mSearchEngine);
         defaultEngineSelection.waitForExists(waitingTime);
-        assertTrue(defaultEngineSelection.getText().equals(mSearchEngine));
+        assertEquals(defaultEngineSelection.getText(), mSearchEngine);
         defaultEngineSelection.click();
         TestHelper.pressBackKey();
         TestHelper.settingsHeading.waitForExists(waitingTime);
         UiObject defaultSearchEngine = TestHelper.mDevice.findObject(new UiSelector()
                 .text(mSearchEngine)
                 .resourceId("android:id/summary"));
-        assertTrue(defaultSearchEngine.getText().equals(mSearchEngine));
+        assertEquals(defaultSearchEngine.getText(), mSearchEngine);
         TestHelper.pressBackKey();
         TestHelper.pressBackKey();
 
@@ -171,7 +155,7 @@ public class ChangeSearchEngineTest {
        TestHelper.inlineAutocompleteEditText.clearTextField();
        TestHelper.inlineAutocompleteEditText.setText("mozilla focus");
        TestHelper.pressEnterKey();
-       googleWebView.waitForExists(waitingTime);
+       searchPageLoadedView.waitForExists(waitingTime);
        TestHelper.progressBar.waitUntilGone(webPageLoadwaitingTime);
 
        // Search for words: <Google|DuckDuckGo|etc.>, mozilla, focus
@@ -179,4 +163,40 @@ public class ChangeSearchEngineTest {
        assertTrue(TestHelper.browserURLbar.getText().contains("mozilla"));
        assertTrue(TestHelper.browserURLbar.getText().contains("focus"));
     }
+
+    @Test
+    public void disableSearchSuggestionsTest() throws UiObjectNotFoundException {
+        // Open [settings menu] and select Search
+        assertTrue(TestHelper.inlineAutocompleteEditText.waitForExists(waitingTime));
+        openSettings();
+        TestHelper.settingsHeading.waitForExists(waitingTime);
+        searchSettingsMenu.waitForExists(waitingTime);
+        searchSettingsMenu.click();
+
+        // click "Search suggestions" toggle
+        searchSuggestionsToggle.waitForExists(waitingTime);
+        searchSuggestionsToggle.click();
+
+        TestHelper.pressBackKey();
+        TestHelper.pressBackKey();
+
+        TestHelper.inlineAutocompleteEditText.waitForExists(waitingTime);
+        TestHelper.inlineAutocompleteEditText.clearTextField();
+        TestHelper.inlineAutocompleteEditText.setText("mozilla ");
+        assertFalse(TestHelper.suggestionList.exists());
+    }
+
+    UiObject searchSettingsMenu = TestHelper.mDevice.findObject(new UiSelector()
+            .resourceId("android:id/title")
+            .text("Search")
+            .enabled(true));
+
+    UiObject searchPageLoadedView = TestHelper.mDevice.findObject(new UiSelector()
+            .description(searchString));
+
+    UiObject searchEngineSettings = TestHelper.mDevice.findObject(new UiSelector()
+            .text("Search engine"));
+
+    UiObject searchSuggestionsToggle = TestHelper.mDevice.findObject(new UiSelector()
+            .text("Get search suggestions"));
 }
