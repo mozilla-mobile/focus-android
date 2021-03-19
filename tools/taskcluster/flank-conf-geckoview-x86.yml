@@ -36,11 +36,13 @@ gcloud:
 
   # test-targets will be pulled dynamically from package.  DO NOT MODIFY
   test-targets:
-TEST_TARGETS
+    - class org.mozilla.focus.activity.SearchTest#searchWithSuggestionsOnTest
+    - class org.mozilla.focus.activity.SearchTest#disableSearchSuggestionsTest
+# TEST_TARGETS
 
   device:
-    - model: Nexus9 
-      version: 25 
+    - model: Pixel2
+      version: 29
 
 flank:
   # test shards - the amount of groups to split the test suite into
@@ -48,7 +50,7 @@ flank:
   testShards: -1 
   # repeat tests - the amount of times to run the tests.
   # 1 runs the tests once. 10 runs all the tests 10x
-  repeatTests: 1
+  num-test-runs: 3
   # always run - these tests are inserted at the beginning of every shard
   # useful if you need to grant permissions or login before other tests run
   #test-targets-always-run:
