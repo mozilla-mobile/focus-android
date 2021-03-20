@@ -36,7 +36,7 @@ fi
 set +e
 
 
-URL_FLANK_BIN=`curl -s https://api.github.com/repos/TestArmada/flank/releases/latest | grep "browser_download_url*" | cut -d '"' -f 4`
+URL_FLANK_BIN=`curl -s https://api.github.com/repos/Flank/flank/releases/latest | grep "browser_download_url*" | cut -d '"' -f 4`
 JAVA_BIN="/usr/bin/java"
 WORKDIR="/opt/focus-android"
 PATH_TEST="$WORKDIR/app/src/androidTest/java/org/mozilla/focus/activity"
