@@ -6,6 +6,7 @@
 package org.mozilla.focus
 
 import android.os.StrictMode
+import androidx.lifecycle.ProcessLifecycleOwner
 import androidx.preference.PreferenceManager
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -15,7 +16,9 @@ import kotlinx.coroutines.launch
 import mozilla.components.support.base.log.Log
 import mozilla.components.support.base.log.sink.AndroidLogSink
 import mozilla.components.support.ktx.android.content.isMainProcess
+import org.mozilla.focus.biometrics.LockObserver
 import org.mozilla.focus.locale.LocaleAwareApplication
+import org.mozilla.focus.navigation.StoreLink
 import org.mozilla.focus.session.VisibilityLifeCycleCallback
 import org.mozilla.focus.telemetry.CrashReporterWrapper
 import org.mozilla.focus.telemetry.TelemetryWrapper
@@ -32,6 +35,9 @@ open class FocusApplication : LocaleAwareApplication(), CoroutineScope {
 
     var visibilityLifeCycleCallback: VisibilityLifeCycleCallback? = null
         private set
+
+    private val storeLink by lazy { StoreLink(components.appStore, components.store) }
+    private val lockObserver by lazy { LockObserver(this, components.store, components.appStore) }
 
     override fun onCreate() {
         super.onCreate()
@@ -60,6 +66,10 @@ open class FocusApplication : LocaleAwareApplication(), CoroutineScope {
             registerActivityLifecycleCallbacks(visibilityLifeCycleCallback)
 
             components.engine.warmUp()
+
+            storeLink.start()
+
+            ProcessLifecycleOwner.get().lifecycle.addObserver(lockObserver)
         }
     }
 
