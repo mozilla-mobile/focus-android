@@ -48,6 +48,10 @@ android {
         debug {
             applicationIdSuffix ".debug"
         }
+        beta {
+            initWith release
+            applicationIdSuffix ".beta"
+        }
         nightly {
             initWith release
         }
