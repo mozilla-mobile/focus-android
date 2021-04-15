@@ -209,19 +209,11 @@ object TelemetryWrapper {
 
     @JvmStatic
     fun isTelemetryEnabled(context: Context): Boolean {
-        if (isDeviceWithTelemetryDisabled()) { return false }
-
-        // The first access to shared preferences will require a disk read.
-        val threadPolicy = StrictMode.allowThreadDiskReads()
-        try {
-            val resources = context.resources
-            val preferences = PreferenceManager.getDefaultSharedPreferences(context)
-
-            return preferences.getBoolean(
-                    resources.getString(R.string.pref_key_telemetry), isEnabledByDefault) && !AppConstants.isDevBuild
-        } finally {
-            StrictMode.setThreadPolicy(threadPolicy)
-        }
+        // Disabling telemetry entirely due to runtime failures.
+        // For a full explanation see https://github.com/mozilla-mobile/focus-android/issues/4801
+        // Eventually, we need to re-enable this after migrating to Glean.
+        // Refer to this git commit for the previous code logic if needed.
+        return false
     }
 
     @JvmStatic
