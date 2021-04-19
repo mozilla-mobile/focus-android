@@ -11,7 +11,11 @@ import android.util.DisplayMetrics
 import android.util.Log
 import android.view.KeyEvent
 import androidx.test.espresso.Espresso
+import androidx.test.espresso.Espresso.onView
+import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.matcher.ViewMatchers
+import androidx.test.espresso.matcher.ViewMatchers.withId
+import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.espresso.web.sugar.Web
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.uiautomator.UiDevice
@@ -22,6 +26,7 @@ import okhttp3.mockwebserver.MockResponse
 import okio.Buffer
 import okio.Okio
 import org.hamcrest.Matchers
+import org.hamcrest.Matchers.allOf
 import org.junit.Assert
 import org.junit.Assert.assertTrue
 import org.mozilla.focus.R
@@ -42,21 +47,40 @@ object TestHelper {
     const val webPageLoadwaitingTime = DateUtils.SECOND_IN_MILLIS * 15
 
     @JvmStatic
-    val appName: String
+    val packageName: String
         get() = InstrumentationRegistry.getInstrumentation()
-            .targetContext.packageName
+            .targetContext
+            .packageName
 
     @JvmStatic
-    val appContext: Context = InstrumentationRegistry.getInstrumentation().targetContext.applicationContext
+    val appName: String = InstrumentationRegistry.getInstrumentation()
+        .targetContext
+        .getString(R.string.app_name)
+
+    @JvmStatic
+    val appContext: Context = InstrumentationRegistry.getInstrumentation()
+        .targetContext
+        .applicationContext
 
     fun getStringResource(id: Int) = appContext.getString(id)
 
     fun verifySnackBarText(text: String) {
         val snackbarText = mDevice.findObject(
-            UiSelector().resourceId("$appName:id/snackbar_text")
+            UiSelector().resourceId("$packageName:id/snackbar_text")
         )
         snackbarText.waitForExists(waitingTime)
         assertTrue(snackbarText.text.contains(text))
+    }
+
+    fun clickSnackBarActionButton(action: String) {
+        val snackbarActionButton =
+            onView(
+                allOf(
+                    withId(R.id.snackbar_action),
+                    withText(action)
+                )
+            )
+        snackbarActionButton.perform(click())
     }
 
     fun isPackageInstalled(packageName: String): Boolean {
@@ -115,21 +139,21 @@ object TestHelper {
     @JvmField
     var nextBtn = mDevice.findObject(
         UiSelector()
-            .resourceId(appName + ":id/next")
+            .resourceId(packageName + ":id/next")
             .enabled(true)
     )
 
     @JvmField
     var finishBtn = mDevice.findObject(
         UiSelector()
-            .resourceId(appName + ":id/finish")
+            .resourceId(packageName + ":id/finish")
             .enabled(true)
     )
 
     @JvmField
     var initialView = mDevice.findObject(
         UiSelector()
-            .resourceId(appName + ":id/backgroundView")
+            .resourceId(packageName + ":id/backgroundView")
             .enabled(true)
     )
 
@@ -146,7 +170,7 @@ object TestHelper {
     @JvmField
     var browserURLbar = mDevice.findObject(
         UiSelector()
-            .resourceId(appName + ":id/display_url")
+            .resourceId(packageName + ":id/display_url")
             .clickable(true)
     )
 
@@ -160,7 +184,7 @@ object TestHelper {
     @JvmField
     var inlineAutocompleteEditText = mDevice.findObject(
         UiSelector()
-            .resourceId(appName + ":id/urlView")
+            .resourceId(packageName + ":id/urlView")
             .focused(true)
             .enabled(true)
     )
@@ -168,39 +192,39 @@ object TestHelper {
     @JvmField
     var searchSuggestionsTitle = mDevice.findObject(
         UiSelector()
-            .resourceId(appName + ":id/enable_search_suggestions_title")
+            .resourceId(packageName + ":id/enable_search_suggestions_title")
             .enabled(true)
     )
 
     @JvmField
     var searchSuggestionsButtonYes = mDevice.findObject(
         UiSelector()
-            .resourceId(appName + ":id/enable_search_suggestions_button")
+            .resourceId(packageName + ":id/enable_search_suggestions_button")
             .enabled(true)
     )
 
     @JvmField
     var cleartextField = mDevice.findObject(
         UiSelector()
-            .resourceId(appName + ":id/clearView")
+            .resourceId(packageName + ":id/clearView")
             .enabled(true)
     )
 
     @JvmField
     var hint = mDevice.findObject(
         UiSelector()
-            .resourceId(appName + ":id/searchView")
+            .resourceId(packageName + ":id/searchView")
             .clickable(true)
     )
 
     @JvmField
     var suggestionList = mDevice.findObject(
         UiSelector()
-            .resourceId(appName + ":id/suggestionList")
+            .resourceId(packageName + ":id/suggestionList")
     )
     var suggestion = mDevice.findObject(
         UiSelector()
-            .resourceId(appName + ":id/suggestion")
+            .resourceId(packageName + ":id/suggestion")
     )
 
     @JvmField
@@ -211,14 +235,14 @@ object TestHelper {
     )
     var geckoView = mDevice.findObject(
         UiSelector()
-            .resourceId(appName + ":id/webview")
+            .resourceId(packageName + ":id/webview")
             .enabled(true)
     )
 
     @JvmField
     var progressBar = mDevice.findObject(
         UiSelector()
-            .resourceId(appName + ":id/progress")
+            .resourceId(packageName + ":id/progress")
             .enabled(true)
     )
     var tryAgainBtn = mDevice.findObject(
@@ -233,7 +257,7 @@ object TestHelper {
     )
     var browserViewSettingsMenuItem = mDevice.findObject(
         UiSelector()
-            .resourceId(appName + ":id/settings")
+            .resourceId(packageName + ":id/settings")
             .clickable(true)
     )
 
@@ -241,14 +265,14 @@ object TestHelper {
     var erasedMsg = mDevice.findObject(
         UiSelector()
             .text("Your browsing history has been erased.")
-            .resourceId(appName + ":id/snackbar_text")
+            .resourceId(packageName + ":id/snackbar_text")
             .enabled(true)
     )
 
     @JvmField
     var lockIcon = mDevice.findObject(
         UiSelector()
-            .resourceId(appName + ":id/lock")
+            .resourceId(packageName + ":id/lock")
             .description("Secure connection")
     )
 
@@ -262,7 +286,7 @@ object TestHelper {
     var notificationExpandSwitch = mDevice.findObject(
         UiSelector()
             .resourceId("android:id/expand_button")
-            .packageName(appName + "")
+            .packageName(packageName + "")
             .enabled(true)
     )
 
@@ -283,28 +307,28 @@ object TestHelper {
     )
     var blockOffIcon = mDevice.findObject(
         UiSelector()
-            .resourceId(appName + ":id/block")
+            .resourceId(packageName + ":id/block")
             .enabled(true)
     )
 
     @JvmField
     var AddtoHSmenuItem = mDevice.findObject(
         UiSelector()
-            .resourceId(appName + ":id/add_to_homescreen")
+            .resourceId(packageName + ":id/add_to_homescreen")
             .enabled(true)
     )
 
     @JvmField
     var AddtoHSCancelBtn = mDevice.findObject(
         UiSelector()
-            .resourceId(appName + ":id/addtohomescreen_dialog_cancel")
+            .resourceId(packageName + ":id/addtohomescreen_dialog_cancel")
             .enabled(true)
     )
 
     @JvmField
     var AddtoHSOKBtn = mDevice.findObject(
         UiSelector()
-            .resourceId(appName + ":id/addtohomescreen_dialog_add")
+            .resourceId(packageName + ":id/addtohomescreen_dialog_add")
             .enabled(true)
     )
 
@@ -319,7 +343,7 @@ object TestHelper {
     @JvmField
     var shortcutTitle = mDevice.findObject(
         UiSelector()
-            .resourceId(appName + ":id/edit_title")
+            .resourceId(packageName + ":id/edit_title")
             .enabled(true)
     )
 
@@ -334,62 +358,62 @@ object TestHelper {
     @JvmField
     var securityInfoIcon = mDevice.findObject(
         UiSelector()
-            .resourceId(appName + ":id/security_info")
+            .resourceId(packageName + ":id/security_info")
             .enabled(true)
     )
 
     @JvmField
     var identityState = mDevice.findObject(
         UiSelector()
-            .resourceId(appName + ":id/site_identity_state")
+            .resourceId(packageName + ":id/site_identity_state")
             .enabled(true)
     )
 
     @JvmField
     var downloadTitle = mDevice.findObject(
         UiSelector()
-            .resourceId(appName + ":id/title_template")
+            .resourceId(packageName + ":id/title_template")
             .enabled(true)
     )
 
     @JvmField
     var downloadBtn = mDevice.findObject(
         UiSelector()
-            .resourceId(appName + ":id/download_dialog_download")
+            .resourceId(packageName + ":id/download_dialog_download")
             .enabled(true)
     )
 
     /********* Main View Menu Item Locators  */
     var whatsNewItem = mDevice.findObject(
         UiSelector()
-            .resourceId(appName + ":id/whats_new")
+            .resourceId(packageName + ":id/whats_new")
             .enabled(true)
     )
 
     @JvmField
     var HelpItem = mDevice.findObject(
         UiSelector()
-            .resourceId(appName + ":id/help")
+            .resourceId(packageName + ":id/help")
             .enabled(true)
     )
 
     @JvmField
     var settingsMenuItem = mDevice.findObject(
         UiSelector()
-            .resourceId(appName + ":id/settings")
+            .resourceId(packageName + ":id/settings")
             .enabled(true)
     )
 
     @JvmField
     var blockCounterItem = mDevice.findObject(
         UiSelector()
-            .resourceId(appName + ":id/trackers_count")
+            .resourceId(packageName + ":id/trackers_count")
     )
 
     @JvmField
     var menulist = mDevice.findObject(
         UiSelector()
-            .resourceId(appName + ":id/list")
+            .resourceId(packageName + ":id/list")
             .enabled(true)
     )
 
@@ -419,13 +443,13 @@ object TestHelper {
     @JvmField
     var settingsMenu = mDevice.findObject(
         UiSelector()
-            .resourceId(appName + ":id/recycler_view")
+            .resourceId(packageName + ":id/recycler_view")
     )
 
     @JvmField
     var settingsHeading = mDevice.findObject(
         UiSelector()
-            .resourceId(appName + ":id/toolbar")
+            .resourceId(packageName + ":id/toolbar")
             .enabled(true)
     )
     var navigateUp = mDevice.findObject(
@@ -439,7 +463,7 @@ object TestHelper {
     )
     var refreshBtn = mDevice.findObject(
         UiSelector()
-            .resourceId(appName + ":id/refresh")
+            .resourceId(packageName + ":id/refresh")
             .enabled(true)
     )
 

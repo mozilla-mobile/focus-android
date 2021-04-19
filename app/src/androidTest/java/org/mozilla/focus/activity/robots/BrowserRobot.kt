@@ -7,34 +7,40 @@ package org.mozilla.focus.activity.robots
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.IdlingRegistry
 import androidx.test.espresso.IdlingResource
+import androidx.test.espresso.ViewInteraction
 import androidx.test.espresso.action.ViewActions.click
+import androidx.test.espresso.assertion.ViewAssertions.matches
+import androidx.test.espresso.matcher.ViewMatchers.hasDescendant
 import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
+import androidx.test.espresso.matcher.ViewMatchers.withContentDescription
 import androidx.test.espresso.matcher.ViewMatchers.withId
+import androidx.test.espresso.matcher.ViewMatchers.withParentIndex
+import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.uiautomator.UiSelector
 import org.hamcrest.Matchers.allOf
 import org.junit.Assert.assertTrue
 import org.mozilla.focus.R
 import org.mozilla.focus.helpers.SessionLoadedIdlingResource
-import org.mozilla.focus.helpers.TestHelper.appName
 import org.mozilla.focus.helpers.TestHelper.mDevice
+import org.mozilla.focus.helpers.TestHelper.packageName
 import org.mozilla.focus.helpers.TestHelper.webPageLoadwaitingTime
 
 class BrowserRobot {
 
     val progressBar =
         mDevice.findObject(
-            UiSelector().resourceId("$appName:id/progress")
+            UiSelector().resourceId("$packageName:id/progress")
         )
 
     fun verifyBrowserView() =
-        assertTrue(mDevice.findObject(UiSelector().resourceId("$appName:id/webview"))
+        assertTrue(mDevice.findObject(UiSelector().resourceId("$packageName:id/webview"))
             .waitForExists(webPageLoadwaitingTime)
         )
 
     fun verifyPageContent(expectedText: String) {
         val sessionLoadedIdlingResource = SessionLoadedIdlingResource()
 
-        mDevice.findObject(UiSelector().resourceId("$appName:id/webview"))
+        mDevice.findObject(UiSelector().resourceId("$packageName:id/webview"))
             .waitForExists(webPageLoadwaitingTime)
 
         runWithIdleRes(sessionLoadedIdlingResource) {
@@ -50,7 +56,7 @@ class BrowserRobot {
 
         browserURLbar.waitForExists(webPageLoadwaitingTime)
 
-        mDevice.findObject(UiSelector().resourceId("$appName:id/webview"))
+        mDevice.findObject(UiSelector().resourceId("$packageName:id/webview"))
             .waitForExists(webPageLoadwaitingTime)
 
         runWithIdleRes(sessionLoadedIdlingResource) {
@@ -59,6 +65,42 @@ class BrowserRobot {
             )
         }
     }
+
+    fun verifyFloatingEraseButton(): ViewInteraction = floatingEraseButton.check(matches(isDisplayed()))
+
+    fun longPressLink(linkText: String) {
+        val link = mDevice.findObject(UiSelector().text(linkText))
+        link.waitForExists(webPageLoadwaitingTime)
+        link.longClick()
+    }
+
+    fun openLinkInNewTab() {
+        onView(withText(R.string.mozac_feature_contextmenu_open_link_in_private_tab))
+            .perform(click())
+    }
+
+    fun verifyNumberOfTabsOpened(tabsCount: Int) {
+        tabsCounter.check(matches(withContentDescription("Tabs open: $tabsCount")))
+    }
+
+    fun verifyTabsOrder(vararg tabTitle: String) {
+        for (tab in tabTitle.indices) {
+            onView(withId(R.id.sessions)).check(
+                matches(
+                    hasDescendant(
+                        allOf(
+                            withText(tabTitle[tab]),
+                            withParentIndex(tab)
+                        )
+                    )
+                )
+            )
+        }
+    }
+
+    fun openTabsTray(): ViewInteraction = tabsCounter.perform(click())
+
+    fun selectTab(tabTitle: String): ViewInteraction = onView(withText(tabTitle)).perform(click())
 
     class Transition {
         fun openSearchBar(interact: SearchRobot.() -> Unit): SearchRobot.Transition {
@@ -71,6 +113,14 @@ class BrowserRobot {
 
         fun clearBrowsingData(interact: HomeScreenRobot.() -> Unit): HomeScreenRobot.Transition {
             floatingEraseButton.perform(click())
+
+            HomeScreenRobot().interact()
+            return HomeScreenRobot.Transition()
+        }
+
+        fun eraseBrowsingHistoryFromTabsTray(interact: HomeScreenRobot.() -> Unit): HomeScreenRobot.Transition {
+            tabsCounter.perform(click())
+            tabsTrayEraseHistoryButton.perform(click())
 
             HomeScreenRobot().interact()
             return HomeScreenRobot.Transition()
@@ -92,6 +142,10 @@ inline fun runWithIdleRes(ir: IdlingResource?, pendingCheck: () -> Unit) {
     }
 }
 
-private val browserURLbar = mDevice.findObject(UiSelector().resourceId("$appName:id/display_url"))
+private val browserURLbar = mDevice.findObject(UiSelector().resourceId("$packageName:id/display_url"))
 
 private val floatingEraseButton = onView(allOf(withId(R.id.erase), isDisplayed()))
+
+private val tabsCounter = onView(withId(R.id.tabs))
+
+private val tabsTrayEraseHistoryButton = onView(withText(R.string.tabs_tray_action_erase))
