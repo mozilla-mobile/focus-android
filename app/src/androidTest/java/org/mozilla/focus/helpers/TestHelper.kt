@@ -112,6 +112,21 @@ object TestHelper {
         }
     }
 
+    fun setNetworkEnabled(enabled: Boolean) {
+        when (enabled) {
+            true -> {
+                mDevice.executeShellCommand("svc data enable")
+                mDevice.executeShellCommand("svc wifi enable")
+            }
+
+            false -> {
+                mDevice.executeShellCommand("svc data disable")
+                mDevice.executeShellCommand("svc wifi disable")
+            }
+        }
+        mDevice.waitForIdle(waitingTime)
+    }
+
     // wait for web area to be visible
     @JvmStatic
     fun waitForWebContent() {
@@ -266,11 +281,6 @@ object TestHelper {
     var floatingEraseButton = Espresso.onView(
         Matchers.allOf(ViewMatchers.withId(R.id.erase), ViewMatchers.isDisplayed())
     )
-    var browserViewSettingsMenuItem = mDevice.findObject(
-        UiSelector()
-            .resourceId(packageName + ":id/settings")
-            .clickable(true)
-    )
 
     @JvmField
     var erasedMsg = mDevice.findObject(
@@ -310,19 +320,6 @@ object TestHelper {
     )
 
     @JvmField
-    var notificationEraseOpenItem = mDevice.findObject(
-        UiSelector()
-            .resourceId("android:id/action0")
-            .description("Erase and Open")
-            .enabled(true)
-    )
-    var blockOffIcon = mDevice.findObject(
-        UiSelector()
-            .resourceId(packageName + ":id/block")
-            .enabled(true)
-    )
-
-    @JvmField
     var AddtoHSmenuItem = mDevice.findObject(
         UiSelector()
             .resourceId(packageName + ":id/add_to_homescreen")
@@ -333,28 +330,6 @@ object TestHelper {
     var AddtoHSCancelBtn = mDevice.findObject(
         UiSelector()
             .resourceId(packageName + ":id/addtohomescreen_dialog_cancel")
-            .enabled(true)
-    )
-
-    @JvmField
-    var AddtoHSOKBtn = mDevice.findObject(
-        UiSelector()
-            .resourceId(packageName + ":id/addtohomescreen_dialog_add")
-            .enabled(true)
-    )
-
-    @JvmField
-    var AddautoBtn = mDevice.findObject(
-        UiSelector()
-            .className("android.widget.Button")
-            .instance(1)
-            .enabled(true)
-    )
-
-    @JvmField
-    var shortcutTitle = mDevice.findObject(
-        UiSelector()
-            .resourceId(packageName + ":id/edit_title")
             .enabled(true)
     )
 
