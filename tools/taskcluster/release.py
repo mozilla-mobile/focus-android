@@ -38,7 +38,7 @@ def generate_build_task(apks, tag):
         }
         artifacts["public/%s" % os.path.basename(apk)] = artifact
 
-    checkout = "git fetch origin && git reset --hard origin/master" if tag is None else "git fetch origin && git checkout %s" % (tag)
+    checkout = "git fetch origin && git reset --hard origin/main" if tag is None else "git fetch origin && git checkout %s" % (tag)
 
     assemble_task = 'assembleNightly'
 
@@ -54,6 +54,7 @@ def generate_build_task(apks, tag):
         command=(checkout +
                  ' && python tools/taskcluster/get-adjust-token.py'
                  ' && python tools/taskcluster/get-sentry-token.py'
+                 ' && python tools/taskcluster/get-mls-token.py'
                  ' && ./gradlew --no-daemon clean test ' + assemble_task),
         features = {
             "chainOfTrust": True

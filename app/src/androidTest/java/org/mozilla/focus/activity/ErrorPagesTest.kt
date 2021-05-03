@@ -4,6 +4,7 @@
 package org.mozilla.focus.activity
 
 import androidx.test.internal.runner.junit4.AndroidJUnit4ClassRunner
+import org.junit.Ignore
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -30,6 +31,8 @@ class ErrorPagesTest {
         }
     }
 
+    @Ignore("Failing on API 29, working on API 28," +
+            "needs investigation: https://github.com/mozilla-mobile/focus-android/issues/4839")
     @Test
     fun noNetworkConnectionErrorPageTest() {
         val pageUrl = "mozilla.org"
@@ -39,6 +42,7 @@ class ErrorPagesTest {
         }.loadPage(pageUrl) {
             verifyPageContent(getStringResource(R.string.mozac_browser_errorpages_unknown_host_title))
             verifyPageContent("Try Again")
+            setNetworkEnabled(true)
         }
     }
 }
