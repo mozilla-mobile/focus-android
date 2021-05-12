@@ -32,9 +32,15 @@ import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_browser.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.mapNotNull
 import kotlinx.coroutines.launch
+import mozilla.components.browser.state.selector.findCustomTabOrSelectedTab
 import mozilla.components.browser.state.selector.findTabOrCustomTab
 import mozilla.components.browser.state.selector.privateTabs
+import mozilla.components.browser.state.state.BrowserState
 import mozilla.components.browser.state.state.CustomTabConfig
 import mozilla.components.browser.state.state.SessionState
 import mozilla.components.browser.state.state.content.DownloadState
@@ -51,8 +57,10 @@ import mozilla.components.feature.findinpage.view.FindInPageBar
 import mozilla.components.feature.prompts.PromptFeature
 import mozilla.components.feature.session.SessionFeature
 import mozilla.components.lib.crash.Crash
+import mozilla.components.lib.state.ext.flowScoped
 import mozilla.components.support.base.feature.PermissionsFeature
 import mozilla.components.support.base.feature.ViewBoundFeatureWrapper
+import mozilla.components.support.ktx.kotlinx.coroutines.flow.ifAnyChanged
 import mozilla.components.support.utils.ColorUtils
 import mozilla.components.support.utils.DrawableUtils
 import org.mozilla.focus.R
@@ -343,6 +351,14 @@ class BrowserFragment :
             forwardButton.setOnClickListener(this)
             backButton.setOnClickListener(this)
         }
+
+        requireComponents.store.flowScoped { flow -> subscribeToNavigation(flow) }
+    }
+
+    private suspend fun subscribeToNavigation(flow: Flow<BrowserState>) {
+        flow.mapNotNull { state -> state.findCustomTabOrSelectedTab() }
+            .ifAnyChanged { tab -> arrayOf(tab.content.url, tab.content.loadRequest) }
+            .collect { findInPageIntegration.onBackPressed() }
     }
 
     private fun initialiseNormalBrowserUi(view: View) {
