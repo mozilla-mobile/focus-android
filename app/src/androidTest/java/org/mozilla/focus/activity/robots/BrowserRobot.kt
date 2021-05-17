@@ -22,6 +22,7 @@ import org.junit.Assert.assertTrue
 import org.mozilla.focus.R
 import org.mozilla.focus.helpers.TestHelper.mDevice
 import org.mozilla.focus.helpers.TestHelper.packageName
+import org.mozilla.focus.helpers.TestHelper.waitingTime
 import org.mozilla.focus.helpers.TestHelper.webPageLoadwaitingTime
 import org.mozilla.focus.idlingResources.SessionLoadedIdlingResource
 
@@ -64,6 +65,10 @@ class BrowserRobot {
         }
     }
 
+    fun clickGetLocationButton() {
+        mDevice.findObject(UiSelector().textContains("Get Location")).click()
+    }
+
     fun verifyFloatingEraseButton(): ViewInteraction = floatingEraseButton.check(matches(isDisplayed()))
 
     fun longPressLink(linkText: String) {
@@ -101,6 +106,48 @@ class BrowserRobot {
     fun selectTab(tabTitle: String): ViewInteraction = onView(withText(tabTitle)).perform(click())
 
     fun verifyShareAppsListOpened() = assertTrue(shareAppsList.waitForExists(webPageLoadwaitingTime))
+
+    fun clickPlayButton() {
+        val playButton =
+                mDevice.findObject(UiSelector().text("Play"))
+        playButton.waitForExists(webPageLoadwaitingTime)
+        playButton.click()
+    }
+
+    fun clickPauseButton() {
+        val pauseButton =
+                mDevice.findObject(UiSelector().text("Pause"))
+        pauseButton.waitForExists(webPageLoadwaitingTime)
+        pauseButton.click()
+    }
+
+    fun waitForPlaybackToStart() {
+        val playStateMessage = mDevice.findObject(UiSelector().text("Media file is playing"))
+        assertTrue(playStateMessage.waitForExists(webPageLoadwaitingTime))
+    }
+
+    fun verifyPlaybackStopped() {
+        val playStateMessage = mDevice.findObject(UiSelector().text("Media file is paused"))
+        assertTrue(playStateMessage.waitForExists(webPageLoadwaitingTime))
+    }
+
+    fun dismissMediaPlayingAlert() {
+        mDevice.findObject(UiSelector().textContains("OK")).click()
+    }
+
+    fun verifySiteSecurityIconShown(): ViewInteraction = securityIcon.check(matches(isDisplayed()))
+
+    fun verifySiteConnectionInfoIsSecure(isSecure: Boolean) {
+        securityIcon.perform(click())
+        assertTrue(site_identity_Icon.waitForExists(waitingTime))
+        site_identity_title.check(matches(isDisplayed()))
+        if (isSecure) {
+            site_identity_state.check(matches(withText("Secure Connection")))
+            certificateVerifier.check(matches(isDisplayed()))
+        } else {
+            site_identity_state.check(matches(withText("Insecure Connection")))
+        }
+    }
 
     class Transition {
         fun openSearchBar(interact: SearchRobot.() -> Unit): SearchRobot.Transition {
@@ -172,4 +219,15 @@ private val tabsTrayEraseHistoryButton = onView(withText(R.string.tabs_tray_acti
 private val mainMenu = onView(withId(R.id.menuView))
 
 private val shareAppsList =
-    mDevice.findObject(UiSelector().resourceId("android:id/resolver_list"))
+        mDevice.findObject(UiSelector().resourceId("android:id/resolver_list"))
+
+private val securityIcon = onView(withId(R.id.security_info))
+
+private val site_identity_state = onView(withId(R.id.site_identity_state))
+
+private val site_identity_title = onView(withId(R.id.site_identity_title))
+
+private val site_identity_Icon =
+        mDevice.findObject(UiSelector().resourceId("$packageName:id/site_identity_icon"))
+
+private val certificateVerifier = onView(withId(R.id.verifier))
