@@ -18,6 +18,7 @@ import org.mozilla.focus.biometrics.LockObserver
 import org.mozilla.focus.locale.LocaleAwareApplication
 import org.mozilla.focus.navigation.StoreLink
 import org.mozilla.focus.session.VisibilityLifeCycleCallback
+import org.mozilla.focus.telemetry.FactsProcessor
 import org.mozilla.focus.telemetry.TelemetryWrapper
 import org.mozilla.focus.utils.AdjustHelper
 import org.mozilla.focus.utils.AppConstants
@@ -49,6 +50,7 @@ open class FocusApplication : LocaleAwareApplication(), CoroutineScope {
 
             TelemetryWrapper.init(this)
             components.metrics.initialize(this)
+            FactsProcessor.initialize()
 
             enableStrictMode()
 
