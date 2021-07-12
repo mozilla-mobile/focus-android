@@ -59,6 +59,22 @@ public class UrlUtils {
 
     }
 
+    public static boolean isJavaScriptUrl(String url) {
+        if (url == null) {
+            return false;
+        }
+
+        final String scheme = Uri.parse(
+            url.trim()
+        ).normalizeScheme().getScheme();
+
+        if (scheme == null) {
+            return false;
+        }
+
+        return scheme.equals("javascript");
+    }
+
     public static String createSearchUrl(Context context, String searchTerm) {
         final String defaultIdentifier = Settings.getInstance(context).getDefaultSearchEngineName();
 

@@ -505,7 +505,9 @@ class GeckoWebViewProvider : IWebViewProvider {
 
                     val complete = when {
                         request.target == GeckoSession.NavigationDelegate.TARGET_WINDOW_NEW -> {
-                            geckoSession.loadUri(request.uri)
+                            if (!UrlUtils.isJavaScriptUrl(request.uri)) {
+                                geckoSession.loadUri(request.uri)
+                            }
                             AllowOrDeny.DENY
                         }
                         LocalizedContent.handleInternalContent(
