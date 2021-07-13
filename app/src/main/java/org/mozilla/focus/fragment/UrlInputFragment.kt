@@ -55,6 +55,7 @@ import org.mozilla.focus.tips.Tip
 import org.mozilla.focus.tips.TipManager
 import org.mozilla.focus.utils.AppConstants
 import org.mozilla.focus.utils.Features
+import org.mozilla.focus.utils.MvpFeatureManager
 import org.mozilla.focus.utils.OneShotOnPreDrawListener
 import org.mozilla.focus.utils.SearchUtils
 import org.mozilla.focus.utils.Settings
@@ -304,7 +305,12 @@ class UrlInputFragment :
         if (isOverlay) {
             keyboardLinearLayout?.visibility = View.GONE
         } else {
-            backgroundView?.setBackgroundResource(R.drawable.background_gradient)
+            val backgroundId = if (MvpFeatureManager.isEnabled) {
+                R.drawable.mvp_dark_background
+            } else {
+                R.drawable.background_gradient
+            }
+            backgroundView?.setBackgroundResource(backgroundId)
 
             dismissView?.visibility = View.GONE
 
