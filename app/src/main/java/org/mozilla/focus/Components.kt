@@ -35,11 +35,11 @@ import mozilla.components.service.location.LocationService
 import mozilla.components.service.location.MozillaLocationService
 import org.mozilla.focus.activity.MainActivity
 import org.mozilla.focus.components.EngineProvider
-import org.mozilla.focus.telemetry.GleanMetricsService
 import org.mozilla.focus.downloads.DownloadService
 import org.mozilla.focus.engine.ClientWrapper
 import org.mozilla.focus.engine.LocalizedContentInterceptor
 import org.mozilla.focus.engine.SanityCheckMiddleware
+import org.mozilla.focus.exceptions.ExceptionMigrationMiddleware
 import org.mozilla.focus.locale.LocaleManager
 import org.mozilla.focus.notification.PrivateNotificationMiddleware
 import org.mozilla.focus.search.SearchFilterMiddleware
@@ -47,6 +47,7 @@ import org.mozilla.focus.search.SearchMigration
 import org.mozilla.focus.state.AppState
 import org.mozilla.focus.state.AppStore
 import org.mozilla.focus.state.Screen
+import org.mozilla.focus.telemetry.GleanMetricsService
 import org.mozilla.focus.telemetry.TelemetryMiddleware
 import org.mozilla.focus.utils.Settings
 import java.util.Locale
@@ -103,6 +104,7 @@ class Components(
     val store by lazy {
         BrowserStore(
             middleware = listOf(
+                ExceptionMigrationMiddleware(context),
                 PrivateNotificationMiddleware(context),
                 TelemetryMiddleware(),
                 DownloadMiddleware(context, DownloadService::class.java),
@@ -145,17 +147,6 @@ class Components(
     val crashReporter: CrashReporter by lazy { createCrashReporter(context) }
 
     val metrics: GleanMetricsService by lazy { GleanMetricsService(context) }
-
-    fun migrateTrackingProtectionExceptions(context: Context) {
-        if (engineOverride != null) {
-            // If there's an engine override (for testing) then we do not want to migrate any
-            // exceptions and potentially try to launch GeckoView on a plain JVM (which will blow up).
-            return
-        }
-
-        val exceptionsMigrator = EngineProvider.provideTrackingProtectionMigrator(context)
-        exceptionsMigrator.start(context)
-    }
 }
 
 private fun determineInitialScreen(context: Context): Screen {
