@@ -7,5 +7,5 @@ package org.mozilla.focus.utils
  * Feature flag for MVP
  */
 object FeatureFlags {
-    const val isMvp = false
+    const val isMvp = true
 }
