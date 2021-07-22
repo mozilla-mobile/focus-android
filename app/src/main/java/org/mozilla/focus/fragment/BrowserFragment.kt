@@ -65,6 +65,7 @@ import org.mozilla.focus.ext.isCustomTab
 import org.mozilla.focus.ext.requireComponents
 import org.mozilla.focus.open.OpenWithFragment
 import org.mozilla.focus.popup.PopupUtils
+import org.mozilla.focus.settings.TrackingProtectionBottomSheetDialog
 import org.mozilla.focus.state.AppAction
 import org.mozilla.focus.state.Screen
 import org.mozilla.focus.telemetry.TelemetryWrapper
@@ -697,6 +698,11 @@ class BrowserFragment :
             securityPopup.showAtLocation(urlBar, Gravity.TOP or Gravity.CENTER_HORIZONTAL, 0, offsetY)
             popupTint!!.visibility = View.VISIBLE
         }
+    }
+
+    fun showTrackingProtectionBottomSheet() {
+        val trackingProtectionSheet = TrackingProtectionBottomSheetDialog(requireContext())
+        trackingProtectionSheet.show()
     }
 
     private fun onUrlLongClicked(): Boolean {

@@ -53,6 +53,10 @@ class BrowserToolbarIntegration(
             fragment.showSecurityPopUp()
         }
 
+        toolbar.display.setOnTrackingProtectionClickedListener {
+            fragment.showTrackingProtectionBottomSheet()
+        }
+
         if (customTabId != null) {
             customTabsFeature = CustomTabsToolbarFeature(
                 store,
