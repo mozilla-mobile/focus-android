@@ -712,4 +712,16 @@
 
     <!-- Label for the checkbox to send the tab crash report to Mozilla -->
     <string name="crash_report_send_crash_label">Send crash report to Mozilla</string>
+
+    <!-- Tracking protection bottom sheet -->
+    <string name="trackers_count_note">Trackers blocked since %s</string>
+    <string name="content">Content</string>
+    <string name="advertising">Advertising</string>
+    <string name="social">Social</string>
+    <string name="analytics">Analytics</string>
+    <string name="enhanced_tracking">Enhanced Tracking Protection</string>
+    <string name="trackers_and_scripts">Trackers and Scripts to Block</string>
+    <string name="more_settings">More Settings</string>
+    <string name="tracking_protection_description"><![CDATA[Keep your data to yourself. Firefox Focus protects you from many of the most common trackers that follow what you do online...<br><font color=\'#FF4AA2\'>Learn more</font>]]>
+    </string>
 </resources>
