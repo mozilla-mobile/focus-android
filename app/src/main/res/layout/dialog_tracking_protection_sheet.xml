@@ -45,7 +45,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:text="112,663"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/description" />
 
@@ -126,6 +125,7 @@
         android:layout_marginBottom="24dp"
         android:text="@string/more_settings"
         android:textColor="@color/accent_pink"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/content" />
 </androidx.constraintlayout.widget.ConstraintLayout>

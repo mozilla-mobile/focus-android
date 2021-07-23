@@ -65,7 +65,7 @@ import org.mozilla.focus.ext.isCustomTab
 import org.mozilla.focus.ext.requireComponents
 import org.mozilla.focus.open.OpenWithFragment
 import org.mozilla.focus.popup.PopupUtils
-import org.mozilla.focus.settings.TrackingProtectionBottomSheetDialog
+import org.mozilla.focus.settings.privacy.TrackingProtectionBottomSheetDialog
 import org.mozilla.focus.state.AppAction
 import org.mozilla.focus.state.Screen
 import org.mozilla.focus.telemetry.TelemetryWrapper
@@ -701,7 +701,10 @@ class BrowserFragment :
     }
 
     fun showTrackingProtectionBottomSheet() {
-        val trackingProtectionSheet = TrackingProtectionBottomSheetDialog(requireContext())
+        val trackingProtectionSheet = TrackingProtectionBottomSheetDialog(
+            appStore = requireComponents.appStore,
+            context = requireContext()
+        )
         trackingProtectionSheet.show()
     }
 

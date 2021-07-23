@@ -190,7 +190,7 @@
         <item name="android:textColor">@color/primaryTextColor</item>
     </style>
 
-    <style name="AppBottomSheetDialogTheme" parent="Animation.Design.BottomSheetDialog">
+    <style name="AppBottomSheetDialogTheme" parent="Theme.Design.Light.BottomSheetDialog">
         <item name="bottomSheetStyle">@style/AppModalStyle</item>
     </style>
 
