@@ -10,6 +10,7 @@
 
         <item name="android:windowContentTransitions">true</item>
         <item name="popupMenuStyle">@style/PopupMenu</item>
+        <item name="bottomSheetDialogTheme">@style/AppBottomSheetDialogTheme</item>
 
         <!-- Use the same colors for both themes until light theme it will be implemented -->
         <item name="colorControlNormal">@color/photonWhite</item>
@@ -187,5 +188,13 @@
         <item name="fontFamily">@string/font_inter</item>
         <item name="android:textSize">16sp</item>
         <item name="android:textColor">@color/primaryTextColor</item>
+    </style>
+
+    <style name="AppBottomSheetDialogTheme" parent="Animation.Design.BottomSheetDialog">
+        <item name="bottomSheetStyle">@style/AppModalStyle</item>
+    </style>
+
+    <style name="AppModalStyle" parent="Widget.Design.BottomSheet.Modal">
+        <item name="android:background">@drawable/top_rounded_corners_bottom_sheet_background</item>
     </style>
 </resources>
