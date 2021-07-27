@@ -5,7 +5,9 @@
 package org.mozilla.focus.telemetry
 
 import android.content.Context
+import androidx.annotation.VisibleForTesting
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.async
@@ -36,6 +38,7 @@ class GleanMetricsService(context: Context) : MetricsService {
 
     private val activationPing = ActivationPing(context)
 
+    @OptIn(DelicateCoroutinesApi::class)
     override fun initialize(context: Context) {
         val components = context.components
         val settings = Settings.getInstance(context)
@@ -55,6 +58,10 @@ class GleanMetricsService(context: Context) : MetricsService {
         )
 
         Glean.registerPings(Pings)
+
+        if (telemetryEnabled) {
+            installSearchTelemetryExtensions(components)
+        }
 
         // Do this immediately after init.
         GlobalScope.launch(IO) {
@@ -89,6 +96,15 @@ class GleanMetricsService(context: Context) : MetricsService {
             "custom"
         } else {
             searchEngine?.name ?: "<none>"
+        }
+    }
+
+    @VisibleForTesting
+    internal fun installSearchTelemetryExtensions(components: Components) {
+        val engine = components.engine
+        components.store.apply {
+            components.adsTelemetry.install(engine, this)
+            components.searchTelemetry.install(engine, this)
         }
     }
 }
