@@ -43,6 +43,14 @@ android {
             shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             matchingFallbacks = ['release']
+
+            if (gradle.hasProperty("localProperties.autosignReleaseWithDebugKey")) {
+                signingConfig signingConfigs.debug
+            }
+
+            if (gradle.hasProperty("localProperties.debuggable")) {
+                debuggable true
+            }
         }
         debug {
             applicationIdSuffix ".debug"
