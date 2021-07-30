@@ -7,7 +7,9 @@ package org.mozilla.focus.exceptions
 import android.content.Context
 import kotlinx.coroutines.runBlocking
 import mozilla.components.browser.state.action.BrowserAction
+import mozilla.components.browser.state.action.InitAction
 import mozilla.components.browser.state.action.TabListAction
+import mozilla.components.browser.state.action.TrackingProtectionAction.ToggleExclusionListAction
 import mozilla.components.browser.state.selector.privateTabs
 import mozilla.components.browser.state.state.BrowserState
 import mozilla.components.lib.state.Middleware
@@ -35,8 +37,10 @@ class ExceptionMigrationMiddleware(
     ) {
         next(action)
 
-        if (action is TabListAction) {
+        if (action is TabListAction || action is ToggleExclusionListAction) {
             checkIfMigrationIsNeeded(context.state)
+        } else if (action is InitAction) {
+            migrateTrackingProtectionExceptions()
         }
     }
 

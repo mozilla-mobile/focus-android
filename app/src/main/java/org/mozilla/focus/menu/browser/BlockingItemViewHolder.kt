@@ -17,6 +17,7 @@ import mozilla.components.support.utils.ThreadUtils
 import org.mozilla.focus.R
 import org.mozilla.focus.exceptions.ExceptionDomains
 import org.mozilla.focus.ext.components
+import org.mozilla.focus.ext.removeFromExceptions
 import org.mozilla.focus.fragment.BrowserFragment
 import org.mozilla.focus.telemetry.TelemetryWrapper
 
@@ -31,9 +32,10 @@ internal class BlockingItemViewHolder(
     init {
         val switchView = itemView.findViewById<Switch>(R.id.blocking_switch)
 
-        switchView.isChecked = fragment.requireContext().components.store.state.findTabOrCustomTabOrSelectedTab(
-            fragment.tab.id
-        )!!.trackingProtection.ignoredOnTrackingProtection.not()
+        switchView.isChecked =
+            fragment.requireContext().components.store.state.findTabOrCustomTabOrSelectedTab(
+                fragment.tab.id
+            )!!.trackingProtection.ignoredOnTrackingProtection.not()
 
         switchView.setOnCheckedChangeListener(this)
 
@@ -75,7 +77,7 @@ internal class BlockingItemViewHolder(
 
             buttonView.context.components.apply {
                 if (isChecked) {
-                    trackingProtectionUseCases.removeException(fragment.tab.id)
+                    fragment.tab.removeFromExceptions(trackingProtectionUseCases)
                 } else {
                     trackingProtectionUseCases.addException(fragment.tab.id)
                 }

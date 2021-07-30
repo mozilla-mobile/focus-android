@@ -6,6 +6,8 @@ package org.mozilla.focus.ext
 
 import mozilla.components.browser.state.state.CustomTabSessionState
 import mozilla.components.browser.state.state.SessionState
+import mozilla.components.concept.engine.content.blocking.TrackingProtectionException
+import mozilla.components.feature.session.TrackingProtectionUseCases
 
 /**
  * Returns this [SessionState] cast to [CustomTabSessionState] if possible. Otherwise returns `null`.
@@ -22,4 +24,19 @@ fun SessionState.ifCustomTab(): CustomTabSessionState? {
  */
 fun SessionState.isCustomTab(): Boolean {
     return this is CustomTabSessionState
+}
+
+/**
+ * Removes a [TrackingProtectionException] if one is set for the current session.
+ */
+fun SessionState.removeFromExceptions(trackingProtectionUseCases: TrackingProtectionUseCases) {
+    var exceptions: List<TrackingProtectionException>
+    trackingProtectionUseCases.fetchExceptions.invoke {
+        exceptions = it.filter { exception ->
+            exception.url == this.content.url
+        }
+        exceptions.firstOrNull()?.let {
+            trackingProtectionUseCases.removeException(exceptions.first())
+        }
+    }
 }
