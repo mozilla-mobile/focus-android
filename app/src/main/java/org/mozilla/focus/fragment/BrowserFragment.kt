@@ -8,6 +8,7 @@ import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.net.Uri
@@ -55,6 +56,7 @@ import org.mozilla.focus.activity.InstallFirefoxActivity
 import org.mozilla.focus.activity.MainActivity
 import org.mozilla.focus.browser.BrowserMenuControllerAdapter
 import org.mozilla.focus.browser.DisplayToolbar
+import org.mozilla.focus.browser.binding.BlockedTrackersBinding
 import org.mozilla.focus.browser.binding.BlockingThemeBinding
 import org.mozilla.focus.browser.binding.TabCountBinding
 import org.mozilla.focus.browser.integration.BrowserToolbarIntegration
@@ -73,6 +75,7 @@ import org.mozilla.focus.utils.AppPermissionCodes.REQUEST_CODE_DOWNLOAD_PERMISSI
 import org.mozilla.focus.utils.AppPermissionCodes.REQUEST_CODE_PROMPT_PERMISSIONS
 import org.mozilla.focus.utils.Browsers
 import org.mozilla.focus.utils.FeatureFlags
+import org.mozilla.focus.utils.Settings
 import org.mozilla.focus.utils.StatusBarUtils
 import org.mozilla.focus.utils.SupportUtils
 import org.mozilla.focus.widget.FloatingEraseButton
@@ -105,6 +108,9 @@ class BrowserFragment :
 
     private val blockingThemeBinding = ViewBoundFeatureWrapper<BlockingThemeBinding>()
     private val tabCountBinding = ViewBoundFeatureWrapper<TabCountBinding>()
+    private val blockedTrackersBinding = ViewBoundFeatureWrapper<BlockedTrackersBinding>()
+    private lateinit var settings: Settings
+    private lateinit var preferences: SharedPreferences
 
     /**
      * The ID of the tab associated with this fragment.
@@ -160,6 +166,8 @@ class BrowserFragment :
     @Suppress("ComplexCondition", "LongMethod")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         val components = requireComponents
+        settings = Settings.getInstance(requireContext())
+        preferences = PreferenceManager.getDefaultSharedPreferences(requireContext())
 
         engineView = (view.findViewById<View>(R.id.webview) as EngineView)
 
@@ -247,6 +255,16 @@ class BrowserFragment :
                 tab.isCustomTab(),
                 statusBar!!,
                 urlBar!!
+            ),
+            owner = this,
+            view = statusBar!!
+        )
+
+        blockedTrackersBinding.set(
+            BlockedTrackersBinding(
+                store = components.store,
+                tabId = tab.id,
+                updateCount = ::updateTotalTrackersBlockedCount
             ),
             owner = this,
             view = statusBar!!
@@ -680,6 +698,7 @@ class BrowserFragment :
     }
 
     fun setShouldRequestDesktop(enabled: Boolean) {
+
         if (enabled) {
             PreferenceManager.getDefaultSharedPreferences(context).edit()
                 .putBoolean(
@@ -730,6 +749,18 @@ class BrowserFragment :
 
     fun handleTabCrash(crash: Crash) {
         showCrashReporter(crash)
+    }
+
+    private fun updateTotalTrackersBlockedCount(count: Int) {
+        if (count == 0) return
+        val blockedTrackersCount = settings.getTotalBlockedTrackersCount()
+        preferences
+            .edit()
+            .putInt(
+                context?.getString(R.string.pref_key_privacy_total_trackers_blocked_count),
+                blockedTrackersCount + count
+            )
+            .apply()
     }
 
     companion object {
