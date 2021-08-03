@@ -47,6 +47,40 @@ Before you attempt to make a contribution please read the [Community Participati
 **focusX86Debug** for X86
 **focusAarch64Debug** for ARM64
 
+## local.properties helpers
+You can speed up or enhance local development by setting a few helper flags available in `local.properties` which will be made easily available as gradle properties.
+
+### Automatically sign release builds
+To sign your release builds with your debug key automatically, add the following to `<proj-root>/local.properties`:
+
+```sh
+autosignReleaseWithDebugKey
+```
+
+With this line, release build variants will automatically be signed with your debug key (like debug builds), allowing them to be built and installed directly through Android Studio or the command line.
+
+This is helpful when you're building release variants frequently, for example to test feature flags and or do performance analyses.
+
+### Building debuggable release variants
+
+Nightly, Beta and Release variants are getting published to Google Play and therefore are not debuggable. To locally create debuggable builds of those variants, add the following to `<proj-root>/local.properties`:
+
+```sh
+debuggable
+```
+
+### Auto-publication workflow for android-components and application-services
+If you're making changes to these projects and want to test them in Focus, auto-publication workflow is the fastest, most reliable
+way to do that.
+
+In `local.properties`, specify a relative path to your local `android-components` and/or `application-services` checkouts. E.g.:
+- `autoPublish.android-components.dir=../android-components`
+- `autoPublish.application-services.dir=../application-services`
+
+Once these flags are set, your Focus builds will include any local modifications present in these projects.
+
+See a [demo of auto-publication workflow in action](https://www.youtube.com/watch?v=qZKlBzVvQGc).
+
 ## Pre-push hooks
 To reduce review turn-around time, we'd like all pushes to run tests locally. We'd
 recommend you use our provided pre-push hook in `quality/pre-push-recommended.sh`.
