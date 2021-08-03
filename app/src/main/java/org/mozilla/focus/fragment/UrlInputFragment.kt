@@ -146,10 +146,13 @@ class UrlInputFragment :
     @Volatile
     private var isAnimating: Boolean = false
 
-    private var tab: TabSessionState? = null
+    var tab: TabSessionState? = null
+        private set
 
     private val isOverlay: Boolean
         get() = tab != null
+
+    private var isInitialized = false
 
     private val toolbarIntegration = ViewBoundFeatureWrapper<InputToolbarIntegration>()
 
@@ -201,6 +204,13 @@ class UrlInputFragment :
 
         StatusBarUtils.getStatusBarHeight(keyboardLinearLayout) {
             adjustViewToStatusBarHeight(it)
+        }
+
+        if (!isInitialized) {
+            // Explicitly switching to "edit mode" here in order to focus the toolbar and select
+            // all text in it. We only want to do this once per fragment.
+            browserToolbar.editMode()
+            isInitialized = true
         }
     }
 
