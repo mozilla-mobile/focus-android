@@ -40,6 +40,7 @@ import mozilla.components.browser.state.state.SessionState
 import mozilla.components.browser.state.state.TabSessionState
 import mozilla.components.browser.state.state.selectedOrDefaultSearchEngine
 import mozilla.components.support.base.feature.ViewBoundFeatureWrapper
+import mozilla.components.support.ktx.android.view.hideKeyboard
 import mozilla.components.support.utils.ThreadUtils
 import org.mozilla.focus.R
 import org.mozilla.focus.ext.isSearch
@@ -145,10 +146,13 @@ class UrlInputFragment :
     @Volatile
     private var isAnimating: Boolean = false
 
-    private var tab: TabSessionState? = null
+    var tab: TabSessionState? = null
+        private set
 
     private val isOverlay: Boolean
         get() = tab != null
+
+    private var isInitialized = false
 
     private val toolbarIntegration = ViewBoundFeatureWrapper<InputToolbarIntegration>()
 
@@ -201,11 +205,19 @@ class UrlInputFragment :
         StatusBarUtils.getStatusBarHeight(keyboardLinearLayout) {
             adjustViewToStatusBarHeight(it)
         }
+
+        if (!isInitialized) {
+            // Explicitly switching to "edit mode" here in order to focus the toolbar and select
+            // all text in it. We only want to do this once per fragment.
+            browserToolbar.editMode()
+            isInitialized = true
+        }
     }
 
     override fun onPause() {
         job.cancel()
         super.onPause()
+        view?.hideKeyboard()
     }
 
     private fun updateTipsLabel() {
