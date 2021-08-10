@@ -124,7 +124,10 @@ android {
 tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {
         kotlinOptions {
             allWarningsAsErrors = true
-            freeCompilerArgs += "-Xuse-experimental=kotlinx.coroutines.ExperimentalCoroutinesApi"
+            freeCompilerArgs += [
+                "-Xuse-experimental=kotlinx.coroutines.ExperimentalCoroutinesApi",
+                "-Xopt-in=kotlin.RequiresOptIn"
+            ]
             jvmTarget = '1.8'
         }
 }
