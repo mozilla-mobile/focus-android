@@ -60,10 +60,12 @@ import org.mozilla.focus.browser.binding.TabCountBinding
 import org.mozilla.focus.browser.integration.BrowserToolbarIntegration
 import org.mozilla.focus.browser.integration.FindInPageIntegration
 import org.mozilla.focus.browser.integration.FullScreenIntegration
+import org.mozilla.focus.browser.integration.BrowserMenuController
 import org.mozilla.focus.downloads.DownloadService
 import org.mozilla.focus.ext.ifCustomTab
 import org.mozilla.focus.ext.isCustomTab
 import org.mozilla.focus.ext.requireComponents
+import org.mozilla.focus.menu.browser.DefaultBrowserMenu
 import org.mozilla.focus.open.OpenWithFragment
 import org.mozilla.focus.popup.PopupUtils
 import org.mozilla.focus.state.AppAction
@@ -125,34 +127,10 @@ class BrowserFragment :
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_browser, container, false)
 
-        val browserToolbar = view.findViewById<BrowserToolbar>(R.id.browserToolbar)
-
-        toolbarIntegration.set(
-            BrowserToolbarIntegration(
-                requireComponents.store,
-                browserToolbar,
-                fragment = this,
-                customTabId = if (tab.isCustomTab()) { tab.id } else { null },
-                customTabsUseCases = requireComponents.customTabsUseCases,
-                sessionUseCases = requireComponents.sessionUseCases
-            ),
-            owner = this,
-            view = browserToolbar
-        )
-
-        browserToolbar.display.onUrlClicked = {
-            edit()
-            false // Do not switch to edit mode
-        }
-
-        browserToolbar.display.menuController = BrowserMenuControllerAdapter(this)
-
         urlBar = view.findViewById(R.id.urlbar)
         statusBar = view.findViewById(R.id.status_bar_background)
 
         popupTint = view.findViewById(R.id.popup_tint)
-
-        browserToolbar.display.setOnUrlLongClickListener { onUrlLongClicked() }
 
         return view
     }
@@ -252,12 +230,57 @@ class BrowserFragment :
             view = statusBar!!
         )
 
+        customizeToolbar(view)
+
         val customTabConfig = tab.ifCustomTab()?.config
         if (customTabConfig != null) {
             initialiseCustomTabUi(view, customTabConfig)
         } else {
             initialiseNormalBrowserUi(view)
         }
+    }
+
+    private fun customizeToolbar(view: View) {
+        val browserToolbar = view.findViewById<BrowserToolbar>(R.id.browserToolbar)
+        val controller = BrowserMenuController(
+            requireComponents.sessionUseCases,
+            requireComponents.appStore,
+            requireComponents.store,
+            findInPageIntegration.get(),
+            tabId,
+            ::shareCurrentUrl,
+            ::setShouldRequestDesktop,
+            ::showAddToHomescreenDialog,
+            ::openSelectBrowser
+        )
+
+        if (FeatureFlags.isMvp) {
+            if (tab.ifCustomTab()?.config == null) {
+                val browserMenu = DefaultBrowserMenu(
+                    context = requireContext(),
+                    store = requireComponents.store,
+                    onItemTapped = { controller.handleMenuInteraction(it) }
+                )
+                browserToolbar.display.menuBuilder = browserMenu.menuBuilder
+            }
+        } else {
+            browserToolbar.display.menuController = BrowserMenuControllerAdapter(this)
+        }
+
+        toolbarIntegration.set(
+            BrowserToolbarIntegration(
+                requireComponents.store,
+                browserToolbar,
+                fragment = this,
+                controller = controller,
+                customTabId = if (tab.isCustomTab()) { tab.id } else { null },
+                customTabsUseCases = requireComponents.customTabsUseCases,
+                sessionUseCases = requireComponents.sessionUseCases,
+                onUrlLongClicked = ::onUrlLongClicked
+            ),
+            owner = this,
+            view = browserToolbar
+        )
     }
 
     private fun initialiseNormalBrowserUi(view: View) {
@@ -591,25 +614,7 @@ class BrowserFragment :
                 }
             }
 
-            R.id.open_select_browser -> {
-                val browsers = Browsers(requireContext(), tab.content.url)
-
-                val apps = browsers.installedBrowsers
-                val store = if (browsers.hasFirefoxBrandedBrowserInstalled())
-                    null
-                else
-                    InstallFirefoxActivity.resolveAppStore(requireContext())
-
-                val fragment = OpenWithFragment.newInstance(
-                    apps,
-                    tab.content.url,
-                    store
-                )
-                @Suppress("DEPRECATION")
-                fragment.show(requireFragmentManager(), OpenWithFragment.FRAGMENT_TAG)
-
-                TelemetryWrapper.openSelectionEvent()
-            }
+            R.id.open_select_browser -> { openSelectBrowser() }
 
             R.id.help -> {
                 requireComponents.tabsUseCases.addTab(
@@ -669,6 +674,26 @@ class BrowserFragment :
         }
     }
 
+    private fun openSelectBrowser() {
+        val browsers = Browsers(requireContext(), tab.content.url)
+
+        val apps = browsers.installedBrowsers
+        val store = if (browsers.hasFirefoxBrandedBrowserInstalled())
+            null
+        else
+            InstallFirefoxActivity.resolveAppStore(requireContext())
+
+        val fragment = OpenWithFragment.newInstance(
+            apps,
+            tab.content.url,
+            store
+        )
+        @Suppress("DEPRECATION")
+        fragment.show(requireFragmentManager(), OpenWithFragment.FRAGMENT_TAG)
+
+        TelemetryWrapper.openSelectionEvent()
+    }
+
     internal fun closeCustomTab() {
         TelemetryWrapper.closeCustomTabEvent()
 
@@ -687,7 +712,7 @@ class BrowserFragment :
                     true
                 ).apply()
         }
-
+        TelemetryWrapper.desktopRequestCheckEvent(enabled)
         requireComponents.sessionUseCases.requestDesktopSite(enabled, tab.id)
     }
 

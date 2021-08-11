@@ -6,7 +6,8 @@
     <color name="colorPrimary">#ff272727</color>
     <color name="colorPrimaryDark">#6c3b6e</color>
     <color name="colorAccent">@color/focusContrastPink</color>
-
+    <color name="primary_text">#ffffff</color>
+    <color name="disabled">#66FBFBFE</color>
     <color name="focusContrastPink">#e452B9</color>
 
     <color name="colorSettingsTint">#f9f9fa</color>
@@ -111,4 +112,5 @@
     <color name="home_screen_dialog_warning_text">#96f9f9fa</color>
 
     <color name="settings_summary_text">#ffbbbcc5</color>
+    <color name="settings_whats_new">#FFFF1AD9</color>
 </resources>
