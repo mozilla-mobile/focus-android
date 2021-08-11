@@ -5,7 +5,7 @@ tasks:
     - $let:
           taskgraph:
               branch: taskgraph
-              revision: 2b2622598df02bde211d8cedb334b7b22fb883a4
+              revision: b975005a3219b65ad0dd073263a19ec6c94d8b73
           trustDomain: mobile
       in:
           $let:
@@ -237,7 +237,7 @@ tasks:
                               # Note: This task is built server side without the context or tooling that
                               # exist in tree so we must hard code the hash
                               image:
-                                  mozillareleases/taskgraph:decision-mobile-682fbaa1ef17e70ddfe3457da3eaf8e776c4a20fe5bfbdbeba0641fd5bceae2a@sha256:bbb2613aaab79d17e590fbd78c072d0643be40fd1237195703f84280ecc3b302
+                                  mozillareleases/taskgraph:decision-mobile-0e1cefb4ec46060d53bcd0eb2c0dd296210fa969998af468d693d1c6922efd1d@sha256:7cfb913bee636f1ab1477a09f8ad746e1f8c68fab0e2a3e1408c985d2ddc27f7
 
                               maxRunTime: 1800
 
@@ -254,14 +254,14 @@ tasks:
                                     in:
                                         $if: 'tasks_for == "action"'
                                         then: >
-                                            PIP_IGNORE_INSTALLED=0 pip install --user /builds/worker/checkouts/taskgraph &&
-                                            PIP_IGNORE_INSTALLED=0 pip install --user mozilla-version &&
+                                            PIP_IGNORE_INSTALLED=0 pip3 install --user /builds/worker/checkouts/taskgraph &&
+                                            PIP_IGNORE_INSTALLED=0 pip3 install --user mozilla-version &&
                                             taskcluster/scripts/decision-install-sdk.sh &&
                                             ln -s /builds/worker/artifacts artifacts &&
                                             ~/.local/bin/taskgraph action-callback
                                         else: >
-                                            PIP_IGNORE_INSTALLED=0 pip install --user /builds/worker/checkouts/taskgraph &&
-                                            PIP_IGNORE_INSTALLED=0 pip install --user mozilla-version &&
+                                            PIP_IGNORE_INSTALLED=0 pip3 install --user /builds/worker/checkouts/taskgraph &&
+                                            PIP_IGNORE_INSTALLED=0 pip3 install --user mozilla-version &&
                                             taskcluster/scripts/decision-install-sdk.sh &&
                                             ln -s /builds/worker/artifacts artifacts &&
                                             ~/.local/bin/taskgraph decision
@@ -385,58 +385,58 @@ tasks:
 #         \-> Code quality -/
 #
 ###############################################################################
-  - $if: 'tasks_for == "github-push"'
-    then:
-      $if: 'event.repository.fork == false'
-      then:
-        taskId: {$eval: as_slugid("decision_task")}
-        # The next line won't be needed anymore after https://github.com/taskcluster/taskcluster-github/pull/273
-        taskGroupId: {$eval: as_slugid("decision_task")}
-        created: {$fromNow: ''}
-        deadline: {$fromNow: '2 hours'}
-        schedulerId: taskcluster-github
-        provisionerId: mobile-3
-        workerType: decision
-        routes:
-          - 'notify.irc-channel.#android-ci.on-any'
-        scopes:
-          $let:
-            short_head_branch:
-              $if: 'event.ref[:11] == "refs/heads/"'
-              then: {$eval: 'event.ref[11:]'}
-              else: ${event.ref}
-          in:
-            - 'assume:repo:github.com/mozilla-mobile/focus-android:branch:${short_head_branch}'
-        payload:
-          maxRunTime: 7200
-          image: mozillamobile/focus-android:1.7
-          features:
-            taskclusterProxy: true
-          env:
-            TASK_ID: {$eval: as_slugid("decision_task")}
-            MOBILE_HEAD_REPOSITORY: ${event.repository.clone_url}
-            MOBILE_HEAD_BRANCH: ${event.ref}
-            MOBILE_HEAD_REV: ${event.after}
-          command:
-            - /bin/bash
-            - --login
-            - -cx
-            - >-
-              git fetch origin
-              && git submodule update --init
-              && git config advice.detachedHead false
-              && git checkout ${event.after}
-              && python tools/taskcluster/schedule-main-build.py
-          artifacts:
-            public:
-              type: directory
-              path: /opt/focus-android/test_artifacts
-              expires: {$fromNow: '1 week'}
-        metadata:
-          name: (Focus for Android) Schedule tasks
-          description: Scheduling tasks for main branch push
-          owner: ${event.pusher.name}@users.noreply.github.com
-          source: ${event.repository.url}
+#   - $if: 'tasks_for == "github-push"'
+#     then:
+#       $if: 'event.repository.fork == false'
+#       then:
+#         taskId: {$eval: as_slugid("decision_task")}
+#         # The next line won't be needed anymore after https://github.com/taskcluster/taskcluster-github/pull/273
+#         taskGroupId: {$eval: as_slugid("decision_task")}
+#         created: {$fromNow: ''}
+#         deadline: {$fromNow: '2 hours'}
+#         schedulerId: taskcluster-github
+#         provisionerId: mobile-3
+#         workerType: decision
+#         routes:
+#           - 'notify.irc-channel.#android-ci.on-any'
+#         scopes:
+#           $let:
+#             short_head_branch:
+#               $if: 'event.ref[:11] == "refs/heads/"'
+#               then: {$eval: 'event.ref[11:]'}
+#               else: ${event.ref}
+#           in:
+#             - 'assume:repo:github.com/mozilla-mobile/focus-android:branch:${short_head_branch}'
+#         payload:
+#           maxRunTime: 7200
+#           image: mozillamobile/focus-android:1.7
+#           features:
+#             taskclusterProxy: true
+#           env:
+#             TASK_ID: {$eval: as_slugid("decision_task")}
+#             MOBILE_HEAD_REPOSITORY: ${event.repository.clone_url}
+#             MOBILE_HEAD_BRANCH: ${event.ref}
+#             MOBILE_HEAD_REV: ${event.after}
+#           command:
+#             - /bin/bash
+#             - --login
+#             - -cx
+#             - >-
+#               git fetch origin
+#               && git submodule update --init
+#               && git config advice.detachedHead false
+#               && git checkout ${event.after}
+#               && python tools/taskcluster/schedule-main-build.py
+#           artifacts:
+#             public:
+#               type: directory
+#               path: /opt/focus-android/test_artifacts
+#               expires: {$fromNow: '1 week'}
+#         metadata:
+#           name: (Focus for Android) Schedule tasks
+#           description: Scheduling tasks for main branch push
+#           owner: ${event.pusher.name}@users.noreply.github.com
+#           source: ${event.repository.url}
 ###############################################################################
 # Task: Release builds
 #

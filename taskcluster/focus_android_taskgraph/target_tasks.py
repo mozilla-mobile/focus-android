@@ -2,7 +2,6 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
-from __future__ import absolute_import, print_function, unicode_literals
 
 from taskgraph.target_tasks import _target_task, filter_for_tasks_for
 
@@ -61,7 +60,7 @@ def target_tasks_nightly_on_google_play(full_task_graph, parameters, graph_confi
 
 
 def _filter_fennec(fennec_type, task, parameters):
-    return task.attributes.get("build-type", "") == "fennec-{}".format(fennec_type)
+    return task.attributes.get("build-type", "") == f"fennec-{fennec_type}"
 
 
 @_target_task("fennec-production")

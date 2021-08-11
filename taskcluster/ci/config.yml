@@ -12,12 +12,12 @@ treeherder:
 task-priority: highest
 
 taskgraph:
-    register: focus_android_taskgraph:register
+    # register: focus_android_taskgraph:register
     repositories:
         mobile:
             name: "Focus-Android"
-    cached-task-prefix: mobile.v2.focus_android
-    decision-parameters: 'focus_android_taskgraph.parameters:get_decision_parameters'
+    cached-task-prefix: mobile.v2.focus-android
+    # decision-parameters: 'focus_android_taskgraph.parameters:get_decision_parameters'
 
 workers:
     aliases:
@@ -75,14 +75,9 @@ workers:
             implementation: scriptworker-tree
             os: scriptworker
             worker-type: 'mobile-{level}-tree'
-        t-bitbar.*:
-            provisioner: proj-autophone
-            implementation: generic-worker
-            os: linux-bitbar
-            worker-type: 'gecko-{alias}'
 
 scriptworker:
-    scope-prefix: project:mobile:focus_android:releng
+    scope-prefix: project:mobile:focus-android:releng
 
 
 release-promotion:

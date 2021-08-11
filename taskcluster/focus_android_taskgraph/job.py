@@ -2,7 +2,6 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
-from __future__ import absolute_import, print_function, unicode_literals
 
 from taskgraph.transforms.job import run_job_using, configure_taskdesc_for_run
 from taskgraph.util import path
@@ -13,25 +12,25 @@ from six import text_type
 from pipes import quote as shell_quote
 
 secret_schema = {
-    Required("name"): text_type,
-    Required("path"): text_type,
-    Required("key"): text_type,
+    Required("name"): str,
+    Required("path"): str,
+    Required("key"): str,
     Optional("json"): bool,
 }
 
 dummy_secret_schema = {
-    Required("content"): text_type,
-    Required("path"): text_type,
+    Required("content"): str,
+    Required("path"): str,
     Optional("json"): bool,
 }
 
 gradlew_schema = Schema({
     Required("using"): "gradlew",
-    Optional("pre-gradlew"): [[text_type]],
-    Required("gradlew"): [text_type],
-    Optional("post-gradlew"): [[text_type]],
+    Optional("pre-gradlew"): [[str]],
+    Required("gradlew"): [str],
+    Optional("post-gradlew"): [[str]],
     # Base work directory used to set up the task.
-    Required("workdir"): text_type,
+    Required("workdir"): str,
     Optional("use-caches"): bool,
     Optional("secrets"): [secret_schema],
     Optional("dummy-secrets"): [dummy_secret_schema],
@@ -39,9 +38,9 @@ gradlew_schema = Schema({
 
 run_commands_schema = Schema({
     Required("using"): "run-commands",
-    Optional("pre-commands"): [[text_type]],
+    Optional("pre-commands"): [[str]],
     Required("commands"): [[taskref_or_string]],
-    Required("workdir"): text_type,
+    Required("workdir"): str,
     Optional("use-caches"): bool,
     Optional("secrets"): [secret_schema],
     Optional("dummy-secrets"): [dummy_secret_schema],
@@ -149,7 +148,7 @@ def _convert_commands_to_string(commands):
                     part_string = part["task-reference"]
                     should_task_reference = True
                 else:
-                    raise ValueError('Unsupported dict: {}'.format(part))
+                    raise ValueError(f'Unsupported dict: {part}')
             else:
                 part_string = part
 

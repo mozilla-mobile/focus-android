@@ -2,7 +2,6 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
-from __future__ import absolute_import, print_function, unicode_literals
 
 import json
 import subprocess
@@ -39,7 +38,7 @@ def _fetch_all_variants():
 
 def _run_gradle_process(gradle_command, **kwargs):
     gradle_properties = [
-        '-P{property_name}={value}'.format(property_name=property_name, value=value)
+        f'-P{property_name}={value}'
         for property_name, value in kwargs.iteritems()
     ]
 
@@ -47,8 +46,8 @@ def _run_gradle_process(gradle_command, **kwargs):
     output, err = process.communicate()
     exit_code = process.wait()
 
-    if exit_code is not 0:
-        raise RuntimeError("Gradle command returned error: {}".format(exit_code))
+    if exit_code != 0:
+        raise RuntimeError(f"Gradle command returned error: {exit_code}")
 
     return output
 
