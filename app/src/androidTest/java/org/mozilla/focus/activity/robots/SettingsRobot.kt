@@ -1,12 +1,15 @@
 /* This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
-
 package org.mozilla.focus.activity.robots
 
+import androidx.test.espresso.Espresso.onView
+import androidx.test.espresso.action.ViewActions.click
+import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.uiautomator.UiScrollable
 import androidx.test.uiautomator.UiSelector
 import org.junit.Assert.assertTrue
+import org.mozilla.focus.R
 import org.mozilla.focus.helpers.TestHelper.packageName
 import org.mozilla.focus.helpers.TestHelper.waitingTime
 
@@ -14,7 +17,7 @@ class SettingsRobot {
 
     fun verifySettingsMenuItems() {
         settingsMenuList.waitForExists(waitingTime)
-        assertTrue(generalSettingsMenu.exists())
+        assertTrue(generalSettingsMenu().exists())
         assertTrue(searchSettingsMenu.exists())
         assertTrue(privacySettingsMenu.exists())
         assertTrue(advancedSettingsMenu.exists())
@@ -31,10 +34,11 @@ class SettingsRobot {
         }
 
         fun openGeneralSettingsMenu(
+            localizedText: String = "General",
             interact: SettingsGeneralMenuRobot.() -> Unit
         ): SettingsGeneralMenuRobot.Transition {
-            generalSettingsMenu.waitForExists(waitingTime)
-            generalSettingsMenu.click()
+            generalSettingsMenu(localizedText).waitForExists(waitingTime)
+            generalSettingsMenu(localizedText).click()
 
             SettingsGeneralMenuRobot().interact()
             return SettingsGeneralMenuRobot.Transition()
@@ -69,15 +73,26 @@ class SettingsRobot {
             SettingsMozillaMenuRobot().interact()
             return SettingsMozillaMenuRobot.Transition()
         }
+
+        fun clickWhatsNewLink(
+            interact: BrowserRobot.() -> Unit
+        ): BrowserRobot.Transition {
+            whatsNewButton.perform(click())
+
+            BrowserRobot().interact()
+            return BrowserRobot.Transition()
+        }
     }
 }
 
-private val settingsMenuList = UiScrollable(UiSelector().resourceId("$packageName:id/recycler_view"))
+private val settingsMenuList =
+    UiScrollable(UiSelector().resourceId("$packageName:id/recycler_view"))
 
-private val generalSettingsMenu = settingsMenuList.getChild(
-    UiSelector()
-        .text("General")
-)
+private fun generalSettingsMenu(localizedText: String = "General") =
+    settingsMenuList.getChild(
+        UiSelector()
+            .text(localizedText)
+    )
 
 private val searchSettingsMenu = settingsMenuList.getChild(
     UiSelector()
@@ -98,3 +113,5 @@ private val mozillaSettingsMenu = settingsMenuList.getChild(
     UiSelector()
         .text("Mozilla")
 )
+
+private val whatsNewButton = onView(withId(R.id.menu_whats_new))

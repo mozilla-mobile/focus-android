@@ -16,6 +16,7 @@ import org.mozilla.focus.helpers.TestHelper.exitToTop
 import org.mozilla.focus.helpers.TestHelper.pressEnterKey
 import org.mozilla.focus.helpers.TestHelper.webPageLoadwaitingTime
 import org.mozilla.focus.idlingResources.RecyclerViewIdlingResource
+import org.mozilla.focus.testAnnotations.SmokeTest
 
 // This test checks the search engine can be changed and that search suggestions appear
 class SearchTest {
@@ -57,6 +58,7 @@ class SearchTest {
         }
     }
 
+    @SmokeTest
     @Test
     fun enableSearchSuggestionOnFirstRunTest() {
         val searchString = "mozilla "
@@ -84,8 +86,8 @@ class SearchTest {
             // Search on blank spaces should not do anything
             typeInSearchBar(" ")
             pressEnterKey()
-            homeScreen {
-                verifyNavBarIsDisplayed()
+            searchScreen {
+                verifySearchEditBarContainsText(" ")
             }
         }
     }

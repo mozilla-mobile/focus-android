@@ -1,31 +1,24 @@
 /* This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
-
 package org.mozilla.focus.activity.robots
 
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.assertion.ViewAssertions.matches
-import androidx.test.espresso.matcher.ViewMatchers.isChecked
+import androidx.test.espresso.matcher.ViewMatchers
 import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
-import androidx.test.espresso.matcher.ViewMatchers.withId
+import androidx.test.espresso.matcher.ViewMatchers.withEffectiveVisibility
+import androidx.test.espresso.matcher.ViewMatchers.withSubstring
 import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.uiautomator.UiSelector
 import junit.framework.TestCase.assertTrue
-import org.mozilla.focus.R
+import org.hamcrest.Matchers.allOf
 import org.mozilla.focus.helpers.TestHelper.mDevice
 import org.mozilla.focus.helpers.TestHelper.packageName
 import org.mozilla.focus.helpers.TestHelper.waitingTime
 
 class ThreeDotMainMenuRobot {
-
-    fun verifyTrackersToggleExists() {
-        onView(withText("Trackers blocked")).check(matches(isDisplayed()))
-        onView(withText("Turning this off may fix some site problems")).check(matches(isDisplayed()))
-        trackersCount.check(matches(isDisplayed()))
-        blockTrackersToggle.check(matches(isChecked()))
-    }
 
     fun verifyShareButtonExists() = assertTrue(shareBtn.exists())
 
@@ -37,11 +30,9 @@ class ThreeDotMainMenuRobot {
 
     fun verifyRequestDesktopSiteExists() = requestDesktopSiteButton.check(matches(isDisplayed()))
 
-    fun verifySettingsButtonExists() = settingsMenuButton.check(matches(isDisplayed()))
+    fun verifySettingsButtonExists() = settingsMenuButton().check(matches(isDisplayed()))
 
     fun verifyReportSiteIssueButtonExists() = reportSiteIssueButton.check(matches(isDisplayed()))
-
-    fun verifyWhatsNewLinkExists() = whatsNewMenuLink.check(matches(isDisplayed()))
 
     fun verifyHelpPageLinkExists() = helpPageMenuLink.check(matches(isDisplayed()))
 
@@ -51,8 +42,8 @@ class ThreeDotMainMenuRobot {
     }
 
     fun verifyOpenInDialog() {
-        assertTrue(openInDialogTitle.exists())
-        assertTrue(openWithList.exists())
+        assertTrue(openInDialogTitle.waitForExists(waitingTime))
+        assertTrue(openWithList.waitForExists(waitingTime))
     }
 
     fun clickOpenInChrome() {
@@ -63,9 +54,12 @@ class ThreeDotMainMenuRobot {
     }
 
     class Transition {
-        fun openSettings(interact: SettingsRobot.() -> Unit): SettingsRobot.Transition {
-            mDevice.findObject(UiSelector().text("Settings")).waitForExists(waitingTime)
-            settingsMenuButton
+        fun openSettings(
+            localizedText: String = "Settings",
+            interact: SettingsRobot.() -> Unit
+        ): SettingsRobot.Transition {
+            mDevice.findObject(UiSelector().text(localizedText)).waitForExists(waitingTime)
+            settingsMenuButton(localizedText)
                 .check(matches(isDisplayed()))
                 .perform(click())
 
@@ -83,24 +77,10 @@ class ThreeDotMainMenuRobot {
 
         fun openAddToHSDialog(interact: AddToHomeScreenRobot.() -> Unit): AddToHomeScreenRobot.Transition {
             addToHSmenuItem.waitForExists(waitingTime)
-            // If the menu item is not clickable, wait and retry
-            while (!addToHSmenuItem.isClickable) {
-                mDevice.pressBack()
-                threeDotMenuButton.perform(click())
-            }
             addToHSmenuItem.click()
 
             AddToHomeScreenRobot().interact()
             return AddToHomeScreenRobot.Transition()
-        }
-
-        fun clickWhatsNewLink(interact: BrowserRobot.() -> Unit): BrowserRobot.Transition {
-            whatsNewMenuLink
-                .check(matches(isDisplayed()))
-                .perform(click())
-
-            BrowserRobot().interact()
-            return BrowserRobot.Transition()
         }
 
         fun clickHelpPageLink(interact: BrowserRobot.() -> Unit): BrowserRobot.Transition {
@@ -114,29 +94,28 @@ class ThreeDotMainMenuRobot {
     }
 }
 
-private val settingsMenuButton = onView(withId(R.id.settings))
+private fun settingsMenuButton(localizedText: String = "Settings") =
+    onView(
+        allOf(withText(localizedText), withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE))
+    )
 
 private val shareBtn = mDevice.findObject(
     UiSelector()
-        .resourceId("$packageName:id/share")
+        .description("Share…")
 )
-
-private val threeDotMenuButton = onView(withId(R.id.mozac_browser_toolbar_menu))
 
 private val addToHSmenuItem = mDevice.findObject(
     UiSelector()
-        .resourceId("$packageName:id/add_to_homescreen")
+        .text("Add to Home screen")
 )
 
-private val findInPageButton = onView(withId(R.id.find_in_page))
+private val findInPageButton = onView(withText("Find in Page"))
 
-private val whatsNewMenuLink = onView(withId(R.id.whats_new))
-
-private val helpPageMenuLink = onView(withId(R.id.help))
+private val helpPageMenuLink = onView(withText("Help"))
 
 private val openInBtn = mDevice.findObject(
     UiSelector()
-        .resourceId("$packageName:id/open_select_browser")
+        .text("Open in…")
 )
 
 private val openInDialogTitle = mDevice.findObject(
@@ -149,10 +128,6 @@ private val openWithList = mDevice.findObject(
         .resourceId("$packageName:id/apps")
 )
 
-private val requestDesktopSiteButton = onView(withText("Request desktop site"))
+private val requestDesktopSiteButton = onView(withSubstring("Desktop site"))
 
-private val reportSiteIssueButton = onView(withId((R.id.report_site_issue)))
-
-private val trackersCount = onView(withId(R.id.trackers_count))
-
-private val blockTrackersToggle = onView(withId(R.id.blocking_switch))
+private val reportSiteIssueButton = onView(withText("Report Site Issue…"))

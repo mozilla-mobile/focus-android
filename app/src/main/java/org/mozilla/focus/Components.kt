@@ -31,6 +31,7 @@ import mozilla.components.feature.session.SettingsUseCases
 import mozilla.components.feature.session.TrackingProtectionUseCases
 import mozilla.components.feature.tabs.CustomTabsUseCases
 import mozilla.components.feature.tabs.TabsUseCases
+import mozilla.components.feature.webcompat.reporter.WebCompatReporterFeature
 import mozilla.components.lib.crash.CrashReporter
 import mozilla.components.lib.crash.service.CrashReporterService
 import mozilla.components.lib.crash.service.GleanCrashReporterService
@@ -39,6 +40,7 @@ import mozilla.components.lib.crash.service.SentryService
 import mozilla.components.service.location.LocationService
 import mozilla.components.service.location.MozillaLocationService
 import org.mozilla.focus.activity.MainActivity
+import org.mozilla.focus.browser.BlockedTrackersMiddleware
 import org.mozilla.focus.components.EngineProvider
 import org.mozilla.focus.downloads.DownloadService
 import org.mozilla.focus.engine.ClientWrapper
@@ -87,6 +89,7 @@ class Components(
     val engine: Engine by lazy {
         engineOverride ?: EngineProvider.createEngine(context, engineDefaultSettings).apply {
             Settings.getInstance(context).setupSafeBrowsing(this)
+            WebCompatReporterFeature.install(this, "focus")
         }
     }
 
@@ -122,7 +125,8 @@ class Components(
                 SearchMiddleware(context, migration = SearchMigration(context)),
                 SearchFilterMiddleware(),
                 PromptMiddleware(),
-                AdsTelemetryMiddleware(adsTelemetry)
+                AdsTelemetryMiddleware(adsTelemetry),
+                BlockedTrackersMiddleware(context)
             ) + EngineMiddleware.create(engine)
         )
     }

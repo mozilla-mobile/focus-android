@@ -11,14 +11,17 @@ import androidx.preference.PreferenceManager
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
+import mozilla.components.support.base.facts.register
 import mozilla.components.support.base.log.Log
 import mozilla.components.support.base.log.sink.AndroidLogSink
 import mozilla.components.support.ktx.android.content.isMainProcess
+import mozilla.components.support.webextensions.WebExtensionSupport
 import org.mozilla.focus.biometrics.LockObserver
 import org.mozilla.focus.locale.LocaleAwareApplication
 import org.mozilla.focus.navigation.StoreLink
 import org.mozilla.focus.session.VisibilityLifeCycleCallback
 import org.mozilla.focus.telemetry.FactsProcessor
+import org.mozilla.focus.telemetry.ProfilerMarkerFactProcessor
 import org.mozilla.focus.telemetry.TelemetryWrapper
 import org.mozilla.focus.utils.AdjustHelper
 import org.mozilla.focus.utils.AppConstants
@@ -49,6 +52,7 @@ open class FocusApplication : LocaleAwareApplication(), CoroutineScope {
             TelemetryWrapper.init(this)
             components.metrics.initialize(this)
             FactsProcessor.initialize()
+            ProfilerMarkerFactProcessor.create { components.engine.profiler }.register()
 
             enableStrictMode()
 
@@ -60,6 +64,8 @@ open class FocusApplication : LocaleAwareApplication(), CoroutineScope {
             components.engine.warmUp()
 
             storeLink.start()
+
+            initializeWebExtensionSupport()
 
             ProcessLifecycleOwner.get().lifecycle.addObserver(lockObserver)
         }
@@ -85,5 +91,20 @@ open class FocusApplication : LocaleAwareApplication(), CoroutineScope {
 
         StrictMode.setThreadPolicy(threadPolicyBuilder.build())
         StrictMode.setVmPolicy(vmPolicyBuilder.build())
+    }
+
+    private fun initializeWebExtensionSupport() {
+        WebExtensionSupport.initialize(
+            components.engine,
+            components.store,
+            onNewTabOverride = { _, engineSession, url ->
+                components.tabsUseCases.addTab(
+                    url = url,
+                    selectTab = true,
+                    engineSession = engineSession,
+                    private = true
+                )
+            }
+        )
     }
 }
