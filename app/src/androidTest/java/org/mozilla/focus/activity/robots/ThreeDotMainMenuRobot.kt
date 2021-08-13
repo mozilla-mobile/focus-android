@@ -30,11 +30,9 @@ class ThreeDotMainMenuRobot {
 
     fun verifyRequestDesktopSiteExists() = requestDesktopSiteButton.check(matches(isDisplayed()))
 
-    fun verifySettingsButtonExists() = settingsMenuButton.check(matches(isDisplayed()))
+    fun verifySettingsButtonExists() = settingsMenuButton().check(matches(isDisplayed()))
 
     fun verifyReportSiteIssueButtonExists() = reportSiteIssueButton.check(matches(isDisplayed()))
-
-    fun verifyWhatsNewLinkExists() = whatsNewMenuLink.check(matches(isDisplayed()))
 
     fun verifyHelpPageLinkExists() = helpPageMenuLink.check(matches(isDisplayed()))
 
@@ -56,9 +54,12 @@ class ThreeDotMainMenuRobot {
     }
 
     class Transition {
-        fun openSettings(interact: SettingsRobot.() -> Unit): SettingsRobot.Transition {
-            mDevice.findObject(UiSelector().text("Settings")).waitForExists(waitingTime)
-            settingsMenuButton
+        fun openSettings(
+            localizedText: String = "Settings",
+            interact: SettingsRobot.() -> Unit
+        ): SettingsRobot.Transition {
+            mDevice.findObject(UiSelector().text(localizedText)).waitForExists(waitingTime)
+            settingsMenuButton(localizedText)
                 .check(matches(isDisplayed()))
                 .perform(click())
 
@@ -82,15 +83,6 @@ class ThreeDotMainMenuRobot {
             return AddToHomeScreenRobot.Transition()
         }
 
-        fun clickWhatsNewLink(interact: BrowserRobot.() -> Unit): BrowserRobot.Transition {
-            whatsNewMenuLink
-                .check(matches(isDisplayed()))
-                .perform(click())
-
-            BrowserRobot().interact()
-            return BrowserRobot.Transition()
-        }
-
         fun clickHelpPageLink(interact: BrowserRobot.() -> Unit): BrowserRobot.Transition {
             helpPageMenuLink
                 .check(matches(isDisplayed()))
@@ -102,9 +94,10 @@ class ThreeDotMainMenuRobot {
     }
 }
 
-private val settingsMenuButton = onView(
-    allOf(withText("Settings"), withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE))
-)
+private fun settingsMenuButton(localizedText: String = "Settings") =
+    onView(
+        allOf(withText(localizedText), withEffectiveVisibility(ViewMatchers.Visibility.VISIBLE))
+    )
 
 private val shareBtn = mDevice.findObject(
     UiSelector()
@@ -117,8 +110,6 @@ private val addToHSmenuItem = mDevice.findObject(
 )
 
 private val findInPageButton = onView(withText("Find in Page"))
-
-private val whatsNewMenuLink = onView(withText("What’s New"))
 
 private val helpPageMenuLink = onView(withText("Help"))
 
