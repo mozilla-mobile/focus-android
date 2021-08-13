@@ -210,6 +210,12 @@
     <!-- Action at the bottom of the list of custom autocomplete URLs that will open a new screen to add a new URL to the list. -->
     <string name="preference_autocomplete_action_add">+ Add custom URL</string>
 
+    <!-- Explanation text above the list of custom autocomplete URLs. -->
+    <string name="preference_autocomplete_explanation_text">Your autocomplete list:</string>
+
+    <!-- Action at the bottom of the list of custom autocomplete URLs that will open a new screen to add a new URL to the list. -->
+    <string name="preference_autocomplete_action_add2">Add URL</string>
+
     <!-- Title of the screen for adding custom autocomplete URLs. -->
     <string name="preference_autocomplete_title_add">Add custom URL</string>
 
@@ -276,10 +282,10 @@
 
     <!-- Three options for Cookie blocking. Yes (All cookies Blocked), Block 3rd-party cookies
     only (Only 3rd-party Cookies Blocked), No (No cookies blocked) -->
-    <string name="preference_privacy_should_block_cookies_no_option">No</string>
+    <string name="preference_privacy_should_block_cookies_no_option2">No thanks</string>
     <string name="preference_privacy_should_block_cookies_third_party_tracker_cookies_option">Block 3rd-party tracker cookies only</string>
     <string name="preference_privacy_should_block_cookies_third_party_only_option">Block 3rd-party cookies only</string>
-    <string name="preference_privacy_should_block_cookies_yes_option">Yes</string>
+    <string name="preference_privacy_should_block_cookies_yes_option2">Yes please</string>
 
     <!-- Preference Title: Biometrics can be used to unlock Focus if the previous session's data was not erased by the user. -->
     <string name="preference_security_biometric">Use fingerprint to unlock app</string>
@@ -333,6 +339,9 @@
     <!-- Header for the list of installed search engines -->
     <string name="preference_search_installed_search_engines">Installed search engines</string>
 
+    <!-- Header for the list of installed search engines -->
+    <string name="preference_choose_search_engine">Choose search engine</string>
+
     <!-- Action for restoring the default list of search engines -->
     <string name="preference_search_restore">Restore default search engines</string>
 
@@ -341,6 +350,10 @@
     <string name="preference_search_add2">+ Add another search engine</string>
     <string name="preference_search_remove_title">Remove search engines</string>
     <string name="preference_search_remove">Remove</string>
+    <!-- Action for dding an additional search engine to the list -->
+    <string name="preference_search_add3">Add another search engine</string>
+    <!-- Explanation text above the list of search engines-->
+    <string name="preference_select_preferred_engine">Select your preferred engine:</string>
 
     <!-- Title: Homescreen tips settings toggle to determine whether or not tips are displayed when
      a user first launches the app. -->
@@ -475,9 +488,13 @@
 
     <!-- Label of the action that will add the current website to the home screen (shown in the confirmation dialog). -->
     <string name="dialog_addtohomescreen_action_add">Add</string>
+    <!-- Label of the action that will add the current website to the home screen (shown in the confirmation dialog). -->
+    <string name="dialog_addtohomescreen_action_yes">YES</string>
 
     <!-- Label of the action that will close the dialog and not add anything to the home screen (shown in the confirmation dialog). -->
     <string name="dialog_addtohomescreen_action_cancel">Cancel</string>
+    <!-- Label of the action that will close the dialog and not add anything to the home screen (shown in the confirmation dialog). -->
+    <string name="dialog_addtohomescreen_action_no">NO</string>
 
     <!-- When tracking protection is disabled for the current session then we will show this warning in the "Add to home screen" dialog to
          let the user know that the shortcut will always be opened with tracking protection disabled. -->
@@ -704,6 +721,12 @@
     <!-- Button to remove all websites from the exception list -->
     <string name="preference_exceptions_remove_all_button_label">Remove all websites</string>
 
+    <!-- Title for Preference screen for cookie blocking for exceptions tracking protection -->
+    <string name="preference_block_cookies_title">Block Cookies</string>
+
+    <!-- Message for Preference screen for cookie blocking for exceptions tracking protection -->
+    <string name="preference_category_block_cookies">Would you like to block cookies?</string>
+
     <!-- Title for the tab crash report screen-->
     <string name="tab_crash_report_title">Tab Crashed</string>
     <!-- Headline for the tab crash report screen -->
@@ -715,4 +738,32 @@
 
     <!-- Label for the checkbox to send the tab crash report to Mozilla -->
     <string name="crash_report_send_crash_label">Send crash report to Mozilla</string>
+
+    <!-- Tracking protection bottom sheet -->
+
+    <!-- Label for the total number of trackers blocked. %s represents the number of trackers blocked. -->
+    <string name="trackers_count_note">Trackers blocked since %s</string>
+    <!-- Category of trackers (content) that can be blocked by Enhanced Tracking Protection -->
+    <string name="content">Content</string>
+    <!-- Category of trackers (advertising) that can be blocked by Enhanced Tracking Protection -->
+    <string name="advertising">Advertising</string>
+    <!-- Category of trackers (social media) that can be blocked by Enhanced Tracking Protection -->
+    <string name="social">Social</string>
+    <!-- Category of trackers (analytics) that can be blocked by Enhanced Tracking Protection -->
+    <string name="analytics">Analytics</string>
+    <!-- Preference title for enhanced tracking protection settings -->
+    <string name="enhanced_tracking_protection">Enhanced Tracking Protection</string>
+    <!-- Enhanced tracking protection preference description when the tracking protection is disabled for this site-->
+    <string name="enhanced_tracking_protection_state_off">Protections are OFF for this site</string>
+    <!-- Enhanced tracking protection preference description when the tracking protection is enabled for this site-->
+    <string name="enhanced_tracking_protection_state_on">Protections are ON for this site</string>
+    <!-- Label that indicates a site is using a secure connection -->
+    <string name="secure_connection">Connection is secure</string>
+    <!-- Label that indicates a site is using a insecure connection -->
+    <string name="insecure_connection">Connection is not secure</string>
+    <!-- Title for the list of trackers enhanced tracking ptotection can block-->
+    <string name="trackers_and_scripts">Trackers and Scripts to Block</string>
+
+    <!-- Content description (not visible, for screen readers etc.): Navigate back button description -->
+    <string name="go_back">Go back</string>
 </resources>

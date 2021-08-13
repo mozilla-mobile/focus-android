@@ -21,6 +21,7 @@ import android.view.accessibility.AccessibilityManager
 import android.webkit.MimeTypeMap
 import android.widget.FrameLayout
 import android.widget.Toast
+import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.content.ContextCompat
 import androidx.preference.PreferenceManager
 import com.google.android.material.appbar.AppBarLayout
@@ -62,12 +63,15 @@ import org.mozilla.focus.browser.integration.FindInPageIntegration
 import org.mozilla.focus.browser.integration.FullScreenIntegration
 import org.mozilla.focus.browser.integration.BrowserMenuController
 import org.mozilla.focus.downloads.DownloadService
+import org.mozilla.focus.engine.EngineSharedPreferencesListener
 import org.mozilla.focus.ext.ifCustomTab
 import org.mozilla.focus.ext.isCustomTab
 import org.mozilla.focus.ext.requireComponents
 import org.mozilla.focus.menu.browser.DefaultBrowserMenu
 import org.mozilla.focus.open.OpenWithFragment
 import org.mozilla.focus.popup.PopupUtils
+import org.mozilla.focus.settings.privacy.ConnectionDetailsPanel
+import org.mozilla.focus.settings.privacy.TrackingProtectionPanel
 import org.mozilla.focus.state.AppAction
 import org.mozilla.focus.state.Screen
 import org.mozilla.focus.telemetry.TelemetryWrapper
@@ -75,6 +79,7 @@ import org.mozilla.focus.utils.AppPermissionCodes.REQUEST_CODE_DOWNLOAD_PERMISSI
 import org.mozilla.focus.utils.AppPermissionCodes.REQUEST_CODE_PROMPT_PERMISSIONS
 import org.mozilla.focus.utils.Browsers
 import org.mozilla.focus.utils.FeatureFlags
+import org.mozilla.focus.utils.Settings
 import org.mozilla.focus.utils.StatusBarUtils
 import org.mozilla.focus.utils.SupportUtils
 import org.mozilla.focus.widget.FloatingEraseButton
@@ -107,7 +112,7 @@ class BrowserFragment :
 
     private val blockingThemeBinding = ViewBoundFeatureWrapper<BlockingThemeBinding>()
     private val tabCountBinding = ViewBoundFeatureWrapper<TabCountBinding>()
-
+    private lateinit var trackingProtectionPanel: TrackingProtectionPanel
     /**
      * The ID of the tab associated with this fragment.
      */
@@ -145,7 +150,7 @@ class BrowserFragment :
 
         findInPageIntegration.set(FindInPageIntegration(
             components.store,
-            view.findViewById<FindInPageBar>(R.id.find_in_page),
+            view.findViewById(R.id.find_in_page),
             engineView!!
         ), this, view)
 
@@ -231,6 +236,9 @@ class BrowserFragment :
         )
 
         customizeToolbar(view)
+        if (FeatureFlags.isMvp) {
+            customizeFindInPage(view)
+        }
 
         val customTabConfig = tab.ifCustomTab()?.config
         if (customTabConfig != null) {
@@ -240,17 +248,23 @@ class BrowserFragment :
         }
     }
 
+    private fun customizeFindInPage(view: View) {
+        val findInPageBar = view.findViewById<FindInPageBar>(R.id.find_in_page)
+        val newParams = findInPageBar.layoutParams as CoordinatorLayout.LayoutParams
+        newParams.gravity = Gravity.BOTTOM
+        findInPageBar.layoutParams = newParams
+    }
+
     private fun customizeToolbar(view: View) {
         val browserToolbar = view.findViewById<BrowserToolbar>(R.id.browserToolbar)
         val controller = BrowserMenuController(
             requireComponents.sessionUseCases,
             requireComponents.appStore,
-            requireComponents.store,
-            findInPageIntegration.get(),
             tabId,
             ::shareCurrentUrl,
             ::setShouldRequestDesktop,
             ::showAddToHomescreenDialog,
+            ::showFindInPageBar,
             ::openSelectBrowser
         )
 
@@ -435,7 +449,7 @@ class BrowserFragment :
         snackbar.show()
     }
 
-    internal fun showAddToHomescreenDialog(url: String, title: String) {
+    private fun showAddToHomescreenDialog() {
         val fragmentManager = childFragmentManager
 
         if (fragmentManager.findFragmentByTag(AddToHomescreenDialogFragment.FRAGMENT_TAG) != null) {
@@ -447,8 +461,8 @@ class BrowserFragment :
         val requestDesktop = tab.content.desktopMode
 
         val addToHomescreenDialogFragment = AddToHomescreenDialogFragment.newInstance(
-            url,
-            title,
+            tab.content.url,
+            tab.content.title,
             tab.trackingProtection.enabled,
             requestDesktop = requestDesktop
         )
@@ -647,11 +661,7 @@ class BrowserFragment :
                 )
             }
 
-            R.id.add_to_homescreen -> {
-                showAddToHomescreenDialog(
-                    tab.content.url, tab.content.title
-                )
-            }
+            R.id.add_to_homescreen -> { showAddToHomescreenDialog() }
 
             R.id.report_site_issue -> {
                 val reportUrl = String.format(SupportUtils.REPORT_SITE_ISSUE_URL, tab.content.url)
@@ -665,13 +675,15 @@ class BrowserFragment :
                 TelemetryWrapper.reportSiteIssueEvent()
             }
 
-            R.id.find_in_page -> {
-                findInPageIntegration.get()?.show(tab)
-                TelemetryWrapper.findInPageMenuEvent()
-            }
+            R.id.find_in_page -> { showFindInPageBar() }
 
             else -> throw IllegalArgumentException("Unhandled menu item in BrowserFragment")
         }
+    }
+
+    private fun showFindInPageBar() {
+        findInPageIntegration.get()?.show(tab)
+        TelemetryWrapper.findInPageMenuEvent()
     }
 
     private fun openSelectBrowser() {
@@ -736,6 +748,48 @@ class BrowserFragment :
             val offsetY = requireContext().resources.getDimensionPixelOffset(R.dimen.doorhanger_offsetY)
             securityPopup.showAtLocation(urlBar, Gravity.TOP or Gravity.CENTER_HORIZONTAL, 0, offsetY)
             popupTint!!.visibility = View.VISIBLE
+        }
+    }
+
+    fun showTrackingProtectionPanel() {
+        trackingProtectionPanel = TrackingProtectionPanel(
+            context = requireContext(),
+            tabUrl = tab.content.url,
+            isTrackingProtectionOn = tab.trackingProtection.ignoredOnTrackingProtection.not(),
+            isConnectionSecure = tab.content.securityInfo.secure,
+            blockedTrackersCount = Settings.getInstance(requireContext())
+                .getTotalBlockedTrackersCount(),
+            toggleTrackingProtection = ::toggleTrackingProtection,
+            updateTrackingProtectionPolicy = {
+                EngineSharedPreferencesListener(requireContext()).updateTrackingProtectionPolicy()
+            },
+            showConnectionInfo = ::showConnectionInfo
+        )
+        trackingProtectionPanel.show()
+    }
+
+    private fun showConnectionInfo() {
+        val connectionInfoPanel = ConnectionDetailsPanel(
+            context = requireContext(),
+            tabTitle = tab.content.title,
+            tabUrl = tab.content.url,
+            isConnectionSecure = tab.content.securityInfo.secure,
+            goBack = { trackingProtectionPanel.show() }
+        )
+        trackingProtectionPanel.hide()
+        connectionInfoPanel.show()
+    }
+
+    private fun toggleTrackingProtection(enable: Boolean) {
+
+        tab.trackingProtection.blockedTrackers.size
+        with(requireComponents) {
+            if (enable) {
+                trackingProtectionUseCases.removeException(tab.id)
+            } else {
+                trackingProtectionUseCases.addException(tab.id)
+            }
+            sessionUseCases.reload(tab.id)
         }
     }
 

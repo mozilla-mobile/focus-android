@@ -85,6 +85,7 @@ android {
 
     buildFeatures {
         compose true
+        viewBinding true
     }
 
     composeOptions {
@@ -201,6 +202,7 @@ dependencies {
     implementation "org.mozilla.components:browser-engine-gecko:${AndroidComponents.VERSION}"
     implementation "org.mozilla.components:browser-domains:${AndroidComponents.VERSION}"
     implementation "org.mozilla.components:browser-errorpages:${AndroidComponents.VERSION}"
+    implementation "org.mozilla.components:browser-icons:${AndroidComponents.VERSION}"
     implementation "org.mozilla.components:browser-menu:${AndroidComponents.VERSION}"
     implementation "org.mozilla.components:browser-state:${AndroidComponents.VERSION}"
     implementation "org.mozilla.components:browser-toolbar:${AndroidComponents.VERSION}"
@@ -225,6 +227,7 @@ dependencies {
     implementation "org.mozilla.components:support-utils:${AndroidComponents.VERSION}"
     implementation "org.mozilla.components:ui-autocomplete:${AndroidComponents.VERSION}"
     implementation "org.mozilla.components:ui-colors:${AndroidComponents.VERSION}"
+    implementation "org.mozilla.components:ui-icons:${AndroidComponents.VERSION}"
     implementation "org.mozilla.components:feature-webcompat-reporter:${AndroidComponents.VERSION}"
     implementation "org.mozilla.components:support-webextensions:${AndroidComponents.VERSION}"
 

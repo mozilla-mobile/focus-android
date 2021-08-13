@@ -48,7 +48,6 @@ class BrowserToolbarIntegration(
             )
 
             indicators = listOf(
-                DisplayToolbar.Indicators.SECURITY,
                 DisplayToolbar.Indicators.TRACKING_PROTECTION
             )
 
@@ -64,6 +63,10 @@ class BrowserToolbarIntegration(
             }
 
             setOnUrlLongClickListener { onUrlLongClicked() }
+        }
+
+        toolbar.display.setOnTrackingProtectionClickedListener {
+            fragment.showTrackingProtectionPanel()
         }
 
         if (customTabId != null) {
