@@ -15,6 +15,7 @@ import org.mozilla.focus.search.MultiselectSearchEngineListPreference
 import org.mozilla.focus.state.AppAction
 import org.mozilla.focus.telemetry.TelemetryWrapper
 import org.mozilla.focus.utils.ViewUtils
+import kotlin.collections.forEach as withEach
 
 class RemoveSearchEnginesSettingsFragment : BaseSettingsFragment() {
     override fun onCreatePreferences(p0: Bundle?, p1: String?) {
@@ -62,7 +63,7 @@ class RemoveSearchEnginesSettingsFragment : BaseSettingsFragment() {
 
                 requireComponents.store.state.search.searchEngines.filter { searchEngine ->
                     searchEngine.id in enginesToRemove
-                }.forEach { searchEngine ->
+                }.withEach { searchEngine ->
                     requireComponents.searchUseCases.removeSearchEngine(searchEngine)
                 }
 

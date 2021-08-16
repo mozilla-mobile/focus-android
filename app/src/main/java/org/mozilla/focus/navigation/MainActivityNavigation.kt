@@ -28,6 +28,7 @@ import org.mozilla.focus.settings.SearchSettingsFragment
 import org.mozilla.focus.settings.SettingsFragment
 import org.mozilla.focus.state.Screen
 import org.mozilla.focus.utils.ViewUtils
+import kotlin.collections.forEach as withEach
 
 /**
  * Class performing the actual navigation in [MainActivity] by performing fragment transactions if
@@ -161,7 +162,7 @@ class MainActivityNavigation(
         val transaction = fragmentManager
             .beginTransaction()
 
-        fragmentManager.fragments.forEach { fragment ->
+        fragmentManager.fragments.withEach { fragment ->
             transaction.remove(fragment)
         }
 

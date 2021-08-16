@@ -6,6 +6,7 @@ package org.mozilla.focus.ext
 
 import android.net.Uri
 import org.mozilla.focus.utils.UrlUtils
+import kotlin.collections.forEach as withEach
 
 // Extension functions for the String class
 
@@ -66,7 +67,7 @@ fun String.removePrefixesIgnoreCase(vararg prefixes: String): String {
     var value = this
     var lower = this.toLowerCase()
 
-    prefixes.forEach {
+    prefixes.withEach {
         if (lower.startsWith(it.toLowerCase())) {
             value = value.substring(it.length)
             lower = lower.substring(it.length)
