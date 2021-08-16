@@ -36,7 +36,6 @@ import org.mozilla.focus.helpers.TestHelper.verifySnackBarText
 import org.mozilla.focus.helpers.TestHelper.waitingTime
 import org.mozilla.focus.helpers.TestHelper.webPageLoadwaitingTime
 import org.mozilla.focus.testAnnotations.SmokeTest
-import org.mozilla.focus.utils.FeatureFlags
 import java.io.IOException
 
 // This test erases browsing data and checks for message
@@ -82,24 +81,17 @@ class EraseBrowsingDataTest {
     @SmokeTest
     @Test
     fun trashButtonTest() {
-        // Establish feedback message id
-        val feedbackEraseId = if (FeatureFlags.isMvp)
-            R.string.feedback_erase2
-        else
-            R.string.feedback_erase
-
         // Open a webpage
         searchScreen {
         }.loadPage(webServer.url("").toString()) {
             verifyPageContent("focus test page")
             // Press erase button, and check for message and return to the main page
         }.clearBrowsingData {
-            verifySnackBarText(getStringResource(feedbackEraseId))
+            verifySnackBarText(getStringResource(R.string.feedback_erase2))
             verifyEmptySearchBar()
         }
     }
 
-    @Ignore("Failing on Firebase: https://github.com/mozilla-mobile/focus-android/issues/4823")
     @SmokeTest
     @Test
     fun notificationEraseAndOpenButtonTest() {
@@ -107,13 +99,6 @@ class EraseBrowsingDataTest {
             mDevice.openNotification()
             clearNotifications()
         }
-
-        // Establish feedback message id
-        val feedbackEraseId = if (FeatureFlags.isMvp)
-            R.string.feedback_erase2
-        else
-            R.string.feedback_erase
-
         // Open a webpage
         searchScreen {
         }.loadPage(webServer.url("").toString()) { }
@@ -125,7 +110,7 @@ class EraseBrowsingDataTest {
             verifySystemNotificationExists(getStringResource(R.string.notification_erase_text))
             expandEraseBrowsingNotification()
         }.clickEraseAndOpenNotificationButton {
-            verifySnackBarText(getStringResource(feedbackEraseId))
+            verifySnackBarText(getStringResource(R.string.feedback_erase2))
             verifyEmptySearchBar()
         }
     }
