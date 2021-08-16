@@ -17,6 +17,7 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.mozilla.focus.settings.ManualAddSearchEngineSettingsFragment.Companion.isValidSearchQueryURL
 import org.robolectric.RobolectricTestRunner
+import kotlin.collections.forEach as withEach
 
 @RunWith(RobolectricTestRunner::class)
 // This unit test is not running on an Android device. Allow me to use spaces in function names.
@@ -64,7 +65,7 @@ class SearchEngineValidationTest {
 private fun withMockWebServer(vararg responses: MockResponse, block: (MockWebServer) -> Unit) {
     val server = MockWebServer()
 
-    responses.forEach { server.enqueue(it) }
+    responses.withEach { server.enqueue(it) }
 
     server.start()
 
