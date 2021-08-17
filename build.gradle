@@ -35,12 +35,12 @@ plugins {
     // limitations of the gradle plugin. We've decided to stick with duplication for now since the
     // other methods involve using undocumented APIs
     // https://docs.gradle.org/current/userguide/plugins.html#plugins_dsl_limitations
-    id("io.gitlab.arturbosch.detekt").version("1.16.0")
+    id("io.gitlab.arturbosch.detekt").version("1.18.0")
 }
 
 detekt {
     // The version number is duplicated, please refer to plugins block for more details
-    version = "1.16.0"
+    version = "1.18.0"
     buildUponDefaultConfig = true
     input = files("$projectDir/app")
     config = files("$projectDir/quality/detekt.yml")
@@ -63,27 +63,6 @@ allprojects {
         }
         maven {
             url "https://maven.mozilla.org/maven2"
-        }
-        jcenter() {
-            content {
-                ////////////////////////////////////////////////////////////////////////////////
-                // JCenter is going away. Please do not add any new dependencies here.
-                // https://jfrog.com/blog/into-the-sunset-bintray-jcenter-gocenter-and-chartcenter/
-                ////////////////////////////////////////////////////////////////////////////////
-
-                // Used by detekt
-                // Issue for publishing to maven central: https://github.com/Kotlin/kotlinx.html/issues/173
-                // Related detekt issue: https://github.com/detekt/detekt/issues/3461
-                includeVersion("org.jetbrains.kotlinx", "kotlinx-html-jvm", "0.7.2")
-                includeVersion("org.jetbrains.kotlinx", "kotlinx-html-common", "0.7.2")
-
-                // Fastlane
-                // Doesn't seem to be available on Maven Central yet, and I couldn't find an issue for it
-                // https://github.com/fastlane/fastlane
-                includeVersion("tools.fastlane", "screengrab", "2.0.0")
-                // https://github.com/jraska/Falcon/issues/52
-                includeVersion("com.jraska", "falcon", "2.1.1")
-            }
         }
     }
 }
