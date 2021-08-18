@@ -12,6 +12,7 @@ import mozilla.components.browser.state.store.BrowserStore
 import mozilla.components.concept.engine.DefaultSettings
 import mozilla.components.concept.engine.Engine
 import mozilla.components.concept.fetch.Client
+import mozilla.components.feature.app.links.AppLinksInterceptor
 import mozilla.components.feature.app.links.AppLinksUseCases
 import mozilla.components.feature.contextmenu.ContextMenuUseCases
 import mozilla.components.feature.customtabs.store.CustomTabsServiceStore
@@ -40,7 +41,7 @@ import org.mozilla.focus.activity.MainActivity
 import org.mozilla.focus.components.EngineProvider
 import org.mozilla.focus.downloads.DownloadService
 import org.mozilla.focus.engine.ClientWrapper
-import org.mozilla.focus.engine.LocalizedContentInterceptor
+import org.mozilla.focus.engine.AppContentInterceptor
 import org.mozilla.focus.engine.SanityCheckMiddleware
 import org.mozilla.focus.exceptions.ExceptionMigrationMiddleware
 import org.mozilla.focus.locale.LocaleManager
@@ -73,7 +74,7 @@ class Components(
         val settings = Settings.getInstance(context)
 
         DefaultSettings(
-                requestInterceptor = LocalizedContentInterceptor(context),
+                requestInterceptor = AppContentInterceptor(context),
                 trackingProtectionPolicy = settings.createTrackingProtectionPolicy(),
                 javascriptEnabled = !settings.shouldBlockJavaScript(),
                 remoteDebuggingEnabled = settings.shouldEnableRemoteDebugging(),
@@ -95,11 +96,11 @@ class Components(
 
     val settingsUseCases by lazy { SettingsUseCases(engine, store) }
 
+    @Suppress("DEPRECATION")
     private val locationService: LocationService by lazy {
         if (BuildConfig.MLS_TOKEN.isNullOrEmpty()) {
             LocationService.default()
         } else {
-            @Suppress("DEPRECATION")
             MozillaLocationService(context, client.unwrap(), BuildConfig.MLS_TOKEN)
         }
     }
@@ -129,10 +130,8 @@ class Components(
      */
     val customTabsStore by lazy { CustomTabsServiceStore() }
 
-    @Suppress("DEPRECATION")
     val sessionUseCases: SessionUseCases by lazy { SessionUseCases(store) }
 
-    @Suppress("DEPRECATION")
     val tabsUseCases: TabsUseCases by lazy { TabsUseCases(store) }
 
     val searchUseCases: SearchUseCases by lazy {
@@ -145,7 +144,6 @@ class Components(
 
     val appLinksUseCases: AppLinksUseCases by lazy { AppLinksUseCases(context.applicationContext) }
 
-    @Suppress("DEPRECATION")
     val customTabsUseCases: CustomTabsUseCases by lazy { CustomTabsUseCases(store, sessionUseCases.loadUrl) }
 
     val crashReporter: CrashReporter by lazy { createCrashReporter(context) }
@@ -155,6 +153,10 @@ class Components(
     val adsTelemetry: AdsTelemetry by lazy { AdsTelemetry() }
 
     val searchTelemetry: InContentTelemetry by lazy { InContentTelemetry() }
+
+    val appLinksInterceptor by lazy {
+        AppLinksInterceptor(context, interceptLinkClicks = true, launchInApp = { true })
+    }
 }
 
 private fun determineInitialScreen(context: Context): Screen {
