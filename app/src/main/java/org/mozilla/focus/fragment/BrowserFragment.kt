@@ -38,6 +38,7 @@ import mozilla.components.browser.state.state.content.DownloadState
 import mozilla.components.browser.state.state.createTab
 import mozilla.components.browser.toolbar.BrowserToolbar
 import mozilla.components.concept.engine.EngineView
+import mozilla.components.feature.app.links.AppLinksFeature
 import mozilla.components.feature.contextmenu.ContextMenuCandidate
 import mozilla.components.feature.contextmenu.ContextMenuFeature
 import mozilla.components.feature.downloads.AbstractFetchDownloadService
@@ -62,6 +63,7 @@ import org.mozilla.focus.browser.integration.BrowserToolbarIntegration
 import org.mozilla.focus.browser.integration.FindInPageIntegration
 import org.mozilla.focus.browser.integration.FullScreenIntegration
 import org.mozilla.focus.downloads.DownloadService
+import org.mozilla.focus.ext.components
 import org.mozilla.focus.ext.ifCustomTab
 import org.mozilla.focus.ext.isCustomTab
 import org.mozilla.focus.ext.requireComponents
@@ -101,6 +103,7 @@ class BrowserFragment :
     private val downloadsFeature = ViewBoundFeatureWrapper<DownloadsFeature>()
     private val shareDownloadFeature = ViewBoundFeatureWrapper<ShareDownloadFeature>()
     private val windowFeature = ViewBoundFeatureWrapper<WindowFeature>()
+    private val appLinksFeature = ViewBoundFeatureWrapper<AppLinksFeature>()
 
     private val toolbarIntegration = ViewBoundFeatureWrapper<BrowserToolbarIntegration>()
 
@@ -240,6 +243,19 @@ class BrowserFragment :
             store = components.store,
             tabId = tab.id
         ), this, view)
+
+        appLinksFeature.set(
+            feature = AppLinksFeature(
+                requireContext(),
+                store = components.store,
+                sessionId = tabId,
+                fragmentManager = parentFragmentManager,
+                launchInApp = { true },
+                loadUrlUseCase = requireContext().components.sessionUseCases.loadUrl
+            ),
+            owner = this,
+            view = view
+        )
 
         blockingThemeBinding.set(
             BlockingThemeBinding(
