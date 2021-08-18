@@ -41,7 +41,7 @@ class SettingsPrivacyMenuRobot {
 }
 
 private val privacySettingsList =
-        UiScrollable(UiSelector().resourceId("$packageName:id/recycler_view"))
+    UiScrollable(UiSelector().resourceId("$packageName:id/recycler_view"))
 
 private fun adTrackersBlockSwitch(): ViewInteraction {
     privacySettingsList
@@ -69,8 +69,8 @@ private fun otherContentTrackersBlockSwitch(): ViewInteraction {
 
 private fun blockWebFontsSwitch(): ViewInteraction {
     privacySettingsList
-        .scrollTextIntoView("Block Web fonts")
-    return onView(withText("Block Web fonts"))
+        .scrollTextIntoView("Block web fonts")
+    return onView(withText("Block web fonts"))
 }
 
 private fun blockJavaScriptSwitch(): ViewInteraction {

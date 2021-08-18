@@ -35,8 +35,9 @@ class BrowserRobot {
         )
 
     fun verifyBrowserView() =
-        assertTrue(mDevice.findObject(UiSelector().resourceId("$packageName:id/webview"))
-            .waitForExists(webPageLoadwaitingTime)
+        assertTrue(
+            mDevice.findObject(UiSelector().resourceId("$packageName:id/webview"))
+                .waitForExists(webPageLoadwaitingTime)
         )
 
     fun verifyPageContent(expectedText: String) {
@@ -70,7 +71,8 @@ class BrowserRobot {
         mDevice.findObject(UiSelector().textContains("Get Location")).click()
     }
 
-    fun verifyFloatingEraseButton(): ViewInteraction = floatingEraseButton.check(matches(isDisplayed()))
+    fun verifyFloatingEraseButton(): ViewInteraction =
+        floatingEraseButton.check(matches(isDisplayed()))
 
     fun longPressLink(linkText: String) {
         val link = mDevice.findObject(UiSelector().text(linkText))
@@ -106,18 +108,19 @@ class BrowserRobot {
 
     fun selectTab(tabTitle: String): ViewInteraction = onView(withText(tabTitle)).perform(click())
 
-    fun verifyShareAppsListOpened() = assertTrue(shareAppsList.waitForExists(webPageLoadwaitingTime))
+    fun verifyShareAppsListOpened() =
+        assertTrue(shareAppsList.waitForExists(webPageLoadwaitingTime))
 
     fun clickPlayButton() {
         val playButton =
-                mDevice.findObject(UiSelector().text("Play"))
+            mDevice.findObject(UiSelector().text("Play"))
         playButton.waitForExists(webPageLoadwaitingTime)
         playButton.click()
     }
 
     fun clickPauseButton() {
         val pauseButton =
-                mDevice.findObject(UiSelector().text("Pause"))
+            mDevice.findObject(UiSelector().text("Pause"))
         pauseButton.waitForExists(webPageLoadwaitingTime)
         pauseButton.click()
     }
@@ -140,13 +143,13 @@ class BrowserRobot {
 
     fun verifySiteConnectionInfoIsSecure(isSecure: Boolean) {
         securityIcon.perform(click())
-        assertTrue(site_identity_Icon.waitForExists(waitingTime))
+        assertTrue(site_security_info.waitForExists(waitingTime))
         site_identity_title.check(matches(isDisplayed()))
+        site_identity_Icon.check(matches(isDisplayed()))
         if (isSecure) {
-            site_identity_state.check(matches(withText("Secure Connection")))
-            certificateVerifier.check(matches(isDisplayed()))
+            assertTrue(site_security_info.text.equals("Connection is secure"))
         } else {
-            site_identity_state.check(matches(withText("Insecure Connection")))
+            assertTrue(site_security_info.text.equals("Connection is not secure"))
         }
     }
 
@@ -161,8 +164,8 @@ class BrowserRobot {
 
         fun clearBrowsingData(interact: HomeScreenRobot.() -> Unit): HomeScreenRobot.Transition {
             floatingEraseButton
-                    .check(matches(isCompletelyDisplayed()))
-                    .perform(click())
+                .check(matches(isCompletelyDisplayed()))
+                .perform(click())
 
             HomeScreenRobot().interact()
             return HomeScreenRobot.Transition()
@@ -224,15 +227,12 @@ private val tabsTrayEraseHistoryButton = onView(withText(R.string.tabs_tray_acti
 private val mainMenu = onView(withId(R.id.mozac_browser_toolbar_menu))
 
 private val shareAppsList =
-        mDevice.findObject(UiSelector().resourceId("android:id/resolver_list"))
+    mDevice.findObject(UiSelector().resourceId("android:id/resolver_list"))
 
-private val securityIcon = onView(withId(R.id.mozac_browser_toolbar_security_indicator))
+private val securityIcon = onView(withId(R.id.mozac_browser_toolbar_tracking_protection_indicator))
 
-private val site_identity_state = onView(withId(R.id.site_identity_state))
+private val site_security_info = mDevice.findObject(UiSelector().resourceId("$packageName:id/security_info"))
 
-private val site_identity_title = onView(withId(R.id.site_identity_title))
+private val site_identity_title = onView(withId(R.id.site_title))
 
-private val site_identity_Icon =
-        mDevice.findObject(UiSelector().resourceId("$packageName:id/site_identity_icon"))
-
-private val certificateVerifier = onView(withId(R.id.verifier))
+private val site_identity_Icon = onView(withId(R.id.site_favicon))

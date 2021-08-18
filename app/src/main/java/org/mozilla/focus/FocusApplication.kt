@@ -49,6 +49,8 @@ open class FocusApplication : LocaleAwareApplication(), CoroutineScope {
         if (isMainProcess()) {
             PreferenceManager.setDefaultValues(this, R.xml.settings, false)
 
+            components.engine.warmUp()
+
             TelemetryWrapper.init(this)
             components.metrics.initialize(this)
             FactsProcessor.initialize()
@@ -60,8 +62,6 @@ open class FocusApplication : LocaleAwareApplication(), CoroutineScope {
 
             visibilityLifeCycleCallback = VisibilityLifeCycleCallback(this@FocusApplication)
             registerActivityLifecycleCallbacks(visibilityLifeCycleCallback)
-
-            components.engine.warmUp()
 
             storeLink.start()
 
@@ -80,11 +80,11 @@ open class FocusApplication : LocaleAwareApplication(), CoroutineScope {
 
         val threadPolicyBuilder = StrictMode.ThreadPolicy.Builder().detectAll()
         val vmPolicyBuilder = StrictMode.VmPolicy.Builder()
-                .detectActivityLeaks()
-                .detectFileUriExposure()
-                .detectLeakedClosableObjects()
-                .detectLeakedRegistrationObjects()
-                .detectLeakedSqlLiteObjects()
+            .detectActivityLeaks()
+            .detectFileUriExposure()
+            .detectLeakedClosableObjects()
+            .detectLeakedRegistrationObjects()
+            .detectLeakedSqlLiteObjects()
 
         threadPolicyBuilder.penaltyLog()
         vmPolicyBuilder.penaltyLog()

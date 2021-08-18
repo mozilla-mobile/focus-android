@@ -24,14 +24,11 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.preference.PreferenceManager
 import kotlinx.android.synthetic.main.firstrun_page.*
 import kotlinx.android.synthetic.main.firstrun_page.view.*
-import kotlinx.android.synthetic.main.fragment_urlinput.*
-import kotlinx.android.synthetic.main.fragment_urlinput.view.*
+import kotlinx.android.synthetic.main.fragment_urlinput2.*
+import kotlinx.android.synthetic.main.fragment_urlinput2.view.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.launch
-import mozilla.components.browser.domains.CustomDomains
 import mozilla.components.browser.domains.autocomplete.CustomDomainsProvider
 import mozilla.components.browser.domains.autocomplete.ShippedDomainsProvider
 import mozilla.components.browser.state.action.ContentAction
@@ -56,7 +53,6 @@ import org.mozilla.focus.tips.Tip
 import org.mozilla.focus.tips.TipManager
 import org.mozilla.focus.utils.AppConstants
 import org.mozilla.focus.utils.Features
-import org.mozilla.focus.utils.FeatureFlags
 import org.mozilla.focus.utils.OneShotOnPreDrawListener
 import org.mozilla.focus.utils.SearchUtils
 import org.mozilla.focus.utils.Settings
@@ -175,20 +171,23 @@ class UrlInputFragment :
         searchSuggestionsViewModel = ViewModelProvider(requireActivity()).get(SearchSuggestionsViewModel::class.java)
 
         childFragmentManager.beginTransaction()
-                .replace(searchViewContainer.id, SearchSuggestionsFragment.create())
-                .commit()
+            .replace(searchViewContainer.id, SearchSuggestionsFragment.create())
+            .commit()
 
-        searchSuggestionsViewModel.selectedSearchSuggestion.observe(viewLifecycleOwner, Observer {
-            val isSuggestion = searchSuggestionsViewModel.searchQuery.value != it
-            it?.let {
-                if (searchSuggestionsViewModel.alwaysSearch) {
-                    onSearch(it, false, true)
-                } else {
-                    onSearch(it, isSuggestion)
+        searchSuggestionsViewModel.selectedSearchSuggestion.observe(
+            viewLifecycleOwner,
+            Observer {
+                val isSuggestion = searchSuggestionsViewModel.searchQuery.value != it
+                it?.let {
+                    if (searchSuggestionsViewModel.alwaysSearch) {
+                        onSearch(it, false, true)
+                    } else {
+                        onSearch(it, isSuggestion)
+                    }
+                    searchSuggestionsViewModel.clearSearchSuggestion()
                 }
-                searchSuggestionsViewModel.clearSearchSuggestion()
             }
-        })
+        )
     }
 
     override fun onResume() {
@@ -243,8 +242,8 @@ class UrlInputFragment :
 
         // Only make the second line clickable if applicable
         val linkStartIndex =
-                if (tipText.contains("\n")) tipText.indexOf("\n") + 2
-                else 0
+            if (tipText.contains("\n")) tipText.indexOf("\n") + 2
+            else 0
 
         keyboardLinearLayout.homeViewTipsLabel.movementMethod = LinkMovementMethod()
         homeViewTipsLabel.setText(tipText, TextView.BufferType.SPANNABLE)
@@ -284,22 +283,13 @@ class UrlInputFragment :
             val marginParams = searchViewContainer.layoutParams as ViewGroup.MarginLayoutParams
             marginParams.topMargin = (inputHeight + statusBarHeight).toInt()
         }
-
-        if (addToAutoComplete.layoutParams is ViewGroup.MarginLayoutParams) {
-            val marginParams = addToAutoComplete.layoutParams as ViewGroup.MarginLayoutParams
-            marginParams.topMargin = (inputHeight + statusBarHeight).toInt()
-        }
     }
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? = if (FeatureFlags.isMvp) {
-        inflater.inflate(R.layout.fragment_urlinput2, container, false)
-    } else {
-        inflater.inflate(R.layout.fragment_urlinput, container, false)
-    }
+    ): View? = inflater.inflate(R.layout.fragment_urlinput2, container, false)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         toolbarIntegration.set(
@@ -325,12 +315,7 @@ class UrlInputFragment :
         if (isOverlay) {
             keyboardLinearLayout?.visibility = View.GONE
         } else {
-            val backgroundId = if (FeatureFlags.isMvp) {
-                R.drawable.dark_background
-            } else {
-                R.drawable.background_gradient
-            }
-            backgroundView?.setBackgroundResource(backgroundId)
+            backgroundView?.setBackgroundResource(R.drawable.dark_background)
 
             dismissView?.visibility = View.GONE
 
@@ -353,14 +338,10 @@ class UrlInputFragment :
                 }
 
             searchViewContainer?.visibility = View.GONE
-            addToAutoComplete?.visibility = View.VISIBLE
+            menuView?.visibility = View.GONE
         }
 
         browserToolbar.editMode()
-
-        addToAutoComplete.setOnClickListener {
-            browserToolbar?.url?.let { addUrlToAutocomplete(it.toString()) }
-        }
 
         updateTipsLabel()
     }
@@ -378,7 +359,8 @@ class UrlInputFragment :
         super.onStart()
 
         activity?.let {
-            if (Settings.getInstance(it.applicationContext).shouldShowFirstrun()) return@onStart }
+            if (Settings.getInstance(it.applicationContext).shouldShowFirstrun()) return@onStart
+        }
     }
 
     override fun onStop() {
@@ -458,31 +440,6 @@ class UrlInputFragment :
         }
     }
 
-    private fun addUrlToAutocomplete(url: String) {
-        var duplicateURL = false
-        val job = launch(IO) {
-            duplicateURL = CustomDomains.load(requireContext()).contains(url)
-
-            if (duplicateURL) return@launch
-            CustomDomains.add(requireContext(), url)
-
-            TelemetryWrapper.saveAutocompleteDomainEvent(TelemetryWrapper.AutoCompleteEventSource.QUICK_ADD)
-        }
-
-        job.invokeOnCompletion {
-            requireActivity().runOnUiThread {
-                val messageId =
-                        if (!duplicateURL)
-                            R.string.preference_autocomplete_add_confirmation
-                        else
-                            R.string.preference_autocomplete_duplicate_url_error
-
-                ViewUtils.showBrandedSnackbar(requireView(), messageId, 0)
-                animateAndDismiss()
-            }
-        }
-    }
-
     override fun onDetach() {
         super.onDetach()
 
@@ -536,10 +493,12 @@ class UrlInputFragment :
 
         isAnimating = true
 
-        val xyOffset = (if (isOverlay)
-            (urlInputContainerView?.layoutParams as FrameLayout.LayoutParams).bottomMargin
-        else
-            0).toFloat()
+        val xyOffset = (
+            if (isOverlay)
+                (urlInputContainerView?.layoutParams as FrameLayout.LayoutParams).bottomMargin
+            else
+                0
+            ).toFloat()
 
         if (urlInputBackgroundView != null) {
             val width = urlInputBackgroundView.width.toFloat()
@@ -747,7 +706,6 @@ class UrlInputFragment :
 
         if (text.trim { it <= ' ' }.isEmpty()) {
             searchViewContainer?.visibility = View.GONE
-            addToAutoComplete?.visibility = View.GONE
 
             if (!isOverlay) {
                 playVisibilityAnimation(true)
@@ -761,7 +719,6 @@ class UrlInputFragment :
             }
 
             searchViewContainer?.visibility = View.VISIBLE
-            addToAutoComplete?.visibility = View.GONE
         }
     }
 

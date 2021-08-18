@@ -9,6 +9,7 @@ import android.content.Context
 import android.content.Intent
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
+import mozilla.components.browser.icons.BrowserIcons
 import mozilla.components.browser.state.engine.EngineMiddleware
 import mozilla.components.browser.state.store.BrowserStore
 import mozilla.components.concept.engine.DefaultSettings
@@ -31,6 +32,7 @@ import mozilla.components.feature.session.SettingsUseCases
 import mozilla.components.feature.session.TrackingProtectionUseCases
 import mozilla.components.feature.tabs.CustomTabsUseCases
 import mozilla.components.feature.tabs.TabsUseCases
+import mozilla.components.feature.webcompat.WebCompatFeature
 import mozilla.components.feature.webcompat.reporter.WebCompatReporterFeature
 import mozilla.components.lib.crash.CrashReporter
 import mozilla.components.lib.crash.service.CrashReporterService
@@ -69,26 +71,29 @@ class Components(
     private val clientOverride: Client? = null
 ) {
     val appStore: AppStore by lazy {
-        AppStore(AppState(
-            screen = determineInitialScreen(context)
-        ))
+        AppStore(
+            AppState(
+                screen = determineInitialScreen(context)
+            )
+        )
     }
 
     val engineDefaultSettings by lazy {
         val settings = Settings.getInstance(context)
 
         DefaultSettings(
-                requestInterceptor = LocalizedContentInterceptor(context),
-                trackingProtectionPolicy = settings.createTrackingProtectionPolicy(),
-                javascriptEnabled = !settings.shouldBlockJavaScript(),
-                remoteDebuggingEnabled = settings.shouldEnableRemoteDebugging(),
-                webFontsEnabled = !settings.shouldBlockWebFonts()
+            requestInterceptor = LocalizedContentInterceptor(context),
+            trackingProtectionPolicy = settings.createTrackingProtectionPolicy(),
+            javascriptEnabled = !settings.shouldBlockJavaScript(),
+            remoteDebuggingEnabled = settings.shouldEnableRemoteDebugging(),
+            webFontsEnabled = !settings.shouldBlockWebFonts()
         )
     }
 
     val engine: Engine by lazy {
         engineOverride ?: EngineProvider.createEngine(context, engineDefaultSettings).apply {
             Settings.getInstance(context).setupSafeBrowsing(this)
+            WebCompatFeature.install(this)
             WebCompatReporterFeature.install(this, "focus")
         }
     }
@@ -162,6 +167,8 @@ class Components(
     val adsTelemetry: AdsTelemetry by lazy { AdsTelemetry() }
 
     val searchTelemetry: InContentTelemetry by lazy { InContentTelemetry() }
+
+    val icons by lazy { BrowserIcons(context, client) }
 }
 
 private fun determineInitialScreen(context: Context): Screen {
@@ -209,7 +216,8 @@ private fun createCrashReporter(context: Context): CrashReporter {
         context,
         0,
         intent,
-        0)
+        0
+    )
 
     return CrashReporter(
         context = context,

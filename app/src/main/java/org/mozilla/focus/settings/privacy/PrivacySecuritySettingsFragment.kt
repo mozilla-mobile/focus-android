@@ -2,7 +2,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
-package org.mozilla.focus.settings
+package org.mozilla.focus.settings.privacy
 
 import android.content.SharedPreferences
 import android.os.Build
@@ -12,12 +12,14 @@ import androidx.preference.SwitchPreferenceCompat
 import org.mozilla.focus.R
 import org.mozilla.focus.biometrics.Biometrics
 import org.mozilla.focus.ext.requireComponents
+import org.mozilla.focus.settings.BaseSettingsFragment
 import org.mozilla.focus.state.AppAction
 import org.mozilla.focus.state.Screen
 import org.mozilla.focus.telemetry.TelemetryWrapper
 import org.mozilla.focus.widget.CookiesPreference
 
-class PrivacySecuritySettingsFragment : BaseSettingsFragment(),
+class PrivacySecuritySettingsFragment :
+    BaseSettingsFragment(),
     SharedPreferences.OnSharedPreferenceChangeListener {
     override fun onCreatePreferences(p0: Bundle?, p1: String?) {
         addPreferencesFromResource(R.xml.privacy_security_settings)
@@ -25,7 +27,7 @@ class PrivacySecuritySettingsFragment : BaseSettingsFragment(),
         val biometricPreference: SwitchPreferenceCompat? = findPreference(getString(R.string.pref_key_biometric))
         val appName = getString(R.string.app_name)
         biometricPreference?.summary =
-                getString(R.string.preference_security_biometric_summary, appName)
+            getString(R.string.preference_security_biometric_summary, appName)
 
         // Remove the biometric toggle if the software or hardware do not support it
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M || !Biometrics.hasFingerprintHardware(
@@ -65,15 +67,15 @@ class PrivacySecuritySettingsFragment : BaseSettingsFragment(),
 
     private fun updateBiometricsToggleAvailability() {
         val switch = preferenceScreen.findPreference(resources.getString(R.string.pref_key_biometric))
-                as? SwitchPreferenceCompat
+            as? SwitchPreferenceCompat
 
         if (!Biometrics.hasFingerprintHardware(requireContext())) {
             switch?.isChecked = false
             switch?.isEnabled = false
             preferenceManager.sharedPreferences
-                    .edit()
-                    .putBoolean(resources.getString(R.string.pref_key_biometric), false)
-                    .apply()
+                .edit()
+                .putBoolean(resources.getString(R.string.pref_key_biometric), false)
+                .apply()
         } else {
             switch?.isEnabled = true
         }
@@ -109,7 +111,7 @@ class PrivacySecuritySettingsFragment : BaseSettingsFragment(),
         val switch =
             preferenceScreen.findPreference(resources.getString(R.string.pref_key_secure)) as? SwitchPreferenceCompat
         if (preferenceManager.sharedPreferences
-                .getBoolean(
+            .getBoolean(
                     resources.getString(R.string.pref_key_biometric),
                     false
                 )

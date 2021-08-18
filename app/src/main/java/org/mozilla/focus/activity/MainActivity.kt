@@ -29,7 +29,6 @@ import org.mozilla.focus.shortcut.HomeScreen
 import org.mozilla.focus.state.AppAction
 import org.mozilla.focus.state.Screen
 import org.mozilla.focus.telemetry.TelemetryWrapper
-import org.mozilla.focus.utils.FeatureFlags
 import org.mozilla.focus.utils.Settings
 import org.mozilla.focus.utils.SupportUtils
 
@@ -44,9 +43,9 @@ open class MainActivity : LocaleAwareAppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        if (FeatureFlags.isMvp) {
-            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
-        }
+        // Because some MVP characteristics are set from xml files we need to choose the mode of the theme
+        // according to MVP flag and not by system theme mode
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
 
         if (!isTaskRoot) {
             if (intent.hasCategory(Intent.CATEGORY_LAUNCHER) && Intent.ACTION_MAIN == intent.action) {
@@ -72,9 +71,9 @@ open class MainActivity : LocaleAwareAppCompatActivity() {
 
         val launchCount = Settings.getInstance(this).getAppLaunchCount()
         PreferenceManager.getDefaultSharedPreferences(this)
-                .edit()
-                .putInt(getString(R.string.app_launch_count), launchCount + 1)
-                .apply()
+            .edit()
+            .putInt(getString(R.string.app_launch_count), launchCount + 1)
+            .apply()
 
         lifecycle.addObserver(navigator)
     }
@@ -114,7 +113,7 @@ open class MainActivity : LocaleAwareAppCompatActivity() {
     override fun onNewIntent(unsafeIntent: Intent) {
         if (Crash.isCrashIntent(unsafeIntent)) {
             val browserFragment = supportFragmentManager
-                    .findFragmentByTag(BrowserFragment.FRAGMENT_TAG) as BrowserFragment?
+                .findFragmentByTag(BrowserFragment.FRAGMENT_TAG) as BrowserFragment?
             val crash = Crash.fromIntent(unsafeIntent)
 
             browserFragment?.handleTabCrash(crash)
@@ -123,9 +122,11 @@ open class MainActivity : LocaleAwareAppCompatActivity() {
         val intent = SafeIntent(unsafeIntent)
 
         if (intent.dataString.equals(SupportUtils.OPEN_WITH_DEFAULT_BROWSER_URL)) {
-            components.appStore.dispatch(AppAction.OpenSettings(
-                page = Screen.Settings.Page.General
-            ))
+            components.appStore.dispatch(
+                AppAction.OpenSettings(
+                    page = Screen.Settings.Page.General
+                )
+            )
             super.onNewIntent(unsafeIntent)
             return
         }
@@ -174,18 +175,21 @@ open class MainActivity : LocaleAwareAppCompatActivity() {
         val fragmentManager = supportFragmentManager
 
         val sessionsSheetFragment = fragmentManager.findFragmentByTag(
-            TabSheetFragment.FRAGMENT_TAG) as TabSheetFragment?
+            TabSheetFragment.FRAGMENT_TAG
+        ) as TabSheetFragment?
         if (sessionsSheetFragment != null &&
-                sessionsSheetFragment.isVisible &&
-                sessionsSheetFragment.onBackPressed()) {
+            sessionsSheetFragment.isVisible &&
+            sessionsSheetFragment.onBackPressed()
+        ) {
             // SessionsSheetFragment handles back presses itself (custom animations).
             return
         }
 
         val urlInputFragment = fragmentManager.findFragmentByTag(UrlInputFragment.FRAGMENT_TAG) as UrlInputFragment?
         if (urlInputFragment != null &&
-                urlInputFragment.isVisible &&
-                urlInputFragment.onBackPressed()) {
+            urlInputFragment.isVisible &&
+            urlInputFragment.onBackPressed()
+        ) {
             // The URL input fragment has handled the back press. It does its own animations so
             // we do not try to remove it from outside.
             return
@@ -193,8 +197,9 @@ open class MainActivity : LocaleAwareAppCompatActivity() {
 
         val browserFragment = fragmentManager.findFragmentByTag(BrowserFragment.FRAGMENT_TAG) as BrowserFragment?
         if (browserFragment != null &&
-                browserFragment.isVisible &&
-                browserFragment.onBackPressed()) {
+            browserFragment.isVisible &&
+            browserFragment.onBackPressed()
+        ) {
             // The Browser fragment handles back presses on its own because it might just go back
             // in the browsing history.
             return
@@ -229,8 +234,10 @@ open class MainActivity : LocaleAwareAppCompatActivity() {
         // Disable biometrics if the user is no longer eligible due to un-enrolling fingerprints:
         if (!Biometrics.hasFingerprintHardware(this)) {
             PreferenceManager.getDefaultSharedPreferences(this)
-                    .edit().putBoolean(getString(R.string.pref_key_biometric),
-                            false).apply()
+                .edit().putBoolean(
+                    getString(R.string.pref_key_biometric),
+                    false
+                ).apply()
         }
     }
 

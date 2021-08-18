@@ -6,13 +6,8 @@ package org.mozilla.focus.searchsuggestions.ui
 
 import android.graphics.Color
 import android.os.Bundle
-import android.text.SpannableString
 import android.text.SpannableStringBuilder
-import android.text.Spanned
-import android.text.TextPaint
 import android.text.method.LinkMovementMethod
-import android.text.style.ClickableSpan
-import android.text.style.ForegroundColorSpan
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -32,12 +27,9 @@ import kotlinx.coroutines.Dispatchers.Main
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
-import mozilla.components.browser.state.state.SessionState
 import org.mozilla.focus.R
-import org.mozilla.focus.ext.requireComponents
 import org.mozilla.focus.searchsuggestions.SearchSuggestionsViewModel
 import org.mozilla.focus.searchsuggestions.State
-import org.mozilla.focus.utils.SupportUtils
 import org.mozilla.focus.utils.UrlUtils
 import kotlin.coroutines.CoroutineContext
 
@@ -70,39 +62,48 @@ class SearchSuggestionsFragment : Fragment(), CoroutineScope {
         searchSuggestionsViewModel = ViewModelProvider(requireActivity())
             .get(SearchSuggestionsViewModel::class.java)
 
-        searchSuggestionsViewModel.searchQuery.observe(viewLifecycleOwner, Observer {
-            searchView.text = it
-            searchView.contentDescription = requireContext().getString(R.string.search_hint, it)
-        })
-
-        searchSuggestionsViewModel.suggestions.observe(viewLifecycleOwner, Observer { suggestions ->
-            launch(IO) {
-                suggestions?.apply { (suggestionList.adapter as SuggestionsAdapter).refresh(this) }
+        searchSuggestionsViewModel.searchQuery.observe(
+            viewLifecycleOwner,
+            Observer {
+                searchView.text = it
+                searchView.contentDescription = requireContext().getString(R.string.search_hint, it)
             }
-        })
+        )
 
-        searchSuggestionsViewModel.state.observe(viewLifecycleOwner, Observer { state ->
-            enable_search_suggestions_container.visibility = View.GONE
-            no_suggestions_container.visibility = View.GONE
-            suggestionList.visibility = View.GONE
-
-            when (state) {
-                is State.ReadyForSuggestions ->
-                    suggestionList.visibility = View.VISIBLE
-                is State.NoSuggestionsAPI ->
-                    no_suggestions_container.visibility = if (state.givePrompt) {
-                        View.VISIBLE
-                    } else {
-                        View.GONE
-                    }
-                is State.Disabled ->
-                    enable_search_suggestions_container.visibility = if (state.givePrompt) {
-                        View.VISIBLE
-                    } else {
-                        View.GONE
-                    }
+        searchSuggestionsViewModel.suggestions.observe(
+            viewLifecycleOwner,
+            Observer { suggestions ->
+                launch(IO) {
+                    suggestions?.apply { (suggestionList.adapter as SuggestionsAdapter).refresh(this) }
+                }
             }
-        })
+        )
+
+        searchSuggestionsViewModel.state.observe(
+            viewLifecycleOwner,
+            Observer { state ->
+                enable_search_suggestions_container.visibility = View.GONE
+                no_suggestions_container.visibility = View.GONE
+                suggestionList.visibility = View.GONE
+
+                when (state) {
+                    is State.ReadyForSuggestions ->
+                        suggestionList.visibility = View.VISIBLE
+                    is State.NoSuggestionsAPI ->
+                        no_suggestions_container.visibility = if (state.givePrompt) {
+                            View.VISIBLE
+                        } else {
+                            View.GONE
+                        }
+                    is State.Disabled ->
+                        enable_search_suggestions_container.visibility = if (state.givePrompt) {
+                            View.VISIBLE
+                        } else {
+                            View.GONE
+                        }
+                }
+            }
+        )
     }
 
     override fun onCreateView(
@@ -114,12 +115,17 @@ class SearchSuggestionsFragment : Fragment(), CoroutineScope {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        enable_search_suggestions_subtitle.text = buildEnableSearchSuggestionsSubtitle()
+        val appName = resources.getString(R.string.app_name)
+
+        enable_search_suggestions_subtitle.text =
+            resources.getString(R.string.enable_search_suggestion_description, appName)
         enable_search_suggestions_subtitle.movementMethod = LinkMovementMethod.getInstance()
         enable_search_suggestions_subtitle.highlightColor = Color.TRANSPARENT
 
-        suggestionList.layoutManager = LinearLayoutManager(activity,
-                RecyclerView.VERTICAL, false)
+        suggestionList.layoutManager = LinearLayoutManager(
+            activity,
+            RecyclerView.VERTICAL, false
+        )
         suggestionList.adapter = SuggestionsAdapter {
             searchSuggestionsViewModel.selectSearchSuggestion(it)
         }
@@ -144,41 +150,6 @@ class SearchSuggestionsFragment : Fragment(), CoroutineScope {
         }
     }
 
-    private fun buildEnableSearchSuggestionsSubtitle(): SpannableString {
-        val subtitle = resources.getString(R.string.enable_search_suggestion_subtitle)
-        val appName = resources.getString(R.string.app_name)
-        val learnMore = resources.getString(R.string.enable_search_suggestion_subtitle_learnmore)
-
-        val spannable = SpannableString(String.format(subtitle, appName, learnMore))
-        val startIndex = spannable.indexOf(learnMore)
-        val endIndex = startIndex + learnMore.length
-
-        val learnMoreSpan = object : ClickableSpan() {
-            override fun onClick(textView: View) {
-                val context = textView.context
-                val url = SupportUtils.getSumoURLForTopic(context, SupportUtils.SumoTopic.SEARCH_SUGGESTIONS)
-
-                requireComponents.tabsUseCases.addTab(
-                    url,
-                    source = SessionState.Source.Internal.Menu,
-                    selectTab = true,
-                    private = true
-                )
-            }
-
-            override fun updateDrawState(ds: TextPaint) {
-                ds.isUnderlineText = false
-            }
-        }
-
-        spannable.setSpan(learnMoreSpan, startIndex, endIndex, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
-        val color = ForegroundColorSpan(
-                ContextCompat.getColor(requireContext(), R.color.searchSuggestionPromptButtonTextColor))
-        spannable.setSpan(color, startIndex, endIndex, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
-
-        return spannable
-    }
-
     companion object {
         fun create() = SearchSuggestionsFragment()
     }
@@ -194,9 +165,9 @@ class SearchSuggestionsFragment : Fragment(), CoroutineScope {
             override fun getNewListSize(): Int = newSuggestions.size
             override fun areItemsTheSame(p0: Int, p1: Int): Boolean = true
             override fun areContentsTheSame(p0: Int, p1: Int): Boolean =
-                    oldSuggestions[p0] == newSuggestions[p1]
+                oldSuggestions[p0] == newSuggestions[p1]
             override fun getChangePayload(oldItemPosition: Int, newItemPosition: Int): Any? =
-                    newSuggestions[newItemPosition]
+                newSuggestions[newItemPosition]
         }
 
         private var suggestions: List<SpannableStringBuilder> = listOf()
@@ -239,8 +210,9 @@ class SearchSuggestionsFragment : Fragment(), CoroutineScope {
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
             return SuggestionViewHolder(
-                    LayoutInflater.from(parent.context).inflate(viewType, parent, false),
-                    clickListener)
+                LayoutInflater.from(parent.context).inflate(viewType, parent, false),
+                clickListener
+            )
         }
     }
 }
@@ -268,7 +240,7 @@ private class SuggestionViewHolder(
         )
 
         val backgroundDrawableArray =
-                suggestionText.context.obtainStyledAttributes(intArrayOf(R.attr.selectableItemBackground))
+            suggestionText.context.obtainStyledAttributes(intArrayOf(R.attr.selectableItemBackground))
         val backgroundDrawable = backgroundDrawableArray.getDrawable(0)
         backgroundDrawableArray.recycle()
         suggestionText.background = backgroundDrawable

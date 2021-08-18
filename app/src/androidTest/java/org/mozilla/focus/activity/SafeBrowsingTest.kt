@@ -24,7 +24,7 @@ class SafeBrowsingTest {
     private val malwareWarning = getStringResource(R.string.mozac_browser_errorpages_safe_browsing_malware_uri_title)
     private val phishingWarning = getStringResource(R.string.mozac_browser_errorpages_safe_phishing_uri_title)
     private val unwantedSoftwareWarning =
-            getStringResource(R.string.mozac_browser_errorpages_safe_browsing_unwanted_uri_title)
+        getStringResource(R.string.mozac_browser_errorpages_safe_browsing_unwanted_uri_title)
     private val harmfulSiteWarning = getStringResource(R.string.mozac_browser_errorpages_safe_harmful_uri_title)
     private val tryAgainButton = getStringResource(R.string.mozac_browser_errorpages_page_refresh)
 
@@ -111,12 +111,12 @@ class SafeBrowsingTest {
     @SmokeTest
     @Test
     fun verifyPageSecurityIconAndInfo() {
-        val safePageUrl = "https://rpappalax.github.io/testapp"
+        val safePageUrl = "https://mozilla-mobile.github.io/testapp/"
         val insecurePageUrl = "http://itisatrap.org/firefox/its-a-trap.html"
 
         searchScreen {
         }.loadPage(safePageUrl) {
-            verifyPageContent("Privacy & Security")
+            verifyPageContent("Lets test!")
             verifySiteSecurityIconShown()
             verifySiteConnectionInfoIsSecure(true)
             mDevice.pressBack()
