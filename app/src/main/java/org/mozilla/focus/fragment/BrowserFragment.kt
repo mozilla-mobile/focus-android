@@ -39,6 +39,7 @@ import mozilla.components.browser.state.state.content.DownloadState
 import mozilla.components.browser.state.state.createTab
 import mozilla.components.browser.toolbar.BrowserToolbar
 import mozilla.components.concept.engine.EngineView
+import mozilla.components.feature.app.links.AppLinksFeature
 import mozilla.components.feature.contextmenu.ContextMenuCandidate
 import mozilla.components.feature.contextmenu.ContextMenuFeature
 import mozilla.components.feature.downloads.AbstractFetchDownloadService
@@ -48,6 +49,7 @@ import mozilla.components.feature.downloads.share.ShareDownloadFeature
 import mozilla.components.feature.findinpage.view.FindInPageBar
 import mozilla.components.feature.prompts.PromptFeature
 import mozilla.components.feature.session.SessionFeature
+import mozilla.components.feature.tabs.WindowFeature
 import mozilla.components.lib.crash.Crash
 import mozilla.components.support.base.feature.PermissionsFeature
 import mozilla.components.support.base.feature.ViewBoundFeatureWrapper
@@ -63,6 +65,7 @@ import org.mozilla.focus.browser.integration.FindInPageIntegration
 import org.mozilla.focus.browser.integration.FullScreenIntegration
 import org.mozilla.focus.downloads.DownloadService
 import org.mozilla.focus.engine.EngineSharedPreferencesListener
+import org.mozilla.focus.ext.components
 import org.mozilla.focus.ext.ifCustomTab
 import org.mozilla.focus.ext.isCustomTab
 import org.mozilla.focus.ext.requireComponents
@@ -105,6 +108,8 @@ class BrowserFragment :
     private val contextMenuFeature = ViewBoundFeatureWrapper<ContextMenuFeature>()
     private val downloadsFeature = ViewBoundFeatureWrapper<DownloadsFeature>()
     private val shareDownloadFeature = ViewBoundFeatureWrapper<ShareDownloadFeature>()
+    private val windowFeature = ViewBoundFeatureWrapper<WindowFeature>()
+    private val appLinksFeature = ViewBoundFeatureWrapper<AppLinksFeature>()
 
     private val toolbarIntegration = ViewBoundFeatureWrapper<BrowserToolbarIntegration>()
 
@@ -242,6 +247,19 @@ class BrowserFragment :
             this, view
         )
 
+        appLinksFeature.set(
+            feature = AppLinksFeature(
+                requireContext(),
+                store = components.store,
+                sessionId = tabId,
+                fragmentManager = parentFragmentManager,
+                launchInApp = { true },
+                loadUrlUseCase = requireContext().components.sessionUseCases.loadUrl
+            ),
+            owner = this,
+            view = view
+        )
+
         blockingThemeBinding.set(
             BlockingThemeBinding(
                 components.store,
@@ -260,8 +278,22 @@ class BrowserFragment :
         val customTabConfig = tab.ifCustomTab()?.config
         if (customTabConfig != null) {
             initialiseCustomTabUi(view, customTabConfig)
+
+            // TODO Add custom tabs window feature support
+            // We to add support for Custom Tabs here, however in order to send the window request
+            // back to us through the intent system, we need to register a unique schema that we
+            // can handle. For example, Fenix Nighlyt does this today with `fenix-nightly://`.
         } else {
             initialiseNormalBrowserUi(view)
+
+            windowFeature.set(
+                feature = WindowFeature(
+                    store = components.store,
+                    tabsUseCases = components.tabsUseCases
+                ),
+                owner = this,
+                view = view
+            )
         }
     }
 
@@ -277,6 +309,8 @@ class BrowserFragment :
         val controller = BrowserMenuController(
             requireComponents.sessionUseCases,
             requireComponents.appStore,
+            requireComponents.store,
+            requireComponents.topSitesUseCases,
             tabId,
             ::shareCurrentUrl,
             ::setShouldRequestDesktop,
@@ -289,6 +323,7 @@ class BrowserFragment :
         if (tab.ifCustomTab()?.config == null) {
             val browserMenu = DefaultBrowserMenu(
                 context = requireContext(),
+                appStore = requireComponents.appStore,
                 store = requireComponents.store,
                 onItemTapped = { controller.handleMenuInteraction(it) }
             )
