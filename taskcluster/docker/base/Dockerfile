@@ -7,7 +7,7 @@
 
 FROM ubuntu:18.04
 
-MAINTAINER Sebastian Kaspari "skaspari@mozilla.com"
+MAINTAINER Release Engineering <releng@mozilla.com>
 
 # Add worker user
 RUN mkdir /builds && \
@@ -20,10 +20,10 @@ WORKDIR /builds/worker/
 
 # -- System -----------------------------------------------------------------------------
 
-ENV GRADLE_OPTS='-Xmx4096m -Dorg.gradle.daemon=false' \
+ENV CURL='curl --location --retry 5' \
+    GRADLE_OPTS='-Xmx4096m -Dorg.gradle.daemon=false' \
     LANG='en_US.UTF-8' \
-    TERM='dumb' \
-    JAVA8PATH="/usr/lib/jvm/java-8-openjdk-amd64/jre/bin/:$PATH"
+    TERM='dumb'
 
 RUN apt-get update -qq \
     # We need to install tzdata before all of the other packages. Otherwise it will show an interactive dialog
