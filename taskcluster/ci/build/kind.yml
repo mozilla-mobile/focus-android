@@ -8,15 +8,14 @@ transforms:
     - taskgraph.transforms.job:transforms
     - taskgraph.transforms.task:transforms
 
-# kind-dependencies:
-#     - toolchain
-
+kind-dependencies:
+    - toolchain
 
 job-defaults:
-    # fetches:
-    #     toolchain:
-    #         - android-sdk-linux
-    #         - android-gradle-dependencies
+    fetches:
+        toolchain:
+            - android-sdk-linux
+            - android-gradle-dependencies
     run:
         using: gradlew
         use-caches: false
@@ -28,7 +27,7 @@ job-defaults:
         tier: 1
     worker-type: b-android
     worker:
-        docker-image: {in-tree: base}
+        docker-image: {in-tree: android-build}
         max-run-time: 7200
         chain-of-trust: true
 
