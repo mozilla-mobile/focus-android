@@ -21,7 +21,7 @@ pushd $PROJECT_DIR
 NEXUS_PREFIX='http://localhost:8081/nexus/content/repositories'
 GRADLE_ARGS="--parallel -PgoogleRepo=$NEXUS_PREFIX/google/ -PcentralRepo=$NEXUS_PREFIX/central/"
 # We build everything to be sure to fetch all dependencies
-./gradlew $GRADLE_ARGS assemble assembleFocusDebug ktlint detekt
+./gradlew $GRADLE_ARGS assembleFocusDebug testFocusDebugUnitTest detekt ktlint clean
 
 # Some tests may be flaky, although they still download dependencies. So we let the following
 # command fail, if needed.
