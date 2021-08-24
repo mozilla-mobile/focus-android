@@ -17,7 +17,7 @@ job-defaults:
             - android-sdk-linux
             - android-gradle-dependencies
     run:
-        using: gradlew
+        # using: gradlew
         use-caches: false
     run-on-tasks-for: []
     treeherder:

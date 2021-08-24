@@ -12,7 +12,7 @@ treeherder:
 task-priority: highest
 
 taskgraph:
-    # register: focus_android_taskgraph:register
+    register: focus_android_taskgraph:register
     repositories:
         mobile:
             name: "Focus-Android"

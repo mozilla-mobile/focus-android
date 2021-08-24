@@ -13,11 +13,11 @@ def register(graph_config):
     """
     _import_modules([
         "job",
-        "parameters",
-        "release_promotion",
-        "routes",
-        "target_tasks",
-        "worker_types",
+        # parameters
+        # release_promotion
+        # "routes",
+        # "target_tasks",
+        # "worker_types",
     ])
 
 
