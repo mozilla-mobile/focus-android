@@ -17,8 +17,9 @@ job-defaults:
             - android-sdk-linux
             - android-gradle-dependencies
     run:
-        # using: gradlew
+        using: gradlew
         use-caches: false
+        workdir: '/builds/worker'
     run-on-tasks-for: []
     treeherder:
         kind: build
@@ -27,7 +28,7 @@ job-defaults:
         tier: 1
     worker-type: b-android
     worker:
-        docker-image: {in-tree: android-build}
+        docker-image: {in-tree: base}
         max-run-time: 7200
         chain-of-trust: true
 
@@ -36,6 +37,4 @@ jobs:
         description: 'Build Focus/Klar for Android from source code'
         run-on-tasks-for: [github-pull-request, github-push]
         run:
-            using: run-task
-            cwd: '{checkout}'
-            command: 'echo "--" > .adjust_token && ./gradlew --no-daemon clean assemble'
+            gradlew: ['assemble']

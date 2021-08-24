@@ -100,7 +100,7 @@ def _extract_gradlew_command(run, fetches_dir):
         )
         for repo_name in ("google", "jcenter")
     ]
-    gradle_command = ["./gradlew"] + gradle_repos_args + ["listRepositories"] + run.pop("gradlew")
+    gradle_command = ["./gradlew"] + gradle_repos_args + run.pop("gradlew")
     post_gradle_commands = run.pop("post-gradlew", [])
 
     commands = pre_gradle_commands + [gradle_command] + post_gradle_commands
