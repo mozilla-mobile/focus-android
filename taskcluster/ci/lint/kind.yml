@@ -54,7 +54,7 @@ jobs:
         description: 'Running detekt over all modules'
         run:
             using: gradlew
-            gradlew: ['detekt']
+            gradlew: ['detekt', 'githubLintDetektDetails']
         treeherder:
             symbol: detekt
 
@@ -70,6 +70,6 @@ jobs:
         description: 'Running lint over all modules'
         run:
             using: gradlew
-            gradlew: ['lint']
+            gradlew: ['lint', 'githubLintAndroidDetails']
         treeherder:
             symbol: lint
