@@ -33,10 +33,12 @@ job-defaults:
         docker-image: {in-tree: base}
         max-run-time: 7200
         artifacts:
-            - name: public
-              path: /opt/focus-android/app/build/reports
-              type: directory
-
+                - name: public/reports
+                  path: /builds/worker/checkouts/src/build/reports
+                  type: directory
+                - name: public/github
+                  path: /builds/worker/github
+                  type: directory
 
 jobs:
     compare-locales:
@@ -48,26 +50,26 @@ jobs:
         treeherder:
             symbol: compare-locale
             tier: 2
-    # detekt:
-    #     description: 'Running detekt over all modules'
-    #     run:
-    #         using: gradlew
-    #         gradlew: [detekt, githubLintDetektDetails, 'mozilla-detekt-rules:test']
-    #     treeherder:
-    #         symbol: detekt
+    detekt:
+        description: 'Running detekt over all modules'
+        run:
+            using: gradlew
+            gradlew: ['detekt']
+        treeherder:
+            symbol: detekt
 
-    # ktlint:
-    #     description: 'Running ktlint over all modules'
-    #     run:
-    #         using: gradlew
-    #         gradlew: [ktlint]
-    #     treeherder:
-    #         symbol: ktlint
+    ktlint:
+        description: 'Running ktlint over all modules'
+        run:
+            using: gradlew
+            gradlew: ['ktlint']
+        treeherder:
+            symbol: ktlint
     
-    # lint:
-    #     description: 'Running lint over all modules'
-    #     run:
-    #         using: gradlew
-    #         gradlew: ['lintDebug', 'githubLintAndroidDetails', 'mozilla-lint-rules:test']
-    #     treeherder:
-    #         symbol: lint
+    lint:
+        description: 'Running lint over all modules'
+        run:
+            using: gradlew
+            gradlew: ['lint']
+        treeherder:
+            symbol: lint
