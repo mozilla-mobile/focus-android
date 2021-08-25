@@ -12,9 +12,9 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import mozilla.components.browser.icons.IconRequest
 import mozilla.components.support.ktx.android.view.putCompoundDrawablesRelativeWithIntrinsicBounds
+import mozilla.components.support.ktx.kotlin.tryGetHostFromUrl
 import org.mozilla.focus.R
 import org.mozilla.focus.databinding.DialogTrackingProtectionSheetBinding
-import org.mozilla.focus.ext.beautifyUrl
 import org.mozilla.focus.ext.components
 import org.mozilla.focus.ext.installedDate
 
@@ -52,7 +52,7 @@ class TrackingProtectionPanel(
     }
 
     private fun updateTitle() {
-        binding.siteTitle.text = tabUrl.beautifyUrl()
+        binding.siteTitle.text = tabUrl.tryGetHostFromUrl()
         context.components.icons.loadIntoView(
             binding.siteFavicon,
             IconRequest(tabUrl, isPrivate = true)
@@ -69,9 +69,9 @@ class TrackingProtectionPanel(
         val nextIcon = AppCompatResources.getDrawable(context, R.drawable.mozac_ic_arrowhead_right)
 
         val securityIcon = if (isConnectionSecure) {
-            AppCompatResources.getDrawable(context, R.drawable.ic_lock)
+            AppCompatResources.getDrawable(context, R.drawable.mozac_ic_lock)
         } else {
-            AppCompatResources.getDrawable(context, R.drawable.ic_warning)
+            AppCompatResources.getDrawable(context, R.drawable.mozac_ic_warning)
         }
 
         binding.securityInfo.putCompoundDrawablesRelativeWithIntrinsicBounds(
@@ -90,9 +90,9 @@ class TrackingProtectionPanel(
         }
 
         val icon = if (isTrackingProtectionOn) {
-            R.drawable.mozac_ic_tracking_protection_on_trackers_blocked
+            R.drawable.mozac_ic_shield
         } else {
-            R.drawable.mozac_ic_tracking_protection_off_for_a_site
+            R.drawable.mozac_ic_shield_disabled
         }
 
         binding.enhancedTracking.apply {

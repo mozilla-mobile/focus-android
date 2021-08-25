@@ -39,6 +39,7 @@ import mozilla.components.browser.state.state.content.DownloadState
 import mozilla.components.browser.state.state.createTab
 import mozilla.components.browser.toolbar.BrowserToolbar
 import mozilla.components.concept.engine.EngineView
+import mozilla.components.concept.engine.HitResult
 import mozilla.components.feature.app.links.AppLinksFeature
 import mozilla.components.feature.contextmenu.ContextMenuCandidate
 import mozilla.components.feature.contextmenu.ContextMenuFeature
@@ -69,6 +70,7 @@ import org.mozilla.focus.ext.components
 import org.mozilla.focus.ext.ifCustomTab
 import org.mozilla.focus.ext.isCustomTab
 import org.mozilla.focus.ext.requireComponents
+import org.mozilla.focus.ext.titleOrDomain
 import org.mozilla.focus.menu.browser.DefaultBrowserMenu
 import org.mozilla.focus.open.OpenWithFragment
 import org.mozilla.focus.popup.PopupUtils
@@ -181,12 +183,14 @@ class BrowserFragment :
                     components.tabsUseCases,
                     components.contextMenuUseCases,
                     view
-                ) + ContextMenuCandidate.createOpenInExternalAppCandidate(
-                    requireContext(),
-                    components.appLinksUseCases
-                ),
+                ) +
+                    ContextMenuCandidate.createOpenInExternalAppCandidate(
+                        requireContext(),
+                        components.appLinksUseCases
+                    ),
                 engineView!!,
-                requireComponents.contextMenuUseCases
+                requireComponents.contextMenuUseCases,
+                additionalNote = { hitResult -> getAdditionalNote(hitResult) }
             ),
             this, view
         )
@@ -294,6 +298,16 @@ class BrowserFragment :
                 owner = this,
                 view = view
             )
+        }
+    }
+
+    private fun getAdditionalNote(hitResult: HitResult): String? {
+        return if ((hitResult is HitResult.IMAGE_SRC || hitResult is HitResult.IMAGE) &&
+            hitResult.src.isNotEmpty()
+        ) {
+            getString(R.string.contextmenu_erased_images_note2, getString(R.string.app_name))
+        } else {
+            null
         }
     }
 
@@ -511,7 +525,7 @@ class BrowserFragment :
 
         val addToHomescreenDialogFragment = AddToHomescreenDialogFragment.newInstance(
             tab.content.url,
-            tab.content.title,
+            tab.content.titleOrDomain,
             tab.trackingProtection.enabled,
             requestDesktop = requestDesktop
         )
