@@ -54,15 +54,15 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             matchingFallbacks = ['release']
 
-            if (gradle.hasProperty("localProperties.autosignReleaseWithDebugKey")) {
-                println ("All builds will be automatically signed with the debug key")
-                signingConfig signingConfigs.debug
-            }
+            // if (gradle.hasProperty("localProperties.autosignReleaseWithDebugKey")) {
+            //     println ("All builds will be automatically signed with the debug key")
+            //     signingConfig signingConfigs.debug
+            // }
 
-            if (gradle.hasProperty("localProperties.debuggable")) {
-                println ("All builds will be debuggable")
-                debuggable true
-            }
+            // if (gradle.hasProperty("localProperties.debuggable")) {
+            //     println ("All builds will be debuggable")
+            //     debuggable true
+            // }
         }
         debug {
             applicationIdSuffix ".debug"
@@ -556,14 +556,14 @@ tasks.register('printVariants') {
             name: variant.name,
         ]}
         // AndroidTest is a special case not included above
-        variants.add([
-            apks: [[
-                abi: 'noarch',
-                fileName: 'app-debug-androidTest.apk',
-            ]],
-            build_type: 'androidTest',
-            name: 'androidTest',
-        ])
+        // variants.add([
+        //     apks: [[
+        //         abi: 'noarch',
+        //         fileName: 'app-debug-androidTest.apk',
+        //     ]],
+        //     build_type: 'androidTest',
+        //     name: 'androidTest',
+        // ])
         println 'variants: ' + JsonOutput.toJson(variants)
     }
 }

@@ -6,7 +6,6 @@ Apply some defaults and minor modifications to the jobs defined in the build
 kind.
 """
 
-from __future__ import absolute_import, print_function, unicode_literals
 
 import datetime
 
@@ -36,14 +35,14 @@ def add_shippable_secrets(config, tasks):
         if task.pop("include-shippable-secrets", False) and config.params["level"] == "3":
             build_type = task["attributes"]["build-type"]
             gradle_build_type = task["run"]["gradle-build-type"]
-            secret_index = 'project/mobile/fenix/{}'.format(build_type)
+            secret_index = f'project/mobile/fenix/{build_type}'
             secrets.extend([{
                 "key": key,
                 "name": secret_index,
                 "path": target_file,
             } for key, target_file in (
                 ('adjust', '.adjust_token'),
-                ('firebase', 'app/src/{}/res/values/firebase.xml'.format(gradle_build_type)),
+                ('firebase', f'app/src/{gradle_build_type}/res/values/firebase.xml'),
                 ('sentry_dsn', '.sentry_token'),
                 ('mls', '.mls_token'),
                 ('nimbus_url', '.nimbus'),
@@ -88,7 +87,7 @@ def add_test_build_type(config, tasks):
         test_build_type = task["run"].pop("test-build-type", "")
         if test_build_type:
             task["run"]["gradlew"].append(
-                "-PtestBuildType={}".format(test_build_type)
+                f"-PtestBuildType={test_build_type}"
             )
         yield task
 

@@ -38,5 +38,5 @@ jobs:
         description: 'Build Focus/Klar for Android from source code'
         run-on-tasks-for: [github-pull-request, github-push]
         run:
-            gradle-build-type: test
+            gradle-build-type: debug
             # test-build-type: test

@@ -10,11 +10,11 @@ from taskgraph.util.memoize import memoize
 
 
 
-def get_variant(build_type):
+def get_variant(build_type, build_name):
     all_variants = _fetch_all_variants()
     matching_variants = [
         variant for variant in all_variants
-        if variant["build_type"] == build_type
+        if variant["build_type"] == build_type and variant["name"] == build_name
     ]
     number_of_matching_variants = len(matching_variants)
     if number_of_matching_variants == 0:
@@ -41,9 +41,7 @@ def _run_gradle_process(gradle_command, **kwargs):
         f'-P{property_name}={value}'
         for property_name, value in kwargs.items()
     ]
-    print(gradle_properties)
-    print(gradle_command)
-    process = subprocess.Popen(["./gradlew", "--no-daemon", "--quiet", gradle_command] + gradle_properties, stdout=subprocess.PIPE)
+    process = subprocess.Popen(["./gradlew", "--no-daemon", "--quiet", gradle_command] + gradle_properties, stdout=subprocess.PIPE, universal_newlines=True)
     output, err = process.communicate()
     exit_code = process.wait()
 
