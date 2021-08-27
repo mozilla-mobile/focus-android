@@ -34,9 +34,9 @@ job-defaults:
         chain-of-trust: true
 
 jobs:
-    build:
+    debug:
         description: 'Build Focus/Klar for Android from source code'
         run-on-tasks-for: [github-pull-request, github-push]
         run:
             gradle-build-type: debug
-            # test-build-type: test
+            gradle-build-name: focusDebug

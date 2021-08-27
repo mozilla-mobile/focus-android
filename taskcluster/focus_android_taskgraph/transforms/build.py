@@ -35,7 +35,7 @@ def add_shippable_secrets(config, tasks):
         if task.pop("include-shippable-secrets", False) and config.params["level"] == "3":
             build_type = task["attributes"]["build-type"]
             gradle_build_type = task["run"]["gradle-build-type"]
-            secret_index = f'project/mobile/fenix/{build_type}'
+            secret_index = f'project/focus/{build_type}'
             secrets.extend([{
                 "key": key,
                 "name": secret_index,
@@ -64,13 +64,14 @@ def add_shippable_secrets(config, tasks):
 def build_gradle_command(config, tasks):
     for task in tasks:
         gradle_build_type = task["run"]["gradle-build-type"]
-        variant_config = get_variant(gradle_build_type)
-
+        gradle_build_name = task["run"]["gradle-build-name"]
+        variant_config = get_variant(gradle_build_type, gradle_build_name)
+        variant_name = variant_config["name"][0].upper() + variant_config["name"][1:]
         task["run"]["gradlew"] = [
             "clean",
-            "assemble{}".format(variant_config["name"].capitalize()),
+            "assemble{}".format(variant_name),
         ]
-
+        print("assemble{}".format(variant_name))
         yield task
 
 @transforms.add
@@ -127,7 +128,8 @@ def add_release_version(config, tasks):
 def add_artifacts(config, tasks):
     for task in tasks:
         gradle_build_type = task["run"].pop("gradle-build-type")
-        variant_config = get_variant(gradle_build_type)
+        gradle_build_name = task["run"].pop("gradle-build-name")
+        variant_config = get_variant(gradle_build_type, gradle_build_name)
         artifacts = task.setdefault("worker", {}).setdefault("artifacts", [])
         task["attributes"]["apks"] = apks = {}
 

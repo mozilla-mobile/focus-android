@@ -17,7 +17,8 @@ def write_secret_to_file(path, secret):
     except OSError as error:
         if error.errno != errno.EEXIST:
             raise
-    print(f"Outputting secret to: {path}")
+
+    print("Outputting secret to: {}".format(path))
 
     with open(path, 'w') as f:
         f.write(secret)

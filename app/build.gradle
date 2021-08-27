@@ -54,15 +54,15 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             matchingFallbacks = ['release']
 
-            // if (gradle.hasProperty("localProperties.autosignReleaseWithDebugKey")) {
-            //     println ("All builds will be automatically signed with the debug key")
-            //     signingConfig signingConfigs.debug
-            // }
+            if (gradle.hasProperty("localProperties.autosignReleaseWithDebugKey")) {
+                println ("All builds will be automatically signed with the debug key")
+                signingConfig signingConfigs.debug
+            }
 
-            // if (gradle.hasProperty("localProperties.debuggable")) {
-            //     println ("All builds will be debuggable")
-            //     debuggable true
-            // }
+            if (gradle.hasProperty("localProperties.debuggable")) {
+                println ("All builds will be debuggable")
+                debuggable true
+            }
         }
         debug {
             applicationIdSuffix ".debug"
