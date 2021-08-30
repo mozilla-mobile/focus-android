@@ -35,18 +35,10 @@
             android:focusable="false"
             android:src="@drawable/wordmark2" />
 
-        <TextView
-            android:id="@+id/homeViewTipsLabel"
+        <org.mozilla.focus.tips.TipsHorizontalCarousel
+            android:id="@+id/home_tips"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            android:layout_weight="0.1"
-            android:focusable="false"
-            android:gravity="center"
-            android:lineSpacingExtra="7sp"
-            android:text="@string/teaser"
-            android:textColor="#eeeeee"
-            android:textSize="14sp" />
+            android:layout_height="wrap_content" />
 
     </org.mozilla.focus.widget.ResizableKeyboardLinearLayout>
 
@@ -64,7 +56,7 @@
             android:id="@+id/toolbarBackgroundView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@drawable/animated_background_url" />
+            android:background="@drawable/background_gradient_dark" />
 
         <View
             android:id="@+id/toolbarBottomBorder"
@@ -72,7 +64,7 @@
             android:layout_height="1dp"
             android:layout_gravity="bottom"
             android:alpha="0.20"
-            android:background="@color/photonGrey90" />
+            android:background="@color/divider" />
 
         <FrameLayout
             android:id="@+id/urlInputContainerView"
@@ -125,6 +117,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/urlinput_height"
-        android:visibility="gone"></FrameLayout>
+        android:visibility="gone" />
 
 </FrameLayout>

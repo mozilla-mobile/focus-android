@@ -6,6 +6,7 @@ package org.mozilla.focus.browser.integration
 
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.content.ContextCompat
+import androidx.core.content.res.ResourcesCompat
 import mozilla.components.browser.state.store.BrowserStore
 import mozilla.components.browser.toolbar.BrowserToolbar
 import mozilla.components.browser.toolbar.display.DisplayToolbar
@@ -14,6 +15,7 @@ import mozilla.components.feature.session.SessionUseCases
 import mozilla.components.feature.tabs.CustomTabsUseCases
 import mozilla.components.feature.toolbar.ToolbarPresenter
 import mozilla.components.support.base.feature.LifecycleAwareFeature
+import org.mozilla.focus.GleanMetrics.TrackingProtection
 import org.mozilla.focus.R
 import org.mozilla.focus.fragment.BrowserFragment
 import org.mozilla.focus.menu.browser.CustomTabMenu
@@ -44,8 +46,8 @@ class BrowserToolbarIntegration(
 
         toolbar.display.apply {
             colors = colors.copy(
-                hint = ContextCompat.getColor(context, R.color.urlBarHintText),
-                text = 0xFFFFFFFF.toInt()
+                hint = ContextCompat.getColor(toolbar.context, R.color.photonLightGrey05),
+                text = ContextCompat.getColor(toolbar.context, R.color.primaryText)
             )
 
             indicators = listOf(
@@ -82,8 +84,19 @@ class BrowserToolbarIntegration(
         }
 
         toolbar.display.setOnTrackingProtectionClickedListener {
+            TrackingProtection.toolbarShieldClicked.add()
             fragment.showTrackingProtectionPanel()
         }
+
+        // Use the same background for display/edit modes.
+        val urlBackground = ResourcesCompat.getDrawable(
+            fragment.resources,
+            R.drawable.toolbar_url_background,
+            fragment.context?.theme
+        )
+
+        toolbar.display.setUrlBackground(urlBackground)
+        toolbar.edit.setUrlBackground(urlBackground)
 
         if (customTabId != null) {
             val menu = CustomTabMenu(
