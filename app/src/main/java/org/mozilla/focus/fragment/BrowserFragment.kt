@@ -23,6 +23,7 @@ import android.widget.FrameLayout
 import android.widget.Toast
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.content.ContextCompat
+import androidx.core.content.pm.ShortcutManagerCompat
 import androidx.preference.PreferenceManager
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.snackbar.Snackbar
@@ -327,6 +328,9 @@ class BrowserFragment :
                 context = requireContext(),
                 appStore = requireComponents.appStore,
                 store = requireComponents.store,
+                isPinningSupported = ShortcutManagerCompat.isRequestPinShortcutSupported(
+                    requireContext()
+                ),
                 onItemTapped = { controller.handleMenuInteraction(it) }
             )
             browserToolbar.display.menuBuilder = browserMenu.menuBuilder
