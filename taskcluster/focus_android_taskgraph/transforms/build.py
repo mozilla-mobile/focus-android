@@ -22,7 +22,7 @@ def add_variant_config(config, tasks):
         attributes = task.setdefault("attributes", {})
         if not attributes.get("build-type"):
             attributes["build-type"] = task["name"]
-
+        print(attributes)
         yield task
 
 
@@ -66,6 +66,7 @@ def build_gradle_command(config, tasks):
         gradle_build_type = task["run"]["gradle-build-type"]
         gradle_build_name = task["run"]["gradle-build-name"]
         variant_config = get_variant(gradle_build_type, gradle_build_name)
+        print(variant_config)
         variant_name = variant_config["name"][0].upper() + variant_config["name"][1:]
         task["run"]["gradlew"] = [
             "clean",

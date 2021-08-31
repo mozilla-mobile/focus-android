@@ -34,9 +34,68 @@ job-defaults:
         chain-of-trust: true
 
 jobs:
-    debug:
-        description: 'Build Focus/Klar for Android from source code'
+    focus-debug:
+        description: 'Build Focus for Android from source code'
         run-on-tasks-for: [github-pull-request, github-push]
         run:
             gradle-build-type: debug
             gradle-build-name: focusDebug
+        treeherder:
+            symbol: debug(Bf)
+
+    klar-debug:
+        description: 'Build Klar for Android from source code'
+        run-on-tasks-for: [github-pull-request, github-push]
+        run:
+            gradle-build-type: debug
+            gradle-build-name: klarDebug
+        treeherder:
+            symbol: debug(Bkl)
+
+    focus-release:
+        description: 'Release build for Focus for Android'
+        include-shippable-secrets: true
+        # attributes:
+        #     release-type: release
+        # include-release-version: true
+        # filter-incomplete-translations: true
+        run:
+            gradle-build-type: release
+            gradle-build-name: focusRelease
+        treeherder:
+            symbol: release(Bf)
+
+    klar-release:
+        description: 'Release build for Klar for Android'
+        include-shippable-secrets: true
+        # attributes:
+            # release-type: release
+        # include-release-version: true
+        # filter-incomplete-translations: true
+        run:
+            gradle-build-type: release
+            gradle-build-name: klarRelease
+        treeherder:
+            symbol: release(Bkl)
+
+    # nightly:
+    #     attributes:
+    #         nightly: true
+    #     include-nightly-version: true
+    #     include-shippable-secrets: true
+    #     run:
+    #         gradle-build-type: nightly
+    #     run-on-tasks-for: []
+    #     treeherder:
+    #         symbol: nightly(B)
+
+    # beta:
+    #     attributes:
+    #         release-type: beta
+    #     include-release-version: true
+    #     include-shippable-secrets: true
+    #     filter-incomplete-translations: true
+    #     run:
+    #         gradle-build-type: beta
+    #     treeherder:
+    #         symbol: beta(B)
