@@ -1,0 +1,57 @@
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at http://mozilla.org/MPL/2.0/.
+---
+loader: taskgraph.loader.transform:loader
+
+transforms:
+    - focus_android_taskgraph.transforms.test:transforms
+    - taskgraph.transforms.job:transforms
+    - taskgraph.transforms.task:transforms
+
+kind-dependencies:
+    - toolchain
+
+
+job-defaults:
+    attributes:
+        retrigger: true
+    description: UI tests 
+    fetches:
+        toolchain:
+            - android-sdk-linux
+            - android-gradle-dependencies
+    include-pull-request-number: false
+    run:
+        secrets:
+            - name: project/focus/firebase
+              key: keyFile
+              path: .firebase_token.json
+              json: true
+        use-caches: false
+        using: gradlew
+        use-caches: false
+    treeherder:
+        kind: test
+        platform: 'ui-test/opt'
+        tier: 2
+    worker-type: b-android
+    worker:
+        docker-image: {in-tree: base}
+        max-run-time: 7200
+        env:
+            GOOGLE_APPLICATION_CREDENTIALS: '.firebase_token.json'
+        artifacts:
+            - name: public
+              path: /builds/worker/artifacts
+              type: directory
+
+jobs:
+    debug:
+        attributes:
+            build-type: debug
+            code-review: true
+        run:
+            gradlew: ['clean', 'assembleFocusDebug', 'assembleFocusDebugAndroidTest']
+        treeherder:
+            symbol: debug(ui-tests)

@@ -20,7 +20,7 @@ def write_secret_to_file(path, data, key, base64decode=False, json_secret=False,
     except OSError as error:
         if error.errno != errno.EEXIST:
             raise
-    print(f"Outputting secret to: {path}")
+    print("Outputting secret to: {}".format(path))
 
     with open(path, 'a' if append else 'w') as f:
         value = data['secret'][key]
