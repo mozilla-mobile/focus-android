@@ -8,30 +8,20 @@ import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
 import android.content.SharedPreferences
 import android.content.res.Configuration
-import android.graphics.drawable.TransitionDrawable
 import android.os.Bundle
-import android.text.SpannableString
-import android.text.method.LinkMovementMethod
-import android.text.style.ClickableSpan
-import android.text.style.ForegroundColorSpan
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
-import android.widget.TextView
 import androidx.compose.ui.platform.ComposeView
-import androidx.compose.ui.res.stringResource
+import androidx.core.view.isVisible
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.lifecycleScope
 import androidx.preference.PreferenceManager
 import kotlinx.android.synthetic.main.fragment_urlinput2.*
-import kotlinx.android.synthetic.main.fragment_urlinput2.view.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.launch
 import mozilla.components.browser.domains.autocomplete.CustomDomainsProvider
 import mozilla.components.browser.domains.autocomplete.ShippedDomainsProvider
 import mozilla.components.browser.state.action.ContentAction
@@ -41,11 +31,9 @@ import mozilla.components.browser.state.state.TabSessionState
 import mozilla.components.browser.state.state.selectedOrDefaultSearchEngine
 import mozilla.components.feature.top.sites.TopSitesConfig
 import mozilla.components.feature.top.sites.TopSitesFeature
-import mozilla.components.lib.state.ext.observeAsComposableState
 import mozilla.components.support.base.feature.ViewBoundFeatureWrapper
 import mozilla.components.support.ktx.android.view.hideKeyboard
 import mozilla.components.support.utils.ThreadUtils
-import org.mozilla.focus.GleanMetrics.Shortcuts
 import org.mozilla.focus.R
 import org.mozilla.focus.ext.isSearch
 import org.mozilla.focus.ext.requireComponents
@@ -57,10 +45,8 @@ import org.mozilla.focus.searchsuggestions.ui.SearchSuggestionsFragment
 import org.mozilla.focus.state.AppAction
 import org.mozilla.focus.state.Screen
 import org.mozilla.focus.telemetry.TelemetryWrapper
-import org.mozilla.focus.tips.Tip
 import org.mozilla.focus.tips.TipManager
 import org.mozilla.focus.topsites.DefaultTopSitesView
-import org.mozilla.focus.topsites.TopSiteMenuItem
 import org.mozilla.focus.utils.AppConstants
 import org.mozilla.focus.utils.Features
 import org.mozilla.focus.utils.OneShotOnPreDrawListener
@@ -71,6 +57,12 @@ import org.mozilla.focus.utils.SupportUtils
 import org.mozilla.focus.utils.UrlUtils
 import org.mozilla.focus.utils.ViewUtils
 import kotlin.coroutines.CoroutineContext
+
+private const val TIP_ONE_CAROUSEL_POSITION = 1
+private const val TIP_TWO_CAROUSEL_POSITION = 2
+private const val TIP_THREE_CAROUSEL_POSITION = 3
+private const val TIP_FOUR_CAROUSEL_POSITION = 4
+private const val TIP_FIVE_CAROUSEL_POSITION = 5
 
 class FocusCrashException : Exception()
 
@@ -97,7 +89,6 @@ class UrlInputFragment :
         private val ANIMATION_BROWSER_SCREEN = "browser_screen"
 
         private val ANIMATION_DURATION = 200
-        private val TIPS_ALPHA = 0.65f
 
         private lateinit var searchSuggestionsViewModel: SearchSuggestionsViewModel
 
@@ -164,7 +155,7 @@ class UrlInputFragment :
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        searchSuggestionsViewModel = ViewModelProvider(requireActivity()).get(SearchSuggestionsViewModel::class.java)
+        searchSuggestionsViewModel = ViewModelProvider(this).get(SearchSuggestionsViewModel::class.java)
 
         childFragmentManager.beginTransaction()
             .replace(searchViewContainer.id, SearchSuggestionsFragment.create())
@@ -207,6 +198,8 @@ class UrlInputFragment :
 
         StatusBarUtils.getStatusBarHeight(keyboardLinearLayout) {
             adjustViewToStatusBarHeight(it)
+            // Show tips section as a carousel when the keyboard is hidden
+            home_tips.showAsCarousel(keyboardLinearLayout.paddingBottom != 0)
         }
 
         if (!isInitialized) {
@@ -225,52 +218,8 @@ class UrlInputFragment :
 
     private fun updateTipsLabel() {
         val context = context ?: return
-        val tip = TipManager.getNextTipIfAvailable(context)
-        updateSubtitle(tip)
-    }
-
-    private fun updateSubtitle(tip: Tip?) {
-        if (tip == null) {
-            showFocusSubtitle()
-            return
-        }
-
-        val tipText = String.format(tip.text, System.getProperty("line.separator"))
-        keyboardLinearLayout.homeViewTipsLabel.alpha = TIPS_ALPHA
-
-        if (tip.deepLink == null) {
-            homeViewTipsLabel.text = tipText
-            return
-        }
-
-        // Only make the second line clickable if applicable
-        val linkStartIndex =
-            if (tipText.contains("\n")) tipText.indexOf("\n") + 2
-            else 0
-
-        keyboardLinearLayout.homeViewTipsLabel.movementMethod = LinkMovementMethod()
-        homeViewTipsLabel.setText(tipText, TextView.BufferType.SPANNABLE)
-
-        val deepLinkAction = object : ClickableSpan() {
-            override fun onClick(p0: View) {
-                tip.deepLink.invoke()
-            }
-        }
-
-        val textWithDeepLink = SpannableString(tipText).apply {
-            setSpan(deepLinkAction, linkStartIndex, tipText.length, 0)
-
-            val colorSpan = ForegroundColorSpan(homeViewTipsLabel.currentTextColor)
-            setSpan(colorSpan, linkStartIndex, tipText.length, 0)
-        }
-
-        homeViewTipsLabel.text = textWithDeepLink
-    }
-
-    private fun showFocusSubtitle() {
-        keyboardLinearLayout.homeViewTipsLabel.text = getString(R.string.teaser)
-        keyboardLinearLayout.homeViewTipsLabel.alpha = 1f
-        keyboardLinearLayout.homeViewTipsLabel.setOnClickListener(null)
+        val tips = TipManager.getAvailableTips(context)
+        home_tips.tipsAdapter.submitList(tips)
     }
 
     private fun adjustViewToStatusBarHeight(statusBarHeight: Int) {
@@ -296,35 +245,7 @@ class UrlInputFragment :
         val view = inflater.inflate(R.layout.fragment_urlinput2, container, false)
 
         val topSites = view.findViewById<ComposeView>(R.id.topSites)
-        topSites.setContent {
-            val topSitesState = requireComponents.appStore.observeAsComposableState { state -> state.topSites }
-
-            HomeScreen(
-                topSites = topSitesState.value!!,
-                topSitesMenuItems = listOfNotNull(
-                    TopSiteMenuItem(
-                        title = stringResource(R.string.remove_top_site),
-                        onClick = { topSite ->
-                            Shortcuts.shortcutRemovedCounter["removed_from_home_screen"].add()
-
-                            viewLifecycleOwner.lifecycleScope.launch(IO) {
-                                requireComponents.topSitesUseCases.removeTopSites(topSite)
-                            }
-                        }
-                    )
-                ),
-                onTopSiteClick = { topSite ->
-                    Shortcuts.shortcutOpenedCounter.add()
-
-                    requireComponents.tabsUseCases.addTab(
-                        url = topSite.url,
-                        source = SessionState.Source.Internal.HomeScreen,
-                        selectTab = true,
-                        private = true
-                    )
-                }
-            )
-        }
+        topSites.setContent { HomeScreen() }
 
         return view
     }
@@ -613,10 +534,8 @@ class UrlInputFragment :
         */
 
         if (toolbarBackgroundView != null) {
-            val transitionDrawable = toolbarBackgroundView?.background as TransitionDrawable
 
             if (reverse) {
-                transitionDrawable.reverseTransition(ANIMATION_DURATION)
                 toolbarBottomBorder?.visibility = View.VISIBLE
 
                 if (!isOverlay) {
@@ -624,7 +543,6 @@ class UrlInputFragment :
                     menuView?.visibility = View.VISIBLE
                 }
             } else {
-                transitionDrawable.startTransition(ANIMATION_DURATION)
                 toolbarBottomBorder?.visibility = View.GONE
             }
         }
@@ -664,13 +582,11 @@ class UrlInputFragment :
         var triggerHandled = true
 
         when (input) {
-            "l10n:tip:1" -> updateSubtitle(Tip.createTrackingProtectionTip(requireContext()))
-            "l10n:tip:2" -> updateSubtitle(Tip.createHomescreenTip(requireContext()))
-            "l10n:tip:3" -> updateSubtitle(Tip.createDefaultBrowserTip(requireContext()))
-            "l10n:tip:4" -> updateSubtitle(Tip.createAutocompleteURLTip(requireContext()))
-            "l10n:tip:5" -> updateSubtitle(Tip.createOpenInNewTabTip(requireContext()))
-            "l10n:tip:6" -> updateSubtitle(Tip.createRequestDesktopTip(requireContext()))
-            "l10n:tip:7" -> updateSubtitle(Tip.createAllowlistTip(requireContext()))
+            "l10n:tip:1" -> home_tips.scrollToPosition(TIP_ONE_CAROUSEL_POSITION)
+            "l10n:tip:2" -> home_tips.scrollToPosition(TIP_TWO_CAROUSEL_POSITION)
+            "l10n:tip:3" -> home_tips.scrollToPosition(TIP_THREE_CAROUSEL_POSITION)
+            "l10n:tip:4" -> home_tips.scrollToPosition(TIP_FOUR_CAROUSEL_POSITION)
+            "l10n:tip:5" -> home_tips.scrollToPosition(TIP_FIVE_CAROUSEL_POSITION)
             else -> triggerHandled = false
         }
 
@@ -721,6 +637,15 @@ class UrlInputFragment :
     }
 
     private fun openUrl(url: String, searchTerms: String?) {
+        when (url) {
+            "focus:about" -> {
+                requireComponents.appStore.dispatch(
+                    AppAction.OpenSettings(Screen.Settings.Page.About)
+                )
+                return
+            }
+        }
+
         if (!searchTerms.isNullOrEmpty()) {
             tab?.let {
                 requireComponents.store.dispatch(ContentAction.UpdateSearchTermsAction(it.id, searchTerms))
@@ -743,6 +668,12 @@ class UrlInputFragment :
             if (!searchTerms.isNullOrEmpty()) {
                 requireComponents.store.dispatch(ContentAction.UpdateSearchTermsAction(tabId, searchTerms))
             }
+        }
+    }
+
+    internal fun onStartEditing() {
+        if (tab != null) {
+            searchViewContainer?.isVisible = true
         }
     }
 
