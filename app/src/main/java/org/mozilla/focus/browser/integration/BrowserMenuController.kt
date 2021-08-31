@@ -61,6 +61,13 @@ class BrowserMenuController(
                         )
                     }
                 }
+
+                currentTab?.let { AppAction.TopSiteAdded(it.content.url, it.content.titleOrDomain) }
+                    ?.let {
+                        appStore.dispatch(
+                            it
+                        )
+                    }
             }
             is ToolbarMenu.Item.RemoveFromShortcuts -> {
                 Shortcuts.shortcutRemovedCounter["removed_from_browser_menu"].add()
@@ -72,6 +79,12 @@ class BrowserMenuController(
                                 topSitesUseCases.removeTopSites(topSite)
                             }
                     }
+                }
+
+                currentTab?.let { AppAction.TopSiteRemoved(it.content.url) }?.let {
+                    appStore.dispatch(
+                        it
+                    )
                 }
             }
             is ToolbarMenu.Item.RequestDesktop -> requestDesktopCallback(item.isChecked)

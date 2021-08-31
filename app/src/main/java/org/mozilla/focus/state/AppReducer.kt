@@ -30,6 +30,8 @@ object AppReducer : Reducer<AppState, AppAction> {
             is AppAction.NavigateUp -> navigateUp(state, action)
             is AppAction.OpenTab -> openTab(state, action)
             is AppAction.TopSitesChange -> topSitesChanged(state, action)
+            is AppAction.TopSiteAdded -> topSiteAdded(state, action)
+            is AppAction.TopSiteRemoved -> topSiteRemoved(state, action)
         }
     }
 }
@@ -155,6 +157,31 @@ private fun openTab(state: AppState, action: AppAction.OpenTab): AppState {
  */
 private fun topSitesChanged(state: AppState, action: AppAction.TopSitesChange): AppState {
     return state.copy(topSites = action.topSites)
+}
+
+/**
+ * An item has been added to the list of [TopSite]s.
+ */
+private fun topSiteAdded(state: AppState, action: AppAction.TopSiteAdded): AppState {
+    val newTopSite = TopSite(
+        id = null,
+        title = action.topSiteName,
+        url = action.topSiteUrl,
+        createdAt = null,
+        type = TopSite.Type.PINNED
+    )
+    val newList = state.topSites + newTopSite
+    return state.copy(topSites = newList)
+}
+
+/**
+ * An item has been removed from the list of [TopSite]s.
+ */
+private fun topSiteRemoved(state: AppState, action: AppAction.TopSiteRemoved): AppState {
+    val newList = state.topSites.filter {
+        it.url != action.topSiteUrl
+    }
+    return state.copy(topSites = newList)
 }
 
 @Suppress("ComplexMethod")

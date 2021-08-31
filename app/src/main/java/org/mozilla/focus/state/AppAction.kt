@@ -80,4 +80,14 @@ sealed class AppAction : Action {
      * The list of [TopSite] has changed.
      */
     data class TopSitesChange(val topSites: List<TopSite>) : AppAction()
+
+    /**
+     * An item has been added to the list of [TopSite]s.
+     */
+    data class TopSiteAdded(val topSiteUrl: String, val topSiteName: String) : AppAction()
+
+    /**
+     * An item has been removed from the list of [TopSite]s.
+     */
+    data class TopSiteRemoved(val topSiteUrl: String) : AppAction()
 }
