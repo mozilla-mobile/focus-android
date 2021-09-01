@@ -26,11 +26,11 @@ job-defaults:
         dummy-secrets:
             - content: "faketoken"
               path: .adjust_token
-        secrets:
-            - name: project/focus/firebase
-              key: keyFile
-              path: .firebase_token.json
-              json: true
+        # secrets:
+        #     - name: project/focus/firebase
+        #       key: keyFile
+        #       path: .firebase_token.json
+        #       json: true
         use-caches: false
         using: gradlew
     treeherder:
