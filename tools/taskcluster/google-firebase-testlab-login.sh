@@ -10,7 +10,7 @@
 set -ex
 
 # download the login JSON token info from taskcluster
-python tools/taskcluster/get-google-firebase-token.py
+# python tools/taskcluster/get-google-firebase-token.py
 
 # this is where the Google Testcloud project ID is set
 /opt/google-cloud-sdk/bin/gcloud config set project moz-fx-mobile-firebase-testlab
