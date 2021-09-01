@@ -555,15 +555,6 @@ tasks.register('printVariants') {
             build_type: variant.buildType.name,
             name: variant.name,
         ]}
-        // AndroidTest is a special case not included above
-        // variants.add([
-        //     apks: [[
-        //         abi: 'noarch',
-        //         fileName: 'app-debug-androidTest.apk',
-        //     ]],
-        //     build_type: 'androidTest',
-        //     name: 'androidTest',
-        // ])
         println 'variants: ' + JsonOutput.toJson(variants)
     }
 }

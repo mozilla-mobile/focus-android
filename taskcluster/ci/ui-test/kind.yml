@@ -26,11 +26,11 @@ job-defaults:
         dummy-secrets:
             - content: "faketoken"
               path: .adjust_token
-        # secrets:
-        #     - name: project/focus/firebase
-        #       key: keyFile
-        #       path: .firebase_token.json
-        #       json: true
+        secrets:
+            - name: project/focus/firebase
+              key: keyFile
+              path: .firebase_token.json
+              json: true
         use-caches: false
         using: gradlew
     treeherder:
@@ -39,7 +39,7 @@ job-defaults:
         tier: 2
     worker-type: b-android
     worker:
-        docker-image: {in-tree: base}
+        docker-image: {in-tree: ui-tests}
         max-run-time: 7200
         env:
             GOOGLE_APPLICATION_CREDENTIALS: '.firebase_token.json'
@@ -49,13 +49,16 @@ job-defaults:
               type: directory
 
 jobs:
-    debug:
+    firebase:
         description: UI tests with Firebase
         run-on-tasks-for: [github-pull-request, github-push]
         attributes:
-            build-type: debug
+            build-type: focusDebug
             code-review: true
         run:
-            gradlew: [clean, assembleFocusDebug, assembleFocusDebugAndroidTest, '&& ./tools/taskcluster/google-firebase-testlab-login.sh', '&& ./tools/taskcluster/execute-firebase-tests.sh']
+            script: ['google-firebase-testlab-login.sh', 'execute-firebase-tests.sh']
+            resources:
+                - taskcluster/scripts/google-firebase-testlab-login.sh
+                - taskcluster/scripts/execute-firebase-tests.sh
         treeherder:
             symbol: debug(ui-tests)

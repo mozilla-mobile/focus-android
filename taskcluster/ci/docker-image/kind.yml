@@ -16,3 +16,6 @@ jobs:
         parent: base
     base:
         symbol: I(base)
+    ui-tests:
+        symbol: I(ui-tests)
+        parent: base
