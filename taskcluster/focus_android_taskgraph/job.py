@@ -16,6 +16,7 @@ secret_schema = {
     Required("path"): str,
     Required("key"): str,
     Optional("json"): bool,
+    Optional("decode"): bool,
 }
 
 dummy_secret_schema = {
@@ -116,6 +117,9 @@ def _generate_secret_command(secret):
     ]
     if secret.get("json"):
         secret_command.append("--json")
+
+    if secret.get("decode"):
+        secret_command.append("--decode")
 
     return secret_command
 

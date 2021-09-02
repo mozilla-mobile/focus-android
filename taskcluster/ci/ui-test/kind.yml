@@ -15,7 +15,8 @@ kind-dependencies:
 
 job-defaults:
     attributes:
-        retrigger: true
+        build-type: focusDebug
+        code-review: true
     description: UI tests 
     fetches:
         toolchain:
@@ -28,11 +29,11 @@ job-defaults:
               path: .adjust_token
         secrets:
             - name: project/focus/firebase
-              key: keyFile
+              key: "keyFile"
               path: .firebase_token.json
-              json: true
+              decode: true
         use-caches: false
-        using: gradlew
+        using: run-commands
     treeherder:
         kind: test
         platform: 'ui-test/opt'
@@ -43,22 +44,18 @@ job-defaults:
         max-run-time: 7200
         env:
             GOOGLE_APPLICATION_CREDENTIALS: '.firebase_token.json'
+            GOOGLE_PROJECT: 'moz-fx-mobile-firebase-testlab'
         artifacts:
             - name: public
               path: /builds/worker/artifacts
               type: directory
 
 jobs:
-    firebase:
-        description: UI tests with Firebase
+    debug:
+        description: UI tests
         run-on-tasks-for: [github-pull-request, github-push]
-        attributes:
-            build-type: focusDebug
-            code-review: true
         run:
-            script: ['google-firebase-testlab-login.sh', 'execute-firebase-tests.sh']
-            resources:
-                - taskcluster/scripts/google-firebase-testlab-login.sh
-                - taskcluster/scripts/execute-firebase-tests.sh
+            commands: 
+                - [taskcluster/scripts/execute-firebase-tests.sh]
         treeherder:
             symbol: debug(ui-tests)
