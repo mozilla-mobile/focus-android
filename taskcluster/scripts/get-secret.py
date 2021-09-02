@@ -59,7 +59,7 @@ def main():
     parser.add_argument('--prefix', dest="prefix", action="store", default="", help='add prefix when writing secret to file')
 
     result = parser.parse_args()
-
+    print(result)
     secret = fetch_secret_from_taskcluster(result.secret)
     write_secret_to_file(result.path, secret, result.key, result.decode, result.json, result.append, result.prefix)
 

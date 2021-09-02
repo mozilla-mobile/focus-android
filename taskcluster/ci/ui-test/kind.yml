@@ -11,12 +11,11 @@ transforms:
 
 kind-dependencies:
     - toolchain
+    - build
 
+primary-dependency: build
 
 job-defaults:
-    attributes:
-        build-type: focusDebug
-        code-review: true
     description: UI tests 
     fetches:
         toolchain:
@@ -52,10 +51,12 @@ job-defaults:
 
 jobs:
     debug:
-        description: UI tests
+        attributes:
+            build-type: focus-debug
+            code-review: true
         run-on-tasks-for: [github-pull-request, github-push]
         run:
             commands: 
-                - [taskcluster/scripts/execute-firebase-tests.sh]
+                - [taskcluster/scripts/ui-tests.sh]
         treeherder:
             symbol: debug(ui-tests)

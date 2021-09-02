@@ -27,7 +27,7 @@ gcloud:
   num-flaky-test-attempts: 1
 
   # test and app are the only required args
-  app: /opt/focus-android/app/build/outputs/apk/focus/debug/app-focus-x86-debug.apk
+  app: /builds/worker/checkouts/src/app/build/outputs/apk/debug/app-focus-x86-debug.apk
   test: /opt/focus-android/app/build/outputs/apk/androidTest/focus/debug/app-focus-debug-androidTest.apk
   auto-google-login: true
   use-orchestrator: true

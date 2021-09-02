@@ -12,7 +12,6 @@ transforms:
 kind-dependencies:
     - toolchain
 
-
 job-defaults:
     attributes:
         retrigger: true
@@ -36,7 +35,6 @@ job-defaults:
 jobs:
     debug:
         attributes:
-            build-type: debug
             code-review: true
         run:
             gradlew: ['clean', 'test', 'githubTestDetails']

@@ -13,6 +13,10 @@ kind-dependencies:
     - toolchain
 
 job-defaults:
+    apk-artifact-template:
+        type: file
+        name: public/build/{abi}/target.apk
+        path: '/builds/worker/checkouts/src/app/build/outputs/apk/{gradle_build_type}/{fileName}'
     fetches:
         toolchain:
             - android-sdk-linux

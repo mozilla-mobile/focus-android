@@ -134,6 +134,7 @@ def add_artifacts(config, tasks):
         if "apk-artifact-template" in task:
             artifact_template = task.pop("apk-artifact-template")
             for apk in variant_config["apks"]:
+                print('apk {}'.format(apk))
                 apk_name = artifact_template["name"].format(
                     **apk
                 )
@@ -145,13 +146,14 @@ def add_artifacts(config, tasks):
                         **apk
                     ),
                 })
-                apks[apk["abi"]] = {
-                    "name": apk_name,
-                    "github-name": artifact_template["github-name"].format(
-                        version=config.params["version"],
-                        **apk
-                    )
-                }
+                # TODO figure out what to do here since Focus apk's already have an "abi" key
+                # apks[apk["abi"]] = { 
+                    # "name": apk_name,
+                    # "github-name": artifact_template["github-name"].format(
+                    #     version=config.params["version"],
+                    #     **apk
+                    # )
+                # }
 
         yield task
 
