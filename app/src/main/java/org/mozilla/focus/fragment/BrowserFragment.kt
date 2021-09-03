@@ -21,7 +21,6 @@ import android.view.accessibility.AccessibilityManager
 import android.webkit.MimeTypeMap
 import android.widget.FrameLayout
 import android.widget.Toast
-import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.content.ContextCompat
 import androidx.preference.PreferenceManager
 import com.google.android.material.appbar.AppBarLayout
@@ -47,7 +46,6 @@ import mozilla.components.feature.downloads.AbstractFetchDownloadService
 import mozilla.components.feature.downloads.DownloadsFeature
 import mozilla.components.feature.downloads.manager.FetchDownloadManager
 import mozilla.components.feature.downloads.share.ShareDownloadFeature
-import mozilla.components.feature.findinpage.view.FindInPageBar
 import mozilla.components.feature.prompts.PromptFeature
 import mozilla.components.feature.session.SessionFeature
 import mozilla.components.feature.tabs.WindowFeature
@@ -285,7 +283,6 @@ class BrowserFragment :
         )
 
         customizeToolbar(view)
-        customizeFindInPage(view)
 
         val customTabConfig = tab.ifCustomTab()?.config
         if (customTabConfig != null) {
@@ -317,13 +314,6 @@ class BrowserFragment :
         } else {
             null
         }
-    }
-
-    private fun customizeFindInPage(view: View) {
-        val findInPageBar = view.findViewById<FindInPageBar>(R.id.find_in_page)
-        val newParams = findInPageBar.layoutParams as CoordinatorLayout.LayoutParams
-        newParams.gravity = Gravity.BOTTOM
-        findInPageBar.layoutParams = newParams
     }
 
     private fun customizeToolbar(view: View) {
