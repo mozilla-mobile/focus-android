@@ -5,7 +5,6 @@
 loader: taskgraph.loader.transform:loader
 
 transforms:
-    - focus_android_taskgraph.transforms.test:transforms
     - taskgraph.transforms.job:transforms
     - taskgraph.transforms.task:transforms
 
@@ -20,7 +19,6 @@ job-defaults:
         toolchain:
             - android-sdk-linux
             - android-gradle-dependencies
-    include-pull-request-number: false
     run:
         using: gradlew
         use-caches: false

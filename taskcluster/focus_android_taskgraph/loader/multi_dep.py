@@ -19,7 +19,7 @@ schema = Schema({
     Required(
         'dependent-tasks',
         'dictionary of dependent tasks, keyed by kind',
-    ): {basestring: Task},
+    ): {str: Task},
 })
 
 
@@ -41,6 +41,7 @@ def loader(kind, path, config, params, loaded_tasks):
     job_template = config.get('job-template')
 
     for dep_tasks in group_tasks(config, loaded_tasks):
+
         kinds = [dep.kind for dep in dep_tasks]
         kinds_occurrences = {kind: kinds.count(kind) for kind in kinds}
 
@@ -65,7 +66,7 @@ def get_primary_dep(config, dep_tasks):
     is the primary dependency. If it's undefined, return the first dep.
     """
     primary_dependencies = config.get('primary-dependency')
-    if isinstance(primary_dependencies, basestring):
+    if isinstance(primary_dependencies, str):
         primary_dependencies = [primary_dependencies]
     if not primary_dependencies:
         assert len(dep_tasks) == 1, "Must define a primary-dependency!"
