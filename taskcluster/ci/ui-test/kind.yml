@@ -33,6 +33,10 @@ job-template:
         env:
             GOOGLE_APPLICATION_CREDENTIALS: '.firebase_token.json'
             GOOGLE_PROJECT: 'moz-fx-mobile-firebase-testlab'
+        artifacts:
+            - name: public
+              path: /builds/worker/artifacts
+              type: directory
     run-on-tasks-for: [github-pull-request, github-push]
     treeherder:
         symbol:
@@ -53,5 +57,5 @@ job-template:
               path: .firebase_token.json
               decode: true
         commands:
-            - [taskcluster/scripts/ui-tests.sh]
+            - [automation/taskcluster/androidTest/ui-test.sh, x86, app.apk, android-test.apk, '-1']
 
