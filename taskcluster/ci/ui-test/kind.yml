@@ -2,26 +2,24 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 ---
-loader: focus_android_taskgraph.loader.multi_dep:loader
+loader: taskgraph.loader.transform:loader
 
 transforms:
-    - focus_android_taskgraph.transforms.multi_dep:transforms
     - taskgraph.transforms.job:transforms
     - taskgraph.transforms.task:transforms
 
 kind-dependencies:
-    - build
     - toolchain
+    - build
 
-primary-dependency: build
-
-group-by: build-type
-
-only-for-build-types:
-    - focus-debug
-
-job-template:
-    description: 'UI tests with firebase'
+job-defaults:
+    attributes:
+        build-type: debug
+        code-review: true
+        retrigger: true
+    dependencies:
+        build: build-android-test-debug
+        build: build-focus-debug
     fetches:
         toolchain:
             - android-sdk-linux
@@ -39,9 +37,6 @@ job-template:
               type: directory
     run-on-tasks-for: [github-pull-request, github-push]
     treeherder:
-        symbol:
-            by-build-type:
-                focus-debug: debug(ui-tests)
         kind: test
         platform: 'ui-test/opt'
         tier: 2
@@ -57,5 +52,14 @@ job-template:
               path: .firebase_token.json
               decode: true
         commands:
-            - [automation/taskcluster/androidTest/ui-test.sh, x86, app.apk, android-test.apk, '-1']
+            - [wget, {artifact-reference: '<builds/worker/checkouts/src/app/build/outputs/apk/focus/debug/app-focus-x86-debug.apk'}, '-O', app.apk]
+            - [wget, {artifact-reference: '<builds/worker/checkouts/src/app/build/outputs/apk/androidTest/focus/debug/app-focus-debug-androidTest.apk>'}, '-O', android-test.apk]
 
+jobs:
+    x86-debug:
+        description: 'UI tests with firebase'
+        run:
+            commands: 
+                - [automation/taskcluster/androidTest/ui-test.sh, x86, app.apk, android-test.apk, '-1']
+        treeherder:
+            symbol: debug(ui-test-x86)

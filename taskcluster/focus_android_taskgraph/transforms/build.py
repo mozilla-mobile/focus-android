@@ -127,6 +127,7 @@ def add_artifacts(config, tasks):
     for task in tasks:
         gradle_build_type = task["run"].pop("gradle-build-type")
         gradle_build_name = task["run"].pop("gradle-build-name")
+        gradle_build = task["run"].pop("gradle-build")
         variant_config = get_variant(gradle_build_type, gradle_build_name)
         artifacts = task.setdefault("worker", {}).setdefault("artifacts", [])
         task["attributes"]["apks"] = apks = {}
@@ -142,6 +143,7 @@ def add_artifacts(config, tasks):
                     "name": apk_name,
                     "path": artifact_template["path"].format(
                         gradle_build_type=gradle_build_type,
+                        gradle_build=gradle_build,
                         **apk
                     ),
                 })

@@ -15,8 +15,8 @@ kind-dependencies:
 job-defaults:
     apk-artifact-template:
         type: file
-        name: public/build/{abi}/target.apk
-        path: '/builds/worker/checkouts/src/app/build/outputs/apk/{gradle_build_type}/{fileName}'
+        name: '{fileName}'
+        path: '/builds/worker/checkouts/src/app/build/outputs/apk/{gradle_build}/{gradle_build_type}/{fileName}'
     fetches:
         toolchain:
             - android-sdk-linux
@@ -38,12 +38,28 @@ job-defaults:
         chain-of-trust: true
 
 jobs:
+    android-test-debug:
+        description: 'Android Test for debugging'
+        attributes:
+            code-review: true
+        run-on-tasks-for: [github-pull-request, github-push]
+        run:
+            gradle-build-type: debug
+            gradle-build-name: androidTest
+            gradle-build: focus
+        apk-artifact-template:
+            # "androidTest/" is added
+            path: '/builds/worker/checkouts/src/app/build/outputs/apk/androidTest/{gradle_build}/{gradle_build_type}/{fileName}'    
+        treeherder:
+            symbol: debug(Bat)
+
     focus-debug:
         description: 'Focus debug build from source code'
         run-on-tasks-for: [github-pull-request, github-push]
         run:
             gradle-build-type: debug
             gradle-build-name: focusDebug
+            gradle-build: focus
         treeherder:
             symbol: debug(Bf)
 
@@ -53,6 +69,7 @@ jobs:
         run:
             gradle-build-type: debug
             gradle-build-name: klarDebug
+            gradle-build: klar
         treeherder:
             symbol: debug(Bkl)
 
@@ -62,6 +79,7 @@ jobs:
         run:
             gradle-build-type: release
             gradle-build-name: focusRelease
+            gradle-build: focus
         treeherder:
             symbol: release(Bf)
 
@@ -71,6 +89,7 @@ jobs:
         run:
             gradle-build-type: release
             gradle-build-name: klarRelease
+            gradle-build: klar
         treeherder:
             symbol: release(Bkl)
 
@@ -80,6 +99,7 @@ jobs:
         run:
             gradle-build-type: nightly
             gradle-build-name: focusNightly
+            gradle-build: focus
         treeherder:
             symbol: nightly(B)
 
@@ -89,8 +109,10 @@ jobs:
         run:
             gradle-build-type: beta
             gradle-build-name: focusBeta
+            gradle-build: focus
         treeherder:
             symbol: beta(B)
+
 
     # TODO modify release, nightly and beta (focus only for the latter two) for signing and push-apk
     # Note: nightly and beta will not push to google plaly store
