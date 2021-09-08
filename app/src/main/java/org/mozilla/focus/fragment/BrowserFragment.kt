@@ -52,6 +52,8 @@ import mozilla.components.feature.findinpage.view.FindInPageBar
 import mozilla.components.feature.prompts.PromptFeature
 import mozilla.components.feature.session.SessionFeature
 import mozilla.components.feature.tabs.WindowFeature
+import mozilla.components.feature.top.sites.TopSitesConfig
+import mozilla.components.feature.top.sites.TopSitesFeature
 import mozilla.components.lib.crash.Crash
 import mozilla.components.support.base.feature.PermissionsFeature
 import mozilla.components.support.base.feature.ViewBoundFeatureWrapper
@@ -80,6 +82,8 @@ import org.mozilla.focus.settings.privacy.TrackingProtectionPanel
 import org.mozilla.focus.state.AppAction
 import org.mozilla.focus.state.Screen
 import org.mozilla.focus.telemetry.TelemetryWrapper
+import org.mozilla.focus.topsites.DefaultTopSitesStorage.Companion.TOP_SITES_MAX_LIMIT
+import org.mozilla.focus.topsites.DefaultTopSitesView
 import org.mozilla.focus.utils.AppPermissionCodes.REQUEST_CODE_DOWNLOAD_PERMISSIONS
 import org.mozilla.focus.utils.AppPermissionCodes.REQUEST_CODE_PROMPT_PERMISSIONS
 import org.mozilla.focus.utils.Browsers
@@ -113,6 +117,7 @@ class BrowserFragment :
     private val shareDownloadFeature = ViewBoundFeatureWrapper<ShareDownloadFeature>()
     private val windowFeature = ViewBoundFeatureWrapper<WindowFeature>()
     private val appLinksFeature = ViewBoundFeatureWrapper<AppLinksFeature>()
+    private val topSitesFeature = ViewBoundFeatureWrapper<TopSitesFeature>()
 
     private val toolbarIntegration = ViewBoundFeatureWrapper<BrowserToolbarIntegration>()
 
@@ -260,6 +265,21 @@ class BrowserFragment :
                 fragmentManager = parentFragmentManager,
                 launchInApp = { true },
                 loadUrlUseCase = requireContext().components.sessionUseCases.loadUrl
+            ),
+            owner = this,
+            view = view
+        )
+
+        topSitesFeature.set(
+            feature = TopSitesFeature(
+                view = DefaultTopSitesView(requireComponents.appStore),
+                storage = requireComponents.topSitesStorage,
+                config = {
+                    TopSitesConfig(
+                        totalSites = TOP_SITES_MAX_LIMIT,
+                        frecencyConfig = null
+                    )
+                }
             ),
             owner = this,
             view = view
@@ -815,11 +835,12 @@ class BrowserFragment :
             blockedTrackersCount = Settings.getInstance(requireContext())
                 .getTotalBlockedTrackersCount(),
             toggleTrackingProtection = ::toggleTrackingProtection,
-            updateTrackingProtectionPolicy = {
+            updateTrackingProtectionPolicy = { tracker, isEnabled ->
                 EngineSharedPreferencesListener(requireContext())
                     .updateTrackingProtectionPolicy(
                         source = EngineSharedPreferencesListener.ChangeSource.PANEL.source,
-                        tracker = it
+                        tracker = tracker,
+                        isEnabled = isEnabled
                     )
             },
             showConnectionInfo = ::showConnectionInfo

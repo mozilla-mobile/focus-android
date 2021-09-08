@@ -42,7 +42,8 @@ class Settings private constructor(
     }
 
     fun createTrackingProtectionPolicy(): EngineSession.TrackingProtectionPolicy {
-        val trackingCategories: MutableList<EngineSession.TrackingProtectionPolicy.TrackingCategory> = mutableListOf()
+        val trackingCategories: MutableList<EngineSession.TrackingProtectionPolicy.TrackingCategory> =
+            mutableListOf(EngineSession.TrackingProtectionPolicy.TrackingCategory.SCRIPTS_AND_SUB_RESOURCES)
 
         if (shouldBlockSocialTrackers()) {
             trackingCategories.add(EngineSession.TrackingProtectionPolicy.TrackingCategory.SOCIAL)
@@ -54,7 +55,7 @@ class Settings private constructor(
             trackingCategories.add(EngineSession.TrackingProtectionPolicy.TrackingCategory.ANALYTICS)
         }
         if (shouldBlockOtherTrackers()) {
-            trackingCategories.add(EngineSession.TrackingProtectionPolicy.TrackingCategory.SCRIPTS_AND_SUB_RESOURCES)
+            trackingCategories.add(EngineSession.TrackingProtectionPolicy.TrackingCategory.CONTENT)
         }
 
         val cookiePolicy = when (shouldBlockCookiesValue()) {
@@ -158,9 +159,6 @@ class Settings private constructor(
     fun shouldUseBiometrics(): Boolean =
         preferences.getBoolean(getPreferenceKey(R.string.pref_key_biometric), false)
 
-    fun shouldOpenNewTabs(): Boolean =
-        preferences.getBoolean(getPreferenceKey(R.string.pref_key_open_new_tab), false)
-
     fun shouldUseSecureMode(): Boolean =
         preferences.getBoolean(getPreferenceKey(R.string.pref_key_secure), false)
 
@@ -208,8 +206,8 @@ class Settings private constructor(
 
     fun shouldBlockOtherTrackers() =
         preferences.getBoolean(
-            getPreferenceKey(R.string.pref_key_privacy_block_other2),
-            true
+            getPreferenceKey(R.string.pref_key_privacy_block_other3),
+            false
         )
 
     fun userHasToggledSearchSuggestions(): Boolean =
@@ -259,7 +257,7 @@ class Settings private constructor(
     )
 
     fun hasContentBlocked() = preferences.getBoolean(
-        getPreferenceKey(R.string.pref_key_privacy_block_other2),
+        getPreferenceKey(R.string.pref_key_privacy_block_other3),
         true
     )
 

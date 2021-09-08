@@ -171,7 +171,7 @@
     <string name="preference_category_search">Ricerca</string>
 
     <!-- Title of "switch" preference that enables/disables search suggestions -->
-    <string name="preference_show_search_suggestions">Ottene suggestioni di ricerca</string>
+    <string name="preference_show_search_suggestions">Ottene sugestioni di ricerca</string>
     <!-- Description of the preference that enables/disables search suggestions
         %1$s will be replaced by the app name (e.g. Firefox Focus) -->
     <string name="preference_show_search_suggestions_summary">%1$s manderà à u vostru mutore di ricerca ciò chì voi scrivite in a barra d’indirizzu</string>
@@ -669,7 +669,7 @@
 
     <!-- Description for the prompt to enable search suggestions
         %1$s will be replaced by the app name (e.g. Firefox Focus) -->
-    <string name="enable_search_suggestion_description">Per ottene suggestioni di ricerca, %1$s hà bisognu di mandà à u mutore di ricerca ciò chì vo scrivite in a barra d’indirizzu.</string>
+    <string name="enable_search_suggestion_description">Per ottene sugestioni di ricerca, %1$s hà bisognu di mandà à u mutore di ricerca ciò chì vo scrivite in a barra d’indirizzu.</string>
 
     <!-- Label used for the "NO button" for the prompt to enable search suggestions -->
     <string name="enable_search_suggestions_no">Innò</string>
@@ -678,7 +678,7 @@
     <string name="enable_search_suggestions_yes">Iè</string>
 
     <!-- Message displayed when using a search engine that doesn't provide suggestions -->
-    <string name="no_suggestions_message">Certi mutori di ricerca ùn ponu affissà suggestioni.</string>
+    <string name="no_suggestions_message">Certi mutori di ricerca ùn ponu affissà sugestioni.</string>
 
     <!-- Button to dismiss the message displayed  when using a search engine that doesn't provide suggestions-->
     <string name="dismiss_no_suggestions_prompt_button">Ignurà</string>
@@ -692,7 +692,7 @@
 
     <!-- Tip displayed on home view explaining how to disable enhanced tracking protection
 The new line here must be kept as the second half of the string is clickable for the user. -->
-    <string name="tip_disable_tracking_protection3">Ci seria u cuntenutu chì manca o u situ si cumpurteria d’una manera strana ?\n
+    <string name="tip_disable_tracking_protection3">Ci seria u cuntenutu chì manca o u situ si cumpurteria d’una manera strana ?\n
     Pruvate di disattivà a prutezzione rinfurzata contr’à u spiunagiu</string>
 
     <!-- Tip displayed on home view explaining how to add sites to homescreen
@@ -733,6 +733,11 @@ The new line here must be kept as the second half of the string is clickable for
     <!-- Tip displayed on the home view about the changes in the new release.
     %1$s is a placeholder for the app name -->
     <string name="tip_fresh_look">Hè vera, avemu un aspettu tuttu novu ! Sapene di più apprupositu di què è d’altre mudificazioni nant’à %1$s.</string>
+
+    <!-- Tip displayed on the home view about shortcuts
+    %1$s is a placeholder for the app name -->
+    <string name="tip_about_shortcuts">Create l’accurtatoghji per i siti chì vo visitate u più :\n
+    Selezziunate « Aghjunghje à l’accurtatoghji » in u listinu di %1$s</string>
 
     <!-- Label for the snackbar when a user opens a new tab -->
     <string name="new_tab_opened_snackbar">Nova unghjetta aperta</string>
