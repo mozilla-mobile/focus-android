@@ -77,7 +77,7 @@ class Components(
     val appStore: AppStore by lazy {
         AppStore(
             AppState(
-                screen = determineInitialScreen(context),
+                screen = Screen.Home,
                 topSites = emptyList()
             )
         )
@@ -178,14 +178,6 @@ class Components(
 
     val appLinksInterceptor by lazy {
         AppLinksInterceptor(context, interceptLinkClicks = true, launchInApp = { true })
-    }
-}
-
-private fun determineInitialScreen(context: Context): Screen {
-    return if (Settings.getInstance(context).shouldShowFirstrun()) {
-        Screen.FirstRun
-    } else {
-        Screen.Home
     }
 }
 
