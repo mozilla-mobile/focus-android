@@ -29,6 +29,7 @@ import org.mozilla.focus.GleanMetrics.Shortcuts
 import org.mozilla.focus.GleanMetrics.TrackingProtection
 import org.mozilla.focus.ext.components
 import org.mozilla.focus.telemetry.TelemetryWrapper.isTelemetryEnabled
+import org.mozilla.focus.topsites.DefaultTopSitesStorage.Companion.TOP_SITES_MAX_LIMIT
 import org.mozilla.focus.utils.Settings
 import java.util.UUID
 
@@ -93,14 +94,15 @@ class GleanMetricsService(context: Context) : MetricsService {
         context: Context
     ) = CoroutineScope(IO).async {
         val installedBrowsers = BrowsersCache.all(context)
-        val hasFenixInstalled = installedBrowsers.hasFirefoxBrandedBrowserInstalled
-        val isFenixDefaultBrowser = installedBrowsers.isFirefoxDefaultBrowser
+        val hasFenixInstalled = FenixProductDetector.getInstalledFenixVersions(context).isNotEmpty()
+        val isFenixDefaultBrowser = FenixProductDetector.isFenixDefaultBrowser(installedBrowsers.defaultBrowser)
         val isFocusDefaultBrowser = installedBrowsers.isDefaultBrowser
 
         Browser.isDefault.set(isFocusDefaultBrowser)
         Browser.localeOverride.set(components.store.state.locale?.displayName ?: "none")
-        val shortcutsOnHomeNumber = components.appStore.state.topSites.size.toLong()
-        Shortcuts.shortcutsOnHomeNumber.set(shortcutsOnHomeNumber)
+        val shortcutsOnHomeNumber =
+            components.topSitesStorage.getTopSites(TOP_SITES_MAX_LIMIT, null).size
+        Shortcuts.shortcutsOnHomeNumber.set(shortcutsOnHomeNumber.toLong())
 
         // Fenix telemetry
         MozillaProducts.hasFenixInstalled.set(hasFenixInstalled)

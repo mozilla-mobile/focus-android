@@ -67,7 +67,7 @@ sealed class AppAction : Action {
     data class NavigateUp(val tabId: String?) : AppAction()
 
     /**
-     * Forces showing the first run screen (for tests).
+     * Forces showing the first run screen.
      */
     internal object ShowFirstRun : AppAction()
 
