@@ -23,6 +23,7 @@ import org.mozilla.focus.fragment.UrlInputFragment
 import org.mozilla.focus.locale.LocaleAwareAppCompatActivity
 import org.mozilla.focus.navigation.MainActivityNavigation
 import org.mozilla.focus.navigation.Navigator
+import org.mozilla.focus.perf.Performance
 import org.mozilla.focus.session.IntentProcessor
 import org.mozilla.focus.session.ui.TabSheetFragment
 import org.mozilla.focus.shortcut.HomeScreen
@@ -60,6 +61,14 @@ open class MainActivity : LocaleAwareAppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         val intent = SafeIntent(intent)
+
+        // The performance check was added after the shouldShowFirstRun to take as much of the
+        // code path as possible
+        if (Settings.getInstance(this).shouldShowFirstrun() &&
+            !Performance.processIntentIfPerformanceTest(intent, this)
+        ) {
+            components.appStore.dispatch(AppAction.ShowFirstRun)
+        }
 
         if (intent.hasExtra(HomeScreen.ADD_TO_HOMESCREEN_TAG)) {
             intentProcessor.handleNewIntent(this, intent)
