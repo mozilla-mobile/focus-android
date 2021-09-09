@@ -52,8 +52,8 @@ job-defaults:
               path: .firebase_token.json
               decode: true
         commands:
-            - [wget, {artifact-reference: '<builds/worker/checkouts/src/app/build/outputs/apk/focus/debug/app-focus-x86-debug.apk'}, '-O', app.apk]
-            - [wget, {artifact-reference: '<builds/worker/checkouts/src/app/build/outputs/apk/androidTest/focus/debug/app-focus-debug-androidTest.apk>'}, '-O', android-test.apk]
+            - [wget, {artifact-reference: '<build/app-focus-x86-debug.apk>'}, '-O', app.apk]
+            - [wget, {artifact-reference: '<build/app-focus-debug-androidTest.apk>'}, '-O', android-test.apk]
 
 jobs:
     x86-debug:
