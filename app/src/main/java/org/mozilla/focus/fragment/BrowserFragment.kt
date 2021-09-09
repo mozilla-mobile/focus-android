@@ -21,8 +21,8 @@ import android.view.accessibility.AccessibilityManager
 import android.webkit.MimeTypeMap
 import android.widget.FrameLayout
 import android.widget.Toast
-import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.content.ContextCompat
+import androidx.core.content.pm.ShortcutManagerCompat
 import androidx.preference.PreferenceManager
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.snackbar.Snackbar
@@ -47,7 +47,6 @@ import mozilla.components.feature.downloads.AbstractFetchDownloadService
 import mozilla.components.feature.downloads.DownloadsFeature
 import mozilla.components.feature.downloads.manager.FetchDownloadManager
 import mozilla.components.feature.downloads.share.ShareDownloadFeature
-import mozilla.components.feature.findinpage.view.FindInPageBar
 import mozilla.components.feature.prompts.PromptFeature
 import mozilla.components.feature.session.SessionFeature
 import mozilla.components.feature.tabs.WindowFeature
@@ -214,7 +213,7 @@ class BrowserFragment :
             PromptFeature(
                 fragment = this,
                 store = components.store,
-                customTabId = tab.id,
+                customTabId = tryGetCustomTabId(),
                 fragmentManager = parentFragmentManager,
                 onNeedToRequestPermissions = { permissions ->
                     @Suppress("DEPRECATION") // https://github.com/mozilla-mobile/focus-android/issues/4959
@@ -285,7 +284,6 @@ class BrowserFragment :
         )
 
         customizeToolbar(view)
-        customizeFindInPage(view)
 
         val customTabConfig = tab.ifCustomTab()?.config
         if (customTabConfig != null) {
@@ -319,13 +317,6 @@ class BrowserFragment :
         }
     }
 
-    private fun customizeFindInPage(view: View) {
-        val findInPageBar = view.findViewById<FindInPageBar>(R.id.find_in_page)
-        val newParams = findInPageBar.layoutParams as CoordinatorLayout.LayoutParams
-        newParams.gravity = Gravity.BOTTOM
-        findInPageBar.layoutParams = newParams
-    }
-
     private fun customizeToolbar(view: View) {
         val browserToolbar = view.findViewById<BrowserToolbar>(R.id.browserToolbar)
         val controller = BrowserMenuController(
@@ -347,6 +338,9 @@ class BrowserFragment :
                 context = requireContext(),
                 appStore = requireComponents.appStore,
                 store = requireComponents.store,
+                isPinningSupported = ShortcutManagerCompat.isRequestPinShortcutSupported(
+                    requireContext()
+                ),
                 onItemTapped = { controller.handleMenuInteraction(it) }
             )
             browserToolbar.display.menuBuilder = browserMenu.menuBuilder
@@ -358,7 +352,7 @@ class BrowserFragment :
                 browserToolbar,
                 fragment = this,
                 controller = controller,
-                customTabId = if (tab.isCustomTab()) { tab.id } else { null },
+                customTabId = tryGetCustomTabId(),
                 customTabsUseCases = requireComponents.customTabsUseCases,
                 sessionUseCases = requireComponents.sessionUseCases,
                 onUrlLongClicked = ::onUrlLongClicked
@@ -887,6 +881,12 @@ class BrowserFragment :
         } else {
             false
         }
+    }
+
+    private fun tryGetCustomTabId() = if (tab.isCustomTab()) {
+        tab.id
+    } else {
+        null
     }
 
     fun handleTabCrash(crash: Crash) {
