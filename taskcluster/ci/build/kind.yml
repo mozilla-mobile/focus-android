@@ -15,7 +15,7 @@ kind-dependencies:
 job-defaults:
     apk-artifact-template:
         type: file
-        name: '{fileName}'
+        name: 'public/build/{fileName}'
         path: '/builds/worker/checkouts/src/app/build/outputs/apk/{gradle_build}/{gradle_build_type}/{fileName}'
     fetches:
         toolchain:
@@ -49,6 +49,7 @@ jobs:
             gradle-build: focus
         apk-artifact-template:
             # "androidTest/" is added
+            name: 'public/build/{fileName}'
             path: '/builds/worker/checkouts/src/app/build/outputs/apk/androidTest/{gradle_build}/{gradle_build_type}/{fileName}'    
         treeherder:
             symbol: debug(Bat)

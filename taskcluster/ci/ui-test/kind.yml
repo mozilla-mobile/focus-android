@@ -18,8 +18,8 @@ job-defaults:
         code-review: true
         retrigger: true
     dependencies:
-        build: build-android-test-debug
-        build: build-focus-debug
+        build-debug: build-focus-debug
+        build-android-test: build-android-test-debug
     fetches:
         toolchain:
             - android-sdk-linux
@@ -52,8 +52,8 @@ job-defaults:
               path: .firebase_token.json
               decode: true
         commands:
-            - [wget, {artifact-reference: '<build/app-focus-x86-debug.apk>'}, '-O', app.apk]
-            - [wget, {artifact-reference: '<build/app-focus-debug-androidTest.apk>'}, '-O', android-test.apk]
+            - [wget, {artifact-reference: '<build-debug/public/build/app-focus-x86-debug.apk>'}, '-O', app.apk]
+            - [wget, {artifact-reference: '<build-android-test/public/build/app-focus-debug-androidTest.apk>'}, '-O', android-test.apk]
 
 jobs:
     x86-debug:
