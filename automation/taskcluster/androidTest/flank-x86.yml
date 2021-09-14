@@ -37,10 +37,10 @@ gcloud:
     - /sdcard/screenshots
   performance-metrics: true
 
-  # test-targets:
-  #   - package org.mozilla.focus.activity
-  #   - package org.mozilla.focus.privacy
-  #   - package org.mozilla.focus.screenshots
+  test-targets:
+    - package org.mozilla.focus.activity
+    - package org.mozilla.focus.privacy
+    - package org.mozilla.focus.screenshots
   
   device:
    - model: Pixel2
