@@ -17,9 +17,9 @@ job-defaults:
         build-type: debug
         code-review: true
         retrigger: true
-    dependencies:
-        build-debug: build-focus-debug
-        build-android-test: build-android-test-debug
+    # dependencies:
+    #     build-debug: build-focus-debug
+    #     build-android-test: build-android-test-debug
     fetches:
         toolchain:
             - android-sdk-linux
@@ -42,7 +42,7 @@ job-defaults:
         tier: 2
     run:
         use-caches: false
-        using: run-commands
+        using: gradlew
         dummy-secrets:
             - content: "faketoken"
               path: .adjust_token
@@ -51,15 +51,17 @@ job-defaults:
               key: "keyFile"
               path: .firebase_token.json
               decode: true
-        commands:
-            - [wget, {artifact-reference: '<build-debug/public/build/app-focus-x86-debug.apk>'}, '-O', app.apk]
-            - [wget, {artifact-reference: '<build-android-test/public/build/app-focus-debug-androidTest.apk>'}, '-O', android-test.apk]
+        # TODO retrieving these from two separate tasks means they're signed differently; need to create a signing
+        # dependency in order to get this working properly (signed with same key)
+        #     - [wget, {artifact-reference: '<build-debug/public/build/app-focus-x86-debug.apk>'}, '-O', app.apk]
+        #     - [wget, {artifact-reference: '<build-android-test/public/build/app-focus-debug-androidTest.apk>'}, '-O', android-test.apk]
 
 jobs:
     x86-debug:
         description: 'UI tests with firebase'
         run:
-            commands: 
-                - [automation/taskcluster/androidTest/ui-test.sh, x86, app.apk, android-test.apk, '-1']
+            gradlew: ['clean', 'assembleFocusDebug', 'assembleFocusDebugAndroidTest']
+            post-gradlew:
+                - ['automation/taskcluster/androidTest/ui-test.sh', 'x86', './app/build/outputs/apk/focus/debug/app-focus-x86-debug.apk', './app/build/outputs/apk/androidTest/focus/debug/app-focus-debug-androidTest.apk', '-1']
         treeherder:
             symbol: debug(ui-test-x86)

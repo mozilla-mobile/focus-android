@@ -38,22 +38,6 @@ job-defaults:
         chain-of-trust: true
 
 jobs:
-    android-test-debug:
-        description: 'Android Test for debugging'
-        attributes:
-            code-review: true
-        run-on-tasks-for: [github-pull-request, github-push]
-        run:
-            gradle-build-type: debug
-            gradle-build-name: FocusDebugAndroidTest
-            gradle-build: focus
-        apk-artifact-template:
-            # "androidTest/" is added
-            name: 'public/build/{fileName}'
-            path: '/builds/worker/checkouts/src/app/build/outputs/apk/androidTest/{gradle_build}/{gradle_build_type}/{fileName}'    
-        treeherder:
-            symbol: debug(Bat)
-
     focus-debug:
         description: 'Focus debug build from source code'
         run-on-tasks-for: [github-pull-request, github-push]
@@ -116,4 +100,5 @@ jobs:
 
 
     # TODO modify release, nightly and beta (focus only for the latter two) for signing and push-apk
+    # Add androidTest as a separate task
     # Note: nightly and beta will not push to google plaly store
