@@ -45,7 +45,7 @@ jobs:
         run-on-tasks-for: [github-pull-request, github-push]
         run:
             gradle-build-type: debug
-            gradle-build-name: androidTest
+            gradle-build-name: FocusDebugAndroidTest
             gradle-build: focus
         apk-artifact-template:
             # "androidTest/" is added

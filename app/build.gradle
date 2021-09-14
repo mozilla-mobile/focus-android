@@ -562,7 +562,7 @@ tasks.register('printVariants') {
                 fileName: 'app-focus-debug-androidTest.apk',
             ]],
             build_type: 'debug',
-            name: 'androidTest',
+            name: 'FocusDebugAndroidTest',
         ])
         println 'variants: ' + JsonOutput.toJson(variants)
     }
