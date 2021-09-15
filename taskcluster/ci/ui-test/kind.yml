@@ -48,9 +48,9 @@ job-defaults:
               path: .adjust_token
         secrets:
             - name: project/mobile/focus-android/firebase
-              key: "firebaseToken"
+              key: firebaseToken
               path: .firebase_token.json
-              decode: true
+              json: true
         # TODO retrieving these from two separate tasks means they're signed differently; need to create a signing
         # dependency in order to get this working properly (signed with same key)
         #     - [wget, {artifact-reference: '<build-debug/public/build/app-focus-x86-debug.apk>'}, '-O', app.apk]
