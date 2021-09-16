@@ -17,9 +17,6 @@ job-defaults:
         build-type: debug
         code-review: true
         retrigger: true
-    # dependencies:
-    #     build-debug: build-focus-debug
-    #     build-android-test: build-android-test-debug
     fetches:
         toolchain:
             - android-sdk-linux
@@ -30,7 +27,7 @@ job-defaults:
         max-run-time: 7200
         env:
             GOOGLE_APPLICATION_CREDENTIALS: '.firebase_token.json'
-            GOOGLE_PROJECT: 'moz-fx-mobile-firebase-testlab'
+            GOOGLE_PROJECT: 'moz-focus-android'
         artifacts:
             - name: public
               path: /builds/worker/artifacts
