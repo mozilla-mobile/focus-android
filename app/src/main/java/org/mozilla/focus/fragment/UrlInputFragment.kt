@@ -14,6 +14,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
 import androidx.compose.ui.platform.ComposeView
+import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -250,6 +251,8 @@ class UrlInputFragment :
 
     @Suppress("LongMethod")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        browserToolbar.private = true
+
         toolbarIntegration.set(
             InputToolbarIntegration(
                 browserToolbar,
@@ -357,6 +360,11 @@ class UrlInputFragment :
                     false
                 }
             }
+            // Make sure we update the background for landscape / portrait orientations.
+            backgroundView?.background = ContextCompat.getDrawable(
+                requireContext(),
+                R.drawable.dark_background
+            )
         }
     }
 

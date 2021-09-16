@@ -442,6 +442,8 @@ class BrowserFragment :
 
                 GlobalScope.launch(Dispatchers.IO) { crashReporter.submitReport(crash) }
             }
+
+            requireComponents.sessionUseCases.crashRecovery.invoke()
             erase()
             hideCrashReporter()
         }
@@ -834,10 +836,15 @@ class BrowserFragment :
                         tracker = tracker,
                         isEnabled = isEnabled
                     )
+                reloadCurrentTab()
             },
             showConnectionInfo = ::showConnectionInfo
         )
         trackingProtectionPanel.show()
+    }
+
+    private fun reloadCurrentTab() {
+        requireComponents.sessionUseCases.reload(tab.id)
     }
 
     private fun showConnectionInfo() {
@@ -862,8 +869,9 @@ class BrowserFragment :
                 ExceptionDomains.add(context, tab.content.url.tryGetHostFromUrl())
                 trackingProtectionUseCases.addException(tab.id)
             }
-            sessionUseCases.reload(tab.id)
         }
+
+        reloadCurrentTab()
 
         TrackingProtection.hasEverChangedEtp.set(true)
         TrackingProtection.trackingProtectionChanged.record(
