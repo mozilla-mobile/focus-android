@@ -97,6 +97,7 @@ class BrowserFragment :
     BaseFragment(),
     View.OnClickListener {
 
+    private lateinit var toolbarView: DisplayToolbar
     private var statusBar: View? = null
     private var urlBar: View? = null
     private var popupTint: FrameLayout? = null
@@ -152,7 +153,7 @@ class BrowserFragment :
 
         engineView = (view.findViewById<View>(R.id.webview) as EngineView)
 
-        val toolbarView = view.findViewById<DisplayToolbar>(R.id.appbar)
+        toolbarView = view.findViewById<DisplayToolbar>(R.id.appbar)
 
         findInPageIntegration.set(
             FindInPageIntegration(
@@ -169,7 +170,7 @@ class BrowserFragment :
                 components.store,
                 tab.id,
                 components.sessionUseCases,
-                toolbarView!!,
+                toolbarView,
                 statusBar!!
             ),
             this, view
@@ -346,8 +347,9 @@ class BrowserFragment :
 
         toolbarIntegration.set(
             BrowserToolbarIntegration(
-                requireComponents.store,
-                browserToolbar,
+                store = requireComponents.store,
+                toolbar = browserToolbar,
+                toolbarView = toolbarView,
                 fragment = this,
                 controller = controller,
                 customTabId = tryGetCustomTabId(),
@@ -561,6 +563,9 @@ class BrowserFragment :
             return true
         } else if (sessionFeature.get()?.onBackPressed() == true) {
             return true
+        } else if (tab.source is SessionState.Source.Internal.TextSelection) {
+            erase()
+            return true
         } else {
             if (tab.source is SessionState.Source.External || tab.isCustomTab()) {
                 TelemetryWrapper.eraseBackToAppEvent()
@@ -605,6 +610,11 @@ class BrowserFragment :
         }
 
         requireComponents.tabsUseCases.removeTab(tab.id)
+        requireComponents.appStore.dispatch(
+            AppAction.NavigateUp(
+                requireComponents.store.state.selectedTabId
+            )
+        )
     }
 
     private fun shareCurrentUrl() {
