@@ -149,7 +149,6 @@ tasks:
                         type: file
                         path: /opt/focus-android/task-graph.json
                         expires: ${expires_in}
-<<<<<<< Updated upstream
                         schedulerId: ${scheduler_id}   # Must be explicit because of Chain of Trust
                         provisionerId: mobile-3
                         workerType: decision
@@ -212,7 +211,7 @@ tasks:
                           owner: ${event.sender.login}@users.noreply.github.com
                           source: ${repository}/raw/${event.release.tag_name}/.taskcluster.yml
                   # Remove this block when nightlies have been moved to taskgraph
-                  - $if: 'tasks_for == "cron"'
+                    $if: 'tasks_for == "cron"'
                     then:
                       $let:
                         decision_task_id: {$eval: as_slugid("decision_task")}
@@ -224,15 +223,6 @@ tasks:
                         taskGroupId: ${decision_task_id}  # Must be explicit because of Chain of Trust
                         created: {$fromNow: ''}
                         deadline: {$fromNow: '2 hours'}
-=======
-                      public/actions.json:
-                        type: file
-                        path: /opt/focus-android/actions.json
-                        expires: ${expires_in}
-                      public/parameters.yml:
-                        type: file
-                        path: /opt/focus-android/parameters.yml
->>>>>>> Stashed changes
                         expires: ${expires_in}
                   extra:
                       tasks_for: ${tasks_for}
@@ -241,7 +231,7 @@ tasks:
                     description: Scheduling tasks for releasing Focus/Klar
                     owner: ${event.sender.login}@users.noreply.github.com
                     source: ${repository}/raw/${event.release.tag_name}/.taskcluster.yml
-                # Remove this block when nightlies have been moved to taskgraph
+                  # Remove this block when nightlies have been moved to taskgraph
                   $if: 'tasks_for == "cron"'
                   then:
                     $let:
