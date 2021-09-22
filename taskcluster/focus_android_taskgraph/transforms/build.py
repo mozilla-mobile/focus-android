@@ -68,7 +68,7 @@ def build_gradle_command(config, tasks):
         variant_name = variant_config["name"][0].upper() + variant_config["name"][1:]
         task["run"]["gradlew"] = [
             "clean",
-            "assemble{}".format(variant_name),
+            f"assemble{variant_name}",
         ]
         yield task
 
@@ -147,14 +147,9 @@ def add_artifacts(config, tasks):
                         **apk
                     ),
                 })
-                # TODO figure out what to do here since Focus apk's already have an "abi" key
-                # apks[apk["abi"]] = { 
-                    # "name": apk_name,
-                    # "github-name": artifact_template["github-name"].format(
-                    #     version=config.params["version"],
-                    #     **apk
-                    # )
-                # }
+                apks[apk["abi"]] = {
+                    "name": apk_name,
+                }
 
         yield task
 

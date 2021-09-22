@@ -60,13 +60,15 @@ def resolve_keys(config, tasks):
 @transforms.add
 def build_upstream_artifacts(config, tasks):
     for task in tasks:
-        worker_definition = {}
+        worker_definition = {
+            "upstream-artifacts": [],
+        }
 
         for dep in _get_all_deps(task).values():
-            paths = sorted([
+            paths = sorted(
                 apk_metadata["name"]
                 for apk_metadata in dep.attributes.get("apks", {}).values()
-            ])
+            )
             if paths:
                 worker_definition["upstream-artifacts"] = [{
                     "taskId": {"task-reference": f"<{dep.kind}>"},
@@ -85,7 +87,7 @@ def build_treeherder_definition(config, tasks):
 
         task.setdefault("treeherder", {}).update(inherit_treeherder_from_dep(task, dep))
         job_group = dep.task["extra"]["treeherder"].get("groupSymbol", "?")
-        job_symbol = dep.task["extra"]["treeherder"].get("symbol", "?")
+        job_symbol = task["treeherder"].pop("job-symbol")
         full_symbol = join_symbol(job_group, job_symbol)
         task["treeherder"]["symbol"] = full_symbol
 
