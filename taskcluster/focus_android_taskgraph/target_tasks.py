@@ -36,6 +36,6 @@ def target_tasks_nightly(full_task_graph, parameters, graph_config):
     """Select the set of tasks required for a nightly build."""
 
     def filter(task):
-        return 'nightly' in task.label.split('-')
+        return task.attributes.get("nightly-task", False)
 
     return [l for l, t in full_task_graph.tasks.items() if filter(t)]
