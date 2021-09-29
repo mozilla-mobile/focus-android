@@ -18,7 +18,8 @@ group-by: build-type
 
 only-for-build-types:
     - nightly
-    - release
+    - focus-release
+    - klar-release
 
 job-template:
     description: Publish Focus
@@ -30,12 +31,17 @@ job-template:
         channel:
             by-build-type:
                 nightly: nightly
-                release: release
+                focus-release: focus-release
+                klar-release: klar-release
         dep:
             by-level:
                 '3': false
                 default: true
         product: focus-android
     treeherder:
-        job-symbol: gp
+        job-symbol:
+            by-build-type:
+                nightly: gp
+                focus-release: gpf
+                klar-release: gpkl
         kind: build
