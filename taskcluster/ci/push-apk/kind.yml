@@ -18,17 +18,19 @@ group-by: build-type
 
 only-for-build-types:
     - nightly
+    - release
 
 job-template:
     description: Publish Focus
     worker-type: push-apk
-    run-on-tasks-for: [cron]
+    run-on-tasks-for: []
     worker:
         certificate-alias: focus
         commit: true
         channel:
             by-build-type:
                 nightly: nightly
+                release: release
         dep:
             by-level:
                 '3': false
