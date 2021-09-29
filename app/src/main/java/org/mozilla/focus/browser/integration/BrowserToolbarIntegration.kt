@@ -12,8 +12,10 @@ import androidx.core.content.res.ResourcesCompat
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.mapNotNull
 import mozilla.components.browser.state.selector.findCustomTabOrSelectedTab
+import mozilla.components.browser.state.selector.selectedTab
 import mozilla.components.browser.state.store.BrowserStore
 import mozilla.components.browser.toolbar.BrowserToolbar
 import mozilla.components.browser.toolbar.display.DisplayToolbar.Indicators
@@ -21,13 +23,14 @@ import mozilla.components.feature.customtabs.CustomTabsToolbarFeature
 import mozilla.components.feature.session.SessionUseCases
 import mozilla.components.feature.tabs.CustomTabsUseCases
 import mozilla.components.feature.toolbar.ToolbarPresenter
+import mozilla.components.lib.state.ext.consumeFlow
 import mozilla.components.lib.state.ext.flowScoped
 import mozilla.components.support.base.feature.LifecycleAwareFeature
 import mozilla.components.support.ktx.kotlinx.coroutines.flow.ifChanged
-import mozilla.components.support.utils.ColorUtils
 import org.mozilla.focus.GleanMetrics.TrackingProtection
 import org.mozilla.focus.R
-import org.mozilla.focus.ext.ifCustomTab
+import org.mozilla.focus.browser.DisplayToolbar
+import org.mozilla.focus.ext.isCustomTab
 import org.mozilla.focus.fragment.BrowserFragment
 import org.mozilla.focus.menu.browser.CustomTabMenu
 import org.mozilla.focus.utils.HardwareUtils
@@ -36,6 +39,7 @@ import org.mozilla.focus.utils.HardwareUtils
 class BrowserToolbarIntegration(
     private val store: BrowserStore,
     private val toolbar: BrowserToolbar,
+    private val toolbarView: DisplayToolbar,
     private val fragment: BrowserFragment,
     controller: BrowserMenuController,
     sessionUseCases: SessionUseCases,
@@ -137,21 +141,14 @@ class BrowserToolbarIntegration(
 
     // Use the same background for display/edit modes.
     private fun setUrlBackground() {
-        var backgroundResId = R.drawable.toolbar_url_dark_background
-
-        // Use a light background for url only when the current tab is a custom tab
-        // with a light background for toolbar
-        store.state.findCustomTabOrSelectedTab(customTabId)?.ifCustomTab()?.let { sessionState ->
-            sessionState.config.toolbarColor?.let { color ->
-                if (!ColorUtils.isDark(color)) {
-                    backgroundResId = R.drawable.toolbar_url_light_background
-                }
-            }
+        // For custom tabs, we don't use a background for the url.
+        if (store.state.findCustomTabOrSelectedTab(customTabId)?.isCustomTab() == true) {
+            return
         }
 
         val urlBackground = ResourcesCompat.getDrawable(
             fragment.resources,
-            backgroundResId,
+            R.drawable.toolbar_url_dark_background,
             fragment.context?.theme
         )
         toolbar.display.setUrlBackground(urlBackground)
@@ -164,6 +161,17 @@ class BrowserToolbarIntegration(
         customTabsFeature?.start()
         navigationButtonsIntegration?.start()
         observerSecurityIndicatorChanges()
+        observeCurrentUrlChanges()
+    }
+
+    private fun observeCurrentUrlChanges() {
+        fragment.consumeFlow(store) { flow ->
+            flow.map { state -> state.selectedTab?.content?.url }
+                .ifChanged()
+                .collect {
+                    toolbarView.setExpanded(true, true)
+                }
+        }
     }
 
     @VisibleForTesting

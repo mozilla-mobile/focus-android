@@ -159,6 +159,15 @@ private fun topSitesChanged(state: AppState, action: AppAction.TopSitesChange): 
 
 @Suppress("ComplexMethod")
 private fun navigateUp(state: AppState, action: AppAction.NavigateUp): AppState {
+    if (state.screen is Screen.Browser) {
+        val screen = if (action.tabId != null) {
+            Screen.Browser(tabId = action.tabId, showTabs = false)
+        } else {
+            Screen.Home
+        }
+        return state.copy(screen = screen)
+    }
+
     if (state.screen !is Screen.Settings) {
         return state
     }

@@ -97,6 +97,7 @@ class BrowserFragment :
     BaseFragment(),
     View.OnClickListener {
 
+    private lateinit var toolbarView: DisplayToolbar
     private var statusBar: View? = null
     private var urlBar: View? = null
     private var popupTint: FrameLayout? = null
@@ -150,9 +151,11 @@ class BrowserFragment :
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         val components = requireComponents
 
-        engineView = (view.findViewById<View>(R.id.webview) as EngineView)
+        engineView = (view.findViewById<View>(R.id.engineView) as EngineView).apply {
+            setDynamicToolbarMaxHeight(resources.getDimension(R.dimen.display_toolbar_height).toInt())
+        }
 
-        val toolbarView = view.findViewById<DisplayToolbar>(R.id.appbar)
+        toolbarView = view.findViewById<DisplayToolbar>(R.id.appbar)
 
         findInPageIntegration.set(
             FindInPageIntegration(
@@ -169,8 +172,9 @@ class BrowserFragment :
                 components.store,
                 tab.id,
                 components.sessionUseCases,
-                toolbarView!!,
-                statusBar!!
+                toolbarView,
+                statusBar!!,
+                engineView!!
             ),
             this, view
         )
@@ -346,8 +350,9 @@ class BrowserFragment :
 
         toolbarIntegration.set(
             BrowserToolbarIntegration(
-                requireComponents.store,
-                browserToolbar,
+                store = requireComponents.store,
+                toolbar = browserToolbar,
+                toolbarView = toolbarView,
                 fragment = this,
                 controller = controller,
                 customTabId = tryGetCustomTabId(),
@@ -561,6 +566,9 @@ class BrowserFragment :
             return true
         } else if (sessionFeature.get()?.onBackPressed() == true) {
             return true
+        } else if (tab.source is SessionState.Source.Internal.TextSelection) {
+            erase()
+            return true
         } else {
             if (tab.source is SessionState.Source.External || tab.isCustomTab()) {
                 TelemetryWrapper.eraseBackToAppEvent()
@@ -605,6 +613,11 @@ class BrowserFragment :
         }
 
         requireComponents.tabsUseCases.removeTab(tab.id)
+        requireComponents.appStore.dispatch(
+            AppAction.NavigateUp(
+                requireComponents.store.state.selectedTabId
+            )
+        )
     }
 
     private fun shareCurrentUrl() {

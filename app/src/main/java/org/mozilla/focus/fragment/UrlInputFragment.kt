@@ -16,10 +16,9 @@ import android.widget.FrameLayout
 import androidx.compose.ui.platform.ComposeView
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.preference.PreferenceManager
-import kotlinx.android.synthetic.main.fragment_urlinput2.*
+import kotlinx.android.synthetic.main.fragment_urlinput.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -41,6 +40,7 @@ import org.mozilla.focus.ext.requireComponents
 import org.mozilla.focus.home.HomeScreen
 import org.mozilla.focus.input.InputToolbarIntegration
 import org.mozilla.focus.menu.home.HomeMenu
+import org.mozilla.focus.menu.home.HomeMenuItem
 import org.mozilla.focus.searchsuggestions.SearchSuggestionsViewModel
 import org.mozilla.focus.searchsuggestions.ui.SearchSuggestionsFragment
 import org.mozilla.focus.state.AppAction
@@ -124,7 +124,6 @@ class UrlInputFragment :
         get() = job + Dispatchers.Main
     private val shippedDomainsProvider = ShippedDomainsProvider()
     private val customDomainsProvider = CustomDomainsProvider()
-    private var displayedPopupMenu: HomeMenu? = null
 
     @Volatile
     private var isAnimating: Boolean = false
@@ -164,11 +163,11 @@ class UrlInputFragment :
 
         searchSuggestionsViewModel.selectedSearchSuggestion.observe(
             viewLifecycleOwner,
-            Observer {
+            {
                 val isSuggestion = searchSuggestionsViewModel.searchQuery.value != it
                 it?.let {
                     if (searchSuggestionsViewModel.alwaysSearch) {
-                        onSearch(it, false, true)
+                        onSearch(it, isSuggestion = false, alwaysSearch = true)
                     } else {
                         onSearch(it, isSuggestion)
                     }
@@ -197,7 +196,7 @@ class UrlInputFragment :
             customDomainsProvider.initialize(it.applicationContext)
         }
 
-        StatusBarUtils.getStatusBarHeight(keyboardLinearLayout) {
+        StatusBarUtils.getStatusBarHeight(landingLayout) {
             adjustViewToStatusBarHeight(it)
         }
 
@@ -223,10 +222,6 @@ class UrlInputFragment :
 
     private fun adjustViewToStatusBarHeight(statusBarHeight: Int) {
         val inputHeight = resources.getDimension(R.dimen.urlinput_height)
-        if (keyboardLinearLayout.layoutParams is ViewGroup.MarginLayoutParams) {
-            val marginParams = keyboardLinearLayout.layoutParams as ViewGroup.MarginLayoutParams
-            marginParams.topMargin = (inputHeight + statusBarHeight).toInt()
-        }
 
         urlInputLayout.layoutParams.height = (inputHeight + statusBarHeight).toInt()
 
@@ -241,7 +236,7 @@ class UrlInputFragment :
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.fragment_urlinput2, container, false)
+        val view = inflater.inflate(R.layout.fragment_urlinput, container, false)
 
         val topSites = view.findViewById<ComposeView>(R.id.topSites)
         topSites.setContent { HomeScreen() }
@@ -289,14 +284,13 @@ class UrlInputFragment :
         }
 
         if (isOverlay) {
-            keyboardLinearLayout?.visibility = View.GONE
+            landingLayout?.visibility = View.GONE
         } else {
             backgroundView?.setBackgroundResource(R.drawable.dark_background)
 
             dismissView?.visibility = View.GONE
 
             menuView?.visibility = View.VISIBLE
-            menuView?.setOnClickListener(this)
         }
 
         val isDDG: Boolean =
@@ -318,8 +312,31 @@ class UrlInputFragment :
         }
 
         browserToolbar.editMode()
-
+        setHomeMenu()
         updateTipsLabel()
+    }
+
+    private fun setHomeMenu() {
+        menuView.menuBuilder = HomeMenu(requireContext()) { menuItem ->
+            when (menuItem) {
+                is HomeMenuItem.Help -> openHelpPage()
+                is HomeMenuItem.Settings -> openSettingsPage()
+            }
+        }.getMenuBuilder()
+    }
+
+    private fun openHelpPage() {
+        requireComponents.tabsUseCases.addTab(
+            SupportUtils.HELP_URL,
+            source = SessionState.Source.Internal.Menu,
+            private = true
+        )
+    }
+
+    private fun openSettingsPage() {
+        requireComponents.appStore.dispatch(
+            AppAction.OpenSettings(page = Screen.Settings.Page.Start)
+        )
     }
 
     fun onBackPressed(): Boolean {
@@ -339,27 +356,10 @@ class UrlInputFragment :
         }
     }
 
-    override fun onStop() {
-        super.onStop()
-
-        // Reset the keyboard layout to avoid a jarring animation when the view is started again. (#1135)
-        keyboardLinearLayout?.reset()
-    }
-
     override fun onConfigurationChanged(newConfig: Configuration) {
         super.onConfigurationChanged(newConfig)
 
         if (newConfig.orientation != Configuration.ORIENTATION_UNDEFINED) {
-            // This is a hack to make the HomeMenu actually stick on top of the menuView (#3287)
-
-            displayedPopupMenu?.let {
-                it.dismiss()
-
-                OneShotOnPreDrawListener(menuView) {
-                    showHomeMenu(menuView)
-                    false
-                }
-            }
             // Make sure we update the background for landscape / portrait orientations.
             backgroundView?.background = ContextCompat.getDrawable(
                 requireContext(),
@@ -371,26 +371,10 @@ class UrlInputFragment :
     // This method triggers the complexity warning. However it's actually not that hard to understand.
     @Suppress("ComplexMethod")
     override fun onClick(view: View) {
-        when (view.id) {
-            R.id.dismissView -> handleDismiss()
-
-            R.id.menuView -> showHomeMenu(view)
-
-            R.id.settings -> {
-                requireComponents.appStore.dispatch(
-                    AppAction.OpenSettings(page = Screen.Settings.Page.Start)
-                )
-            }
-
-            R.id.help -> {
-                requireComponents.tabsUseCases.addTab(
-                    SupportUtils.HELP_URL,
-                    source = SessionState.Source.Internal.Menu,
-                    private = true
-                )
-            }
-
-            else -> throw IllegalStateException("Unhandled view in onClick()")
+        if (view.id == R.id.dismissView) {
+            handleDismiss()
+        } else {
+            throw IllegalStateException("Unhandled view in onClick()")
         }
     }
 
@@ -404,25 +388,6 @@ class UrlInputFragment :
             browserToolbar.edit.updateUrl("", false)
             onTextChange("")
         }
-    }
-
-    private fun showHomeMenu(anchor: View) = context?.let {
-        displayedPopupMenu = HomeMenu(it, this)
-
-        displayedPopupMenu?.show(anchor)
-
-        displayedPopupMenu?.dismissListener = {
-            displayedPopupMenu = null
-        }
-    }
-
-    override fun onDetach() {
-        super.onDetach()
-
-        // On detach, the PopupMenu is no longer relevant to other content (e.g. BrowserFragment) so dismiss it.
-        // Note: if we don't dismiss the PopupMenu, its onMenuItemClick method references the old Fragment, which now
-        // has a null Context and will cause crashes.
-        displayedPopupMenu?.dismiss()
     }
 
     private fun animateFirstDraw() {
