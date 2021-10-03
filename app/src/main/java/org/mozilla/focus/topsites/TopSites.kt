@@ -131,7 +131,7 @@ private fun TopSiteItem(
         DropdownMenu(
             expanded = menuExpanded,
             onDismissRequest = { menuExpanded = false },
-            modifier = Modifier.background(color = PhotonColors.Ink30)
+            modifier = Modifier.background(color = PhotonColors.Ink05)
         ) {
             for (item in menuItems) {
                 DropdownMenuItem(
@@ -160,7 +160,7 @@ private fun TopSiteFaviconCard(topSite: TopSite) {
     Card(
         modifier = Modifier.size(60.dp),
         shape = RoundedCornerShape(8.dp),
-        backgroundColor = PhotonColors.Ink30
+        backgroundColor = PhotonColors.Ink05
     ) {
         Column(
             verticalArrangement = Arrangement.Center,
