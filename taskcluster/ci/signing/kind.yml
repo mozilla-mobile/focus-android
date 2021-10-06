@@ -24,11 +24,11 @@ job-template:
         by-tasks-for:
             (action|cron|github-release):
                 by-build-type:
-                    nightly:
+                    (nightly|focus-release|klar-release):
                         type: signing
                     default: {}
             default: {}
-    run-on-tasks-for: [github-push, github-release]
+    run-on-tasks-for: []
     treeherder:
         job-symbol:
             by-build-type:
