@@ -89,7 +89,12 @@
     <color name="colorSession">@color/photonLightGrey05</color>
     <color name="colorActiveSession">@color/photonViolet05</color>
 
+<<<<<<< HEAD
     <!-- Launcher Icon Background-->
+=======
+    <!-- Dialogs -->
+    <color name="add_to_homescreen_text">#B3FFFFFF</color>
+>>>>>>> 492efa153 (For #5549: Update color for add-to home launcher shortcuts.)
     <color name="add_to_homescreen_icon_background">@color/photonInk60</color>
 
     <!-- Dialogs -->
