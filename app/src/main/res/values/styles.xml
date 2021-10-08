@@ -38,7 +38,11 @@
     </style>
 
     <style name="DialogTitleStyle" parent="TextAppearance.AppCompat.Title">
+<<<<<<< HEAD
         <item name="android:textColor">@color/primaryText</item>
+=======
+        <item name="android:textColor">@color/dialog_title</item>
+>>>>>>> c0fc304a8 (For #5549: Update add to home dialog UI.)
         <item name="android:textSize">20sp</item>
         <item name="android:fontFamily">@string/font_roboto_medium</item>
     </style>
@@ -47,7 +51,11 @@
         <item name="android:textSize">20sp</item>
         <!-- Setting textVisiblePassword as inputType removes the line below the text-->
         <item name="android:inputType">text|textVisiblePassword</item>
+<<<<<<< HEAD
         <item name="android:textColor">@color/primaryText</item>
+=======
+        <item name="android:textColor">@color/dialog_title</item>
+>>>>>>> c0fc304a8 (For #5549: Update add to home dialog UI.)
         <item name="android:textCursorDrawable">@null</item>
     </style>
 

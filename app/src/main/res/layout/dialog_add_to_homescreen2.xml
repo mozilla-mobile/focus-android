@@ -20,7 +20,11 @@
         android:fontFamily="@font/metropolis_semibold"
         android:letterSpacing="0.05"
         android:text="@string/menu_add_to_home_screen"
+<<<<<<< HEAD
         android:textColor="@color/primaryText"
+=======
+        android:textColor="@color/dialog_title"
+>>>>>>> c0fc304a8 (For #5549: Update add to home dialog UI.)
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

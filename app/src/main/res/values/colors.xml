@@ -90,11 +90,15 @@
     <color name="colorActiveSession">@color/photonViolet05</color>
 
 <<<<<<< HEAD
+<<<<<<< HEAD
     <!-- Launcher Icon Background-->
 =======
     <!-- Dialogs -->
     <color name="add_to_homescreen_text">#B3FFFFFF</color>
 >>>>>>> 492efa153 (For #5549: Update color for add-to home launcher shortcuts.)
+=======
+    <!-- Launcher Icon Background-->
+>>>>>>> c0fc304a8 (For #5549: Update add to home dialog UI.)
     <color name="add_to_homescreen_icon_background">@color/photonInk60</color>
 
     <!-- Dialogs -->
@@ -136,6 +140,10 @@
 
     <!--Modals colors -->
     <color name="modal_background">@color/colorSecondary</color>
+<<<<<<< HEAD
+=======
+    <color name="dialog_title">@color/primaryText</color>
+>>>>>>> c0fc304a8 (For #5549: Update add to home dialog UI.)
 
     <!-- Override AC colors -->
     <color name="mozac_ui_icons_fill">@color/primaryText</color>
