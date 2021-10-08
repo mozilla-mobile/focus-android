@@ -139,7 +139,11 @@
     <color name="onboarding_title">@color/photonLightGrey05</color>
 
     <!--Modals colors -->
+<<<<<<< HEAD
     <color name="modal_background">@color/photonLightGrey05</color>
+=======
+    <color name="modal_background">@color/colorSecondary</color>
+>>>>>>> 2ceec64cb (For #5561: Update colors for dialogs.)
 
     <!-- Override AC colors -->
     <color name="mozac_ui_icons_fill">@color/primaryText</color>

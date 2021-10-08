@@ -15,7 +15,11 @@
         android:layout_marginTop="24dp"
         android:layout_marginEnd="24dp"
         android:text="@string/menu_add_to_home_screen"
+<<<<<<< HEAD
         android:textColor="@color/photonWhite"
+=======
+        android:textColor="@color/primaryText"
+>>>>>>> 2ceec64cb (For #5561: Update colors for dialogs.)
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
