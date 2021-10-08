@@ -88,8 +88,7 @@
 
     <!-- Session -->
     <color name="colorSession">@color/photonLightGrey05</color>
-    <color name="colorActiveSession">#353852</color>
-    <color name="colorAction">@color/photonBlue50</color>
+    <color name="colorActiveSession">@color/photonViolet05</color>
 
     <!-- Dialogs -->
     <color name="add_to_homescreen_text">#B3FFFFFF</color>
