@@ -18,7 +18,6 @@ import android.view.accessibility.AccessibilityManager
 import android.webkit.MimeTypeMap
 import android.widget.FrameLayout
 import android.widget.Toast
-import androidx.core.content.ContextCompat
 import androidx.core.content.pm.ShortcutManagerCompat
 import androidx.preference.PreferenceManager
 import com.google.android.material.appbar.AppBarLayout
@@ -83,6 +82,8 @@ import org.mozilla.focus.topsites.DefaultTopSitesView
 import org.mozilla.focus.utils.AppPermissionCodes.REQUEST_CODE_DOWNLOAD_PERMISSIONS
 import org.mozilla.focus.utils.AppPermissionCodes.REQUEST_CODE_PROMPT_PERMISSIONS
 import org.mozilla.focus.utils.Browsers
+import org.mozilla.focus.utils.FocusSnackbar
+import org.mozilla.focus.utils.FocusSnackbarDelegate
 import org.mozilla.focus.utils.Settings
 import org.mozilla.focus.utils.StatusBarUtils
 import org.mozilla.focus.utils.SupportUtils
@@ -187,7 +188,8 @@ class BrowserFragment :
                     requireContext(),
                     components.tabsUseCases,
                     components.contextMenuUseCases,
-                    view
+                    view,
+                    FocusSnackbarDelegate(view)
                 ) +
                     ContextMenuCandidate.createOpenInExternalAppCandidate(
                         requireContext(),
@@ -488,10 +490,16 @@ class BrowserFragment :
             return
         }
 
-        val snackbar = Snackbar.make(
+        val snackbar = FocusSnackbar.make(
             requireView(),
-            String.format(requireContext().getString(R.string.download_snackbar_finished), state.fileName),
             Snackbar.LENGTH_LONG
+        )
+
+        snackbar.setText(
+            String.format(
+                requireContext().getString(R.string.download_snackbar_finished),
+                state.fileName
+            )
         )
 
         snackbar.setAction(getString(R.string.download_snackbar_open)) {
@@ -513,8 +521,6 @@ class BrowserFragment :
                 ).show()
             }
         }
-
-        snackbar.setActionTextColor(ContextCompat.getColor(requireContext(), R.color.snackbarActionText))
 
         snackbar.show()
     }
