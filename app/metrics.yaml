@@ -302,12 +302,14 @@ tracking_protection:
       - https://github.com/mozilla-mobile/focus-android/issues/5057
     data_reviews:
       - https://github.com/mozilla-mobile/focus-android/pull/5163
+      - https://github.com/mozilla-mobile/focus-android/pull/5543
     data_sensitivity:
       - interaction
     lifetime: user
     notification_emails:
       - android-probes@mozilla.com
-    expires: "2022-08-17"
+      - mcarare@mozilla.com
+    expires: never
 
   tracker_setting_changed:
     type: event
@@ -393,3 +395,78 @@ tracking_protection:
     notification_emails:
       - android-probes@mozilla.com
     expires: "2022-08-17"
+pro_tips:
+  tip_displayed:
+    type: event
+    description: A pro tip has been displayed.
+    bugs:
+      - https://github.com/mozilla-mobile/focus-android/issues/5541
+    data_reviews:
+      - https://github.com/mozilla-mobile/focus-android/pull/5542
+    data_sensitivity:
+      - interaction
+    notification_emails:
+      - android-probes@mozilla.com
+    expires: "2022-11-01"
+    extra_keys:
+      tip_id:
+        description: |
+          The tip code of tip being displayed. Can be one of fresh_look_tip,
+          shortcuts_tip, allow_list_tip, etp_tip,request_desktop_tip.
+          Note that fresh_look_tip is automatically displayed on home screen.
+        type: string
+  link_in_tip_clicked:
+    type: event
+    description: A link in a pro tip has been clicked.
+    bugs:
+      - https://github.com/mozilla-mobile/focus-android/issues/5541
+    data_reviews:
+      - https://github.com/mozilla-mobile/focus-android/pull/5542
+    data_sensitivity:
+      - interaction
+    notification_emails:
+      - android-probes@mozilla.com
+    expires: "2022-11-01"
+    extra_keys:
+      tip_id:
+        description: |
+          The tip code of tip being clicked.
+          Can be one of fresh_look_tip, allow_list_tip, request_desktop_tip.
+        type: string
+
+preferences:
+  user_theme:
+    type: string
+    description: >
+      A string that indicates the theme.
+      Can be one of LIGHT, DARK, or FOLLOW DEVICE.
+      Default is FOLLOW DEVICE.
+    bugs:
+      - https://github.com/mozilla-mobile/focus-android/issues/5519
+    data_reviews:
+      - https://github.com/mozilla-mobile/focus-android/pull/5526
+    data_sensitivity:
+      - interaction
+    notification_emails:
+      - android-probes@mozilla.com
+    expires: "2022-10-01"
+
+app_opened:
+  from_icons:
+    type: event
+    description: |
+      The user has opened the app using launcher icons
+    bugs:
+      - https://github.com/mozilla-mobile/focus-android/issues/5546
+    data_reviews:
+      - https://github.com/mozilla-mobile/focus-android/pull/5552
+    data_sensitivity:
+      - interaction
+    notification_emails:
+      - android-probes@mozilla.com
+    expires: "2022-11-01"
+    extra_keys:
+      open_type:
+        description: |
+          Can be "Launch" if Focus was not already opened or "Resume" if it was.
+        type: string

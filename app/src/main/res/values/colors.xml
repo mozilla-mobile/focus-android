@@ -60,13 +60,13 @@
     <color name="menuBackground">@color/colorSecondary</color>
 
     <!-- Snackbar-->
-    <color name="snackbarBackground">@color/photonLightGrey05</color>
-    <color name="snackbarTextColor">@color/photonBlack</color>
-    <color name="snackbarActionText">@color/photonBlue40</color>
+    <color name="snackbarBackground">@color/colorSecondary</color>
+    <color name="snackbarTextColor">@color/primaryText</color>
+    <color name="snackbarActionText">@color/accentBright</color>
 
     <!-- Search Suggestions -->
     <color name="searchSuggestionsBackground">@color/photonLightGrey05</color>
-    <color name="searchSuggestionPromptBackground">@color/photonLightGrey05</color>
+    <color name="searchSuggestionPromptBackground">@color/photonViolet05</color>
     <color name="searchSuggestionPromptTitleColor">@color/photonInk80</color>
     <color name="searchSuggestionPromptSubtitleColor">@color/photonInk80</color>
     <color name="searchSuggestionPromptBorderColor">@color/colorSecondary</color>
@@ -81,15 +81,13 @@
     <color name="onboarding_indicator_selected">#FFFFFFFF</color>
 
     <!-- Home Tips -->
-    <color name="inactive_dot_background">@color/photonInk20A48</color>
-    <color name="active_dot_background">@color/photonLightGrey05</color>
-    <color name="tip_text_color">@color/disabled</color>
+    <color name="tip_dot_background">@color/photonInk50</color>
+    <color name="tip_text_color">@color/secondaryText</color>
     <color name="tip_deeplink_color">@color/accent</color>
 
     <!-- Session -->
     <color name="colorSession">@color/photonLightGrey05</color>
-    <color name="colorActiveSession">#353852</color>
-    <color name="colorAction">@color/photonBlue50</color>
+    <color name="colorActiveSession">@color/photonViolet05</color>
 
     <!-- Launcher Icon Background-->
     <color name="add_to_homescreen_icon_background">@color/photonInk60</color>
@@ -112,7 +110,7 @@
 
     <!-- Preferences -->
     <color name="preference_summary_text">@color/secondaryText</color>
-    <color name="settings_background">@color/background</color>
+    <color name="settings_background">@color/photonLightGrey05</color>
     <color name="preference_learn_more_link">@color/accentBright</color>
     <color name="selected_search_engine">@color/accentBright</color>
     <color name="settings_whats_new">@color/accentBright</color>
@@ -133,9 +131,10 @@
 
     <!--Modals colors -->
     <color name="modal_background">@color/colorSecondary</color>
-    <color name="dialog_title">@color/primaryText</color>
 
     <!-- Override AC colors -->
     <color name="mozac_ui_icons_fill">@color/primaryText</color>
+    <color name="mozac_additional_note_background">@color/colorPrimary</color>
+    <color name="mozac_additional_note_text_color">@color/secondaryText</color>
 
 </resources>
