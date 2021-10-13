@@ -13,7 +13,6 @@ import androidx.preference.PreferenceManager
 import mozilla.components.concept.engine.Engine
 import mozilla.components.concept.engine.EngineSession
 import org.mozilla.focus.R
-import org.mozilla.focus.engine.EngineSharedPreferencesListener
 import org.mozilla.focus.fragment.FirstrunFragment
 import org.mozilla.focus.searchsuggestions.SearchSuggestionsPreferences
 
@@ -57,11 +56,7 @@ class Settings private constructor(
             return false
         }
 
-    private val preferencesListener = EngineSharedPreferencesListener(context)
-
-    private val preferences: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(context).apply {
-        registerOnSharedPreferenceChangeListener(preferencesListener)
-    }
+    private val preferences: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
 
     fun createTrackingProtectionPolicy(): EngineSession.TrackingProtectionPolicy {
         val trackingCategories: MutableList<EngineSession.TrackingProtectionPolicy.TrackingCategory> =
@@ -100,8 +95,8 @@ class Settings private constructor(
         )
     }
 
-    fun setupSafeBrowsing(engine: Engine) {
-        if (shouldUseSafeBrowsing()) {
+    fun setupSafeBrowsing(engine: Engine, shouldUseSafeBrowsing: Boolean = shouldUseSafeBrowsing()) {
+        if (shouldUseSafeBrowsing) {
             engine.settings.safeBrowsingPolicy = arrayOf(EngineSession.SafeBrowsingPolicy.RECOMMENDED)
         } else {
             engine.settings.safeBrowsingPolicy = arrayOf(EngineSession.SafeBrowsingPolicy.NONE)
@@ -115,6 +110,12 @@ class Settings private constructor(
     @Deprecated("This is no longer used. Read search engines from BrowserStore instead")
     val defaultSearchEngineName: String
         get() = preferences.getString(getPreferenceKey(R.string.pref_key_search_engine), "")!!
+
+    val openLinksInExternalApp: Boolean
+        get() = preferences.getBoolean(
+            getPreferenceKey(R.string.pref_key_open_links_in_external_app),
+            false
+        )
 
     fun shouldBlockImages(): Boolean =
         // Not shipping in v1 (#188)

@@ -51,6 +51,7 @@ import org.mozilla.focus.downloads.DownloadService
 import org.mozilla.focus.engine.AppContentInterceptor
 import org.mozilla.focus.engine.ClientWrapper
 import org.mozilla.focus.engine.SanityCheckMiddleware
+import org.mozilla.focus.engine.TabsFeatureMiddleware
 import org.mozilla.focus.exceptions.ExceptionMigrationMiddleware
 import org.mozilla.focus.ext.components
 import org.mozilla.focus.locale.LocaleManager
@@ -136,7 +137,8 @@ class Components(
                 SearchFilterMiddleware(),
                 PromptMiddleware(),
                 AdsTelemetryMiddleware(adsTelemetry),
-                BlockedTrackersMiddleware(context)
+                BlockedTrackersMiddleware(context),
+                TabsFeatureMiddleware()
             ) + EngineMiddleware.create(engine)
         )
     }
@@ -151,7 +153,7 @@ class Components(
     val tabsUseCases: TabsUseCases by lazy { TabsUseCases(store) }
 
     val searchUseCases: SearchUseCases by lazy {
-        SearchUseCases(store, tabsUseCases)
+        SearchUseCases(store, tabsUseCases, sessionUseCases)
     }
 
     val contextMenuUseCases: ContextMenuUseCases by lazy { ContextMenuUseCases(store) }
@@ -177,7 +179,13 @@ class Components(
     val topSitesUseCases: TopSitesUseCases by lazy { TopSitesUseCases(topSitesStorage) }
 
     val appLinksInterceptor by lazy {
-        AppLinksInterceptor(context, interceptLinkClicks = true, launchInApp = { true })
+        AppLinksInterceptor(
+            context,
+            interceptLinkClicks = true,
+            launchInApp = {
+                Settings.getInstance(context).openLinksInExternalApp
+            }
+        )
     }
 }
 
