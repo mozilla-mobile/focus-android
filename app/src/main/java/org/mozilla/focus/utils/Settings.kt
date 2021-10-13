@@ -4,21 +4,22 @@
 
 package org.mozilla.focus.utils
 
+import android.accessibilityservice.AccessibilityServiceInfo
 import android.content.Context
 import android.content.SharedPreferences
 import android.content.res.Resources
+import android.view.accessibility.AccessibilityManager
 import androidx.preference.PreferenceManager
 import mozilla.components.concept.engine.Engine
 import mozilla.components.concept.engine.EngineSession
 import org.mozilla.focus.R
-import org.mozilla.focus.engine.EngineSharedPreferencesListener
 import org.mozilla.focus.fragment.FirstrunFragment
 import org.mozilla.focus.searchsuggestions.SearchSuggestionsPreferences
 
 /**
  * A simple wrapper for SharedPreferences that makes reading preference a little bit easier.
  */
-@Suppress("TooManyFunctions") // This class is designed to have a lot of (simple) functions
+@Suppress("TooManyFunctions", "LargeClass") // This class is designed to have a lot of (simple) functions
 class Settings private constructor(
     private val context: Context
 ) {
@@ -35,11 +36,27 @@ class Settings private constructor(
         }
     }
 
-    private val preferencesListener = EngineSharedPreferencesListener(context)
+    private val accessibilityManager =
+        context.getSystemService(Context.ACCESSIBILITY_SERVICE) as AccessibilityManager?
 
-    private val preferences: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(context).apply {
-        registerOnSharedPreferenceChangeListener(preferencesListener)
-    }
+    /**
+     * Check each active accessibility service to see if it can perform gestures, if any can,
+     * then it is *likely* a switch service is enabled.
+     */
+    private val switchServiceIsEnabled: Boolean
+        get() {
+            accessibilityManager?.getEnabledAccessibilityServiceList(0)?.let { activeServices ->
+                for (service in activeServices) {
+                    if (service.capabilities.and(AccessibilityServiceInfo.CAPABILITY_CAN_PERFORM_GESTURES) == 1) {
+                        return true
+                    }
+                }
+            }
+
+            return false
+        }
+
+    private val preferences: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
 
     fun createTrackingProtectionPolicy(): EngineSession.TrackingProtectionPolicy {
         val trackingCategories: MutableList<EngineSession.TrackingProtectionPolicy.TrackingCategory> =
@@ -78,8 +95,8 @@ class Settings private constructor(
         )
     }
 
-    fun setupSafeBrowsing(engine: Engine) {
-        if (shouldUseSafeBrowsing()) {
+    fun setupSafeBrowsing(engine: Engine, shouldUseSafeBrowsing: Boolean = shouldUseSafeBrowsing()) {
+        if (shouldUseSafeBrowsing) {
             engine.settings.safeBrowsingPolicy = arrayOf(EngineSession.SafeBrowsingPolicy.RECOMMENDED)
         } else {
             engine.settings.safeBrowsingPolicy = arrayOf(EngineSession.SafeBrowsingPolicy.NONE)
@@ -210,6 +227,12 @@ class Settings private constructor(
             false
         )
 
+    /**
+     * This is automatically inferred based on the current system status. Not a setting in our app.
+     */
+    fun isAccessibilityEnabled() =
+        accessibilityManager?.isTouchExplorationEnabled ?: false || switchServiceIsEnabled
+
     fun userHasToggledSearchSuggestions(): Boolean =
         preferences.getBoolean(SearchSuggestionsPreferences.TOGGLED_SUGGESTIONS_PREF, false)
 
@@ -259,6 +282,21 @@ class Settings private constructor(
     fun hasContentBlocked() = preferences.getBoolean(
         getPreferenceKey(R.string.pref_key_privacy_block_other3),
         true
+    )
+
+    var lightThemeSelected = preferences.getBoolean(
+        getPreferenceKey(R.string.pref_key_light_theme),
+        false
+    )
+
+    var darkThemeSelected = preferences.getBoolean(
+        getPreferenceKey(R.string.pref_key_dark_theme),
+        false
+    )
+
+    var useDefaultThemeSelected = preferences.getBoolean(
+        getPreferenceKey(R.string.pref_key_default_theme),
+        false
     )
 
     private fun getPreferenceKey(resourceId: Int): String =
