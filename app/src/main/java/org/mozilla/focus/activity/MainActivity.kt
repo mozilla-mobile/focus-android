@@ -6,15 +6,21 @@ package org.mozilla.focus.activity
 
 import android.content.Context
 import android.content.Intent
+import android.content.res.Configuration
+import android.graphics.Color
+import android.os.Build
 import android.os.Bundle
 import android.util.AttributeSet
 import android.view.MenuItem
 import android.view.View
-import androidx.appcompat.app.AppCompatDelegate
+import androidx.core.content.ContextCompat
 import androidx.preference.PreferenceManager
 import mozilla.components.concept.engine.EngineView
 import mozilla.components.lib.crash.Crash
+import mozilla.components.support.ktx.android.content.getColorFromAttr
+import mozilla.components.support.ktx.android.view.getWindowInsetsController
 import mozilla.components.support.utils.SafeIntent
+import org.mozilla.focus.GleanMetrics.AppOpened
 import org.mozilla.focus.R
 import org.mozilla.focus.biometrics.Biometrics
 import org.mozilla.focus.ext.components
@@ -44,10 +50,6 @@ open class MainActivity : LocaleAwareAppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        // Because some MVP characteristics are set from xml files we need to choose the mode of the theme
-        // according to MVP flag and not by system theme mode
-        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
-
         if (!isTaskRoot) {
             if (intent.hasCategory(Intent.CATEGORY_LAUNCHER) && Intent.ACTION_MAIN == intent.action) {
                 finish()
@@ -58,6 +60,16 @@ open class MainActivity : LocaleAwareAppCompatActivity() {
         @Suppress("DEPRECATION") // https://github.com/mozilla-mobile/focus-android/issues/5016
         window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_STABLE or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
 
+        window.statusBarColor = ContextCompat.getColor(this, android.R.color.transparent)
+        when (resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) {
+            Configuration.UI_MODE_NIGHT_UNDEFINED, // We assume light here per Android doc's recommendation
+            Configuration.UI_MODE_NIGHT_NO -> {
+                updateLightSystemBars()
+            }
+            Configuration.UI_MODE_NIGHT_YES -> {
+                clearLightSystemBars()
+            }
+        }
         setContentView(R.layout.activity_main)
 
         val intent = SafeIntent(intent)
@@ -75,7 +87,7 @@ open class MainActivity : LocaleAwareAppCompatActivity() {
         }
 
         if (intent.isLauncherIntent) {
-            TelemetryWrapper.openFromIconEvent()
+            AppOpened.fromIcons.record(AppOpened.FromIconsExtra(AppOpenType.LAUNCH.type))
         }
 
         val launchCount = Settings.getInstance(this).getAppLaunchCount()
@@ -155,7 +167,7 @@ open class MainActivity : LocaleAwareAppCompatActivity() {
         }
 
         if (intent.isLauncherIntent) {
-            TelemetryWrapper.resumeFromIconEvent()
+            AppOpened.fromIcons.record(AppOpened.FromIconsExtra(AppOpenType.RESUME.type))
         }
 
         super.onNewIntent(unsafeIntent)
@@ -248,6 +260,36 @@ open class MainActivity : LocaleAwareAppCompatActivity() {
                     false
                 ).apply()
         }
+    }
+
+    private fun updateLightSystemBars() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            window.statusBarColor = getColorFromAttr(android.R.attr.statusBarColor)
+            window.getWindowInsetsController().isAppearanceLightStatusBars = true
+        } else {
+            window.statusBarColor = Color.BLACK
+        }
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            // API level can display handle light navigation bar color
+            window.getWindowInsetsController().isAppearanceLightNavigationBars = true
+        }
+    }
+
+    private fun clearLightSystemBars() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            window.getWindowInsetsController().isAppearanceLightStatusBars = false
+        }
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            // API level can display handle light navigation bar color
+            window.getWindowInsetsController().isAppearanceLightNavigationBars = false
+        }
+    }
+
+    enum class AppOpenType(val type: String) {
+        LAUNCH("Launch"),
+        RESUME("Resume")
     }
 
     companion object {

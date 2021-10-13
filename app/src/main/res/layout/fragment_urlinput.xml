@@ -33,7 +33,7 @@
             android:paddingStart="24dp"
             android:paddingEnd="24dp"
             android:scaleType="centerInside"
-            android:src="@drawable/wordmark2"
+            app:srcCompat="@drawable/wordmark2"
             app:layout_constraintBottom_toTopOf="@id/home_tips"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -63,7 +63,7 @@
             android:id="@+id/toolbarBackgroundView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/toolbar_color" />
+            android:background="@drawable/background_gradient" />
 
         <View
             android:id="@+id/toolbarBottomBorder"
@@ -90,7 +90,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@android:color/transparent"
+                android:background="@drawable/background_gradient"
                 android:orientation="horizontal">
 
                 <mozilla.components.browser.toolbar.BrowserToolbar

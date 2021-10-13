@@ -13,6 +13,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
+import androidx.appcompat.content.res.AppCompatResources
 import androidx.compose.ui.platform.ComposeView
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
@@ -286,7 +287,10 @@ class UrlInputFragment :
         if (isOverlay) {
             landingLayout?.visibility = View.GONE
         } else {
-            backgroundView?.setBackgroundResource(R.drawable.dark_background)
+            backgroundView?.background = AppCompatResources.getDrawable(
+                requireContext(),
+                R.drawable.home_background
+            )
 
             dismissView?.visibility = View.GONE
 
@@ -363,7 +367,7 @@ class UrlInputFragment :
             // Make sure we update the background for landscape / portrait orientations.
             backgroundView?.background = ContextCompat.getDrawable(
                 requireContext(),
-                R.drawable.dark_background
+                R.drawable.home_background
             )
         }
     }

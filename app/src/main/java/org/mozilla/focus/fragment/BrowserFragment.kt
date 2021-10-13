@@ -18,7 +18,6 @@ import android.view.accessibility.AccessibilityManager
 import android.webkit.MimeTypeMap
 import android.widget.FrameLayout
 import android.widget.Toast
-import androidx.core.content.ContextCompat
 import androidx.core.content.pm.ShortcutManagerCompat
 import androidx.preference.PreferenceManager
 import com.google.android.material.appbar.AppBarLayout
@@ -38,7 +37,6 @@ import mozilla.components.browser.toolbar.BrowserToolbar
 import mozilla.components.concept.engine.EngineView
 import mozilla.components.concept.engine.HitResult
 import mozilla.components.feature.app.links.AppLinksFeature
-import mozilla.components.feature.contextmenu.ContextMenuCandidate
 import mozilla.components.feature.contextmenu.ContextMenuFeature
 import mozilla.components.feature.downloads.AbstractFetchDownloadService
 import mozilla.components.feature.downloads.DownloadsFeature
@@ -63,6 +61,7 @@ import org.mozilla.focus.browser.integration.BrowserMenuController
 import org.mozilla.focus.browser.integration.BrowserToolbarIntegration
 import org.mozilla.focus.browser.integration.FindInPageIntegration
 import org.mozilla.focus.browser.integration.FullScreenIntegration
+import org.mozilla.focus.contextmenu.ContextMenuCandidates
 import org.mozilla.focus.downloads.DownloadService
 import org.mozilla.focus.engine.EngineSharedPreferencesListener
 import org.mozilla.focus.exceptions.ExceptionDomains
@@ -83,6 +82,8 @@ import org.mozilla.focus.topsites.DefaultTopSitesView
 import org.mozilla.focus.utils.AppPermissionCodes.REQUEST_CODE_DOWNLOAD_PERMISSIONS
 import org.mozilla.focus.utils.AppPermissionCodes.REQUEST_CODE_PROMPT_PERMISSIONS
 import org.mozilla.focus.utils.Browsers
+import org.mozilla.focus.utils.FocusSnackbar
+import org.mozilla.focus.utils.FocusSnackbarDelegate
 import org.mozilla.focus.utils.Settings
 import org.mozilla.focus.utils.StatusBarUtils
 import org.mozilla.focus.utils.SupportUtils
@@ -183,16 +184,14 @@ class BrowserFragment :
             ContextMenuFeature(
                 parentFragmentManager,
                 components.store,
-                ContextMenuCandidate.defaultCandidates(
+                ContextMenuCandidates.get(
                     requireContext(),
                     components.tabsUseCases,
                     components.contextMenuUseCases,
-                    view
-                ) +
-                    ContextMenuCandidate.createOpenInExternalAppCandidate(
-                        requireContext(),
-                        components.appLinksUseCases
-                    ),
+                    components.appLinksUseCases,
+                    view,
+                    FocusSnackbarDelegate(view)
+                ),
                 engineView!!,
                 requireComponents.contextMenuUseCases,
                 tabId,
@@ -263,7 +262,7 @@ class BrowserFragment :
                 store = components.store,
                 sessionId = tabId,
                 fragmentManager = parentFragmentManager,
-                launchInApp = { true },
+                launchInApp = { Settings.getInstance(requireContext()).openLinksInExternalApp },
                 loadUrlUseCase = requireContext().components.sessionUseCases.loadUrl
             ),
             owner = this,
@@ -488,10 +487,17 @@ class BrowserFragment :
             return
         }
 
-        val snackbar = Snackbar.make(
+        val snackbar = FocusSnackbar.make(
             requireView(),
-            String.format(requireContext().getString(R.string.download_snackbar_finished), state.fileName),
+            (requireView().findViewById(R.id.tabs) as? FloatingSessionsButton)?.visibility == View.VISIBLE,
             Snackbar.LENGTH_LONG
+        )
+
+        snackbar.setText(
+            String.format(
+                requireContext().getString(R.string.download_snackbar_finished),
+                state.fileName
+            )
         )
 
         snackbar.setAction(getString(R.string.download_snackbar_open)) {
@@ -513,8 +519,6 @@ class BrowserFragment :
                 ).show()
             }
         }
-
-        snackbar.setActionTextColor(ContextCompat.getColor(requireContext(), R.color.snackbarActionText))
 
         snackbar.show()
     }
@@ -727,16 +731,6 @@ class BrowserFragment :
 
             R.id.forward -> {
                 requireComponents.sessionUseCases.goForward(tabId)
-            }
-
-            R.id.help_trackers -> {
-                val url = SupportUtils.getSumoURLForTopic(requireContext(), SupportUtils.SumoTopic.TRACKERS)
-                requireComponents.tabsUseCases.addTab(
-                    url,
-                    source = SessionState.Source.Internal.Menu,
-                    selectTab = true,
-                    private = true
-                )
             }
 
             R.id.add_to_homescreen -> { showAddToHomescreenDialog() }

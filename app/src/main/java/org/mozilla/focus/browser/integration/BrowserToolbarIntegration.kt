@@ -64,9 +64,10 @@ class BrowserToolbarIntegration(
 
         toolbar.display.apply {
             colors = colors.copy(
-                hint = ContextCompat.getColor(toolbar.context, R.color.photonLightGrey05),
+                hint = ContextCompat.getColor(toolbar.context, R.color.urlBarHintText),
                 securityIconInsecure = Color.TRANSPARENT,
-                text = ContextCompat.getColor(toolbar.context, R.color.primaryText)
+                text = ContextCompat.getColor(toolbar.context, R.color.primaryText),
+                menu = ContextCompat.getColor(toolbar.context, R.color.primaryText)
             )
 
             addTrackingProtectionIndicator()
@@ -148,7 +149,7 @@ class BrowserToolbarIntegration(
 
         val urlBackground = ResourcesCompat.getDrawable(
             fragment.resources,
-            R.drawable.toolbar_url_dark_background,
+            R.drawable.toolbar_url_background,
             fragment.context?.theme
         )
         toolbar.display.setUrlBackground(urlBackground)
