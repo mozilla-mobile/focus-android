@@ -18,7 +18,7 @@ import org.mozilla.focus.searchsuggestions.SearchSuggestionsPreferences
 /**
  * A simple wrapper for SharedPreferences that makes reading preference a little bit easier.
  */
-@Suppress("TooManyFunctions") // This class is designed to have a lot of (simple) functions
+@Suppress("TooManyFunctions", "LargeClass") // This class is designed to have a lot of (simple) functions
 class Settings private constructor(
     private val context: Context
 ) {
@@ -93,6 +93,12 @@ class Settings private constructor(
     @Deprecated("This is no longer used. Read search engines from BrowserStore instead")
     val defaultSearchEngineName: String
         get() = preferences.getString(getPreferenceKey(R.string.pref_key_search_engine), "")!!
+
+    val openLinksInExternalApp: Boolean
+        get() = preferences.getBoolean(
+            getPreferenceKey(R.string.pref_key_open_links_in_external_app),
+            false
+        )
 
     fun shouldBlockImages(): Boolean =
         // Not shipping in v1 (#188)
