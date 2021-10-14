@@ -23,6 +23,7 @@ import mozilla.components.support.utils.SafeIntent
 import org.mozilla.focus.R
 import org.mozilla.focus.biometrics.Biometrics
 import org.mozilla.focus.ext.components
+import org.mozilla.focus.ext.settings
 import org.mozilla.focus.fragment.BrowserFragment
 import org.mozilla.focus.fragment.UrlInputFragment
 import org.mozilla.focus.locale.LocaleAwareAppCompatActivity
@@ -75,7 +76,7 @@ open class MainActivity : LocaleAwareAppCompatActivity() {
 
         // The performance check was added after the shouldShowFirstRun to take as much of the
         // code path as possible
-        if (Settings.getInstance(this).shouldShowFirstrun() &&
+        if (settings.shouldShowFirstrun() &&
             !Performance.processIntentIfPerformanceTest(intent, this)
         ) {
             components.appStore.dispatch(AppAction.ShowFirstRun)
@@ -89,7 +90,7 @@ open class MainActivity : LocaleAwareAppCompatActivity() {
             TelemetryWrapper.openFromIconEvent()
         }
 
-        val launchCount = Settings.getInstance(this).getAppLaunchCount()
+        val launchCount = settings.getAppLaunchCount()
         PreferenceManager.getDefaultSharedPreferences(this)
             .edit()
             .putInt(getString(R.string.app_launch_count), launchCount + 1)
