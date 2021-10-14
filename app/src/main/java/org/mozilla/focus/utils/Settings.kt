@@ -18,7 +18,7 @@ import org.mozilla.focus.searchsuggestions.SearchSuggestionsPreferences
 /**
  * A simple wrapper for SharedPreferences that makes reading preference a little bit easier.
  */
-@Suppress("TooManyFunctions") // This class is designed to have a lot of (simple) functions
+@Suppress("TooManyFunctions", "LargeClass") // This class is designed to have a lot of (simple) functions
 class Settings private constructor(
     private val context: Context
 ) {
