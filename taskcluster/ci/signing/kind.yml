@@ -24,7 +24,7 @@ job-template:
         by-tasks-for:
             (action|cron|github-release):
                 by-build-type:
-                    (nightly|focus-release|klar-release|beta):
+                    (nightly|focus-release|klar-release|beta|focus-debug|android-test-debug):
                         type: signing
                     default: {}
             default: {}
@@ -35,6 +35,7 @@ job-template:
                 focus-.*: Bfs
                 klar-.*: Bkls
                 default: Bs
+                android-test.+: Bats
         kind: build
         platform: android-all/opt
         tier: 1
