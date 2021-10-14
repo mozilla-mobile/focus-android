@@ -9,9 +9,12 @@ import androidx.annotation.StringRes
 import mozilla.components.browser.state.state.SessionState
 import org.mozilla.focus.R
 import org.mozilla.focus.ext.components
+<<<<<<< HEAD
 import org.mozilla.focus.telemetry.TelemetryWrapper
+=======
+import org.mozilla.focus.ext.settings
+>>>>>>> 9553c8ee7 (No issue: Refactor settings to use delegates.)
 import org.mozilla.focus.utils.AppConstants
-import org.mozilla.focus.utils.Settings
 import org.mozilla.focus.utils.SupportUtils
 import org.mozilla.focus.utils.SupportUtils.getSumoURLForTopic
 
@@ -74,7 +77,7 @@ class Tip(
                 TelemetryWrapper.pressTipEvent(id)
             }
             val shouldDisplayFreshLookTip = {
-                Settings.getInstance(context).getAppLaunchCount() == 0
+                context.settings.getAppLaunchCount() == 0
             }
 
             return Tip(id, name, shouldDisplayFreshLookTip, deepLink)
@@ -92,10 +95,12 @@ class Tip(
         fun createTrackingProtectionTip(context: Context): Tip {
             val id = R.string.tip_disable_tracking_protection3
 
+            val settings = context.settings
+
             val shouldDisplayTrackingProtection = {
-                Settings.getInstance(context).shouldBlockOtherTrackers() ||
-                    Settings.getInstance(context).shouldBlockAdTrackers() ||
-                    Settings.getInstance(context).shouldBlockAnalyticTrackers()
+                settings.shouldBlockOtherTrackers() ||
+                    settings.shouldBlockAdTrackers() ||
+                    settings.shouldBlockAnalyticTrackers()
             }
 
             return Tip(id, null, shouldDisplayTrackingProtection)
@@ -108,7 +113,7 @@ class Tip(
                 "https://support.mozilla.org/kb/switch-desktop-view-firefox-focus-android"
 
             val shouldDisplayRequestDesktop = {
-                !Settings.getInstance(context).hasRequestedDesktop()
+                !context.settings.hasRequestedDesktop()
             }
 
             val deepLinkRequestDesktop = {
@@ -142,7 +147,7 @@ object TipManager {
     }
 
     fun getAvailableTips(context: Context): List<Tip>? {
-        if (!Settings.getInstance(context).shouldDisplayHomescreenTips()) return null
+        if (!context.settings.shouldDisplayHomescreenTips()) return null
 
         if (!listInitialized) {
             listOfTips.clear()
