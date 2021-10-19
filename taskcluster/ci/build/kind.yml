@@ -124,9 +124,42 @@ jobs:
             gradle-build-name: FocusDebugAndroidTest
             gradle-build: focus
         apk-artifact-template:
-            # "androidTest/" is added
+            # "androidTest/" is added to path
             name: 'public/build/{fileName}'
             path: '/builds/worker/checkouts/src/app/build/outputs/apk/androidTest/{gradle_build}/{gradle_build_type}/{fileName}'    
         treeherder:
             symbol: debug(Bat)
 
+    # TODO enable this when android tests for Nightly and Beta are added
+    # android-test-nightly:
+    #     description: 'Nightly Android Test for debugging'
+    #     attributes:
+    #         nightly-task: true
+    #     run-on-tasks-for: [github-push]
+    #     run:
+    #         gradle-build-type: nightly
+    #         gradle-build-name: FocusNightlyAndroidTest
+    #         gradle-build: focus
+    #     apk-artifact-template:
+    #         # "androidTest/" is added to path
+    #         name: 'public/build/{fileName}'
+    #         path: '/builds/worker/checkouts/src/app/build/outputs/apk/androidTest/{gradle_build}/{gradle_build_type}/{fileName}'    
+    #     treeherder:
+    #         symbol: nightly(Bat)
+
+    # android-test-beta:
+    #     description: 'Beta Android Test for debugging'
+    #     # enable this attribute if you want this build to run for beta releases
+    #     # attributes:
+    #         # release-type: beta
+    #     run-on-tasks-for: [github-push]
+    #     run:
+    #         gradle-build-type: beta
+    #         gradle-build-name: FocusBetaAndroidTest
+    #         gradle-build: focus
+    #     apk-artifact-template:
+    #         # "androidTest/" is added to path
+    #         name: 'public/build/{fileName}'
+    #         path: '/builds/worker/checkouts/src/app/build/outputs/apk/androidTest/{gradle_build}/{gradle_build_type}/{fileName}'    
+    #     treeherder:
+    #         symbol: beta(Bat)
