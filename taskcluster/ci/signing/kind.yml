@@ -24,13 +24,13 @@ job-template:
         by-tasks-for:
             (action|cron|github-release):
                 by-build-type:
-                    (nightly|focus-release|klar-release|beta|focus-debug):
+                    (nightly|focus-release|klar-release|beta):
                         type: signing
                     default: {}
             default: {}
     run-on-tasks-for: 
         by-build-type:
-            (android-test-beta|android-test-nightly): [github-push]
+            (focus-debug|android-test-debug): [github-push]
             default: []
     treeherder:
         job-symbol:
