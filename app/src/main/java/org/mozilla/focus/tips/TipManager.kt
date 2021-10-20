@@ -9,11 +9,8 @@ import androidx.annotation.StringRes
 import mozilla.components.browser.state.state.SessionState
 import org.mozilla.focus.R
 import org.mozilla.focus.ext.components
-<<<<<<< HEAD
-import org.mozilla.focus.telemetry.TelemetryWrapper
-=======
 import org.mozilla.focus.ext.settings
->>>>>>> 9553c8ee7 (No issue: Refactor settings to use delegates.)
+import org.mozilla.focus.telemetry.TelemetryWrapper
 import org.mozilla.focus.utils.AppConstants
 import org.mozilla.focus.utils.SupportUtils
 import org.mozilla.focus.utils.SupportUtils.getSumoURLForTopic
