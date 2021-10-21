@@ -137,7 +137,6 @@ jobs:
             gradle-build: focus
         apk-artifact-template:
             # "androidTest/" is added to path
-            name: 'public/build/{fileName}'
             path: '/builds/worker/checkouts/src/app/build/outputs/apk/androidTest/{gradle_build}/{gradle_build_type}/{fileName}'    
         treeherder:
             symbol: debug(Bat)
@@ -160,7 +159,7 @@ jobs:
         apk-artifact-template:
             # "androidTest/" is added to path
             # filename is forced to 'app-nightly-androidTest.apk'
-            path: '/builds/worker/checkouts/src/app/build/outputs/apk/androidTest/nightly/app-nightly-androidTest.apk'    
+            path: '/builds/worker/checkouts/src/app/build/outputs/apk/androidTest/{gradle_build}/{gradle_build_type}/{fileName}'    
         treeherder:
             symbol: nightly(Bat)
 
