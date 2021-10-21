@@ -17,6 +17,7 @@ PRODUCTION_SIGNING_BUILD_TYPES = [
     "beta",
     "focus-release",
     "klar-release",
+    "android-test-nightly"
 ]
 
 SIGNING_BUILD_TYPES = PRODUCTION_SIGNING_BUILD_TYPES + [
