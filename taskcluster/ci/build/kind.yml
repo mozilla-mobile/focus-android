@@ -159,7 +159,7 @@ jobs:
             test-build-type: nightly
         apk-artifact-template:
             # "androidTest/" is added to path
-            name: 'public/build/{fileName}'
+            # filename is forced to 'app-nightly-androidTest.apk'
             path: '/builds/worker/checkouts/src/app/build/outputs/apk/androidTest/nightly/app-nightly-androidTest.apk'    
         treeherder:
             symbol: nightly(Bat)

@@ -69,7 +69,7 @@ jobs:
             signed-android-test: signing-android-test-nightly
         run:
             commands:
-                - [wget, {artifact-reference: '<signed-debug-apk/public/build/app-focus-x86-nightly.apk>'}, '-O', app.apk]
+                - [wget, {artifact-reference: '<signed-debug-apk/public/build/app-focus-x86-nightly-unsigned.apk>'}, '-O', app.apk]
                 - [wget, {artifact-reference: '<signed-android-test/public/build/app-focus-debug-androidTest.apk>'}, '-O', android-test.apk]
                 - [automation/taskcluster/androidTest/ui-test.sh, x86-start-test, app.apk, android-test.apk, '-1']
         treeherder:
