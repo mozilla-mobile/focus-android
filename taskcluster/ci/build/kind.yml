@@ -176,7 +176,7 @@ jobs:
             gradle-build: focus
             test-build-type: beta
         apk-artifact-template:
-            name: 'public/build/app-focus-beta-androidTest.apk'
+            name: 'public/build/app-focus-androidTest.apk'
             path: '/builds/worker/checkouts/src/app/build/outputs/apk/androidTest/focus/beta/app-focus-beta-androidTest.apk'
         treeherder:
             symbol: beta(Bat)
