@@ -136,7 +136,7 @@ jobs:
             gradle-build-name: androidTest
             gradle-build: focus
         apk-artifact-template:
-            # we override this with a generic name to make the signing kinds cleaner
+            # we override this with a generic name to make the signing kind cleaner
             name: 'public/build/app-focus-androidTest.apk'
             # this path is determined by the gradle build configs
             path: '/builds/worker/checkouts/src/app/build/outputs/apk/androidTest/focus/debug/app-focus-debug-androidTest.apk'
@@ -164,19 +164,19 @@ jobs:
         treeherder:
             symbol: nightly(Bat)
 
-    # android-test-beta:
-    #     description: 'Beta Android Test for debugging'
-    #     # enable this attribute if you want this build to run for beta releases
-    #     # attributes:
-    #         # release-type: beta
-    #     run-on-tasks-for: [github-push]
-    #     run:
-    #         gradle-build-type: debug
-    #         gradle-build-name: FocusDebugAndroidTest
-    #         gradle-build: focus
-    #         test-build-type: beta
-    #     apk-artifact-template:
-            # name: 'public/build/app-focus-beta-androidTest.apk'
-            # path: '/builds/worker/checkouts/src/app/build/outputs/apk/androidTest/focus/beta/app-focus-beta-androidTest.apk'
-    #     treeherder:
-    #         symbol: beta(Bat)
+    android-test-beta:
+        description: 'Beta Android Test for debugging'
+        # enable this attribute if you want this build to run for beta releases
+        # attributes:
+            # release-type: beta
+        run-on-tasks-for: [github-push]
+        run:
+            gradle-build-type: androidTest
+            gradle-build-name: androidTest
+            gradle-build: focus
+            test-build-type: beta
+        apk-artifact-template:
+            name: 'public/build/app-focus-beta-androidTest.apk'
+            path: '/builds/worker/checkouts/src/app/build/outputs/apk/androidTest/focus/beta/app-focus-beta-androidTest.apk'
+        treeherder:
+            symbol: beta(Bat)
