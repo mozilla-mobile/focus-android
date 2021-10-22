@@ -20,7 +20,7 @@ job-defaults:
     dependencies:
         # key is arbitrary, the value corresponds to <kind name>-<build-name> 
         signed-debug-apk: signing-focus-debug
-        signed-android-test: signing-android-test-debug  
+        signed-android-test: signing-android-test-debug
     worker-type: b-android
     worker:
         docker-image: {in-tree: ui-tests}
@@ -48,14 +48,15 @@ job-defaults:
               key: firebaseToken
               path: .firebase_token.json
               json: true
+        commands:
+            - [wget, {artifact-reference: '<signed-debug-apk/public/build/focus/x86/target.apk>'}, '-O', app.apk]
+            - [wget, {artifact-reference: '<signed-android-test/public/build/app-focus-androidTest.apk>'}, '-O', android-test.apk]
 
 jobs:
     x86-debug:
         description: 'UI tests with firebase'
         run:
             commands:
-                - [wget, {artifact-reference: '<signed-debug-apk/public/build/app-focus-x86-debug.apk>'}, '-O', app.apk]
-                - [wget, {artifact-reference: '<signed-android-test/public/build/app-focus-debug-androidTest.apk>'}, '-O', android-test.apk]
                 - ['automation/taskcluster/androidTest/ui-test.sh', 'x86', 'app.apk', 'android-test.apk', '-1']
         treeherder:
             symbol: debug(ui-test-x86)
@@ -69,8 +70,6 @@ jobs:
             signed-android-test: signing-android-test-nightly
         run:
             commands:
-                - [wget, {artifact-reference: '<signed-debug-apk/public/build/app-focus-x86-nightly-unsigned.apk>'}, '-O', app.apk]
-                - [wget, {artifact-reference: '<signed-android-test/public/build/app-focus-debug-androidTest.apk>'}, '-O', android-test.apk]
-                - [automation/taskcluster/androidTest/ui-test.sh, x86-start-test, app.apk, android-test.apk, '-1']
+                - ['automation/taskcluster/androidTest/ui-test.sh', 'x86-start-test', 'app.apk', 'android-test.apk', '-1']
         treeherder:
             symbol: nightly(ui-test-x86-nightly)

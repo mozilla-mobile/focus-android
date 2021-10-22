@@ -15,7 +15,7 @@ kind-dependencies:
 job-defaults:
     apk-artifact-template:
         type: file
-        name: 'public/build/{fileName}'
+        name: 'public/build/{gradle_build}/{abi}/target.apk'
         path: '/builds/worker/checkouts/src/app/build/outputs/apk/{gradle_build}/{gradle_build_type}/{fileName}'
     fetches:
         toolchain:
@@ -136,7 +136,9 @@ jobs:
             gradle-build-name: androidTest
             gradle-build: focus
         apk-artifact-template:
-            name: 'public/build/app-focus-debug-androidTest.apk'
+            # we override this with a generic name to make the signing kinds cleaner
+            name: 'public/build/app-focus-androidTest.apk'
+            # this path is determined by the gradle build configs
             path: '/builds/worker/checkouts/src/app/build/outputs/apk/androidTest/focus/debug/app-focus-debug-androidTest.apk'
         treeherder:
             symbol: debug(Bat)
@@ -157,7 +159,7 @@ jobs:
             gradle-build: focus
             test-build-type: nightly
         apk-artifact-template:
-            name: 'public/build/app-focus-nightly-androidTest.apk'
+            name: 'public/build/app-focus-androidTest.apk'
             path: '/builds/worker/checkouts/src/app/build/outputs/apk/androidTest/focus/nightly/app-focus-nightly-androidTest.apk'
         treeherder:
             symbol: nightly(Bat)
