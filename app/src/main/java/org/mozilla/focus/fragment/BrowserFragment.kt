@@ -11,7 +11,6 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -87,7 +86,6 @@ import org.mozilla.focus.topsites.DefaultTopSitesView
 import org.mozilla.focus.utils.Browsers
 import org.mozilla.focus.utils.FocusSnackbar
 import org.mozilla.focus.utils.FocusSnackbarDelegate
-import org.mozilla.focus.utils.Settings
 import org.mozilla.focus.utils.StatusBarUtils
 import org.mozilla.focus.utils.SupportUtils
 import org.mozilla.focus.widget.FloatingEraseButton
@@ -254,7 +252,6 @@ class BrowserFragment :
                 ),
                 onNeedToRequestPermissions = { permissions ->
                     requestInPlacePermissions(permissions) { result ->
-                        Log.d("Blabla", "Browser fragment")
                         downloadsFeature.get()?.onPermissionsResult(
                             result.keys.toTypedArray(),
                             result.values.map {
