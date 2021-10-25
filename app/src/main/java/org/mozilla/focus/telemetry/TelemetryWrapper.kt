@@ -120,7 +120,6 @@ object TelemetryWrapper {
         val CUSTOM_TAB_CLOSE_BUTTON = "custom_tab_close_but"
         val CUSTOM_TAB_ACTION_BUTTON = "custom_tab_action_bu"
         val FIRSTRUN = "firstrun"
-        val DOWNLOAD_DIALOG = "download_dialog"
         val ADD_TO_HOMESCREEN_DIALOG = "add_to_homescreen_dialog"
         val HOMESCREEN_SHORTCUT = "homescreen_shortcut"
         val RECENT_APPS = "recent_apps"
@@ -154,7 +153,6 @@ object TelemetryWrapper {
         val SKIP = "skip"
         val FINISH = "finish"
         val OPEN = "open"
-        val DOWNLOAD = "download"
         val URL = "url"
         val SEARCH = "search"
         val CANCEL = "cancel"
@@ -386,20 +384,6 @@ object TelemetryWrapper {
     }
 
     @JvmStatic
-    fun urlBarEvent(isUrl: Boolean) {
-        if (isUrl) {
-            browseEvent()
-        } else {
-            searchEnterEvent()
-        }
-    }
-
-    private fun browseEvent() {
-        TelemetryEvent.create(Category.ACTION, Method.TYPE_URL, Object.SEARCH_BAR)
-            .queue()
-    }
-
-    @JvmStatic
     fun browseIntentEvent() {
         TelemetryEvent.create(Category.ACTION, Method.INTENT_URL, Object.APP).queue()
     }
@@ -435,15 +419,6 @@ object TelemetryWrapper {
     }
 
     @JvmStatic
-    fun downloadDialogDownloadEvent(sentToDownload: Boolean) {
-        if (sentToDownload) {
-            TelemetryEvent.create(Category.ACTION, Method.CLICK, Object.DOWNLOAD_DIALOG, Value.DOWNLOAD).queue()
-        } else {
-            TelemetryEvent.create(Category.ACTION, Method.CLICK, Object.DOWNLOAD_DIALOG, Value.CANCEL).queue()
-        }
-    }
-
-    @JvmStatic
     fun closeCustomTabEvent() {
         withSessionCounts(TelemetryEvent.create(Category.ACTION, Method.CLICK, Object.CUSTOM_TAB_CLOSE_BUTTON))
             .queue()
@@ -462,16 +437,6 @@ object TelemetryWrapper {
     @JvmStatic
     fun textSelectionIntentEvent() {
         TelemetryEvent.create(Category.ACTION, Method.TEXT_SELECTION_INTENT, Object.APP).queue()
-    }
-
-    private fun searchEnterEvent() {
-        val telemetry = TelemetryHolder.get()
-
-        TelemetryEvent.create(Category.ACTION, Method.TYPE_QUERY, Object.SEARCH_BAR).queue()
-
-        val searchEngine = getDefaultSearchEngineIdentifierForTelemetry(telemetry.configuration.context)
-
-        telemetry.recordSearch(SearchesMeasurement.LOCATION_ACTIONBAR, searchEngine)
     }
 
     @JvmStatic
@@ -840,16 +805,6 @@ object TelemetryWrapper {
         TelemetryEvent
             .create(Category.ACTION, Method.CLICK, Object.SEARCH_SUGGESTION_PROMPT, "$enable")
             .queue()
-    }
-
-    @JvmStatic
-    fun makeDefaultBrowserOpenWith() {
-        TelemetryEvent.create(Category.ACTION, Method.SHOW, Object.MAKE_DEFAULT_BROWSER_OPEN_WITH).queue()
-    }
-
-    @JvmStatic
-    fun makeDefaultBrowserSettings() {
-        TelemetryEvent.create(Category.ACTION, Method.SHOW, Object.MAKE_DEFAULT_BROWSER_SETTINGS).queue()
     }
 
     @JvmStatic
