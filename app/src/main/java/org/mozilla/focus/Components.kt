@@ -44,6 +44,7 @@ import mozilla.components.lib.crash.service.MozillaSocorroService
 import mozilla.components.lib.crash.service.SentryService
 import mozilla.components.service.location.LocationService
 import mozilla.components.service.location.MozillaLocationService
+import mozilla.components.service.nimbus.NimbusApi
 import org.mozilla.focus.activity.MainActivity
 import org.mozilla.focus.browser.BlockedTrackersMiddleware
 import org.mozilla.focus.components.EngineProvider
@@ -51,8 +52,8 @@ import org.mozilla.focus.downloads.DownloadService
 import org.mozilla.focus.engine.AppContentInterceptor
 import org.mozilla.focus.engine.ClientWrapper
 import org.mozilla.focus.engine.SanityCheckMiddleware
-import org.mozilla.focus.engine.TabsFeatureMiddleware
 import org.mozilla.focus.exceptions.ExceptionMigrationMiddleware
+import org.mozilla.focus.experiments.createNimbus
 import org.mozilla.focus.ext.components
 import org.mozilla.focus.ext.settings
 import org.mozilla.focus.locale.LocaleManager
@@ -62,6 +63,7 @@ import org.mozilla.focus.search.SearchMigration
 import org.mozilla.focus.state.AppState
 import org.mozilla.focus.state.AppStore
 import org.mozilla.focus.state.Screen
+import org.mozilla.focus.tabs.MergeTabsMiddleware
 import org.mozilla.focus.telemetry.GleanMetricsService
 import org.mozilla.focus.telemetry.TelemetryMiddleware
 import org.mozilla.focus.topsites.DefaultTopSitesStorage
@@ -139,7 +141,7 @@ class Components(
                 PromptMiddleware(),
                 AdsTelemetryMiddleware(adsTelemetry),
                 BlockedTrackersMiddleware(context),
-                TabsFeatureMiddleware()
+                MergeTabsMiddleware(),
             ) + EngineMiddleware.create(engine)
         )
     }
@@ -168,6 +170,8 @@ class Components(
     val crashReporter: CrashReporter by lazy { createCrashReporter(context) }
 
     val metrics: GleanMetricsService by lazy { GleanMetricsService(context) }
+
+    val experiments: NimbusApi by lazy { createNimbus(context, BuildConfig.NIMBUS_ENDPOINT) }
 
     val adsTelemetry: AdsTelemetry by lazy { AdsTelemetry() }
 

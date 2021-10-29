@@ -45,7 +45,6 @@ import java.net.URL
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
-import kotlin.collections.HashSet
 
 @Suppress(
     // Yes, this a large class with a lot of functions. But it's very simple and still easy to read.
@@ -99,7 +98,6 @@ object TelemetryWrapper {
         val REMOVE = "remove"
         val REMOVE_ALL = "remove_all"
         val REORDER = "reorder"
-        val RESTORE = "restore"
         val PAGE = "page"
         val RESOURCE = "resource"
     }
@@ -121,18 +119,12 @@ object TelemetryWrapper {
         val CUSTOM_TAB_CLOSE_BUTTON = "custom_tab_close_but"
         val CUSTOM_TAB_ACTION_BUTTON = "custom_tab_action_bu"
         val FIRSTRUN = "firstrun"
-        val DOWNLOAD_DIALOG = "download_dialog"
         val ADD_TO_HOMESCREEN_DIALOG = "add_to_homescreen_dialog"
         val HOMESCREEN_SHORTCUT = "homescreen_shortcut"
-        val TABS_TRAY = "tabs_tray"
         val RECENT_APPS = "recent_apps"
         val APP_ICON = "app_icon"
         val AUTOCOMPLETE_DOMAIN = "autocomplete_domain"
         val AUTOFILL = "autofill"
-        val SEARCH_ENGINE_SETTING = "search_engine_setting"
-        val ADD_SEARCH_ENGINE_LEARN_MORE = "search_engine_learn_more"
-        val CUSTOM_SEARCH_ENGINE = "custom_search_engine"
-        val REMOVE_SEARCH_ENGINES = "remove_search_engines"
         val GECKO_ENGINE = "gecko_engine"
         val SEARCH_SUGGESTION_PROMPT = "search_suggestion_prompt"
         val MAKE_DEFAULT_BROWSER_OPEN_WITH = "make_default_browser_open_with"
@@ -156,7 +148,6 @@ object TelemetryWrapper {
         val SKIP = "skip"
         val FINISH = "finish"
         val OPEN = "open"
-        val DOWNLOAD = "download"
         val URL = "url"
         val SEARCH = "search"
         val CANCEL = "cancel"
@@ -388,20 +379,6 @@ object TelemetryWrapper {
     }
 
     @JvmStatic
-    fun urlBarEvent(isUrl: Boolean) {
-        if (isUrl) {
-            browseEvent()
-        } else {
-            searchEnterEvent()
-        }
-    }
-
-    private fun browseEvent() {
-        TelemetryEvent.create(Category.ACTION, Method.TYPE_URL, Object.SEARCH_BAR)
-            .queue()
-    }
-
-    @JvmStatic
     fun browseIntentEvent() {
         TelemetryEvent.create(Category.ACTION, Method.INTENT_URL, Object.APP).queue()
     }
@@ -437,15 +414,6 @@ object TelemetryWrapper {
     }
 
     @JvmStatic
-    fun downloadDialogDownloadEvent(sentToDownload: Boolean) {
-        if (sentToDownload) {
-            TelemetryEvent.create(Category.ACTION, Method.CLICK, Object.DOWNLOAD_DIALOG, Value.DOWNLOAD).queue()
-        } else {
-            TelemetryEvent.create(Category.ACTION, Method.CLICK, Object.DOWNLOAD_DIALOG, Value.CANCEL).queue()
-        }
-    }
-
-    @JvmStatic
     fun closeCustomTabEvent() {
         withSessionCounts(TelemetryEvent.create(Category.ACTION, Method.CLICK, Object.CUSTOM_TAB_CLOSE_BUTTON))
             .queue()
@@ -464,16 +432,6 @@ object TelemetryWrapper {
     @JvmStatic
     fun textSelectionIntentEvent() {
         TelemetryEvent.create(Category.ACTION, Method.TEXT_SELECTION_INTENT, Object.APP).queue()
-    }
-
-    private fun searchEnterEvent() {
-        val telemetry = TelemetryHolder.get()
-
-        TelemetryEvent.create(Category.ACTION, Method.TYPE_QUERY, Object.SEARCH_BAR).queue()
-
-        val searchEngine = getDefaultSearchEngineIdentifierForTelemetry(telemetry.configuration.context)
-
-        telemetry.recordSearch(SearchesMeasurement.LOCATION_ACTIONBAR, searchEngine)
     }
 
     @JvmStatic
@@ -497,12 +455,6 @@ object TelemetryWrapper {
         } else {
             searchEngine?.name ?: "<none>"
         }
-    }
-
-    @JvmStatic
-    fun eraseEvent() {
-        withSessionCounts(TelemetryEvent.create(Category.ACTION, Method.CLICK, Object.ERASE_BUTTON))
-            .queue()
     }
 
     @JvmStatic
@@ -617,12 +569,6 @@ object TelemetryWrapper {
     }
 
     @JvmStatic
-    fun openLinkInNewTabEvent() {
-        withSessionCounts(TelemetryEvent.create(Category.ACTION, Method.OPEN, Object.BROWSER_CONTEXTMENU, Value.TAB))
-            .queue()
-    }
-
-    @JvmStatic
     fun openLinkInFullBrowserFromCustomTabEvent() {
         withSessionCounts(
             TelemetryEvent.create(
@@ -726,30 +672,8 @@ object TelemetryWrapper {
     }
 
     @JvmStatic
-    fun openTabsTrayEvent() {
-        TelemetryEvent.create(Category.ACTION, Method.SHOW, Object.TABS_TRAY).queue()
-    }
-
-    @JvmStatic
     fun findInPageMenuEvent() {
         TelemetryEvent.create(Category.ACTION, Method.OPEN, Object.MENU, Value.FIND_IN_PAGE).queue()
-    }
-
-    @JvmStatic
-    fun closeTabsTrayEvent() {
-        TelemetryEvent.create(Category.ACTION, Method.HIDE, Object.TABS_TRAY).queue()
-    }
-
-    @JvmStatic
-    fun switchTabInTabsTrayEvent() {
-        withSessionCounts(TelemetryEvent.create(Category.ACTION, Method.CLICK, Object.TABS_TRAY, Value.TAB))
-            .queue()
-    }
-
-    @JvmStatic
-    fun eraseInTabsTrayEvent() {
-        withSessionCounts(TelemetryEvent.create(Category.ACTION, Method.CLICK, Object.TABS_TRAY, Value.ERASE))
-            .queue()
     }
 
     @JvmStatic
@@ -816,52 +740,6 @@ object TelemetryWrapper {
     }
 
     @JvmStatic
-    fun setDefaultSearchEngineEvent(source: String) {
-        TelemetryEvent.create(Category.ACTION, Method.SAVE, Object.SEARCH_ENGINE_SETTING)
-            .extra(Extra.SOURCE, source)
-            .queue()
-    }
-
-    @JvmStatic
-    fun openSearchSettingsEvent() {
-        TelemetryEvent.create(Category.ACTION, Method.OPEN, Object.SEARCH_ENGINE_SETTING).queue()
-    }
-
-    @JvmStatic
-    fun menuRemoveEnginesEvent() {
-        TelemetryEvent.create(Category.ACTION, Method.REMOVE, Object.SEARCH_ENGINE_SETTING).queue()
-    }
-
-    @JvmStatic
-    fun menuRestoreEnginesEvent() {
-        TelemetryEvent.create(Category.ACTION, Method.RESTORE, Object.SEARCH_ENGINE_SETTING).queue()
-    }
-
-    @JvmStatic
-    fun menuAddSearchEngineEvent() {
-        TelemetryEvent.create(Category.ACTION, Method.SHOW, Object.CUSTOM_SEARCH_ENGINE).queue()
-    }
-
-    @JvmStatic
-    fun saveCustomSearchEngineEvent(success: Boolean) {
-        TelemetryEvent.create(Category.ACTION, Method.SAVE, Object.CUSTOM_SEARCH_ENGINE)
-            .extra(Extra.SUCCESS, success.toString())
-            .queue()
-    }
-
-    @JvmStatic
-    fun removeSearchEnginesEvent(selected: Int) {
-        TelemetryEvent.create(Category.ACTION, Method.REMOVE, Object.REMOVE_SEARCH_ENGINES)
-            .extra(Extra.SELECTED, selected.toString())
-            .queue()
-    }
-
-    @JvmStatic
-    fun addSearchEngineLearnMoreEvent() {
-        TelemetryEvent.create(Category.ACTION, Method.CLICK, Object.ADD_SEARCH_ENGINE_LEARN_MORE).queue()
-    }
-
-    @JvmStatic
     fun changeToGeckoEngineEvent() {
         TelemetryEvent.create(Category.ACTION, Method.CHANGE, Object.GECKO_ENGINE).queue()
     }
@@ -876,16 +754,6 @@ object TelemetryWrapper {
         TelemetryEvent
             .create(Category.ACTION, Method.CLICK, Object.SEARCH_SUGGESTION_PROMPT, "$enable")
             .queue()
-    }
-
-    @JvmStatic
-    fun makeDefaultBrowserOpenWith() {
-        TelemetryEvent.create(Category.ACTION, Method.SHOW, Object.MAKE_DEFAULT_BROWSER_OPEN_WITH).queue()
-    }
-
-    @JvmStatic
-    fun makeDefaultBrowserSettings() {
-        TelemetryEvent.create(Category.ACTION, Method.SHOW, Object.MAKE_DEFAULT_BROWSER_SETTINGS).queue()
     }
 
     @JvmStatic

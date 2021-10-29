@@ -622,16 +622,19 @@
 
 
   <!-- Checkbox menu item text to request desktop site -->
-    <string name="preference_performance_request_desktop_site">Запросить версию для компьютера</string>
+    <string name="preference_performance_request_desktop_site">Запросить полную версию сайта</string>
 
     <!-- Checkbox menu item text to request desktop site -->
-    <string name="preference_performance_request_desktop_site2">Версия для компьютера</string>
+    <string name="preference_performance_request_desktop_site2">Версия для ПК</string>
 
     <!-- Displayed after a user long presses on the URL in a custom tab to copy the URL -->
     <string name="custom_tab_copy_url_action">URL скопирован</string>
 
     <!-- Description of what a user may find in the Advanced Setting category, used for debugging -->
     <string name="preference_advanced_summary">Инструменты разработчика</string>
+
+    <!-- Preference for open links in third party apps -->
+    <string name="preferences_open_links_in_apps">Открывать ссылки в приложениях</string>
 
     <!-- Title of Advanced Setting category -->
     <string name="preference_category_advanced">Дополнительно</string>
