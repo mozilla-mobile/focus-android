@@ -30,7 +30,7 @@ job-template:
             default: {}
     run-on-tasks-for: 
         by-build-type:
-            (focus-debug|android-test-debug|nightly-firebase|android-test-nightly): [github-push]
+            (focus-debug|android-test-debug|nightly-firebase|android-test-nightly|beta-firebase|android-test-beta): [github-push]
             default: []
     treeherder:
         job-symbol:
@@ -39,7 +39,8 @@ job-template:
                 klar-.*: Bkls
                 default: Bs
                 android-test.+: Bats
-                nightly-firebase: nightly(Bf)
+                beta-firebase: Bfs
+                nightly-firebase: Bfs
         kind: build
         platform: android-all/opt
         tier: 1

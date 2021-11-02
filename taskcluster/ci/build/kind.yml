@@ -126,6 +126,18 @@ jobs:
         treeherder:
             symbol: nightly(Bf)
 
+    beta-firebase:
+        description: 'Beta build for UI tests'
+        disable-optimization: true
+        run-on-tasks-for: [github-push] # We want this on push so that we detect problem before triggering a new nightly
+        run:
+            gradle-build-type: beta
+            gradle-build-name: focusBeta
+            gradle-build: focus
+            test-build-type: beta
+        treeherder:
+            symbol: beta(Bf)
+
     android-test-debug:
         description: 'Android Test for debugging'
         attributes:
@@ -150,8 +162,6 @@ jobs:
 
     android-test-nightly:
         description: 'Nightly Android Test for debugging'
-        attributes:
-            nightly-task: true
         run-on-tasks-for: [github-push]
         run:
             gradle-build-type: androidTest
@@ -166,9 +176,6 @@ jobs:
 
     android-test-beta:
         description: 'Beta Android Test for debugging'
-        # enable this attribute if you want this build to run for beta releases
-        # attributes:
-            # release-type: beta
         run-on-tasks-for: [github-push]
         run:
             gradle-build-type: androidTest

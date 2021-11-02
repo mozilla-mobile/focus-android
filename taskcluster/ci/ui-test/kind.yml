@@ -73,3 +73,16 @@ jobs:
                 - ['automation/taskcluster/androidTest/ui-test.sh', 'x86', 'app.apk', 'android-test.apk', '-1']
         treeherder:
             symbol: nightly(ui-test-x86-nightly)
+    x86-beta:
+        attributes:
+            build-type: nightly-firebase
+        description: 'UI tests on Nightly with firebase'
+        run-on-tasks-for: [github-push]
+        dependencies:
+            signed-debug-apk: signing-beta-firebase
+            signed-android-test: signing-android-test-beta
+        run:
+            commands:
+                - ['automation/taskcluster/androidTest/ui-test.sh', 'x86', 'app.apk', 'android-test.apk', '-1']
+        treeherder:
+            symbol: beta(ui-test-x86-beta)
