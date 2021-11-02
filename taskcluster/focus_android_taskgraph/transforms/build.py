@@ -34,14 +34,13 @@ def add_shippable_secrets(config, tasks):
         if task.pop("include-shippable-secrets", False) and config.params["level"] == "3":
             build_type = task["attributes"]["build-type"]
             gradle_build_type = task["run"]["gradle-build-type"]
-            secret_index = f'project/focus/{build_type}'
+            secret_index = f'project/mobile/focus-android/{build_type}'
             secrets.extend([{
                 "key": key,
                 "name": secret_index,
                 "path": target_file,
             } for key, target_file in (
                 ('adjust', '.adjust_token'),
-                ('firebase', f'app/src/{gradle_build_type}/res/values/firebase.xml'),
                 ('sentry_dsn', '.sentry_token'),
                 ('mls', '.mls_token'),
                 ('nimbus_url', '.nimbus'),
