@@ -92,7 +92,7 @@ jobs:
             # any tasks that have this as a primary dependency will
             # inherit this attribute via the multi_dep loader
             nightly-task: true
-        run-on-tasks-for: [github-pull-request]
+        run-on-tasks-for: []
         include-shippable-secrets: true
         run:
             gradle-build-type: nightly
@@ -105,7 +105,7 @@ jobs:
         description: 'Beta focus build'
         attributes:
             release-type: beta
-        run-on-tasks-for: [github-pull-request]
+        run-on-tasks-for: []
         include-shippable-secrets: true
         run:
             gradle-build-type: beta
