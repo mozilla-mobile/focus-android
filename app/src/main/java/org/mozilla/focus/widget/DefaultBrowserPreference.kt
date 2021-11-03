@@ -14,9 +14,9 @@ import androidx.core.os.bundleOf
 import androidx.preference.Preference
 import androidx.preference.PreferenceViewHolder
 import com.google.android.material.switchmaterial.SwitchMaterial
+import mozilla.components.support.utils.Browsers
 import org.mozilla.focus.GleanMetrics.SetDefaultBrowser
 import org.mozilla.focus.R
-import org.mozilla.focus.utils.Browsers
 import org.mozilla.focus.utils.SupportUtils.openDefaultBrowserSumoPage
 import org.mozilla.focus.utils.asActivity
 
@@ -27,7 +27,8 @@ class DefaultBrowserPreference @JvmOverloads constructor(
 ) : Preference(context, attrs, defStyleAttr) {
 
     private var switchView: SwitchMaterial? = null
-    private val browsers = Browsers(context, Browsers.TRADITIONAL_BROWSER_URL)
+    private val browsers
+        get() = Browsers.all(context)
 
     init {
         widgetLayoutResource = R.layout.preference_default_browser
@@ -43,11 +44,11 @@ class DefaultBrowserPreference @JvmOverloads constructor(
     }
 
     fun update() {
-        switchView?.isChecked = browsers.isDefaultBrowser(context)
+        switchView?.isChecked = browsers.isDefaultBrowser
     }
 
     public override fun onClick() {
-        val isDefault = browsers.isDefaultBrowser(context)
+        val isDefault = browsers.isDefaultBrowser
         when {
             Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q -> {
                 context.getSystemService(RoleManager::class.java).also {

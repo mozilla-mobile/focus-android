@@ -51,7 +51,9 @@ import mozilla.components.lib.crash.Crash
 import mozilla.components.service.glean.private.NoExtras
 import mozilla.components.support.base.feature.ViewBoundFeatureWrapper
 import mozilla.components.support.ktx.kotlin.tryGetHostFromUrl
+import mozilla.components.support.utils.Browsers
 import org.mozilla.focus.GleanMetrics.Downloads
+import org.mozilla.focus.GleanMetrics.OpenWith
 import org.mozilla.focus.GleanMetrics.TabCount
 import org.mozilla.focus.GleanMetrics.TrackingProtection
 import org.mozilla.focus.R
@@ -85,7 +87,7 @@ import org.mozilla.focus.state.Screen
 import org.mozilla.focus.telemetry.TelemetryWrapper
 import org.mozilla.focus.topsites.DefaultTopSitesStorage.Companion.TOP_SITES_MAX_LIMIT
 import org.mozilla.focus.topsites.DefaultTopSitesView
-import org.mozilla.focus.utils.Browsers
+import org.mozilla.focus.utils.Features
 import org.mozilla.focus.utils.FocusSnackbar
 import org.mozilla.focus.utils.FocusSnackbarDelegate
 import org.mozilla.focus.utils.StatusBarUtils
@@ -700,7 +702,13 @@ class BrowserFragment :
         // Release the session from this view so that it can immediately be rendered by a different view
         sessionFeature.get()?.release()
 
-        requireComponents.customTabsUseCases.migrate(tab.id)
+        if (Features.TABS) {
+            requireComponents.customTabsUseCases.migrate(tab.id)
+        } else {
+            // A Middleware will take care of either opening a new tab for this URL or reusing an
+            // already existing tab.
+            requireComponents.tabsUseCases.addTab(tab.content.url)
+        }
 
         val intent = Intent(context, MainActivity::class.java)
         intent.action = Intent.ACTION_MAIN
@@ -709,8 +717,9 @@ class BrowserFragment :
 
         TelemetryWrapper.openFullBrowser()
 
+        // Close this activity (and the task) since it is no longer displaying any session
         val activity = activity
-        activity?.finish()
+        activity?.finishAndRemoveTask()
     }
 
     internal fun edit() {
@@ -749,7 +758,7 @@ class BrowserFragment :
             }
 
             R.id.open_default -> {
-                val browsers = Browsers(requireContext(), tab.content.url)
+                val browsers = Browsers.all(requireContext())
 
                 val defaultBrowser = browsers.defaultBrowser
                     ?: throw IllegalStateException("<Open with \$Default> was shown when no default browser is set")
@@ -816,23 +825,23 @@ class BrowserFragment :
     }
 
     private fun openSelectBrowser() {
-        val browsers = Browsers(requireContext(), tab.content.url)
+        val browsers = Browsers.all(requireContext())
 
         val apps = browsers.installedBrowsers
-        val store = if (browsers.hasFirefoxBrandedBrowserInstalled())
+        val store = if (browsers.hasFirefoxBrandedBrowserInstalled)
             null
         else
             InstallFirefoxActivity.resolveAppStore(requireContext())
 
         val fragment = OpenWithFragment.newInstance(
-            apps,
+            apps.toTypedArray(),
             tab.content.url,
             store
         )
         @Suppress("DEPRECATION")
         fragment.show(requireFragmentManager(), OpenWithFragment.FRAGMENT_TAG)
 
-        TelemetryWrapper.openSelectionEvent()
+        OpenWith.listDisplayed.record(OpenWith.ListDisplayedExtra(apps.size))
     }
 
     internal fun closeCustomTab() {
