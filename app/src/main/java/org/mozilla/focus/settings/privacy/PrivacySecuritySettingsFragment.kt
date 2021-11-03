@@ -15,9 +15,11 @@ import org.mozilla.focus.engine.EngineSharedPreferencesListener
 import org.mozilla.focus.ext.requireComponents
 import org.mozilla.focus.ext.settings
 import org.mozilla.focus.settings.BaseSettingsFragment
+import org.mozilla.focus.settings.StatePreference
 import org.mozilla.focus.state.AppAction
 import org.mozilla.focus.state.Screen
 import org.mozilla.focus.telemetry.TelemetryWrapper
+import org.mozilla.focus.utils.AppConstants
 import org.mozilla.focus.widget.CookiesPreference
 
 class PrivacySecuritySettingsFragment :
@@ -38,7 +40,8 @@ class PrivacySecuritySettingsFragment :
         ) {
             preferenceScreen.removePreference(biometricPreference)
         }
-
+        (findPreference(getString(R.string.pref_key_studies)) as StatePreference?)?.isVisible =
+            AppConstants.isDevOrNightlyBuild
         val preferencesListener = EngineSharedPreferencesListener(requireContext())
 
         val cookiesPreference =
@@ -150,6 +153,10 @@ class PrivacySecuritySettingsFragment :
                     EngineSharedPreferencesListener.ChangeSource.SETTINGS.source,
                     EngineSharedPreferencesListener.TrackerChanged.CONTENT.tracker,
                     settings.shouldBlockOtherTrackers()
+                )
+            resources.getString(R.string.pref_key_studies) ->
+                requireComponents.appStore.dispatch(
+                    AppAction.OpenSettings(page = Screen.Settings.Page.Studies)
                 )
         }
         return super.onPreferenceTreeClick(preference)
