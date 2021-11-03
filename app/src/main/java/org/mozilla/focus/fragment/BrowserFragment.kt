@@ -50,7 +50,6 @@ import mozilla.components.feature.top.sites.TopSitesFeature
 import mozilla.components.lib.crash.Crash
 import mozilla.components.service.glean.private.NoExtras
 import mozilla.components.support.base.feature.ViewBoundFeatureWrapper
-import mozilla.components.support.ktx.kotlin.tryGetHostFromUrl
 import mozilla.components.support.utils.Browsers
 import org.mozilla.focus.GleanMetrics.Downloads
 import org.mozilla.focus.GleanMetrics.OpenWith
@@ -67,7 +66,6 @@ import org.mozilla.focus.browser.integration.FullScreenIntegration
 import org.mozilla.focus.contextmenu.ContextMenuCandidates
 import org.mozilla.focus.downloads.DownloadService
 import org.mozilla.focus.engine.EngineSharedPreferencesListener
-import org.mozilla.focus.exceptions.ExceptionDomains
 import org.mozilla.focus.ext.accessibilityManager
 import org.mozilla.focus.ext.components
 import org.mozilla.focus.ext.disableDynamicBehavior
@@ -83,7 +81,6 @@ import org.mozilla.focus.open.OpenWithFragment
 import org.mozilla.focus.settings.privacy.ConnectionDetailsPanel
 import org.mozilla.focus.settings.privacy.TrackingProtectionPanel
 import org.mozilla.focus.state.AppAction
-import org.mozilla.focus.state.Screen
 import org.mozilla.focus.telemetry.TelemetryWrapper
 import org.mozilla.focus.topsites.DefaultTopSitesStorage.Companion.TOP_SITES_MAX_LIMIT
 import org.mozilla.focus.topsites.DefaultTopSitesView
@@ -91,7 +88,6 @@ import org.mozilla.focus.utils.Features
 import org.mozilla.focus.utils.FocusSnackbar
 import org.mozilla.focus.utils.FocusSnackbarDelegate
 import org.mozilla.focus.utils.StatusBarUtils
-import org.mozilla.focus.utils.SupportUtils
 import org.mozilla.focus.widget.FloatingEraseButton
 import org.mozilla.focus.widget.FloatingSessionsButton
 import java.net.URLEncoder
@@ -694,8 +690,6 @@ class BrowserFragment :
         }
 
         startActivity(Intent.createChooser(shareIntent, getString(R.string.share_dialog_title)))
-
-        TelemetryWrapper.shareEvent()
     }
 
     private fun openInBrowser() {
@@ -714,8 +708,6 @@ class BrowserFragment :
         intent.action = Intent.ACTION_MAIN
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
         startActivity(intent)
-
-        TelemetryWrapper.openFullBrowser()
 
         // Close this activity (and the task) since it is no longer displaying any session
         val activity = activity
@@ -743,85 +735,14 @@ class BrowserFragment :
                 TabCount.sessionButtonTapped.record(TabCount.SessionButtonTappedExtra(openedTabs))
             }
 
-            R.id.open_in_firefox_focus -> {
-                openInBrowser()
+            else -> {
+                throw IllegalArgumentException("Unhandled menu item in BrowserFragment")
             }
-
-            R.id.share -> {
-                shareCurrentUrl()
-            }
-
-            R.id.settings -> {
-                requireComponents.appStore.dispatch(
-                    AppAction.OpenSettings(page = Screen.Settings.Page.Start)
-                )
-            }
-
-            R.id.open_default -> {
-                val browsers = Browsers.all(requireContext())
-
-                val defaultBrowser = browsers.defaultBrowser
-                    ?: throw IllegalStateException("<Open with \$Default> was shown when no default browser is set")
-                // We only add this menu item when a third party default exists, in
-                // BrowserMenuAdapter.initializeMenu()
-
-                val intent = Intent(Intent.ACTION_VIEW, Uri.parse(tab.content.url))
-                intent.setPackage(defaultBrowser.packageName)
-                startActivity(intent)
-
-                if (browsers.isFirefoxDefaultBrowser) {
-                    TelemetryWrapper.openFirefoxEvent()
-                } else {
-                    TelemetryWrapper.openDefaultAppEvent()
-                }
-            }
-
-            R.id.open_select_browser -> { openSelectBrowser() }
-
-            R.id.help -> {
-                requireComponents.tabsUseCases.addTab(
-                    SupportUtils.HELP_URL,
-                    source = SessionState.Source.Internal.Menu,
-                    selectTab = true,
-                    private = true
-                )
-            }
-
-            R.id.stop -> {
-                requireComponents.sessionUseCases.stopLoading(tabId)
-            }
-
-            R.id.refresh -> {
-                requireComponents.sessionUseCases.reload(tabId)
-            }
-
-            R.id.forward -> {
-                requireComponents.sessionUseCases.goForward(tabId)
-            }
-
-            R.id.add_to_homescreen -> { showAddToHomescreenDialog() }
-
-            R.id.report_site_issue -> {
-                val reportUrl = String.format(SupportUtils.REPORT_SITE_ISSUE_URL, tab.content.url)
-                requireComponents.tabsUseCases.addTab(
-                    reportUrl,
-                    source = SessionState.Source.Internal.Menu,
-                    selectTab = true,
-                    private = true
-                )
-
-                TelemetryWrapper.reportSiteIssueEvent()
-            }
-
-            R.id.find_in_page -> { showFindInPageBar() }
-
-            else -> throw IllegalArgumentException("Unhandled menu item in BrowserFragment")
         }
     }
 
     private fun showFindInPageBar() {
         findInPageIntegration.get()?.show(tab)
-        TelemetryWrapper.findInPageMenuEvent()
     }
 
     private fun openSelectBrowser() {
@@ -845,13 +766,8 @@ class BrowserFragment :
     }
 
     internal fun closeCustomTab() {
-        TelemetryWrapper.closeCustomTabEvent()
-
         requireComponents.customTabsUseCases.remove(tab.id)
-
         requireActivity().finish()
-
-        TelemetryWrapper.closeCustomTabEvent()
     }
 
     fun setShouldRequestDesktop(enabled: Boolean) {
@@ -862,7 +778,6 @@ class BrowserFragment :
                     true
                 ).apply()
         }
-        TelemetryWrapper.desktopRequestCheckEvent(enabled)
         requireComponents.sessionUseCases.requestDesktopSite(enabled, tab.id)
     }
 
@@ -906,14 +821,11 @@ class BrowserFragment :
     }
 
     private fun toggleTrackingProtection(enable: Boolean) {
-        val context = requireContext()
         with(requireComponents) {
             if (enable) {
-                ExceptionDomains.remove(context, listOf(tab.content.url.tryGetHostFromUrl()))
                 trackingProtectionUseCases.removeException(tab.id)
             } else {
-                ExceptionDomains.add(context, tab.content.url.tryGetHostFromUrl())
-                trackingProtectionUseCases.addException(tab.id)
+                trackingProtectionUseCases.addException(tab.id, persistInPrivateMode = true)
             }
         }
 

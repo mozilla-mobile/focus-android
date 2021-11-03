@@ -12,8 +12,11 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.lifecycle.ProcessLifecycleOwner
 import androidx.preference.PreferenceManager
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
 import mozilla.components.support.base.facts.register
 import mozilla.components.support.base.log.Log
 import mozilla.components.support.base.log.sink.AndroidLogSink
@@ -44,6 +47,7 @@ open class FocusApplication : LocaleAwareApplication(), CoroutineScope {
     private val storeLink by lazy { StoreLink(components.appStore, components.store) }
     private val lockObserver by lazy { LockObserver(this, components.store, components.appStore) }
 
+    @OptIn(DelicateCoroutinesApi::class)
     override fun onCreate() {
         super.onCreate()
 
@@ -51,6 +55,8 @@ open class FocusApplication : LocaleAwareApplication(), CoroutineScope {
         components.crashReporter.install(this)
 
         if (isMainProcess()) {
+            initializeNimbus()
+
             PreferenceManager.setDefaultValues(this, R.xml.settings, false)
 
             setTheme(this)
@@ -70,9 +76,20 @@ open class FocusApplication : LocaleAwareApplication(), CoroutineScope {
 
             storeLink.start()
 
+            GlobalScope.launch(Dispatchers.IO) {
+                components.migrator.start(this@FocusApplication)
+            }
+
             initializeWebExtensionSupport()
 
             ProcessLifecycleOwner.get().lifecycle.addObserver(lockObserver)
+        }
+    }
+
+    @OptIn(DelicateCoroutinesApi::class) // GlobalScope usage
+    private fun initializeNimbus() {
+        GlobalScope.launch(Dispatchers.IO) {
+            components.experiments.initialize()
         }
     }
 
