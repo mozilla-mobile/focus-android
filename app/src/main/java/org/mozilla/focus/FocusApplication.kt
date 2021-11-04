@@ -12,12 +12,17 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.lifecycle.ProcessLifecycleOwner
 import androidx.preference.PreferenceManager
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
 import mozilla.components.support.base.facts.register
 import mozilla.components.support.base.log.Log
 import mozilla.components.support.base.log.sink.AndroidLogSink
 import mozilla.components.support.ktx.android.content.isMainProcess
+import mozilla.components.support.rusthttp.RustHttpConfig
+import mozilla.components.support.rustlog.RustLog
 import mozilla.components.support.webextensions.WebExtensionSupport
 import org.mozilla.focus.biometrics.LockObserver
 import org.mozilla.focus.ext.settings
@@ -51,6 +56,8 @@ open class FocusApplication : LocaleAwareApplication(), CoroutineScope {
         components.crashReporter.install(this)
 
         if (isMainProcess()) {
+            initializeNativeComponents()
+
             PreferenceManager.setDefaultValues(this, R.xml.settings, false)
 
             setTheme(this)
@@ -73,6 +80,21 @@ open class FocusApplication : LocaleAwareApplication(), CoroutineScope {
             initializeWebExtensionSupport()
 
             ProcessLifecycleOwner.get().lifecycle.addObserver(lockObserver)
+        }
+    }
+
+    @OptIn(DelicateCoroutinesApi::class) // GlobalScope usage
+    private fun initializeNativeComponents() {
+        GlobalScope.launch(Dispatchers.IO) {
+            // We need to use an unwrapped client because native components do not support private
+            // requests.
+            @Suppress("Deprecation")
+            RustHttpConfig.setClient(lazy { components.client.unwrap() })
+            RustLog.enable(components.crashReporter)
+            // We want to ensure Nimbus is initialized as early as possible so we can
+            // experiment on features close to startup.
+            // But we need viaduct (the RustHttp client) to be ready before we do.
+            components.experiments.initialize()
         }
     }
 
