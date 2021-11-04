@@ -15,7 +15,6 @@ import android.view.ViewGroup
 import android.widget.FrameLayout
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.compose.ui.platform.ComposeView
-import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
 import androidx.preference.PreferenceManager
@@ -26,18 +25,22 @@ import kotlinx.coroutines.Job
 import mozilla.components.browser.domains.autocomplete.CustomDomainsProvider
 import mozilla.components.browser.domains.autocomplete.ShippedDomainsProvider
 import mozilla.components.browser.state.action.ContentAction
+import mozilla.components.browser.state.search.SearchEngine
 import mozilla.components.browser.state.selector.findTab
 import mozilla.components.browser.state.state.SessionState
 import mozilla.components.browser.state.state.TabSessionState
 import mozilla.components.browser.state.state.selectedOrDefaultSearchEngine
 import mozilla.components.feature.top.sites.TopSitesConfig
 import mozilla.components.feature.top.sites.TopSitesFeature
+import mozilla.components.service.glean.private.NoExtras
 import mozilla.components.support.base.feature.ViewBoundFeatureWrapper
 import mozilla.components.support.ktx.android.view.hideKeyboard
 import mozilla.components.support.utils.ThreadUtils
+import org.mozilla.focus.GleanMetrics.SearchBar
 import org.mozilla.focus.R
 import org.mozilla.focus.ext.isSearch
 import org.mozilla.focus.ext.requireComponents
+import org.mozilla.focus.ext.settings
 import org.mozilla.focus.home.HomeScreen
 import org.mozilla.focus.input.InputToolbarIntegration
 import org.mozilla.focus.menu.home.HomeMenu
@@ -53,7 +56,6 @@ import org.mozilla.focus.utils.AppConstants
 import org.mozilla.focus.utils.Features
 import org.mozilla.focus.utils.OneShotOnPreDrawListener
 import org.mozilla.focus.utils.SearchUtils
-import org.mozilla.focus.utils.Settings
 import org.mozilla.focus.utils.StatusBarUtils
 import org.mozilla.focus.utils.SupportUtils
 import org.mozilla.focus.utils.UrlUtils
@@ -226,9 +228,16 @@ class UrlInputFragment :
 
         urlInputLayout.layoutParams.height = (inputHeight + statusBarHeight).toInt()
 
+        val topMargin = (inputHeight + statusBarHeight).toInt()
+
         if (searchViewContainer.layoutParams is ViewGroup.MarginLayoutParams) {
             val marginParams = searchViewContainer.layoutParams as ViewGroup.MarginLayoutParams
-            marginParams.topMargin = (inputHeight + statusBarHeight).toInt()
+            marginParams.topMargin = topMargin
+        }
+
+        if (landingLayout.layoutParams is ViewGroup.MarginLayoutParams) {
+            val marginParams = landingLayout.layoutParams as ViewGroup.MarginLayoutParams
+            marginParams.topMargin = topMargin
         }
     }
 
@@ -356,7 +365,7 @@ class UrlInputFragment :
         super.onStart()
 
         activity?.let {
-            if (Settings.getInstance(it.applicationContext).shouldShowFirstrun()) return@onStart
+            if (requireContext().settings.shouldShowFirstrun()) return@onStart
         }
     }
 
@@ -365,7 +374,7 @@ class UrlInputFragment :
 
         if (newConfig.orientation != Configuration.ORIENTATION_UNDEFINED) {
             // Make sure we update the background for landscape / portrait orientations.
-            backgroundView?.background = ContextCompat.getDrawable(
+            backgroundView?.background = AppCompatResources.getDrawable(
                 requireContext(),
                 R.drawable.home_background
             )
@@ -549,7 +558,22 @@ class UrlInputFragment :
 
             openUrl(url, searchTerms)
 
-            TelemetryWrapper.urlBarEvent(isUrl)
+            if (isUrl) {
+                SearchBar.enteredUrl.record(NoExtras())
+            } else {
+                val defaultSearchEngine =
+                    requireComponents.store.state.search.selectedOrDefaultSearchEngine
+                val defaultSearchEngineName =
+                    if (defaultSearchEngine?.type == SearchEngine.Type.CUSTOM) {
+                        "custom"
+                    } else {
+                        defaultSearchEngine?.name ?: "<none>"
+                    }
+
+                SearchBar.performedSearch.record(
+                    SearchBar.PerformedSearchExtra(defaultSearchEngineName)
+                )
+            }
         }
     }
 

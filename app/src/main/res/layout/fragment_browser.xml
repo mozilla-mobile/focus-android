@@ -6,7 +6,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:mozac="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <LinearLayout
@@ -37,8 +36,7 @@
                 android:layout_height="match_parent"
                 android:focusable="true"
                 android:focusableInTouchMode="true"
-                android:scrollbarThumbVertical="@drawable/scrollbar_thumb"
-                app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+                android:scrollbarThumbVertical="@drawable/scrollbar_thumb" />
 
             <FrameLayout
                 android:id="@+id/crash_container"
@@ -47,8 +45,21 @@
                 android:background="@color/destructive"
                 android:visibility="gone"/>
 
-            <include
-                layout="@layout/browser_display_toolbar"/>
+            <mozilla.components.browser.toolbar.BrowserToolbar
+                android:id="@+id/browserToolbar"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/browser_toolbar_height"
+                android:layout_gravity="top"
+                android:background="@drawable/background_gradient"
+                android:clickable="true"
+                android:elevation="4dp"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                app:browserToolbarClearColor="?primaryText"
+                app:browserToolbarInsecureColor="?primaryText"
+                app:browserToolbarMenuColor="?primaryText"
+                app:browserToolbarProgressBarGravity="bottom"
+                app:browserToolbarSecureColor="?primaryText" />
 
             <org.mozilla.focus.widget.FloatingSessionsButton
                 android:id="@+id/tabs"
@@ -90,12 +101,11 @@
                 android:elevation="10dp"
                 android:layout_height="56dp"
                 android:padding="4dp"
-                android:background="@color/find_in_page_background"
-                mozac:findInPageNoMatchesTextColor="@color/find_in_page_no_matches_color"
-                mozac:findInPageQueryTextColor="@color/find_in_page_query_color"
-                mozac:findInPageQueryHintTextColor="@color/find_in_page_query_hint_color"
-                mozac:findInPageResultCountTextColor="@color/find_in_page_results_color"
-                app:findInPageButtonsTint="@color/find_in_page_buttons_tint"
+                android:background="@color/colorPrimary"
+                app:findInPageQueryHintTextColor="@color/secondaryText"
+                app:findInPageNoMatchesTextColor="@color/error"
+                app:findInPageButtonsTint="@color/primaryText"
+                app:findInPageResultCountTextColor="@color/primaryText"
                 android:visibility="gone" />
 
         </org.mozilla.focus.widget.ResizableKeyboardCoordinatorLayout>

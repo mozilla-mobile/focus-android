@@ -44,6 +44,7 @@ import mozilla.components.lib.crash.service.MozillaSocorroService
 import mozilla.components.lib.crash.service.SentryService
 import mozilla.components.service.location.LocationService
 import mozilla.components.service.location.MozillaLocationService
+import mozilla.components.service.nimbus.NimbusApi
 import org.mozilla.focus.activity.MainActivity
 import org.mozilla.focus.browser.BlockedTrackersMiddleware
 import org.mozilla.focus.components.EngineProvider
@@ -51,9 +52,9 @@ import org.mozilla.focus.downloads.DownloadService
 import org.mozilla.focus.engine.AppContentInterceptor
 import org.mozilla.focus.engine.ClientWrapper
 import org.mozilla.focus.engine.SanityCheckMiddleware
-import org.mozilla.focus.engine.TabsFeatureMiddleware
-import org.mozilla.focus.exceptions.ExceptionMigrationMiddleware
+import org.mozilla.focus.experiments.createNimbus
 import org.mozilla.focus.ext.components
+import org.mozilla.focus.ext.settings
 import org.mozilla.focus.locale.LocaleManager
 import org.mozilla.focus.notification.PrivateNotificationMiddleware
 import org.mozilla.focus.search.SearchFilterMiddleware
@@ -61,6 +62,7 @@ import org.mozilla.focus.search.SearchMigration
 import org.mozilla.focus.state.AppState
 import org.mozilla.focus.state.AppStore
 import org.mozilla.focus.state.Screen
+import org.mozilla.focus.tabs.MergeTabsMiddleware
 import org.mozilla.focus.telemetry.GleanMetricsService
 import org.mozilla.focus.telemetry.TelemetryMiddleware
 import org.mozilla.focus.topsites.DefaultTopSitesStorage
@@ -84,9 +86,9 @@ class Components(
         )
     }
 
-    val engineDefaultSettings by lazy {
-        val settings = Settings.getInstance(context)
+    val settings by lazy { Settings(context) }
 
+    val engineDefaultSettings by lazy {
         DefaultSettings(
             requestInterceptor = AppContentInterceptor(context),
             trackingProtectionPolicy = settings.createTrackingProtectionPolicy(),
@@ -98,7 +100,7 @@ class Components(
 
     val engine: Engine by lazy {
         engineOverride ?: EngineProvider.createEngine(context, engineDefaultSettings).apply {
-            Settings.getInstance(context).setupSafeBrowsing(this)
+            this@Components.settings.setupSafeBrowsing(this)
             WebCompatFeature.install(this)
             WebCompatReporterFeature.install(this, "focus")
         }
@@ -124,7 +126,6 @@ class Components(
     val store by lazy {
         BrowserStore(
             middleware = listOf(
-                ExceptionMigrationMiddleware(context),
                 PrivateNotificationMiddleware(context),
                 TelemetryMiddleware(),
                 DownloadMiddleware(context, DownloadService::class.java),
@@ -138,10 +139,12 @@ class Components(
                 PromptMiddleware(),
                 AdsTelemetryMiddleware(adsTelemetry),
                 BlockedTrackersMiddleware(context),
-                TabsFeatureMiddleware()
+                MergeTabsMiddleware(),
             ) + EngineMiddleware.create(engine)
         )
     }
+
+    val migrator by lazy { EngineProvider.provideTrackingProtectionMigrator(context) }
 
     /**
      * The [CustomTabsServiceStore] holds global custom tabs related data.
@@ -168,6 +171,8 @@ class Components(
 
     val metrics: GleanMetricsService by lazy { GleanMetricsService(context) }
 
+    val experiments: NimbusApi by lazy { createNimbus(context, BuildConfig.NIMBUS_ENDPOINT) }
+
     val adsTelemetry: AdsTelemetry by lazy { AdsTelemetry() }
 
     val searchTelemetry: InContentTelemetry by lazy { InContentTelemetry() }
@@ -183,7 +188,7 @@ class Components(
             context,
             interceptLinkClicks = true,
             launchInApp = {
-                Settings.getInstance(context).openLinksInExternalApp
+                context.settings.openLinksInExternalApp
             }
         )
     }

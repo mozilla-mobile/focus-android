@@ -36,6 +36,8 @@
     <dimen name="adaptive_icon_drawable_dimen">108dp</dimen> <!-- Specified in AdaptiveIconDrawable docs. -->
 
     <dimen name="dialogHorizontalPadding">24dp</dimen>
+    <dimen name="dialog_min_width_major">65%</dimen>
+    <dimen name="dialog_min_width_minor">75%</dimen>
 
     <dimen name="preference_root_layout_padding">16dp</dimen>
     <dimen name="preference_icon_drawable_size">24dp</dimen>
@@ -72,7 +74,7 @@
     <dimen name="search_suggestions_padding_start">56dp</dimen>
     <dimen name="search_suggestions_padding_with_icon">16dp</dimen>
 
-    <dimen name="display_toolbar_height">56dp</dimen>
+    <dimen name="browser_toolbar_height">56dp</dimen>
 
     <!-- Override the default menu width values from AC. -->
     <dimen name="mozac_browser_menu_width_min" tools:ignore="UnusedResources">112dp</dimen>

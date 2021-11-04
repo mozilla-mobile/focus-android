@@ -20,21 +20,9 @@ import org.mozilla.focus.searchsuggestions.SearchSuggestionsPreferences
  * A simple wrapper for SharedPreferences that makes reading preference a little bit easier.
  */
 @Suppress("TooManyFunctions", "LargeClass") // This class is designed to have a lot of (simple) functions
-class Settings private constructor(
+class Settings(
     private val context: Context
 ) {
-    companion object {
-        private var instance: Settings? = null
-
-        @JvmStatic
-        @Synchronized
-        fun getInstance(context: Context): Settings {
-            if (instance == null) {
-                instance = Settings(context.applicationContext)
-            }
-            return instance ?: throw AssertionError("Instance cleared")
-        }
-    }
 
     private val accessibilityManager =
         context.getSystemService(Context.ACCESSIBILITY_SERVICE) as AccessibilityManager?
@@ -58,7 +46,9 @@ class Settings private constructor(
 
     private val preferences: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
 
-    fun createTrackingProtectionPolicy(): EngineSession.TrackingProtectionPolicy {
+    fun createTrackingProtectionPolicy(
+        shouldBlockCookiesValue: String = shouldBlockCookiesValue()
+    ): EngineSession.TrackingProtectionPolicy {
         val trackingCategories: MutableList<EngineSession.TrackingProtectionPolicy.TrackingCategory> =
             mutableListOf(EngineSession.TrackingProtectionPolicy.TrackingCategory.SCRIPTS_AND_SUB_RESOURCES)
 
@@ -75,7 +65,7 @@ class Settings private constructor(
             trackingCategories.add(EngineSession.TrackingProtectionPolicy.TrackingCategory.CONTENT)
         }
 
-        val cookiePolicy = when (shouldBlockCookiesValue()) {
+        val cookiePolicy = when (shouldBlockCookiesValue) {
             context.getString(R.string.preference_privacy_should_block_cookies_yes_option2) ->
                 EngineSession.TrackingProtectionPolicy.CookiePolicy.ACCEPT_NONE
 
@@ -116,6 +106,14 @@ class Settings private constructor(
             getPreferenceKey(R.string.pref_key_open_links_in_external_app),
             false
         )
+
+    var isExperimentationEnabled: Boolean
+        get() = preferences.getBoolean(getPreferenceKey(R.string.pref_key_studies), false)
+        set(value) {
+            preferences.edit()
+                .putBoolean(getPreferenceKey(R.string.pref_key_studies), value)
+                .commit()
+        }
 
     fun shouldBlockImages(): Boolean =
         // Not shipping in v1 (#188)

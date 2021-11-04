@@ -8,6 +8,7 @@ import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -20,7 +21,6 @@ import android.widget.FrameLayout
 import android.widget.Toast
 import androidx.core.content.pm.ShortcutManagerCompat
 import androidx.preference.PreferenceManager
-import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_browser.*
 import kotlinx.coroutines.DelicateCoroutinesApi
@@ -48,14 +48,16 @@ import mozilla.components.feature.tabs.WindowFeature
 import mozilla.components.feature.top.sites.TopSitesConfig
 import mozilla.components.feature.top.sites.TopSitesFeature
 import mozilla.components.lib.crash.Crash
-import mozilla.components.support.base.feature.PermissionsFeature
+import mozilla.components.service.glean.private.NoExtras
 import mozilla.components.support.base.feature.ViewBoundFeatureWrapper
-import mozilla.components.support.ktx.kotlin.tryGetHostFromUrl
+import mozilla.components.support.utils.Browsers
+import org.mozilla.focus.GleanMetrics.Downloads
+import org.mozilla.focus.GleanMetrics.OpenWith
+import org.mozilla.focus.GleanMetrics.TabCount
 import org.mozilla.focus.GleanMetrics.TrackingProtection
 import org.mozilla.focus.R
 import org.mozilla.focus.activity.InstallFirefoxActivity
 import org.mozilla.focus.activity.MainActivity
-import org.mozilla.focus.browser.DisplayToolbar
 import org.mozilla.focus.browser.binding.TabCountBinding
 import org.mozilla.focus.browser.integration.BrowserMenuController
 import org.mozilla.focus.browser.integration.BrowserToolbarIntegration
@@ -64,31 +66,31 @@ import org.mozilla.focus.browser.integration.FullScreenIntegration
 import org.mozilla.focus.contextmenu.ContextMenuCandidates
 import org.mozilla.focus.downloads.DownloadService
 import org.mozilla.focus.engine.EngineSharedPreferencesListener
-import org.mozilla.focus.exceptions.ExceptionDomains
+import org.mozilla.focus.ext.accessibilityManager
 import org.mozilla.focus.ext.components
+import org.mozilla.focus.ext.disableDynamicBehavior
+import org.mozilla.focus.ext.enableDynamicBehavior
 import org.mozilla.focus.ext.ifCustomTab
 import org.mozilla.focus.ext.isCustomTab
 import org.mozilla.focus.ext.requireComponents
+import org.mozilla.focus.ext.settings
+import org.mozilla.focus.ext.showAsFixed
 import org.mozilla.focus.ext.titleOrDomain
 import org.mozilla.focus.menu.browser.DefaultBrowserMenu
 import org.mozilla.focus.open.OpenWithFragment
 import org.mozilla.focus.settings.privacy.ConnectionDetailsPanel
 import org.mozilla.focus.settings.privacy.TrackingProtectionPanel
 import org.mozilla.focus.state.AppAction
-import org.mozilla.focus.state.Screen
 import org.mozilla.focus.telemetry.TelemetryWrapper
 import org.mozilla.focus.topsites.DefaultTopSitesStorage.Companion.TOP_SITES_MAX_LIMIT
 import org.mozilla.focus.topsites.DefaultTopSitesView
-import org.mozilla.focus.utils.AppPermissionCodes.REQUEST_CODE_DOWNLOAD_PERMISSIONS
-import org.mozilla.focus.utils.AppPermissionCodes.REQUEST_CODE_PROMPT_PERMISSIONS
-import org.mozilla.focus.utils.Browsers
+import org.mozilla.focus.utils.Features
 import org.mozilla.focus.utils.FocusSnackbar
 import org.mozilla.focus.utils.FocusSnackbarDelegate
-import org.mozilla.focus.utils.Settings
 import org.mozilla.focus.utils.StatusBarUtils
-import org.mozilla.focus.utils.SupportUtils
 import org.mozilla.focus.widget.FloatingEraseButton
 import org.mozilla.focus.widget.FloatingSessionsButton
+import java.net.URLEncoder
 
 /**
  * Fragment for displaying the browser UI.
@@ -96,14 +98,16 @@ import org.mozilla.focus.widget.FloatingSessionsButton
 @Suppress("LargeClass", "TooManyFunctions")
 class BrowserFragment :
     BaseFragment(),
-    View.OnClickListener {
+    View.OnClickListener,
+    AccessibilityManager.AccessibilityStateChangeListener {
 
-    private lateinit var toolbarView: DisplayToolbar
     private var statusBar: View? = null
-    private var urlBar: View? = null
     private var popupTint: FrameLayout? = null
 
-    private var engineView: EngineView? = null
+    private lateinit var engineView: EngineView
+    private lateinit var toolbar: BrowserToolbar
+    private lateinit var eraseFab: FloatingEraseButton
+    private lateinit var sessionsFab: FloatingSessionsButton
 
     private val findInPageIntegration = ViewBoundFeatureWrapper<FindInPageIntegration>()
     private val fullScreenIntegration = ViewBoundFeatureWrapper<FullScreenIntegration>()
@@ -140,10 +144,11 @@ class BrowserFragment :
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_browser, container, false)
 
-        urlBar = view.findViewById(R.id.urlbar)
         statusBar = view.findViewById(R.id.status_bar_background)
 
         popupTint = view.findViewById(R.id.popup_tint)
+
+        requireContext().accessibilityManager.addAccessibilityStateChangeListener(this)
 
         return view
     }
@@ -152,17 +157,16 @@ class BrowserFragment :
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         val components = requireComponents
 
-        engineView = (view.findViewById<View>(R.id.engineView) as EngineView).apply {
-            setDynamicToolbarMaxHeight(resources.getDimension(R.dimen.display_toolbar_height).toInt())
-        }
-
-        toolbarView = view.findViewById<DisplayToolbar>(R.id.appbar)
+        engineView = (view.findViewById<View>(R.id.engineView) as EngineView)
+        toolbar = view.findViewById(R.id.browserToolbar)
+        eraseFab = view.findViewById(R.id.erase)
+        sessionsFab = view.findViewById(R.id.tabs)
 
         findInPageIntegration.set(
             FindInPageIntegration(
                 components.store,
                 view.findViewById(R.id.find_in_page),
-                engineView!!
+                engineView
             ),
             this, view
         )
@@ -173,9 +177,12 @@ class BrowserFragment :
                 components.store,
                 tab.id,
                 components.sessionUseCases,
-                toolbarView,
+                requireContext().settings,
+                toolbar,
                 statusBar!!,
-                engineView!!
+                engineView,
+                eraseFab,
+                sessionsFab
             ),
             this, view
         )
@@ -192,7 +199,7 @@ class BrowserFragment :
                     view,
                     FocusSnackbarDelegate(view)
                 ),
-                engineView!!,
+                engineView,
                 requireComponents.contextMenuUseCases,
                 tabId,
                 additionalNote = { hitResult -> getAdditionalNote(hitResult) }
@@ -204,7 +211,7 @@ class BrowserFragment :
             SessionFeature(
                 components.store,
                 components.sessionUseCases.goBack,
-                engineView!!,
+                engineView,
                 tab.id
             ),
             this, view
@@ -217,8 +224,17 @@ class BrowserFragment :
                 customTabId = tryGetCustomTabId(),
                 fragmentManager = parentFragmentManager,
                 onNeedToRequestPermissions = { permissions ->
-                    @Suppress("DEPRECATION") // https://github.com/mozilla-mobile/focus-android/issues/4959
-                    requestPermissions(permissions, REQUEST_CODE_PROMPT_PERMISSIONS)
+                    requestInPlacePermissions(permissions) { result ->
+                        promptFeature.get()?.onPermissionsResult(
+                            result.keys.toTypedArray(),
+                            result.values.map {
+                                when (it) {
+                                    true -> PackageManager.PERMISSION_GRANTED
+                                    false -> PackageManager.PERMISSION_DENIED
+                                }
+                            }.toIntArray()
+                        )
+                    }
                 }
             ),
             this, view
@@ -236,11 +252,20 @@ class BrowserFragment :
                     DownloadService::class
                 ),
                 onNeedToRequestPermissions = { permissions ->
-                    @Suppress("DEPRECATION") // https://github.com/mozilla-mobile/focus-android/issues/4959
-                    requestPermissions(permissions, REQUEST_CODE_DOWNLOAD_PERMISSIONS)
+                    requestInPlacePermissions(permissions) { result ->
+                        downloadsFeature.get()?.onPermissionsResult(
+                            result.keys.toTypedArray(),
+                            result.values.map {
+                                when (it) {
+                                    true -> PackageManager.PERMISSION_GRANTED
+                                    false -> PackageManager.PERMISSION_DENIED
+                                }
+                            }.toIntArray()
+                        )
+                    }
                 },
                 onDownloadStopped = { state, _, status ->
-                    showDownloadSnackbar(state, status)
+                    handleDownloadStopped(state, status)
                 }
             ),
             this, view
@@ -262,7 +287,7 @@ class BrowserFragment :
                 store = components.store,
                 sessionId = tabId,
                 fragmentManager = parentFragmentManager,
-                launchInApp = { Settings.getInstance(requireContext()).openLinksInExternalApp },
+                launchInApp = { requireContext().settings.openLinksInExternalApp },
                 loadUrlUseCase = requireContext().components.sessionUseCases.loadUrl
             ),
             owner = this,
@@ -288,7 +313,7 @@ class BrowserFragment :
 
         val customTabConfig = tab.ifCustomTab()?.config
         if (customTabConfig != null) {
-            initialiseCustomTabUi(view, customTabConfig)
+            initialiseCustomTabUi(customTabConfig)
 
             // TODO Add custom tabs window feature support
             // We to add support for Custom Tabs here, however in order to send the window request
@@ -305,6 +330,14 @@ class BrowserFragment :
                 owner = this,
                 view = view
             )
+        }
+    }
+
+    override fun onAccessibilityStateChanged(enabled: Boolean) = when (enabled) {
+        false -> toolbar.enableDynamicBehavior(requireContext(), engineView)
+        true -> {
+            toolbar.disableDynamicBehavior(engineView)
+            toolbar.showAsFixed(requireContext(), engineView)
         }
     }
 
@@ -349,9 +382,8 @@ class BrowserFragment :
 
         toolbarIntegration.set(
             BrowserToolbarIntegration(
-                store = requireComponents.store,
+                requireComponents.store,
                 toolbar = browserToolbar,
-                toolbarView = toolbarView,
                 fragment = this,
                 controller = controller,
                 customTabId = tryGetCustomTabId(),
@@ -365,6 +397,12 @@ class BrowserFragment :
     }
 
     private fun initialiseNormalBrowserUi(view: View) {
+        if (!requireContext().settings.isAccessibilityEnabled()) {
+            toolbar.enableDynamicBehavior(requireContext(), engineView)
+        } else {
+            toolbar.showAsFixed(requireContext(), engineView)
+        }
+
         val eraseButton = view.findViewById<FloatingEraseButton>(R.id.erase)
         eraseButton.setOnClickListener(this)
 
@@ -382,24 +420,28 @@ class BrowserFragment :
         )
     }
 
-    private fun initialiseCustomTabUi(view: View, customTabConfig: CustomTabConfig) {
+    private fun initialiseCustomTabUi(customTabConfig: CustomTabConfig) {
         // Unfortunately there's no simpler way to have the FAB only in normal-browser mode.
         // - ViewStub: requires splitting attributes for the FAB between the ViewStub, and actual FAB layout file.
         //             Moreover, the layout behaviour just doesn't work unless you set it programatically.
         // - View.GONE: doesn't work because the layout-behaviour makes the FAB visible again when scrolling.
         // - Adding at runtime: works, but then we need to use a separate layout file (and you need
         //   to set some attributes programatically, same as ViewStub).
-        val erase = view.findViewById<FloatingEraseButton>(R.id.erase)
-        val eraseContainer = erase.parent as ViewGroup
-        eraseContainer.removeView(erase)
+        val eraseContainer = eraseFab.parent as ViewGroup
+        eraseContainer.removeView(eraseFab)
 
-        val sessions = view.findViewById<FloatingSessionsButton>(R.id.tabs)
-        eraseContainer.removeView(sessions)
+        eraseContainer.removeView(sessionsFab)
 
-        if (!customTabConfig.enableUrlbarHiding) {
-            val params = urlBar!!.layoutParams as AppBarLayout.LayoutParams
-            params.scrollFlags = 0
+        if (customTabConfig.enableUrlbarHiding && !requireContext().settings.isAccessibilityEnabled()) {
+            toolbar.enableDynamicBehavior(requireContext(), engineView)
+        } else {
+            toolbar.showAsFixed(requireContext(), engineView)
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        requireContext().accessibilityManager.removeAccessibilityStateChangeListener(this)
     }
 
     override fun onDestroy() {
@@ -408,16 +450,6 @@ class BrowserFragment :
         // This fragment might get destroyed before the user left immersive mode (e.g. by opening another URL from an
         // app). In this case let's leave immersive mode now when the fragment gets destroyed.
         fullScreenIntegration.get()?.exitImmersiveModeIfNeeded()
-    }
-
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
-        val feature: PermissionsFeature? = when (requestCode) {
-            REQUEST_CODE_PROMPT_PERMISSIONS -> promptFeature.get()
-            REQUEST_CODE_DOWNLOAD_PERMISSIONS -> downloadsFeature.get()
-            else -> null
-        }
-
-        feature?.onPermissionsResult(permissions, grantResults)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -478,15 +510,36 @@ class BrowserFragment :
         it.findFragmentByTag(CrashReporterFragment.FRAGMENT_TAG)?.isVisible ?: false
     }
 
-    private fun showDownloadSnackbar(
+    private fun handleDownloadStopped(
         state: DownloadState,
         status: DownloadState.Status
     ) {
-        if (status != DownloadState.Status.COMPLETED) {
-            // We currently only show an in-app snackbar for completed downloads.
-            return
-        }
+        val extension =
+            MimeTypeMap.getFileExtensionFromUrl(URLEncoder.encode(state.filePath, "utf-8"))
 
+        when (status) {
+            DownloadState.Status.FAILED -> {
+                Downloads.downloadFailed.record(Downloads.DownloadFailedExtra(extension))
+            }
+
+            DownloadState.Status.PAUSED -> {
+                Downloads.downloadPaused.record(NoExtras())
+            }
+
+            DownloadState.Status.COMPLETED -> {
+                Downloads.downloadCompleted.record(NoExtras())
+                showDownloadCompletedSnackbar(state, extension)
+            }
+
+            else -> {
+            }
+        }
+    }
+
+    private fun showDownloadCompletedSnackbar(
+        state: DownloadState,
+        extension: String?
+    ) {
         val snackbar = FocusSnackbar.make(
             requireView(),
             (requireView().findViewById(R.id.tabs) as? FloatingSessionsButton)?.visibility == View.VISIBLE,
@@ -507,8 +560,6 @@ class BrowserFragment :
             )
 
             if (!opened) {
-                val extension = MimeTypeMap.getFileExtensionFromUrl(state.filePath)
-
                 Toast.makeText(
                     context,
                     getString(
@@ -518,6 +569,10 @@ class BrowserFragment :
                     Toast.LENGTH_LONG
                 ).show()
             }
+
+            Downloads.openButtonTapped.record(
+                Downloads.OpenButtonTappedExtra(fileExtension = extension, openSuccessful = opened)
+            )
         }
 
         snackbar.show()
@@ -635,25 +690,28 @@ class BrowserFragment :
         }
 
         startActivity(Intent.createChooser(shareIntent, getString(R.string.share_dialog_title)))
-
-        TelemetryWrapper.shareEvent()
     }
 
     private fun openInBrowser() {
         // Release the session from this view so that it can immediately be rendered by a different view
         sessionFeature.get()?.release()
 
-        requireComponents.customTabsUseCases.migrate(tab.id)
+        if (Features.TABS) {
+            requireComponents.customTabsUseCases.migrate(tab.id)
+        } else {
+            // A Middleware will take care of either opening a new tab for this URL or reusing an
+            // already existing tab.
+            requireComponents.tabsUseCases.addTab(tab.content.url)
+        }
 
         val intent = Intent(context, MainActivity::class.java)
         intent.action = Intent.ACTION_MAIN
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
         startActivity(intent)
 
-        TelemetryWrapper.openFullBrowser()
-
+        // Close this activity (and the task) since it is no longer displaying any session
         val activity = activity
-        activity?.finish()
+        activity?.finishAndRemoveTask()
     }
 
     internal fun edit() {
@@ -664,128 +722,52 @@ class BrowserFragment :
 
     @Suppress("ComplexMethod")
     override fun onClick(view: View) {
+        val openedTabs = view.context.components.store.state.tabs.size
         when (view.id) {
             R.id.erase -> {
-                TelemetryWrapper.eraseEvent()
-
+                TabCount.eraseButtonTapped.record(TabCount.EraseButtonTappedExtra(openedTabs))
                 erase()
             }
 
             R.id.tabs -> {
                 requireComponents.appStore.dispatch(AppAction.ShowTabs)
 
-                TelemetryWrapper.openTabsTrayEvent()
+                TabCount.sessionButtonTapped.record(TabCount.SessionButtonTappedExtra(openedTabs))
             }
 
-            R.id.open_in_firefox_focus -> {
-                openInBrowser()
+            else -> {
+                throw IllegalArgumentException("Unhandled menu item in BrowserFragment")
             }
-
-            R.id.share -> {
-                shareCurrentUrl()
-            }
-
-            R.id.settings -> {
-                requireComponents.appStore.dispatch(
-                    AppAction.OpenSettings(page = Screen.Settings.Page.Start)
-                )
-            }
-
-            R.id.open_default -> {
-                val browsers = Browsers(requireContext(), tab.content.url)
-
-                val defaultBrowser = browsers.defaultBrowser
-                    ?: throw IllegalStateException("<Open with \$Default> was shown when no default browser is set")
-                // We only add this menu item when a third party default exists, in
-                // BrowserMenuAdapter.initializeMenu()
-
-                val intent = Intent(Intent.ACTION_VIEW, Uri.parse(tab.content.url))
-                intent.setPackage(defaultBrowser.packageName)
-                startActivity(intent)
-
-                if (browsers.isFirefoxDefaultBrowser) {
-                    TelemetryWrapper.openFirefoxEvent()
-                } else {
-                    TelemetryWrapper.openDefaultAppEvent()
-                }
-            }
-
-            R.id.open_select_browser -> { openSelectBrowser() }
-
-            R.id.help -> {
-                requireComponents.tabsUseCases.addTab(
-                    SupportUtils.HELP_URL,
-                    source = SessionState.Source.Internal.Menu,
-                    selectTab = true,
-                    private = true
-                )
-            }
-
-            R.id.stop -> {
-                requireComponents.sessionUseCases.stopLoading(tabId)
-            }
-
-            R.id.refresh -> {
-                requireComponents.sessionUseCases.reload(tabId)
-            }
-
-            R.id.forward -> {
-                requireComponents.sessionUseCases.goForward(tabId)
-            }
-
-            R.id.add_to_homescreen -> { showAddToHomescreenDialog() }
-
-            R.id.report_site_issue -> {
-                val reportUrl = String.format(SupportUtils.REPORT_SITE_ISSUE_URL, tab.content.url)
-                requireComponents.tabsUseCases.addTab(
-                    reportUrl,
-                    source = SessionState.Source.Internal.Menu,
-                    selectTab = true,
-                    private = true
-                )
-
-                TelemetryWrapper.reportSiteIssueEvent()
-            }
-
-            R.id.find_in_page -> { showFindInPageBar() }
-
-            else -> throw IllegalArgumentException("Unhandled menu item in BrowserFragment")
         }
     }
 
     private fun showFindInPageBar() {
         findInPageIntegration.get()?.show(tab)
-        TelemetryWrapper.findInPageMenuEvent()
     }
 
     private fun openSelectBrowser() {
-        val browsers = Browsers(requireContext(), tab.content.url)
+        val browsers = Browsers.all(requireContext())
 
         val apps = browsers.installedBrowsers
-        val store = if (browsers.hasFirefoxBrandedBrowserInstalled())
+        val store = if (browsers.hasFirefoxBrandedBrowserInstalled)
             null
         else
             InstallFirefoxActivity.resolveAppStore(requireContext())
 
         val fragment = OpenWithFragment.newInstance(
-            apps,
+            apps.toTypedArray(),
             tab.content.url,
             store
         )
         @Suppress("DEPRECATION")
         fragment.show(requireFragmentManager(), OpenWithFragment.FRAGMENT_TAG)
 
-        TelemetryWrapper.openSelectionEvent()
+        OpenWith.listDisplayed.record(OpenWith.ListDisplayedExtra(apps.size))
     }
 
     internal fun closeCustomTab() {
-        TelemetryWrapper.closeCustomTabEvent()
-
         requireComponents.customTabsUseCases.remove(tab.id)
-
         requireActivity().finish()
-
-        TelemetryWrapper.closeCustomTabEvent()
     }
 
     fun setShouldRequestDesktop(enabled: Boolean) {
@@ -796,7 +778,6 @@ class BrowserFragment :
                     true
                 ).apply()
         }
-        TelemetryWrapper.desktopRequestCheckEvent(enabled)
         requireComponents.sessionUseCases.requestDesktopSite(enabled, tab.id)
     }
 
@@ -806,7 +787,7 @@ class BrowserFragment :
             tabUrl = tab.content.url,
             isTrackingProtectionOn = tab.trackingProtection.ignoredOnTrackingProtection.not(),
             isConnectionSecure = tab.content.securityInfo.secure,
-            blockedTrackersCount = Settings.getInstance(requireContext())
+            blockedTrackersCount = requireContext().settings
                 .getTotalBlockedTrackersCount(),
             toggleTrackingProtection = ::toggleTrackingProtection,
             updateTrackingProtectionPolicy = { tracker, isEnabled ->
@@ -840,14 +821,11 @@ class BrowserFragment :
     }
 
     private fun toggleTrackingProtection(enable: Boolean) {
-        val context = requireContext()
         with(requireComponents) {
             if (enable) {
-                ExceptionDomains.remove(context, listOf(tab.content.url.tryGetHostFromUrl()))
                 trackingProtectionUseCases.removeException(tab.id)
             } else {
-                ExceptionDomains.add(context, tab.content.url.tryGetHostFromUrl())
-                trackingProtectionUseCases.addException(tab.id)
+                trackingProtectionUseCases.addException(tab.id, persistInPrivateMode = true)
             }
         }
 

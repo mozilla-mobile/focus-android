@@ -5,6 +5,7 @@
 package org.mozilla.focus.telemetry
 
 import android.content.Context
+import android.os.Build
 import androidx.annotation.VisibleForTesting
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.DelicateCoroutinesApi
@@ -14,13 +15,20 @@ import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import mozilla.components.browser.state.search.SearchEngine
 import mozilla.components.browser.state.state.selectedOrDefaultSearchEngine
+import mozilla.components.feature.customtabs.CustomTabsFacts
 import mozilla.components.feature.search.ext.waitForSelectedOrDefaultSearchEngine
 import mozilla.components.service.glean.net.ConceptFetchHttpUploader
+import mozilla.components.service.glean.private.NoExtras
+import mozilla.components.support.base.Component
+import mozilla.components.support.base.facts.Fact
+import mozilla.components.support.base.facts.FactProcessor
+import mozilla.components.support.base.facts.Facts
 import mozilla.telemetry.glean.Glean
 import mozilla.telemetry.glean.config.Configuration
 import org.mozilla.focus.BuildConfig
 import org.mozilla.focus.Components
 import org.mozilla.focus.GleanMetrics.Browser
+import org.mozilla.focus.GleanMetrics.CustomTabsToolbar
 import org.mozilla.focus.GleanMetrics.GleanBuildInfo
 import org.mozilla.focus.GleanMetrics.LegacyIds
 import org.mozilla.focus.GleanMetrics.MozillaProducts
@@ -29,6 +37,7 @@ import org.mozilla.focus.GleanMetrics.Preferences
 import org.mozilla.focus.GleanMetrics.Shortcuts
 import org.mozilla.focus.GleanMetrics.TrackingProtection
 import org.mozilla.focus.ext.components
+import org.mozilla.focus.ext.settings
 import org.mozilla.focus.telemetry.TelemetryWrapper.isTelemetryEnabled
 import org.mozilla.focus.topsites.DefaultTopSitesStorage.Companion.TOP_SITES_MAX_LIMIT
 import org.mozilla.focus.utils.Settings
@@ -47,7 +56,7 @@ class GleanMetricsService(context: Context) : MetricsService {
     @OptIn(DelicateCoroutinesApi::class)
     override fun initialize(context: Context) {
         val components = context.components
-        val settings = Settings.getInstance(context)
+        val settings = context.settings
         val telemetryEnabled = isTelemetryEnabled(context)
 
         Glean.initialize(
@@ -87,6 +96,21 @@ class GleanMetricsService(context: Context) : MetricsService {
                 // activationPing.checkAndSend()
             }
         }
+
+        Facts.registerProcessor(object : FactProcessor {
+            override fun process(fact: Fact) {
+                fact.recordTelemetry()
+            }
+        }
+        )
+    }
+
+    private fun Fact.recordTelemetry() = when {
+        Component.FEATURE_CUSTOMTABS == component && CustomTabsFacts.Items.CLOSE == item ->
+            CustomTabsToolbar.closeTabTapped.record(NoExtras())
+        Component.FEATURE_CUSTOMTABS == component && CustomTabsFacts.Items.ACTION_BUTTON == item ->
+            CustomTabsToolbar.actionButtonTapped.record(NoExtras())
+        else -> null
     }
 
     private fun collectPrefMetrics(
@@ -104,6 +128,15 @@ class GleanMetricsService(context: Context) : MetricsService {
         val shortcutsOnHomeNumber =
             components.topSitesStorage.getTopSites(TOP_SITES_MAX_LIMIT, null).size
         Shortcuts.shortcutsOnHomeNumber.set(shortcutsOnHomeNumber.toLong())
+
+        val installSourcePackage = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            context.packageManager.getInstallSourceInfo(context.packageName).installingPackageName
+        } else {
+            @Suppress("DEPRECATION")
+            context.packageManager.getInstallerPackageName(context.packageName)
+        }
+
+        Browser.installSource.set(installSourcePackage.orEmpty())
 
         // Fenix telemetry
         MozillaProducts.hasFenixInstalled.set(hasFenixInstalled)

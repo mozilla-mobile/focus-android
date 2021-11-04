@@ -194,14 +194,16 @@
     <!-- Title of "switch" preference that enables/disables autocomplete for the default list -->
     <string name="preference_switch_autocomplete_topsites">Foar topwebsites</string>
 
-    <!-- Summary for the toggle to enable autocomplete for the topsites list -->
-    <string name="preference_autocomplete_topsite_summary">Skeakel dit yn om automatysk mear as 450 populêre URL’s yn de adresbalke oanfolje te litten.</string>
+    <!-- Summary for the toggle to enable autocomplete for the topsites list
+    %s is a placeholder for the app name (e.g. Firefox Focus)-->
+    <string name="preference_autocomplete_topsite_summary2">Skeakelje dit yn om %s automatysk mear as 450 populêre URL’s yn de adresbalke oanfolje te litten.</string>
 
     <!-- Title of "switch" preference that enables/disables autocomplete for the user-defined list -->
     <string name="preference_switch_autocomplete_user_list">Foar websites dy\'t jo tafoegje</string>
 
-    <!-- Summary for the toggle to enable autocomplete for the user-defined list -->
-    <string name="preference_autocomplete_user_list_summary">Skeakel dit yn om automatysk mear as 450 populêre URL’s yn de adresbalke oanfolje te litten.</string>
+    <!-- Summary for the toggle to enable autocomplete for the user-defined list
+     %s is a placeholder for the app name (e.g. Firefox Focus)-->
+    <string name="preference_autocomplete_user_list_summary2">Skeakelje dit yn om %s automatysk jo favorite URL’s oanfolje te litten.</string>
 
     <!-- Preference category: Manage (user-defined) sites -->
     <string name="preference_category_autocomplete_manage_sites">Websites beheare</string>
@@ -632,6 +634,9 @@
     <!-- Description of what a user may find in the Advanced Setting category, used for debugging -->
     <string name="preference_advanced_summary">Untwikkelersark</string>
 
+    <!-- Preference for open links in third party apps -->
+    <string name="preferences_open_links_in_apps">Keppelingen yn apps iepenje</string>
+
     <!-- Title of Advanced Setting category -->
     <string name="preference_category_advanced">Avansearre</string>
 
@@ -815,4 +820,17 @@ The new line here must be kept as the second half of the string is clickable for
     <!-- Text for context menu additional note.
     %1$s is a placeholder for the app name. -->
     <string name="contextmenu_erased_images_note2">Bewarre en dielde ôfbyldingen &lt;b&gt;wurde net&lt;/b&gt; fuortsmiten as jo skiednis fan %1$s wiskje</string>
+
+    <!-- Theme Preferences -->
+    <!-- Preference category for changing default theme to dark or light mode -->
+    <string name="preferences_theme">Tema</string>
+    <!-- Preference for using light theme -->
+    <string name="preference_light_theme">Ljocht</string>
+    <!-- Preference for using dark theme -->
+    <string name="preference_dark_theme">Donker</string>
+    <!-- Preference for using using dark or light theme automatically set by battery -->
+    <string name="preference_auto_battery_theme">Ynsteld troch Batterijbesparring</string>
+    <!-- Preference for using following device theme -->
+    <string name="preference_follow_device_theme">Apparaattema folgje</string>
+
 </resources>

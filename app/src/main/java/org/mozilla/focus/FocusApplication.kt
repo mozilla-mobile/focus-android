@@ -12,14 +12,18 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.lifecycle.ProcessLifecycleOwner
 import androidx.preference.PreferenceManager
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
 import mozilla.components.support.base.facts.register
 import mozilla.components.support.base.log.Log
 import mozilla.components.support.base.log.sink.AndroidLogSink
 import mozilla.components.support.ktx.android.content.isMainProcess
 import mozilla.components.support.webextensions.WebExtensionSupport
 import org.mozilla.focus.biometrics.LockObserver
+import org.mozilla.focus.ext.settings
 import org.mozilla.focus.locale.LocaleAwareApplication
 import org.mozilla.focus.navigation.StoreLink
 import org.mozilla.focus.session.VisibilityLifeCycleCallback
@@ -28,7 +32,6 @@ import org.mozilla.focus.telemetry.ProfilerMarkerFactProcessor
 import org.mozilla.focus.telemetry.TelemetryWrapper
 import org.mozilla.focus.utils.AdjustHelper
 import org.mozilla.focus.utils.AppConstants
-import org.mozilla.focus.utils.Settings
 import kotlin.coroutines.CoroutineContext
 
 open class FocusApplication : LocaleAwareApplication(), CoroutineScope {
@@ -44,6 +47,7 @@ open class FocusApplication : LocaleAwareApplication(), CoroutineScope {
     private val storeLink by lazy { StoreLink(components.appStore, components.store) }
     private val lockObserver by lazy { LockObserver(this, components.store, components.appStore) }
 
+    @OptIn(DelicateCoroutinesApi::class)
     override fun onCreate() {
         super.onCreate()
 
@@ -51,6 +55,8 @@ open class FocusApplication : LocaleAwareApplication(), CoroutineScope {
         components.crashReporter.install(this)
 
         if (isMainProcess()) {
+            initializeNimbus()
+
             PreferenceManager.setDefaultValues(this, R.xml.settings, false)
 
             setTheme(this)
@@ -70,14 +76,25 @@ open class FocusApplication : LocaleAwareApplication(), CoroutineScope {
 
             storeLink.start()
 
+            GlobalScope.launch(Dispatchers.IO) {
+                components.migrator.start(this@FocusApplication)
+            }
+
             initializeWebExtensionSupport()
 
             ProcessLifecycleOwner.get().lifecycle.addObserver(lockObserver)
         }
     }
 
+    @OptIn(DelicateCoroutinesApi::class) // GlobalScope usage
+    private fun initializeNimbus() {
+        GlobalScope.launch(Dispatchers.IO) {
+            components.experiments.initialize()
+        }
+    }
+
     private fun setTheme(context: Context) {
-        val settings = Settings.getInstance(context)
+        val settings = context.settings
         when {
             settings.lightThemeSelected -> {
                 AppCompatDelegate.setDefaultNightMode(

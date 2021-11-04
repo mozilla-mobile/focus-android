@@ -5,8 +5,10 @@
 package org.mozilla.focus.ext
 
 import android.content.Context
+import android.view.accessibility.AccessibilityManager
 import org.mozilla.focus.Components
 import org.mozilla.focus.FocusApplication
+import org.mozilla.focus.utils.Settings
 import java.text.DateFormat
 
 /**
@@ -20,6 +22,18 @@ val Context.application: FocusApplication
  */
 val Context.components: Components
     get() = application.components
+
+/**
+ * Get the settings of this application.
+ */
+val Context.settings: Settings
+    get() = application.components.settings
+
+/**
+ * System's [AccessibilityManager].
+ */
+val Context.accessibilityManager: AccessibilityManager
+    get() = getSystemService(Context.ACCESSIBILITY_SERVICE) as AccessibilityManager
 
 /**
  * Get the app install date.
