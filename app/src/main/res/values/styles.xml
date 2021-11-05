@@ -25,6 +25,13 @@
         <item name="alertDialogStyle">@style/DialogStyle</item>
         <item name="alertDialogTheme">@style/DialogStyle</item>
         <item name="android:progressBarStyleHorizontal">@style/progressBarStyleHorizontal</item>
+        <item name="android:itemBackground">@color/menuBackground</item>
+        <item name="android:itemTextAppearance">@style/ItemTextAppearance</item>
+    </style>
+
+    <style name="ItemTextAppearance" parent="TextAppearance.AppCompat.Widget.DropDownItem">
+        <item name="android:textColor">@color/primaryText</item>
+        <item name="android:textSize">@dimen/mozac_browser_menu_item_text_size</item>
     </style>
 
     <style name="PreferenceTheme" parent="PreferenceThemeOverlay.v14.Material">
@@ -59,12 +66,21 @@
         <item name="android:windowTitleStyle">@style/DialogTitleStyle</item>
         <item name="android:textColorPrimary">@color/primaryText</item>
         <item name="dialogPreferredPadding">24dp</item>
-        <item name="android:windowBackground">@drawable/dialog_background_with_insets</item>
+        <item name="android:windowBackground">@drawable/dialog_background</item>
+        <item name="android:windowMinWidthMajor">@dimen/dialog_min_width_major</item>
+        <item name="android:windowMinWidthMinor">@dimen/dialog_min_width_minor</item>
+
         <!-- This is the default color for activated controls(buttons) -->
         <item name="android:colorAccent">@color/accentBright</item>
         <item name="textColorAlertDialogListItem">@color/primaryText</item>
         <item name="colorControlActivated">@color/accentBright</item>
         <item name="colorControlNormal">@color/accentBright</item>
+        <item name="buttonBarNegativeButtonStyle">@style/DialogButtonStyle</item>
+        <item name="buttonBarPositiveButtonStyle">@style/DialogButtonStyle</item>
+    </style>
+
+    <style name="DialogButtonStyle" parent="Widget.MaterialComponents.Button.TextButton.Dialog">
+        <item name="android:textColor">@color/accentBright</item>
     </style>
 
     <style name="ButtonStyle" parent="Base.Widget.AppCompat.ButtonBar.AlertDialog">

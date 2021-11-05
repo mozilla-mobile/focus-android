@@ -194,14 +194,16 @@
     <!-- Title of "switch" preference that enables/disables autocomplete for the default list -->
     <string name="preference_switch_autocomplete_topsites">რჩეული საიტებისთვის</string>
 
-    <!-- Summary for the toggle to enable autocomplete for the topsites list -->
-    <string name="preference_autocomplete_topsite_summary">ჩართეთ 450-ზე მეტი ცნობილი URL-ბმულის თვითდასრულებისთვის მისამართების ველში.</string>
+    <!-- Summary for the toggle to enable autocomplete for the topsites list
+    %s is a placeholder for the app name (e.g. Firefox Focus)-->
+    <string name="preference_autocomplete_topsite_summary2">ჩართეთ და %s თავად დაასრულებს 450-ზე მეტ ცნობილ URL-ბმულს, მისამართების ველში აკრეფისას.</string>
 
     <!-- Title of "switch" preference that enables/disables autocomplete for the user-defined list -->
     <string name="preference_switch_autocomplete_user_list">თქვენ მიერ დამატებული საიტებისთვის</string>
 
-    <!-- Summary for the toggle to enable autocomplete for the user-defined list -->
-    <string name="preference_autocomplete_user_list_summary">ჩართეთ 450-ზე მეტი ცნობილი ბმულის თვითდასრულებისთვის მისამართების ველში.</string>
+    <!-- Summary for the toggle to enable autocomplete for the user-defined list
+     %s is a placeholder for the app name (e.g. Firefox Focus)-->
+    <string name="preference_autocomplete_user_list_summary2">ჩართეთ და %s თავად დაასრულებს თქვენს რჩეულ URL-ბმულებს.</string>
 
     <!-- Preference category: Manage (user-defined) sites -->
     <string name="preference_category_autocomplete_manage_sites">საიტების მართვა</string>
@@ -276,7 +278,7 @@
     <string name="preference_privacy_block_ads_summary">ზოგიერთი სარეკლამო ელემენტი, თვალს ადევნებს თქვენს გადაადგილებას საიტებზე, მაშინაც კი როცა მათზე არ აწკაპებთ</string>
     <string name="preference_privacy_block_analytics">სტატისტიკური აღრიცხვის ელემენტების შეზღუდვა</string>
     <string name="preference_privacy_block_analytics_summary">გამოიყენება მონაცემთა აღრიცხვისთვის, დამუშავებისა და ისეთი მოქმედებების შესამოწმებლად, როგორიცაა თითის შეხება და გვერდის გადაადგილება</string>
-    <string name="preference_privacy_block_social">სოც. ქსელების ელემენტების შეზღუდვა</string>
+    <string name="preference_privacy_block_social">სოცქსელების მეთვალყურეების შეზღუდვა</string>
     <string name="preference_privacy_block_social_summary">თქვენს გადაადგილებაზე თვალყურის მისადევნებლად, საიტებზე განთავსებულია მოწონების ან გაზიარების ღილაკების სახით</string>
     <string name="preference_privacy_block_content">სხვა მეთვალყურე ელემენტების შეზღუდვა</string>
     <string name="preference_privacy_block_content_summary2">ჩართვის შედეგად, ზოგიერთმა ვებგვერდმა, შესაძლოა გამართულად ვერ იმუშაოს</string>
@@ -632,6 +634,9 @@
     <!-- Description of what a user may find in the Advanced Setting category, used for debugging -->
     <string name="preference_advanced_summary">შემმუშავებლის ხელსაწყოები</string>
 
+    <!-- Preference for open links in third party apps -->
+    <string name="preferences_open_links_in_apps">ბმულების გახსნა პროგრამებში</string>
+
     <!-- Title of Advanced Setting category -->
     <string name="preference_category_advanced">დამატებითი</string>
 
@@ -768,7 +773,7 @@ The new line here must be kept as the second half of the string is clickable for
     <!-- Title for the tab crash report screen-->
     <string name="tab_crash_report_title">ჩანართი გაითიშა</string>
     <!-- Headline for the tab crash report screen -->
-    <string name="tab_crash_report_headline">ვწუხვართ. ამ ჩანართს რაღაც ხარვეზები გააჩნდა.</string>
+    <string name="tab_crash_report_headline">ვწუხვართ. ამ ჩანართს რაღაც ხარვეზები ჰქონდა.</string>
     <!-- Subtitle for the tab crash report screen -->
     <string name="tab_crash_report_description">როგორც პირადი ბრაუზერი, ჩვენ არაფერს ვინახავთ და შესაბამისად არ შეგვიძლია ამ ჩანართის აღდგენა.</string>
     <!-- Label for button to close the tab-->
@@ -815,4 +820,17 @@ The new line here must be kept as the second half of the string is clickable for
     <!-- Text for context menu additional note.
     %1$s is a placeholder for the app name. -->
     <string name="contextmenu_erased_images_note2">შენახული და გაზიარებული სურათები &lt;b&gt;არ წაიშლება&lt;/b&gt;, როცა %1$s გასუფთავდება</string>
+
+    <!-- Theme Preferences -->
+    <!-- Preference category for changing default theme to dark or light mode -->
+    <string name="preferences_theme">იერსახე</string>
+    <!-- Preference for using light theme -->
+    <string name="preference_light_theme">ნათელი</string>
+    <!-- Preference for using dark theme -->
+    <string name="preference_dark_theme">მუქი</string>
+    <!-- Preference for using using dark or light theme automatically set by battery -->
+    <string name="preference_auto_battery_theme">ბატარეის დამზოგის მიხედვით</string>
+    <!-- Preference for using following device theme -->
+    <string name="preference_follow_device_theme">მოწყობილობის იერსახის მიხედვით</string>
+
 </resources>

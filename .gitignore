@@ -55,11 +55,13 @@ infer-out/
 
 # Screenshots
 fastlane/
-Screengrabfile
 
 # Adjust token file
 .adjust_token
 
 # Sentry token file
 .sentry_token
+
+# Nimbus endpoint file
+.nimbus
 

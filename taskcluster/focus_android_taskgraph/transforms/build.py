@@ -34,14 +34,13 @@ def add_shippable_secrets(config, tasks):
         if task.pop("include-shippable-secrets", False) and config.params["level"] == "3":
             build_type = task["attributes"]["build-type"]
             gradle_build_type = task["run"]["gradle-build-type"]
-            secret_index = f'project/focus/{build_type}'
+            secret_index = f'project/mobile/focus-android/{build_type}'
             secrets.extend([{
                 "key": key,
                 "name": secret_index,
                 "path": target_file,
             } for key, target_file in (
                 ('adjust', '.adjust_token'),
-                ('firebase', f'app/src/{gradle_build_type}/res/values/firebase.xml'),
                 ('sentry_dsn', '.sentry_token'),
                 ('mls', '.mls_token'),
                 ('nimbus_url', '.nimbus'),
@@ -66,6 +65,7 @@ def build_gradle_command(config, tasks):
         gradle_build_name = task["run"]["gradle-build-name"]
         variant_config = get_variant(gradle_build_type, gradle_build_name)
         variant_name = variant_config["name"][0].upper() + variant_config["name"][1:]
+
         task["run"]["gradlew"] = [
             "clean",
             f"assemble{variant_name}",
@@ -136,6 +136,7 @@ def add_artifacts(config, tasks):
             artifact_template = task.pop("apk-artifact-template")
             for apk in variant_config["apks"]:
                 apk_name = artifact_template["name"].format(
+                    gradle_build=gradle_build,
                     **apk
                 )
                 artifacts.append({
