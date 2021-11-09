@@ -5,12 +5,17 @@
 package org.mozilla.focus.telemetry
 
 import androidx.annotation.VisibleForTesting
+import mozilla.components.feature.contextmenu.facts.ContextMenuFacts
+import mozilla.components.feature.customtabs.CustomTabsFacts
 import mozilla.components.feature.search.telemetry.ads.AdsTelemetry
 import mozilla.components.feature.search.telemetry.incontent.InContentTelemetry
+import mozilla.components.service.glean.private.NoExtras
 import mozilla.components.support.base.Component
 import mozilla.components.support.base.facts.Fact
 import mozilla.components.support.base.facts.FactProcessor
 import mozilla.components.support.base.facts.Facts
+import org.mozilla.focus.GleanMetrics.ContextMenu
+import org.mozilla.focus.GleanMetrics.CustomTabsToolbar
 
 /**
  * Processes all [Fact]s emitted from Android Components based on which the appropriate telemetry
@@ -36,6 +41,28 @@ object FactsProcessor {
         Component.FEATURE_SEARCH to InContentTelemetry.IN_CONTENT_SEARCH -> {
             TelemetryWrapper.inContentSearchEvent(value!!)
         }
+
+        Component.FEATURE_CUSTOMTABS to CustomTabsFacts.Items.CLOSE -> {
+            CustomTabsToolbar.closeTabTapped.record(NoExtras())
+        }
+
+        Component.FEATURE_CUSTOMTABS to CustomTabsFacts.Items.ACTION_BUTTON -> {
+            CustomTabsToolbar.actionButtonTapped.record(NoExtras())
+        }
+        Component.FEATURE_CONTEXTMENU to ContextMenuFacts.Items.ITEM -> {
+            ContextMenu.itemTapped.record(ContextMenu.ItemTappedExtra(this.toContextMenuExtraKey()))
+        }
+
         else -> Unit
     }
 }
+
+/**
+ * Extracts an extraKey from a context menu Fact.
+ */
+fun Fact.toContextMenuExtraKey() =
+    if (this.component == Component.FEATURE_CONTEXTMENU) {
+        this.metadata?.get("item").toString().removePrefix("mozac.feature.contextmenu.")
+    } else {
+        throw IllegalArgumentException("Fact is not a context menu fact")
+    }

@@ -84,9 +84,7 @@ object TelemetryWrapper {
         val CHANGE = "change"
         val FOREGROUND = "foreground"
         val BACKGROUND = "background"
-        val SHARE = "share"
         val SAVE = "save"
-        val COPY = "copy"
         val OPEN = "open"
         val INSTALL = "install"
         val INTENT_URL = "intent_url"
@@ -103,20 +101,14 @@ object TelemetryWrapper {
 
     private object Object {
         val SEARCH_BAR = "search_bar"
-        val ERASE_BUTTON = "erase_button"
         val SETTING = "setting"
         val APP = "app"
         val MENU = "menu"
         val BACK_BUTTON = "back_button"
-        val NOTIFICATION = "notification"
-        val NOTIFICATION_ACTION = "notification_action"
-        val SHORTCUT = "shortcut"
         val BLOCKING_SWITCH = "blocking_switch"
         val BROWSER = "browser"
-        val BROWSER_CONTEXTMENU = "browser_contextmenu"
         val FIRSTRUN = "firstrun"
         val HOMESCREEN_SHORTCUT = "homescreen_shortcut"
-        val RECENT_APPS = "recent_apps"
         val APP_ICON = "app_icon"
         val AUTOCOMPLETE_DOMAIN = "autocomplete_domain"
         val AUTOFILL = "autofill"
@@ -130,13 +122,8 @@ object TelemetryWrapper {
         val DEFAULT = "default"
         val FIREFOX = "firefox"
         val SELECTION = "selection"
-        val ERASE = "erase"
-        val ERASE_AND_OPEN = "erase_open"
         val ERASE_TO_HOME = "erase_home"
         val ERASE_TO_APP = "erase_app"
-        val IMAGE = "image"
-        val LINK = "link"
-        val IMAGE_WITH_LINK = "image+link"
         val SKIP = "skip"
         val FINISH = "finish"
         val OPEN = "open"
@@ -167,14 +154,6 @@ object TelemetryWrapper {
         val SEARCH_SUGGESTION = "search_suggestion"
         val TOTAL_URI_COUNT = "total_uri_count"
         val UNIQUE_DOMAINS_COUNT = "unique_domains_count"
-    }
-
-    enum class BrowserContextMenuValue(val value: String) {
-        Link(Value.LINK),
-        Image(Value.IMAGE),
-        ImageWithLink(Value.IMAGE_WITH_LINK);
-
-        override fun toString(): String = value
     }
 
     @JvmStatic
@@ -443,49 +422,8 @@ object TelemetryWrapper {
     }
 
     @JvmStatic
-    fun eraseNotificationEvent() {
-        withSessionCounts(TelemetryEvent.create(Category.ACTION, Method.CLICK, Object.NOTIFICATION, Value.ERASE))
-            .queue()
-    }
-
-    @JvmStatic
-    fun eraseAndOpenNotificationActionEvent() {
-        withSessionCounts(
-            TelemetryEvent.create(
-                Category.ACTION,
-                Method.CLICK,
-                Object.NOTIFICATION_ACTION,
-                Value.ERASE_AND_OPEN
-            )
-        ).queue()
-    }
-
-    @JvmStatic
-    fun openNotificationActionEvent() {
-        TelemetryEvent.create(Category.ACTION, Method.CLICK, Object.NOTIFICATION_ACTION, Value.OPEN).queue()
-    }
-
-    @JvmStatic
     fun openHomescreenShortcutEvent() {
         TelemetryEvent.create(Category.ACTION, Method.CLICK, Object.HOMESCREEN_SHORTCUT, Value.OPEN).queue()
-    }
-
-    @JvmStatic
-    fun eraseShortcutEvent() {
-        withSessionCounts(TelemetryEvent.create(Category.ACTION, Method.CLICK, Object.SHORTCUT, Value.ERASE))
-            .queue()
-    }
-
-    @JvmStatic
-    fun eraseAndOpenShortcutEvent() {
-        withSessionCounts(TelemetryEvent.create(Category.ACTION, Method.CLICK, Object.SHORTCUT, Value.ERASE_AND_OPEN))
-            .queue()
-    }
-
-    @JvmStatic
-    fun eraseTaskRemoved() {
-        withSessionCounts(TelemetryEvent.create(Category.ACTION, Method.CLICK, Object.RECENT_APPS, Value.ERASE))
-            .queue()
     }
 
     @JvmStatic
@@ -493,54 +431,6 @@ object TelemetryWrapper {
         TelemetryEvent.create(Category.ACTION, Method.CHANGE, Object.SETTING, key)
             .extra(Extra.TO, value)
             .queue()
-    }
-
-    @JvmStatic
-    fun shareLinkEvent() {
-        TelemetryEvent.create(Category.ACTION, Method.SHARE, Object.BROWSER_CONTEXTMENU, Value.LINK).queue()
-    }
-
-    @JvmStatic
-    fun shareImageEvent() {
-        TelemetryEvent.create(Category.ACTION, Method.SHARE, Object.BROWSER_CONTEXTMENU, Value.IMAGE).queue()
-    }
-
-    @JvmStatic
-    fun saveImageEvent() {
-        TelemetryEvent.create(Category.ACTION, Method.SAVE, Object.BROWSER_CONTEXTMENU, Value.IMAGE).queue()
-    }
-
-    @JvmStatic
-    fun copyLinkEvent() {
-        TelemetryEvent.create(Category.ACTION, Method.COPY, Object.BROWSER_CONTEXTMENU, Value.LINK).queue()
-    }
-
-    @JvmStatic
-    fun copyImageEvent() {
-        TelemetryEvent.create(Category.ACTION, Method.COPY, Object.BROWSER_CONTEXTMENU, Value.IMAGE).queue()
-    }
-
-    @JvmStatic
-    fun openLinkInFullBrowserFromCustomTabEvent() {
-        withSessionCounts(
-            TelemetryEvent.create(
-                Category.ACTION,
-                Method.OPEN,
-                Object.BROWSER_CONTEXTMENU,
-                Value.FULL_BROWSER
-            )
-        )
-            .queue()
-    }
-
-    @JvmStatic
-    fun openWebContextMenuEvent() {
-        TelemetryEvent.create(Category.ACTION, Method.LONG_PRESS, Object.BROWSER).queue()
-    }
-
-    @JvmStatic
-    fun cancelWebContextMenuEvent(value: BrowserContextMenuValue) {
-        TelemetryEvent.create(Category.ACTION, Method.CANCEL, Object.BROWSER_CONTEXTMENU, value.toString()).queue()
     }
 
     @JvmStatic
