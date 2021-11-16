@@ -9,7 +9,6 @@
 package org.mozilla.focus.telemetry
 
 import android.content.Context
-import android.net.http.SslError
 import android.os.Build
 import android.os.StrictMode
 import androidx.annotation.CheckResult
@@ -21,7 +20,6 @@ import mozilla.components.browser.state.selector.privateTabs
 import mozilla.components.browser.state.state.selectedOrDefaultSearchEngine
 import org.json.JSONObject
 import org.mozilla.focus.BuildConfig
-import org.mozilla.focus.GleanMetrics.BrowserSearch
 import org.mozilla.focus.R
 import org.mozilla.focus.ext.components
 import org.mozilla.focus.utils.AppConstants
@@ -74,7 +72,6 @@ object TelemetryWrapper {
     private object Method {
         val TYPE_SELECT_QUERY = "select_query"
         val CLICK = "click"
-        val SWIPE = "swipe"
         val CANCEL = "cancel"
         val LONG_PRESS = "long_press"
         val CHANGE = "change"
@@ -87,8 +84,6 @@ object TelemetryWrapper {
         val HIDE = "hide"
         val REMOVE = "remove"
         val REORDER = "reorder"
-        val PAGE = "page"
-        val RESOURCE = "resource"
     }
 
     private object Object {
@@ -101,8 +96,6 @@ object TelemetryWrapper {
         val BROWSER = "browser"
         val FIRSTRUN = "firstrun"
         val AUTOCOMPLETE_DOMAIN = "autocomplete_domain"
-        val AUTOFILL = "autofill"
-        val GECKO_ENGINE = "gecko_engine"
         val SEARCH_SUGGESTION_PROMPT = "search_suggestion_prompt"
         val MAKE_DEFAULT_BROWSER_OPEN_WITH = "make_default_browser_open_with"
         val MAKE_DEFAULT_BROWSER_SETTINGS = "make_default_browser_settings"
@@ -123,7 +116,6 @@ object TelemetryWrapper {
         val TAB = "tab"
         val WHATS_NEW = "whats_new"
         val RESUME = "resume"
-        val RELOAD = "refresh"
         val FULL_BROWSER = "full_browser"
         val REPORT_ISSUE = "report_issue"
         val SETTINGS = "settings"
@@ -140,7 +132,6 @@ object TelemetryWrapper {
         val AUTOCOMPLETE = "autocomplete"
         val SOURCE = "source"
         val SUCCESS = "success"
-        val ERROR_CODE = "error_code"
         val SEARCH_SUGGESTION = "search_suggestion"
         val TOTAL_URI_COUNT = "total_uri_count"
         val UNIQUE_DOMAINS_COUNT = "unique_domains_count"
@@ -403,28 +394,6 @@ object TelemetryWrapper {
         TelemetryEvent.create(Category.ACTION, Method.CLICK, Object.FIRSTRUN, Value.FINISH).queue()
     }
 
-    @JvmStatic
-    fun swipeReloadEvent() {
-        TelemetryEvent.create(Category.ACTION, Method.SWIPE, Object.BROWSER, Value.RELOAD).queue()
-    }
-
-    @JvmStatic
-    fun sslErrorEvent(fromPage: Boolean, error: SslError) {
-        // SSL Errors from https://developer.android.com/reference/android/net/http/SslError.html
-        val primaryErrorMessage = when (error.primaryError) {
-            SslError.SSL_DATE_INVALID -> "SSL_DATE_INVALID"
-            SslError.SSL_EXPIRED -> "SSL_EXPIRED"
-            SslError.SSL_IDMISMATCH -> "SSL_IDMISMATCH"
-            SslError.SSL_NOTYETVALID -> "SSL_NOTYETVALID"
-            SslError.SSL_UNTRUSTED -> "SSL_UNTRUSTED"
-            SslError.SSL_INVALID -> "SSL_INVALID"
-            else -> "Undefined SSL Error"
-        }
-        TelemetryEvent.create(Category.ERROR, if (fromPage) Method.PAGE else Method.RESOURCE, Object.BROWSER)
-            .extra(Extra.ERROR_CODE, primaryErrorMessage)
-            .queue()
-    }
-
     enum class AutoCompleteEventSource {
         SETTINGS
     }
@@ -452,20 +421,6 @@ object TelemetryWrapper {
             .queue()
     }
 
-    fun autofillShownEvent() {
-        TelemetryEvent.create(Category.ACTION, Method.SHOW, Object.AUTOFILL).queue()
-    }
-
-    @JvmStatic
-    fun autofillPerformedEvent() {
-        TelemetryEvent.create(Category.ACTION, Method.CLICK, Object.AUTOFILL).queue()
-    }
-
-    @JvmStatic
-    fun changeToGeckoEngineEvent() {
-        TelemetryEvent.create(Category.ACTION, Method.CHANGE, Object.GECKO_ENGINE).queue()
-    }
-
     @JvmStatic
     fun reportSiteIssueEvent() {
         TelemetryEvent.create(Category.ACTION, Method.CLICK, Object.MENU, Value.REPORT_ISSUE).queue()
@@ -485,18 +440,6 @@ object TelemetryWrapper {
         // Make sure a minimum of 1 day has passed since we collected data
         val currentDateLong = dateFormat.format(Date()).toLong()
         return currentDateLong > dateOfLastPing
-    }
-
-    fun searchWithAdsShownEvent(provider: String) {
-        BrowserSearch.withAds[provider].add()
-    }
-
-    fun clickAddInSearchEvent(provider: String) {
-        BrowserSearch.adClicks[provider].add()
-    }
-
-    fun inContentSearchEvent(provider: String) {
-        BrowserSearch.inContent[provider].add()
     }
 
     private fun isDeviceWithTelemetryDisabled(): Boolean {
