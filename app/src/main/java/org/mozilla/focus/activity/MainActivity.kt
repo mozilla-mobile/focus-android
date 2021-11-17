@@ -15,12 +15,15 @@ import android.view.MenuItem
 import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.preference.PreferenceManager
+import mozilla.components.browser.state.selector.privateTabs
 import mozilla.components.concept.engine.EngineView
 import mozilla.components.lib.crash.Crash
+import mozilla.components.service.glean.private.NoExtras
 import mozilla.components.support.ktx.android.content.getColorFromAttr
 import mozilla.components.support.ktx.android.view.getWindowInsetsController
 import mozilla.components.support.utils.SafeIntent
 import org.mozilla.focus.GleanMetrics.AppOpened
+import org.mozilla.focus.GleanMetrics.Notifications
 import org.mozilla.focus.R
 import org.mozilla.focus.biometrics.Biometrics
 import org.mozilla.focus.ext.components
@@ -37,7 +40,6 @@ import org.mozilla.focus.shortcut.HomeScreen
 import org.mozilla.focus.state.AppAction
 import org.mozilla.focus.state.Screen
 import org.mozilla.focus.telemetry.TelemetryWrapper
-import org.mozilla.focus.utils.Settings
 import org.mozilla.focus.utils.SupportUtils
 
 @Suppress("TooManyFunctions")
@@ -47,6 +49,8 @@ open class MainActivity : LocaleAwareAppCompatActivity() {
     }
 
     private val navigator by lazy { Navigator(components.appStore, MainActivityNavigation(this)) }
+    private val tabCount: Int
+        get() = components.store.state.privateTabs.size
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -59,7 +63,8 @@ open class MainActivity : LocaleAwareAppCompatActivity() {
         }
 
         @Suppress("DEPRECATION") // https://github.com/mozilla-mobile/focus-android/issues/5016
-        window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_STABLE or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+        window.decorView.systemUiVisibility =
+            View.SYSTEM_UI_FLAG_LAYOUT_STABLE or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
 
         window.statusBarColor = ContextCompat.getColor(this, android.R.color.transparent)
         when (resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) {
@@ -160,7 +165,7 @@ open class MainActivity : LocaleAwareAppCompatActivity() {
         }
 
         if (ACTION_OPEN == action) {
-            TelemetryWrapper.openNotificationActionEvent()
+            Notifications.openButtonTapped.record(NoExtras())
         }
 
         if (ACTION_ERASE == action) {
@@ -175,15 +180,12 @@ open class MainActivity : LocaleAwareAppCompatActivity() {
     }
 
     private fun processEraseAction(intent: SafeIntent) {
-        val fromShortcut = intent.getBooleanExtra(EXTRA_SHORTCUT, false)
-        val fromNotification = intent.getBooleanExtra(EXTRA_NOTIFICATION, false)
+        val fromNotificationAction = intent.getBooleanExtra(EXTRA_NOTIFICATION, false)
 
         components.tabsUseCases.removeAllTabs()
 
-        if (fromShortcut) {
-            TelemetryWrapper.eraseShortcutEvent()
-        } else if (fromNotification) {
-            TelemetryWrapper.eraseAndOpenNotificationActionEvent()
+        if (fromNotificationAction) {
+            Notifications.eraseOpenButtonTapped.record(Notifications.EraseOpenButtonTappedExtra(tabCount))
         }
     }
 
@@ -207,7 +209,8 @@ open class MainActivity : LocaleAwareAppCompatActivity() {
             return
         }
 
-        val urlInputFragment = fragmentManager.findFragmentByTag(UrlInputFragment.FRAGMENT_TAG) as UrlInputFragment?
+        val urlInputFragment =
+            fragmentManager.findFragmentByTag(UrlInputFragment.FRAGMENT_TAG) as UrlInputFragment?
         if (urlInputFragment != null &&
             urlInputFragment.isVisible &&
             urlInputFragment.onBackPressed()
@@ -217,7 +220,8 @@ open class MainActivity : LocaleAwareAppCompatActivity() {
             return
         }
 
-        val browserFragment = fragmentManager.findFragmentByTag(BrowserFragment.FRAGMENT_TAG) as BrowserFragment?
+        val browserFragment =
+            fragmentManager.findFragmentByTag(BrowserFragment.FRAGMENT_TAG) as BrowserFragment?
         if (browserFragment != null &&
             browserFragment.isVisible &&
             browserFragment.onBackPressed()
@@ -274,6 +278,12 @@ open class MainActivity : LocaleAwareAppCompatActivity() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             // API level can display handle light navigation bar color
             window.getWindowInsetsController().isAppearanceLightNavigationBars = true
+            window.navigationBarColor = ContextCompat.getColor(this, android.R.color.transparent)
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+                window.navigationBarDividerColor =
+                    ContextCompat.getColor(this, android.R.color.transparent)
+            }
         }
     }
 
@@ -298,7 +308,5 @@ open class MainActivity : LocaleAwareAppCompatActivity() {
         const val ACTION_OPEN = "open"
 
         const val EXTRA_NOTIFICATION = "notification"
-
-        private const val EXTRA_SHORTCUT = "shortcut"
     }
 }

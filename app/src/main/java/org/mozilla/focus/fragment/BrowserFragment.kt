@@ -14,7 +14,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.accessibility.AccessibilityEvent
 import android.view.accessibility.AccessibilityManager
 import android.webkit.MimeTypeMap
 import android.widget.FrameLayout
@@ -44,6 +43,8 @@ import mozilla.components.feature.downloads.manager.FetchDownloadManager
 import mozilla.components.feature.downloads.share.ShareDownloadFeature
 import mozilla.components.feature.prompts.PromptFeature
 import mozilla.components.feature.session.SessionFeature
+import mozilla.components.feature.sitepermissions.SitePermissionsFeature
+import mozilla.components.feature.sitepermissions.SitePermissionsRules
 import mozilla.components.feature.tabs.WindowFeature
 import mozilla.components.feature.top.sites.TopSitesConfig
 import mozilla.components.feature.top.sites.TopSitesFeature
@@ -120,6 +121,7 @@ class BrowserFragment :
     private val windowFeature = ViewBoundFeatureWrapper<WindowFeature>()
     private val appLinksFeature = ViewBoundFeatureWrapper<AppLinksFeature>()
     private val topSitesFeature = ViewBoundFeatureWrapper<TopSitesFeature>()
+    private var sitePermissionsFeature = ViewBoundFeatureWrapper<SitePermissionsFeature>()
 
     private val toolbarIntegration = ViewBoundFeatureWrapper<BrowserToolbarIntegration>()
 
@@ -331,6 +333,39 @@ class BrowserFragment :
                 view = view
             )
         }
+
+        setSitePermissions(view)
+    }
+
+    private fun setSitePermissions(rootView: View) {
+        val sitePermissionsRules = SitePermissionsRules(
+            notification = SitePermissionsRules.Action.BLOCKED,
+            microphone = SitePermissionsRules.Action.BLOCKED,
+            location = SitePermissionsRules.Action.BLOCKED,
+            camera = SitePermissionsRules.Action.BLOCKED,
+            autoplayAudible = SitePermissionsRules.AutoplayAction.BLOCKED,
+            autoplayInaudible = SitePermissionsRules.AutoplayAction.ALLOWED,
+            persistentStorage = SitePermissionsRules.Action.BLOCKED,
+            mediaKeySystemAccess = SitePermissionsRules.Action.BLOCKED
+        )
+        sitePermissionsFeature.set(
+            feature = SitePermissionsFeature(
+                context = requireContext(),
+                fragmentManager = parentFragmentManager,
+                onNeedToRequestPermissions = {
+                    // This it will be always empty because we are not asking for user input
+                },
+                onShouldShowRequestPermissionRationale = {
+                    // Since we don't request permissions this it will not be called
+                    false
+                },
+                sitePermissionsRules = sitePermissionsRules,
+                sessionId = tabId,
+                store = requireComponents.store
+            ),
+            owner = this,
+            view = rootView
+        )
     }
 
     override fun onAccessibilityStateChanged(enabled: Boolean) = when (enabled) {
@@ -657,20 +692,6 @@ class BrowserFragment :
     }
 
     fun erase() {
-        val context = context
-
-        // Notify the user their session has been erased if Talk Back is enabled:
-        if (context != null) {
-            val manager = context.getSystemService(Context.ACCESSIBILITY_SERVICE) as AccessibilityManager
-            if (manager.isEnabled) {
-                val event = AccessibilityEvent.obtain()
-                event.eventType = AccessibilityEvent.TYPE_ANNOUNCEMENT
-                event.className = javaClass.name
-                event.packageName = requireContext().packageName
-                event.text.add(getString(R.string.feedback_erase2))
-            }
-        }
-
         requireComponents.tabsUseCases.removeTab(tab.id)
         requireComponents.appStore.dispatch(
             AppAction.NavigateUp(
@@ -746,9 +767,9 @@ class BrowserFragment :
     }
 
     private fun openSelectBrowser() {
-        val browsers = Browsers.all(requireContext())
+        val browsers = Browsers.forUrl(requireContext(), tab.content.url)
 
-        val apps = browsers.installedBrowsers
+        val apps = browsers.installedBrowsers.filterNot { it.packageName == requireContext().packageName }
         val store = if (browsers.hasFirefoxBrandedBrowserInstalled)
             null
         else
