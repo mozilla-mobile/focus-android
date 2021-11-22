@@ -138,8 +138,19 @@ def release_promotion_action(parameters, graph_config, input, task_group_id, tas
     # previous graphs.
     parameters['optimize_target_tasks'] = True
     parameters['shipping_phase'] = input['release_promotion_flavor']
-    parameters['version'] = input['version']
-    parameters['head_tag'] = 'v{}'.format(input['version'])
+
+    version_in_file = read_version_file()
+    version_string = input.get('version', None)
+
+    # shipit uses the version in version.txt to determine next version number; check that its passed in
+    # in the payload     
+    if not version_string:
+        version_string = version_in_file
+    elif version_string != version_in_file:
+        raise ValueError("Version given in tag ({}) does not match the one in version.txt ({})".format(version_string, version_in_file))
+
+    parameters['version'] = version_string
+    parameters['head_tag'] = 'v{}'.format(version_string)
     parameters['next_version'] = input['next_version']
 
     if 'beta' in input["version"] or 'beta' in input["head_tag"]:
@@ -155,3 +166,7 @@ def release_promotion_action(parameters, graph_config, input, task_group_id, tas
     parameters = Parameters(**parameters)
 
     taskgraph_decision({'root': graph_config.root_dir}, parameters=parameters)
+
+def read_version_file():
+    with open(os.path.join(os.path.dirname(__file__), '..', '..', 'version.txt')) as f:
+        return f.read().strip()
