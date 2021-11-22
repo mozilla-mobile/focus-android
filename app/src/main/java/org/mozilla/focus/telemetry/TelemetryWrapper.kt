@@ -56,8 +56,6 @@ object TelemetryWrapper {
 
     private val dateFormat = SimpleDateFormat("yyyyMMdd", Locale.US)
 
-    private const val MAXIMUM_CUSTOM_TAB_EXTRAS = 10
-
     private const val HISTOGRAM_SIZE = 200
     private const val BUCKET_SIZE_MS = 100
     private const val HISTOGRAM_MIN_INDEX = 0
@@ -72,24 +70,16 @@ object TelemetryWrapper {
     }
 
     private object Method {
-        val TYPE_URL = "type_url"
-        val TYPE_QUERY = "type_query"
         val TYPE_SELECT_QUERY = "select_query"
         val CLICK = "click"
         val CANCEL = "cancel"
         val LONG_PRESS = "long_press"
         val CHANGE = "change"
-        val FOREGROUND = "foreground"
-        val BACKGROUND = "background"
         val SAVE = "save"
         val OPEN = "open"
         val INSTALL = "install"
-        val INTENT_URL = "intent_url"
-        val INTENT_CUSTOM_TAB = "intent_custom_tab"
-        val TEXT_SELECTION_INTENT = "text_selection_intent"
         val SHOW = "show"
         val HIDE = "hide"
-        val SHARE_INTENT = "share_intent"
         val REMOVE = "remove"
         val REORDER = "reorder"
     }
@@ -97,14 +87,10 @@ object TelemetryWrapper {
     private object Object {
         val SEARCH_BAR = "search_bar"
         val SETTING = "setting"
-        val APP = "app"
         val MENU = "menu"
         val BACK_BUTTON = "back_button"
         val BLOCKING_SWITCH = "blocking_switch"
         val BROWSER = "browser"
-        val FIRSTRUN = "firstrun"
-        val HOMESCREEN_SHORTCUT = "homescreen_shortcut"
-        val APP_ICON = "app_icon"
         val AUTOCOMPLETE_DOMAIN = "autocomplete_domain"
         val SEARCH_SUGGESTION_PROMPT = "search_suggestion_prompt"
         val MAKE_DEFAULT_BROWSER_OPEN_WITH = "make_default_browser_open_with"
@@ -117,8 +103,6 @@ object TelemetryWrapper {
         val SELECTION = "selection"
         val ERASE_TO_HOME = "erase_home"
         val ERASE_TO_APP = "erase_app"
-        val SKIP = "skip"
-        val FINISH = "finish"
         val OPEN = "open"
         val URL = "url"
         val SEARCH = "search"
@@ -273,8 +257,6 @@ object TelemetryWrapper {
     @JvmStatic
     fun startSession() {
         TelemetryHolder.get().recordSessionStart()
-
-        TelemetryEvent.create(Category.ACTION, Method.FOREGROUND, Object.APP).queue()
     }
 
     @VisibleForTesting var histogram = IntArray(HISTOGRAM_SIZE)
@@ -304,15 +286,6 @@ object TelemetryWrapper {
     fun stopSession() {
         TelemetryHolder.get().recordSessionEnd()
 
-        val histogramEvent = TelemetryEvent.create(Category.HISTOGRAM, Method.FOREGROUND, Object.BROWSER)
-        for (bucketIndex in histogram.indices) {
-            histogramEvent.extra((bucketIndex * BUCKET_SIZE_MS).toString(), histogram[bucketIndex].toString())
-        }
-        histogramEvent.queue()
-
-        // Clear histogram array after queueing it
-        histogram = IntArray(HISTOGRAM_SIZE)
-
         TelemetryEvent.create(Category.ACTION, Method.OPEN, Object.BROWSER).extra(
             Extra.UNIQUE_DOMAINS_COUNT,
             domainMap.size.toString()
@@ -324,8 +297,6 @@ object TelemetryWrapper {
             numUri.toString()
         ).queue()
         numUri = 0
-
-        TelemetryEvent.create(Category.ACTION, Method.BACKGROUND, Object.APP).queue()
     }
 
     @JvmStatic
@@ -335,46 +306,6 @@ object TelemetryWrapper {
             .queuePing(TelemetryEventPingBuilder.TYPE)
             .queuePing(TelemetryMobileMetricsPingBuilder.TYPE)
             .scheduleUpload()
-    }
-
-    @JvmStatic
-    fun browseIntentEvent() {
-        TelemetryEvent.create(Category.ACTION, Method.INTENT_URL, Object.APP).queue()
-    }
-
-    @JvmStatic
-    fun shareIntentEvent(isSearch: Boolean) {
-        if (isSearch) {
-            TelemetryEvent.create(Category.ACTION, Method.SHARE_INTENT, Object.APP, Value.SEARCH).queue()
-        } else {
-            TelemetryEvent.create(Category.ACTION, Method.SHARE_INTENT, Object.APP, Value.URL).queue()
-        }
-    }
-
-    /**
-     * Sends a list of the custom tab options that a custom-tab intent made use of.
-     */
-    @JvmStatic
-    fun customTabsIntentEvent(options: List<String>) {
-        val event = TelemetryEvent.create(Category.ACTION, Method.INTENT_CUSTOM_TAB, Object.APP)
-
-        // We can send at most 10 extras per event - we just ignore the rest if there are too many
-        val extrasCount: Int = if (options.size > MAXIMUM_CUSTOM_TAB_EXTRAS) {
-            MAXIMUM_CUSTOM_TAB_EXTRAS
-        } else {
-            options.size
-        }
-
-        for (option in options.subList(0, extrasCount)) {
-            event.extra(option, "true")
-        }
-
-        event.queue()
-    }
-
-    @JvmStatic
-    fun textSelectionIntentEvent() {
-        TelemetryEvent.create(Category.ACTION, Method.TEXT_SELECTION_INTENT, Object.APP).queue()
     }
 
     @JvmStatic
@@ -413,11 +344,6 @@ object TelemetryWrapper {
     }
 
     @JvmStatic
-    fun openHomescreenShortcutEvent() {
-        TelemetryEvent.create(Category.ACTION, Method.CLICK, Object.HOMESCREEN_SHORTCUT, Value.OPEN).queue()
-    }
-
-    @JvmStatic
     fun settingsEvent(key: String, value: String) {
         TelemetryEvent.create(Category.ACTION, Method.CHANGE, Object.SETTING, key)
             .extra(Extra.TO, value)
@@ -432,21 +358,6 @@ object TelemetryWrapper {
             Object.BLOCKING_SWITCH,
             isBlockingEnabled.toString()
         ).queue()
-    }
-
-    @JvmStatic
-    fun showFirstRunPageEvent(page: Int) {
-        TelemetryEvent.create(Category.ACTION, Method.SHOW, Object.FIRSTRUN, page.toString()).queue()
-    }
-
-    @JvmStatic
-    fun skipFirstRunEvent() {
-        TelemetryEvent.create(Category.ACTION, Method.CLICK, Object.FIRSTRUN, Value.SKIP).queue()
-    }
-
-    @JvmStatic
-    fun finishFirstRunEvent() {
-        TelemetryEvent.create(Category.ACTION, Method.CLICK, Object.FIRSTRUN, Value.FINISH).queue()
     }
 
     enum class AutoCompleteEventSource {
@@ -479,13 +390,6 @@ object TelemetryWrapper {
     @JvmStatic
     fun reportSiteIssueEvent() {
         TelemetryEvent.create(Category.ACTION, Method.CLICK, Object.MENU, Value.REPORT_ISSUE).queue()
-    }
-
-    @JvmStatic
-    fun respondToSearchSuggestionPrompt(enable: Boolean) {
-        TelemetryEvent
-            .create(Category.ACTION, Method.CLICK, Object.SEARCH_SUGGESTION_PROMPT, "$enable")
-            .queue()
     }
 
     @JvmStatic

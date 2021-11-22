@@ -658,6 +658,9 @@
     <!-- Title of the active section on the studies list -->
     <string name="studies_active">进行中</string>
 
+    <!-- Title of the completed section on the studies list -->
+    <string name="studies_completed">已完成</string>
+
     <!-- Preference to enable remote debugging of the app via USB or Wi-Fi -->
     <string name="preference_remote_debugging">通过 USB/Wi-Fi 远程调试</string>
 
@@ -756,7 +759,7 @@ The new line here must be kept as the second half of the string is clickable for
 
     <!-- Tip displayed on the home view about the changes in the new release.
     %1$s is a placeholder for the app name -->
-    <string name="tip_fresh_look">是的，我们的外观已焕然一新！\n了解更多 %1$s 的新变化。</string>
+    <string name="tip_fresh_look">是的，我们的外观已焕然一新！\n 了解更多 %1$s 的新变化。</string>
 
     <!-- Tip displayed on the home view about shortcuts
     %1$s is a placeholder for the app name -->
