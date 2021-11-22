@@ -37,7 +37,6 @@ job-template:
                 klar-release: false
                 default: true
         release-name:
-        # TODO we need to upload focus-release and klar-release signed builds as part of the release task
             by-build-type:
                 beta: Focus/Klar {version}-beta
                 focus-release: Focus/Klar v{version}
