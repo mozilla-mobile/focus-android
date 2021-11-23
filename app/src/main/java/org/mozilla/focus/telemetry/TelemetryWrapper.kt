@@ -75,23 +75,18 @@ object TelemetryWrapper {
         val CANCEL = "cancel"
         val LONG_PRESS = "long_press"
         val CHANGE = "change"
-        val SAVE = "save"
         val OPEN = "open"
         val INSTALL = "install"
         val SHOW = "show"
         val HIDE = "hide"
-        val REMOVE = "remove"
-        val REORDER = "reorder"
     }
 
     private object Object {
         val SEARCH_BAR = "search_bar"
         val SETTING = "setting"
         val MENU = "menu"
-        val BACK_BUTTON = "back_button"
         val BLOCKING_SWITCH = "blocking_switch"
         val BROWSER = "browser"
-        val AUTOCOMPLETE_DOMAIN = "autocomplete_domain"
         val SEARCH_SUGGESTION_PROMPT = "search_suggestion_prompt"
         val MAKE_DEFAULT_BROWSER_OPEN_WITH = "make_default_browser_open_with"
         val MAKE_DEFAULT_BROWSER_SETTINGS = "make_default_browser_settings"
@@ -101,8 +96,6 @@ object TelemetryWrapper {
         val DEFAULT = "default"
         val FIREFOX = "firefox"
         val SELECTION = "selection"
-        val ERASE_TO_HOME = "erase_home"
-        val ERASE_TO_APP = "erase_app"
         val OPEN = "open"
         val URL = "url"
         val SEARCH = "search"
@@ -111,7 +104,6 @@ object TelemetryWrapper {
         val WHATS_NEW = "whats_new"
         val RESUME = "resume"
         val FULL_BROWSER = "full_browser"
-        val REPORT_ISSUE = "report_issue"
         val SETTINGS = "settings"
         val QUICK_ADD = "quick_add"
         val CLOSE_TAB = "close_tab"
@@ -332,18 +324,6 @@ object TelemetryWrapper {
     }
 
     @JvmStatic
-    fun eraseBackToHomeEvent() {
-        withSessionCounts(TelemetryEvent.create(Category.ACTION, Method.CLICK, Object.BACK_BUTTON, Value.ERASE_TO_HOME))
-            .queue()
-    }
-
-    @JvmStatic
-    fun eraseBackToAppEvent() {
-        withSessionCounts(TelemetryEvent.create(Category.ACTION, Method.CLICK, Object.BACK_BUTTON, Value.ERASE_TO_APP))
-            .queue()
-    }
-
-    @JvmStatic
     fun settingsEvent(key: String, value: String) {
         TelemetryEvent.create(Category.ACTION, Method.CHANGE, Object.SETTING, key)
             .extra(Extra.TO, value)
@@ -362,34 +342,6 @@ object TelemetryWrapper {
 
     enum class AutoCompleteEventSource {
         SETTINGS
-    }
-
-    fun saveAutocompleteDomainEvent(eventSource: AutoCompleteEventSource) {
-        val source = when (eventSource) {
-            AutoCompleteEventSource.SETTINGS -> Value.SETTINGS
-        }
-
-        TelemetryEvent.create(Category.ACTION, Method.SAVE, Object.AUTOCOMPLETE_DOMAIN)
-            .extra(Extra.SOURCE, source)
-            .queue()
-    }
-
-    fun removeAutocompleteDomainsEvent(count: Int) {
-        TelemetryEvent.create(Category.ACTION, Method.REMOVE, Object.AUTOCOMPLETE_DOMAIN)
-            .extra(Extra.TOTAL, count.toString())
-            .queue()
-    }
-
-    fun reorderAutocompleteDomainEvent(from: Int, to: Int) {
-        TelemetryEvent.create(Category.ACTION, Method.REORDER, Object.AUTOCOMPLETE_DOMAIN)
-            .extra(Extra.FROM, from.toString())
-            .extra(Extra.TO, to.toString())
-            .queue()
-    }
-
-    @JvmStatic
-    fun reportSiteIssueEvent() {
-        TelemetryEvent.create(Category.ACTION, Method.CLICK, Object.MENU, Value.REPORT_ISSUE).queue()
     }
 
     @JvmStatic

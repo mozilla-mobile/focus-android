@@ -80,6 +80,38 @@ browser:
     notification_emails:
       - android-probes@mozilla.com
     expires: "2022-11-01"
+  back_button_pressed:
+    type: event
+    description: Back button has been presed on a browser tab.
+    bugs:
+      - https://github.com/mozilla-mobile/focus-android/issues/5914
+    data_reviews:
+      - https://github.com/mozilla-mobile/focus-android/pull/5913
+    data_sensitivity:
+      - interaction
+    notification_emails:
+      - android-probes@mozilla.com
+    expires: "2022-11-01"
+    extra_keys:
+      action_performed:
+        description: |
+          The action performed by pressing back button:
+          erase_to_home or erase_to_external_app.
+        type: string
+  report_site_issue_counter:
+    type: counter
+    description: |
+      A counter that indicates how many times a user has tapped
+      the report site issue from browser menu
+    bugs:
+      - https://github.com/mozilla-mobile/focus-android/issues/5897
+    data_reviews:
+      - https://github.com/mozilla-mobile/focus-android/pull/?
+    data_sensitivity:
+      - interaction
+    notification_emails:
+      - android-probes@mozilla.com
+    expires: "2022-11-01"
 
 legacy_ids:
   client_id:
@@ -195,20 +227,50 @@ settings_screen:
     notification_emails:
       - android-probes@mozilla.com
     expires: "2022-08-17"
-  autocomplete_domain_added:
+
+autocomplete:
+  domain_added:
     type: counter
     description: |
       A counter that indicates how many times a user has added
       a website to the autocomplete list.
     bugs:
-      - https://github.com/mozilla-mobile/focus-android/issues/5059
+      - https://github.com/mozilla-mobile/focus-android/issues/5885
     data_reviews:
-      - https://github.com/mozilla-mobile/focus-android/pull/5184
+      - https://github.com/mozilla-mobile/focus-android/pull/5886
     data_sensitivity:
       - interaction
     notification_emails:
       - android-probes@mozilla.com
-    expires: "2022-08-17"
+    expires: "2022-11-01"
+  domain_removed:
+    type: counter
+    description: |
+      A counter that indicates how many times a user has removed
+      a website from the autocomplete list.
+    bugs:
+      - https://github.com/mozilla-mobile/focus-android/issues/5885
+    data_reviews:
+      - https://github.com/mozilla-mobile/focus-android/pull/5886
+    data_sensitivity:
+      - interaction
+    notification_emails:
+      - android-probes@mozilla.com
+    expires: "2022-11-01"
+  list_order_changed:
+    type: counter
+    description: |
+      A counter that indicates how many times a user has reordered
+      the autocomplete list.
+    bugs:
+      - https://github.com/mozilla-mobile/focus-android/issues/5885
+    data_reviews:
+      - https://github.com/mozilla-mobile/focus-android/pull/5886
+    data_sensitivity:
+      - interaction
+    notification_emails:
+      - android-probes@mozilla.com
+    expires: "2022-11-01"
 
 shortcuts:
   shortcuts_on_home_number:
