@@ -133,7 +133,7 @@ def add_artifacts(config, tasks):
 
         if "apk-artifact-template" in task:
             artifact_template = task.pop("apk-artifact-template")
-            print('artifact template {}'.format(artifact_template))
+
             for apk in variant_config["apks"]:
                 apk_name = artifact_template["name"].format(
                     gradle_build=gradle_build,
