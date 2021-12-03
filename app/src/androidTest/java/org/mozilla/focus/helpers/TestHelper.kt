@@ -69,6 +69,11 @@ object TestHelper {
         snackbarActionButton.perform(click())
     }
 
+    fun waitUntilSnackBarGone() {
+        mDevice.findObject(UiSelector().resourceId("$appName:id/snackbar_layout"))
+            .waitUntilGone(waitingTime)
+    }
+
     fun isPackageInstalled(packageName: String): Boolean {
         return try {
             val packageManager = InstrumentationRegistry.getInstrumentation().context.packageManager

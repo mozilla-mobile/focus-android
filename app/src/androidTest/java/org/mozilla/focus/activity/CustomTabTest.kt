@@ -21,7 +21,6 @@ import okhttp3.mockwebserver.MockWebServer
 import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Before
-import org.junit.Ignore
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -31,7 +30,6 @@ import org.mozilla.focus.activity.robots.homeScreen
 import org.mozilla.focus.activity.robots.searchScreen
 import org.mozilla.focus.helpers.TestHelper.createMockResponseFromAsset
 import org.mozilla.focus.helpers.TestHelper.mDevice
-import org.mozilla.focus.helpers.TestHelper.waitingTime
 import org.mozilla.focus.helpers.TestHelper.webPageLoadwaitingTime
 import org.mozilla.focus.testAnnotations.SmokeTest
 import java.io.IOException
@@ -92,7 +90,6 @@ class CustomTabTest {
 
     @SmokeTest
     @Test
-    @Ignore("Refactoring is required because of erase and tabs counter relocation")
     fun openCustomTabInFocusTest() {
         val browserPage = webServer.url("plain_test.html").toString()
         val customTabPage = webServer.url("tab1.html").toString()
@@ -116,7 +113,7 @@ class CustomTabTest {
         }
 
         browserScreen {
-            mDevice.waitForIdle(waitingTime)
+            verifyPageURL(customTabPage)
             mDevice.pressBack()
             verifyPageURL(browserPage)
         }
