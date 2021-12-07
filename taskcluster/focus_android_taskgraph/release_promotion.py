@@ -5,7 +5,7 @@
 from __future__ import absolute_import, print_function, unicode_literals
 
 import os
-
+from mozilla_version.mobile import MobileVersion
 from taskgraph.actions.registry import register_callback_action
 
 from taskgraph.util.taskcluster import get_artifact
@@ -153,10 +153,10 @@ def release_promotion_action(parameters, graph_config, input, task_group_id, tas
     parameters['head_tag'] = 'v{}'.format(version_string)
     parameters['next_version'] = input['next_version']
 
-    if 'beta' in input["version"] or 'beta' in input["head_tag"]:
+    release_type = "release"
+    version = MobileVersion.parse(version_string)
+    if version.is_beta:
         release_type = "beta"
-    else:
-        release_type = "release"
 
     parameters['release_type'] = release_type
     parameters['tasks_for'] = 'action'
