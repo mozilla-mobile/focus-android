@@ -24,6 +24,12 @@ class Settings(
     private val context: Context
 ) {
 
+    companion object {
+        // Default value is block cross site cookies.
+        const val DEFAULT_COOKIE_OPTION_INDEX = 3
+        const val NO_VALUE = "no value"
+    }
+
     private val accessibilityManager =
         context.getSystemService(Context.ACCESSIBILITY_SERVICE) as AccessibilityManager?
 
@@ -65,21 +71,7 @@ class Settings(
             trackingCategories.add(EngineSession.TrackingProtectionPolicy.TrackingCategory.CONTENT)
         }
 
-        val cookiePolicy = when (shouldBlockCookiesValue) {
-            context.getString(R.string.preference_privacy_should_block_cookies_yes_option2) ->
-                EngineSession.TrackingProtectionPolicy.CookiePolicy.ACCEPT_NONE
-
-            context.getString(R.string.preference_privacy_should_block_cookies_third_party_tracker_cookies_option) ->
-                EngineSession.TrackingProtectionPolicy.CookiePolicy.ACCEPT_NON_TRACKERS
-
-            context.getString(R.string.preference_privacy_should_block_cookies_third_party_only_option) ->
-                EngineSession.TrackingProtectionPolicy.CookiePolicy.ACCEPT_ONLY_FIRST_PARTY
-
-            context.getString(R.string.preference_privacy_should_block_cookies_cross_site_option) ->
-                EngineSession.TrackingProtectionPolicy.CookiePolicy.ACCEPT_FIRST_PARTY_AND_ISOLATE_OTHERS
-
-            else -> EngineSession.TrackingProtectionPolicy.CookiePolicy.ACCEPT_ALL
-        }
+        val cookiePolicy = getCookiePolicy(shouldBlockCookiesValue)
 
         return EngineSession.TrackingProtectionPolicy.select(
             cookiePolicy = cookiePolicy,
@@ -87,6 +79,70 @@ class Settings(
             strictSocialTrackingProtection = shouldBlockSocialTrackers()
         )
     }
+
+    private fun getCookiePolicy(shouldBlockCookiesValue: String) =
+        when (shouldBlockCookiesValue) {
+            context.getString(R.string.yes) ->
+                EngineSession.TrackingProtectionPolicy.CookiePolicy.ACCEPT_NONE
+
+            context.getString(R.string.third_party_tracker) ->
+                EngineSession.TrackingProtectionPolicy.CookiePolicy.ACCEPT_NON_TRACKERS
+
+            context.getString(R.string.third_party_only) ->
+                EngineSession.TrackingProtectionPolicy.CookiePolicy.ACCEPT_ONLY_FIRST_PARTY
+
+            context.getString(R.string.cross_site) ->
+                EngineSession.TrackingProtectionPolicy.CookiePolicy.ACCEPT_FIRST_PARTY_AND_ISOLATE_OTHERS
+
+            context.getString(R.string.no) -> {
+                EngineSession.TrackingProtectionPolicy.CookiePolicy.ACCEPT_ALL
+            }
+
+            NO_VALUE -> {
+                // Ending up here means that the cookie preference has not been yet modified.
+                // We should set it to the default value.
+                setBlockCookiesValue(
+                    resources.getStringArray(R.array.cookies_options_entry_values)[DEFAULT_COOKIE_OPTION_INDEX]
+                )
+                EngineSession.TrackingProtectionPolicy.CookiePolicy.ACCEPT_FIRST_PARTY_AND_ISOLATE_OTHERS
+            }
+
+            else -> {
+                // Ending up here means that the cookie preference has already been stored in another locale.
+                // We will have identify the existing option and set the preference to the corresponding value.
+                // See https://github.com/mozilla-mobile/focus-android/issues/5996.
+
+                val cookieOptionIndex =
+                    resources.getStringArray(R.array.cookies_options_entries)
+                        .asList().indexOf(shouldBlockCookiesValue())
+
+                val correspondingValue =
+                    resources.getStringArray(R.array.cookies_options_entry_values).getOrNull(cookieOptionIndex)
+                        ?: resources.getStringArray(R.array.cookies_options_entry_values)[DEFAULT_COOKIE_OPTION_INDEX]
+
+                setBlockCookiesValue(correspondingValue)
+
+                // Get the updated cookie policy for the corresponding value
+                when (shouldBlockCookiesValue) {
+                    context.getString(R.string.yes) ->
+                        EngineSession.TrackingProtectionPolicy.CookiePolicy.ACCEPT_NONE
+
+                    context.getString(R.string.third_party_tracker) ->
+                        EngineSession.TrackingProtectionPolicy.CookiePolicy.ACCEPT_NON_TRACKERS
+
+                    context.getString(R.string.third_party_only) ->
+                        EngineSession.TrackingProtectionPolicy.CookiePolicy.ACCEPT_ONLY_FIRST_PARTY
+
+                    context.getString(R.string.cross_site) ->
+                        EngineSession.TrackingProtectionPolicy.CookiePolicy.ACCEPT_FIRST_PARTY_AND_ISOLATE_OTHERS
+
+                    else -> {
+                        // Fallback to the default value.
+                        EngineSession.TrackingProtectionPolicy.CookiePolicy.ACCEPT_ALL
+                    }
+                }
+            }
+        }
 
     fun setupSafeBrowsing(engine: Engine, shouldUseSafeBrowsing: Boolean = shouldUseSafeBrowsing()) {
         if (shouldUseSafeBrowsing) {
@@ -161,21 +217,14 @@ class Settings(
                 R.string
                     .pref_key_performance_enable_cookies
             ),
-            resources.getString(R.string.preference_privacy_should_block_cookies_third_party_tracker_cookies_option)
+            NO_VALUE
         )!!
 
-    fun shouldBlockCookies(): Boolean =
-        shouldBlockCookiesValue() == resources.getString(
-            R.string.preference_privacy_should_block_cookies_yes_option2
-        )
-
-    fun shouldBlockThirdPartyCookies(): Boolean =
-        shouldBlockCookiesValue() == resources.getString(
-            R.string.preference_privacy_should_block_cookies_third_party_only_option
-        ) ||
-            shouldBlockCookiesValue() == resources.getString(
-                R.string.preference_privacy_should_block_cookies_yes_option2
-            )
+    private fun setBlockCookiesValue(newValue: String) {
+        preferences.edit()
+            .putString(getPreferenceKey(R.string.pref_key_performance_enable_cookies), newValue)
+            .apply()
+    }
 
     fun shouldShowFirstrun(): Boolean =
         !preferences.getBoolean(FirstrunFragment.FIRSTRUN_PREF, false)
@@ -318,5 +367,5 @@ class Settings(
     }
 
     private fun getPreferenceKey(resourceId: Int): String =
-        resources.getString(resourceId)
+        context.getString(resourceId)
 }
