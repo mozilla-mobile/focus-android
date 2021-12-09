@@ -17,6 +17,7 @@ def register(graph_config):
         "worker_types",
         "routes",
         "target_tasks",
+        "release_promotion",
     ])
 
 
