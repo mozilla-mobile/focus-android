@@ -29,7 +29,7 @@ job-template:
         github-project:
             by-level:
                 '3': focus-android
-                default: mock
+                default: staging-focus-android
         is-prerelease:
             by-build-type:
                 beta: true
