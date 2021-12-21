@@ -5,10 +5,10 @@ plugins {
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'jacoco'
-apply plugin: 'kotlin-android-extensions'
 apply from: "$project.rootDir/tools/gradle/versionCode.gradle"
 
 import com.android.build.OutputFile
+import groovy.json.JsonOutput
 
 android {
     compileSdkVersion 30
@@ -25,9 +25,11 @@ android {
         targetSdkVersion 30
         versionCode 11 // This versionCode is "frozen" for local builds. For "release" builds we
                        // override this with a generated versionCode at build time.
-        versionName "93.0"
+        versionName "97.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         testInstrumentationRunnerArguments clearPackageData: 'true'
+
+        vectorDrawables.useSupportLibrary = true
 
         multiDexEnabled true
     }
@@ -73,6 +75,7 @@ android {
         }
         nightly {
             initWith release
+            applicationIdSuffix ".nightly"
         }
     }
     testOptions {
@@ -150,7 +153,7 @@ android {
 tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {
         kotlinOptions {
             allWarningsAsErrors = true
-            freeCompilerArgs += "-Xuse-experimental=kotlinx.coroutines.ExperimentalCoroutinesApi"
+            freeCompilerArgs += "-Xopt-in=kotlinx.coroutines.ExperimentalCoroutinesApi"
             freeCompilerArgs += "-Xopt-in=kotlin.RequiresOptIn"
             jvmTarget = '1.8'
         }
@@ -227,22 +230,29 @@ dependencies {
     implementation "org.mozilla.components:feature-tabs:${AndroidComponents.VERSION}"
     implementation "org.mozilla.components:feature-toolbar:${AndroidComponents.VERSION}"
     implementation "org.mozilla.components:feature-top-sites:${AndroidComponents.VERSION}"
-
+    implementation "org.mozilla.components:feature-sitepermissions:${AndroidComponents.VERSION}"
     implementation "org.mozilla.components:lib-crash:${AndroidComponents.VERSION}"
     implementation "org.mozilla.components:lib-state:${AndroidComponents.VERSION}"
 
-    implementation "org.mozilla.components:service-glean:${AndroidComponents.VERSION}"
+    implementation "org.mozilla.components:service-glean:${AndroidComponents.VERSION}", {
+        exclude group: 'org.mozilla.telemetry', module: 'glean-native'
+    }
     implementation "org.mozilla.components:service-location:${AndroidComponents.VERSION}"
+    implementation "org.mozilla.components:service-nimbus:${AndroidComponents.VERSION}"
 
     implementation "org.mozilla.components:support-ktx:${AndroidComponents.VERSION}"
     implementation "org.mozilla.components:support-utils:${AndroidComponents.VERSION}"
+    implementation "org.mozilla.components:support-rusthttp:${AndroidComponents.VERSION}"
+    implementation "org.mozilla.components:support-rustlog:${AndroidComponents.VERSION}"
 
     implementation "org.mozilla.components:ui-autocomplete:${AndroidComponents.VERSION}"
     implementation "org.mozilla.components:ui-colors:${AndroidComponents.VERSION}"
     implementation "org.mozilla.components:ui-icons:${AndroidComponents.VERSION}"
+    implementation "org.mozilla.components:ui-tabcounter:${AndroidComponents.VERSION}"
     implementation "org.mozilla.components:feature-webcompat:${AndroidComponents.VERSION}"
     implementation "org.mozilla.components:feature-webcompat-reporter:${AndroidComponents.VERSION}"
     implementation "org.mozilla.components:support-webextensions:${AndroidComponents.VERSION}"
+    implementation "org.mozilla.components:support-locale:${AndroidComponents.VERSION}"
 
     implementation project(':service-telemetry')
 
@@ -254,7 +264,7 @@ dependencies {
 
     jnaForTest "net.java.dev.jna:jna:${jna_version}@jar"
     testImplementation files(configurations.jnaForTest.copyRecursive().files)
-    testImplementation "org.mozilla.telemetry:glean-forUnitTests:${project.ext.glean_version}"
+    testImplementation "org.mozilla.telemetry:glean-native-forUnitTests:${project.ext.glean_version}"
 
     testImplementation "org.junit.jupiter:junit-jupiter-api:5.3.1"
     testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:5.3.1"
@@ -293,6 +303,7 @@ dependencies {
     testImplementation 'androidx.test:core:1.2.0'
     testImplementation 'androidx.test:runner:1.2.0'
     testImplementation 'androidx.test:rules:1.2.0'
+    androidTestImplementation 'androidx.test:core-ktx:1.4.0'
     androidTestImplementation 'androidx.test.uiautomator:uiautomator:2.2.0'
     androidTestImplementation 'androidx.test:runner:1.2.0'
     androidTestUtil 'androidx.test:orchestrator:1.2.0'
@@ -312,7 +323,7 @@ android.applicationVariants.all { variant ->
     println("Build type:        " + variant.buildType.name)
     println("Flavor:            " + variant.flavorName)
 
-    if (buildType == "release" || buildType == "nightly") {
+    if (buildType == "release" || buildType == "nightly" || buildType == "beta") {
         def baseVersionCode = generatedVersionCode
 
         // The Google Play Store does not allow multiple APKs for the same app that all have the
@@ -456,6 +467,33 @@ def getEnabledLocales() {
     return langs.sort { it }
 }
 
+// -------------------------------------------------------------------------------------------------
+// Nimbus: Read endpoint from local.properties of a local file if it exists
+// -------------------------------------------------------------------------------------------------
+
+print("Nimbus endpoint: ")
+android.applicationVariants.all { variant ->
+    def variantName = variant.getName()
+
+    if (!variantName.contains("Debug")) {
+        try {
+            def url = new File("${rootDir}/.nimbus").text.trim()
+            buildConfigField 'String', 'NIMBUS_ENDPOINT', '"' + url + '"'
+            println "(Added from .nimbus file)"
+        } catch (FileNotFoundException ignored) {
+            buildConfigField 'String', 'NIMBUS_ENDPOINT', 'null'
+            println("X_X")
+        }
+    } else if (gradle.hasProperty("localProperties.nimbus.remote-settings.url")) {
+        def url = gradle.getProperty("localProperties.nimbus.remote-settings.url")
+        buildConfigField 'String', 'NIMBUS_ENDPOINT', '"' + url + '"'
+        println "(Added from local.properties file)"
+    } else {
+        buildConfigField 'String', 'NIMBUS_ENDPOINT', 'null'
+        println("--")
+    }
+}
+
 def generatedLocaleListDir = 'src/main/java/org/mozilla/focus/generated'
 def generatedLocaleListFilename = 'LocaleList.java'
 
@@ -536,4 +574,31 @@ if (gradle.hasProperty('localProperties.autoPublish.android-components.dir')) {
 if (gradle.hasProperty('localProperties.autoPublish.application-services.dir')) {
     ext.appServicesSrcDir = gradle."localProperties.autoPublish.application-services.dir"
     apply from: "../${appServicesSrcDir}/build-scripts/substitute-local-appservices.gradle"
+}
+
+// -------------------------------------------------------------------------------------------------
+// Task for printing APK information for the requested variant
+// Taskgraph Usage: "./gradlew printVariants
+// -------------------------------------------------------------------------------------------------
+tasks.register('printVariants') {
+    doLast {
+        def variants = android.applicationVariants.collect { variant -> [
+            apks: variant.outputs.collect { output -> [
+                abi: output.getFilter(com.android.build.VariantOutput.FilterType.ABI),
+                fileName: output.outputFile.name
+            ]},
+            build_type: variant.buildType.name,
+            name: variant.name,
+        ]}
+        // AndroidTest is a special case not included above
+        variants.add([
+            apks: [[
+                abi: 'noarch',
+                fileName: 'app-debug-androidTest.apk',
+            ]],
+            build_type: 'androidTest',
+            name: 'androidTest',
+        ])
+        println 'variants: ' + JsonOutput.toJson(variants)
+    }
 }

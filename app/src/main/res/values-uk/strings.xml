@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:moz="http://mozac.org/tools">
     <!-- ####################################################################################### -->
     <!-- ## Put only strings into this file that should be translated. Move all other strings ## -->
     <!-- ## into a separate file like strings_references.xml                                  ## -->
@@ -73,7 +73,7 @@
     <!-- Menu item: This is the label for turning off content blocking for the current website. -->
     <string name="menu_content_blocking">Блокування вмісту</string>
     <!-- This is the subtitle content blocking toggle -->
-    <string name="menu_content_blocking_subtitle">Вимкнути для вирішення проблем з деякими сайтами</string>
+    <string name="menu_content_blocking_subtitle">Вимкнути для усунення проблем з деякими сайтами</string>
 
     <!-- This is a small text at the bottom of the menu shown in a "custom tab" for branding purposes.
      See https://github.com/mozilla-mobile/focus-android/issues/2106
@@ -150,11 +150,11 @@
     <!-- %1$s will be replaced by the app name (e.g. Firefox Focus) -->
     <string name="preference_mozilla_summary">Про %1$s, допомога</string>
 
-    <!-- Preference category for ad blocking and tracking protection settings -->
-    <string name="preference_category_tracking_protection">Захист від стеження</string>
+    <!-- Preference category for ad blocking and enhanced tracking protection settings -->
+    <string name="preference_category_tracking_protection3">Розширений захист від стеження</string>
 
     <!-- Preference category for settings related to controlling web content -->
-    <string name="preference_category_web_content">Веб-вміст</string>
+    <string name="preference_category_web_content">Вебвміст</string>
 
     <!-- Preference category: stealth settings for while switching apps -->
     <string name="preference_category_switching_apps">Перемикання програм</string>
@@ -162,8 +162,8 @@
     <!-- Preference category for General Settings -->
     <string name="preference_category_general">Загальні</string>
 
-    <!-- Preference summary for General Settings category; the three things users can find in this category -->
-    <string name="preference_general_summary">Типовий браузер, вкладки, мова</string>
+    <!-- Preference summary for General Settings category; the two things users can find in this category -->
+    <string name="preference_general_summary2">Типовий браузер, мова</string>
 
     <!-- Preference category for settings about sending usage data -->
     <string name="preference_category_data_collection_use">Збір даних і використання</string>
@@ -194,14 +194,16 @@
     <!-- Title of "switch" preference that enables/disables autocomplete for the default list -->
     <string name="preference_switch_autocomplete_topsites">Для популярних сайтів</string>
 
-    <!-- Summary for the toggle to enable autocomplete for the topsites list -->
-    <string name="preference_autocomplete_topsite_summary">Увімкнути для автозавершення понад 450 популярних URL в панелі адреси.</string>
+    <!-- Summary for the toggle to enable autocomplete for the topsites list
+    %s is a placeholder for the app name (e.g. Firefox Focus)-->
+    <string name="preference_autocomplete_topsite_summary2">Увімкніть автозавершення в %s для понад 450 популярних URL-адрес у панелі адреси.</string>
 
     <!-- Title of "switch" preference that enables/disables autocomplete for the user-defined list -->
     <string name="preference_switch_autocomplete_user_list">Для доданих вами сайтів</string>
 
-    <!-- Summary for the toggle to enable autocomplete for the user-defined list -->
-    <string name="preference_autocomplete_user_list_summary">Увімкнути для автозавершення понад 450 популярних URL в панелі адреси.</string>
+    <!-- Summary for the toggle to enable autocomplete for the user-defined list
+     %s is a placeholder for the app name (e.g. Firefox Focus)-->
+    <string name="preference_autocomplete_user_list_summary2">Увімкнути, щоб %s автоматично завершував URL-адреси популярних сайтів.</string>
 
     <!-- Preference category: Manage (user-defined) sites -->
     <string name="preference_category_autocomplete_manage_sites">Керувати сайтами</string>
@@ -288,6 +290,7 @@
     <string name="preference_privacy_should_block_cookies_third_party_tracker_cookies_option">Блокувати лише сторонні куки стеження</string>
     <string name="preference_privacy_should_block_cookies_third_party_only_option">Блокувати лише сторонні куки</string>
 
+    <string name="preference_privacy_should_block_cookies_cross_site_option">Блокувати куки сторонніх сайтів</string>
     <string name="preference_privacy_should_block_cookies_yes_option2">Так, будь ласка</string>
 
     <!-- Preference Title: Biometrics can be used to unlock Focus if the previous session's data was not erased by the user. -->
@@ -304,12 +307,12 @@
      app's content (in our case especially the content of webpages) to show up in the "recent apps"
      screen. Additionally Android will prevent the user from taking screenshots or casting the app
      to other displays. -->
-    <string name="preference_privacy_stealth_summary">Приховувати веб-сторінки при перемиканні додатків та не дозволяти знімки екрану.</string>
+    <string name="preference_privacy_stealth_summary">Приховувати вебсторінки при перемиканні застосунків та не дозволяти знімки екрану.</string>
 
     <string name="preference_category_security">Безпека</string>
 
     <string name="preference_category_performance">Швидкодія</string>
-    <string name="preference_performance_block_webfonts">Блокувати веб-шрифти</string>
+    <string name="preference_performance_block_webfonts">Блокувати вебшрифти</string>
     <!-- This text is shown below the setting for disabling web fonts. Some websites use icons/images from a font and those do not show up if fonts are blocked.-->
     <string name="preference_performance_block_webfonts_summary">Може призвести до втрати піктограм чи зображень</string>
 
@@ -408,7 +411,7 @@
 
     <!-- This text is not visible. Instead it will be read by the accessibility service once we
      finished loading a website -->
-    <string name="accessibility_announcement_loading_finished">Веб-сайт завантажено</string>
+    <string name="accessibility_announcement_loading_finished">Вебсайт завантажено</string>
 
     <!-- Content description (not visible, for screen readers etc.): "Three dot" menu button. -->
     <string name="content_description_menu">Додатково</string>
@@ -421,7 +424,7 @@
     <string name="content_description_forward">Перехід уперед</string>
 
     <!-- Content description (not visible, for screen readers etc.): Reload current website -->
-    <string name="content_description_reload">Перезавантажити веб-сайт</string>
+    <string name="content_description_reload">Перезавантажити вебсайт</string>
 
     <!-- Content description (not visible, for screen readers etc.): Navigate back (browsing history) -->
     <string name="content_description_back">Перейти назад</string>
@@ -506,7 +509,7 @@
     <!-- First run tour (Privacy): Title -->
     <string name="firstrun_privacy_title">Зробіть приватність звичкою</string>
     <!-- First run tour (Privacy): Text. %1$s will be replaced with the name of the app (e.g. Firefox Focus) -->
-    <string name="firstrun_privacy_text">Встановіть %1$s своїм типовим браузером та отримайте переваги приватного перегляду при переході на веб-сайти з інших програм.</string>
+    <string name="firstrun_privacy_text">Встановіть %1$s своїм типовим браузером та отримайте переваги приватного перегляду при переході на вебсайти з інших застосунків.</string>
 
     <string name="firstrun_close_button">Гаразд, зрозуміло!</string>
     <string name="firstrun_skip_button">Пропустити</string>
@@ -527,9 +530,9 @@
     <!-- Label of the action that will close the dialog and not add anything to the home screen (shown in the confirmation dialog). -->
     <string name="dialog_addtohomescreen_action_no">НІ</string>
 
-    <!-- When tracking protection is disabled for the current session then we will show this warning in the "Add to home screen" dialog to
-         let the user know that the shortcut will always be opened with tracking protection disabled. -->
-    <string name="dialog_addtohomescreen_tracking_protection">Ярлик буде відкриватися з вимкненим захистом від стеження</string>
+    <!-- When enhanced tracking protection is disabled for the current session then we will show this warning in the "Add to home screen" dialog to
+         let the user know that the shortcut will always be opened with enhanced tracking protection disabled. -->
+    <string name="dialog_addtohomescreen_tracking_protection2">Ярлик відкриватиметься з вимкненим Розширеним захистом від стеження</string>
 
     <!-- The user visible name of the "notification channel" (Android 8+ feature) for the ongoing notification shown while a browsing session is active.
     The recommended maximum length is 40 characters; the value may be truncated if it is too long.
@@ -569,7 +572,7 @@
     <!-- Text shown in the "Your rights" screen.
     %1$s will be replaced with the name of the app (e.g. Firefox Focus)
     %2$s will be replaced with a URL linking to the trademark policy (e.g. https://www.mozilla.org/foundation/trademarks/policy/) -->
-    <string name="your_rights_content3"><![CDATA[Вам не надаються жодні права чи ліцензії на торгові марки Mozilla Foundation або будь-яких її сторін, включно з Mozilla, Firefox, а також назвами чи логотипами %1$s. Додаткову інформацію можна знайти <a href="%2$s">тут</a>.]]></string>
+    <string name="your_rights_content3"><![CDATA[Вам не надаються жодні права чи ліцензії на торговельні марки Mozilla Foundation або на будь-які її частини, включно з Mozilla, Firefox, а також назвами чи логотипами %1$s. Додаткову інформацію можна знайти <a href="%2$s">тут</a>.]]></string>
 
     <!-- Text shown in the "Your rights" screen.
     %1$s will be replaced with the name of the app (e.g. Firefox Focus)
@@ -632,8 +635,32 @@
     <!-- Description of what a user may find in the Advanced Setting category, used for debugging -->
     <string name="preference_advanced_summary">Інструменти розробника</string>
 
+    <!-- Preference for open links in third party apps -->
+    <string name="preferences_open_links_in_apps">Відкривати посилання у програмах</string>
+
     <!-- Title of Advanced Setting category -->
     <string name="preference_category_advanced">Додатково</string>
+
+    <!-- Preference for studies -->
+    <string name="preference_studies">Дослідження</string>
+
+    <!-- Preference for studies summary-->
+    <string name="preference_studies_summary">Firefox може час від часу встановлювати та виконувати дослідження.</string>
+
+    <!-- Learn more link for studies, links to an article for more information about studies. -->
+    <string name="studies_learn_more">Докладніше</string>
+
+    <!-- Dialog message shown when some changes are made on studies -->
+    <string name="studies_restart_app">Програма закриється, щоб застосувати зміни</string>
+
+    <!-- Title of the remove studies button -->
+    <string name="studies_remove">Вилучити</string>
+
+    <!-- Title of the active section on the studies list -->
+    <string name="studies_active">Активні</string>
+
+    <!-- Title of the completed section on the studies list -->
+    <string name="studies_completed">Завершено</string>
 
     <!-- Preference to enable remote debugging of the app via USB or Wi-Fi -->
     <string name="preference_remote_debugging">Віддалене зневадження через USB/Wi-Fi</string>
@@ -689,10 +716,10 @@
     The new line here must be kept as the second half of the string is clickable for the user. -->
     <string name="tip_disable_tracking_protection">Неочікувана поведінка сайту?\n Спробуйте вимкнути захист від стеження</string>
 
-    <!-- Tip displayed on home view explaining how to disable tracking protection
+    <!-- Tip displayed on home view explaining how to disable enhanced tracking protection
 The new line here must be kept as the second half of the string is clickable for the user. -->
-    <string name="tip_disable_tracking_protection2">Сайт виглядає чи поводиться дивно?\n
-    Спробуйте вимкнути захист від стеження</string>
+    <string name="tip_disable_tracking_protection3">Вигляд чи поведінка сайту дивні?\n
+    Спробуйте вимкнути Розширений захист від стеження</string>
 
     <!-- Tip displayed on home view explaining how to add sites to homescreen
     Argument 1 will be replaced with a line break in the application.-->
@@ -721,13 +748,18 @@ The new line here must be kept as the second half of the string is clickable for
 
     <!-- Tip displayed on the home view explaining how to use the Allowlist feature.
      "Allowlist" is a replacement for the word whitelist. -->
-    <string name="tip_explain_allowlist2">Хочете вимкнути захист від стеження для довіреного сайту?\n
+    <string name="tip_explain_allowlist3">Хочете вимкнути Розширений захист від стеження для довіреного сайту?\n
         Додайте його до списку винятків у налаштуваннях
     </string>
 
     <!-- Tip displayed on the home view about the changes in the new release.
     %1$s is a placeholder for the app name -->
-    <string name="tip_fresh_look">Оновлений зовнішній вигляд! Ознайомтеся докладніше про це, а також про інші оновлення в %1$s.</string>
+    <string name="tip_fresh_look">Оновлений зовнішній вигляд!\n Ознайомтеся докладніше про це, а також про інші оновлення в %1$s.</string>
+
+    <!-- Tip displayed on the home view about shortcuts
+    %1$s is a placeholder for the app name -->
+    <string name="tip_about_shortcuts">Створюйте ярлики для найвідвідуваніших сайтів:\n
+    Виберіть Додати до ярликів у меню %1$s</string>
 
     <!-- Label for the snackbar when a user opens a new tab -->
     <string name="new_tab_opened_snackbar">Відкрито нову вкладку</string>
@@ -739,20 +771,25 @@ The new line here must be kept as the second half of the string is clickable for
     <string name="preference_open_new_tab">Негайно перемикати на посилання в новій вкладці</string>
 
     <!-- Preference for safe browsing which when enabled, blocks dangerous or deceptive webpages that may include phishing or malware -->
-    <string name="preference_category_safe_browsing">Безпечний перегляд</string>
+    <string moz:removedIn="97" name="preference_category_safe_browsing">Безпечний перегляд</string>
     <!-- Preference title for safe browsing which when enabled, blocks dangerous or deceptive webpages that may include phishing or malware -->
     <string name="preference_safe_browsing_title">Блокувати потенційно небезпечні та підозрілі сайти</string>
     <!-- Preference summary for safe browsing which when enabled, blocks dangerous or deceptive webpages that may include phishing or malware -->
     <string name="preference_safe_browsing_summary">Блокувати відомі підозрілі та зловмисні сайти, шкідливі сайти та сайти з небажаним програмним забезпеченням.</string>
 
+    <!-- Title of the preference to enable "HTTPS-Only" mode -->
+    <string name="preference_https_only_title">HTTPS-режим</string>
+    <!-- Description of the preference to enable "HTTPS-Only" mode. %1$s will get replaced with the name of the app. -->
+    <string name="preference_https_only_summary">HTTPS забезпечує захищене, зашифроване зʼєднання між %1$s та відвідуваними вебсайтами. Більшість вебсайтів підтримують HTTPS, тому, якщо увімкнено HTTPS-режим, %1$s перенаправлятиме усі зʼєднання до HTTPS.</string>
+
     <!-- Preference for exceptions tracking protection -->
     <string name="preference_exceptions">Винятки</string>
     <!-- Description for the exceptions preference screen-->
-    <string name="preference_exceptions_description">Ви вимкнули блокування вмісту для цих веб-сайтів.</string>
+    <string name="preference_exceptions_description">Ви вимкнули блокування вмісту для цих вебсайтів.</string>
     <!-- Menu item to remove existing exceptions. -->
     <string name="preference_exceptions_menu_remove">Вилучити</string>
     <!-- Button to remove all websites from the exception list -->
-    <string name="preference_exceptions_remove_all_button_label">Вилучити всі веб-сайти</string>
+    <string name="preference_exceptions_remove_all_button_label">Вилучити всі вебсайти</string>
 
     <!-- Title for Preference screen for cookie blocking for exceptions tracking protection -->
     <string name="preference_block_cookies_title">Блокувати куки</string>
@@ -807,7 +844,27 @@ The new line here must be kept as the second half of the string is clickable for
     <!-- Text for the menu button to remove a top site -->
     <string name="remove_top_site">Вилучити</string>
 
+    <!-- Text for the dialog title for renaming a top site -->
+    <string name="rename_top_site">Перейменувати</string>
+
     <!-- Text for context menu additional note.
     %1$s is a placeholder for the app name. -->
-    <string name="contextmenu_erased_images_note">Збережені та спільні зображення &lt;b&gt;не будуть&lt;/b&gt; видалені, якщо ви зітрете історію %1s</string>
+    <string name="contextmenu_erased_images_note2">Збережені та спільні зображення &lt;b&gt;не будуть видалені&lt;/b&gt;, якщо ви зітрете історію %1$s</string>
+
+    <!-- Theme Preferences -->
+    <!-- Preference category for changing default theme to dark or light mode -->
+    <string name="preferences_theme">Тема</string>
+    <!-- Preference for using light theme -->
+    <string name="preference_light_theme">Світла</string>
+    <!-- Preference for using dark theme -->
+    <string name="preference_dark_theme">Темна</string>
+    <!-- Preference for using using dark or light theme automatically set by battery -->
+    <string name="preference_auto_battery_theme">Враховувати режим економії заряду</string>
+    <!-- Preference for using following device theme -->
+    <string name="preference_follow_device_theme">Тема пристрою</string>
+
+
+    <!-- Sessions List -->
+    <!-- Content description (not visible, for screen readers etc.): Button that closes a tab n the sessions list -->
+    <string name="close_tab">Закрити вкладку</string>
 </resources>

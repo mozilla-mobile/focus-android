@@ -9,9 +9,11 @@ import android.view.View
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.preference.PreferenceFragmentCompat
 import org.mozilla.focus.R
+import org.mozilla.focus.ext.setNavigationIcon
 import org.mozilla.focus.utils.StatusBarUtils
 
 /**
@@ -33,12 +35,18 @@ open class BaseSettingsLikeFragment : Fragment() {
         val statusBarView = view.findViewById<View>(R.id.status_bar_background)
         StatusBarUtils.getStatusBarHeight(statusBarView) { statusBarHeight ->
             statusBarView.layoutParams.height = statusBarHeight
+            statusBarView.setBackgroundColor(
+                ContextCompat.getColor(
+                    view.context,
+                    R.color.settings_background
+                )
+            )
         }
 
         val toolbar = view.findViewById<Toolbar>(R.id.toolbar)
 
         val activity = requireActivity() as AppCompatActivity
         activity.setSupportActionBar(toolbar)
-        activity.supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        activity.setNavigationIcon(R.drawable.ic_back_button)
     }
 }

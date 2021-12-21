@@ -11,7 +11,6 @@ import androidx.test.espresso.ViewInteraction
 import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.hasDescendant
-import androidx.test.espresso.matcher.ViewMatchers.isCompletelyDisplayed
 import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import androidx.test.espresso.matcher.ViewMatchers.withContentDescription
 import androidx.test.espresso.matcher.ViewMatchers.withId
@@ -36,14 +35,14 @@ class BrowserRobot {
 
     fun verifyBrowserView() =
         assertTrue(
-            mDevice.findObject(UiSelector().resourceId("$packageName:id/webview"))
+            mDevice.findObject(UiSelector().resourceId("$packageName:id/engineView"))
                 .waitForExists(webPageLoadwaitingTime)
         )
 
     fun verifyPageContent(expectedText: String) {
         val sessionLoadedIdlingResource = SessionLoadedIdlingResource()
 
-        mDevice.findObject(UiSelector().resourceId("$packageName:id/webview"))
+        mDevice.findObject(UiSelector().resourceId("$packageName:id/engineView"))
             .waitForExists(webPageLoadwaitingTime)
 
         runWithIdleRes(sessionLoadedIdlingResource) {
@@ -52,6 +51,15 @@ class BrowserRobot {
                     .waitForExists(webPageLoadwaitingTime)
             )
         }
+    }
+
+    fun verifyTrackingProtectionAlert(expectedText: String) {
+        assertTrue(
+            mDevice.findObject(UiSelector().textContains(expectedText))
+                .waitForExists(webPageLoadwaitingTime)
+        )
+        // close the JavaScript alert
+        mDevice.pressBack()
     }
 
     fun verifyPageURL(expectedText: String) {
@@ -71,8 +79,8 @@ class BrowserRobot {
         mDevice.findObject(UiSelector().textContains("Get Location")).click()
     }
 
-    fun verifyFloatingEraseButton(): ViewInteraction =
-        floatingEraseButton.check(matches(isDisplayed()))
+    fun verifyEraseBrowsingButton(): ViewInteraction =
+        eraseBrowsingButton.check(matches(isDisplayed()))
 
     fun longPressLink(linkText: String) {
         val link = mDevice.findObject(UiSelector().text(linkText))
@@ -81,12 +89,11 @@ class BrowserRobot {
     }
 
     fun openLinkInNewTab() {
-        onView(withText(R.string.mozac_feature_contextmenu_open_link_in_private_tab))
-            .perform(click())
+        openLinkInPrivateTab.perform(click())
     }
 
     fun verifyNumberOfTabsOpened(tabsCount: Int) {
-        tabsCounter.check(matches(withContentDescription("Tabs open: $tabsCount")))
+        tabsCounter.check(matches(withContentDescription("$tabsCount open tabs. Tap to switch tabs.")))
     }
 
     fun verifyTabsOrder(vararg tabTitle: String) {
@@ -95,7 +102,9 @@ class BrowserRobot {
                 matches(
                     hasDescendant(
                         allOf(
-                            withText(tabTitle[tab]),
+                            hasDescendant(
+                                withText(tabTitle[tab])
+                            ),
                             withParentIndex(tab)
                         )
                     )
@@ -139,18 +148,15 @@ class BrowserRobot {
         mDevice.findObject(UiSelector().textContains("OK")).click()
     }
 
-    fun verifySiteSecurityIconShown(): ViewInteraction = securityIcon.check(matches(isDisplayed()))
+    fun verifySiteTrackingProtectionIconShown() = assertTrue(securityIcon.waitForExists(waitingTime))
 
-    fun verifySiteConnectionInfoIsSecure(isSecure: Boolean) {
-        securityIcon.perform(click())
-        assertTrue(site_security_info.waitForExists(waitingTime))
-        site_identity_title.check(matches(isDisplayed()))
-        site_identity_Icon.check(matches(isDisplayed()))
-        if (isSecure) {
-            assertTrue(site_security_info.text.equals("Connection is secure"))
-        } else {
-            assertTrue(site_security_info.text.equals("Connection is not secure"))
-        }
+    fun verifySiteSecurityIndicatorShown() = assertTrue(site_security_indicator.waitForExists(waitingTime))
+
+    fun verifyLinkContextMenu(linkAddress: String) {
+        onView(withId(R.id.titleView)).check(matches(withText(linkAddress)))
+        openLinkInPrivateTab.check(matches(isDisplayed()))
+        copyLink.check(matches(isDisplayed()))
+        shareLink.check(matches(isDisplayed()))
     }
 
     class Transition {
@@ -163,17 +169,9 @@ class BrowserRobot {
         }
 
         fun clearBrowsingData(interact: HomeScreenRobot.() -> Unit): HomeScreenRobot.Transition {
-            floatingEraseButton
-                .check(matches(isCompletelyDisplayed()))
+            eraseBrowsingButton
+                .check(matches(isDisplayed()))
                 .perform(click())
-
-            HomeScreenRobot().interact()
-            return HomeScreenRobot.Transition()
-        }
-
-        fun eraseBrowsingHistoryFromTabsTray(interact: HomeScreenRobot.() -> Unit): HomeScreenRobot.Transition {
-            tabsCounter.perform(click())
-            tabsTrayEraseHistoryButton.perform(click())
 
             HomeScreenRobot().interact()
             return HomeScreenRobot.Transition()
@@ -197,6 +195,24 @@ class BrowserRobot {
             ThreeDotMainMenuRobot().interact()
             return ThreeDotMainMenuRobot.Transition()
         }
+
+        fun openSiteSettingsMenu(interact: HomeScreenRobot.() -> Unit): HomeScreenRobot.Transition {
+            securityIcon.click()
+
+            HomeScreenRobot().interact()
+            return HomeScreenRobot.Transition()
+        }
+
+        fun openSiteSecurityInfoSheet(interact: SiteSecurityInfoSheetRobot.() -> Unit): SiteSecurityInfoSheetRobot.Transition {
+            if (securityIcon.exists()) {
+                securityIcon.click()
+            } else {
+                site_security_indicator.click()
+            }
+
+            SiteSecurityInfoSheetRobot().interact()
+            return SiteSecurityInfoSheetRobot.Transition()
+        }
     }
 }
 
@@ -218,21 +234,30 @@ private val browserURLbar = mDevice.findObject(
     UiSelector().resourceId("$packageName:id/mozac_browser_toolbar_url_view")
 )
 
-private val floatingEraseButton = onView(allOf(withId(R.id.erase), isDisplayed()))
+private val eraseBrowsingButton = onView(withContentDescription("Erase browsing history"))
 
-private val tabsCounter = onView(withId(R.id.tabs))
-
-private val tabsTrayEraseHistoryButton = onView(withText(R.string.tabs_tray_action_erase))
+private val tabsCounter = onView(withId(R.id.counter_root))
 
 private val mainMenu = onView(withId(R.id.mozac_browser_toolbar_menu))
 
 private val shareAppsList =
     mDevice.findObject(UiSelector().resourceId("android:id/resolver_list"))
 
-private val securityIcon = onView(withId(R.id.mozac_browser_toolbar_tracking_protection_indicator))
+private val securityIcon =
+    mDevice.findObject(
+        UiSelector()
+            .resourceId("$packageName:id/mozac_browser_toolbar_tracking_protection_indicator")
+    )
 
-private val site_security_info = mDevice.findObject(UiSelector().resourceId("$packageName:id/security_info"))
+private val site_security_indicator =
+    mDevice.findObject(
+        UiSelector()
+            .resourceId("$packageName:id/mozac_browser_toolbar_security_indicator")
+    )
 
-private val site_identity_title = onView(withId(R.id.site_title))
+// Link long-tap context menu items
+private val openLinkInPrivateTab = onView(withText("Open link in private tab"))
 
-private val site_identity_Icon = onView(withId(R.id.site_favicon))
+private val copyLink = onView(withText("Copy link"))
+
+private val shareLink = onView(withText("Share link"))

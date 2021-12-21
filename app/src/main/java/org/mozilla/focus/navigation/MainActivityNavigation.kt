@@ -13,10 +13,10 @@ import org.mozilla.focus.autocomplete.AutocompleteSettingsFragment
 import org.mozilla.focus.biometrics.BiometricAuthenticationDialogFragment
 import org.mozilla.focus.exceptions.ExceptionsListFragment
 import org.mozilla.focus.exceptions.ExceptionsRemoveFragment
+import org.mozilla.focus.fragment.AboutFragment
 import org.mozilla.focus.fragment.BrowserFragment
 import org.mozilla.focus.fragment.FirstrunFragment
 import org.mozilla.focus.fragment.UrlInputFragment
-import org.mozilla.focus.session.ui.TabSheetFragment
 import org.mozilla.focus.settings.AdvancedSettingsFragment
 import org.mozilla.focus.settings.GeneralSettingsFragment
 import org.mozilla.focus.settings.InstalledSearchEnginesSettingsFragment
@@ -25,7 +25,10 @@ import org.mozilla.focus.settings.MozillaSettingsFragment
 import org.mozilla.focus.settings.RemoveSearchEnginesSettingsFragment
 import org.mozilla.focus.settings.SearchSettingsFragment
 import org.mozilla.focus.settings.SettingsFragment
+import org.mozilla.focus.settings.permissions.AutoplayFragment
+import org.mozilla.focus.settings.permissions.SitePermissionsFragment
 import org.mozilla.focus.settings.privacy.PrivacySecuritySettingsFragment
+import org.mozilla.focus.settings.privacy.studies.StudiesFragment
 import org.mozilla.focus.state.Screen
 import org.mozilla.focus.utils.ViewUtils
 import kotlin.collections.forEach as withEach
@@ -83,7 +86,7 @@ class MainActivityNavigation(
     /**
      * Show browser for tab with the given [tabId].
      */
-    fun browser(tabId: String, showTabs: Boolean) {
+    fun browser(tabId: String) {
         val fragmentManager = activity.supportFragmentManager
 
         val urlInputFragment = fragmentManager.findFragmentByTag(UrlInputFragment.FRAGMENT_TAG) as UrlInputFragment?
@@ -99,19 +102,6 @@ class MainActivityNavigation(
             fragmentManager
                 .beginTransaction()
                 .replace(R.id.container, BrowserFragment.createForTab(tabId), BrowserFragment.FRAGMENT_TAG)
-                .commitAllowingStateLoss()
-        }
-
-        val tabsTrayFragment = fragmentManager.findFragmentByTag(TabSheetFragment.FRAGMENT_TAG) as TabSheetFragment?
-        if (tabsTrayFragment == null && showTabs) {
-            fragmentManager
-                .beginTransaction()
-                .add(R.id.container, TabSheetFragment(), TabSheetFragment.FRAGMENT_TAG)
-                .commitAllowingStateLoss()
-        } else if (tabsTrayFragment != null && !showTabs) {
-            fragmentManager
-                .beginTransaction()
-                .remove(tabsTrayFragment)
                 .commitAllowingStateLoss()
         }
     }
@@ -183,6 +173,9 @@ class MainActivityNavigation(
             Screen.Settings.Page.Mozilla -> MozillaSettingsFragment()
             Screen.Settings.Page.PrivacyExceptions -> ExceptionsListFragment()
             Screen.Settings.Page.PrivacyExceptionsRemove -> ExceptionsRemoveFragment()
+            Screen.Settings.Page.Autoplay -> AutoplayFragment()
+            Screen.Settings.Page.SitePermissions -> SitePermissionsFragment()
+            Screen.Settings.Page.Studies -> StudiesFragment()
             Screen.Settings.Page.SearchList -> InstalledSearchEnginesSettingsFragment()
             Screen.Settings.Page.SearchRemove -> RemoveSearchEnginesSettingsFragment()
             Screen.Settings.Page.SearchAdd -> ManualAddSearchEngineSettingsFragment()
@@ -190,6 +183,7 @@ class MainActivityNavigation(
             Screen.Settings.Page.SearchAutocompleteList -> AutocompleteListFragment()
             Screen.Settings.Page.SearchAutocompleteAdd -> AutocompleteAddFragment()
             Screen.Settings.Page.SearchAutocompleteRemove -> AutocompleteRemoveFragment()
+            Screen.Settings.Page.About -> AboutFragment()
         }
 
         val tag = "settings_" + fragment::class.java.simpleName

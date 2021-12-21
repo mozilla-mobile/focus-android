@@ -5,8 +5,8 @@
 package org.mozilla.focus.topsites
 
 import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.foundation.background
 import androidx.compose.foundation.combinedClickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -15,8 +15,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
-import androidx.compose.material.DropdownMenu
-import androidx.compose.material.DropdownMenuItem
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -26,27 +24,34 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import mozilla.components.feature.top.sites.TopSite
 import mozilla.components.support.ktx.kotlin.getRepresentativeCharacter
-import mozilla.components.ui.colors.PhotonColors
+import org.mozilla.focus.R
+import org.mozilla.focus.ui.menu.CustomDropdownMenu
+import org.mozilla.focus.ui.menu.MenuItem
+import org.mozilla.focus.ui.theme.focusColors
 
 /**
  * A list of top sites.
  *
  * @param topSites List of [TopSite] to display.
- * @param menuItems List of [TopSiteMenuItem] to display in a top site dropdown menu.
- * @param onTopSiteClick Invoked when the user clicks on a top site.
+ * @param onTopSiteClicked Invoked when the user clicked the top site
+ * @param onRemoveTopSiteClicked Invoked when the user clicked 'Remove' item from drop down menu
+ * @param onRenameTopSiteClicked Invoked when the user clicked 'Rename' item from drop down menu
  */
+
 @Composable
 fun TopSites(
     topSites: List<TopSite>,
-    menuItems: List<TopSiteMenuItem>,
-    onTopSiteClick: (TopSite) -> Unit = {}
+    onTopSiteClicked: (TopSite) -> Unit,
+    onRemoveTopSiteClicked: (TopSite) -> Unit,
+    onRenameTopSiteClicked: (TopSite) -> Unit
 ) {
+
     Row(
         modifier = Modifier
             .padding(horizontal = 10.dp)
@@ -57,8 +62,17 @@ fun TopSites(
         topSites.forEach { topSite ->
             TopSiteItem(
                 topSite = topSite,
-                menuItems = menuItems,
-                onTopSiteClick = onTopSiteClick
+                menuItems = listOfNotNull(
+                    MenuItem(
+                        title = stringResource(R.string.rename_top_site_item),
+                        onClick = { onRenameTopSiteClicked(topSite) }
+                    ),
+                    MenuItem(
+                        title = stringResource(R.string.remove_top_site),
+                        onClick = { onRemoveTopSiteClicked(topSite) }
+                    )
+                ),
+                onTopSiteClick = { item -> onTopSiteClicked(item) }
             )
         }
     }
@@ -68,14 +82,14 @@ fun TopSites(
  * A top site item.
  *
  * @param topSite The [TopSite] to display.
- * @param menuItems List of [TopSiteMenuItem] to display in a top site dropdown menu.
+ * @param menuItems List of [MenuItem] to display in a top site dropdown menu.
  * @param onTopSiteClick Invoked when the user clicks on a top site.
  */
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 private fun TopSiteItem(
     topSite: TopSite,
-    menuItems: List<TopSiteMenuItem>,
+    menuItems: List<MenuItem>,
     onTopSiteClick: (TopSite) -> Unit = {}
 ) {
     var menuExpanded by remember { mutableStateOf(false) }
@@ -84,6 +98,8 @@ private fun TopSiteItem(
         Column(
             modifier = Modifier
                 .combinedClickable(
+                    interactionSource = remember { MutableInteractionSource() },
+                    indication = null,
                     onClick = { onTopSiteClick(topSite) },
                     onLongClick = { menuExpanded = true }
                 )
@@ -95,31 +111,17 @@ private fun TopSiteItem(
             Text(
                 text = topSite.title ?: topSite.url,
                 modifier = Modifier.padding(top = 8.dp),
-                color = PhotonColors.LightGrey05,
+                color = focusColors.topSiteTitle,
                 fontSize = 12.sp,
                 overflow = TextOverflow.Ellipsis,
                 maxLines = 1
             )
-        }
 
-        DropdownMenu(
-            expanded = menuExpanded,
-            onDismissRequest = { menuExpanded = false },
-            modifier = Modifier.background(color = PhotonColors.Ink30)
-        ) {
-            for (item in menuItems) {
-                DropdownMenuItem(
-                    onClick = {
-                        menuExpanded = false
-                        item.onClick(topSite)
-                    }
-                ) {
-                    Text(
-                        text = item.title,
-                        color = Color.White
-                    )
-                }
-            }
+            CustomDropdownMenu(
+                menuItems = menuItems,
+                isExpanded = menuExpanded,
+                onDismissClicked = { menuExpanded = false }
+            )
         }
     }
 }
@@ -134,7 +136,7 @@ private fun TopSiteFaviconCard(topSite: TopSite) {
     Card(
         modifier = Modifier.size(60.dp),
         shape = RoundedCornerShape(8.dp),
-        backgroundColor = PhotonColors.Ink30
+        backgroundColor = focusColors.topSiteBackground
     ) {
         Column(
             verticalArrangement = Arrangement.Center,
@@ -143,7 +145,7 @@ private fun TopSiteFaviconCard(topSite: TopSite) {
             Surface(
                 modifier = Modifier.size(36.dp),
                 shape = RoundedCornerShape(4.dp),
-                color = PhotonColors.Ink60
+                color = focusColors.surface
             ) {
                 Column(
                     verticalArrangement = Arrangement.Center,
@@ -151,7 +153,7 @@ private fun TopSiteFaviconCard(topSite: TopSite) {
                 ) {
                     Text(
                         text = topSite.url.getRepresentativeCharacter(),
-                        color = PhotonColors.LightGrey05,
+                        color = focusColors.topSiteFaviconText,
                         fontSize = 20.sp
                     )
                 }

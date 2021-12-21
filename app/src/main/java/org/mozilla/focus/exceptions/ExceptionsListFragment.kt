@@ -5,7 +5,6 @@
 package org.mozilla.focus.exceptions
 
 import android.content.Context
-import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.Menu
@@ -17,28 +16,31 @@ import android.view.ViewGroup
 import android.widget.CheckBox
 import android.widget.CompoundButton
 import android.widget.TextView
+import androidx.core.content.ContextCompat
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.ItemTouchHelper.SimpleCallback
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import kotlinx.android.synthetic.main.fragment_exceptions_domains.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import mozilla.components.concept.engine.content.blocking.TrackingProtectionException
+import org.mozilla.focus.GleanMetrics.TrackingProtectionExceptions
 import org.mozilla.focus.R
 import org.mozilla.focus.autocomplete.AutocompleteDomainFormatter
+import org.mozilla.focus.databinding.FragmentExceptionsDomainsBinding
 import org.mozilla.focus.ext.components
 import org.mozilla.focus.ext.requireComponents
 import org.mozilla.focus.settings.BaseSettingsLikeFragment
 import org.mozilla.focus.state.AppAction
 import org.mozilla.focus.state.Screen
-import org.mozilla.focus.telemetry.TelemetryWrapper
 import org.mozilla.focus.utils.ViewUtils
 import java.util.Collections
 import kotlin.coroutines.CoroutineContext
 
+private const val REMOVE_EXCEPTIONS_DISABLED_ALPHA = 0.5f
 typealias DomainFormatter = (String) -> String
 
 /**
@@ -48,6 +50,9 @@ open class ExceptionsListFragment : BaseSettingsLikeFragment(), CoroutineScope {
     private var job = Job()
     override val coroutineContext: CoroutineContext
         get() = job + Dispatchers.Main
+    private var _binding: FragmentExceptionsDomainsBinding? = null
+    protected val binding get() = _binding!!
+
     /**
      * ItemTouchHelper for reordering items in the domain list.
      */
@@ -103,32 +108,44 @@ open class ExceptionsListFragment : BaseSettingsLikeFragment(), CoroutineScope {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View = inflater.inflate(R.layout.fragment_exceptions_domains, container, false)
+    ): View {
+        _binding = FragmentExceptionsDomainsBinding.inflate(inflater, container, false)
+        return binding.root
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        exceptionList.layoutManager =
-            LinearLayoutManager(activity, RecyclerView.VERTICAL, false)
-        exceptionList.adapter = DomainListAdapter()
-        exceptionList.setHasFixedSize(true)
-
-        if (!isSelectionMode()) {
-            itemTouchHelper.attachToRecyclerView(exceptionList)
+        binding.exceptionList.apply {
+            layoutManager =
+                LinearLayoutManager(activity, RecyclerView.VERTICAL, false)
+            adapter = DomainListAdapter()
+            setHasFixedSize(true)
         }
 
-        removeAllExceptions.setOnClickListener {
-            requireComponents.trackingProtectionUseCases.removeAllExceptions()
-            ExceptionDomains.removeAll(requireContext())
+        binding.removeAllExceptions.isVisible = !isSelectionMode()
 
-            val exceptions = (exceptionList.adapter as DomainListAdapter).selection()
-            TelemetryWrapper.removeAllExceptionDomains(exceptions.count())
+        if (!isSelectionMode()) {
+            itemTouchHelper.attachToRecyclerView(binding.exceptionList)
+        }
 
-            requireComponents.appStore.dispatch(
-                AppAction.NavigateUp(
-                    requireComponents.store.state.selectedTabId
+        binding.removeAllExceptions.setOnClickListener { removeButton ->
+            removeButton.apply {
+                isEnabled = false
+                alpha = REMOVE_EXCEPTIONS_DISABLED_ALPHA
+            }
+            requireComponents.trackingProtectionUseCases.removeAllExceptions {
+                val exceptionsListSize =
+                    (binding.exceptionList.adapter as DomainListAdapter).itemCount
+                TrackingProtectionExceptions.allowListCleared.record(
+                    TrackingProtectionExceptions.AllowListClearedExtra(exceptionsListSize)
                 )
-            )
+                requireComponents.appStore.dispatch(
+                    AppAction.NavigateUp(
+                        requireComponents.store.state.selectedTabId
+                    )
+                )
+            }
         }
     }
 
@@ -139,8 +156,8 @@ open class ExceptionsListFragment : BaseSettingsLikeFragment(), CoroutineScope {
 
         updateTitle(R.string.preference_exceptions)
 
-        (exceptionList.adapter as DomainListAdapter).refresh(requireActivity()) {
-            if ((exceptionList.adapter as DomainListAdapter).itemCount == 0) {
+        (binding.exceptionList.adapter as DomainListAdapter).refresh(requireActivity()) {
+            if ((binding.exceptionList.adapter as DomainListAdapter).itemCount == 0) {
                 requireComponents.appStore.dispatch(
                     AppAction.NavigateUp(requireComponents.store.state.selectedTabId)
                 )
@@ -154,6 +171,11 @@ open class ExceptionsListFragment : BaseSettingsLikeFragment(), CoroutineScope {
         super.onStop()
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.menu_exceptions_list, menu)
     }
@@ -162,9 +184,9 @@ open class ExceptionsListFragment : BaseSettingsLikeFragment(), CoroutineScope {
         val removeItem = menu.findItem(R.id.remove)
 
         removeItem?.let {
-            it.isVisible = isSelectionMode() || exceptionList.adapter!!.itemCount > 0
+            it.isVisible = isSelectionMode() || binding.exceptionList.adapter!!.itemCount > 0
             val isEnabled =
-                !isSelectionMode() || (exceptionList.adapter as DomainListAdapter).selection().isNotEmpty()
+                !isSelectionMode() || (binding.exceptionList.adapter as DomainListAdapter).selection().isNotEmpty()
             ViewUtils.setMenuItemEnabled(it, isEnabled)
         }
     }
@@ -291,7 +313,7 @@ open class ExceptionsListFragment : BaseSettingsLikeFragment(), CoroutineScope {
         }
 
         fun onSelected() {
-            itemView.setBackgroundColor(Color.DKGRAY)
+            itemView.setBackgroundColor(ContextCompat.getColor(itemView.context, R.color.disabled))
         }
 
         fun onCleared() {

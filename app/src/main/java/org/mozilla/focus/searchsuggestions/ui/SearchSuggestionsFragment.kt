@@ -9,27 +9,23 @@ import android.text.method.LinkMovementMethod
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.livedata.observeAsState
-import androidx.compose.runtime.remember
 import androidx.compose.ui.platform.ComposeView
-import androidx.compose.ui.platform.LocalContext
-import androidx.core.content.ContextCompat
-import androidx.core.graphics.drawable.toBitmap
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import kotlinx.android.synthetic.main.fragment_search_suggestions.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
-import mozilla.components.compose.browser.awesomebar.AwesomeBar
-import mozilla.components.feature.awesomebar.provider.SearchSuggestionProvider
+import mozilla.components.service.glean.private.NoExtras
+import mozilla.components.support.ktx.android.view.hideKeyboard
+import org.mozilla.focus.GleanMetrics.ShowSearchSuggestions
 import org.mozilla.focus.R
-import org.mozilla.focus.components
+import org.mozilla.focus.databinding.FragmentSearchSuggestionsBinding
+import org.mozilla.focus.ext.defaultSearchEngineName
+import org.mozilla.focus.ext.requireComponents
 import org.mozilla.focus.searchsuggestions.SearchSuggestionsViewModel
 import org.mozilla.focus.searchsuggestions.State
-import org.mozilla.focus.theme.FocusTheme
+import org.mozilla.focus.ui.theme.FocusTheme
 import kotlin.coroutines.CoroutineContext
 
 class SearchSuggestionsFragment : Fragment(), CoroutineScope {
@@ -37,7 +33,12 @@ class SearchSuggestionsFragment : Fragment(), CoroutineScope {
     override val coroutineContext: CoroutineContext
         get() = job + Dispatchers.Main
 
+    private var _binding: FragmentSearchSuggestionsBinding? = null
+    private val binding get() = _binding!!
     lateinit var searchSuggestionsViewModel: SearchSuggestionsViewModel
+
+    private val defaultSearchEngineName: String
+        get() = requireComponents.store.defaultSearchEngineName()
 
     override fun onResume() {
         super.onResume()
@@ -54,34 +55,40 @@ class SearchSuggestionsFragment : Fragment(), CoroutineScope {
         super.onPause()
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+
     @Suppress("DEPRECATION") // https://github.com/mozilla-mobile/focus-android/issues/4958
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        searchSuggestionsViewModel = ViewModelProvider(requireActivity())
+        searchSuggestionsViewModel = ViewModelProvider(requireParentFragment())
             .get(SearchSuggestionsViewModel::class.java)
 
         searchSuggestionsViewModel.state.observe(
             viewLifecycleOwner,
             Observer { state ->
-                enable_search_suggestions_container.visibility = View.GONE
-                no_suggestions_container.visibility = View.GONE
+                binding.enableSearchSuggestionsContainer.visibility = View.GONE
+                binding.noSuggestionsContainer.visibility = View.GONE
 
                 when (state) {
                     is State.ReadyForSuggestions -> { /* Handled by Jetpack Compose implementation */
                     }
                     is State.NoSuggestionsAPI ->
-                        no_suggestions_container.visibility = if (state.givePrompt) {
+                        binding.noSuggestionsContainer.visibility = if (state.givePrompt) {
                             View.VISIBLE
                         } else {
                             View.GONE
                         }
                     is State.Disabled ->
-                        enable_search_suggestions_container.visibility = if (state.givePrompt) {
-                            View.VISIBLE
-                        } else {
-                            View.GONE
-                        }
+                        binding.enableSearchSuggestionsContainer.visibility =
+                            if (state.givePrompt) {
+                                View.VISIBLE
+                            } else {
+                                View.GONE
+                            }
                 }
             }
         )
@@ -91,91 +98,47 @@ class SearchSuggestionsFragment : Fragment(), CoroutineScope {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? = inflater.inflate(R.layout.fragment_search_suggestions, container, false)
+    ): View {
+        _binding = FragmentSearchSuggestionsBinding.inflate(inflater, container, false)
+        return binding.root
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         val appName = resources.getString(R.string.app_name)
 
-        enable_search_suggestions_subtitle.text =
-            resources.getString(R.string.enable_search_suggestion_description, appName)
-        enable_search_suggestions_subtitle.movementMethod = LinkMovementMethod.getInstance()
-        enable_search_suggestions_subtitle.highlightColor = android.graphics.Color.TRANSPARENT
-
-        enable_search_suggestions_button.setOnClickListener {
+        binding.enableSearchSuggestionsSubtitle.apply {
+            text = resources.getString(R.string.enable_search_suggestion_description, appName)
+            movementMethod = LinkMovementMethod.getInstance()
+            highlightColor = android.graphics.Color.TRANSPARENT
+        }
+        binding.enableSearchSuggestionsButton.setOnClickListener {
             searchSuggestionsViewModel.enableSearchSuggestions()
+            ShowSearchSuggestions.enabledFromPanel.record(NoExtras())
         }
 
-        disable_search_suggestions_button.setOnClickListener {
+        binding.disableSearchSuggestionsButton.setOnClickListener {
             searchSuggestionsViewModel.disableSearchSuggestions()
+            ShowSearchSuggestions.disabledFromPanel.record(NoExtras())
         }
 
-        dismiss_no_suggestions_message.setOnClickListener {
+        binding.dismissNoSuggestionsMessage.setOnClickListener {
             searchSuggestionsViewModel.dismissNoSuggestionsMessage()
         }
 
         val searchSuggestionsView = view.findViewById<ComposeView>(R.id.search_suggestions_view)
-        searchSuggestionsView.setContent { SearchOverlay(searchSuggestionsViewModel) }
+        searchSuggestionsView.setContent {
+            FocusTheme {
+                SearchOverlay(
+                    searchSuggestionsViewModel,
+                    defaultSearchEngineName
+                ) { view.hideKeyboard() }
+            }
+        }
     }
 
     companion object {
         fun create() = SearchSuggestionsFragment()
-    }
-}
-
-@Composable
-private fun SearchOverlay(
-    viewModel: SearchSuggestionsViewModel
-) {
-    val state = viewModel.state.observeAsState()
-
-    when (state.value) {
-        is State.Disabled -> { /* Not implemented in Compose, still handled by the View implementation */ }
-        is State.NoSuggestionsAPI -> { /* Not implemented in Compose, still handled by the View implementation */ }
-        State.ReadyForSuggestions -> SearchSuggestions(viewModel)
-    }
-}
-
-@Composable
-private fun SearchSuggestions(
-    viewModel: SearchSuggestionsViewModel
-) {
-    val context = LocalContext.current
-    val components = components
-    val query = viewModel.searchQuery.observeAsState()
-
-    val icon = ContextCompat.getDrawable(LocalContext.current, R.drawable.mozac_ic_search)
-        ?.toBitmap()
-
-    val provider = remember(context) {
-        SearchSuggestionProvider(
-            context,
-            components.store,
-            components.searchUseCases.newPrivateTabSearch,
-            components.client,
-            mode = SearchSuggestionProvider.Mode.MULTIPLE_SUGGESTIONS,
-            private = true,
-            showDescription = false,
-            icon = icon
-        )
-    }
-
-    FocusTheme {
-        AwesomeBar(
-            text = query.value ?: "",
-            providers = listOf(
-                provider
-            ),
-            onSuggestionClicked = { suggestion ->
-                viewModel.selectSearchSuggestion(
-                    suggestion.title!!
-                )
-            },
-            onAutoComplete = { suggestion ->
-                val text = suggestion.editSuggestion ?: return@AwesomeBar
-                viewModel.setAutocompleteSuggestion(text)
-            }
-        )
     }
 }

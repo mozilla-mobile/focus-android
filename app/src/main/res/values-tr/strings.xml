@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:moz="http://mozac.org/tools">
     <!-- ####################################################################################### -->
     <!-- ## Put only strings into this file that should be translated. Move all other strings ## -->
     <!-- ## into a separate file like strings_references.xml                                  ## -->
@@ -64,7 +64,7 @@
          Next to this label is a switch that allows the user to temporarily enable / disable the
          blocking of trackers for the current browsing session - for example if the current website
          doesn't work correctly with blocked content. -->
-    <string name="menu_trackers_blocked_title">Engellenen takipçi</string>
+    <string name="menu_trackers_blocked_title">Takipçileri engelle</string>
 
     <!-- Menu item: This is the subtitle for the Trackers blocked menu entry that shows how many
     trackers have been blocked for the currently loaded website.  -->
@@ -150,8 +150,8 @@
     <!-- %1$s will be replaced by the app name (e.g. Firefox Focus) -->
     <string name="preference_mozilla_summary">%1$s hakkında, yardım</string>
 
-    <!-- Preference category for ad blocking and tracking protection settings -->
-    <string name="preference_category_tracking_protection">İzlenme Koruması</string>
+    <!-- Preference category for ad blocking and enhanced tracking protection settings -->
+    <string name="preference_category_tracking_protection3">Gelişmiş izlenme koruması</string>
 
     <!-- Preference category for settings related to controlling web content -->
     <string name="preference_category_web_content">Web içeriği</string>
@@ -162,8 +162,8 @@
     <!-- Preference category for General Settings -->
     <string name="preference_category_general">Genel</string>
 
-    <!-- Preference summary for General Settings category; the three things users can find in this category -->
-    <string name="preference_general_summary">Varsayılan tarayıcı, sekmeler, dil</string>
+    <!-- Preference summary for General Settings category; the two things users can find in this category -->
+    <string name="preference_general_summary2">Varsayılan tarayıcı, dil</string>
 
     <!-- Preference category for settings about sending usage data -->
     <string name="preference_category_data_collection_use">Veri toplanması ve kullanımı</string>
@@ -194,14 +194,16 @@
     <!-- Title of "switch" preference that enables/disables autocomplete for the default list -->
     <string name="preference_switch_autocomplete_topsites">Popüler sitelerde</string>
 
-    <!-- Summary for the toggle to enable autocomplete for the topsites list -->
-    <string name="preference_autocomplete_topsite_summary">450’den fazla popüler adresi adres çubuğunda otomatik tamamlamak için bunu etkinleştirin.</string>
+    <!-- Summary for the toggle to enable autocomplete for the topsites list
+    %s is a placeholder for the app name (e.g. Firefox Focus)-->
+    <string name="preference_autocomplete_topsite_summary2">%s’un 450’den fazla popüler adresi adres çubuğunda tamamlaması için bunu etkinleştirin.</string>
 
     <!-- Title of "switch" preference that enables/disables autocomplete for the user-defined list -->
     <string name="preference_switch_autocomplete_user_list">Eklediğim sitelerde</string>
 
-    <!-- Summary for the toggle to enable autocomplete for the user-defined list -->
-    <string name="preference_autocomplete_user_list_summary">450’den fazla popüler adresi adres çubuğunda otomatik tamamlamak için bunu etkinleştirin.</string>
+    <!-- Summary for the toggle to enable autocomplete for the user-defined list
+     %s is a placeholder for the app name (e.g. Firefox Focus)-->
+    <string name="preference_autocomplete_user_list_summary2">%s’un sık kullandığınız adresleri otomatik tamamlaması için etkinleştirin.</string>
 
     <!-- Preference category: Manage (user-defined) sites -->
     <string name="preference_category_autocomplete_manage_sites">Siteleri yönet</string>
@@ -286,8 +288,9 @@
     only (Only 3rd-party Cookies Blocked), No (No cookies blocked) -->
     <string name="preference_privacy_should_block_cookies_no_option2">Hayır</string>
     <string name="preference_privacy_should_block_cookies_third_party_tracker_cookies_option">Yalnızca üçüncü taraf takipçi çerezlerini engelle</string>
-    <string name="preference_privacy_should_block_cookies_third_party_only_option">Yalnızca 3. taraf çerezlerini engelle</string>
+    <string name="preference_privacy_should_block_cookies_third_party_only_option">Yalnızca üçüncü taraf çerezlerini engelle</string>
 
+    <string name="preference_privacy_should_block_cookies_cross_site_option">Siteler arası çerezleri engelle</string>
     <string name="preference_privacy_should_block_cookies_yes_option2">Evet</string>
 
     <!-- Preference Title: Biometrics can be used to unlock Focus if the previous session's data was not erased by the user. -->
@@ -527,9 +530,9 @@
     <!-- Label of the action that will close the dialog and not add anything to the home screen (shown in the confirmation dialog). -->
     <string name="dialog_addtohomescreen_action_no">HAYIR</string>
 
-    <!-- When tracking protection is disabled for the current session then we will show this warning in the "Add to home screen" dialog to
-         let the user know that the shortcut will always be opened with tracking protection disabled. -->
-    <string name="dialog_addtohomescreen_tracking_protection">Kısayolu kullandığınızda İzlenme Koruması kapalı kalacaktır</string>
+    <!-- When enhanced tracking protection is disabled for the current session then we will show this warning in the "Add to home screen" dialog to
+         let the user know that the shortcut will always be opened with enhanced tracking protection disabled. -->
+    <string name="dialog_addtohomescreen_tracking_protection2">Kısayolu kullandığınızda gelişmiş izlenme koruması kapalı kalacaktır</string>
 
     <!-- The user visible name of the "notification channel" (Android 8+ feature) for the ongoing notification shown while a browsing session is active.
     The recommended maximum length is 40 characters; the value may be truncated if it is too long.
@@ -632,8 +635,32 @@
     <!-- Description of what a user may find in the Advanced Setting category, used for debugging -->
     <string name="preference_advanced_summary">Geliştirici araçları</string>
 
+    <!-- Preference for open links in third party apps -->
+    <string name="preferences_open_links_in_apps">Bağlantıları uygulamalarda aç</string>
+
     <!-- Title of Advanced Setting category -->
     <string name="preference_category_advanced">Gelişmiş</string>
+
+    <!-- Preference for studies -->
+    <string name="preference_studies">Araştırmalar</string>
+
+    <!-- Preference for studies summary-->
+    <string name="preference_studies_summary">Firefox zaman zaman araştırmalar yükleyip çalıştırabilir.</string>
+
+    <!-- Learn more link for studies, links to an article for more information about studies. -->
+    <string name="studies_learn_more">Daha fazla bilgi al</string>
+
+    <!-- Dialog message shown when some changes are made on studies -->
+    <string name="studies_restart_app">Değişiklikleri uygulamak için uygulama kapanacak</string>
+
+    <!-- Title of the remove studies button -->
+    <string name="studies_remove">Kaldır</string>
+
+    <!-- Title of the active section on the studies list -->
+    <string name="studies_active">Etkin</string>
+
+    <!-- Title of the completed section on the studies list -->
+    <string name="studies_completed">Tamamlandı</string>
 
     <!-- Preference to enable remote debugging of the app via USB or Wi-Fi -->
     <string name="preference_remote_debugging">USB/Wi-Fi ile uzaktan hata ayıklama</string>
@@ -689,10 +716,10 @@
     The new line here must be kept as the second half of the string is clickable for the user. -->
     <string name="tip_disable_tracking_protection">Düzgün görünmeyen bir site mi var?\n İzlenme Koruması’nı kapatmayı deneyin</string>
 
-    <!-- Tip displayed on home view explaining how to disable tracking protection
+    <!-- Tip displayed on home view explaining how to disable enhanced tracking protection
 The new line here must be kept as the second half of the string is clickable for the user. -->
-    <string name="tip_disable_tracking_protection2">Düzgün görünmeyen bir site mi var?\n
-    İzlenme Koruması’nı kapatmayı deneyin</string>
+    <string name="tip_disable_tracking_protection3">Düzgün görünmeyen bir site mi var?\n
+    Gelişmiş izlenme korumasını kapatmayı deneyin</string>
 
     <!-- Tip displayed on home view explaining how to add sites to homescreen
     Argument 1 will be replaced with a line break in the application.-->
@@ -711,8 +738,28 @@ The new line here must be kept as the second half of the string is clickable for
     The new line here must be kept as the second half of the string is clickable for the user. -->
     <string name="tip_open_in_new_tab">Bağlantıları yeni sekmede açabilirsiniz\n Bir sayfadaki herhangi bir bağlantıya uzun basın</string>
 
+    <!-- Tip displayed on home view explaining how to request the desktop version of a website.
+      %1$s is a placeholder for the app name. -->
+    <string name="tip_request_desktop2">Bir sitenin tam versiyonunu mu görmek istiyorsunuz?\n
+        %1$s menüsünden masaüstü sitesine geçebilirsiniz</string>
+
     <!-- Tip displayed on home view explaining how to add a custom autocomplete URL -->
     <string name="tip_disable_tips2">Başlangıç ​​ekranında ipuçlarını kapat</string>
+
+    <!-- Tip displayed on the home view explaining how to use the Allowlist feature.
+     "Allowlist" is a replacement for the word whitelist. -->
+    <string name="tip_explain_allowlist3">Güvendiğiniz bir sitede gelişmiş izlenme korumasını kapatmak mı istiyorsunuz?\n
+        Ayarlardan o siteyi izinli listenize ekleyebilirsiniz
+    </string>
+
+    <!-- Tip displayed on the home view about the changes in the new release.
+    %1$s is a placeholder for the app name -->
+    <string name="tip_fresh_look">Tasarımımız yenilendi!\n Yeni tasarım ve diğer %1$s güncellemeleri hakkında bilgi alın.</string>
+
+    <!-- Tip displayed on the home view about shortcuts
+    %1$s is a placeholder for the app name -->
+    <string name="tip_about_shortcuts">En çok ziyaret ettiğiniz sitelere kısayol oluşturun:\n
+    %1$s menüsünden “Kısayollara ekle”yi seçin</string>
 
     <!-- Label for the snackbar when a user opens a new tab -->
     <string name="new_tab_opened_snackbar">Yeni sekme açıldı</string>
@@ -724,11 +771,16 @@ The new line here must be kept as the second half of the string is clickable for
     <string name="preference_open_new_tab">Hemen yeni sekmedeki bağlantıya geç</string>
 
     <!-- Preference for safe browsing which when enabled, blocks dangerous or deceptive webpages that may include phishing or malware -->
-    <string name="preference_category_safe_browsing">Güvenli gezinti</string>
+    <string moz:removedIn="97" name="preference_category_safe_browsing">Güvenli gezinti</string>
     <!-- Preference title for safe browsing which when enabled, blocks dangerous or deceptive webpages that may include phishing or malware -->
     <string name="preference_safe_browsing_title">Olası tehlikeli ve aldatıcı siteleri engelle</string>
     <!-- Preference summary for safe browsing which when enabled, blocks dangerous or deceptive webpages that may include phishing or malware -->
     <string name="preference_safe_browsing_summary">Bildirilen aldatıcı ve saldırı amaçlı siteleri, kötü amaçlı yazılım sitelerini ve istenmeyen yazılım sitelerini engelle.</string>
+
+    <!-- Title of the preference to enable "HTTPS-Only" mode -->
+    <string name="preference_https_only_title">Yalnızca HTTPS modu</string>
+    <!-- Description of the preference to enable "HTTPS-Only" mode. %1$s will get replaced with the name of the app. -->
+    <string name="preference_https_only_summary">HTTPS, ziyaret ettiğiniz sitelerle %1$s arasında güvenli ve şifrelenmiş bağlantı sağlar. Çoğu site HTTPS desteği sunar. “Yalnızca HTTPS” modunu açarsanız %1$s tüm bağlantılarda HTTPS kullanmaya çalışır.</string>
 
     <!-- Preference for exceptions tracking protection -->
     <string name="preference_exceptions">İstisnalar</string>
@@ -762,6 +814,8 @@ The new line here must be kept as the second half of the string is clickable for
 
     <!-- Tracking protection bottom sheet -->
 
+    <!-- Label for the total number of trackers blocked. %s represents the app install date -->
+    <string name="trackers_count_note">%s tarihinden beri engellenen takipçi</string>
     <!-- Category of trackers (content) that can be blocked by Enhanced Tracking Protection -->
     <string name="content">İçerik</string>
     <!-- Category of trackers (advertising) that can be blocked by Enhanced Tracking Protection -->
@@ -789,4 +843,28 @@ The new line here must be kept as the second half of the string is clickable for
     <!-- Top Sites -->
     <!-- Text for the menu button to remove a top site -->
     <string name="remove_top_site">Kaldır</string>
+
+    <!-- Text for the dialog title for renaming a top site -->
+    <string name="rename_top_site">Yeniden adlandır</string>
+
+    <!-- Text for context menu additional note.
+    %1$s is a placeholder for the app name. -->
+    <string name="contextmenu_erased_images_note2">%1$s geçmişini sildiğinizde, kaydettiğiniz ve paylaştığınız resimler &lt;b&gt;silinmeyecektir&lt;/b&gt;</string>
+
+    <!-- Theme Preferences -->
+    <!-- Preference category for changing default theme to dark or light mode -->
+    <string name="preferences_theme">Tema</string>
+    <!-- Preference for using light theme -->
+    <string name="preference_light_theme">Açık</string>
+    <!-- Preference for using dark theme -->
+    <string name="preference_dark_theme">Koyu</string>
+    <!-- Preference for using using dark or light theme automatically set by battery -->
+    <string name="preference_auto_battery_theme">Pil tasarrufuna göre</string>
+    <!-- Preference for using following device theme -->
+    <string name="preference_follow_device_theme">Cihaz temasına uy</string>
+
+
+    <!-- Sessions List -->
+    <!-- Content description (not visible, for screen readers etc.): Button that closes a tab n the sessions list -->
+    <string name="close_tab">Sekmeyi kapat</string>
 </resources>

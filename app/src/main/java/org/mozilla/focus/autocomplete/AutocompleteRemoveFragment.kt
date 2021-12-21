@@ -8,7 +8,6 @@ import android.content.Context
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
-import kotlinx.android.synthetic.main.fragment_autocomplete_customdomains.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Dispatchers.Main
@@ -16,10 +15,10 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import mozilla.components.browser.domains.CustomDomains
+import org.mozilla.focus.GleanMetrics.Autocomplete
 import org.mozilla.focus.R
 import org.mozilla.focus.ext.requireComponents
 import org.mozilla.focus.state.AppAction
-import org.mozilla.focus.telemetry.TelemetryWrapper
 import kotlin.coroutines.CoroutineContext
 
 class AutocompleteRemoveFragment : AutocompleteListFragment(), CoroutineScope {
@@ -40,13 +39,12 @@ class AutocompleteRemoveFragment : AutocompleteListFragment(), CoroutineScope {
     }
 
     private fun removeSelectedDomains(context: Context) {
-        val domains = (domainList.adapter as DomainListAdapter).selection()
+        val domains = (binding.domainList.adapter as DomainListAdapter).selection()
         if (domains.isNotEmpty()) {
             launch(Main) {
                 async {
                     CustomDomains.remove(context, domains)
-
-                    TelemetryWrapper.removeAutocompleteDomainsEvent(domains.size)
+                    Autocomplete.domainRemoved.add()
                 }.await()
 
                 requireComponents.appStore.dispatch(

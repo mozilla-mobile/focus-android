@@ -14,6 +14,7 @@ import androidx.test.uiautomator.UiScrollable
 import androidx.test.uiautomator.UiSelector
 import junit.framework.TestCase.assertTrue
 import org.mozilla.focus.helpers.TestHelper
+import org.mozilla.focus.helpers.TestHelper.appName
 import org.mozilla.focus.helpers.TestHelper.mDevice
 import org.mozilla.focus.helpers.TestHelper.waitingTime
 import org.mozilla.focus.helpers.TestHelper.webPageLoadwaitingTime
@@ -31,30 +32,6 @@ class SettingsMozillaMenuRobot {
 
     fun switchHomeScreenTips() {
         showTipsSwitch
-            .check(matches(isDisplayed()))
-            .perform(click())
-    }
-
-    fun openAboutPage() {
-        aboutFocusPageLink
-            .check(matches(isDisplayed()))
-            .perform(click())
-    }
-
-    fun openYourRightsPage() {
-        yourRightsLink
-            .check(matches(isDisplayed()))
-            .perform(click())
-    }
-
-    fun openPrivacyNotice() {
-        privacyNoticeLink
-            .check(matches(isDisplayed()))
-            .perform(click())
-    }
-
-    fun openHelpLink() {
-        helpPageLink
             .check(matches(isDisplayed()))
             .perform(click())
     }
@@ -88,7 +65,50 @@ class SettingsMozillaMenuRobot {
         }
     }
 
-    class Transition
+    class Transition {
+        fun openAboutPage(interact: SettingsMozillaMenuRobot.() -> Unit): Transition {
+            aboutFocusPageLink
+                .check(matches(isDisplayed()))
+                .perform(click())
+
+            SettingsMozillaMenuRobot().interact()
+            return Transition()
+        }
+
+        fun openAboutPageLearnMoreLink(interact: BrowserRobot.() -> Unit): BrowserRobot.Transition {
+            mDevice.findObject(UiSelector().text("Learn more")).click()
+
+            BrowserRobot().interact()
+            return BrowserRobot.Transition()
+        }
+
+        fun openYourRightsPage(interact: BrowserRobot.() -> Unit): BrowserRobot.Transition {
+            yourRightsLink
+                .check(matches(isDisplayed()))
+                .perform(click())
+
+            BrowserRobot().interact()
+            return BrowserRobot.Transition()
+        }
+
+        fun openPrivacyNotice(interact: BrowserRobot.() -> Unit): BrowserRobot.Transition {
+            privacyNoticeLink
+                .check(matches(isDisplayed()))
+                .perform(click())
+
+            BrowserRobot().interact()
+            return BrowserRobot.Transition()
+        }
+
+        fun openHelpLink(interact: BrowserRobot.() -> Unit): BrowserRobot.Transition {
+            helpPageLink
+                .check(matches(isDisplayed()))
+                .perform(click())
+
+            BrowserRobot().interact()
+            return BrowserRobot.Transition()
+        }
+    }
 }
 
 private val mozillaSettingsList =
@@ -96,7 +116,7 @@ private val mozillaSettingsList =
 
 private val showTipsSwitch = onView(withText("Show home screen tips"))
 
-private val aboutFocusPageLink = onView(withText("About Firefox Focus"))
+private val aboutFocusPageLink = onView(withText("About $appName"))
 
 private val helpPageLink = onView(withText("Help"))
 

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:moz="http://mozac.org/tools">
     <!-- ####################################################################################### -->
     <!-- ## Put only strings into this file that should be translated. Move all other strings ## -->
     <!-- ## into a separate file like strings_references.xml                                  ## -->
@@ -151,8 +151,8 @@
     <!-- %1$s will be replaced by the app name (e.g. Firefox Focus) -->
     <string name="preference_mozilla_summary">Over %1$s, help</string>
 
-    <!-- Preference category for ad blocking and tracking protection settings -->
-    <string name="preference_category_tracking_protection">Bescherming tegen volgen</string>
+    <!-- Preference category for ad blocking and enhanced tracking protection settings -->
+    <string name="preference_category_tracking_protection3">Verbeterde bescherming tegen volgen</string>
 
     <!-- Preference category for settings related to controlling web content -->
     <string name="preference_category_web_content">Webinhoud</string>
@@ -163,8 +163,8 @@
     <!-- Preference category for General Settings -->
     <string name="preference_category_general">Algemeen</string>
 
-    <!-- Preference summary for General Settings category; the three things users can find in this category -->
-    <string name="preference_general_summary">Standaardbrowser, tabbladen, taal</string>
+    <!-- Preference summary for General Settings category; the two things users can find in this category -->
+    <string name="preference_general_summary2">Standaardbrowser, taal</string>
 
     <!-- Preference category for settings about sending usage data -->
     <string name="preference_category_data_collection_use">Gegevensverzameling en -gebruik</string>
@@ -195,14 +195,16 @@
     <!-- Title of "switch" preference that enables/disables autocomplete for the default list -->
     <string name="preference_switch_autocomplete_topsites">Voor topwebsites</string>
 
-    <!-- Summary for the toggle to enable autocomplete for the topsites list -->
-    <string name="preference_autocomplete_topsite_summary">Schakel dit in om automatisch meer dan 450 populaire URL’s in de adresbalk aan te vullen.</string>
+    <!-- Summary for the toggle to enable autocomplete for the topsites list
+    %s is a placeholder for the app name (e.g. Firefox Focus)-->
+    <string name="preference_autocomplete_topsite_summary2">Schakel dit in om %s automatisch meer dan 450 populaire URL’s in de adresbalk te laten aanvullen.</string>
 
     <!-- Title of "switch" preference that enables/disables autocomplete for the user-defined list -->
     <string name="preference_switch_autocomplete_user_list">Voor websites die u toevoegt</string>
 
-    <!-- Summary for the toggle to enable autocomplete for the user-defined list -->
-    <string name="preference_autocomplete_user_list_summary">Schakel dit in om automatisch meer dan 450 populaire URL’s in de adresbalk aan te vullen.</string>
+    <!-- Summary for the toggle to enable autocomplete for the user-defined list
+     %s is a placeholder for the app name (e.g. Firefox Focus)-->
+    <string name="preference_autocomplete_user_list_summary2">Schakel dit in om %s automatisch uw favoriete URL’s te laten aanvullen.</string>
 
     <!-- Preference category: Manage (user-defined) sites -->
     <string name="preference_category_autocomplete_manage_sites">Websites beheren</string>
@@ -289,6 +291,7 @@
     <string name="preference_privacy_should_block_cookies_third_party_tracker_cookies_option">Alleen tracking-cookies van derden blokkeren</string>
     <string name="preference_privacy_should_block_cookies_third_party_only_option">Alleen cookies van derden blokkeren</string>
 
+    <string name="preference_privacy_should_block_cookies_cross_site_option">Cross-sitecookies blokkeren</string>
     <string name="preference_privacy_should_block_cookies_yes_option2">Ja, graag</string>
 
     <!-- Preference Title: Biometrics can be used to unlock Focus if the previous session's data was not erased by the user. -->
@@ -528,9 +531,9 @@
     <!-- Label of the action that will close the dialog and not add anything to the home screen (shown in the confirmation dialog). -->
     <string name="dialog_addtohomescreen_action_no">NEE</string>
 
-    <!-- When tracking protection is disabled for the current session then we will show this warning in the "Add to home screen" dialog to
-         let the user know that the shortcut will always be opened with tracking protection disabled. -->
-    <string name="dialog_addtohomescreen_tracking_protection">Snelkoppeling opent met Bescherming tegen volgen uitgeschakeld</string>
+    <!-- When enhanced tracking protection is disabled for the current session then we will show this warning in the "Add to home screen" dialog to
+         let the user know that the shortcut will always be opened with enhanced tracking protection disabled. -->
+    <string name="dialog_addtohomescreen_tracking_protection2">Snelkoppeling opent met Verbeterde bescherming tegen volgen uitgeschakeld</string>
 
     <!-- The user visible name of the "notification channel" (Android 8+ feature) for the ongoing notification shown while a browsing session is active.
     The recommended maximum length is 40 characters; the value may be truncated if it is too long.
@@ -633,8 +636,32 @@
     <!-- Description of what a user may find in the Advanced Setting category, used for debugging -->
     <string name="preference_advanced_summary">Ontwikkelaarshulpmiddelen</string>
 
+    <!-- Preference for open links in third party apps -->
+    <string name="preferences_open_links_in_apps">Koppelingen in apps openen</string>
+
     <!-- Title of Advanced Setting category -->
     <string name="preference_category_advanced">Geavanceerd</string>
+
+    <!-- Preference for studies -->
+    <string name="preference_studies">Onderzoeken</string>
+
+    <!-- Preference for studies summary-->
+    <string name="preference_studies_summary">Firefox kan af en toe onderzoeken installeren en uitvoeren.</string>
+
+    <!-- Learn more link for studies, links to an article for more information about studies. -->
+    <string name="studies_learn_more">Meer info</string>
+
+    <!-- Dialog message shown when some changes are made on studies -->
+    <string name="studies_restart_app">De toepassing wordt afgesloten om wijzigingen toe te passen</string>
+
+    <!-- Title of the remove studies button -->
+    <string name="studies_remove">Verwijderen</string>
+
+    <!-- Title of the active section on the studies list -->
+    <string name="studies_active">Actief</string>
+
+    <!-- Title of the completed section on the studies list -->
+    <string name="studies_completed">Voltooid</string>
 
     <!-- Preference to enable remote debugging of the app via USB or Wi-Fi -->
     <string name="preference_remote_debugging">Remote debugging via USB/wifi</string>
@@ -690,10 +717,10 @@
     The new line here must be kept as the second half of the string is clickable for the user. -->
     <string name="tip_disable_tracking_protection">Gedraagt een website zich onverwacht?\n Probeer Bescherming tegen volgen uit te schakelen</string>
 
-    <!-- Tip displayed on home view explaining how to disable tracking protection
+    <!-- Tip displayed on home view explaining how to disable enhanced tracking protection
 The new line here must be kept as the second half of the string is clickable for the user. -->
-    <string name="tip_disable_tracking_protection2">Mist een website inhoud of gedraagt deze zich vreemd?\n
-    Probeer Bescherming tegen volgen uit te schakelen</string>
+    <string name="tip_disable_tracking_protection3">Mist een website inhoud of gedraagt deze zich vreemd?\n
+    Probeer Verbeterde bescherming tegen volgen uit te schakelen</string>
 
     <!-- Tip displayed on home view explaining how to add sites to homescreen
     Argument 1 will be replaced with a line break in the application.-->
@@ -722,13 +749,18 @@ The new line here must be kept as the second half of the string is clickable for
 
     <!-- Tip displayed on the home view explaining how to use the Allowlist feature.
      "Allowlist" is a replacement for the word whitelist. -->
-    <string name="tip_explain_allowlist2">Wilt u Bescherming tegen volgen uitschakelen voor een website die u vertrouwt?\n
+    <string name="tip_explain_allowlist3">Wilt u Verbeterde bescherming tegen volgen uitschakelen voor een website die u vertrouwt?\n
         Voeg deze toe aan de Toegestane lijst in de Instellingen
     </string>
 
     <!-- Tip displayed on the home view about the changes in the new release.
     %1$s is a placeholder for the app name -->
-    <string name="tip_fresh_look">Inderdaad, we hebben een frisse nieuwe uitstraling! Meer info hierover en over andere updates van %1$s.</string>
+    <string name="tip_fresh_look">Inderdaad, we hebben een frisse nieuwe uitstraling!\n Meer info hierover en over andere updates van %1$s.</string>
+
+    <!-- Tip displayed on the home view about shortcuts
+    %1$s is a placeholder for the app name -->
+    <string name="tip_about_shortcuts">Maak snelkoppelingen voor websites die u het meest bezoekt:\n
+    Selecteer in het %1$s-menu ‘Toevoegen aan snelkoppelingen’</string>
 
     <!-- Label for the snackbar when a user opens a new tab -->
     <string name="new_tab_opened_snackbar">Nieuw tabblad geopend</string>
@@ -740,11 +772,16 @@ The new line here must be kept as the second half of the string is clickable for
     <string name="preference_open_new_tab">Onmiddellijk naar koppeling in nieuw tabblad wisselen</string>
 
     <!-- Preference for safe browsing which when enabled, blocks dangerous or deceptive webpages that may include phishing or malware -->
-    <string name="preference_category_safe_browsing">Safe Browsing</string>
+    <string moz:removedIn="97" name="preference_category_safe_browsing">Safe Browsing</string>
     <!-- Preference title for safe browsing which when enabled, blocks dangerous or deceptive webpages that may include phishing or malware -->
     <string name="preference_safe_browsing_title">Mogelijk gevaarlijke en misleidende websites blokkeren</string>
     <!-- Preference summary for safe browsing which when enabled, blocks dangerous or deceptive webpages that may include phishing or malware -->
     <string name="preference_safe_browsing_summary">Gerapporteerde misleidende en aanvalsites, malwaresites en ongewenste-software-websites blokkeren.</string>
+
+    <!-- Title of the preference to enable "HTTPS-Only" mode -->
+    <string name="preference_https_only_title">Alleen-HTTPS-modus</string>
+    <!-- Description of the preference to enable "HTTPS-Only" mode. %1$s will get replaced with the name of the app. -->
+    <string name="preference_https_only_summary">HTTPS biedt een veilige, versleutelde verbinding tussen %1$s en de door u bezochte websites. De meeste websites ondersteunen HTTPS en als de Alleen-HTTPS-modus is ingeschakeld, zal %1$s alle verbindingen upgraden naar HTTPS.</string>
 
     <!-- Preference for exceptions tracking protection -->
     <string name="preference_exceptions">Uitzonderingen</string>
@@ -807,4 +844,28 @@ The new line here must be kept as the second half of the string is clickable for
     <!-- Top Sites -->
     <!-- Text for the menu button to remove a top site -->
     <string name="remove_top_site">Verwijderen</string>
+
+    <!-- Text for the dialog title for renaming a top site -->
+    <string name="rename_top_site">Hernoemen</string>
+
+    <!-- Text for context menu additional note.
+    %1$s is a placeholder for the app name. -->
+    <string name="contextmenu_erased_images_note2">Opgeslagen en gedeelde afbeeldingen &lt;b&gt;worden niet&lt;/b&gt; verwijderd als u geschiedenis van %1$s wist</string>
+
+    <!-- Theme Preferences -->
+    <!-- Preference category for changing default theme to dark or light mode -->
+    <string name="preferences_theme">Thema</string>
+    <!-- Preference for using light theme -->
+    <string name="preference_light_theme">Licht</string>
+    <!-- Preference for using dark theme -->
+    <string name="preference_dark_theme">Donker</string>
+    <!-- Preference for using using dark or light theme automatically set by battery -->
+    <string name="preference_auto_battery_theme">Ingesteld door Batterijbesparing</string>
+    <!-- Preference for using following device theme -->
+    <string name="preference_follow_device_theme">Apparaatthema volgen</string>
+
+
+    <!-- Sessions List -->
+    <!-- Content description (not visible, for screen readers etc.): Button that closes a tab n the sessions list -->
+    <string name="close_tab">Tabblad sluiten</string>
 </resources>

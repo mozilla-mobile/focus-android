@@ -15,9 +15,11 @@ import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.uiautomator.UiObject
 import androidx.test.uiautomator.UiScrollable
 import androidx.test.uiautomator.UiSelector
+import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
 import org.mozilla.focus.R
 import org.mozilla.focus.helpers.TestHelper.appContext
+import org.mozilla.focus.helpers.TestHelper.getStringResource
 import org.mozilla.focus.helpers.TestHelper.mDevice
 import org.mozilla.focus.helpers.TestHelper.packageName
 import org.mozilla.focus.helpers.TestHelper.waitingTime
@@ -45,6 +47,14 @@ class SearchSettingsRobot {
     fun clickSearchSuggestionsSwitch() {
         searchSuggestionsSwitch.waitForExists(waitingTime)
         searchSuggestionsSwitch.click()
+    }
+
+    fun verifySearchSuggestionsEnabled(enabled: Boolean) {
+        if (enabled) {
+            assertTrue(searchSuggestionsSwitch.isChecked)
+        } else {
+            assertFalse(searchSuggestionsSwitch.isChecked)
+        }
     }
 
     fun openUrlAutocompleteSubMenu() {
@@ -97,7 +107,7 @@ class SearchSettingsRobot {
 
 private val searchEngineSubMenu =
     UiScrollable(UiSelector().resourceId("$packageName:id/recycler_view"))
-        .getChild(UiSelector().text("Search engine"))
+        .getChild(UiSelector().text(getStringResource(R.string.preference_search_engine_label)))
 
 private val searchEngineList = UiScrollable(
     UiSelector()
@@ -112,7 +122,10 @@ private val searchSuggestionsSwitch: UiObject =
 
 private val urlAutocompleteSubMenu =
     UiScrollable(UiSelector().resourceId("$packageName:id/recycler_view"))
-        .getChildByText(UiSelector().text("URL Autocomplete"), "URL Autocomplete", true)
+        .getChildByText(
+            UiSelector().text(getStringResource(R.string.preference_subitem_autocomplete)),
+            getStringResource(R.string.preference_subitem_autocomplete), true,
+        )
 
 private val manageSitesSubMenu = onView(withText(R.string.preference_autocomplete_subitem_manage_sites))
 

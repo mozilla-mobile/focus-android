@@ -44,6 +44,8 @@ import mozilla.components.lib.crash.service.MozillaSocorroService
 import mozilla.components.lib.crash.service.SentryService
 import mozilla.components.service.location.LocationService
 import mozilla.components.service.location.MozillaLocationService
+import mozilla.components.service.nimbus.NimbusApi
+import mozilla.components.support.locale.LocaleManager
 import org.mozilla.focus.activity.MainActivity
 import org.mozilla.focus.browser.BlockedTrackersMiddleware
 import org.mozilla.focus.components.EngineProvider
@@ -51,15 +53,17 @@ import org.mozilla.focus.downloads.DownloadService
 import org.mozilla.focus.engine.AppContentInterceptor
 import org.mozilla.focus.engine.ClientWrapper
 import org.mozilla.focus.engine.SanityCheckMiddleware
-import org.mozilla.focus.exceptions.ExceptionMigrationMiddleware
+import org.mozilla.focus.experiments.ExperimentalFeatures
+import org.mozilla.focus.experiments.createNimbus
 import org.mozilla.focus.ext.components
-import org.mozilla.focus.locale.LocaleManager
+import org.mozilla.focus.ext.settings
 import org.mozilla.focus.notification.PrivateNotificationMiddleware
 import org.mozilla.focus.search.SearchFilterMiddleware
 import org.mozilla.focus.search.SearchMigration
 import org.mozilla.focus.state.AppState
 import org.mozilla.focus.state.AppStore
 import org.mozilla.focus.state.Screen
+import org.mozilla.focus.tabs.MergeTabsMiddleware
 import org.mozilla.focus.telemetry.GleanMetricsService
 import org.mozilla.focus.telemetry.TelemetryMiddleware
 import org.mozilla.focus.topsites.DefaultTopSitesStorage
@@ -77,29 +81,30 @@ class Components(
     val appStore: AppStore by lazy {
         AppStore(
             AppState(
-                screen = determineInitialScreen(context),
+                screen = Screen.Home,
                 topSites = emptyList()
             )
         )
     }
 
-    val engineDefaultSettings by lazy {
-        val settings = Settings.getInstance(context)
+    val settings by lazy { Settings(context) }
 
+    val engineDefaultSettings by lazy {
         DefaultSettings(
             requestInterceptor = AppContentInterceptor(context),
             trackingProtectionPolicy = settings.createTrackingProtectionPolicy(),
             javascriptEnabled = !settings.shouldBlockJavaScript(),
             remoteDebuggingEnabled = settings.shouldEnableRemoteDebugging(),
-            webFontsEnabled = !settings.shouldBlockWebFonts()
+            webFontsEnabled = !settings.shouldBlockWebFonts(),
+            httpsOnlyMode = settings.getHttpsOnlyMode()
         )
     }
 
     val engine: Engine by lazy {
         engineOverride ?: EngineProvider.createEngine(context, engineDefaultSettings).apply {
-            Settings.getInstance(context).setupSafeBrowsing(this)
+            this@Components.settings.setupSafeBrowsing(this)
             WebCompatFeature.install(this)
-            WebCompatReporterFeature.install(this, "focus")
+            WebCompatReporterFeature.install(this, "focus-geckoview")
         }
     }
 
@@ -123,7 +128,6 @@ class Components(
     val store by lazy {
         BrowserStore(
             middleware = listOf(
-                ExceptionMigrationMiddleware(context),
                 PrivateNotificationMiddleware(context),
                 TelemetryMiddleware(),
                 DownloadMiddleware(context, DownloadService::class.java),
@@ -136,10 +140,13 @@ class Components(
                 SearchFilterMiddleware(),
                 PromptMiddleware(),
                 AdsTelemetryMiddleware(adsTelemetry),
-                BlockedTrackersMiddleware(context)
+                BlockedTrackersMiddleware(context),
+                MergeTabsMiddleware(context),
             ) + EngineMiddleware.create(engine)
         )
     }
+
+    val migrator by lazy { EngineProvider.provideTrackingProtectionMigrator(context) }
 
     /**
      * The [CustomTabsServiceStore] holds global custom tabs related data.
@@ -151,7 +158,7 @@ class Components(
     val tabsUseCases: TabsUseCases by lazy { TabsUseCases(store) }
 
     val searchUseCases: SearchUseCases by lazy {
-        SearchUseCases(store, tabsUseCases)
+        SearchUseCases(store, tabsUseCases, sessionUseCases)
     }
 
     val contextMenuUseCases: ContextMenuUseCases by lazy { ContextMenuUseCases(store) }
@@ -166,6 +173,8 @@ class Components(
 
     val metrics: GleanMetricsService by lazy { GleanMetricsService(context) }
 
+    val experiments: NimbusApi by lazy { createNimbus(context, BuildConfig.NIMBUS_ENDPOINT) }
+
     val adsTelemetry: AdsTelemetry by lazy { AdsTelemetry() }
 
     val searchTelemetry: InContentTelemetry by lazy { InContentTelemetry() }
@@ -177,15 +186,17 @@ class Components(
     val topSitesUseCases: TopSitesUseCases by lazy { TopSitesUseCases(topSitesStorage) }
 
     val appLinksInterceptor by lazy {
-        AppLinksInterceptor(context, interceptLinkClicks = true, launchInApp = { true })
+        AppLinksInterceptor(
+            context,
+            interceptLinkClicks = true,
+            launchInApp = {
+                context.settings.openLinksInExternalApp
+            }
+        )
     }
-}
 
-private fun determineInitialScreen(context: Context): Screen {
-    return if (Settings.getInstance(context).shouldShowFirstrun()) {
-        Screen.FirstRun
-    } else {
-        Screen.Home
+    val experimentalFeatures by lazy {
+        ExperimentalFeatures(experiments)
     }
 }
 
@@ -243,7 +254,7 @@ private fun createCrashReporter(context: Context): CrashReporter {
 }
 
 private fun getLocaleTag(context: Context): String {
-    val currentLocale = LocaleManager.getInstance().getCurrentLocale(context)
+    val currentLocale = LocaleManager.getCurrentLocale(context)
     return if (currentLocale != null) {
         currentLocale.toLanguageTag()
     } else {

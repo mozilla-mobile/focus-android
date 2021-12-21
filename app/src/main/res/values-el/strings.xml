@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:moz="http://mozac.org/tools">
     <!-- ####################################################################################### -->
     <!-- ## Put only strings into this file that should be translated. Move all other strings ## -->
     <!-- ## into a separate file like strings_references.xml                                  ## -->
@@ -18,15 +18,15 @@
     <string name="teaser">Αυτόματη ιδιωτική περιήγηση.\nΠεριήγηση. Διαγραφή. Επανάληψη.</string>
 
     <!-- "Snackbar" shown after the user has pressed the 'erase' button at the end of a browsing session -->
-    <string name="feedback_erase">Το ιστορικό περιήγησής έχει εκκαθαριστεί.</string>
+    <string name="feedback_erase">Το ιστορικό περιήγησης έχει διαγραφτεί.</string>
 
-    <string name="feedback_erase2">Το ιστορικό περιήγησης διαγράφηκε</string>
+    <string name="feedback_erase2">Το ιστορικό περιήγησης απαλείφθηκε</string>
 
     <!-- "Snackbar" shown after the user has pressed the 'erase' button at the end of a custom tab browsing session -->
-    <string name="feedback_erase_custom_tab">Το ιστορικό της καρτέλας έχει διαγραφεί.</string>
+    <string name="feedback_erase_custom_tab">Το ιστορικό της καρτέλας έχει διαγραφτεί.</string>
 
     <!-- This label is shown below the URL bar as soon as the user enters text. Clicking the label will perform a search -->
-    <string name="search_hint">Αναζήτηση για %1$s</string>
+    <string name="search_hint">Αναζήτηση για «%1$s»</string>
 
     <!-- Menu item: Share the currently visible page -->
     <string name="menu_share">Κοινή χρήση…</string>
@@ -49,9 +49,9 @@
     <string name="menu_add_to_home_screen">Προσθήκη στην αρχική οθόνη</string>
 
     <!-- Menu item: Add the current site as a shortcut on the Home screen -->
-    <string name="menu_add_to_shortcuts">Προσθήκη στις συντομεύσεις</string>
+    <string name="menu_add_to_shortcuts">Προσθήκη συντόμευσης</string>
     <!-- Menu item: Remove the current site as a shortcut from the Home screen -->
-    <string name="menu_remove_from_shortcuts">Αφαίρεση από συντομεύσεις</string>
+    <string name="menu_remove_from_shortcuts">Αφαίρεση συντόμευσης</string>
 
     <!-- Menu item: Shows information about features and changes that are new to this version -->
     <string name="menu_whats_new">Τι νέο υπάρχει</string>
@@ -117,18 +117,31 @@
          instead of the short title when it has enough space. Android recommends a maximum length
          of 25 characters.
          %1$s will be replaced by the app name (e.g. Firefox Focus) -->
-    <string name="shortcut_erase_and_open_long_label">Διαγραφή και άνοιγμα του %1$s</string>
+    <string name="shortcut_erase_and_open_long_label">Διαγραφή και άνοιγμα %1$s</string>
 
 
     <!-- This is the label of an action we offer when the user selects text in other third-party apps.
          Clicking this action will launch Focus and perform a search in the default search engine. -->
     <string name="text_selection_search_action">Ιδιωτική αναζήτηση</string>
 
+    <!-- Content of about focus. Argument 1 is the app name (Firefox Focus/Firefox Klar/etc).
+         Argument 2 is the url for the learn-more link. -->
+    <string name="about_content"><![CDATA[<p>Το %1$s σάς δίνει τον έλεγχο.</p>
+<p>Χρησιμοποιήστε το για:
+  <ul>
+    <li>Αναζήτηση και περιήγηση</li>
+    <li>Φραγή ιχνηλατών (ή αποδοχή, ενημερώνοντας τις ρυθμίσεις)</li>
+    <li>Διαγραφή των cookies και του ιστορικού αναζητήσεων και περιήγησης</li>
+  </ul>
+</p>
+<p>Το %1$s αναπτύσσεται από τη Mozilla. Αποστολή μας είναι ένα υγιές και ανοικτό διαδίκτυο.<br/>
+<a href="%2$s">Μάθετε περισσότερα</a></p>]]></string>
+
     <!-- Header for the Privacy and Security settings menu -->
     <string name="preference_privacy_and_security_header">Απόρρητο &amp; ασφάλεια</string>
 
     <!-- Preference summary for settings related to privacy and security -->
-    <string name="preference_privacy_and_security_summary">Επιλογές καταγραφής, cookie, δεδομένων</string>
+    <string name="preference_privacy_and_security_summary">Επιλογές καταγραφής, cookies, δεδομένων</string>
 
     <!-- Preference category description for settings related to search, set default
     and autocomplete are settings a user can find and change inside the "search" settings screen -->
@@ -139,11 +152,11 @@
     <!-- %1$s will be replaced by the app name (e.g. Firefox Focus) -->
     <string name="preference_mozilla_summary">Σχετικά με το %1$s, βοήθεια</string>
 
-    <!-- Preference category for ad blocking and tracking protection settings -->
-    <string name="preference_category_tracking_protection">Προστασία από καταγραφή</string>
+    <!-- Preference category for ad blocking and enhanced tracking protection settings -->
+    <string name="preference_category_tracking_protection3">Ενισχυμένη προστασία από καταγραφή</string>
 
     <!-- Preference category for settings related to controlling web content -->
-    <string name="preference_category_web_content">Διαδικτυακό περιεχόμενο</string>
+    <string name="preference_category_web_content">Περιεχόμενο ιστού</string>
 
     <!-- Preference category: stealth settings for while switching apps -->
     <string name="preference_category_switching_apps">Εναλλαγή εφαρμογών</string>
@@ -151,8 +164,8 @@
     <!-- Preference category for General Settings -->
     <string name="preference_category_general">Γενικά</string>
 
-    <!-- Preference summary for General Settings category; the three things users can find in this category -->
-    <string name="preference_general_summary">Προεπιλεγμένος φυλλομετρητής, καρτέλες, γλώσσα</string>
+    <!-- Preference summary for General Settings category; the two things users can find in this category -->
+    <string name="preference_general_summary2">Προεπιλεγμένος φυλλομετρητής, γλώσσα</string>
 
     <!-- Preference category for settings about sending usage data -->
     <string name="preference_category_data_collection_use">Συλλογή &amp; χρήση δεδομένων</string>
@@ -163,7 +176,7 @@
     <string name="preference_show_search_suggestions">Λήψη προτάσεων αναζήτησης</string>
     <!-- Description of the preference that enables/disables search suggestions
         %1$s will be replaced by the app name (e.g. Firefox Focus) -->
-    <string name="preference_show_search_suggestions_summary">Το %1$s θα στείλει ό,τι πληκτρολογήσετε στη γραμμή διευθύνσεων στη μηχανή αναζήτησής σας</string>
+    <string name="preference_show_search_suggestions_summary">Το %1$s θα στέλνει όσα πληκτρολογείτε στη γραμμή διευθύνσεων στη μηχανή αναζήτησής σας</string>
 
     <!-- This label is shown below the name of the default search engine in settings -->
     <string name="preference_search_engine_default">Προεπιλογή</string>
@@ -183,8 +196,16 @@
     <!-- Title of "switch" preference that enables/disables autocomplete for the default list -->
     <string name="preference_switch_autocomplete_topsites">Για κορυφαίους ιστοτόπους</string>
 
+    <!-- Summary for the toggle to enable autocomplete for the topsites list
+    %s is a placeholder for the app name (e.g. Firefox Focus)-->
+    <string name="preference_autocomplete_topsite_summary2">Ενεργοποιήστε το για συμπλήρωση πάνω από 450 δημοφιλών URL στη γραμμή διευθύνσεων του %s.</string>
+
     <!-- Title of "switch" preference that enables/disables autocomplete for the user-defined list -->
     <string name="preference_switch_autocomplete_user_list">Για ιστοτόπους που προσθέτετε</string>
+
+    <!-- Summary for the toggle to enable autocomplete for the user-defined list
+     %s is a placeholder for the app name (e.g. Firefox Focus)-->
+    <string name="preference_autocomplete_user_list_summary2">Ενεργοποιήστε το για συμπλήρωση των αγαπημένων σας URL στο %s.</string>
 
     <!-- Preference category: Manage (user-defined) sites -->
     <string name="preference_category_autocomplete_manage_sites">Διαχείριση ιστοτόπων</string>
@@ -211,19 +232,19 @@
     <string name="add_custom_autocomplete_label">Προσθήκη συνδέσμου για αυτόματη συμπλήρωση</string>
 
     <!-- Preference category for settings about cookies and site data -->
-    <string name="preference_category_cookies">Cookie και δεδομένα ιστοτόπων</string>
+    <string name="preference_category_cookies">Cookies και δεδομένα ιστοτόπων</string>
 
     <!-- Preference category for settings about data choices -->
     <string name="preference_category_data_choices">Επιλογές δεδομένων</string>
 
     <!-- Title of the screen for removing custom autocomplete URLs. -->
-    <string name="preference_autocomplete_title_remove">Αφαίρεση προσαρμοσμένων URLs</string>
+    <string name="preference_autocomplete_title_remove">Αφαίρεση προσαρμοσμένων URL</string>
 
     <!-- A link to SUMO at autocomplete settings. -->
     <string name="preference_autocomplete_learn_more">Μάθετε περισσότερα</string>
 
     <!-- Preference summary: Custom (user-defined) autocomplete URLs. -->
-    <string name="preference_autocomplete_custom_summary">Προσθήκη και διαχείριση προσαρμοσμένων URLs αυτόματης συμπλήρωσης.</string>
+    <string name="preference_autocomplete_custom_summary">Προσθήκη και διαχείριση προσαρμοσμένων URL αυτόματης συμπλήρωσης.</string>
 
     <!-- Label for the "custom autocomplete URL" input field -->
     <string name="preference_autocomplete_add_title">URL για προσθήκη</string>
@@ -259,18 +280,19 @@
     <string name="preference_privacy_block_ads_summary">Ορισμένες διαφημίσεις καταγράφουν επισκέψεις σε ιστοτόπους, ακόμη κι αν δεν τις πατήσετε</string>
     <string name="preference_privacy_block_analytics">Φραγή ιχνηλατών ανάλυσης</string>
     <string name="preference_privacy_block_analytics_summary">Χρησιμοποιούνται για τη συλλογή, την ανάλυση και τη μέτρηση δραστηριοτήτων, όπως πατήματα και κυλίσεις</string>
-    <string name="preference_privacy_block_social">Φραγή κοινωνικών ιχνηλατών</string>
+    <string name="preference_privacy_block_social">Φραγή ιχνηλατών κοινωνικών δικτύων</string>
     <string name="preference_privacy_block_social_summary">Ενσωματώνονται σε ιστοτόπους για την καταγραφή των επισκέψεών σας και την εμφάνιση λειτουργιών, όπως κουμπιά κοινοποίησης</string>
     <string name="preference_privacy_block_content">Φραγή ιχνηλατών άλλου περιεχομένου</string>
     <string name="preference_privacy_block_content_summary2">Η ενεργοποίηση ενδέχεται να προκαλέσει την απρόσμενη συμπεριφορά ορισμένων σελίδων</string>
-    <string name="preference_privacy_category_cookies">Φραγή cookie</string>
+    <string name="preference_privacy_category_cookies">Φραγή cookies</string>
 
     <!-- Three options for Cookie blocking. Yes (All cookies Blocked), Block 3rd-party cookies
     only (Only 3rd-party Cookies Blocked), No (No cookies blocked) -->
     <string name="preference_privacy_should_block_cookies_no_option2">Όχι, ευχαριστώ</string>
-    <string name="preference_privacy_should_block_cookies_third_party_tracker_cookies_option">Φραγή μόνο cookie καταγραφής τρίτων</string>
-    <string name="preference_privacy_should_block_cookies_third_party_only_option">Φραγή μόνο cookie τρίτων</string>
+    <string name="preference_privacy_should_block_cookies_third_party_tracker_cookies_option">Φραγή μόνο cookies καταγραφής τρίτων</string>
+    <string name="preference_privacy_should_block_cookies_third_party_only_option">Φραγή μόνο cookies τρίτων</string>
 
+    <string name="preference_privacy_should_block_cookies_cross_site_option">Φραγή cookies μεταξύ ιστοτόπων</string>
     <string name="preference_privacy_should_block_cookies_yes_option2">Ναι, παρακαλώ</string>
 
     <!-- Preference Title: Biometrics can be used to unlock Focus if the previous session's data was not erased by the user. -->
@@ -278,7 +300,8 @@
     <!-- Preference Summary: Biometrics (iris scan, fingerprint, or facial scan) can be used to unlock Focus if the app had a URL
         open when the app was last run to ensure that only the phone's owner can view a previous session.
         %1$s will be replaced by the app name (e.g. Firefox Focus) -->
-    <string name="preference_security_biometric_summary">Το δακτυλικό σας αποτύπωμα μπορεί να ξεκλειδώσει το %1$s αν έχει ήδη ανοίξει ένα URL στην εφαρμογή. Θα ενεργοποιηθεί η διακριτικότητα.</string>
+    <string name="preference_security_biometric_summary">Το αποτύπωμά σας μπορεί να ξεκλειδώσει το %1$s εάν έχει ήδη ανοίξει ένα URL.
+    Θα ενεργοποιηθεί η λειτουργία αορατότητας.</string>
 
     <!-- Preference Title: Secure Mode is a setting that prevents the app's content to show up in the "recent apps" screen
          and prevents the user from taking screenshots or casting the app to other displays. -->
@@ -298,13 +321,13 @@
 
     <string name="preference_performance_block_javascript">Φραγή JavaScript</string>
     <!-- This text is shown below setting for disabling JavaScript. Some websites may not work correctly when JavaScript is disabled -->
-    <string name="preference_performance_block_javascript_summary">Οι σελίδες ενδέχεται να φορτώνονται ταχύτερα, αλλά ίσως συμπεριφερθούν απροσδόκητα</string>
+    <string name="preference_performance_block_javascript_summary">Οι σελίδες ενδέχεται να φορτώνονται ταχύτερα, αλλά με απρόσμενες συμπεριφορές</string>
 
     <!-- This preference does not set Focus as the default browser but instead links to Android's
      "default apps" settings screen or if not supported by this Android version to a SUMO page describing
      how to set Focus as a default browser.
       %1$s will be replaced by the app name (e.g. Firefox Focus) -->
-    <string name="preference_default_browser2">Ορισμός του %1$s ως προεπιλεγμένου φυλλομετρητή</string>
+    <string name="preference_default_browser2">Ορισμός του %1$s ως προεπιλογής</string>
 
     <string name="preference_category_mozilla">Mozilla</string>
     <string name="preference_mozilla_telemetry2">Αποστολή δεδομένων χρήσης</string>
@@ -313,7 +336,7 @@
     <string name="preference_mozilla_telemetry_summary">Μάθετε περισσότερα</string>
 
     <!-- %1$s will be replaced with the name of the app (e.g. Firefox Focus) -->
-    <string name="preference_mozilla_telemetry_summary2">Η Mozilla αγωνίζεται για να συλλέγει μόνο ό,τι χρειάζεται για να παρέχει και να βελτιώνει το %1$s για όλους.</string>
+    <string name="preference_mozilla_telemetry_summary2">Η Mozilla προσπαθεί συλλέγει μόνο όσα χρειάζεται για να παρέχει και να βελτιώνει το %1$s για όλους.</string>
 
     <!-- In-app link (in settings) to Focus privacy notice. -->
     <string name="preference_privacy_notice">Σημείωση απορρήτου</string>
@@ -328,7 +351,7 @@
     <string name="preference_choose_search_engine">Επιλογή μηχανής αναζήτησης</string>
 
     <!-- Action for restoring the default list of search engines -->
-    <string name="preference_search_restore">Επαναφορά προεπιλεγμένων μηχανών αναζήτησης</string>
+    <string name="preference_search_restore">Επαναφορά αρχικών μηχανών αναζήτησης</string>
 
     <!-- Action for adding an additional search engine to the list.
     The "+" is used to emphasize that this is an "add" action -->
@@ -349,7 +372,7 @@
     <string name="action_option_add_search_engine">Προσθήκη μηχανής αναζήτησης</string>
 
     <string name="search_add_manually_name_hint">Όνομα μηχανής αναζήτησης</string>
-    <string name="search_add_manually_string">Νήμα αναζήτησης προς χρήση</string>
+    <string name="search_add_manually_string">Όρος αναζήτησης για χρήση</string>
     <string name="search_add_manually_save">Αποθήκευση</string>
 
     <!-- Example of search engine url -->
@@ -360,12 +383,12 @@
     <string name="search_add_error_empty_name">Εισαγάγετε το όνομα μηχανής αναζήτησης</string>
     <string name="search_add_error_duplicate_name">Μια εγκατεστημένη μηχανή αναζήτησης χρησιμοποιεί ήδη αυτό το όνομα.</string>
 
-    <string name="search_add_error_empty_search">Εισαγάγετε νήμα αναζήτησης</string>
+    <string name="search_add_error_empty_search">Εισαγάγετε τον όρο αναζήτησης</string>
 
-    <string name="search_add_error_format">Ελέγξτε ότι το νήμα αναζήτησης ταιριάζει με τη μορφή του παραδείγματος</string>
+    <string name="search_add_error_format">Ελέγξτε αν ο όρος αναζήτησης ταιριάζει με τη μορφή του παραδείγματος</string>
 
     <!-- Content description (not visible, for screen readers etc.): Clear text in URL bar -->
-    <string name="content_description_clear_input">Εκκαθάριση εισόδου</string>
+    <string name="content_description_clear_input">Απαλοιφή εισόδου</string>
 
     <!-- Content description (not visible, for screen readers etc.): Clicking on the website overlay
      while in typing mode will dismiss and go back to the browser. This text will be read when the
@@ -433,7 +456,7 @@
     <string name="external_app_prompt_no_app_title">Βρείτε μια εφαρμογή που μπορεί να ανοίξει τον σύνδεσμο</string>
     <!-- This text is shown in a dialog if no app could be found for a custom link protocol. %1$s is the name of the app (i.e. Firefox Focus) and %2$s is the name of
          the app store installed on the device (usually that's Google Play). -->
-    <string name="external_app_prompt_no_app">Καμία από τις εφαρμογές της συσκευής σας δεν μπορεί να ανοίξει αυτό το σύνδεσμο. Μπορείτε να αποχωρήσετε από το %1$s για να αναζητήσετε στο %2$s μια εφαρμογή που να μπορεί να εκτελέσει αυτή την εργασία.</string>
+    <string name="external_app_prompt_no_app">Καμία από τις εφαρμογές της συσκευής σας δεν μπορεί να ανοίξει αυτόν τον σύνδεσμο. Μπορείτε να φύγετε από το %1$s για να αναζητήσετε στο %2$s μια εφαρμογή που να μπορεί να εκτελέσει αυτήν την εργασία.</string>
     <!-- This label is shown above a list of apps that can be used to open a given link -->
     <string name="external_multiple_apps_matched_exit">Έξοδος από την ιδιωτική περιήγηση;</string>
 
@@ -477,7 +500,7 @@
     <string name="firstrun_defaultbrowser_text2">Μεταβείτε στο επόμενο επίπεδο ιδιωτικής περιήγησης. Αποκλείστε διαφημίσεις και περιεχόμενο που μπορεί να καταγράψει τη δραστηριότητά σας και να επιβραδύνει τη φόρτωση σελίδων.</string>
 
     <!-- First run tour (Search): Title -->
-    <string name="firstrun_search_title">Η αναζήτησή σας, με τον τρόπο σας</string>
+    <string name="firstrun_search_title">Αναζήτηση με τον δικό σας τρόπο</string>
     <!-- First run tour (Search): Text -->
     <string name="firstrun_search_text">Ψάχνετε κάτι διαφορετικό; Επιλέξτε μια άλλη προεπιλεγμένη μηχανή αναζήτησης στις ρυθμίσεις.</string>
 
@@ -489,9 +512,9 @@
     <!-- First run tour (Privacy): Title -->
     <string name="firstrun_privacy_title">Κάντε το απόρρητο συνήθεια</string>
     <!-- First run tour (Privacy): Text. %1$s will be replaced with the name of the app (e.g. Firefox Focus) -->
-    <string name="firstrun_privacy_text">Ορίστε το %1$s ως τον προεπιλεγμένο φυλλομετρητή και απολαύστε τα οφέλη της ιδιωτικής περιήγησης όταν ανοίγετε ιστοσελίδες από άλλες εφαρμογές.</string>
+    <string name="firstrun_privacy_text">Ορίστε το %1$s ως τον προεπιλεγμένο φυλλομετρητή για ιδιωτική περιήγηση σε ιστοτόπους που ανοίγουν από άλλες εφαρμογές.</string>
 
-    <string name="firstrun_close_button">OK, το \'πιασα!</string>
+    <string name="firstrun_close_button">OK, κατάλαβα!</string>
     <string name="firstrun_skip_button">Παράλειψη</string>
     <string name="firstrun_next_button">Επόμενο</string>
 
@@ -510,9 +533,9 @@
     <!-- Label of the action that will close the dialog and not add anything to the home screen (shown in the confirmation dialog). -->
     <string name="dialog_addtohomescreen_action_no">ΟΧΙ</string>
 
-    <!-- When tracking protection is disabled for the current session then we will show this warning in the "Add to home screen" dialog to
-         let the user know that the shortcut will always be opened with tracking protection disabled. -->
-    <string name="dialog_addtohomescreen_tracking_protection">Η συντόμευση θα ανοίξει χωρίς προστασία από καταγραφή</string>
+    <!-- When enhanced tracking protection is disabled for the current session then we will show this warning in the "Add to home screen" dialog to
+         let the user know that the shortcut will always be opened with enhanced tracking protection disabled. -->
+    <string name="dialog_addtohomescreen_tracking_protection2">Η συντόμευση θα ανοίξει χωρίς Ενισχυμένη προστασία από καταγραφή</string>
 
     <!-- The user visible name of the "notification channel" (Android 8+ feature) for the ongoing notification shown while a browsing session is active.
     The recommended maximum length is 40 characters; the value may be truncated if it is too long.
@@ -528,7 +551,7 @@
     * To understand what notification channels are, see: https://www.androidcentral.com/notification-channels
     * To see how this string will look like in Android's UI, see: https://github.com/mozilla-mobile/focus-android/issues/863#issuecomment-324105723
     -->
-    <string name="notification_browsing_session_channel_description">Οι ειδοποιήσεις σάς επιτρέπουν να διαγράψετε τη συνεδρία σας στο %1$s με ένα πάτημα. Δεν χρειάζεται να ανοίξετε την εφαρμογή ή να δείτε τι συμβαίνει στο πρόγραμμα περιήγησής σας.</string>
+    <string name="notification_browsing_session_channel_description">Οι ειδοποιήσεις σάς επιτρέπουν να διαγράψετε τη συνεδρία σας στο %1$s με ένα πάτημα. Δεν χρειάζεται να ανοίξετε την εφαρμογή ή να δείτε τι συμβαίνει στον φυλλομετρητή σας.</string>
 
     <!-- Label for a button in the "tabs tray" to erase the browsing history (closes all tabs and removes associated data). -->
     <string name="tabs_tray_action_erase">Διαγραφή ιστορικού περιήγησης</string>
@@ -544,7 +567,28 @@
 
 
 
-  <!-- Text shown in prompts for GeckoView -->
+  <!-- Text shown in the "Your rights" screen.
+    %1$s will be replaced with the name of the app (e.g. Firefox Focus)
+    %2$s will be replaced with a URL linking to the MPL (e.g. https://www.mozilla.org/en-US/MPL/) -->
+    <string name="your_rights_content2"><![CDATA[Το %1$s διατίθεται βάσει των όρων της <a href="%2$s">Mozilla Public License</a> και άλλων αδειών ανοικτού κώδικα.]]></string>
+
+    <!-- Text shown in the "Your rights" screen.
+    %1$s will be replaced with the name of the app (e.g. Firefox Focus)
+    %2$s will be replaced with a URL linking to the trademark policy (e.g. https://www.mozilla.org/foundation/trademarks/policy/) -->
+    <string name="your_rights_content3"><![CDATA[Δεν έχετε δικαίωμα ή άδεια για τα εμπορικά σήματα του Mozilla Foundation ή άλλου μέρους, όπως της Mozilla, του Firefox και τα ονόματα ή λογότυπα του %1$s. Μπορείτε να βρείτε περισσότερες πληροφορίες <a href="%2$s">εδώ</a>.]]></string>
+
+    <!-- Text shown in the "Your rights" screen.
+    %1$s will be replaced with the name of the app (e.g. Firefox Focus)
+    %2$s will be replaced with a URL linking to the list of licenses used by the dependencies.-->
+    <string name="your_rights_content4"><![CDATA[Επιπρόσθετος πηγαίος κώδικας του %1$s διατίθεται βάσει άλλων ελεύθερων <a href="%2$s">αδειών</a> ανοικτού κώδικα.]]></string>
+
+    <!-- Text shown in the "Your rights" screen.
+    %1$s will be replaced with the name of the app (e.g. Firefox Focus)
+    %2$s will be replaced with a URL linking to the GPL
+    %3$s will be replaced with a URL linking to the tracking protection wiki page (e.g. https://wiki.mozilla.org/Security/Tracking_protection#Lists) -->
+    <string name="your_rights_content5"><![CDATA[Το %1$s χρησιμοποιεί επίσης λίστες αποκλεισμού από την ανεξάρτητη Disconnect, Inc. βάσει της <a href="%2$s">GNU General Public License v3</a>, που βρίσκονται <a href="%3$s">εδώ</a>.]]></string>
+
+    <!-- Text shown in prompts for GeckoView -->
     <string name="gv_prompt_username_hint">Όνομα χρήστη</string>
     <string name="gv_prompt_password_hint">Κωδικός πρόσβασης</string>
     <string name="gv_prompt_clear">Εκκαθάριση</string>
@@ -557,7 +601,7 @@
     <string name="security_popup_security_verified">Επαληθεύτηκε από: %1$s</string>
 
     <!-- Content Description of Security Icon in toolbar -->
-    <string name="site_security_icon_content_description">Ασφάλεια ιστοσελίδας</string>
+    <string name="site_security_icon_content_description">Ασφάλεια ιστοτόπου</string>
     <string name="preference_autocomplete_duplicate_url_error">Το URL υπάρχει ήδη</string>
 
     <!-- Label for the Find in page button -->
@@ -583,7 +627,7 @@
 
 
   <!-- Checkbox menu item text to request desktop site -->
-    <string name="preference_performance_request_desktop_site">Απαίτηση ιστοσελίδας για υπολογιστές</string>
+    <string name="preference_performance_request_desktop_site">Ιστότοπος υπολογιστή</string>
 
     <!-- Checkbox menu item text to request desktop site -->
     <string name="preference_performance_request_desktop_site2">Έκδοση υπολογιστή</string>
@@ -594,11 +638,35 @@
     <!-- Description of what a user may find in the Advanced Setting category, used for debugging -->
     <string name="preference_advanced_summary">Εργαλεία προγραμματιστή</string>
 
+    <!-- Preference for open links in third party apps -->
+    <string name="preferences_open_links_in_apps">Άνοιγμα συνδέσμων σε εφαρμογές</string>
+
     <!-- Title of Advanced Setting category -->
     <string name="preference_category_advanced">Για προχωρημένους</string>
 
+    <!-- Preference for studies -->
+    <string name="preference_studies">Μελέτες</string>
+
+    <!-- Preference for studies summary-->
+    <string name="preference_studies_summary">Το Firefox ενδέχεται να εγκαθιστά και να εκτελεί περιστασιακά μελέτες.</string>
+
+    <!-- Learn more link for studies, links to an article for more information about studies. -->
+    <string name="studies_learn_more">Μάθετε περισσότερα</string>
+
+    <!-- Dialog message shown when some changes are made on studies -->
+    <string name="studies_restart_app">Η εφαρμογή θα κλείσει για την εφαρμογή των αλλαγών</string>
+
+    <!-- Title of the remove studies button -->
+    <string name="studies_remove">Αφαίρεση</string>
+
+    <!-- Title of the active section on the studies list -->
+    <string name="studies_active">Ενεργές</string>
+
+    <!-- Title of the completed section on the studies list -->
+    <string name="studies_completed">Ολοκληρωμένες</string>
+
     <!-- Preference to enable remote debugging of the app via USB or Wi-Fi -->
-    <string name="preference_remote_debugging">Απομακρυσμένη αποσφαλμάτωση μέσω USB/Wi-Fi</string>
+    <string name="preference_remote_debugging">Απομακρυσμένος έλεγχος σφαλμάτων μέσω USB/Wi-Fi</string>
 
     <!-- Title for the fingerprint authentication dialog box that is shown to the user when opening the app.
      %1$s is replaced with the app name -->
@@ -629,6 +697,10 @@
     <!-- Title for the prompt to enable search suggestions -->
     <string name="enable_search_suggestion_title2">Εμφάνιση προτάσεων αναζήτησης;</string>
 
+    <!-- Description for the prompt to enable search suggestions
+        %1$s will be replaced by the app name (e.g. Firefox Focus) -->
+    <string name="enable_search_suggestion_description">Για να λάβετε προτάσεις, το %1$s πρέπει να στείλει ό,τι πληκτρολογείτε στη γραμμή διευθύνσεων στη μηχανή αναζήτησης.</string>
+
     <!-- Label used for the "NO button" for the prompt to enable search suggestions -->
     <string name="enable_search_suggestions_no">Όχι</string>
 
@@ -645,27 +717,59 @@
 
     <!-- Tip displayed on home view explaining how to disable tracking protection
     The new line here must be kept as the second half of the string is clickable for the user. -->
-    <string name="tip_disable_tracking_protection">Απρόσμενη συμπεριφορά ιστοσελίδας;\n Δοκιμάστε να απενεργοποιήσετε την προστασία από καταγραφή</string>
+    <string name="tip_disable_tracking_protection">Απρόσμενη συμπεριφορά σε ιστότοπο;\n
+    Απενεργοποιήστε την προστασία από καταγραφή</string>
+
+    <!-- Tip displayed on home view explaining how to disable enhanced tracking protection
+The new line here must be kept as the second half of the string is clickable for the user. -->
+    <string name="tip_disable_tracking_protection3">Απουσία περιεχόμενου ή περίεργη συμπεριφορά ιστοτόπου;\n
+    Απενεργοποιήστε την Ενισχυμένη προστασία από καταγραφή</string>
 
     <!-- Tip displayed on home view explaining how to add sites to homescreen
     Argument 1 will be replaced with a line break in the application.-->
-    <string name="tip_add_to_homescreen"><![CDATA[Πρόσβαση με ένα πάτημα σε ιστοσελίδες συχνής χρήσης%1$s Μενού > Προσθήκη στην αρχική οθόνη]]></string>
+    <string name="tip_add_to_homescreen"><![CDATA[Πρόσβαση με ένα πάτημα σε συχνούς ιστοτόπους%1$s Μενού > Προσθήκη στην αρχική οθόνη]]></string>
 
     <!-- Tip displayed on home view explaining how to make Focus the default browser
     Argument 1 is the app name (Firefox Focus/Firefox Klar/etc).
     The new line here must be kept as the second half of the string is clickable for the user. -->
-    <string name="tip_set_default_browser">Άνοιγμα κάθε συνδέσμου στο %1$s\n Ορίστε το %1$s ως το προεπιλεγμένο πρόγραμμα περιήγησης</string>
+    <string name="tip_set_default_browser">Άνοιγμα κάθε συνδέσμου στο %1$s\n
+        Ορίστε το %1$s ως προεπιλογή
+    </string>
 
     <!-- Tip displayed on home view explaining how to add a custom autocomplete URL
     The new line here must be kept as the second half of the string is clickable for the user. -->
-    <string name="tip_autocomplete_url">Αυτόματη συμπλήρωση URLs για τις ιστοσελίδες συχνής χρήσης\n Πατήστε παρατεταμένα οποιοδήποτε URL στη γραμμή διευθύνσεων</string>
+    <string name="tip_autocomplete_url">Αυτόματη συμπλήρωση URL για συχνούς ιστοτόπους\n
+        Πατήστε παρατεταμένα οποιοδήποτε URL στη γραμμή διευθύνσεων
+    </string>
 
     <!-- Tip displayed on home view explaining how to add a custom autocomplete URL
     The new line here must be kept as the second half of the string is clickable for the user. -->
-    <string name="tip_open_in_new_tab">Άνοιγμα συνδέσμου σε νέα καρτέλα\n Πατήστε παρατεταμένα οποιοδήποτε σύνδεσμο σε μια σελίδα</string>
+    <string name="tip_open_in_new_tab">Άνοιγμα συνδέσμου σε νέα καρτέλα\n
+        Πατήστε παρατεταμένο σε οποιονδήποτε σύνδεσμο μιας σελίδας
+    </string>
+
+    <!-- Tip displayed on home view explaining how to request the desktop version of a website.
+      %1$s is a placeholder for the app name. -->
+    <string name="tip_request_desktop2">Θέλετε την πλήρη έκδοση ενός ιστοτόπου;\n
+        Επιλέξτε «Έκδοση υπολογιστή» από το μενού του %1$s</string>
 
     <!-- Tip displayed on home view explaining how to add a custom autocomplete URL -->
-    <string name="tip_disable_tips2">Απενεργοποίηση συμβουλών στην αρχική οθόνη</string>
+    <string name="tip_disable_tips2">Απενεργοποίηση συμβουλών αρχικής οθόνης</string>
+
+    <!-- Tip displayed on the home view explaining how to use the Allowlist feature.
+     "Allowlist" is a replacement for the word whitelist. -->
+    <string name="tip_explain_allowlist3">Δεν θέλετε την Ενισχυμένη προστασία από καταγραφή σε αξιόπιστους ιστοτόπους;\n
+        Προσθέστε τους στη λίστα αποδοχής στις ρυθμίσεις
+    </string>
+
+    <!-- Tip displayed on the home view about the changes in the new release.
+    %1$s is a placeholder for the app name -->
+    <string name="tip_fresh_look">Πράγματι, διαθέτουμε μια νέα εμφάνιση!\n Διαβάστε περισσότερα νέα σχετικά με το %1$s.</string>
+
+    <!-- Tip displayed on the home view about shortcuts
+    %1$s is a placeholder for the app name -->
+    <string name="tip_about_shortcuts">Δημιουργία συντομεύσεων για συχνούς ιστοτόπους:\n
+    Επιλέξτε «Προσθήκη συντόμευσης» από το μενού του %1$s</string>
 
     <!-- Label for the snackbar when a user opens a new tab -->
     <string name="new_tab_opened_snackbar">Άνοιξε νέα καρτέλα</string>
@@ -677,10 +781,18 @@
     <string name="preference_open_new_tab">Άμεση αλλαγή στον σύνδεσμο νέας καρτέλας</string>
 
     <!-- Preference for safe browsing which when enabled, blocks dangerous or deceptive webpages that may include phishing or malware -->
-    <string name="preference_category_safe_browsing">Ασφαλής περιήγηση</string>
+    <string moz:removedIn="97" name="preference_category_safe_browsing">Ασφαλής περιήγηση</string>
 
     <!-- Preference title for safe browsing which when enabled, blocks dangerous or deceptive webpages that may include phishing or malware -->
     <string name="preference_safe_browsing_title">Φραγή δυνητικά επικίνδυνων και παραπλανητικών ιστοτόπων</string>
+
+    <!-- Preference summary for safe browsing which when enabled, blocks dangerous or deceptive webpages that may include phishing or malware -->
+    <string name="preference_safe_browsing_summary">Φραγή ιστοτόπων εξαπάτησης, επιθέσεων, κακόβουλου και ανεπιθύμητου λογισμικού.</string>
+
+    <!-- Title of the preference to enable "HTTPS-Only" mode -->
+    <string name="preference_https_only_title">Λειτουργία «Μόνο HTTPS»</string>
+    <!-- Description of the preference to enable "HTTPS-Only" mode. %1$s will get replaced with the name of the app. -->
+    <string name="preference_https_only_summary">Το HTTPS παρέχει μια ασφαλή, κρυπτογραφημένη σύνδεση μεταξύ του %1$s και των ιστοτόπων που επισκέπτεστε. Οι περισσότεροι ιστότοποι υποστηρίζουν HTTPS και αν είναι ενεργή η λειτουργία «Μόνο HTTPS», τότε το %1$s θα αναβαθμίζει όλες τις συνδέσεις σε HTTPS.</string>
 
     <!-- Preference for exceptions tracking protection -->
     <string name="preference_exceptions">Εξαιρέσεις</string>
@@ -692,15 +804,17 @@
     <string name="preference_exceptions_remove_all_button_label">Αφαίρεση όλων των ιστοτόπων</string>
 
     <!-- Title for Preference screen for cookie blocking for exceptions tracking protection -->
-    <string name="preference_block_cookies_title">Φραγή cookie</string>
+    <string name="preference_block_cookies_title">Φραγή cookies</string>
 
     <!-- Message for Preference screen for cookie blocking for exceptions tracking protection -->
-    <string name="preference_category_block_cookies">Θέλετε να αποκλείσετε τα cookie;</string>
+    <string name="preference_category_block_cookies">Θέλετε να αποκλείσετε τα cookies;</string>
 
     <!-- Title for the tab crash report screen-->
     <string name="tab_crash_report_title">Η καρτέλα κατέρρευσε</string>
     <!-- Headline for the tab crash report screen -->
-    <string name="tab_crash_report_headline">Δυστυχώς, αντιμετωπίζουμε πρόβλημα με αυτή την καρτέλα.</string>
+    <string name="tab_crash_report_headline">Δυστυχώς, αντιμετωπίζουμε πρόβλημα με αυτήν την καρτέλα.</string>
+    <!-- Subtitle for the tab crash report screen -->
+    <string name="tab_crash_report_description">Για λόγους ασφαλείας, δεν αποθηκεύουμε ούτε μπορούμε να ανακτήσουμε αυτήν την καρτέλα.</string>
     <!-- Label for button to close the tab-->
     <string name="tab_crash_report_close_tab_button_label">Κλείσιμο καρτέλας</string>
 
@@ -740,4 +854,27 @@
     <!-- Text for the menu button to remove a top site -->
     <string name="remove_top_site">Αφαίρεση</string>
 
-    </resources>
+    <!-- Text for the dialog title for renaming a top site -->
+    <string name="rename_top_site">Μετονομασία</string>
+
+    <!-- Text for context menu additional note.
+    %1$s is a placeholder for the app name. -->
+    <string name="contextmenu_erased_images_note2">&lt;b&gt;Δεν&lt;/b&gt; διαγράφονται αποθηκευμένες και κοινόχρηστες εικόνες κατά την απαλοιφή ιστορικού του %1$s</string>
+
+    <!-- Theme Preferences -->
+    <!-- Preference category for changing default theme to dark or light mode -->
+    <string name="preferences_theme">Θέμα</string>
+    <!-- Preference for using light theme -->
+    <string name="preference_light_theme">Ανοιχτόχρωμο</string>
+    <!-- Preference for using dark theme -->
+    <string name="preference_dark_theme">Σκουρόχρωμο</string>
+    <!-- Preference for using using dark or light theme automatically set by battery -->
+    <string name="preference_auto_battery_theme">Ορισμός από εξοικονόμηση μπαταρίας</string>
+    <!-- Preference for using following device theme -->
+    <string name="preference_follow_device_theme">Χρήση θέματος συσκευής</string>
+
+
+    <!-- Sessions List -->
+    <!-- Content description (not visible, for screen readers etc.): Button that closes a tab n the sessions list -->
+    <string name="close_tab">Κλείσιμο καρτέλας</string>
+</resources>

@@ -5,7 +5,7 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <dimen name="menu_elevation">8dp</dimen>
 
-    <dimen name="floating_action_button_margin">16dp</dimen>
+    <dimen name="tab_sheet_end_margin">40dp</dimen>
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
 
@@ -31,11 +31,11 @@
 
     <dimen name="tabs_button_text_size">12dp</dimen>
 
-    <dimen name="floating_action_button_size">56dp</dimen>
-
     <dimen name="adaptive_icon_drawable_dimen">108dp</dimen> <!-- Specified in AdaptiveIconDrawable docs. -->
 
     <dimen name="dialogHorizontalPadding">24dp</dimen>
+    <dimen name="dialog_min_width_major">65%</dimen>
+    <dimen name="dialog_min_width_minor">75%</dimen>
 
     <dimen name="preference_root_layout_padding">16dp</dimen>
     <dimen name="preference_icon_drawable_size">24dp</dimen>
@@ -71,4 +71,17 @@
 
     <dimen name="search_suggestions_padding_start">56dp</dimen>
     <dimen name="search_suggestions_padding_with_icon">16dp</dimen>
+
+    <dimen name="browser_toolbar_height">56dp</dimen>
+
+    <!-- Override the default menu width values from AC. -->
+    <dimen name="mozac_browser_menu_width_min" tools:ignore="UnusedResources">112dp</dimen>
+    <dimen name="mozac_browser_menu_width_max" tools:ignore="UnusedResources">314dp</dimen>
+
+    <!-- Preferences. -->
+    <dimen name="radio_button_preference_height">48dp</dimen>
+    <dimen name="radio_button_preference_width">48dp</dimen>
+    <dimen name="radio_button_preference_start_margin">18dp</dimen>
+    <dimen name="radio_button_preference_title_margins">16dp</dimen>
+
 </resources>

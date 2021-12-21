@@ -16,10 +16,13 @@ import androidx.appcompat.app.AlertDialog
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.DialogFragment
 import androidx.preference.PreferenceManager
+import mozilla.components.browser.icons.IconRequest
+import mozilla.components.service.glean.private.NoExtras
+import org.mozilla.focus.GleanMetrics.AddToHomeScreen
 import org.mozilla.focus.R
+import org.mozilla.focus.ext.components
 import org.mozilla.focus.shortcut.HomeScreen
 import org.mozilla.focus.shortcut.IconGenerator
-import org.mozilla.focus.telemetry.TelemetryWrapper
 
 /**
  * Fragment displaying a dialog where a user can change the title for a homescreen shortcut
@@ -28,6 +31,8 @@ class AddToHomescreenDialogFragment : DialogFragment() {
 
     @Suppress("LongMethod")
     override fun onCreateDialog(bundle: Bundle?): AlertDialog {
+        AddToHomeScreen.dialogDisplayed.record(NoExtras())
+
         val url = requireArguments().getString(URL)
         val title = requireArguments().getString(TITLE)
         val blockingEnabled = requireArguments().getBoolean(BLOCKING_ENABLED)
@@ -39,44 +44,47 @@ class AddToHomescreenDialogFragment : DialogFragment() {
         val dialogView = inflater.inflate(R.layout.dialog_add_to_homescreen2, null)
         builder.setView(dialogView)
 
-        // For the dialog we display the Pre Oreo version of the icon because the Oreo+
-        // adaptive launcher icon does not have a mask applied until we create the shortcut
-        val iconBitmap = IconGenerator.generateLauncherIconPreOreo(
-            requireContext(),
-            IconGenerator.getRepresentativeCharacter(url)
-        )
         val iconView = dialogView.findViewById<ImageView>(R.id.homescreen_icon)
-        iconView.setImageBitmap(iconBitmap)
+        requireContext().components.icons.loadIntoView(
+            iconView,
+            IconRequest(url.toString(), isPrivate = true)
+        )
 
         val blockIcon = dialogView.findViewById<ImageView>(R.id.homescreen_dialog_block_icon)
         blockIcon.setImageResource(R.drawable.mozac_ic_shield_disabled)
-        val warning = dialogView.findViewById<ConstraintLayout>(R.id.homescreen_dialog_warning_layout)
+        val warning =
+            dialogView.findViewById<ConstraintLayout>(R.id.homescreen_dialog_warning_layout)
         warning.visibility = if (blockingEnabled) View.GONE else View.VISIBLE
 
         val editableTitle = dialogView.findViewById<EditText>(R.id.edit_title)
+        editableTitle.requestFocus()
 
         if (!TextUtils.isEmpty(title)) {
             editableTitle.setText(title)
             editableTitle.setSelection(title!!.length)
         }
 
-        setButtons(dialogView, editableTitle, url, blockingEnabled, requestDesktop)
+        setButtons(dialogView, editableTitle, url, blockingEnabled, requestDesktop, title)
 
         return builder.create()
     }
 
+    @Suppress("LongParameterList")
     private fun setButtons(
         parentView: View,
         editableTitle: EditText,
         iconUrl: String?,
         blockingEnabled: Boolean,
-        requestDesktop: Boolean
+        requestDesktop: Boolean,
+        initialTitle: String?
     ) {
-        val addToHomescreenDialogCancelButton = parentView.findViewById<Button>(R.id.addtohomescreen_dialog_cancel)
-        val addToHomescreenDialogConfirmButton = parentView.findViewById<Button>(R.id.addtohomescreen_dialog_add)
+        val addToHomescreenDialogCancelButton =
+            parentView.findViewById<Button>(R.id.addtohomescreen_dialog_cancel)
+        val addToHomescreenDialogConfirmButton =
+            parentView.findViewById<Button>(R.id.addtohomescreen_dialog_add)
 
         addToHomescreenDialogCancelButton.setOnClickListener {
-            TelemetryWrapper.cancelAddToHomescreenShortcutEvent()
+            AddToHomeScreen.cancelButtonTapped.record(NoExtras())
             dismiss()
         }
 
@@ -89,7 +97,14 @@ class AddToHomescreenDialogFragment : DialogFragment() {
                 blockingEnabled,
                 requestDesktop
             )
-            TelemetryWrapper.addToHomescreenShortcutEvent()
+
+            val hasEditedTitle = initialTitle != editableTitle.text.toString().trim { it <= ' ' }
+            AddToHomeScreen.addButtonTapped.record(
+                AddToHomeScreen.AddButtonTappedExtra(
+                    hasEditedTitle = hasEditedTitle
+                )
+            )
+
             PreferenceManager.getDefaultSharedPreferences(context).edit()
                 .putBoolean(
                     requireContext().getString(R.string.has_added_to_home_screen),

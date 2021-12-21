@@ -5,7 +5,6 @@
 package org.mozilla.focus.fragment
 
 import android.content.Context
-import android.graphics.drawable.TransitionDrawable
 import android.os.Bundle
 import android.transition.TransitionInflater
 import android.view.LayoutInflater
@@ -14,19 +13,19 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.preference.PreferenceManager
 import androidx.viewpager.widget.ViewPager
-import com.google.android.material.tabs.TabLayout
+import org.mozilla.focus.GleanMetrics.Onboarding
 import org.mozilla.focus.R
+import org.mozilla.focus.databinding.FragmentFirstrunBinding
 import org.mozilla.focus.ext.requireComponents
 import org.mozilla.focus.firstrun.FirstrunPagerAdapter
 import org.mozilla.focus.state.AppAction
-import org.mozilla.focus.telemetry.TelemetryWrapper
 import org.mozilla.focus.utils.StatusBarUtils
+import kotlin.math.abs
 
 class FirstrunFragment : Fragment(), View.OnClickListener {
 
-    private var viewPager: ViewPager? = null
-
-    private var background: View? = null
+    private var _binding: FragmentFirstrunBinding? = null
+    private val binding get() = _binding!!
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -37,68 +36,68 @@ class FirstrunFragment : Fragment(), View.OnClickListener {
 
         // We will send a telemetry event whenever a new firstrun page is shown. However this page
         // listener won't fire for the initial page we are showing. So we are going to firing here.
-        TelemetryWrapper.showFirstRunPageEvent(0)
+        Onboarding.pageDisplayed.record(Onboarding.PageDisplayedExtra(0))
     }
 
-    @Suppress("MagicNumber")
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val view = inflater.inflate(R.layout.fragment_firstrun, container, false)
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+        _binding = FragmentFirstrunBinding.inflate(inflater, container, false)
 
-        view.findViewById<View>(R.id.skip).setOnClickListener(this)
+        setupPager()
 
-        background = view.findViewById(R.id.background)
+        binding.tabs.setupWithViewPager(binding.pager, true)
 
-        val adapter = FirstrunPagerAdapter(container!!.context, this)
+        binding.skip.setOnClickListener(this)
 
-        viewPager = view.findViewById(R.id.pager)
-        viewPager!!.contentDescription = adapter.getPageAccessibilityDescription(0)
-        viewPager!!.isFocusable = true
-
-        viewPager!!.setPageTransformer(true) { page, position -> page.alpha = 1 - 0.5f * Math.abs(position) }
-
-        viewPager!!.clipToPadding = false
-        viewPager!!.adapter = adapter
-        viewPager!!.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
-            override fun onPageSelected(position: Int) {
-                TelemetryWrapper.showFirstRunPageEvent(position)
-
-                val drawable = background!!.background as TransitionDrawable
-
-                if (position == adapter.count - 1) {
-                    drawable.startTransition(200)
-                } else {
-                    drawable.resetTransition()
-                }
-
-                viewPager!!.contentDescription = adapter.getPageAccessibilityDescription(position)
-            }
-
-            override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {}
-
-            override fun onPageScrollStateChanged(state: Int) {}
-        })
-
-        val tabLayout = view.findViewById<TabLayout>(R.id.tabs)
-        tabLayout.setupWithViewPager(viewPager, true)
-
-        return view
+        return binding.root
     }
 
     override fun onClick(view: View) {
+        val currentItem = binding.pager.currentItem
         when (view.id) {
-            R.id.next -> viewPager!!.currentItem = viewPager!!.currentItem + 1
+            R.id.next -> {
+                binding.pager.currentItem = binding.pager.currentItem + 1
+                Onboarding.nextButtonTapped.record(Onboarding.NextButtonTappedExtra(currentItem))
+            }
 
             R.id.skip -> {
                 finishFirstrun()
-                TelemetryWrapper.skipFirstRunEvent()
+                Onboarding.skipButtonTapped.record(Onboarding.SkipButtonTappedExtra(currentItem))
             }
 
             R.id.finish -> {
                 finishFirstrun()
-                TelemetryWrapper.finishFirstRunEvent()
+                Onboarding.finishButtonTapped.record(Onboarding.FinishButtonTappedExtra(currentItem))
             }
 
             else -> throw IllegalArgumentException("Unknown view")
+        }
+    }
+
+    @Suppress("MagicNumber")
+    private fun setupPager() {
+        val firstRunPagerAdapter = FirstrunPagerAdapter(requireContext(), this)
+        binding.pager.apply {
+            contentDescription = firstRunPagerAdapter.getPageAccessibilityDescription(0)
+            isFocusable = true
+
+            setPageTransformer(true) { page, position ->
+                page.alpha = 1 - 0.5f * abs(position)
+            }
+
+            clipToPadding = false
+            adapter = firstRunPagerAdapter
+            addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
+                override fun onPageSelected(position: Int) {
+                    Onboarding.pageDisplayed.record(Onboarding.PageDisplayedExtra(0))
+
+                    contentDescription =
+                        firstRunPagerAdapter.getPageAccessibilityDescription(position)
+                }
+
+                override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {}
+
+                override fun onPageScrollStateChanged(state: Int) {}
+            })
         }
     }
 
@@ -114,14 +113,19 @@ class FirstrunFragment : Fragment(), View.OnClickListener {
 
     override fun onResume() {
         super.onResume()
-        StatusBarUtils.getStatusBarHeight(background) { statusBarHeight ->
-            background!!.setPadding(
+        StatusBarUtils.getStatusBarHeight(binding.background) { statusBarHeight ->
+            binding.background.setPadding(
                 0,
                 statusBarHeight,
                 0,
                 0
             )
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
     companion object {

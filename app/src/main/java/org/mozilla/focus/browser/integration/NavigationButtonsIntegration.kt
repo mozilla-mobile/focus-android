@@ -5,9 +5,6 @@
 package org.mozilla.focus.browser.integration
 
 import android.content.Context
-import android.graphics.drawable.Drawable
-import android.view.View
-import android.widget.ImageButton
 import androidx.core.content.ContextCompat
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.cancel
@@ -20,53 +17,90 @@ import mozilla.components.feature.session.SessionUseCases
 import mozilla.components.lib.state.ext.flowScoped
 import mozilla.components.support.base.feature.LifecycleAwareFeature
 import mozilla.components.support.ktx.kotlinx.coroutines.flow.ifAnyChanged
+import mozilla.components.support.utils.ColorUtils
 import org.mozilla.focus.R
+import org.mozilla.focus.ext.ifCustomTab
+import org.mozilla.focus.theme.resolveAttribute
 
 class NavigationButtonsIntegration(
     val context: Context,
     val store: BrowserStore,
     val toolbar: BrowserToolbar,
-    val sessionUseCases: SessionUseCases,
-    val customTabId: String?
+    private val sessionUseCases: SessionUseCases,
+    private val customTabId: String?
 ) : LifecycleAwareFeature {
     private var scope: CoroutineScope? = null
 
+    private var enabledColorRes = context.theme.resolveAttribute(R.attr.primaryText)
+    private var disabledColorRes = context.theme.resolveAttribute(R.attr.disabled)
+
     init {
-        toolbar.addNavigationAction(
-            NavigationButton(
-                image = ContextCompat.getDrawable(context, R.drawable.mozac_ic_back)!!,
-                contentDescription = context.getString(R.string.content_description_back),
-                isEnabled = { store.state.findCustomTabOrSelectedTab(customTabId)?.content?.canGoBack ?: false },
-                listener = { sessionUseCases.goBack(store.state.findCustomTabOrSelectedTab(customTabId)?.id) }
-            )
-        )
-
-        toolbar.addNavigationAction(
-            NavigationButton(
-                image = ContextCompat.getDrawable(context, R.drawable.mozac_ic_forward)!!,
-                contentDescription = context.getString(R.string.content_description_forward),
-                isEnabled = { store.state.findCustomTabOrSelectedTab(customTabId)?.content?.canGoForward ?: false },
-                listener = { sessionUseCases.goForward(store.state.findCustomTabOrSelectedTab(customTabId)?.id) }
-            )
-        )
-
-        toolbar.addNavigationAction(
-            RefreshStopButton(
-                refreshImage = ContextCompat.getDrawable(context, R.drawable.mozac_ic_refresh)!!,
-                stopImage = ContextCompat.getDrawable(context, R.drawable.mozac_ic_stop)!!,
-                refreshContentDescription = context.getString(R.string.content_description_reload),
-                stopContentDescription = context.getString(R.string.content_description_stop),
-                isLoading = { store.state.findCustomTabOrSelectedTab(customTabId)?.content?.loading ?: false },
-                listener = {
-                    val tab = store.state.findCustomTabOrSelectedTab(customTabId) ?: return@RefreshStopButton
-                    if (tab.content.loading) {
-                        sessionUseCases.stopLoading(tab.id)
-                    } else {
-                        sessionUseCases.reload(tab.id)
-                    }
+        store.state.findCustomTabOrSelectedTab(customTabId)?.ifCustomTab()?.let { sessionState ->
+            sessionState.config.toolbarColor?.let { color ->
+                if (!ColorUtils.isDark(color)) {
+                    enabledColorRes = R.color.enabled_button_tint
+                    disabledColorRes = R.color.disabled
                 }
-            )
+            }
+        }
+
+        val backButton = BrowserToolbar.TwoStateButton(
+            primaryImage = ContextCompat.getDrawable(context, R.drawable.mozac_ic_back)!!,
+            primaryContentDescription = context.getString(R.string.content_description_back),
+            primaryImageTintResource = enabledColorRes,
+            isInPrimaryState = {
+                store.state.findCustomTabOrSelectedTab(customTabId)?.content?.canGoBack
+                    ?: false
+            },
+            secondaryImageTintResource = disabledColorRes,
+            disableInSecondaryState = true,
+            longClickListener = null,
+            listener = {
+                sessionUseCases.goBack(store.state.findCustomTabOrSelectedTab(customTabId)?.id)
+            }
         )
+        toolbar.addNavigationAction(backButton)
+
+        val forwardButton = BrowserToolbar.TwoStateButton(
+            primaryImage = ContextCompat.getDrawable(context, R.drawable.mozac_ic_forward)!!,
+            primaryContentDescription = context.getString(R.string.content_description_forward),
+            primaryImageTintResource = enabledColorRes,
+            isInPrimaryState = {
+                store.state.findCustomTabOrSelectedTab(customTabId)?.content?.canGoForward
+                    ?: false
+            },
+            secondaryImageTintResource = disabledColorRes,
+            disableInSecondaryState = true,
+            longClickListener = null,
+            listener = {
+                sessionUseCases.goForward(store.state.findCustomTabOrSelectedTab(customTabId)?.id)
+            }
+        )
+        toolbar.addNavigationAction(forwardButton)
+
+        val reloadOrStopButton = BrowserToolbar.TwoStateButton(
+            primaryImage = ContextCompat.getDrawable(context, R.drawable.mozac_ic_stop)!!,
+            secondaryImage = ContextCompat.getDrawable(context, R.drawable.mozac_ic_refresh)!!,
+            primaryContentDescription = context.getString(R.string.content_description_stop),
+            secondaryContentDescription = context.getString(R.string.content_description_reload),
+            primaryImageTintResource = enabledColorRes,
+            isInPrimaryState = {
+                store.state.findCustomTabOrSelectedTab(customTabId)?.content?.loading ?: false
+            },
+            secondaryImageTintResource = enabledColorRes,
+            disableInSecondaryState = false,
+            longClickListener = null,
+            listener = {
+                val tab = store.state.findCustomTabOrSelectedTab(customTabId)
+                    ?: return@TwoStateButton
+                if (tab.content.loading) {
+                    sessionUseCases.stopLoading(tab.id)
+                } else {
+                    sessionUseCases.reload(tab.id)
+                }
+            }
+        )
+        toolbar.addNavigationAction(reloadOrStopButton)
     }
 
     override fun start() {
@@ -85,70 +119,5 @@ class NavigationButtonsIntegration(
 
     override fun stop() {
         scope?.cancel()
-    }
-}
-
-private class NavigationButton(
-    private val image: Drawable,
-    contentDescription: String,
-    private val isEnabled: () -> Boolean = { true },
-    listener: () -> Unit
-) : BrowserToolbar.Button(
-    image,
-    contentDescription,
-    listener = listener
-) {
-    private var enabled: Boolean = false
-
-    @Suppress("MagicNumber")
-    private val disabledImage: Drawable = image
-        .constantState!!
-        .newDrawable()
-        .mutate()
-        .apply {
-            alpha = 128
-        }
-
-    override fun bind(view: View) {
-        enabled = isEnabled.invoke()
-
-        val button = view as ImageButton
-        button.contentDescription = contentDescription
-        button.isEnabled = enabled
-
-        button.setImageDrawable(
-            if (enabled) {
-                image
-            } else {
-                disabledImage
-            }
-        )
-    }
-}
-
-private class RefreshStopButton(
-    private val refreshImage: Drawable,
-    private val stopImage: Drawable,
-    private val refreshContentDescription: String,
-    private val stopContentDescription: String,
-    private val isLoading: () -> Boolean = { true },
-    listener: () -> Unit
-) : BrowserToolbar.Button(
-    refreshImage,
-    refreshContentDescription,
-    listener = listener
-) {
-    override fun bind(view: View) {
-        val loading = isLoading()
-
-        val button = view as ImageButton
-
-        if (loading) {
-            button.setImageDrawable(stopImage)
-            button.contentDescription = stopContentDescription
-        } else {
-            button.setImageDrawable(refreshImage)
-            button.contentDescription = refreshContentDescription
-        }
     }
 }

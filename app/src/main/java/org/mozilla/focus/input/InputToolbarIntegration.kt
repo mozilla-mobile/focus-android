@@ -5,6 +5,7 @@
 package org.mozilla.focus.input
 
 import androidx.core.content.ContextCompat
+import androidx.core.content.res.ResourcesCompat
 import mozilla.components.browser.domains.autocomplete.CustomDomainsProvider
 import mozilla.components.browser.domains.autocomplete.DomainAutocompleteResult
 import mozilla.components.browser.domains.autocomplete.ShippedDomainsProvider
@@ -12,8 +13,8 @@ import mozilla.components.browser.toolbar.BrowserToolbar
 import mozilla.components.concept.toolbar.Toolbar
 import mozilla.components.support.base.feature.LifecycleAwareFeature
 import org.mozilla.focus.R
+import org.mozilla.focus.ext.settings
 import org.mozilla.focus.fragment.UrlInputFragment
-import org.mozilla.focus.utils.Settings
 
 class InputToolbarIntegration(
     toolbar: BrowserToolbar,
@@ -21,7 +22,7 @@ class InputToolbarIntegration(
     shippedDomainsProvider: ShippedDomainsProvider,
     customDomainsProvider: CustomDomainsProvider
 ) : LifecycleAwareFeature {
-    private val settings = Settings.getInstance(toolbar.context)
+    private val settings = toolbar.context.settings
 
     private var useShippedDomainProvider: Boolean = false
     private var useCustomDomainProvider: Boolean = false
@@ -32,20 +33,32 @@ class InputToolbarIntegration(
             hint = fragment.getString(R.string.urlbar_hint)
             colors = toolbar.display.colors.copy(
                 hint = ContextCompat.getColor(toolbar.context, R.color.urlBarHintText),
-                text = 0xFFFFFFFF.toInt()
+                text = ContextCompat.getColor(toolbar.context, R.color.primaryText)
             )
         }
         toolbar.edit.hint = fragment.getString(R.string.urlbar_hint)
         toolbar.private = true
         toolbar.edit.colors = toolbar.edit.colors.copy(
             hint = ContextCompat.getColor(toolbar.context, R.color.urlBarHintText),
-            text = 0xFFFFFFFF.toInt()
+            text = ContextCompat.getColor(toolbar.context, R.color.primaryText),
+            clear = ContextCompat.getColor(toolbar.context, R.color.primaryText)
         )
+
         toolbar.setOnEditListener(object : Toolbar.OnEditListener {
+            override fun onStartEditing() {
+                fragment.onStartEditing()
+            }
+
+            override fun onCancelEditing(): Boolean {
+                fragment.onCancelEditing()
+                return true
+            }
+
             override fun onTextChanged(text: String) {
                 fragment.onTextChange(text)
             }
         })
+
         toolbar.setOnUrlCommitListener { url ->
             fragment.onCommit(url)
             false
@@ -71,6 +84,16 @@ class InputToolbarIntegration(
                 delegate.noAutocompleteResult(text)
             }
         }
+
+        // Use the same background for display/edit modes.
+        val urlBackground = ResourcesCompat.getDrawable(
+            fragment.resources,
+            R.drawable.toolbar_url_background,
+            fragment.context?.theme
+        )
+
+        toolbar.display.setUrlBackground(urlBackground)
+        toolbar.edit.setUrlBackground(urlBackground)
     }
 
     override fun start() {

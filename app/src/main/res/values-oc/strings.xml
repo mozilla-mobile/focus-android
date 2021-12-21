@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:moz="http://mozac.org/tools">
     <!-- ####################################################################################### -->
     <!-- ## Put only strings into this file that should be translated. Move all other strings ## -->
     <!-- ## into a separate file like strings_references.xml                                  ## -->
@@ -122,6 +122,19 @@
          Clicking this action will launch Focus and perform a search in the default search engine. -->
     <string name="text_selection_search_action">Recèrca privada</string>
 
+    <!-- Content of about focus. Argument 1 is the app name (Firefox Focus/Firefox Klar/etc).
+         Argument 2 is the url for the learn-more link. -->
+    <string name="about_content"><![CDATA[<p>%1$s vos dòna lo contraròtla.</p>
+<p>Utiliza-lo coma un navegador privat :
+  <ul>
+    <li>Recercatz e navegatz dins l’aplicacion</li>
+    <li>Blocatz los traçadors (o cambiatz lo paramètre per autorizar los traçadors)</li>
+    <li>Escafatz los cookies e los istorics de recèrcas e navegacion</li>
+  </ul>
+</p>
+<p>%1$s es produch per Mozilla. Nòstra mission es d’encoratjar un Internet en bona santat e dobèrt.<br/>
+<a href="%2$s">Ne saber mai</a></p>]]></string>
+
     <!-- Header for the Privacy and Security settings menu -->
     <string name="preference_privacy_and_security_header">Vida privada e seguretat</string>
 
@@ -137,8 +150,8 @@
     <!-- %1$s will be replaced by the app name (e.g. Firefox Focus) -->
     <string name="preference_mozilla_summary">A prepaus de %1$s, ajuda</string>
 
-    <!-- Preference category for ad blocking and tracking protection settings -->
-    <string name="preference_category_tracking_protection">Proteccion contra lo seguiment</string>
+    <!-- Preference category for ad blocking and enhanced tracking protection settings -->
+    <string name="preference_category_tracking_protection3">Proteccion contra lo seguiment renfortida</string>
 
     <!-- Preference category for settings related to controlling web content -->
     <string name="preference_category_web_content">Contengut web</string>
@@ -149,8 +162,8 @@
     <!-- Preference category for General Settings -->
     <string name="preference_category_general">General</string>
 
-    <!-- Preference summary for General Settings category; the three things users can find in this category -->
-    <string name="preference_general_summary">Navegador per defaut, onglets, lenga</string>
+    <!-- Preference summary for General Settings category; the two things users can find in this category -->
+    <string name="preference_general_summary2">Navegador per defaut, lenga</string>
 
     <!-- Preference category for settings about sending usage data -->
     <string name="preference_category_data_collection_use">Collecta de donadas e utilizacion</string>
@@ -181,14 +194,16 @@
     <!-- Title of "switch" preference that enables/disables autocomplete for the default list -->
     <string name="preference_switch_autocomplete_topsites">Pels sites favorits</string>
 
-    <!-- Summary for the toggle to enable autocomplete for the topsites list -->
-    <string name="preference_autocomplete_topsite_summary">Activar per completar automaticament mai de 450 adreças populara dins la barra d’adreça.</string>
+    <!-- Summary for the toggle to enable autocomplete for the topsites list
+    %s is a placeholder for the app name (e.g. Firefox Focus)-->
+    <string name="preference_autocomplete_topsite_summary2">Activar per que %s complete la barra d’adreça amb 450 adreças mai popularas.</string>
 
     <!-- Title of "switch" preference that enables/disables autocomplete for the user-defined list -->
     <string name="preference_switch_autocomplete_user_list">Pels sites qu’apondètz</string>
 
-    <!-- Summary for the toggle to enable autocomplete for the user-defined list -->
-    <string name="preference_autocomplete_user_list_summary">Activar per completar automaticament mai de 450 adreças populara dins la barra d’adreça.</string>
+    <!-- Summary for the toggle to enable autocomplete for the user-defined list
+     %s is a placeholder for the app name (e.g. Firefox Focus)-->
+    <string name="preference_autocomplete_user_list_summary2">Activar per que %s complete vòstras adreças favoritas.</string>
 
     <!-- Preference category: Manage (user-defined) sites -->
     <string name="preference_category_autocomplete_manage_sites">Gerir los sites</string>
@@ -198,6 +213,9 @@
 
     <!-- Action at the bottom of the list of custom autocomplete URLs that will open a new screen to add a new URL to the list. -->
     <string name="preference_autocomplete_action_add">+ Ajustar una adreça personalizada</string>
+
+    <!-- Explanation text above the list of custom autocomplete URLs. -->
+    <string name="preference_autocomplete_explanation_text">Vòstra lista d’auto emplenatge :</string>
 
     <!-- Action at the bottom of the list of custom autocomplete URLs that will open a new screen to add a new URL to the list. -->
     <string name="preference_autocomplete_action_add2">Apondre l’adreça</string>
@@ -271,6 +289,7 @@
     <string name="preference_privacy_should_block_cookies_no_option2">Non, mercé</string>
     <string name="preference_privacy_should_block_cookies_third_party_tracker_cookies_option">Blocar solament los traçadors tèrces</string>
     <string name="preference_privacy_should_block_cookies_third_party_only_option">Blocar solament los cookies tèrces</string>
+    <string name="preference_privacy_should_block_cookies_cross_site_option">Blocar los cookies intersites</string>
     <string name="preference_privacy_should_block_cookies_yes_option2">Òc</string>
 
     <!-- Preference Title: Biometrics can be used to unlock Focus if the previous session's data was not erased by the user. -->
@@ -507,9 +526,9 @@
     <!-- Label of the action that will close the dialog and not add anything to the home screen (shown in the confirmation dialog). -->
     <string name="dialog_addtohomescreen_action_no">NON</string>
 
-    <!-- When tracking protection is disabled for the current session then we will show this warning in the "Add to home screen" dialog to
-         let the user know that the shortcut will always be opened with tracking protection disabled. -->
-    <string name="dialog_addtohomescreen_tracking_protection">Aqueste acorchi se dobrirà sens proteccion contra lo seguiment</string>
+    <!-- When enhanced tracking protection is disabled for the current session then we will show this warning in the "Add to home screen" dialog to
+         let the user know that the shortcut will always be opened with enhanced tracking protection disabled. -->
+    <string name="dialog_addtohomescreen_tracking_protection2">Aqueste acorchi se dobrirà amb proteccion renfortida contra lo seguiment desactivada</string>
 
     <!-- The user visible name of the "notification channel" (Android 8+ feature) for the ongoing notification shown while a browsing session is active.
     The recommended maximum length is 40 characters; the value may be truncated if it is too long.
@@ -541,7 +560,28 @@
 
 
 
-  <!-- Text shown in prompts for GeckoView -->
+  <!-- Text shown in the "Your rights" screen.
+    %1$s will be replaced with the name of the app (e.g. Firefox Focus)
+    %2$s will be replaced with a URL linking to the MPL (e.g. https://www.mozilla.org/en-US/MPL/) -->
+    <string name="your_rights_content2"><![CDATA[%1$s es distribuit jols tèrmes de la <a href="%2$s">Licéncia publica de Mozilla</a> e d’autras licéncias open source.]]></string>
+
+    <!-- Text shown in the "Your rights" screen.
+    %1$s will be replaced with the name of the app (e.g. Firefox Focus)
+    %2$s will be replaced with a URL linking to the trademark policy (e.g. https://www.mozilla.org/foundation/trademarks/policy/) -->
+    <string name="your_rights_content3"><![CDATA[Donatz pas cap de drech de marca o de licéncia sus las marcas depausadas de la Fondacion Mozilla o de tèrces, aquò inclutz sens cap de limit los noms e logos de Firefox. Mai d’informacions sus las marcas se tròban <a href="%2$s">aquí</a>.]]></string>
+
+    <!-- Text shown in the "Your rights" screen.
+    %1$s will be replaced with the name of the app (e.g. Firefox Focus)
+    %2$s will be replaced with a URL linking to the list of licenses used by the dependencies.-->
+    <string name="your_rights_content4"><![CDATA[Còdis font complementaris per %1$s son disponibles jos diferentas <a href="%2$s">licéncias</a> liuras e open source.]]></string>
+
+    <!-- Text shown in the "Your rights" screen.
+    %1$s will be replaced with the name of the app (e.g. Firefox Focus)
+    %2$s will be replaced with a URL linking to the GPL
+    %3$s will be replaced with a URL linking to the tracking protection wiki page (e.g. https://wiki.mozilla.org/Security/Tracking_protection#Lists) -->
+    <string name="your_rights_content5"><![CDATA[%1$s utiliza tanben las listas de blocatges provesidas per Disconnect, Inc coma de trabalh separat e independent jos licéncia <a href="%2$s">GNU General Public License v3</a>, e disponiblas <a href="%3$s">aquí</a>.]]></string>
+
+    <!-- Text shown in prompts for GeckoView -->
     <string name="gv_prompt_username_hint">Nom d\'utilizaire</string>
     <string name="gv_prompt_password_hint">Senhal</string>
     <string name="gv_prompt_clear">Escafar</string>
@@ -591,8 +631,32 @@
     <!-- Description of what a user may find in the Advanced Setting category, used for debugging -->
     <string name="preference_advanced_summary">Aisinas pels desvolopaires</string>
 
+    <!-- Preference for open links in third party apps -->
+    <string name="preferences_open_links_in_apps">Dobrir los ligams dins las aplicacions</string>
+
     <!-- Title of Advanced Setting category -->
     <string name="preference_category_advanced">Avançat</string>
+
+    <!-- Preference for studies -->
+    <string name="preference_studies">Estudis</string>
+
+    <!-- Preference for studies summary-->
+    <string name="preference_studies_summary">Firefox pòt installar e lançar d’estudis de temps en temps.</string>
+
+    <!-- Learn more link for studies, links to an article for more information about studies. -->
+    <string name="studies_learn_more">Ne saber mai</string>
+
+    <!-- Dialog message shown when some changes are made on studies -->
+    <string name="studies_restart_app">L’aplicacion es a se tampar per aplicar las modificacions</string>
+
+    <!-- Title of the remove studies button -->
+    <string name="studies_remove">Suprimir</string>
+
+    <!-- Title of the active section on the studies list -->
+    <string name="studies_active">Actiu</string>
+
+    <!-- Title of the completed section on the studies list -->
+    <string name="studies_completed">Acabats</string>
 
     <!-- Preference to enable remote debugging of the app via USB or Wi-Fi -->
     <string name="preference_remote_debugging">Desbugatge alonhat per USB/Wi-Fi</string>
@@ -608,6 +672,10 @@
      When pressed, the user's previous session is cleared, and authentication is not required. -->
     <string name="biometric_auth_new_session">Session novèla</string>
 
+    <!-- Button for the fingerprint authentication dialog box that is shown to the user when sharing a link to the app
+    while the user has biometric authentication enabled. When pressed, the user's previous session is cleared, and the shared link is opened. -->
+    <string name="biometric_auth_open_link_new_session">Dobrir lo ligam dins una session novèla</string>
+
     <!-- Description for the fingerprint authentication image. Used for accessibility purposes. -->
     <string name="biometric_auth_image_description">Icòna d’emprentas digitalas</string>
 
@@ -621,6 +689,10 @@
 
     <!-- Title for the prompt to enable search suggestions -->
     <string name="enable_search_suggestion_title2">Afichar las suggestions de recèrca ?</string>
+
+    <!-- Description for the prompt to enable search suggestions
+        %1$s will be replaced by the app name (e.g. Firefox Focus) -->
+    <string name="enable_search_suggestion_description">Per obténer de suggestions, %1$s a d’enviar al motor de recèrca çò que picatz dins la barra d’adreça.</string>
 
     <!-- Label used for the "NO button" for the prompt to enable search suggestions -->
     <string name="enable_search_suggestions_no">Non</string>
@@ -640,6 +712,11 @@
     The new line here must be kept as the second half of the string is clickable for the user. -->
     <string name="tip_disable_tracking_protection">Aqueste site a un compòrtament inesperat ?\n Ensajatz de desactivar la proteccion contra lo seguiment</string>
 
+    <!-- Tip displayed on home view explaining how to disable enhanced tracking protection
+The new line here must be kept as the second half of the string is clickable for the user. -->
+    <string name="tip_disable_tracking_protection3">Manca lo contengut al site o agís estranhament ?\n
+    Ensajatz de desactivar la proteccion contra lo seguiment renfortida</string>
+
     <!-- Tip displayed on home view explaining how to add sites to homescreen
     Argument 1 will be replaced with a line break in the application.-->
     <string name="tip_add_to_homescreen"><![CDATA[Accedissètz rapidament als sites que mai visitatz %1$s Menú > Apondre a l’ecran d’acuèlh]]></string>
@@ -657,8 +734,28 @@
     The new line here must be kept as the second half of the string is clickable for the user. -->
     <string name="tip_open_in_new_tab">Dobrir un ligam dins un onglet novèl\n Mantenètz quichat quin que siá ligam de la pagina</string>
 
+    <!-- Tip displayed on home view explaining how to request the desktop version of a website.
+      %1$s is a placeholder for the app name. -->
+    <string name="tip_request_desktop2">Volètz veire la version complèta d’un site ?\n
+        Passatz a la version per ordenador del menú %1$s estant</string>
+
     <!-- Tip displayed on home view explaining how to add a custom autocomplete URL -->
     <string name="tip_disable_tips2">Quitar de mostrar las astúcias a l’ecran de començament</string>
+
+    <!-- Tip displayed on the home view explaining how to use the Allowlist feature.
+     "Allowlist" is a replacement for the word whitelist. -->
+    <string name="tip_explain_allowlist3">Volètz desactivar la proteccion renfortida contra lo seguiment per un site de fisança ?\n
+        Apondètz-lo a la lista d’autorizacion al paramètres
+    </string>
+
+    <!-- Tip displayed on the home view about the changes in the new release.
+    %1$s is a placeholder for the app name -->
+    <string name="tip_fresh_look">Mas òc, avèm una aparéncia novèla !\n Ne saber mai tocant aqueste subjècte e tocant d’autras mesas a jorn de %1$s.</string>
+
+    <!-- Tip displayed on the home view about shortcuts
+    %1$s is a placeholder for the app name -->
+    <string name="tip_about_shortcuts">Creatz d’acorchis cap als sites que mai visitatz :\n
+    Seleccionatz « Apondre als acorchis » al menú de %1$s</string>
 
     <!-- Label for the snackbar when a user opens a new tab -->
     <string name="new_tab_opened_snackbar">Novèl onglet dobèrt</string>
@@ -670,11 +767,16 @@
     <string name="preference_open_new_tab">Mostrar sulcòp los ligams dobèrts</string>
 
     <!-- Preference for safe browsing which when enabled, blocks dangerous or deceptive webpages that may include phishing or malware -->
-    <string name="preference_category_safe_browsing">Navegacion securizada</string>
+    <string moz:removedIn="97" name="preference_category_safe_browsing">Navegacion securizada</string>
     <!-- Preference title for safe browsing which when enabled, blocks dangerous or deceptive webpages that may include phishing or malware -->
     <string name="preference_safe_browsing_title">Blocar los sites potencialament perilhoses e enganaires</string>
     <!-- Preference summary for safe browsing which when enabled, blocks dangerous or deceptive webpages that may include phishing or malware -->
     <string name="preference_safe_browsing_summary">Blocar los sites senhalats coma perilhoses, los sites de logicials dangieroses e los sites de logicials pas desirats.</string>
+
+    <!-- Title of the preference to enable "HTTPS-Only" mode -->
+    <string name="preference_https_only_title">Mòde HTTPS solament</string>
+    <!-- Description of the preference to enable "HTTPS-Only" mode. %1$s will get replaced with the name of the app. -->
+    <string name="preference_https_only_summary">Lo HTTPS provesís una connexion segura e chifrada entre %1$s e lo site web que visitatz. La màger part dels sites web son compatibles HTTPS, se lo mòde HTTPS solament es activat %1$s passarà totas las connexion en HTTPS.</string>
 
     <!-- Preference for exceptions tracking protection -->
     <string name="preference_exceptions">Excepcions</string>
@@ -687,6 +789,9 @@
 
     <!-- Title for Preference screen for cookie blocking for exceptions tracking protection -->
     <string name="preference_block_cookies_title">Blocar los cookies</string>
+
+    <!-- Message for Preference screen for cookie blocking for exceptions tracking protection -->
+    <string name="preference_category_block_cookies">Volètz blocar los cookies ?</string>
 
     <!-- Title for the tab crash report screen-->
     <string name="tab_crash_report_title">L’onglet a plantat</string>
@@ -705,6 +810,8 @@
 
     <!-- Tracking protection bottom sheet -->
 
+    <!-- Label for the total number of trackers blocked. %s represents the app install date -->
+    <string name="trackers_count_note">Traçadors blocats dempuèi lo %s</string>
     <!-- Category of trackers (content) that can be blocked by Enhanced Tracking Protection -->
     <string name="content">Contengut</string>
     <!-- Category of trackers (advertising) that can be blocked by Enhanced Tracking Protection -->
@@ -733,4 +840,27 @@
     <!-- Text for the menu button to remove a top site -->
     <string name="remove_top_site">Suprimir</string>
 
-    </resources>
+    <!-- Text for the dialog title for renaming a top site -->
+    <string name="rename_top_site">Renommar</string>
+
+    <!-- Text for context menu additional note.
+    %1$s is a placeholder for the app name. -->
+    <string name="contextmenu_erased_images_note2">Los imatges salvagardats o partejats &lt;b&gt;seràn pas&lt;/b&gt; suprimits en netejar vòstre istoric %1$s.</string>
+
+    <!-- Theme Preferences -->
+    <!-- Preference category for changing default theme to dark or light mode -->
+    <string name="preferences_theme">Tèma</string>
+    <!-- Preference for using light theme -->
+    <string name="preference_light_theme">Clar</string>
+    <!-- Preference for using dark theme -->
+    <string name="preference_dark_theme">Escur</string>
+    <!-- Preference for using using dark or light theme automatically set by battery -->
+    <string name="preference_auto_battery_theme">Definit per l’estalviador de batariá</string>
+    <!-- Preference for using following device theme -->
+    <string name="preference_follow_device_theme">Segon lo tèma del periferic</string>
+
+
+    <!-- Sessions List -->
+    <!-- Content description (not visible, for screen readers etc.): Button that closes a tab n the sessions list -->
+    <string name="close_tab">Tampar l’onglet</string>
+</resources>

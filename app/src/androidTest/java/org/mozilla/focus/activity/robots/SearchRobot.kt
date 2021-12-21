@@ -38,19 +38,22 @@ class SearchRobot {
         }
     }
 
+    // Would you like to turn on search suggestions? Yes No
+    // fresh install only
+    fun denyEnableSearchSuggestions() {
+        if (searchSuggestionsTitle.waitForExists(waitingTime)) {
+            searchSuggestionsButtonNo.waitForExists(waitingTime)
+            searchSuggestionsButtonNo.click()
+        }
+    }
+
     fun verifySearchSuggestionsAreShown() {
         suggestionsList.waitForExists(waitingTime)
         assertTrue(suggestionsList.childCount >= 1)
     }
 
     fun verifySearchSuggestionsAreNotShown() {
-        searchHint.waitForExists(waitingTime)
         assertFalse(suggestionsList.exists())
-    }
-
-    fun verifyHintForSearch(searchTerm: String) {
-        searchHint.waitForExists(waitingTime)
-        assertTrue(searchHint.text.equals(searchTerm))
     }
 
     fun verifySearchEditBarContainsText(text: String) {
@@ -63,6 +66,8 @@ class SearchRobot {
     class Transition {
         fun loadPage(url: String, interact: BrowserRobot.() -> Unit): BrowserRobot.Transition {
             val sessionLoadedIdlingResource = SessionLoadedIdlingResource()
+            val geckoEngineView = mDevice.findObject(UiSelector().resourceId("$packageName:id/engineView"))
+            val trackingProtectionDialog = mDevice.findObject(UiSelector().resourceId("$packageName:id/message"))
 
             searchScreen { typeInSearchBar(url) }
             pressEnterKey()
@@ -72,8 +77,8 @@ class SearchRobot {
                     BrowserRobot().progressBar.waitUntilGone(webPageLoadwaitingTime)
                 )
                 assertTrue(
-                    mDevice.findObject(UiSelector().resourceId("$packageName:id/webview"))
-                        .waitForExists(webPageLoadwaitingTime)
+                    geckoEngineView.waitForExists(webPageLoadwaitingTime) ||
+                        trackingProtectionDialog.waitForExists(webPageLoadwaitingTime)
                 )
             }
 
@@ -91,12 +96,6 @@ fun searchScreen(interact: SearchRobot.() -> Unit): SearchRobot.Transition {
 private val searchBar =
     mDevice.findObject(UiSelector().resourceId("$packageName:id/mozac_browser_toolbar_edit_url_view"))
 
-private val searchHint = mDevice.findObject(
-    UiSelector()
-        .resourceId("$packageName:id/searchView")
-        .clickable(true)
-)
-
 private val searchSuggestionsTitle = mDevice.findObject(
     UiSelector()
         .resourceId("$packageName:id/enable_search_suggestions_title")
@@ -109,9 +108,15 @@ private val searchSuggestionsButtonYes = mDevice.findObject(
         .enabled(true)
 )
 
+private val searchSuggestionsButtonNo = mDevice.findObject(
+    UiSelector()
+        .resourceId("$packageName:id/disable_search_suggestions_button")
+        .enabled(true)
+)
+
 private val suggestionsList = mDevice.findObject(
     UiSelector()
-        .resourceId("$packageName:id/suggestionList")
+        .resourceId("$packageName:id/search_suggestions_view")
 )
 
 private val clearSearchButton = onView(withId(R.id.mozac_browser_toolbar_clear_view))

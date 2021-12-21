@@ -4,7 +4,6 @@
 
 package org.mozilla.focus.settings
 
-import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
@@ -16,11 +15,11 @@ import org.mozilla.focus.R
 import org.mozilla.focus.ext.requireComponents
 import org.mozilla.focus.state.AppAction
 import org.mozilla.focus.state.Screen
-import org.mozilla.focus.telemetry.TelemetryWrapper
+import org.mozilla.focus.utils.AppConstants
 import org.mozilla.focus.utils.SupportUtils
 import org.mozilla.focus.whatsnew.WhatsNew
 
-class SettingsFragment : BaseSettingsFragment(), SharedPreferences.OnSharedPreferenceChangeListener {
+class SettingsFragment : BaseSettingsFragment() {
 
     override fun onCreatePreferences(bundle: Bundle?, s: String?) {
         setHasOptionsMenu(true)
@@ -32,14 +31,7 @@ class SettingsFragment : BaseSettingsFragment(), SharedPreferences.OnSharedPrefe
 
         (requireActivity() as AppCompatActivity).supportActionBar?.customView
 
-        preferenceManager.sharedPreferences.registerOnSharedPreferenceChangeListener(this)
-
         updateTitle(R.string.menu_settings)
-    }
-
-    override fun onPause() {
-        preferenceManager.sharedPreferences.unregisterOnSharedPreferenceChangeListener(this)
-        super.onPause()
     }
 
     override fun onPreferenceTreeClick(preference: androidx.preference.Preference): Boolean {
@@ -61,10 +53,6 @@ class SettingsFragment : BaseSettingsFragment(), SharedPreferences.OnSharedPrefe
         return super.onPreferenceTreeClick(preference)
     }
 
-    override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences, key: String) {
-        TelemetryWrapper.settingsEvent(key, sharedPreferences.all[key].toString())
-    }
-
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.menu_settings_main, menu)
     }
@@ -83,8 +71,17 @@ class SettingsFragment : BaseSettingsFragment(), SharedPreferences.OnSharedPrefe
         SettingsScreen.whatsNewTapped.add()
         WhatsNew.userViewedWhatsNew(context)
 
-        val url = SupportUtils.getSumoURLForTopic(context, SupportUtils.SumoTopic.WHATS_NEW)
-        requireComponents.tabsUseCases.addTab(url, source = SessionState.Source.Internal.Menu, private = true)
+        val sumoTopic = if (AppConstants.isKlarBuild)
+            SupportUtils.SumoTopic.WHATS_NEW_KLAR
+        else
+            SupportUtils.SumoTopic.WHATS_NEW_FOCUS
+
+        val url = SupportUtils.getSumoURLForTopic(context, sumoTopic)
+        requireComponents.tabsUseCases.addTab(
+            url,
+            source = SessionState.Source.Internal.Menu,
+            private = true
+        )
     }
 
     companion object {

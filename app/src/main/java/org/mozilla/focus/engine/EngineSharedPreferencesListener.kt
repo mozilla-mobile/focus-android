@@ -5,70 +5,91 @@
 package org.mozilla.focus.engine
 
 import android.content.Context
-import android.content.SharedPreferences
+import androidx.preference.Preference
+import org.mozilla.focus.GleanMetrics.TrackingProtection
 import org.mozilla.focus.R
 import org.mozilla.focus.ext.components
-import org.mozilla.focus.utils.Settings
+import org.mozilla.focus.ext.settings
 
 /**
  * SharedPreference listener that will update the engine whenever the user changes settings.
  */
 class EngineSharedPreferencesListener(
     private val context: Context
-) : SharedPreferences.OnSharedPreferenceChangeListener {
-    override fun onSharedPreferenceChanged(preferences: SharedPreferences, key: String) {
-        when (key) {
-            context.getString(R.string.pref_key_privacy_block_social),
-            context.getString(R.string.pref_key_privacy_block_ads),
-            context.getString(R.string.pref_key_privacy_block_analytics),
-            context.getString(R.string.pref_key_privacy_block_other2),
+) : Preference.OnPreferenceChangeListener {
+
+    override fun onPreferenceChange(preference: Preference?, newValue: Any?): Boolean {
+        when (preference?.key) {
             context.getString(R.string.pref_key_performance_enable_cookies) ->
-                updateTrackingProtectionPolicy()
+                updateTrackingProtectionPolicy(shouldBlockCookiesValue = newValue as String)
 
             context.getString(R.string.pref_key_safe_browsing) ->
-                updateSafeBrowsingPolicy()
+                updateSafeBrowsingPolicy(newValue as Boolean)
 
             context.getString(R.string.pref_key_performance_block_javascript) ->
-                updateJavaScriptSetting()
-
-            context.getString(R.string.pref_key_remote_debugging) ->
-                updateRemoteDebugging()
+                updateJavaScriptSetting(newValue as Boolean)
 
             context.getString(R.string.pref_key_performance_block_webfonts) ->
-                updateWebFontsBlocking()
+                updateWebFontsBlocking(newValue as Boolean)
         }
+
+        return true
     }
 
-    internal fun updateTrackingProtectionPolicy() {
-        val policy = Settings.getInstance(context).createTrackingProtectionPolicy()
+    internal fun updateTrackingProtectionPolicy(
+        source: String? = null,
+        tracker: String? = null,
+        isEnabled: Boolean = false,
+        shouldBlockCookiesValue: String = context.settings.shouldBlockCookiesValue()
+    ) {
+        val policy = context.settings.createTrackingProtectionPolicy(shouldBlockCookiesValue)
         val components = context.components
 
         components.engineDefaultSettings.trackingProtectionPolicy = policy
         components.settingsUseCases.updateTrackingProtection(policy)
+
+        if (source != null && tracker != null) {
+            TrackingProtection.trackerSettingChanged.record(
+                TrackingProtection.TrackerSettingChangedExtra(
+                    sourceOfChange = source,
+                    trackerChanged = tracker,
+                    isEnabled = isEnabled
+                )
+            )
+        }
+        components.sessionUseCases.reload()
     }
 
-    private fun updateSafeBrowsingPolicy() {
-        Settings.getInstance(context).setupSafeBrowsing(context.components.engine)
+    private fun updateSafeBrowsingPolicy(newValue: Boolean) {
+        context.settings.setupSafeBrowsing(context.components.engine, newValue)
+        context.components.sessionUseCases.reload()
     }
 
-    private fun updateJavaScriptSetting() {
-        val settings = Settings.getInstance(context)
+    private fun updateJavaScriptSetting(newValue: Boolean) {
         val components = context.components
 
-        components.engineDefaultSettings.javascriptEnabled = !settings.shouldBlockJavaScript()
-        components.engine.settings.javascriptEnabled = !settings.shouldBlockJavaScript()
+        components.engineDefaultSettings.javascriptEnabled = !newValue
+        components.engine.settings.javascriptEnabled = !newValue
+        components.sessionUseCases.reload()
     }
 
-    private fun updateRemoteDebugging() {
-        context.components.engine.settings.remoteDebuggingEnabled =
-            Settings.getInstance(context).shouldEnableRemoteDebugging()
-    }
-
-    private fun updateWebFontsBlocking() {
-        val settings = Settings.getInstance(context)
+    private fun updateWebFontsBlocking(newValue: Boolean) {
         val components = context.components
 
-        components.engineDefaultSettings.webFontsEnabled = !settings.shouldBlockWebFonts()
-        components.engine.settings.webFontsEnabled = !settings.shouldBlockWebFonts()
+        components.engineDefaultSettings.webFontsEnabled = !newValue
+        components.engine.settings.webFontsEnabled = !newValue
+        components.sessionUseCases.reload()
+    }
+
+    enum class ChangeSource(val source: String) {
+        SETTINGS("Settings"),
+        PANEL("Panel")
+    }
+
+    enum class TrackerChanged(val tracker: String) {
+        ADVERTISING("Advertising"),
+        ANALYTICS("Analytics"),
+        SOCIAL("Social"),
+        CONTENT("Content")
     }
 }

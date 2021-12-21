@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:moz="http://mozac.org/tools">
     <!-- ####################################################################################### -->
     <!-- ## Put only strings into this file that should be translated. Move all other strings ## -->
     <!-- ## into a separate file like strings_references.xml                                  ## -->
@@ -124,7 +124,16 @@
 
     <!-- Content of about focus. Argument 1 is the app name (Firefox Focus/Firefox Klar/etc).
          Argument 2 is the url for the learn-more link. -->
-    <string name="about_content"><![CDATA[<p xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">%1$s gibt Ihnen die Kontrolle.</p>\n<p xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">"Verwenden Sie ihn als privaten Browser:\n  "<ul>"\n    "<li>Suchen und bl&#228;ttern Sie in der App</li>"\n    "<li>Blockieren Sie Tracker (oder aktualisieren Sie die Einstellungen, um Tracker zu erlauben)</li>"\n    "<li>Entfernen Sie Cookies, um Such- und Browserverlauf zu l&#246;schen</li>"\n  "</ul>\n</p>\n<p xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">%1$s wird von Mozilla entwickelt. Unsere Mission ist es, ein gesundes, offenes Internet zu f&#246;rdern.<br/>\n<a href="%2$s">Erfahren Sie mehr</a></p>]]></string>
+    <string name="about_content"><![CDATA[<p>%1$s gibt Ihnen die Kontrolle.</p>
+<p>Verwenden Sie ihn als privaten Browser:
+  <ul>
+    <li>Suchen und blättern Sie in der App</li>
+    <li>Blockieren Sie Tracker (oder aktualisieren Sie die Einstellungen, um Tracker zu erlauben)</li>
+    <li>Entfernen Sie Cookies, um Such- und Browserverlauf zu löschen</li>
+  </ul>
+</p>
+<p>%1$s wird von Mozilla entwickelt. Unsere Mission ist es, ein gesundes, offenes Internet zu fördern.<br/>
+<a href="%2$s">Erfahren Sie mehr</a></p>]]></string>
 
     <!-- Header for the Privacy and Security settings menu -->
     <string name="preference_privacy_and_security_header">Datenschutz &amp; Sicherheit</string>
@@ -141,8 +150,8 @@
     <!-- %1$s will be replaced by the app name (e.g. Firefox Focus) -->
     <string name="preference_mozilla_summary">Über %1$s, Hilfe</string>
 
-    <!-- Preference category for ad blocking and tracking protection settings -->
-    <string name="preference_category_tracking_protection">Schutz vor Aktivitätenverfolgung</string>
+    <!-- Preference category for ad blocking and enhanced tracking protection settings -->
+    <string name="preference_category_tracking_protection3">Verbesserter Tracking-Schutz</string>
 
     <!-- Preference category for settings related to controlling web content -->
     <string name="preference_category_web_content">Web-Inhalt</string>
@@ -153,8 +162,8 @@
     <!-- Preference category for General Settings -->
     <string name="preference_category_general">Allgemein</string>
 
-    <!-- Preference summary for General Settings category; the three things users can find in this category -->
-    <string name="preference_general_summary">Standardbrowser, Tabs, Sprache</string>
+    <!-- Preference summary for General Settings category; the two things users can find in this category -->
+    <string name="preference_general_summary2">Standardbrowser, Sprache</string>
 
     <!-- Preference category for settings about sending usage data -->
     <string name="preference_category_data_collection_use">Sammlung und Nutzung von Daten</string>
@@ -185,14 +194,16 @@
     <!-- Title of "switch" preference that enables/disables autocomplete for the default list -->
     <string name="preference_switch_autocomplete_topsites">Für meistbesuchte Seiten</string>
 
-    <!-- Summary for the toggle to enable autocomplete for the topsites list -->
-    <string name="preference_autocomplete_topsite_summary">Aktivieren, damit über 450 beliebte Adressen in der Adressleiste automatisch vervollständigt werden.</string>
+    <!-- Summary for the toggle to enable autocomplete for the topsites list
+    %s is a placeholder for the app name (e.g. Firefox Focus)-->
+    <string name="preference_autocomplete_topsite_summary2">Aktivieren Sie diese Option, damit %s über 450 beliebte Adressen in der Adressleiste automatisch vervollständigt.</string>
 
     <!-- Title of "switch" preference that enables/disables autocomplete for the user-defined list -->
     <string name="preference_switch_autocomplete_user_list">Für Websites, die Sie hinzufügen</string>
 
-    <!-- Summary for the toggle to enable autocomplete for the user-defined list -->
-    <string name="preference_autocomplete_user_list_summary">Aktivieren, damit über 450 beliebte Adressen in der Adressleiste automatisch vervollständigt werden.</string>
+    <!-- Summary for the toggle to enable autocomplete for the user-defined list
+     %s is a placeholder for the app name (e.g. Firefox Focus)-->
+    <string name="preference_autocomplete_user_list_summary2">Aktivieren Sie diese Option, damit %s Ihre Lieblingsadressen automatisch vervollständigt.</string>
 
     <!-- Preference category: Manage (user-defined) sites -->
     <string name="preference_category_autocomplete_manage_sites">Websites verwalten</string>
@@ -279,6 +290,7 @@
     <string name="preference_privacy_should_block_cookies_third_party_tracker_cookies_option">Nur Tracker-Cookies von Drittanbietern blockieren</string>
     <string name="preference_privacy_should_block_cookies_third_party_only_option">Nur Cookies von Drittanbietern blockieren</string>
 
+    <string name="preference_privacy_should_block_cookies_cross_site_option">Seitenübergreifende Cookies blockieren</string>
     <string name="preference_privacy_should_block_cookies_yes_option2">Ja, bitte</string>
 
     <!-- Preference Title: Biometrics can be used to unlock Focus if the previous session's data was not erased by the user. -->
@@ -518,9 +530,9 @@
     <!-- Label of the action that will close the dialog and not add anything to the home screen (shown in the confirmation dialog). -->
     <string name="dialog_addtohomescreen_action_no">NEIN</string>
 
-    <!-- When tracking protection is disabled for the current session then we will show this warning in the "Add to home screen" dialog to
-         let the user know that the shortcut will always be opened with tracking protection disabled. -->
-    <string name="dialog_addtohomescreen_tracking_protection">Verknüpfung wird mit deaktiviertem Schutz vor Aktivitätenverfolgung geöffnet</string>
+    <!-- When enhanced tracking protection is disabled for the current session then we will show this warning in the "Add to home screen" dialog to
+         let the user know that the shortcut will always be opened with enhanced tracking protection disabled. -->
+    <string name="dialog_addtohomescreen_tracking_protection2">Verknüpfung wird mit deaktiviertem verbesserten Schutz vor Aktivitätenverfolgung geöffnet</string>
 
     <!-- The user visible name of the "notification channel" (Android 8+ feature) for the ongoing notification shown while a browsing session is active.
     The recommended maximum length is 40 characters; the value may be truncated if it is too long.
@@ -555,17 +567,17 @@
   <!-- Text shown in the "Your rights" screen.
     %1$s will be replaced with the name of the app (e.g. Firefox Focus)
     %2$s will be replaced with a URL linking to the MPL (e.g. https://www.mozilla.org/en-US/MPL/) -->
-    <string name="your_rights_content2"><![CDATA["%1$s steht unter der "<a xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2" href="%2$s">Mozilla Public License</a>" und anderen Open-Source-Lizenzen."]]></string>
+    <string name="your_rights_content2"><![CDATA[%1$s steht unter der <a href="%2$s">Mozilla Public License</a> und anderen Open-Source-Lizenzen.]]></string>
 
     <!-- Text shown in the "Your rights" screen.
     %1$s will be replaced with the name of the app (e.g. Firefox Focus)
     %2$s will be replaced with a URL linking to the trademark policy (e.g. https://www.mozilla.org/foundation/trademarks/policy/) -->
-    <string name="your_rights_content3"><![CDATA[Ihnen werden keine Rechte oder Lizenzen an den Markenrechten der Mozilla Foundation oder einer anderen Partei eingeräumt, dazu zählen die Namen und Logos von Mozilla, Firefox oder %1$s. Weitere Informationen finden Sie <a xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2" href="%2$s">hier</a>.]]></string>
+    <string name="your_rights_content3"><![CDATA[Ihnen werden keine Rechte oder Lizenzen an den Markenrechten der Mozilla Foundation oder einer anderen Partei eingeräumt, dazu zählen die Namen und Logos von Mozilla, Firefox oder %1$s. Weitere Informationen finden Sie <a href="%2$s">hier</a>.]]></string>
 
     <!-- Text shown in the "Your rights" screen.
     %1$s will be replaced with the name of the app (e.g. Firefox Focus)
     %2$s will be replaced with a URL linking to the list of licenses used by the dependencies.-->
-    <string name="your_rights_content4"><![CDATA[Sonstiger Quelltext für %1$s steht unter diversen anderen freien und Open-Source-<a xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2" href="%2$s">Lizenzen</a>.]]></string>
+    <string name="your_rights_content4"><![CDATA[Sonstiger Quelltext für %1$s steht unter diversen anderen freien und Open-Source-<a href="%2$s">Lizenzen</a>.]]></string>
 
     <!-- Text shown in the "Your rights" screen.
     %1$s will be replaced with the name of the app (e.g. Firefox Focus)
@@ -623,8 +635,32 @@
     <!-- Description of what a user may find in the Advanced Setting category, used for debugging -->
     <string name="preference_advanced_summary">Entwicklerwerkzeuge</string>
 
+    <!-- Preference for open links in third party apps -->
+    <string name="preferences_open_links_in_apps">Links in Apps öffnen</string>
+
     <!-- Title of Advanced Setting category -->
     <string name="preference_category_advanced">Erweitert</string>
+
+    <!-- Preference for studies -->
+    <string name="preference_studies">Studien</string>
+
+    <!-- Preference for studies summary-->
+    <string name="preference_studies_summary">Firefox darf von Zeit zu Zeit Studien installieren und durchführen.</string>
+
+    <!-- Learn more link for studies, links to an article for more information about studies. -->
+    <string name="studies_learn_more">Weitere Informationen</string>
+
+    <!-- Dialog message shown when some changes are made on studies -->
+    <string name="studies_restart_app">Die Anwendung wird beendet, um die Änderungen zu übernehmen</string>
+
+    <!-- Title of the remove studies button -->
+    <string name="studies_remove">Entfernen</string>
+
+    <!-- Title of the active section on the studies list -->
+    <string name="studies_active">Aktiv</string>
+
+    <!-- Title of the completed section on the studies list -->
+    <string name="studies_completed">Abgeschlossen</string>
 
     <!-- Preference to enable remote debugging of the app via USB or Wi-Fi -->
     <string name="preference_remote_debugging">Externes Debugging über USB/WLAN</string>
@@ -680,10 +716,10 @@
     The new line here must be kept as the second half of the string is clickable for the user. -->
     <string name="tip_disable_tracking_protection">Verhält sich die Website ungewohnt?\n Deaktivieren Sie den Schutz vor Aktivitätenverfolgung</string>
 
-    <!-- Tip displayed on home view explaining how to disable tracking protection
+    <!-- Tip displayed on home view explaining how to disable enhanced tracking protection
 The new line here must be kept as the second half of the string is clickable for the user. -->
-    <string name="tip_disable_tracking_protection2">Verhält sich die Website ungewohnt?\n
-Deaktivieren Sie den Schutz vor Aktivitätenverfolgung</string>
+    <string name="tip_disable_tracking_protection3">Verhält sich die Website ungewohnt?\n
+Deaktivieren Sie den verbesserten Schutz vor Aktivitätenverfolgung</string>
 
     <!-- Tip displayed on home view explaining how to add sites to homescreen
     Argument 1 will be replaced with a line break in the application.-->
@@ -712,13 +748,18 @@ Deaktivieren Sie den Schutz vor Aktivitätenverfolgung</string>
 
     <!-- Tip displayed on the home view explaining how to use the Allowlist feature.
      "Allowlist" is a replacement for the word whitelist. -->
-    <string name="tip_explain_allowlist2">Möchten Sie den Tracking-Schutz für eine vertrauenswürdige Website deaktivieren?\n
+    <string name="tip_explain_allowlist3">Möchten Sie den verbesserten Schutz vor Aktivitätenverfolgung für eine vertrauenswürdige Website deaktivieren?\n
         Fügen Sie die Website in die Positivliste in den Einstellungen ein
     </string>
 
     <!-- Tip displayed on the home view about the changes in the new release.
     %1$s is a placeholder for the app name -->
-    <string name="tip_fresh_look">Ja, wir sehen jetzt moderner aus! Lesen Sie mehr dazu und andere Neuigkeiten bei %1$s.</string>
+    <string name="tip_fresh_look">Ja, wir sehen jetzt moderner aus!\n Lesen Sie mehr über diese und andere Neuerungen von %1$s.</string>
+
+    <!-- Tip displayed on the home view about shortcuts
+    %1$s is a placeholder for the app name -->
+    <string name="tip_about_shortcuts">Erstellen Sie Verknüpfungen zu den meistbesuchten Websites:\n
+Wählen Sie aus dem %1$s-Menü die Option „Zu Verknüpfungen hinzufügen“</string>
 
     <!-- Label for the snackbar when a user opens a new tab -->
     <string name="new_tab_opened_snackbar">Neuer Tab geöffnet</string>
@@ -730,11 +771,16 @@ Deaktivieren Sie den Schutz vor Aktivitätenverfolgung</string>
     <string name="preference_open_new_tab">Sofort zum Link im neuen Tab wechseln</string>
 
     <!-- Preference for safe browsing which when enabled, blocks dangerous or deceptive webpages that may include phishing or malware -->
-    <string name="preference_category_safe_browsing">SafeBrowsing</string>
+    <string moz:removedIn="97" name="preference_category_safe_browsing">SafeBrowsing</string>
     <!-- Preference title for safe browsing which when enabled, blocks dangerous or deceptive webpages that may include phishing or malware -->
     <string name="preference_safe_browsing_title">Potenziell gefährliche und betrügerische Websites blockieren</string>
     <!-- Preference summary for safe browsing which when enabled, blocks dangerous or deceptive webpages that may include phishing or malware -->
     <string name="preference_safe_browsing_summary">Blockieren Sie gemeldete betrügerische Websites und solche, die Sie angreifen, Schadsoftware oder unerwünschte Software verteilen.</string>
+
+    <!-- Title of the preference to enable "HTTPS-Only" mode -->
+    <string name="preference_https_only_title">Nur-HTTPS-Modus</string>
+    <!-- Description of the preference to enable "HTTPS-Only" mode. %1$s will get replaced with the name of the app. -->
+    <string name="preference_https_only_summary">HTTPS bietet eine sichere, verschlüsselte Verbindung zwischen %1$s und den von Ihnen besuchten Websites. Die meisten Websites unterstützen HTTPS und wenn der Nur-HTTPS-Modus aktiviert ist, wird %1$s alle Verbindungen zu HTTPS aufrüsten.</string>
 
     <!-- Preference for exceptions tracking protection -->
     <string name="preference_exceptions">Ausnahmen</string>
@@ -798,7 +844,27 @@ Deaktivieren Sie den Schutz vor Aktivitätenverfolgung</string>
     <!-- Text for the menu button to remove a top site -->
     <string name="remove_top_site">Entfernen</string>
 
+    <!-- Text for the dialog title for renaming a top site -->
+    <string name="rename_top_site">Umbenennen</string>
+
     <!-- Text for context menu additional note.
     %1$s is a placeholder for the app name. -->
-    <string name="contextmenu_erased_images_note">Gespeicherte und geteilte Grafiken &lt;b&gt;werden nicht&lt;/b&gt; gelöscht, wenn Sie die Chronik von %1s löschen.</string>
+    <string name="contextmenu_erased_images_note2">Gespeicherte und geteilte Grafiken &lt;b&gt;werden nicht&lt;/b&gt; gelöscht, wenn Sie die Chronik von %1$s löschen.</string>
+
+    <!-- Theme Preferences -->
+    <!-- Preference category for changing default theme to dark or light mode -->
+    <string name="preferences_theme">Theme</string>
+    <!-- Preference for using light theme -->
+    <string name="preference_light_theme">Hell</string>
+    <!-- Preference for using dark theme -->
+    <string name="preference_dark_theme">Dunkel</string>
+    <!-- Preference for using using dark or light theme automatically set by battery -->
+    <string name="preference_auto_battery_theme">Durch Energiespareinstellungen festgelegt</string>
+    <!-- Preference for using following device theme -->
+    <string name="preference_follow_device_theme">Geräte-Theme beachten</string>
+
+
+    <!-- Sessions List -->
+    <!-- Content description (not visible, for screen readers etc.): Button that closes a tab n the sessions list -->
+    <string name="close_tab">Tab schließen</string>
 </resources>

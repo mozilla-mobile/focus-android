@@ -9,7 +9,7 @@
 
     <androidx.preference.PreferenceCategory
         android:layout="@layout/preference_section_header_layout"
-        android:title="@string/preference_category_tracking_protection">
+        android:title="@string/preference_category_tracking_protection3">
 
         <androidx.preference.SwitchPreferenceCompat
             android:defaultValue="true"
@@ -33,8 +33,8 @@
             android:title="@string/preference_privacy_block_social" />
 
         <androidx.preference.SwitchPreferenceCompat
-            android:defaultValue="true"
-            android:key="@string/pref_key_privacy_block_other2"
+            android:defaultValue="false"
+            android:key="@string/pref_key_privacy_block_other3"
             android:layout="@layout/focus_preference_no_icon"
             android:summary="@string/preference_privacy_block_content_summary2"
             android:title="@string/preference_privacy_block_content" />
@@ -72,12 +72,16 @@
         android:layout="@layout/preference_section_header_layout"
         android:title="@string/preference_category_cookies">
         <org.mozilla.focus.widget.CookiesPreference
-            android:entries="@array/preference_privacy_cookies_options"
-            android:entryValues="@array/preference_privacy_cookies_options"
+            android:entries="@array/cookies_options_entries"
+            android:entryValues="@array/cookies_options_entry_values"
             android:key="@string/pref_key_performance_enable_cookies"
-            android:defaultValue="@string/preference_privacy_should_block_cookies_third_party_tracker_cookies_option"
+            android:defaultValue="@string/preference_privacy_should_block_cookies_cross_site_option"
             android:layout="@layout/cookies_preference"
             android:title="@string/preference_privacy_category_cookies" />
+        <androidx.preference.Preference
+            android:key="@string/pref_key_site_permissions"
+            android:layout="@layout/focus_preference_no_icon"
+            android:title="@string/preference_site_permissions" />
     </androidx.preference.PreferenceCategory>
 
     <androidx.preference.PreferenceCategory
@@ -106,15 +110,21 @@
     </androidx.preference.PreferenceCategory>
 
     <androidx.preference.PreferenceCategory
-        android:key="@string/pref_key_category_safe_browsing"
+        android:key="@string/pref_key_category_security"
         android:layout="@layout/preference_section_header_layout"
-        android:title="@string/preference_category_safe_browsing">
+        android:title="@string/preference_category_security">
         <org.mozilla.focus.settings.SafeBrowsingSwitchPreference
             android:defaultValue="true"
             android:key="@string/pref_key_safe_browsing"
             android:layout="@layout/focus_preference_no_icon"
             android:summary="@string/preference_safe_browsing_summary"
             android:title="@string/preference_safe_browsing_title" />
+        <org.mozilla.focus.settings.HttpsOnlyModePreference
+            android:defaultValue="true"
+            android:key="@string/pref_key_https_only"
+            android:layout="@layout/focus_preference_no_icon"
+            android:summary="@string/preference_https_only_summary2"
+            android:title="@string/preference_https_only_title" />
     </androidx.preference.PreferenceCategory>
 
     <androidx.preference.PreferenceCategory
@@ -126,6 +136,12 @@
             android:key="@string/pref_key_telemetry"
             android:summary="@string/preference_mozilla_telemetry_summary2"
             android:title="@string/preference_mozilla_telemetry2" />
+
+        <org.mozilla.focus.settings.StatePreference
+            android:key="@string/pref_key_studies"
+            android:layout="@layout/focus_preference_no_icon"
+            android:summary="@string/preference_state_off"
+            android:title="@string/preference_studies" />
     </androidx.preference.PreferenceCategory>
 
 </androidx.preference.PreferenceScreen>

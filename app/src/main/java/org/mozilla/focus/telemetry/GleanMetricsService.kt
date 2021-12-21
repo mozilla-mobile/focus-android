@@ -5,6 +5,7 @@
 package org.mozilla.focus.telemetry
 
 import android.content.Context
+import android.os.Build
 import androidx.annotation.VisibleForTesting
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.DelicateCoroutinesApi
@@ -23,9 +24,15 @@ import org.mozilla.focus.Components
 import org.mozilla.focus.GleanMetrics.Browser
 import org.mozilla.focus.GleanMetrics.GleanBuildInfo
 import org.mozilla.focus.GleanMetrics.LegacyIds
+import org.mozilla.focus.GleanMetrics.MozillaProducts
 import org.mozilla.focus.GleanMetrics.Pings
+import org.mozilla.focus.GleanMetrics.Preferences
+import org.mozilla.focus.GleanMetrics.Shortcuts
+import org.mozilla.focus.GleanMetrics.TrackingProtection
 import org.mozilla.focus.ext.components
+import org.mozilla.focus.ext.settings
 import org.mozilla.focus.telemetry.TelemetryWrapper.isTelemetryEnabled
+import org.mozilla.focus.topsites.DefaultTopSitesStorage.Companion.TOP_SITES_MAX_LIMIT
 import org.mozilla.focus.utils.Settings
 import java.util.UUID
 
@@ -42,7 +49,7 @@ class GleanMetricsService(context: Context) : MetricsService {
     @OptIn(DelicateCoroutinesApi::class)
     override fun initialize(context: Context) {
         val components = context.components
-        val settings = Settings.getInstance(context)
+        val settings = context.settings
         val telemetryEnabled = isTelemetryEnabled(context)
 
         Glean.initialize(
@@ -68,7 +75,7 @@ class GleanMetricsService(context: Context) : MetricsService {
         GlobalScope.launch(IO) {
 
             // Wait for preferences to be collected before we send the activation ping.
-            collectPrefMetrics(components, settings).await()
+            collectPrefMetrics(components, settings, context).await()
 
             // Set the client ID in Glean as part of the deletion-request.
             LegacyIds.clientId.set(UUID.fromString(TelemetryWrapper.clientId))
@@ -86,10 +93,57 @@ class GleanMetricsService(context: Context) : MetricsService {
 
     private fun collectPrefMetrics(
         components: Components,
-        settings: Settings
+        settings: Settings,
+        context: Context
     ) = CoroutineScope(IO).async {
-        Browser.isDefault.set(settings.isDefaultBrowser())
+        val installedBrowsers = BrowsersCache.all(context)
+        val hasFenixInstalled = FenixProductDetector.getInstalledFenixVersions(context).isNotEmpty()
+        val isFenixDefaultBrowser = FenixProductDetector.isFenixDefaultBrowser(installedBrowsers.defaultBrowser)
+        val isFocusDefaultBrowser = installedBrowsers.isDefaultBrowser
+
+        Browser.isDefault.set(isFocusDefaultBrowser)
         Browser.localeOverride.set(components.store.state.locale?.displayName ?: "none")
+        val shortcutsOnHomeNumber =
+            components.topSitesStorage.getTopSites(TOP_SITES_MAX_LIMIT, null).size
+        Shortcuts.shortcutsOnHomeNumber.set(shortcutsOnHomeNumber.toLong())
+
+        val installSourcePackage = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            context.packageManager.getInstallSourceInfo(context.packageName).installingPackageName
+        } else {
+            @Suppress("DEPRECATION")
+            context.packageManager.getInstallerPackageName(context.packageName)
+        }
+
+        Browser.installSource.set(installSourcePackage.orEmpty())
+
+        // Fenix telemetry
+        MozillaProducts.hasFenixInstalled.set(hasFenixInstalled)
+        MozillaProducts.isFenixDefaultBrowser.set(isFenixDefaultBrowser)
+
+        // tracking protection metrics
+        TrackingProtection.hasAdvertisingBlocked.set(settings.hasAdvertisingBlocked())
+        TrackingProtection.hasAnalyticsBlocked.set(settings.hasAnalyticsBlocked())
+        TrackingProtection.hasContentBlocked.set(settings.hasContentBlocked())
+        TrackingProtection.hasSocialBlocked.set(settings.hasSocialBlocked())
+
+        // theme telemetry
+        val currentTheme =
+            when {
+                settings.lightThemeSelected -> {
+                    "Light"
+                }
+                settings.darkThemeSelected -> {
+                    "Dark"
+                }
+
+                settings.useDefaultThemeSelected -> {
+                    "Follow device"
+                }
+                else -> ""
+            }
+        if (currentTheme.isNotEmpty()) {
+            Preferences.userTheme.set(currentTheme)
+        }
     }
 
     private fun getDefaultSearchEngineIdentifierForTelemetry(context: Context): String {

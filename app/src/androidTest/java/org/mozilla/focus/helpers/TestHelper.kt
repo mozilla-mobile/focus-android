@@ -39,7 +39,7 @@ import java.nio.charset.StandardCharsets
 object TestHelper {
     @JvmField
     var mDevice = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation())
-    const val waitingTime = DateUtils.SECOND_IN_MILLIS * 4
+    const val waitingTime = DateUtils.SECOND_IN_MILLIS * 15
     const val webPageLoadwaitingTime = DateUtils.SECOND_IN_MILLIS * 15
 
     @JvmStatic
@@ -69,6 +69,11 @@ object TestHelper {
         snackbarActionButton.perform(click())
     }
 
+    fun waitUntilSnackBarGone() {
+        mDevice.findObject(UiSelector().resourceId("$appName:id/snackbar_layout"))
+            .waitUntilGone(waitingTime)
+    }
+
     fun isPackageInstalled(packageName: String): Boolean {
         return try {
             val packageManager = InstrumentationRegistry.getInstrumentation().context.packageManager
@@ -90,11 +95,22 @@ object TestHelper {
     // exit to the main view
     fun exitToTop() {
         val homeScreen =
-            mDevice.findObject(UiSelector().resourceId("$packageName:id/keyboardLinearLayout"))
+            mDevice.findObject(UiSelector().resourceId("$packageName:id/landingLayout"))
         var homeScreenVisible = false
         while (!homeScreenVisible) {
             mDevice.pressBack()
             homeScreenVisible = homeScreen.waitForExists(2000)
+        }
+    }
+
+    // exit to the browser view
+    fun exitToBrowser() {
+        val browserScreen =
+            mDevice.findObject(UiSelector().resourceId("$packageName:id/main_content"))
+        var browserScreenVisible = false
+        while (!browserScreenVisible) {
+            mDevice.pressBack()
+            browserScreenVisible = browserScreen.waitForExists(2000)
         }
     }
 
@@ -177,7 +193,7 @@ object TestHelper {
     )
     var geckoView = mDevice.findObject(
         UiSelector()
-            .resourceId(packageName + ":id/webview")
+            .resourceId(packageName + ":id/engineView")
             .enabled(true)
     )
 
@@ -190,7 +206,8 @@ object TestHelper {
 
     @JvmField
     var floatingEraseButton = Espresso.onView(
-        Matchers.allOf(ViewMatchers.withId(R.id.erase), ViewMatchers.isDisplayed())
+        // Replace -1 with the real id of erase button
+        Matchers.allOf(ViewMatchers.withId(-1), ViewMatchers.isDisplayed())
     )
 
     @JvmField

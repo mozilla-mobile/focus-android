@@ -7,11 +7,13 @@ package org.mozilla.focus.settings
 import android.content.SharedPreferences
 import android.os.Bundle
 import androidx.preference.Preference
+import mozilla.components.service.glean.private.NoExtras
+import org.mozilla.focus.GleanMetrics.SearchEngines
+import org.mozilla.focus.GleanMetrics.ShowSearchSuggestions
 import org.mozilla.focus.R
 import org.mozilla.focus.ext.requireComponents
 import org.mozilla.focus.state.AppAction
 import org.mozilla.focus.state.Screen
-import org.mozilla.focus.telemetry.TelemetryWrapper
 
 class SearchSettingsFragment :
     BaseSettingsFragment(),
@@ -39,7 +41,7 @@ class SearchSettingsFragment :
                 requireComponents.appStore.dispatch(
                     AppAction.OpenSettings(page = Screen.Settings.Page.SearchList)
                 )
-                TelemetryWrapper.openSearchSettingsEvent()
+                SearchEngines.openSettings.record(NoExtras())
             }
             resources.getString(R.string.pref_key_screen_autocomplete) ->
                 requireComponents.appStore.dispatch(
@@ -50,7 +52,12 @@ class SearchSettingsFragment :
     }
 
     override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences, key: String) {
-        TelemetryWrapper.settingsEvent(key, sharedPreferences.all[key].toString())
+        when (key) {
+            resources.getString(R.string.pref_key_show_search_suggestions) ->
+                ShowSearchSuggestions.changedFromSettings.record(
+                    ShowSearchSuggestions.ChangedFromSettingsExtra(sharedPreferences.getBoolean(key, false))
+                )
+        }
     }
 
     companion object {

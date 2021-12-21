@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:moz="http://mozac.org/tools">
     <!-- ####################################################################################### -->
     <!-- ## Put only strings into this file that should be translated. Move all other strings ## -->
     <!-- ## into a separate file like strings_references.xml                                  ## -->
@@ -150,8 +150,8 @@
     <!-- %1$s will be replaced by the app name (e.g. Firefox Focus) -->
     <string name="preference_mozilla_summary">關於 %1$s、使用說明</string>
 
-    <!-- Preference category for ad blocking and tracking protection settings -->
-    <string name="preference_category_tracking_protection">追蹤保護</string>
+    <!-- Preference category for ad blocking and enhanced tracking protection settings -->
+    <string name="preference_category_tracking_protection3">加強型追蹤保護</string>
 
     <!-- Preference category for settings related to controlling web content -->
     <string name="preference_category_web_content">網站內容</string>
@@ -162,8 +162,8 @@
     <!-- Preference category for General Settings -->
     <string name="preference_category_general">一般</string>
 
-    <!-- Preference summary for General Settings category; the three things users can find in this category -->
-    <string name="preference_general_summary">預設瀏覽器、分頁、語言</string>
+    <!-- Preference summary for General Settings category; the two things users can find in this category -->
+    <string name="preference_general_summary2">預設瀏覽器、語言</string>
 
     <!-- Preference category for settings about sending usage data -->
     <string name="preference_category_data_collection_use">資料收集與使用</string>
@@ -194,14 +194,16 @@
     <!-- Title of "switch" preference that enables/disables autocomplete for the default list -->
     <string name="preference_switch_autocomplete_topsites">針對熱門網站</string>
 
-    <!-- Summary for the toggle to enable autocomplete for the topsites list -->
-    <string name="preference_autocomplete_topsite_summary">在網址列自動完成超過 450 組熱門網址。</string>
+    <!-- Summary for the toggle to enable autocomplete for the topsites list
+    %s is a placeholder for the app name (e.g. Firefox Focus)-->
+    <string name="preference_autocomplete_topsite_summary2">開啟後，即可在 %s 網址列自動完成超過 450 組熱門網址。</string>
 
     <!-- Title of "switch" preference that enables/disables autocomplete for the user-defined list -->
     <string name="preference_switch_autocomplete_user_list">針對您加入的網站</string>
 
-    <!-- Summary for the toggle to enable autocomplete for the user-defined list -->
-    <string name="preference_autocomplete_user_list_summary">在網址列自動完成超過 450 組熱門網址。</string>
+    <!-- Summary for the toggle to enable autocomplete for the user-defined list
+     %s is a placeholder for the app name (e.g. Firefox Focus)-->
+    <string name="preference_autocomplete_user_list_summary2">開啟後，即可讓 %s 自動完成您最愛的網址。</string>
 
     <!-- Preference category: Manage (user-defined) sites -->
     <string name="preference_category_autocomplete_manage_sites">管理網站</string>
@@ -288,6 +290,7 @@
     <string name="preference_privacy_should_block_cookies_third_party_tracker_cookies_option">僅封鎖第三方追蹤 Cookie</string>
     <string name="preference_privacy_should_block_cookies_third_party_only_option">僅封鎖第三方 Cookie</string>
 
+    <string name="preference_privacy_should_block_cookies_cross_site_option">封鎖跨網站 Cookie</string>
     <string name="preference_privacy_should_block_cookies_yes_option2">好！</string>
 
     <!-- Preference Title: Biometrics can be used to unlock Focus if the previous session's data was not erased by the user. -->
@@ -295,7 +298,7 @@
     <!-- Preference Summary: Biometrics (iris scan, fingerprint, or facial scan) can be used to unlock Focus if the app had a URL
         open when the app was last run to ensure that only the phone's owner can view a previous session.
         %1$s will be replaced by the app name (e.g. Firefox Focus) -->
-    <string name="preference_security_biometric_summary">若已在程式中開啟網頁，可使用您的指紋直接解鎖 %1$s。也會開啟隱私模式。</string>
+    <string name="preference_security_biometric_summary">若已在程式中開啟網頁，可使用您的指紋直接解鎖 %1$s。也會開啟秘密行動模式。</string>
 
     <!-- Preference Title: Secure Mode is a setting that prevents the app's content to show up in the "recent apps" screen
          and prevents the user from taking screenshots or casting the app to other displays. -->
@@ -527,9 +530,9 @@
     <!-- Label of the action that will close the dialog and not add anything to the home screen (shown in the confirmation dialog). -->
     <string name="dialog_addtohomescreen_action_no">不要</string>
 
-    <!-- When tracking protection is disabled for the current session then we will show this warning in the "Add to home screen" dialog to
-         let the user know that the shortcut will always be opened with tracking protection disabled. -->
-    <string name="dialog_addtohomescreen_tracking_protection">使用此捷徑開啟時，將關閉追蹤保護功能</string>
+    <!-- When enhanced tracking protection is disabled for the current session then we will show this warning in the "Add to home screen" dialog to
+         let the user know that the shortcut will always be opened with enhanced tracking protection disabled. -->
+    <string name="dialog_addtohomescreen_tracking_protection2">使用此捷徑開啟時，將關閉追蹤保護功能</string>
 
     <!-- The user visible name of the "notification channel" (Android 8+ feature) for the ongoing notification shown while a browsing session is active.
     The recommended maximum length is 40 characters; the value may be truncated if it is too long.
@@ -548,7 +551,7 @@
     <string name="notification_browsing_session_channel_description">不需要開啟程式或確認瀏覽器中有哪些資料，只要輕鬆一點，就能清除 %1$s 瀏覽階段的通知項目。</string>
 
     <!-- Label for a button in the "tabs tray" to erase the browsing history (closes all tabs and removes associated data). -->
-    <string name="tabs_tray_action_erase">抹除瀏覽紀錄</string>
+    <string name="tabs_tray_action_erase">清除瀏覽紀錄</string>
 
     <!-- If the user decides to open the current page in another browser and if Firefox is not installed then we show this
       item in the list of browsers. Clicking it will open the app store installed on the device (usually that's Google Play). -->
@@ -632,8 +635,32 @@
     <!-- Description of what a user may find in the Advanced Setting category, used for debugging -->
     <string name="preference_advanced_summary">開發者工具</string>
 
+    <!-- Preference for open links in third party apps -->
+    <string name="preferences_open_links_in_apps">用 App 開啟鏈結</string>
+
     <!-- Title of Advanced Setting category -->
     <string name="preference_category_advanced">進階</string>
+
+    <!-- Preference for studies -->
+    <string name="preference_studies">使用者研究</string>
+
+    <!-- Preference for studies summary-->
+    <string name="preference_studies_summary">Firefox 會不定時安裝並執行使用者研究。</string>
+
+    <!-- Learn more link for studies, links to an article for more information about studies. -->
+    <string name="studies_learn_more">了解更多</string>
+
+    <!-- Dialog message shown when some changes are made on studies -->
+    <string name="studies_restart_app">應用程式將結束以套用變更</string>
+
+    <!-- Title of the remove studies button -->
+    <string name="studies_remove">移除</string>
+
+    <!-- Title of the active section on the studies list -->
+    <string name="studies_active">進行中</string>
+
+    <!-- Title of the completed section on the studies list -->
+    <string name="studies_completed">已完成</string>
 
     <!-- Preference to enable remote debugging of the app via USB or Wi-Fi -->
     <string name="preference_remote_debugging">透過 USB/Wi-Fi 進行遠端除錯</string>
@@ -687,11 +714,13 @@
 
     <!-- Tip displayed on home view explaining how to disable tracking protection
     The new line here must be kept as the second half of the string is clickable for the user. -->
-    <string name="tip_disable_tracking_protection">網站變得怪怪的？試試關閉追蹤保護功能</string>
+    <string name="tip_disable_tracking_protection">網站變得怪怪的？\n
+    試試關閉追蹤保護功能</string>
 
-    <!-- Tip displayed on home view explaining how to disable tracking protection
+    <!-- Tip displayed on home view explaining how to disable enhanced tracking protection
 The new line here must be kept as the second half of the string is clickable for the user. -->
-    <string name="tip_disable_tracking_protection2">網站有內容不見，或行為怪怪的？試試關閉追蹤保護功能</string>
+    <string name="tip_disable_tracking_protection3">網站有內容不見，或行為怪怪的？\n
+    試試關閉加強型追蹤保護功能</string>
 
     <!-- Tip displayed on home view explaining how to add sites to homescreen
     Argument 1 will be replaced with a line break in the application.-->
@@ -700,30 +729,44 @@ The new line here must be kept as the second half of the string is clickable for
     <!-- Tip displayed on home view explaining how to make Focus the default browser
     Argument 1 is the app name (Firefox Focus/Firefox Klar/etc).
     The new line here must be kept as the second half of the string is clickable for the user. -->
-    <string name="tip_set_default_browser">使用 %1$s 開啟所有鏈結\n將 %1$s 設為預設瀏覽器</string>
+    <string name="tip_set_default_browser">使用 %1$s 開啟所有鏈結\n
+        將 %1$s 設為預設瀏覽器
+    </string>
 
     <!-- Tip displayed on home view explaining how to add a custom autocomplete URL
     The new line here must be kept as the second half of the string is clickable for the user. -->
-    <string name="tip_autocomplete_url">自動完成您最常造訪的網站網址\n 長按網址列中的任何網址</string>
+    <string name="tip_autocomplete_url">自動完成您最常造訪的網站網址\n
+        長按網址列中的任何網址
+    </string>
 
     <!-- Tip displayed on home view explaining how to add a custom autocomplete URL
     The new line here must be kept as the second half of the string is clickable for the user. -->
-    <string name="tip_open_in_new_tab">使用新分頁開啟鏈結\n長按頁面上的任何鏈結</string>
+    <string name="tip_open_in_new_tab">使用新分頁開啟鏈結\n
+        長按頁面上的任何鏈結
+    </string>
 
     <!-- Tip displayed on home view explaining how to request the desktop version of a website.
       %1$s is a placeholder for the app name. -->
-    <string name="tip_request_desktop2">想看到完整網站嗎？到 %1$s 選單切換成桌面版</string>
+    <string name="tip_request_desktop2">想看到完整網站嗎？\n
+        到 %1$s 選單切換成桌面版</string>
 
     <!-- Tip displayed on home view explaining how to add a custom autocomplete URL -->
     <string name="tip_disable_tips2">關閉啟動畫面上的使用秘訣</string>
 
     <!-- Tip displayed on the home view explaining how to use the Allowlist feature.
      "Allowlist" is a replacement for the word whitelist. -->
-    <string name="tip_explain_allowlist2">想要對您信任的網站關閉追蹤保護嗎？到設定當中加入允許清單</string>
+    <string name="tip_explain_allowlist3">想要對您信任的網站關閉加強型追蹤保護嗎？\n
+        到設定當中加入允許清單
+    </string>
 
     <!-- Tip displayed on the home view about the changes in the new release.
     %1$s is a placeholder for the app name -->
-    <string name="tip_fresh_look">當然，我們有全新設計！了解更多 %1$s 的新鮮事。</string>
+    <string name="tip_fresh_look">當然，我們有全新設計！\n 了解更多 %1$s 的新鮮事。</string>
+
+    <!-- Tip displayed on the home view about shortcuts
+    %1$s is a placeholder for the app name -->
+    <string name="tip_about_shortcuts">對您常造訪的網站建立捷徑:\n
+    選擇 %1$s 選單的「新增捷徑」</string>
 
     <!-- Label for the snackbar when a user opens a new tab -->
     <string name="new_tab_opened_snackbar">已開啟新分頁</string>
@@ -732,14 +775,19 @@ The new line here must be kept as the second half of the string is clickable for
     <string name="open_new_tab_snackbar">切換</string>
 
     <!-- Preference for switching to a new tab immediately after opening -->
-    <string name="preference_open_new_tab">立即切換到新分頁中的鏈結</string>
+    <string name="preference_open_new_tab">開啟鏈結後，立即切換到該分頁</string>
 
     <!-- Preference for safe browsing which when enabled, blocks dangerous or deceptive webpages that may include phishing or malware -->
-    <string name="preference_category_safe_browsing">安全瀏覽</string>
+    <string moz:removedIn="97" name="preference_category_safe_browsing">安全瀏覽</string>
     <!-- Preference title for safe browsing which when enabled, blocks dangerous or deceptive webpages that may include phishing or malware -->
-    <string name="preference_safe_browsing_title">封鎖可能危險或是詐騙內容的網站</string>
+    <string name="preference_safe_browsing_title">封鎖可能危險或詐騙的網站</string>
     <!-- Preference summary for safe browsing which when enabled, blocks dangerous or deceptive webpages that may include phishing or malware -->
     <string name="preference_safe_browsing_summary">封鎖已被回報為詐騙、有攻擊性、惡意軟體以及有害軟體的網站。</string>
+
+    <!-- Title of the preference to enable "HTTPS-Only" mode -->
+    <string name="preference_https_only_title">純 HTTPS 模式</string>
+    <!-- Description of the preference to enable "HTTPS-Only" mode. %1$s will get replaced with the name of the app. -->
+    <string name="preference_https_only_summary">HTTPS 讓 %1$s 與要造訪的網站間能夠有安全而加密過的連線。大部分的網站都支援 HTTPS，開啟純 HTTPS 模式後，%1$s 就會將所有的連線都升級為 HTTPS 連線。</string>
 
     <!-- Preference for exceptions tracking protection -->
     <string name="preference_exceptions">例外網站</string>
@@ -774,7 +822,7 @@ The new line here must be kept as the second half of the string is clickable for
     <!-- Tracking protection bottom sheet -->
 
     <!-- Label for the total number of trackers blocked. %s represents the app install date -->
-    <string name="trackers_count_note">自 %s 起封鎖的追蹤器</string>
+    <string name="trackers_count_note">自 %s起封鎖的追蹤器數量</string>
     <!-- Category of trackers (content) that can be blocked by Enhanced Tracking Protection -->
     <string name="content">內容</string>
     <!-- Category of trackers (advertising) that can be blocked by Enhanced Tracking Protection -->
@@ -803,7 +851,27 @@ The new line here must be kept as the second half of the string is clickable for
     <!-- Text for the menu button to remove a top site -->
     <string name="remove_top_site">移除</string>
 
+    <!-- Text for the dialog title for renaming a top site -->
+    <string name="rename_top_site">重新命名</string>
+
     <!-- Text for context menu additional note.
     %1$s is a placeholder for the app name. -->
-    <string name="contextmenu_erased_images_note">清除 %1$s 瀏覽紀錄時，&lt;b&gt;將不會&lt;/b&gt;刪除儲存或分享的圖片。</string>
+    <string name="contextmenu_erased_images_note2">清除 %1$s 瀏覽紀錄時，&lt;b&gt;將不會&lt;/b&gt;刪除已儲存或分享的圖片</string>
+
+    <!-- Theme Preferences -->
+    <!-- Preference category for changing default theme to dark or light mode -->
+    <string name="preferences_theme">佈景主題</string>
+    <!-- Preference for using light theme -->
+    <string name="preference_light_theme">亮色</string>
+    <!-- Preference for using dark theme -->
+    <string name="preference_dark_theme">暗色</string>
+    <!-- Preference for using using dark or light theme automatically set by battery -->
+    <string name="preference_auto_battery_theme">由系統省電模式設定</string>
+    <!-- Preference for using following device theme -->
+    <string name="preference_follow_device_theme">依照裝置佈景主題顯示</string>
+
+
+    <!-- Sessions List -->
+    <!-- Content description (not visible, for screen readers etc.): Button that closes a tab n the sessions list -->
+    <string name="close_tab">關閉分頁</string>
 </resources>

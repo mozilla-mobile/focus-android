@@ -38,11 +38,6 @@ sealed class AppAction : Action {
     ) : AppAction()
 
     /**
-     * Show the tabs tray.
-     */
-    object ShowTabs : AppAction()
-
-    /**
      * Hide the tabs tray.
      */
     object HideTabs : AppAction()
@@ -67,7 +62,7 @@ sealed class AppAction : Action {
     data class NavigateUp(val tabId: String?) : AppAction()
 
     /**
-     * Forces showing the first run screen (for tests).
+     * Forces showing the first run screen.
      */
     internal object ShowFirstRun : AppAction()
 

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:moz="http://mozac.org/tools">
     <!-- ####################################################################################### -->
     <!-- ## Put only strings into this file that should be translated. Move all other strings ## -->
     <!-- ## into a separate file like strings_references.xml                                  ## -->
@@ -20,6 +20,9 @@
     <!-- "Snackbar" shown after the user has pressed the 'erase' button at the end of a browsing session -->
     <string name="feedback_erase">היסטוריית הגלישה שלך נמחקה.</string>
     <string name="feedback_erase2">היסטוריית הגלישה נמחקה</string>
+
+    <!-- "Snackbar" shown after the user has pressed the 'erase' button at the end of a custom tab browsing session -->
+    <string name="feedback_erase_custom_tab">היסטוריית הגלישה של הלשונית נמחקה.</string>
 
     <!-- This label is shown below the URL bar as soon as the user enters text. Clicking the label will perform a search -->
     <string name="search_hint">חיפוש עבור %1$s</string>
@@ -134,8 +137,8 @@
     <!-- %1$s will be replaced by the app name (e.g. Firefox Focus) -->
     <string name="preference_mozilla_summary">על אודות %1$s, עזרה</string>
 
-    <!-- Preference category for ad blocking and tracking protection settings -->
-    <string name="preference_category_tracking_protection">הגנת מעקב</string>
+    <!-- Preference category for ad blocking and enhanced tracking protection settings -->
+    <string name="preference_category_tracking_protection3">הגנת מעקב מתקדמת</string>
 
     <!-- Preference category for settings related to controlling web content -->
     <string name="preference_category_web_content">תוכן מקוון</string>
@@ -146,8 +149,8 @@
     <!-- Preference category for General Settings -->
     <string name="preference_category_general">כללי</string>
 
-    <!-- Preference summary for General Settings category; the three things users can find in this category -->
-    <string name="preference_general_summary">דפדפן ברירת מחדל, לשוניות, שפה</string>
+    <!-- Preference summary for General Settings category; the two things users can find in this category -->
+    <string name="preference_general_summary2">דפדפן ברירת מחדל, שפה</string>
 
     <!-- Preference category for settings about sending usage data -->
     <string name="preference_category_data_collection_use">איסוף ושימוש במידע</string>
@@ -178,14 +181,16 @@
     <!-- Title of "switch" preference that enables/disables autocomplete for the default list -->
     <string name="preference_switch_autocomplete_topsites">לאתרים המובילים</string>
 
-    <!-- Summary for the toggle to enable autocomplete for the topsites list -->
-    <string name="preference_autocomplete_topsite_summary">יש להפעיל כדי לקבל השלמה אוטומטית ליותר מ־450 כתובות נפוצות בסרגל הכתובות.</string>
+    <!-- Summary for the toggle to enable autocomplete for the topsites list
+    %s is a placeholder for the app name (e.g. Firefox Focus)-->
+    <string name="preference_autocomplete_topsite_summary2">יש להפעיל כדי ש־%s ישלים אוטומטית למעלה מ־450 כתובות נפוצות בשורת הכתובת.</string>
 
     <!-- Title of "switch" preference that enables/disables autocomplete for the user-defined list -->
     <string name="preference_switch_autocomplete_user_list">לאתרים שהוספת</string>
 
-    <!-- Summary for the toggle to enable autocomplete for the user-defined list -->
-    <string name="preference_autocomplete_user_list_summary">יש להפעיל כדי לקבל השלמה אוטומטית ליותר מ־450 כתובות נפוצות בסרגל הכתובות.</string>
+    <!-- Summary for the toggle to enable autocomplete for the user-defined list
+     %s is a placeholder for the app name (e.g. Firefox Focus)-->
+    <string name="preference_autocomplete_user_list_summary2">יש להפעיל כדי ש־%s ישלים אוטומטית את כתובות האתרים המועדפות עליך.</string>
 
     <!-- Preference category: Manage (user-defined) sites -->
     <string name="preference_category_autocomplete_manage_sites">ניהול אתרים</string>
@@ -272,6 +277,7 @@
     <string name="preference_privacy_should_block_cookies_third_party_tracker_cookies_option">חסימת עוגיות מעקב צד־שלישי בלבד</string>
     <string name="preference_privacy_should_block_cookies_third_party_only_option">חסימת עוגיות צד־שלישי בלבד</string>
 
+    <string name="preference_privacy_should_block_cookies_cross_site_option">חסימת עוגיות חוצות אתרים</string>
     <string name="preference_privacy_should_block_cookies_yes_option2">כן בבקשה</string>
 
     <!-- Preference Title: Biometrics can be used to unlock Focus if the previous session's data was not erased by the user. -->
@@ -314,7 +320,7 @@
     <string name="preference_mozilla_telemetry_summary">מידע נוסף</string>
 
     <!-- %1$s will be replaced with the name of the app (e.g. Firefox Focus) -->
-    <string name="preference_mozilla_telemetry_summary2">Mozilla חותרת לאיסוף המידע שנדרש לצורך שיפור %1$s לטובת הכלל.</string>
+    <string name="preference_mozilla_telemetry_summary2">‏Mozilla חותרת לאסוף רק מה שנדרש לצורך שיפור %1$s לטובת הכלל.</string>
 
     <!-- In-app link (in settings) to Focus privacy notice. -->
     <string name="preference_privacy_notice">הצהרת פרטיות</string>
@@ -434,7 +440,7 @@
     <string name="external_app_prompt_no_app_title">חיפוש יישומון שיוכל לפתוח את הקישור</string>
     <!-- This text is shown in a dialog if no app could be found for a custom link protocol. %1$s is the name of the app (i.e. Firefox Focus) and %2$s is the name of
          the app store installed on the device (usually that's Google Play). -->
-    <string name="external_app_prompt_no_app">אף אחד מהיישומים שבהתקן שלך יכולים לפתוח את הקישור הזה. ניתן לעזוב את %1$s כדי לחפש תחת %2$s יישומון שיכול לבצע זאת.</string>
+    <string name="external_app_prompt_no_app">אף אחד מהיישומים שבמכשיר שלך יכולים לפתוח את הקישור הזה. ניתן לעזוב את %1$s כדי לחפש תחת %2$s יישומון שיכול לבצע זאת.</string>
     <!-- This label is shown above a list of apps that can be used to open a given link -->
     <string name="external_multiple_apps_matched_exit">לצאת ממצב גלישה פרטית?</string>
 
@@ -511,9 +517,9 @@
     <!-- Label of the action that will close the dialog and not add anything to the home screen (shown in the confirmation dialog). -->
     <string name="dialog_addtohomescreen_action_no">לא</string>
 
-    <!-- When tracking protection is disabled for the current session then we will show this warning in the "Add to home screen" dialog to
-         let the user know that the shortcut will always be opened with tracking protection disabled. -->
-    <string name="dialog_addtohomescreen_tracking_protection">קיצור הדרך ייפתח ללא הגנת מעקב</string>
+    <!-- When enhanced tracking protection is disabled for the current session then we will show this warning in the "Add to home screen" dialog to
+         let the user know that the shortcut will always be opened with enhanced tracking protection disabled. -->
+    <string name="dialog_addtohomescreen_tracking_protection2">קיצור הדרך ייפתח ללא הגנת המעקב המתקדמת</string>
 
     <!-- The user visible name of the "notification channel" (Android 8+ feature) for the ongoing notification shown while a browsing session is active.
     The recommended maximum length is 40 characters; the value may be truncated if it is too long.
@@ -600,10 +606,10 @@
 
 
   <!-- Checkbox menu item text to request desktop site -->
-    <string name="preference_performance_request_desktop_site">בקשת אתר שולחני</string>
+    <string name="preference_performance_request_desktop_site">בקשת אתר למחשבים</string>
 
     <!-- Checkbox menu item text to request desktop site -->
-    <string name="preference_performance_request_desktop_site2">אתר למחשבים שולחניים</string>
+    <string name="preference_performance_request_desktop_site2">אתר למחשבים</string>
 
     <!-- Displayed after a user long presses on the URL in a custom tab to copy the URL -->
     <string name="custom_tab_copy_url_action">הכתובת הועתקה</string>
@@ -611,8 +617,32 @@
     <!-- Description of what a user may find in the Advanced Setting category, used for debugging -->
     <string name="preference_advanced_summary">כלי פיתוח</string>
 
+    <!-- Preference for open links in third party apps -->
+    <string name="preferences_open_links_in_apps">פתיחת קישורים ביישומונים</string>
+
     <!-- Title of Advanced Setting category -->
     <string name="preference_category_advanced">מתקדם</string>
+
+    <!-- Preference for studies -->
+    <string name="preference_studies">מחקרים</string>
+
+    <!-- Preference for studies summary-->
+    <string name="preference_studies_summary">‏Firefox עשוי להתקין ולהריץ מחקרים מדי פעם בפעם.</string>
+
+    <!-- Learn more link for studies, links to an article for more information about studies. -->
+    <string name="studies_learn_more">מידע נוסף</string>
+
+    <!-- Dialog message shown when some changes are made on studies -->
+    <string name="studies_restart_app">היישומון ייסגר להחלת השינויים</string>
+
+    <!-- Title of the remove studies button -->
+    <string name="studies_remove">הסרה</string>
+
+    <!-- Title of the active section on the studies list -->
+    <string name="studies_active">פעיל</string>
+
+    <!-- Title of the completed section on the studies list -->
+    <string name="studies_completed">הושלמו</string>
 
     <!-- Preference to enable remote debugging of the app via USB or Wi-Fi -->
     <string name="preference_remote_debugging">ניפוי שגיאות מרחוק דרך USB/Wi-Fi</string>
@@ -668,10 +698,10 @@
     The new line here must be kept as the second half of the string is clickable for the user. -->
     <string name="tip_disable_tracking_protection">האתר מתנהג באופן בלתי צפוי?\n ניתן לנסות לבטל את הגנת המעקב</string>
 
-    <!-- Tip displayed on home view explaining how to disable tracking protection
+    <!-- Tip displayed on home view explaining how to disable enhanced tracking protection
 The new line here must be kept as the second half of the string is clickable for the user. -->
-    <string name="tip_disable_tracking_protection2">חסר תוכן כלשהו באתר, או שהוא מתנהג באופן בלתי צפוי?\n
-    ניתן לנסות לבטל את הגנת המעקב</string>
+    <string name="tip_disable_tracking_protection3">חסר תוכן כלשהו באתר, או שהוא מתנהג באופן בלתי צפוי?\n
+    ניתן לנסות לבטל את הגנת המעקב המתקדמת</string>
 
     <!-- Tip displayed on home view explaining how to add sites to homescreen
     Argument 1 will be replaced with a line break in the application.-->
@@ -695,10 +725,20 @@ The new line here must be kept as the second half of the string is clickable for
     <!-- Tip displayed on home view explaining how to request the desktop version of a website.
       %1$s is a placeholder for the app name. -->
     <string name="tip_request_desktop2">רוצה לראות את הגרסה המלאה של אתר כלשהו?\n
-        ניתן להפעיל את האפשרות ’אתר למחשבים שולחניים’</string>
+        ניתן להפעיל את האפשרות ’אתר למחשבים’</string>
 
     <!-- Tip displayed on home view explaining how to add a custom autocomplete URL -->
     <string name="tip_disable_tips2">כיבוי עצות במסך ההתחלה</string>
+
+    <!-- Tip displayed on the home view explaining how to use the Allowlist feature.
+     "Allowlist" is a replacement for the word whitelist. -->
+    <string name="tip_explain_allowlist3">רוצה שהגנת המעקב המתקדמת תישאר כבויה עבור אתר מהימן כלשהו?\n
+        ניתן להוסיף אותו לרשימת המותרים בהגדרות
+    </string>
+
+    <!-- Tip displayed on the home view about the changes in the new release.
+    %1$s is a placeholder for the app name -->
+    <string name="tip_fresh_look">ובכן כן, יש לנו מראה חדיש ומחודש!\n אפשר לקרוא עוד על כך ועל עדכונים נוספים שבוצעו ב־%1$s.</string>
 
     <!-- Label for the snackbar when a user opens a new tab -->
     <string name="new_tab_opened_snackbar">לשונית חדשה נפתחה</string>
@@ -710,11 +750,16 @@ The new line here must be kept as the second half of the string is clickable for
     <string name="preference_open_new_tab">מעבר לקישור בלשונית החדשה מיידית</string>
 
     <!-- Preference for safe browsing which when enabled, blocks dangerous or deceptive webpages that may include phishing or malware -->
-    <string name="preference_category_safe_browsing">גלישה בטוחה</string>
+    <string moz:removedIn="97" name="preference_category_safe_browsing">גלישה בטוחה</string>
     <!-- Preference title for safe browsing which when enabled, blocks dangerous or deceptive webpages that may include phishing or malware -->
     <string name="preference_safe_browsing_title">חסימת אתרים המעוררים חשד לסכנה או הונאה</string>
     <!-- Preference summary for safe browsing which when enabled, blocks dangerous or deceptive webpages that may include phishing or malware -->
     <string name="preference_safe_browsing_summary">חסימת אתרי הונאה ומתקפה, אתרי נוזקה ואתרי תכניות בלתי רצויות.</string>
+
+    <!-- Title of the preference to enable "HTTPS-Only" mode -->
+    <string name="preference_https_only_title">מצב HTTPS בלבד</string>
+    <!-- Description of the preference to enable "HTTPS-Only" mode. %1$s will get replaced with the name of the app. -->
+    <string name="preference_https_only_summary">‏HTTPS מספק חיבור מאובטח ומוצפן בין %1$s לבין האתרים שמבקרים בהם. רוב האתרים תומכים ב־HTTPS, ואם מצב HTTPS בלבד מופעל, %1$s ישדרג את כל החיבורים ל־HTTPS.</string>
 
     <!-- Preference for exceptions tracking protection -->
     <string name="preference_exceptions">חריגות</string>
@@ -776,7 +821,27 @@ The new line here must be kept as the second half of the string is clickable for
     <!-- Text for the menu button to remove a top site -->
     <string name="remove_top_site">הסרה</string>
 
+    <!-- Text for the dialog title for renaming a top site -->
+    <string name="rename_top_site">שינוי שם</string>
+
     <!-- Text for context menu additional note.
     %1$s is a placeholder for the app name. -->
-    <string name="contextmenu_erased_images_note">תמונות שמורות ומשותפות &lt;b&gt;לא יימחקו&lt;/b&gt; בעת מחיקת ההיסטוריה של %1s</string>
+    <string name="contextmenu_erased_images_note2">תמונות שמורות ומשותפות &lt;b&gt;לא יימחקו&lt;/b&gt; בעת מחיקת ההיסטוריה של %1$s</string>
+
+    <!-- Theme Preferences -->
+    <!-- Preference category for changing default theme to dark or light mode -->
+    <string name="preferences_theme">ערכת נושא</string>
+    <!-- Preference for using light theme -->
+    <string name="preference_light_theme">בהירה</string>
+    <!-- Preference for using dark theme -->
+    <string name="preference_dark_theme">כהה</string>
+    <!-- Preference for using using dark or light theme automatically set by battery -->
+    <string name="preference_auto_battery_theme">מוגדר על־ידי מצב חיסכון בסוללה</string>
+    <!-- Preference for using following device theme -->
+    <string name="preference_follow_device_theme">שימוש בערכת הנושא של המכשיר</string>
+
+
+    <!-- Sessions List -->
+    <!-- Content description (not visible, for screen readers etc.): Button that closes a tab n the sessions list -->
+    <string name="close_tab">סגירת לשונית</string>
 </resources>

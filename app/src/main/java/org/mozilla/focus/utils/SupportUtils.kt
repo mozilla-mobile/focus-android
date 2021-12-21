@@ -10,9 +10,13 @@ import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.net.Uri
 import android.os.Build
 import android.provider.Settings
+import androidx.fragment.app.FragmentActivity
 import mozilla.components.browser.state.state.SessionState
+import mozilla.components.feature.customtabs.createCustomTabConfigFromIntent
+import org.mozilla.focus.activity.CustomTabActivity
 import org.mozilla.focus.ext.components
 import org.mozilla.focus.locale.Locales
 import org.mozilla.focus.state.AppAction
@@ -23,7 +27,6 @@ import java.util.Locale
 object SupportUtils {
     const val HELP_URL = "https://support.mozilla.org/kb/what-firefox-focus-android"
     const val DEFAULT_BROWSER_URL = "https://support.mozilla.org/kb/set-firefox-focus-default-browser-android"
-    const val REPORT_SITE_ISSUE_URL = "https://webcompat.com/issues/new?url=%s&label=browser-focus-geckoview"
     const val PRIVACY_NOTICE_URL = "https://www.mozilla.org/privacy/firefox-focus/"
     const val PRIVACY_NOTICE_KLAR_URL = "https://www.mozilla.org/de/privacy/firefox-klar/"
 
@@ -42,9 +45,17 @@ object SupportUtils {
         AUTOCOMPLETE("autofill-domain-android"),
         TRACKERS("trackers"),
         USAGE_DATA("usage-data"),
-        WHATS_NEW("whats-new-firefox-focus-android-version-93"),
+        WHATS_NEW_FOCUS("whats-new-firefox-focus-android"),
+        WHATS_NEW_KLAR("whats-new-firefox-klar-android"),
         SEARCH_SUGGESTIONS("search-suggestions-focus-android"),
-        ALLOWLIST("focus-android-allowlist")
+        ALLOWLIST("focus-android-allowlist"),
+        STUDIES("how-opt-out-studies-firefox-android")
+    }
+
+    fun getGenericSumoURLForTopic(topic: SumoTopic): String {
+        val escapedTopic = getEncodedTopicUTF8(topic.topicStr)
+        val langTag = Locales.getLanguageTag(Locale.getDefault())
+        return "https://support.mozilla.org/$langTag/kb/$escapedTopic"
     }
 
     fun getSumoURLForTopic(context: Context, topic: SumoTopic): String {
@@ -89,6 +100,23 @@ object SupportUtils {
         context.components.appStore.dispatch(
             AppAction.OpenTab(tabId)
         )
+    }
+
+    fun openUrlInCustomTab(activity: FragmentActivity, destinationUrl: String) {
+        val tabId = activity.components.customTabsUseCases.add(
+            url = destinationUrl,
+            customTabConfig = createCustomTabConfigFromIntent(activity.intent, activity.resources),
+            private = true,
+            source = SessionState.Source.Internal.None
+        )
+        val openCustomTabActivityIntent =
+            Intent(activity, CustomTabActivity::class.java).apply {
+                action = Intent.ACTION_VIEW
+                data = Uri.parse(getSumoURLForTopic(activity, SumoTopic.ADD_SEARCH_ENGINE))
+                putExtra(CustomTabActivity.CUSTOM_TAB_ID, tabId)
+            }
+
+        activity.startActivity(openCustomTabActivityIntent)
     }
 
     @TargetApi(Build.VERSION_CODES.N)

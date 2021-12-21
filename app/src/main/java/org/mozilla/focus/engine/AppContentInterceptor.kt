@@ -5,10 +5,14 @@
 package org.mozilla.focus.engine
 
 import android.content.Context
+import android.content.Intent
+import android.content.Intent.FLAG_ACTIVITY_NEW_TASK
 import mozilla.components.browser.errorpages.ErrorPages
 import mozilla.components.browser.errorpages.ErrorType
 import mozilla.components.concept.engine.EngineSession
 import mozilla.components.concept.engine.request.RequestInterceptor
+import org.mozilla.focus.R
+import org.mozilla.focus.activity.CrashListActivity
 import org.mozilla.focus.browser.LocalizedContent
 import org.mozilla.focus.ext.components
 
@@ -42,6 +46,14 @@ class AppContentInterceptor(
                 LocalizedContent.loadLicenses(context), encoding = "base64"
             )
 
+            "about:crashes" -> {
+                val intent = Intent(context, CrashListActivity::class.java)
+                intent.addFlags(FLAG_ACTIVITY_NEW_TASK)
+                context.startActivity(intent)
+
+                RequestInterceptor.InterceptionResponse.Url("about:blank")
+            }
+
             else -> context.components.appLinksInterceptor.onLoadRequest(
                 engineSession,
                 uri,
@@ -60,9 +72,34 @@ class AppContentInterceptor(
         errorType: ErrorType,
         uri: String?
     ): RequestInterceptor.ErrorResponse {
-        val errorPage = ErrorPages.createUrlEncodedErrorPage(context, errorType, uri)
+        val errorPage = ErrorPages.createUrlEncodedErrorPage(
+            context,
+            errorType,
+            uri,
+            titleOverride = { type -> getErrorPageTitle(context, type) },
+            descriptionOverride = { type -> getErrorPageDescription(context, type) }
+        )
         return RequestInterceptor.ErrorResponse(errorPage)
     }
 
     override fun interceptsAppInitiatedRequests() = true
+}
+
+private fun getErrorPageTitle(context: Context, type: ErrorType): String? {
+    if (type == ErrorType.ERROR_HTTPS_ONLY) {
+        return context.getString(R.string.errorpage_httpsonly_title)
+    }
+    // Returning `null` here will let the component use its default title for this error type
+    return null
+}
+
+private fun getErrorPageDescription(context: Context, type: ErrorType): String? {
+    if (type == ErrorType.ERROR_HTTPS_ONLY) {
+        return context.getString(
+            R.string.errorpage_httpsonly_message,
+            context.getString(R.string.app_name)
+        )
+    }
+    // Returning `null` here will let the component use its default description for this error type
+    return null
 }

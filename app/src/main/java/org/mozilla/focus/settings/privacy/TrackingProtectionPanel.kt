@@ -12,11 +12,13 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import mozilla.components.browser.icons.IconRequest
 import mozilla.components.support.ktx.android.view.putCompoundDrawablesRelativeWithIntrinsicBounds
+import mozilla.components.support.ktx.kotlin.tryGetHostFromUrl
 import org.mozilla.focus.R
 import org.mozilla.focus.databinding.DialogTrackingProtectionSheetBinding
-import org.mozilla.focus.ext.beautifyUrl
+import org.mozilla.focus.engine.EngineSharedPreferencesListener.TrackerChanged
 import org.mozilla.focus.ext.components
 import org.mozilla.focus.ext.installedDate
+import org.mozilla.focus.ext.settings
 
 @SuppressWarnings("LongParameterList")
 class TrackingProtectionPanel(
@@ -26,7 +28,7 @@ class TrackingProtectionPanel(
     private val isTrackingProtectionOn: Boolean,
     private val isConnectionSecure: Boolean,
     private val toggleTrackingProtection: (Boolean) -> Unit,
-    private val updateTrackingProtectionPolicy: () -> Unit,
+    private val updateTrackingProtectionPolicy: (String?, Boolean) -> Unit,
     private val showConnectionInfo: () -> Unit
 ) : BottomSheetDialog(context) {
 
@@ -52,7 +54,7 @@ class TrackingProtectionPanel(
     }
 
     private fun updateTitle() {
-        binding.siteTitle.text = tabUrl.beautifyUrl()
+        binding.siteTitle.text = tabUrl.tryGetHostFromUrl()
         context.components.icons.loadIntoView(
             binding.siteFavicon,
             IconRequest(tabUrl, isPrivate = true)
@@ -69,9 +71,9 @@ class TrackingProtectionPanel(
         val nextIcon = AppCompatResources.getDrawable(context, R.drawable.mozac_ic_arrowhead_right)
 
         val securityIcon = if (isConnectionSecure) {
-            AppCompatResources.getDrawable(context, R.drawable.ic_lock)
+            AppCompatResources.getDrawable(context, R.drawable.mozac_ic_lock)
         } else {
-            AppCompatResources.getDrawable(context, R.drawable.ic_warning)
+            AppCompatResources.getDrawable(context, R.drawable.mozac_ic_warning)
         }
 
         binding.securityInfo.putCompoundDrawablesRelativeWithIntrinsicBounds(
@@ -109,12 +111,19 @@ class TrackingProtectionPanel(
     }
 
     private fun updateTrackersState() {
+        val settings = context.settings
+
         with(binding) {
             advertising.isVisible = isTrackingProtectionOn
             analytics.isVisible = isTrackingProtectionOn
             social.isVisible = isTrackingProtectionOn
             content.isVisible = isTrackingProtectionOn
             trackersAndScriptsHeading.isVisible = isTrackingProtectionOn
+
+            advertising.isChecked = settings.shouldBlockAdTrackers()
+            analytics.isChecked = settings.shouldBlockAnalyticTrackers()
+            social.isChecked = settings.shouldBlockSocialTrackers()
+            content.isChecked = settings.shouldBlockOtherTrackers()
         }
     }
 
@@ -125,19 +134,19 @@ class TrackingProtectionPanel(
                 dismiss()
             }
             advertising.onClickListener {
-                updateTrackingProtectionPolicy()
+                updateTrackingProtectionPolicy(TrackerChanged.ADVERTISING.tracker, advertising.isChecked)
             }
 
             analytics.onClickListener {
-                updateTrackingProtectionPolicy()
+                updateTrackingProtectionPolicy(TrackerChanged.ANALYTICS.tracker, analytics.isChecked)
             }
 
             social.onClickListener {
-                updateTrackingProtectionPolicy()
+                updateTrackingProtectionPolicy(TrackerChanged.SOCIAL.tracker, social.isChecked)
             }
 
             content.onClickListener {
-                updateTrackingProtectionPolicy()
+                updateTrackingProtectionPolicy(TrackerChanged.CONTENT.tracker, content.isChecked)
             }
 
             securityInfo.setOnClickListener {

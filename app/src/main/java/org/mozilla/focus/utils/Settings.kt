@@ -4,45 +4,64 @@
 
 package org.mozilla.focus.utils
 
+import android.accessibilityservice.AccessibilityServiceInfo
 import android.content.Context
 import android.content.SharedPreferences
 import android.content.res.Resources
+import android.view.accessibility.AccessibilityManager
 import androidx.preference.PreferenceManager
 import mozilla.components.concept.engine.Engine
 import mozilla.components.concept.engine.EngineSession
+import mozilla.components.feature.sitepermissions.SitePermissionsRules
 import org.mozilla.focus.R
-import org.mozilla.focus.engine.EngineSharedPreferencesListener
+import org.mozilla.focus.ext.components
 import org.mozilla.focus.fragment.FirstrunFragment
 import org.mozilla.focus.searchsuggestions.SearchSuggestionsPreferences
+import org.mozilla.focus.settings.permissions.AutoplayOption
+import org.mozilla.focus.settings.permissions.getValueByPrefKey
 
 /**
  * A simple wrapper for SharedPreferences that makes reading preference a little bit easier.
+ * This class is designed to have a lot of (simple) functions
  */
-@Suppress("TooManyFunctions") // This class is designed to have a lot of (simple) functions
-class Settings private constructor(
+@Suppress("TooManyFunctions", "LargeClass")
+class Settings(
     private val context: Context
 ) {
+
     companion object {
-        private var instance: Settings? = null
+        // Default value is block cross site cookies.
+        const val DEFAULT_COOKIE_OPTION_INDEX = 3
+        const val NO_VALUE = "no value"
+    }
 
-        @JvmStatic
-        @Synchronized
-        fun getInstance(context: Context): Settings {
-            if (instance == null) {
-                instance = Settings(context.applicationContext)
+    private val accessibilityManager =
+        context.getSystemService(Context.ACCESSIBILITY_SERVICE) as AccessibilityManager?
+
+    /**
+     * Check each active accessibility service to see if it can perform gestures, if any can,
+     * then it is *likely* a switch service is enabled.
+     */
+    private val switchServiceIsEnabled: Boolean
+        get() {
+            accessibilityManager?.getEnabledAccessibilityServiceList(0)?.let { activeServices ->
+                for (service in activeServices) {
+                    if (service.capabilities.and(AccessibilityServiceInfo.CAPABILITY_CAN_PERFORM_GESTURES) == 1) {
+                        return true
+                    }
+                }
             }
-            return instance ?: throw AssertionError("Instance cleared")
+
+            return false
         }
-    }
 
-    private val preferencesListener = EngineSharedPreferencesListener(context)
+    private val preferences: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
 
-    private val preferences: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(context).apply {
-        registerOnSharedPreferenceChangeListener(preferencesListener)
-    }
-
-    fun createTrackingProtectionPolicy(): EngineSession.TrackingProtectionPolicy {
-        val trackingCategories: MutableList<EngineSession.TrackingProtectionPolicy.TrackingCategory> = mutableListOf()
+    fun createTrackingProtectionPolicy(
+        shouldBlockCookiesValue: String = shouldBlockCookiesValue()
+    ): EngineSession.TrackingProtectionPolicy {
+        val trackingCategories: MutableList<EngineSession.TrackingProtectionPolicy.TrackingCategory> =
+            mutableListOf(EngineSession.TrackingProtectionPolicy.TrackingCategory.SCRIPTS_AND_SUB_RESOURCES)
 
         if (shouldBlockSocialTrackers()) {
             trackingCategories.add(EngineSession.TrackingProtectionPolicy.TrackingCategory.SOCIAL)
@@ -54,21 +73,10 @@ class Settings private constructor(
             trackingCategories.add(EngineSession.TrackingProtectionPolicy.TrackingCategory.ANALYTICS)
         }
         if (shouldBlockOtherTrackers()) {
-            trackingCategories.add(EngineSession.TrackingProtectionPolicy.TrackingCategory.SCRIPTS_AND_SUB_RESOURCES)
+            trackingCategories.add(EngineSession.TrackingProtectionPolicy.TrackingCategory.CONTENT)
         }
 
-        val cookiePolicy = when (shouldBlockCookiesValue()) {
-            context.getString(R.string.preference_privacy_should_block_cookies_yes_option2) ->
-                EngineSession.TrackingProtectionPolicy.CookiePolicy.ACCEPT_NONE
-
-            context.getString(R.string.preference_privacy_should_block_cookies_third_party_tracker_cookies_option) ->
-                EngineSession.TrackingProtectionPolicy.CookiePolicy.ACCEPT_NON_TRACKERS
-
-            context.getString(R.string.preference_privacy_should_block_cookies_third_party_only_option) ->
-                EngineSession.TrackingProtectionPolicy.CookiePolicy.ACCEPT_ONLY_FIRST_PARTY
-
-            else -> EngineSession.TrackingProtectionPolicy.CookiePolicy.ACCEPT_ALL
-        }
+        val cookiePolicy = getCookiePolicy(shouldBlockCookiesValue)
 
         return EngineSession.TrackingProtectionPolicy.select(
             cookiePolicy = cookiePolicy,
@@ -77,8 +85,72 @@ class Settings private constructor(
         )
     }
 
-    fun setupSafeBrowsing(engine: Engine) {
-        if (shouldUseSafeBrowsing()) {
+    private fun getCookiePolicy(shouldBlockCookiesValue: String) =
+        when (shouldBlockCookiesValue) {
+            context.getString(R.string.yes) ->
+                EngineSession.TrackingProtectionPolicy.CookiePolicy.ACCEPT_NONE
+
+            context.getString(R.string.third_party_tracker) ->
+                EngineSession.TrackingProtectionPolicy.CookiePolicy.ACCEPT_NON_TRACKERS
+
+            context.getString(R.string.third_party_only) ->
+                EngineSession.TrackingProtectionPolicy.CookiePolicy.ACCEPT_ONLY_FIRST_PARTY
+
+            context.getString(R.string.cross_site) ->
+                EngineSession.TrackingProtectionPolicy.CookiePolicy.ACCEPT_FIRST_PARTY_AND_ISOLATE_OTHERS
+
+            context.getString(R.string.no) -> {
+                EngineSession.TrackingProtectionPolicy.CookiePolicy.ACCEPT_ALL
+            }
+
+            NO_VALUE -> {
+                // Ending up here means that the cookie preference has not been yet modified.
+                // We should set it to the default value.
+                setBlockCookiesValue(
+                    resources.getStringArray(R.array.cookies_options_entry_values)[DEFAULT_COOKIE_OPTION_INDEX]
+                )
+                EngineSession.TrackingProtectionPolicy.CookiePolicy.ACCEPT_FIRST_PARTY_AND_ISOLATE_OTHERS
+            }
+
+            else -> {
+                // Ending up here means that the cookie preference has already been stored in another locale.
+                // We will have identify the existing option and set the preference to the corresponding value.
+                // See https://github.com/mozilla-mobile/focus-android/issues/5996.
+
+                val cookieOptionIndex =
+                    resources.getStringArray(R.array.cookies_options_entries)
+                        .asList().indexOf(shouldBlockCookiesValue())
+
+                val correspondingValue =
+                    resources.getStringArray(R.array.cookies_options_entry_values).getOrNull(cookieOptionIndex)
+                        ?: resources.getStringArray(R.array.cookies_options_entry_values)[DEFAULT_COOKIE_OPTION_INDEX]
+
+                setBlockCookiesValue(correspondingValue)
+
+                // Get the updated cookie policy for the corresponding value
+                when (shouldBlockCookiesValue) {
+                    context.getString(R.string.yes) ->
+                        EngineSession.TrackingProtectionPolicy.CookiePolicy.ACCEPT_NONE
+
+                    context.getString(R.string.third_party_tracker) ->
+                        EngineSession.TrackingProtectionPolicy.CookiePolicy.ACCEPT_NON_TRACKERS
+
+                    context.getString(R.string.third_party_only) ->
+                        EngineSession.TrackingProtectionPolicy.CookiePolicy.ACCEPT_ONLY_FIRST_PARTY
+
+                    context.getString(R.string.cross_site) ->
+                        EngineSession.TrackingProtectionPolicy.CookiePolicy.ACCEPT_FIRST_PARTY_AND_ISOLATE_OTHERS
+
+                    else -> {
+                        // Fallback to the default value.
+                        EngineSession.TrackingProtectionPolicy.CookiePolicy.ACCEPT_ALL
+                    }
+                }
+            }
+        }
+
+    fun setupSafeBrowsing(engine: Engine, shouldUseSafeBrowsing: Boolean = shouldUseSafeBrowsing()) {
+        if (shouldUseSafeBrowsing) {
             engine.settings.safeBrowsingPolicy = arrayOf(EngineSession.SafeBrowsingPolicy.RECOMMENDED)
         } else {
             engine.settings.safeBrowsingPolicy = arrayOf(EngineSession.SafeBrowsingPolicy.NONE)
@@ -93,12 +165,41 @@ class Settings private constructor(
     val defaultSearchEngineName: String
         get() = preferences.getString(getPreferenceKey(R.string.pref_key_search_engine), "")!!
 
+    val openLinksInExternalApp: Boolean
+        get() = preferences.getBoolean(
+            getPreferenceKey(R.string.pref_key_open_links_in_external_app),
+            false
+        )
+
+    var isExperimentationEnabled: Boolean
+        get() = preferences.getBoolean(getPreferenceKey(R.string.pref_key_studies), true)
+        set(value) {
+            preferences.edit()
+                .putBoolean(getPreferenceKey(R.string.pref_key_studies), value)
+                .commit()
+        }
+
     fun shouldBlockImages(): Boolean =
         // Not shipping in v1 (#188)
             /* preferences.getBoolean(
                     resources.getString(R.string.pref_key_performance_block_images),
                     false); */
         false
+
+    private var autoplayPrefKey: String? = preferences.getString(
+        getPreferenceKey(R.string.pref_key_autoplay),
+        context.getString(R.string.pref_key_block_autoplay_audio_only)
+    )
+
+    fun updateAutoplayPrefKey(prefKey: String) {
+        preferences.edit()
+            .putString(getPreferenceKey(R.string.pref_key_autoplay), prefKey)
+            .apply()
+        context.components.sessionUseCases.reload.invoke(context.components.store.state.selectedTabId)
+        currentAutoplayOption = getValueByPrefKey(autoplayPrefKey = prefKey, context = context)
+    }
+
+    var currentAutoplayOption = getValueByPrefKey(autoplayPrefKey = autoplayPrefKey, context = context)
 
     fun shouldEnableRemoteDebugging(): Boolean =
         preferences.getBoolean(
@@ -136,30 +237,20 @@ class Settings private constructor(
                 R.string
                     .pref_key_performance_enable_cookies
             ),
-            resources.getString(R.string.preference_privacy_should_block_cookies_third_party_tracker_cookies_option)
+            NO_VALUE
         )!!
 
-    fun shouldBlockCookies(): Boolean =
-        shouldBlockCookiesValue() == resources.getString(
-            R.string.preference_privacy_should_block_cookies_yes_option2
-        )
-
-    fun shouldBlockThirdPartyCookies(): Boolean =
-        shouldBlockCookiesValue() == resources.getString(
-            R.string.preference_privacy_should_block_cookies_third_party_only_option
-        ) ||
-            shouldBlockCookiesValue() == resources.getString(
-                R.string.preference_privacy_should_block_cookies_yes_option2
-            )
+    private fun setBlockCookiesValue(newValue: String) {
+        preferences.edit()
+            .putString(getPreferenceKey(R.string.pref_key_performance_enable_cookies), newValue)
+            .apply()
+    }
 
     fun shouldShowFirstrun(): Boolean =
         !preferences.getBoolean(FirstrunFragment.FIRSTRUN_PREF, false)
 
     fun shouldUseBiometrics(): Boolean =
         preferences.getBoolean(getPreferenceKey(R.string.pref_key_biometric), false)
-
-    fun shouldOpenNewTabs(): Boolean =
-        preferences.getBoolean(getPreferenceKey(R.string.pref_key_open_new_tab), false)
 
     fun shouldUseSecureMode(): Boolean =
         preferences.getBoolean(getPreferenceKey(R.string.pref_key_secure), false)
@@ -208,9 +299,15 @@ class Settings private constructor(
 
     fun shouldBlockOtherTrackers() =
         preferences.getBoolean(
-            getPreferenceKey(R.string.pref_key_privacy_block_other2),
-            true
+            getPreferenceKey(R.string.pref_key_privacy_block_other3),
+            false
         )
+
+    /**
+     * This is automatically inferred based on the current system status. Not a setting in our app.
+     */
+    fun isAccessibilityEnabled() =
+        accessibilityManager?.isTouchExplorationEnabled ?: false || switchServiceIsEnabled
 
     fun userHasToggledSearchSuggestions(): Boolean =
         preferences.getBoolean(SearchSuggestionsPreferences.TOGGLED_SUGGESTIONS_PREF, false)
@@ -243,6 +340,82 @@ class Settings private constructor(
         0
     )
 
+    fun hasSocialBlocked() = preferences.getBoolean(
+        getPreferenceKey(R.string.pref_key_privacy_block_social),
+        true
+    )
+
+    fun hasAdvertisingBlocked() = preferences.getBoolean(
+        getPreferenceKey(R.string.pref_key_privacy_block_ads),
+        true
+    )
+
+    fun hasAnalyticsBlocked() = preferences.getBoolean(
+        getPreferenceKey(R.string.pref_key_privacy_block_analytics),
+        true
+    )
+
+    fun hasContentBlocked() = preferences.getBoolean(
+        getPreferenceKey(R.string.pref_key_privacy_block_other3),
+        true
+    )
+
+    var lightThemeSelected = preferences.getBoolean(
+        getPreferenceKey(R.string.pref_key_light_theme),
+        false
+    )
+
+    var darkThemeSelected = preferences.getBoolean(
+        getPreferenceKey(R.string.pref_key_dark_theme),
+        false
+    )
+
+    var useDefaultThemeSelected = preferences.getBoolean(
+        getPreferenceKey(R.string.pref_key_default_theme),
+        false
+    )
+
+    fun getHttpsOnlyMode(): Engine.HttpsOnlyMode {
+        return if (
+            Features.HTTPS_ONLY_MODE &&
+            preferences.getBoolean(getPreferenceKey(R.string.pref_key_https_only), true)
+        ) {
+            Engine.HttpsOnlyMode.ENABLED
+        } else {
+            Engine.HttpsOnlyMode.DISABLED
+        }
+    }
+
+    fun getSitePermissionsSettingsRules() = SitePermissionsRules(
+        notification = SitePermissionsRules.Action.BLOCKED,
+        microphone = SitePermissionsRules.Action.BLOCKED,
+        location = SitePermissionsRules.Action.BLOCKED,
+        camera = SitePermissionsRules.Action.BLOCKED,
+        autoplayAudible = getAutoplayRules().first,
+        autoplayInaudible = getAutoplayRules().second,
+        persistentStorage = SitePermissionsRules.Action.BLOCKED,
+        mediaKeySystemAccess = SitePermissionsRules.Action.BLOCKED
+    )
+
+    private fun getAutoplayRules(): Pair<SitePermissionsRules.AutoplayAction, SitePermissionsRules.AutoplayAction> {
+        return when (currentAutoplayOption) {
+            is AutoplayOption.AllowAudioVideo -> Pair(
+                SitePermissionsRules.AutoplayAction.ALLOWED,
+                SitePermissionsRules.AutoplayAction.ALLOWED
+            )
+
+            is AutoplayOption.BlockAudioVideo -> Pair(
+                SitePermissionsRules.AutoplayAction.BLOCKED,
+                SitePermissionsRules.AutoplayAction.BLOCKED
+            )
+
+            else -> Pair(
+                SitePermissionsRules.AutoplayAction.BLOCKED,
+                SitePermissionsRules.AutoplayAction.ALLOWED
+            )
+        }
+    }
+
     private fun getPreferenceKey(resourceId: Int): String =
-        resources.getString(resourceId)
+        context.getString(resourceId)
 }

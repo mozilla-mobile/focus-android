@@ -24,17 +24,20 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import mozilla.components.browser.icons.IconRequest
+import mozilla.components.browser.state.state.searchEngines
 import mozilla.components.concept.fetch.Client
 import mozilla.components.concept.fetch.Request
 import mozilla.components.concept.fetch.Request.Redirect.FOLLOW
 import mozilla.components.feature.search.ext.createSearchEngine
+import mozilla.components.service.glean.private.NoExtras
+import org.mozilla.focus.GleanMetrics.SearchEngines
 import org.mozilla.focus.R
+import org.mozilla.focus.ext.components
 import org.mozilla.focus.ext.requireComponents
+import org.mozilla.focus.ext.settings
 import org.mozilla.focus.search.ManualAddSearchEnginePreference
-import org.mozilla.focus.shortcut.IconGenerator
 import org.mozilla.focus.state.AppAction
-import org.mozilla.focus.telemetry.TelemetryWrapper
-import org.mozilla.focus.utils.Settings
 import org.mozilla.focus.utils.SupportUtils
 import org.mozilla.focus.utils.UrlUtils
 import org.mozilla.focus.utils.ViewUtils
@@ -73,15 +76,12 @@ class ManualAddSearchEngineSettingsFragment : BaseSettingsFragment() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         val openLearnMore = {
-            val tabId = requireComponents.tabsUseCases.addTab(
-                SupportUtils.getSumoURLForTopic(requireContext(), SupportUtils.SumoTopic.ADD_SEARCH_ENGINE),
-                selectTab = true,
-                private = true
+            val learnMoreUrl = SupportUtils.getSumoURLForTopic(
+                requireContext(),
+                SupportUtils.SumoTopic.ADD_SEARCH_ENGINE
             )
-
-            TelemetryWrapper.addSearchEngineLearnMoreEvent()
-
-            requireComponents.appStore.dispatch(AppAction.OpenTab(tabId))
+            SupportUtils.openUrlInCustomTab(requireActivity(), learnMoreUrl)
+            SearchEngines.learnMoreTapped.record(NoExtras())
         }
 
         val saveSearchEngine = {
@@ -89,7 +89,9 @@ class ManualAddSearchEngineSettingsFragment : BaseSettingsFragment() {
             val searchQuery = requireView().findViewById<EditText>(R.id.edit_search_string).text.toString()
 
             val pref = findManualAddSearchEnginePreference(R.string.pref_key_manual_add_search_engine)
-            val engineValid = pref?.validateEngineNameAndShowError(engineName) ?: false
+
+            val existingEngines = requireContext().components.store.state.search.searchEngines
+            val engineValid = pref?.validateEngineNameAndShowError(engineName, existingEngines) ?: false
             val searchValid = pref?.validateSearchQueryAndShowError(searchQuery) ?: false
             val isPartialSuccess = engineValid && searchValid
 
@@ -102,7 +104,7 @@ class ManualAddSearchEngineSettingsFragment : BaseSettingsFragment() {
                     validateSearchEngine(engineName, searchQuery, requireComponents.client)
                 }
             } else {
-                TelemetryWrapper.saveCustomSearchEngineEvent(false)
+                SearchEngines.saveEngineTapped.record(SearchEngines.SaveEngineTappedExtra(false))
             }
         }
 
@@ -132,25 +134,28 @@ class ManualAddSearchEngineSettingsFragment : BaseSettingsFragment() {
 
     private fun setUiIsValidatingAsync(isValidating: Boolean, saveMenuItem: MenuItem?) {
         val pref = findManualAddSearchEnginePreference(R.string.pref_key_manual_add_search_engine)
+        val updateViews = {
+            // Disable text entry until done validating
+            val viewGroup = view as ViewGroup
+            enableAllSubviews(!isValidating, viewGroup)
+
+            saveMenuItem?.isEnabled = !isValidating
+        }
 
         if (isValidating) {
             view?.alpha = DISABLED_ALPHA
             // Delay showing the loading indicator to prevent it flashing on the screen
-            job = scope?.launch {
+            job = scope?.launch(Dispatchers.Main) {
                 delay(LOADING_INDICATOR_DELAY)
                 pref?.setProgressViewShown(isValidating)
+                updateViews()
             }
         } else {
             view?.alpha = 1f
             job?.cancel()
             pref?.setProgressViewShown(isValidating)
+            updateViews()
         }
-
-        // Disable text entry until done validating
-        val viewGroup = view as ViewGroup
-        enableAllSubviews(!isValidating, viewGroup)
-
-        saveMenuItem?.isEnabled = !isValidating
     }
 
     private fun enableAllSubviews(shouldEnable: Boolean, viewGroup: ViewGroup) {
@@ -199,7 +204,11 @@ class ManualAddSearchEngineSettingsFragment : BaseSettingsFragment() {
             )
 
             return try {
-                client.fetch(request).status < VALID_RESPONSE_CODE_UPPER_BOUND
+                val response = client.fetch(request)
+                // Close the response stream to ensure the body is closed correctly. See https://bugzilla.mozilla.org/show_bug.cgi?id=1603114.
+                response.body.close()
+
+                response.status < VALID_RESPONSE_CODE_UPPER_BOUND
             } catch (e: IOException) {
                 Log.d(LOGTAG, "Failure to get response code from server: returning invalid search query")
                 false
@@ -209,7 +218,6 @@ class ManualAddSearchEngineSettingsFragment : BaseSettingsFragment() {
 
     private suspend fun validateSearchEngine(engineName: String, query: String, client: Client) {
         val isValidSearchQuery = isValidSearchQueryURL(client, query)
-        TelemetryWrapper.saveCustomSearchEngineEvent(isValidSearchQuery)
 
         withContext(Dispatchers.Main) {
             if (!isActive) {
@@ -221,18 +229,20 @@ class ManualAddSearchEngineSettingsFragment : BaseSettingsFragment() {
                     createSearchEngine(
                         engineName,
                         query.toSearchUrl(),
-                        IconGenerator.generateSearchEngineIcon(requireContext())
+                        requireComponents.icons.loadIcon(IconRequest(query, isPrivate = true)).await().bitmap
                     )
                 )
 
-                Snackbar.make(requireView(), R.string.search_add_confirmation, Snackbar.LENGTH_SHORT).show()
-                Settings.getInstance(requireActivity()).setDefaultSearchEngineByName(engineName)
+                ViewUtils.showBrandedSnackbar(requireView(), R.string.search_add_confirmation, Snackbar.LENGTH_SHORT)
+                requireActivity().settings.setDefaultSearchEngineByName(engineName)
+                SearchEngines.saveEngineTapped.record(SearchEngines.SaveEngineTappedExtra(true))
 
                 requireComponents.appStore.dispatch(
                     AppAction.NavigateUp(requireComponents.store.state.selectedTabId)
                 )
             } else {
                 showServerError()
+                SearchEngines.saveEngineTapped.record(SearchEngines.SaveEngineTappedExtra(false))
             }
 
             setUiIsValidatingAsync(false, menuItemForActiveAsyncTask)

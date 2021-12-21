@@ -5,11 +5,14 @@ package org.mozilla.focus.activity.robots
 
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.click
+import androidx.test.espresso.assertion.ViewAssertions.matches
+import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.uiautomator.UiScrollable
 import androidx.test.uiautomator.UiSelector
 import org.junit.Assert.assertTrue
 import org.mozilla.focus.R
+import org.mozilla.focus.helpers.TestHelper.getStringResource
 import org.mozilla.focus.helpers.TestHelper.packageName
 import org.mozilla.focus.helpers.TestHelper.waitingTime
 
@@ -17,6 +20,7 @@ class SettingsRobot {
 
     fun verifySettingsMenuItems() {
         settingsMenuList.waitForExists(waitingTime)
+        whatsNewButton.check(matches(isDisplayed()))
         assertTrue(generalSettingsMenu().exists())
         assertTrue(searchSettingsMenu.exists())
         assertTrue(privacySettingsMenu.exists())
@@ -34,7 +38,7 @@ class SettingsRobot {
         }
 
         fun openGeneralSettingsMenu(
-            localizedText: String = "General",
+            localizedText: String = getStringResource(R.string.preference_category_general),
             interact: SettingsGeneralMenuRobot.() -> Unit
         ): SettingsGeneralMenuRobot.Transition {
             generalSettingsMenu(localizedText).waitForExists(waitingTime)
@@ -88,7 +92,7 @@ class SettingsRobot {
 private val settingsMenuList =
     UiScrollable(UiSelector().resourceId("$packageName:id/recycler_view"))
 
-private fun generalSettingsMenu(localizedText: String = "General") =
+private fun generalSettingsMenu(localizedText: String = getStringResource(R.string.preference_category_general)) =
     settingsMenuList.getChild(
         UiSelector()
             .text(localizedText)
@@ -96,22 +100,22 @@ private fun generalSettingsMenu(localizedText: String = "General") =
 
 private val searchSettingsMenu = settingsMenuList.getChild(
     UiSelector()
-        .text("Search")
+        .text(getStringResource(R.string.preference_category_search))
 )
 
 private val privacySettingsMenu = settingsMenuList.getChild(
     UiSelector()
-        .text("Privacy & Security")
+        .text(getStringResource(R.string.preference_privacy_and_security_header))
 )
 
 private val advancedSettingsMenu = settingsMenuList.getChild(
     UiSelector()
-        .text("Advanced")
+        .text(getStringResource(R.string.preference_category_advanced))
 )
 
 private val mozillaSettingsMenu = settingsMenuList.getChild(
     UiSelector()
-        .text("Mozilla")
+        .text(getStringResource(R.string.preference_mozilla_summary))
 )
 
 private val whatsNewButton = onView(withId(R.id.menu_whats_new))

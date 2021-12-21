@@ -10,17 +10,21 @@ import android.util.AttributeSet
 import android.view.View
 import mozilla.components.browser.state.selector.findCustomTab
 import mozilla.components.concept.engine.EngineView
+import mozilla.components.feature.session.SessionFeature
+import mozilla.components.support.base.feature.ViewBoundFeatureWrapper
+import mozilla.components.support.locale.LocaleAwareAppCompatActivity
 import mozilla.components.support.utils.SafeIntent
 import org.mozilla.focus.R
 import org.mozilla.focus.ext.components
+import org.mozilla.focus.ext.updateSecureWindowFlags
 import org.mozilla.focus.fragment.BrowserFragment
-import org.mozilla.focus.locale.LocaleAwareAppCompatActivity
 
 /**
  * The main entry point for "custom tabs" opened by third-party apps.
  */
 class CustomTabActivity : LocaleAwareAppCompatActivity() {
     private lateinit var customTabId: String
+    private val sessionFeature = ViewBoundFeatureWrapper<SessionFeature>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -58,14 +62,38 @@ class CustomTabActivity : LocaleAwareAppCompatActivity() {
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+
+        updateSecureWindowFlags()
+    }
+
+    override fun onBackPressed() {
+        if (sessionFeature.onBackPressed()) {
+            return
+        } else {
+            super.onBackPressed()
+        }
+    }
+
     override fun onCreateView(name: String, context: Context, attrs: AttributeSet): View? {
         return if (name == EngineView::class.java.name) {
-            components.engine.createView(context, attrs).asView()
+            val engineView = components.engine.createView(context, attrs)
+            setSessionFeature(engineView)
+            engineView.asView()
         } else super.onCreateView(name, context, attrs)
     }
 
-    override fun applyLocale() {
-        // We don't care here: all our fragments update themselves as appropriate
+    private fun setSessionFeature(engineView: EngineView) {
+        sessionFeature.set(
+            SessionFeature(
+                components.store,
+                components.sessionUseCases.goBack,
+                engineView,
+                customTabId
+            ),
+            this, engineView.asView()
+        )
     }
 
     companion object {

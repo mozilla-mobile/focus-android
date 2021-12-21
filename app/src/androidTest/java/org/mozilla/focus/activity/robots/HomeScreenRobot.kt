@@ -6,10 +6,14 @@ package org.mozilla.focus.activity.robots
 
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.click
+import androidx.test.espresso.action.ViewActions.swipeLeft
+import androidx.test.espresso.action.ViewActions.swipeRight
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import androidx.test.espresso.matcher.ViewMatchers.withId
+import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.uiautomator.UiSelector
+import org.hamcrest.Matchers.not
 import org.junit.Assert.assertTrue
 import org.mozilla.focus.R
 import org.mozilla.focus.helpers.TestHelper.getStringResource
@@ -27,34 +31,48 @@ class HomeScreenRobot {
     fun skipFirstRun() = onView(withId(R.id.skip)).perform(click())
 
     fun verifyOnboardingFirstSlide() {
-        assertTrue(firstSlide.waitForExists(waitingTime))
+        firstSlide.check(matches(isDisplayed()))
     }
 
     fun verifyOnboardingSecondSlide() {
-        assertTrue(secondSlide.waitForExists(waitingTime))
+        secondSlide.check(matches(isDisplayed()))
     }
 
     fun verifyOnboardingThirdSlide() {
-        assertTrue(thirdSlide.waitForExists(waitingTime))
+        thirdSlide.check(matches(isDisplayed()))
     }
 
     fun verifyOnboardingLastSlide() {
-        assertTrue(lastSlide.waitForExists(waitingTime))
-        assertTrue(finishBtn.text == "OK, GOT IT!")
+        lastSlide.check(matches(isDisplayed()))
     }
 
     fun clickOnboardingNextBtn() = nextBtn.click()
 
     fun clickOnboardingFinishBtn() = finishBtn.click()
 
-    fun verifyHomeScreenTipIsDisplayed(isDisplayed: Boolean) {
-        val teaser = getStringResource(R.string.teaser)
-        if (isDisplayed) {
-            homeScreenTips.waitForExists(waitingTime)
-            assertTrue(homeScreenTips.text != teaser)
+    fun verifyTipsCarouselIsDisplayed(enabled: Boolean) {
+        if (enabled) {
+            homeScreenTips.check(matches(isDisplayed()))
         } else {
-            assertTrue(homeScreenTips.text == teaser)
+            homeScreenTips.check(matches(not(isDisplayed())))
         }
+    }
+
+    fun verifyTipText(text: String) {
+        val tipText = mDevice.findObject(UiSelector().text(text))
+        assertTrue(tipText.waitForExists(waitingTime))
+    }
+
+    fun scrollLeftTipsCarousel() {
+        homeScreenTips
+            .check(matches(isDisplayed()))
+            .perform(swipeLeft())
+    }
+
+    fun scrollRightTipsCarousel() {
+        homeScreenTips
+            .check(matches(isDisplayed()))
+            .perform(swipeRight())
     }
 
     class Transition {
@@ -66,6 +84,15 @@ class HomeScreenRobot {
 
             ThreeDotMainMenuRobot().interact()
             return ThreeDotMainMenuRobot.Transition()
+        }
+
+        fun clickLinkFromTips(linkText: String, interact: BrowserRobot.() -> Unit): BrowserRobot.Transition {
+            val tipTextLink = mDevice.findObject(UiSelector().textContains(linkText))
+            tipTextLink.waitForExists(waitingTime)
+            tipTextLink.click()
+
+            BrowserRobot().interact()
+            return BrowserRobot.Transition()
         }
     }
 }
@@ -83,25 +110,13 @@ private val editURLBar =
 private val mainMenu = onView(withId(R.id.menuView))
 
 /********* First Run Locators  */
-private val firstSlide = mDevice.findObject(
-    UiSelector()
-        .text("Power up your privacy")
-)
+private val firstSlide = onView(withText(R.string.firstrun_defaultbrowser_title))
 
-private val secondSlide = mDevice.findObject(
-    UiSelector()
-        .text("Your search, your way")
-)
+private val secondSlide = onView(withText(R.string.firstrun_search_title))
 
-private val thirdSlide = mDevice.findObject(
-    UiSelector()
-        .text("Add shortcuts to your home screen")
-)
+private val thirdSlide = onView(withText(R.string.firstrun_shortcut_title))
 
-private val lastSlide = mDevice.findObject(
-    UiSelector()
-        .text("Make privacy a habit")
-)
+private val lastSlide = onView(withText(R.string.firstrun_privacy_title))
 
 private val nextBtn = mDevice.findObject(
     UiSelector()
@@ -115,5 +130,4 @@ private val finishBtn = mDevice.findObject(
         .enabled(true)
 )
 
-private val homeScreenTips =
-    mDevice.findObject(UiSelector().resourceId("$packageName:id/homeViewTipsLabel"))
+private val homeScreenTips = onView(withId(R.id.home_tips))

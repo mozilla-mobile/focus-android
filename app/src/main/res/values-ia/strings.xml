@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:moz="http://mozac.org/tools">
     <!-- ####################################################################################### -->
     <!-- ## Put only strings into this file that should be translated. Move all other strings ## -->
     <!-- ## into a separate file like strings_references.xml                                  ## -->
@@ -150,8 +150,8 @@
     <!-- %1$s will be replaced by the app name (e.g. Firefox Focus) -->
     <string name="preference_mozilla_summary">A proposito de %1$s, adjuta</string>
 
-    <!-- Preference category for ad blocking and tracking protection settings -->
-    <string name="preference_category_tracking_protection">Protection contra le traciamento</string>
+    <!-- Preference category for ad blocking and enhanced tracking protection settings -->
+    <string name="preference_category_tracking_protection3">Protection antitraciamento reinfortiate</string>
 
     <!-- Preference category for settings related to controlling web content -->
     <string name="preference_category_web_content">Contento de web</string>
@@ -162,8 +162,8 @@
     <!-- Preference category for General Settings -->
     <string name="preference_category_general">General</string>
 
-    <!-- Preference summary for General Settings category; the three things users can find in this category -->
-    <string name="preference_general_summary">Navigator, scheda, lingua predefinite</string>
+    <!-- Preference summary for General Settings category; the two things users can find in this category -->
+    <string name="preference_general_summary2">Navigator, lingua predefinite</string>
 
     <!-- Preference category for settings about sending usage data -->
     <string name="preference_category_data_collection_use">Colligimento e uso de datos</string>
@@ -194,14 +194,16 @@
     <!-- Title of "switch" preference that enables/disables autocomplete for the default list -->
     <string name="preference_switch_autocomplete_topsites">Pro le sitos le plus visitate</string>
 
-    <!-- Summary for the toggle to enable autocomplete for the topsites list -->
-    <string name="preference_autocomplete_topsite_summary">Activa pro auto-completar plus de 450 URLs popular in le barra de adresses.</string>
+    <!-- Summary for the toggle to enable autocomplete for the topsites list
+    %s is a placeholder for the app name (e.g. Firefox Focus)-->
+    <string name="preference_autocomplete_topsite_summary2">Activa pro consentir a %s de auto-completar plus de 450 URLs popular in le barra de adresses.</string>
 
     <!-- Title of "switch" preference that enables/disables autocomplete for the user-defined list -->
     <string name="preference_switch_autocomplete_user_list">Pro le sitos que tu adde</string>
 
-    <!-- Summary for the toggle to enable autocomplete for the user-defined list -->
-    <string name="preference_autocomplete_user_list_summary">Activa pro auto-completar plus de 450 URLs popular in le barra de adresses.</string>
+    <!-- Summary for the toggle to enable autocomplete for the user-defined list
+     %s is a placeholder for the app name (e.g. Firefox Focus)-->
+    <string name="preference_autocomplete_user_list_summary2">Activar pro que %s completa automaticamente tu URLs favorite.</string>
 
     <!-- Preference category: Manage (user-defined) sites -->
     <string name="preference_category_autocomplete_manage_sites">Gerer le sitos</string>
@@ -288,6 +290,7 @@
     <string name="preference_privacy_should_block_cookies_third_party_tracker_cookies_option">Blocar solo le cookies traciator de tertie partes</string>
     <string name="preference_privacy_should_block_cookies_third_party_only_option">Bloca solo le cookies de tertie partes</string>
 
+    <string name="preference_privacy_should_block_cookies_cross_site_option">Blocar le cookies inter sitos</string>
     <string name="preference_privacy_should_block_cookies_yes_option2">Si per favor</string>
 
     <!-- Preference Title: Biometrics can be used to unlock Focus if the previous session's data was not erased by the user. -->
@@ -527,9 +530,9 @@
     <!-- Label of the action that will close the dialog and not add anything to the home screen (shown in the confirmation dialog). -->
     <string name="dialog_addtohomescreen_action_no">NO</string>
 
-    <!-- When tracking protection is disabled for the current session then we will show this warning in the "Add to home screen" dialog to
-         let the user know that the shortcut will always be opened with tracking protection disabled. -->
-    <string name="dialog_addtohomescreen_tracking_protection">Le accesso directe aperira con le protection contra traciamento inactive</string>
+    <!-- When enhanced tracking protection is disabled for the current session then we will show this warning in the "Add to home screen" dialog to
+         let the user know that the shortcut will always be opened with enhanced tracking protection disabled. -->
+    <string name="dialog_addtohomescreen_tracking_protection2">Le via breve se aperira con le Protection antitraciamento reinfortiate disactivate</string>
 
     <!-- The user visible name of the "notification channel" (Android 8+ feature) for the ongoing notification shown while a browsing session is active.
     The recommended maximum length is 40 characters; the value may be truncated if it is too long.
@@ -585,7 +588,7 @@
     <!-- Text shown in prompts for GeckoView -->
     <string name="gv_prompt_username_hint">Nomine del usator</string>
     <string name="gv_prompt_password_hint">Contrasigno</string>
-    <string name="gv_prompt_clear">Clarar</string>
+    <string name="gv_prompt_clear">Vacuar</string>
 
     <!-- Text shown in Security Information Popup -->
     <!-- Text to denote secure or insecure connection -->
@@ -621,10 +624,10 @@
 
 
   <!-- Checkbox menu item text to request desktop site -->
-    <string name="preference_performance_request_desktop_site">Requirer le sito del scriptorio</string>
+    <string name="preference_performance_request_desktop_site">Requestar sito de scriptorio</string>
 
     <!-- Checkbox menu item text to request desktop site -->
-    <string name="preference_performance_request_desktop_site2">Sito del scriptorio</string>
+    <string name="preference_performance_request_desktop_site2">Sito de scriptorio</string>
 
     <!-- Displayed after a user long presses on the URL in a custom tab to copy the URL -->
     <string name="custom_tab_copy_url_action">URL copiate</string>
@@ -632,8 +635,32 @@
     <!-- Description of what a user may find in the Advanced Setting category, used for debugging -->
     <string name="preference_advanced_summary">Instrumentos de developpator</string>
 
+    <!-- Preference for open links in third party apps -->
+    <string name="preferences_open_links_in_apps">Aperir ligamines in apps</string>
+
     <!-- Title of Advanced Setting category -->
     <string name="preference_category_advanced">Avantiate</string>
+
+    <!-- Preference for studies -->
+    <string name="preference_studies">Studios</string>
+
+    <!-- Preference for studies summary-->
+    <string name="preference_studies_summary">Firefox pote installar e conducer studios de tempore in tempore.</string>
+
+    <!-- Learn more link for studies, links to an article for more information about studies. -->
+    <string name="studies_learn_more">Pro saper plus</string>
+
+    <!-- Dialog message shown when some changes are made on studies -->
+    <string name="studies_restart_app">Le application quitara pro applicar cambiamentos</string>
+
+    <!-- Title of the remove studies button -->
+    <string name="studies_remove"></string>
+
+    <!-- Title of the active section on the studies list -->
+    <string name="studies_active">Active</string>
+
+    <!-- Title of the completed section on the studies list -->
+    <string name="studies_completed">Completate</string>
 
     <!-- Preference to enable remote debugging of the app via USB or Wi-Fi -->
     <string name="preference_remote_debugging">Correction de errores remote per USB/wifi</string>
@@ -689,10 +716,10 @@
     The new line here must be kept as the second half of the string is clickable for the user. -->
     <string name="tip_disable_tracking_protection">Se comporta le sito inexpectatemente?\n Prova a disactivar le Protection de traciamento</string>
 
-    <!-- Tip displayed on home view explaining how to disable tracking protection
+    <!-- Tip displayed on home view explaining how to disable enhanced tracking protection
 The new line here must be kept as the second half of the string is clickable for the user. -->
-    <string name="tip_disable_tracking_protection2">Sito que care de contento o age estranie?\n
-    Proba disactivar le protection de traciamento</string>
+    <string name="tip_disable_tracking_protection3">Sito que care de contento o age estranie?\n
+    Proba disactivar le Protection antitraciamento reinfortiate</string>
 
     <!-- Tip displayed on home view explaining how to add sites to homescreen
     Argument 1 will be replaced with a line break in the application.-->
@@ -713,21 +740,26 @@ The new line here must be kept as the second half of the string is clickable for
 
     <!-- Tip displayed on home view explaining how to request the desktop version of a website.
       %1$s is a placeholder for the app name. -->
-    <string name="tip_request_desktop2">Vole tu vider le plen version de un sito?\n
-        Passa sur sito del scriptorio per le menu de %1$s.</string>
+    <string name="tip_request_desktop2">Vole vider le version complete de un sito?\n
+        Activa &quot;Sito de scriptorio&quot; in le menu de %1$s.</string>
 
     <!-- Tip displayed on home view explaining how to add a custom autocomplete URL -->
     <string name="tip_disable_tips2">Disactivar le suggestiones sur le pagina initial</string>
 
     <!-- Tip displayed on the home view explaining how to use the Allowlist feature.
      "Allowlist" is a replacement for the word whitelist. -->
-    <string name="tip_explain_allowlist2">Vole tu disactivar le protection de traciamento pro un sito cuje te fide?\n
+    <string name="tip_explain_allowlist3">Vole tu disactivar le Protection antitraciamento reinfortiate pro un sito cuje te fide?\n
         Adde lo al lista permittite in Parametros
     </string>
 
     <!-- Tip displayed on the home view about the changes in the new release.
     %1$s is a placeholder for the app name -->
-    <string name="tip_fresh_look">Perque si, nos ha un fresc nove apparentia! Lege plus re iste e altere actualisationes a %1$s.</string>
+    <string name="tip_fresh_look">Perque si, nos ha un fresc nove apparentia!\n Lege plus re iste e altere actualisationes a %1$s.</string>
+
+    <!-- Tip displayed on the home view about shortcuts
+    %1$s is a placeholder for the app name -->
+    <string name="tip_about_shortcuts">Crea vias breve pro le sitos que tu plus visita:\n
+    Selige \'Adder al vias breve\' in le menu de %1$s</string>
 
     <!-- Label for the snackbar when a user opens a new tab -->
     <string name="new_tab_opened_snackbar">Nove scheda aperite</string>
@@ -739,11 +771,16 @@ The new line here must be kept as the second half of the string is clickable for
     <string name="preference_open_new_tab">Commutar a ligamine in nove scheda immediatemente</string>
 
     <!-- Preference for safe browsing which when enabled, blocks dangerous or deceptive webpages that may include phishing or malware -->
-    <string name="preference_category_safe_browsing">Navigation secur</string>
+    <string moz:removedIn="97" name="preference_category_safe_browsing">Navigation secur</string>
     <!-- Preference title for safe browsing which when enabled, blocks dangerous or deceptive webpages that may include phishing or malware -->
     <string name="preference_safe_browsing_title">Blocar le sitos potentialmente periculose e fraudulente</string>
     <!-- Preference summary for safe browsing which when enabled, blocks dangerous or deceptive webpages that may include phishing or malware -->
     <string name="preference_safe_browsing_summary">Blocar le sitos reportate como fraudulente e que attacca, le sitos de malware e illos de software non desirate.</string>
+
+    <!-- Title of the preference to enable "HTTPS-Only" mode -->
+    <string name="preference_https_only_title">Modo solo HTTPS</string>
+    <!-- Description of the preference to enable "HTTPS-Only" mode. %1$s will get replaced with the name of the app. -->
+    <string name="preference_https_only_summary">HTTPS offere un connexion secur e cryptate inter %1$s e le sitos web que tu visita. Le major parte del sitos web supporta le HTTPS, e si es activate Modo HTTPS-solo, alora %1$s promovera tote le connexiones a HTTPS.</string>
 
     <!-- Preference for exceptions tracking protection -->
     <string name="preference_exceptions">Exceptiones</string>
@@ -780,7 +817,7 @@ The new line here must be kept as the second half of the string is clickable for
     <!-- Label for the total number of trackers blocked. %s represents the app install date -->
     <string name="trackers_count_note">Traciatores blocate desde %s</string>
     <!-- Category of trackers (content) that can be blocked by Enhanced Tracking Protection -->
-    <string name="content"></string>
+    <string name="content">Contento</string>
     <!-- Category of trackers (advertising) that can be blocked by Enhanced Tracking Protection -->
     <string name="advertising">Publicitate</string>
     <!-- Category of trackers (social media) that can be blocked by Enhanced Tracking Protection -->
@@ -808,7 +845,27 @@ The new line here must be kept as the second half of the string is clickable for
     <!-- Text for the menu button to remove a top site -->
     <string name="remove_top_site">Remover</string>
 
+    <!-- Text for the dialog title for renaming a top site -->
+    <string name="rename_top_site">Renominar</string>
+
     <!-- Text for context menu additional note.
     %1$s is a placeholder for the app name. -->
-    <string name="contextmenu_erased_images_note">Le imagines salvate e compartite &lt;b&gt;non essera&lt;/b&gt; delite quando tu eliminara le chronologia de %1$s.</string>
+    <string name="contextmenu_erased_images_note2">Le imagines salvate e compartite &lt;b&gt;non essera&lt;/b&gt; delite quando tu eliminara le chronologia de %1$s.</string>
+
+    <!-- Theme Preferences -->
+    <!-- Preference category for changing default theme to dark or light mode -->
+    <string name="preferences_theme">Thema</string>
+    <!-- Preference for using light theme -->
+    <string name="preference_light_theme">Clar</string>
+    <!-- Preference for using dark theme -->
+    <string name="preference_dark_theme">Obscur</string>
+    <!-- Preference for using using dark or light theme automatically set by battery -->
+    <string name="preference_auto_battery_theme">Predefinite per sparniator de batteria</string>
+    <!-- Preference for using following device theme -->
+    <string name="preference_follow_device_theme">Sequer le thema del apparato</string>
+
+
+    <!-- Sessions List -->
+    <!-- Content description (not visible, for screen readers etc.): Button that closes a tab n the sessions list -->
+    <string name="close_tab">Clauder scheda</string>
 </resources>

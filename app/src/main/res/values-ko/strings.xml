@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:moz="http://mozac.org/tools">
     <!-- ####################################################################################### -->
     <!-- ## Put only strings into this file that should be translated. Move all other strings ## -->
     <!-- ## into a separate file like strings_references.xml                                  ## -->
@@ -150,8 +150,8 @@
     <!-- %1$s will be replaced by the app name (e.g. Firefox Focus) -->
     <string name="preference_mozilla_summary">%1$s 정보, 도움말</string>
 
-    <!-- Preference category for ad blocking and tracking protection settings -->
-    <string name="preference_category_tracking_protection">추적 방지</string>
+    <!-- Preference category for ad blocking and enhanced tracking protection settings -->
+    <string name="preference_category_tracking_protection3">향상된 추적 방지 기능</string>
 
     <!-- Preference category for settings related to controlling web content -->
     <string name="preference_category_web_content">웹 콘텐츠</string>
@@ -162,8 +162,8 @@
     <!-- Preference category for General Settings -->
     <string name="preference_category_general">일반</string>
 
-    <!-- Preference summary for General Settings category; the three things users can find in this category -->
-    <string name="preference_general_summary">기본 브라우저, 탭, 언어</string>
+    <!-- Preference summary for General Settings category; the two things users can find in this category -->
+    <string name="preference_general_summary2">기본 브라우저, 언어</string>
 
     <!-- Preference category for settings about sending usage data -->
     <string name="preference_category_data_collection_use">데이터 수집 및 사용</string>
@@ -194,14 +194,16 @@
     <!-- Title of "switch" preference that enables/disables autocomplete for the default list -->
     <string name="preference_switch_autocomplete_topsites">자주 가는 사이트</string>
 
-    <!-- Summary for the toggle to enable autocomplete for the topsites list -->
-    <string name="preference_autocomplete_topsite_summary">자동 완성 기능을 활성화해서 450개가 넘는 자주 찾는 URL을 주소창에서 사용해 보세요.</string>
+    <!-- Summary for the toggle to enable autocomplete for the topsites list
+    %s is a placeholder for the app name (e.g. Firefox Focus)-->
+    <string name="preference_autocomplete_topsite_summary2">%s 자동 완성 기능을 활성화해서 450개가 넘는 자주 찾는 URL을 주소창에서 사용해 보세요.</string>
 
     <!-- Title of "switch" preference that enables/disables autocomplete for the user-defined list -->
     <string name="preference_switch_autocomplete_user_list">내가 추가한 사이트</string>
 
-    <!-- Summary for the toggle to enable autocomplete for the user-defined list -->
-    <string name="preference_autocomplete_user_list_summary">자동 완성 기능을 활성화해서 450개가 넘는 자주 찾는 URL을 주소창에서 사용해 보세요.</string>
+    <!-- Summary for the toggle to enable autocomplete for the user-defined list
+     %s is a placeholder for the app name (e.g. Firefox Focus)-->
+    <string name="preference_autocomplete_user_list_summary2">%s 자동 완성 기능을 활성화해서 자주 찾는 URL을 사용해 보세요.</string>
 
     <!-- Preference category: Manage (user-defined) sites -->
     <string name="preference_category_autocomplete_manage_sites">사이트 관리</string>
@@ -287,6 +289,7 @@
     <string name="preference_privacy_should_block_cookies_no_option2">아니오</string>
     <string name="preference_privacy_should_block_cookies_third_party_tracker_cookies_option">제 3자 추적기 쿠키 만 차단</string>
     <string name="preference_privacy_should_block_cookies_third_party_only_option">제 3자 쿠키만 차단</string>
+    <string name="preference_privacy_should_block_cookies_cross_site_option">교차 사이트 쿠키 차단</string>
     <string name="preference_privacy_should_block_cookies_yes_option2">네, 물론이요.</string>
 
     <!-- Preference Title: Biometrics can be used to unlock Focus if the previous session's data was not erased by the user. -->
@@ -523,9 +526,9 @@
     <!-- Label of the action that will close the dialog and not add anything to the home screen (shown in the confirmation dialog). -->
     <string name="dialog_addtohomescreen_action_no">아니오</string>
 
-    <!-- When tracking protection is disabled for the current session then we will show this warning in the "Add to home screen" dialog to
-         let the user know that the shortcut will always be opened with tracking protection disabled. -->
-    <string name="dialog_addtohomescreen_tracking_protection">바로 가기가 추적 차단 기능이 해제된 상태에서 열립니다</string>
+    <!-- When enhanced tracking protection is disabled for the current session then we will show this warning in the "Add to home screen" dialog to
+         let the user know that the shortcut will always be opened with enhanced tracking protection disabled. -->
+    <string name="dialog_addtohomescreen_tracking_protection2">바로 가기가 향상된 추적 방지 기능이 해제된 상태에서 열림</string>
 
     <!-- The user visible name of the "notification channel" (Android 8+ feature) for the ongoing notification shown while a browsing session is active.
     The recommended maximum length is 40 characters; the value may be truncated if it is too long.
@@ -628,8 +631,32 @@
     <!-- Description of what a user may find in the Advanced Setting category, used for debugging -->
     <string name="preference_advanced_summary">개발자 도구</string>
 
+    <!-- Preference for open links in third party apps -->
+    <string name="preferences_open_links_in_apps">앱에서 링크 열기</string>
+
     <!-- Title of Advanced Setting category -->
     <string name="preference_category_advanced">고급</string>
+
+    <!-- Preference for studies -->
+    <string name="preference_studies">연구</string>
+
+    <!-- Preference for studies summary-->
+    <string name="preference_studies_summary">Firefox가 때때로 연구를 설치하고 실행할 수 있습니다.</string>
+
+    <!-- Learn more link for studies, links to an article for more information about studies. -->
+    <string name="studies_learn_more">자세히 알아보기</string>
+
+    <!-- Dialog message shown when some changes are made on studies -->
+    <string name="studies_restart_app">변경 사항을 적용하기 위해 애플리케이션이 종료됩니다</string>
+
+    <!-- Title of the remove studies button -->
+    <string name="studies_remove">삭제</string>
+
+    <!-- Title of the active section on the studies list -->
+    <string name="studies_active">활성화</string>
+
+    <!-- Title of the completed section on the studies list -->
+    <string name="studies_completed">완료</string>
 
     <!-- Preference to enable remote debugging of the app via USB or Wi-Fi -->
     <string name="preference_remote_debugging">USB/Wi-Fi 원격 디버깅</string>
@@ -685,10 +712,10 @@
     The new line here must be kept as the second half of the string is clickable for the user. -->
     <string name="tip_disable_tracking_protection">사이트가 잘 작동하지 않나요?\n 추적 방지를 꺼보세요</string>
 
-    <!-- Tip displayed on home view explaining how to disable tracking protection
+    <!-- Tip displayed on home view explaining how to disable enhanced tracking protection
 The new line here must be kept as the second half of the string is clickable for the user. -->
-    <string name="tip_disable_tracking_protection2">사이트에서 콘텐츠가 나오지 않거나 이상하게 작동하나요?\n
-    추적 방지를 꺼보세요</string>
+    <string name="tip_disable_tracking_protection3">사이트에서 콘텐츠가 나오지 않거나 이상하게 작동하나요?\n
+    향상된 추적 방지를 꺼보세요.</string>
 
     <!-- Tip displayed on home view explaining how to add sites to homescreen
     Argument 1 will be replaced with a line break in the application.-->
@@ -717,13 +744,18 @@ The new line here must be kept as the second half of the string is clickable for
 
     <!-- Tip displayed on the home view explaining how to use the Allowlist feature.
      "Allowlist" is a replacement for the word whitelist. -->
-    <string name="tip_explain_allowlist2">신뢰할 수 있는 사이트는 처적 방지 기능을 해제하고 싶으신가요?\n
+    <string name="tip_explain_allowlist3">신뢰할 수 있는 사이트는 향상된 추적 방지 기능을 해제하고 싶으신가요?\n
         설정의 허용 목록에 추가해보세요.
     </string>
 
     <!-- Tip displayed on the home view about the changes in the new release.
     %1$s is a placeholder for the app name -->
-    <string name="tip_fresh_look">네, 새로운 모습으로 바뀌었습니다! 이에 대해 더 읽어보고 %1$s의 다른 업데이트도 살펴 보세요.</string>
+    <string name="tip_fresh_look">네, 새로운 모습으로 바뀌었습니다!\n 이에 대해 더 읽어보고 %1$s의 다른 업데이트도 살펴 보세요.</string>
+
+    <!-- Tip displayed on the home view about shortcuts
+    %1$s is a placeholder for the app name -->
+    <string name="tip_about_shortcuts">가장 많이 방문하는 사이트에 대한 바로가기 만들기:\n
+    %1$s 메뉴에서 바로가기 추가를 선택하세요.</string>
 
     <!-- Label for the snackbar when a user opens a new tab -->
     <string name="new_tab_opened_snackbar">새 탭 열림</string>
@@ -735,11 +767,17 @@ The new line here must be kept as the second half of the string is clickable for
     <string name="preference_open_new_tab">새탭의 링크로 즉시 전환</string>
 
     <!-- Preference for safe browsing which when enabled, blocks dangerous or deceptive webpages that may include phishing or malware -->
-    <string name="preference_category_safe_browsing">안전한 브라우징</string>
+    <string moz:removedIn="97" name="preference_category_safe_browsing">안전한 브라우징</string>
     <!-- Preference title for safe browsing which when enabled, blocks dangerous or deceptive webpages that may include phishing or malware -->
     <string name="preference_safe_browsing_title">잠재적으로 위험한 사이트 및 사기성 사이트 차단</string>
     <!-- Preference summary for safe browsing which when enabled, blocks dangerous or deceptive webpages that may include phishing or malware -->
     <string name="preference_safe_browsing_summary">사기성 사이트나 공격 사이트, 악성코드 사이트, 원치 않는 소프트웨어 사이트를 차단합니다.</string>
+
+    <!-- Title of the preference to enable "HTTPS-Only" mode -->
+    <string name="preference_https_only_title">HTTPS 전용 모드</string>
+
+    <!-- Description of the preference to enable "HTTPS-Only" mode. %1$s will get replaced with the name of the app. -->
+    <string name="preference_https_only_summary">HTTPS는 %1$s와 사용자가 방문한 웹 사이트 간에 안전한 암호화된 연결을 제공합니다. 대부분의 웹 사이트는 HTTPS를 지원하며, HTTPS 전용 모드를 사용하도록 설정한 경우 %1$s는 모든 연결을 HTTPS로 업그레이드합니다.</string>
 
     <!-- Preference for exceptions tracking protection -->
     <string name="preference_exceptions">예외</string>
@@ -804,7 +842,27 @@ The new line here must be kept as the second half of the string is clickable for
     <!-- Text for the menu button to remove a top site -->
     <string name="remove_top_site">제거</string>
 
+    <!-- Text for the dialog title for renaming a top site -->
+    <string name="rename_top_site">이름 변경</string>
+
     <!-- Text for context menu additional note.
     %1$s is a placeholder for the app name. -->
-    <string name="contextmenu_erased_images_note">%1s 기록을 지울때 저장 및 공유된 이미지는 &lt;b&gt;삭제되지 않습니다&lt;/b&gt;.</string>
+    <string name="contextmenu_erased_images_note2">%1$s 기록을 지울 때 저장 및 공유된 이미지는 &lt;b&gt;삭제되지 않습니다&lt;/b&gt;.</string>
+
+    <!-- Theme Preferences -->
+    <!-- Preference category for changing default theme to dark or light mode -->
+    <string name="preferences_theme">테마</string>
+    <!-- Preference for using light theme -->
+    <string name="preference_light_theme">밝은</string>
+    <!-- Preference for using dark theme -->
+    <string name="preference_dark_theme">어두운</string>
+    <!-- Preference for using using dark or light theme automatically set by battery -->
+    <string name="preference_auto_battery_theme">절전 모드로 설정</string>
+    <!-- Preference for using following device theme -->
+    <string name="preference_follow_device_theme">기기 테마 따르기</string>
+
+
+    <!-- Sessions List -->
+    <!-- Content description (not visible, for screen readers etc.): Button that closes a tab n the sessions list -->
+    <string name="close_tab">탭 닫기</string>
 </resources>

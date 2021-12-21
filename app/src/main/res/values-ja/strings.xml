@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:moz="http://mozac.org/tools">
     <!-- ####################################################################################### -->
     <!-- ## Put only strings into this file that should be translated. Move all other strings ## -->
     <!-- ## into a separate file like strings_references.xml                                  ## -->
@@ -150,8 +150,8 @@
     <!-- %1$s will be replaced by the app name (e.g. Firefox Focus) -->
     <string name="preference_mozilla_summary">%1$s について、ヘルプ</string>
 
-    <!-- Preference category for ad blocking and tracking protection settings -->
-    <string name="preference_category_tracking_protection">トラッキング防止</string>
+    <!-- Preference category for ad blocking and enhanced tracking protection settings -->
+    <string name="preference_category_tracking_protection3">強化型トラッキング防止</string>
 
     <!-- Preference category for settings related to controlling web content -->
     <string name="preference_category_web_content">ウェブコンテンツ</string>
@@ -162,8 +162,8 @@
     <!-- Preference category for General Settings -->
     <string name="preference_category_general">一般</string>
 
-    <!-- Preference summary for General Settings category; the three things users can find in this category -->
-    <string name="preference_general_summary">既定のブラウザー、タブ、言語</string>
+    <!-- Preference summary for General Settings category; the two things users can find in this category -->
+    <string name="preference_general_summary2">既定のブラウザー、言語</string>
 
     <!-- Preference category for settings about sending usage data -->
     <string name="preference_category_data_collection_use">データの収集と使用</string>
@@ -192,16 +192,18 @@
     <string name="preference_subitem_autocomplete">URL 自動補完</string>
 
     <!-- Title of "switch" preference that enables/disables autocomplete for the default list -->
-    <string name="preference_switch_autocomplete_topsites">よく見るサイト</string>
+    <string name="preference_switch_autocomplete_topsites">人気サイト</string>
 
-    <!-- Summary for the toggle to enable autocomplete for the topsites list -->
-    <string name="preference_autocomplete_topsite_summary">アドレスバーで 450 以上の人気サイトの URL の自動補完を有効にします。</string>
+    <!-- Summary for the toggle to enable autocomplete for the topsites list
+    %s is a placeholder for the app name (e.g. Firefox Focus)-->
+    <string name="preference_autocomplete_topsite_summary2">有効にすると、%s のアドレスバーで 450 以上の人気の URL が自動補完されます。</string>
 
     <!-- Title of "switch" preference that enables/disables autocomplete for the user-defined list -->
     <string name="preference_switch_autocomplete_user_list">追加したサイト</string>
 
-    <!-- Summary for the toggle to enable autocomplete for the user-defined list -->
-    <string name="preference_autocomplete_user_list_summary">アドレスバーで 450 以上の人気サイトの URL の自動補完を有効にします。</string>
+    <!-- Summary for the toggle to enable autocomplete for the user-defined list
+     %s is a placeholder for the app name (e.g. Firefox Focus)-->
+    <string name="preference_autocomplete_user_list_summary2">%s によるお気に入りの URL の自動補完を有効にします。</string>
 
     <!-- Preference category: Manage (user-defined) sites -->
     <string name="preference_category_autocomplete_manage_sites">サイトの管理</string>
@@ -288,6 +290,7 @@
     <string name="preference_privacy_should_block_cookies_third_party_tracker_cookies_option">サードバーティの追跡 Cookie のみブロック</string>
     <string name="preference_privacy_should_block_cookies_third_party_only_option">サードパーティ Cookie のみブロック</string>
 
+    <string name="preference_privacy_should_block_cookies_cross_site_option">クロスサイト Cookie をブロック</string>
     <string name="preference_privacy_should_block_cookies_yes_option2">はい</string>
 
     <!-- Preference Title: Biometrics can be used to unlock Focus if the previous session's data was not erased by the user. -->
@@ -527,9 +530,9 @@
     <!-- Label of the action that will close the dialog and not add anything to the home screen (shown in the confirmation dialog). -->
     <string name="dialog_addtohomescreen_action_no">いいえ</string>
 
-    <!-- When tracking protection is disabled for the current session then we will show this warning in the "Add to home screen" dialog to
-         let the user know that the shortcut will always be opened with tracking protection disabled. -->
-    <string name="dialog_addtohomescreen_tracking_protection">ショートカットはトラッキング防止が無効の状態で開かれます</string>
+    <!-- When enhanced tracking protection is disabled for the current session then we will show this warning in the "Add to home screen" dialog to
+         let the user know that the shortcut will always be opened with enhanced tracking protection disabled. -->
+    <string name="dialog_addtohomescreen_tracking_protection2">ショートカットは強化型トラッキング防止が無効の状態で開かれます</string>
 
     <!-- The user visible name of the "notification channel" (Android 8+ feature) for the ongoing notification shown while a browsing session is active.
     The recommended maximum length is 40 characters; the value may be truncated if it is too long.
@@ -632,8 +635,32 @@
     <!-- Description of what a user may find in the Advanced Setting category, used for debugging -->
     <string name="preference_advanced_summary">開発者ツール</string>
 
+    <!-- Preference for open links in third party apps -->
+    <string name="preferences_open_links_in_apps">アプリ内のリンクを開く</string>
+
     <!-- Title of Advanced Setting category -->
     <string name="preference_category_advanced">詳細</string>
+
+    <!-- Preference for studies -->
+    <string name="preference_studies">調査</string>
+
+    <!-- Preference for studies summary-->
+    <string name="preference_studies_summary">Firefox が調査をインストールして実行することがあります。</string>
+
+    <!-- Learn more link for studies, links to an article for more information about studies. -->
+    <string name="studies_learn_more">詳細情報</string>
+
+    <!-- Dialog message shown when some changes are made on studies -->
+    <string name="studies_restart_app">変更を適用するためアプリケーションを終了します</string>
+
+    <!-- Title of the remove studies button -->
+    <string name="studies_remove">削除</string>
+
+    <!-- Title of the active section on the studies list -->
+    <string name="studies_active">有効</string>
+
+    <!-- Title of the completed section on the studies list -->
+    <string name="studies_completed">完了</string>
 
     <!-- Preference to enable remote debugging of the app via USB or Wi-Fi -->
     <string name="preference_remote_debugging">USB/Wi-Fi を通じたリモートデバッグ</string>
@@ -689,10 +716,10 @@
     The new line here must be kept as the second half of the string is clickable for the user. -->
     <string name="tip_disable_tracking_protection">サイトが予期せぬ挙動をしますか？\n トラッキング防止機能を無効化してみてください</string>
 
-    <!-- Tip displayed on home view explaining how to disable tracking protection
+    <!-- Tip displayed on home view explaining how to disable enhanced tracking protection
 The new line here must be kept as the second half of the string is clickable for the user. -->
-    <string name="tip_disable_tracking_protection2">サイトのコンテンツが欠けたりおかしな動作をしていますか？\n
-トラッキング防止機能をオフにしてみてください</string>
+    <string name="tip_disable_tracking_protection3">サイトのコンテンツが欠けたりおかしな動作をしていますか？\n
+強化型トラッキング防止機能をオフにしてみてください</string>
 
     <!-- Tip displayed on home view explaining how to add sites to homescreen
     Argument 1 will be replaced with a line break in the application.-->
@@ -721,8 +748,17 @@ The new line here must be kept as the second half of the string is clickable for
 
     <!-- Tip displayed on the home view explaining how to use the Allowlist feature.
      "Allowlist" is a replacement for the word whitelist. -->
-    <string name="tip_explain_allowlist2">信頼できるサイトでトラッキング防止機能を無効にしておきたいときは？\n
+    <string name="tip_explain_allowlist3">信頼できるサイトで強化型トラッキング防止機能をオフにしておきたいときは？\n
 設定でサイトを許可リストに追加してください</string>
+
+    <!-- Tip displayed on the home view about the changes in the new release.
+    %1$s is a placeholder for the app name -->
+    <string name="tip_fresh_look">ご覧のとおり、外観が新しくなりました！\n これと %1$s の他の変更についてお読みください。</string>
+
+    <!-- Tip displayed on the home view about shortcuts
+    %1$s is a placeholder for the app name -->
+    <string name="tip_about_shortcuts">よく見るサイトへのショートカットを作成しましょう:\n
+    %1$s のメニューからショートカットを追加を選択します</string>
 
     <!-- Label for the snackbar when a user opens a new tab -->
     <string name="new_tab_opened_snackbar">新しいタブを開きました</string>
@@ -734,11 +770,16 @@ The new line here must be kept as the second half of the string is clickable for
     <string name="preference_open_new_tab">新しいタブ内のリンクへすぐに切り替えます</string>
 
     <!-- Preference for safe browsing which when enabled, blocks dangerous or deceptive webpages that may include phishing or malware -->
-    <string name="preference_category_safe_browsing">セーフブラウジング</string>
+    <string moz:removedIn="97" name="preference_category_safe_browsing">セーフブラウジング</string>
     <!-- Preference title for safe browsing which when enabled, blocks dangerous or deceptive webpages that may include phishing or malware -->
     <string name="preference_safe_browsing_title">潜在的に危険な詐欺サイトをブロック</string>
     <!-- Preference summary for safe browsing which when enabled, blocks dangerous or deceptive webpages that may include phishing or malware -->
     <string name="preference_safe_browsing_summary">報告された詐欺サイトや攻撃サイト、マルウェアサイト、不要なソフトウェアをインストールさせようとするサイトをブロックします。</string>
+
+    <!-- Title of the preference to enable "HTTPS-Only" mode -->
+    <string name="preference_https_only_title">HTTPS-Only モード</string>
+    <!-- Description of the preference to enable "HTTPS-Only" mode. %1$s will get replaced with the name of the app. -->
+    <string name="preference_https_only_summary">HTTPS は %1$s とあなたが訪れるウェブサイトとの間に、暗号化された安全な接続を提供します。多くのウェブサイトは HTTPS に対応しており、HTTPS-Only モードを有効にすると %1$s はすべての接続を HTTPS に切り替えます。</string>
 
     <!-- Preference for exceptions tracking protection -->
     <string name="preference_exceptions">例外</string>
@@ -748,6 +789,12 @@ The new line here must be kept as the second half of the string is clickable for
     <string name="preference_exceptions_menu_remove">削除</string>
     <!-- Button to remove all websites from the exception list -->
     <string name="preference_exceptions_remove_all_button_label">すべてのウェブサイトを削除</string>
+
+    <!-- Title for Preference screen for cookie blocking for exceptions tracking protection -->
+    <string name="preference_block_cookies_title">Cookie をブロック</string>
+
+    <!-- Message for Preference screen for cookie blocking for exceptions tracking protection -->
+    <string name="preference_category_block_cookies">Cookie をブロックしたいですか？</string>
 
     <!-- Title for the tab crash report screen-->
     <string name="tab_crash_report_title">タブがクラッシュしました</string>
@@ -766,6 +813,16 @@ The new line here must be kept as the second half of the string is clickable for
 
     <!-- Tracking protection bottom sheet -->
 
+    <!-- Label for the total number of trackers blocked. %s represents the app install date -->
+    <string name="trackers_count_note">%s 以降にブロックされたトラッカー</string>
+    <!-- Category of trackers (content) that can be blocked by Enhanced Tracking Protection -->
+    <string name="content">コンテンツ</string>
+    <!-- Category of trackers (advertising) that can be blocked by Enhanced Tracking Protection -->
+    <string name="advertising">広告</string>
+    <!-- Category of trackers (social media) that can be blocked by Enhanced Tracking Protection -->
+    <string name="social">ソーシャル</string>
+    <!-- Category of trackers (analytics) that can be blocked by Enhanced Tracking Protection -->
+    <string name="analytics">解析</string>
     <!-- Preference title for enhanced tracking protection settings -->
     <string name="enhanced_tracking_protection">強化型トラッキング防止機能</string>
     <!-- Enhanced tracking protection preference description when the tracking protection is disabled for this site-->
@@ -786,7 +843,27 @@ The new line here must be kept as the second half of the string is clickable for
     <!-- Text for the menu button to remove a top site -->
     <string name="remove_top_site">削除</string>
 
+    <!-- Text for the dialog title for renaming a top site -->
+    <string name="rename_top_site">タイトル変更</string>
+
     <!-- Text for context menu additional note.
     %1$s is a placeholder for the app name. -->
-    <string name="contextmenu_erased_images_note">保存、共有された画像は %1s の履歴を消去しても &lt;b&gt;削除されません&lt;/b&gt;。</string>
+    <string name="contextmenu_erased_images_note2">保存、共有された画像は %1$s の履歴を消去しても &lt;b&gt;削除されません&lt;/b&gt;。</string>
+
+    <!-- Theme Preferences -->
+    <!-- Preference category for changing default theme to dark or light mode -->
+    <string name="preferences_theme">テーマ</string>
+    <!-- Preference for using light theme -->
+    <string name="preference_light_theme">Light</string>
+    <!-- Preference for using dark theme -->
+    <string name="preference_dark_theme">Dark</string>
+    <!-- Preference for using using dark or light theme automatically set by battery -->
+    <string name="preference_auto_battery_theme">バッテリーセーバーで設定</string>
+    <!-- Preference for using following device theme -->
+    <string name="preference_follow_device_theme">端末のテーマに従う</string>
+
+
+    <!-- Sessions List -->
+    <!-- Content description (not visible, for screen readers etc.): Button that closes a tab n the sessions list -->
+    <string name="close_tab">タブを閉じる</string>
 </resources>

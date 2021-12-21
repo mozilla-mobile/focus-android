@@ -3,17 +3,23 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 package org.mozilla.focus.activity
 
+import androidx.test.espresso.Espresso.closeSoftKeyboard
+import androidx.test.espresso.Espresso.pressBack
 import androidx.test.internal.runner.junit4.AndroidJUnit4ClassRunner
 import okhttp3.mockwebserver.MockWebServer
 import org.junit.After
 import org.junit.Before
+import org.junit.Ignore
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.mozilla.focus.R
 import org.mozilla.focus.activity.robots.homeScreen
 import org.mozilla.focus.activity.robots.searchScreen
 import org.mozilla.focus.helpers.MainActivityFirstrunTestRule
 import org.mozilla.focus.helpers.TestHelper.createMockResponseFromAsset
+import org.mozilla.focus.helpers.TestHelper.getStringResource
+import org.mozilla.focus.helpers.TestHelper.waitUntilSnackBarGone
 import org.mozilla.focus.testAnnotations.SmokeTest
 
 // Tests the First run onboarding screens
@@ -27,6 +33,7 @@ class FirstRunDialogueTest {
     @Before
     fun startWebServer() {
         webServer = MockWebServer()
+        webServer.start()
     }
 
     @After
@@ -50,6 +57,8 @@ class FirstRunDialogueTest {
     }
 
     @Test
+    @Ignore("This test should be updated since kotlin extensions were migrated to view binding")
+    // https://github.com/mozilla-mobile/focus-android/issues/5767
     fun skipFirstRunOnboardingTest() {
         homeScreen {
             verifyOnboardingFirstSlide()
@@ -62,29 +71,107 @@ class FirstRunDialogueTest {
 
     @SmokeTest
     @Test
+    @Ignore("This test should be updated since kotlin extensions were migrated to view binding")
+    // https://github.com/mozilla-mobile/focus-android/issues/5767
     fun homeScreenTipsTest() {
-        webServer.start()
-        webServer.enqueue(createMockResponseFromAsset("tab1.html"))
-        webServer.enqueue(createMockResponseFromAsset("tab1.html"))
+        // Scrolling left/right through the tips carousel to check the tips displaying order
+        homeScreen {
+            skipFirstRun()
+            closeSoftKeyboard()
+            verifyTipsCarouselIsDisplayed(true)
+            verifyTipText(getStringResource(R.string.tip_fresh_look))
+            scrollLeftTipsCarousel()
+            verifyTipText(getStringResource(R.string.tip_about_shortcuts))
+            scrollLeftTipsCarousel()
+            verifyTipText(getStringResource(R.string.tip_explain_allowlist3))
+            scrollLeftTipsCarousel()
+            verifyTipText(getStringResource(R.string.tip_disable_tracking_protection3))
+            scrollLeftTipsCarousel()
+            verifyTipText(getStringResource(R.string.tip_request_desktop2))
+            scrollRightTipsCarousel()
+            verifyTipText(getStringResource(R.string.tip_disable_tracking_protection3))
+            scrollRightTipsCarousel()
+            verifyTipText(getStringResource(R.string.tip_explain_allowlist3))
+            scrollRightTipsCarousel()
+            verifyTipText(getStringResource(R.string.tip_about_shortcuts))
+            scrollRightTipsCarousel()
+            verifyTipText(getStringResource(R.string.tip_fresh_look))
+        }
+    }
+
+    @SmokeTest
+    @Test
+    @Ignore("This test should be updated since kotlin extensions were migrated to view binding")
+    // https://github.com/mozilla-mobile/focus-android/issues/5767
+    fun verifyWhatsNewLinkFromTips() {
+        homeScreen {
+            skipFirstRun()
+            closeSoftKeyboard()
+            verifyTipsCarouselIsDisplayed(true)
+            verifyTipText(getStringResource(R.string.tip_fresh_look))
+        }.clickLinkFromTips("Read more") {
+            verifyPageURL("whats-new-firefox-focus-android")
+        }
+    }
+
+    @SmokeTest
+    @Test
+    @Ignore("This test should be updated since kotlin extensions were migrated to view binding")
+    // https://github.com/mozilla-mobile/focus-android/issues/5767
+    fun verifyAllowListLinkFromTips() {
+        homeScreen {
+            skipFirstRun()
+            closeSoftKeyboard()
+            verifyTipsCarouselIsDisplayed(true)
+            scrollLeftTipsCarousel()
+            scrollLeftTipsCarousel()
+        }.clickLinkFromTips("Add it to the Allowlist in Settings") {
+            verifyPageURL("add-trusted-websites-your-allow-list-firefox-focus")
+        }
+    }
+
+    @SmokeTest
+    @Test
+    @Ignore("This test should be updated since kotlin extensions were migrated to view binding")
+    // https://github.com/mozilla-mobile/focus-android/issues/5767
+    fun verifySwitchToDesktopSiteLinkFromTips() {
+        homeScreen {
+            skipFirstRun()
+            closeSoftKeyboard()
+            verifyTipsCarouselIsDisplayed(true)
+            scrollLeftTipsCarousel()
+            scrollLeftTipsCarousel()
+            scrollLeftTipsCarousel()
+            scrollLeftTipsCarousel()
+        }.clickLinkFromTips("Switch on Desktop Site") {
+            verifyPageURL("switch-desktop-view-firefox-focus-android")
+        }
+    }
+
+    @SmokeTest
+    @Test
+    @Ignore("This test should be updated since kotlin extensions were migrated to view binding")
+    // https://github.com/mozilla-mobile/focus-android/issues/5767
+    fun firstTipIsAlwaysDisplayedTest() {
         webServer.enqueue(createMockResponseFromAsset("tab1.html"))
         val pageUrl = webServer.url("tab1.html").toString()
 
         homeScreen {
             skipFirstRun()
-            verifyHomeScreenTipIsDisplayed(true)
+            closeSoftKeyboard()
+            verifyTipsCarouselIsDisplayed(true)
+            verifyTipText(getStringResource(R.string.tip_fresh_look))
+            scrollLeftTipsCarousel()
+            verifyTipText(getStringResource(R.string.tip_about_shortcuts))
         }
-        // load a page and clear data 3 times before tips stop being displayed
-        for (pageLoad in 1..3) {
-            searchScreen {
-            }.loadPage(pageUrl) {
-                verifyPageContent("Tab 1")
-            }.clearBrowsingData {
-                when (pageLoad) {
-                    1 -> verifyHomeScreenTipIsDisplayed(true)
-                    2 -> verifyHomeScreenTipIsDisplayed(true)
-                    3 -> verifyHomeScreenTipIsDisplayed(false)
-                }
-            }
+        searchScreen {
+        }.loadPage(pageUrl) {
+            pressBack()
+        }
+        homeScreen {
+            closeSoftKeyboard()
+            waitUntilSnackBarGone()
+            verifyTipText(getStringResource(R.string.tip_fresh_look))
         }
     }
 }

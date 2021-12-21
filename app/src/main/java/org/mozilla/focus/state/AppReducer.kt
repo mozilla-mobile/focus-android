@@ -20,7 +20,6 @@ object AppReducer : Reducer<AppState, AppAction> {
             is AppAction.NoTabs -> noTabs(state)
             is AppAction.EditAction -> editAction(state, action)
             is AppAction.FinishEdit -> finishEditing(state, action)
-            is AppAction.ShowTabs -> showTabs(state)
             is AppAction.HideTabs -> hideTabs(state)
             is AppAction.ShowFirstRun -> showFirstRun(state)
             is AppAction.FinishFirstRun -> finishFirstRun(state, action)
@@ -74,17 +73,6 @@ private fun finishEditing(state: AppState, action: AppAction.FinishEdit): AppSta
     return state.copy(
         screen = Screen.Browser(tabId = action.tabId, showTabs = false)
     )
-}
-
-/**
- * Show the tabs tray.
- */
-private fun showTabs(state: AppState): AppState {
-    return if (state.screen is Screen.Browser) {
-        state.copy(screen = state.screen.copy(showTabs = true))
-    } else {
-        state
-    }
 }
 
 /**
@@ -159,6 +147,15 @@ private fun topSitesChanged(state: AppState, action: AppAction.TopSitesChange): 
 
 @Suppress("ComplexMethod")
 private fun navigateUp(state: AppState, action: AppAction.NavigateUp): AppState {
+    if (state.screen is Screen.Browser) {
+        val screen = if (action.tabId != null) {
+            Screen.Browser(tabId = action.tabId, showTabs = false)
+        } else {
+            Screen.Home
+        }
+        return state.copy(screen = screen)
+    }
+
     if (state.screen !is Screen.Settings) {
         return state
     }
@@ -178,6 +175,9 @@ private fun navigateUp(state: AppState, action: AppAction.NavigateUp): AppState 
 
         Screen.Settings.Page.PrivacyExceptions -> Screen.Settings(page = Screen.Settings.Page.Privacy)
         Screen.Settings.Page.PrivacyExceptionsRemove -> Screen.Settings(page = Screen.Settings.Page.PrivacyExceptions)
+        Screen.Settings.Page.SitePermissions -> Screen.Settings(page = Screen.Settings.Page.Privacy)
+        Screen.Settings.Page.Autoplay -> Screen.Settings(page = Screen.Settings.Page.SitePermissions)
+        Screen.Settings.Page.Studies -> Screen.Settings(page = Screen.Settings.Page.Privacy)
 
         Screen.Settings.Page.SearchList -> Screen.Settings(page = Screen.Settings.Page.Search)
         Screen.Settings.Page.SearchRemove -> Screen.Settings(page = Screen.Settings.Page.SearchList)
@@ -191,6 +191,7 @@ private fun navigateUp(state: AppState, action: AppAction.NavigateUp): AppState 
         Screen.Settings.Page.SearchAutocompleteRemove -> Screen.Settings(
             page = Screen.Settings.Page.SearchAutocompleteList
         )
+        Screen.Settings.Page.About -> Screen.Settings(page = Screen.Settings.Page.Mozilla)
     }
 
     return state.copy(screen = screen)

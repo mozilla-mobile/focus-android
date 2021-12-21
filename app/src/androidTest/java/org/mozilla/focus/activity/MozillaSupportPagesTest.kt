@@ -8,7 +8,6 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mozilla.focus.R
-import org.mozilla.focus.activity.robots.browserScreen
 import org.mozilla.focus.activity.robots.homeScreen
 import org.mozilla.focus.helpers.MainActivityFirstrunTestRule
 import org.mozilla.focus.helpers.TestHelper.appContext
@@ -42,6 +41,7 @@ class MozillaSupportPagesTest {
         }
     }
 
+    @SmokeTest
     @Test
     fun openAboutPageTest() {
         // Go to settings "About" page
@@ -49,11 +49,14 @@ class MozillaSupportPagesTest {
         }.openMainMenu {
         }.openSettings {
         }.openMozillaSettingsMenu {
-            openAboutPage()
+        }.openAboutPage {
             verifyVersionNumbers()
+        }.openAboutPageLearnMoreLink() {
+            verifyPageURL("www.mozilla.org/en-US/about/manifesto/")
         }
     }
 
+    @SmokeTest
     @Test
     fun openMozillaSettingsHelpLinkTest() {
         // Go to settings "About" page
@@ -61,13 +64,12 @@ class MozillaSupportPagesTest {
         }.openMainMenu {
         }.openSettings {
         }.openMozillaSettingsMenu {
-            openHelpLink()
-        }
-        browserScreen {
+        }.openHelpLink {
             verifyPageURL("what-firefox-focus-android")
         }
     }
 
+    @SmokeTest
     @Test
     fun openYourRightsPageTest() {
         val yourRightsString = appContext.getString(
@@ -80,22 +82,19 @@ class MozillaSupportPagesTest {
         }.openMainMenu {
         }.openSettings {
         }.openMozillaSettingsMenu {
-            openYourRightsPage()
-        }
-        browserScreen {
+        }.openYourRightsPage {
             verifyPageContent(yourRightsString)
         }
     }
 
+    @SmokeTest
     @Test
     fun openPrivacyNoticeTest() {
         homeScreen {
         }.openMainMenu {
         }.openSettings {
         }.openMozillaSettingsMenu {
-            openPrivacyNotice()
-        }
-        browserScreen {
+        }.openPrivacyNotice {
             verifyPageURL("privacy/firefox-focus")
         }
     }
@@ -111,7 +110,7 @@ class MozillaSupportPagesTest {
             exitToTop()
         }
         homeScreen {
-            verifyHomeScreenTipIsDisplayed(false)
+            verifyTipsCarouselIsDisplayed(false)
         }
     }
 }

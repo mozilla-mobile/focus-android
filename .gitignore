@@ -15,7 +15,9 @@ out/
 
 # Gradle files
 .gradle/
-build/
+build/*
+buildSrc/build/*
+!taskcluster/build  # but don't ignore taskcluster/build
 
 # Local configuration file (sdk path, etc)
 local.properties
@@ -53,11 +55,13 @@ infer-out/
 
 # Screenshots
 fastlane/
-Screengrabfile
 
 # Adjust token file
 .adjust_token
 
 # Sentry token file
 .sentry_token
+
+# Nimbus endpoint file
+.nimbus
 

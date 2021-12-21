@@ -30,6 +30,7 @@ import org.mozilla.focus.helpers.TestHelper.pressEnterKey
 import org.mozilla.focus.helpers.TestHelper.readTestAsset
 import org.mozilla.focus.helpers.TestHelper.waitForWebSiteTitleLoad
 import org.mozilla.focus.helpers.TestHelper.waitingTime
+import org.mozilla.focus.testAnnotations.SmokeTest
 import java.io.IOException
 
 @RunWith(AndroidJUnit4ClassRunner::class)
@@ -132,6 +133,7 @@ class ImageSelectTest {
 
     @Test
     @Throws(UiObjectNotFoundException::class)
+    @Ignore("Refactoring is required because of erase and tabs counter relocation")
     fun ImageMenuTest() {
         val imagePath = webServer!!.url(TEST_PATH).toString() + "rabbit.jpg"
 
@@ -175,6 +177,7 @@ class ImageSelectTest {
 
     @Suppress("LongMethod")
     @Test
+    @Ignore("Refactoring is required because of erase and tabs counter relocation")
     @Throws(UiObjectNotFoundException::class)
     fun ShareImageTest() {
 
@@ -210,7 +213,9 @@ class ImageSelectTest {
     }
 
     @Suppress("LongMethod")
+    @SmokeTest
     @Test
+    @Ignore("Refactoring is required because of erase and tabs counter relocation")
     @Throws(UiObjectNotFoundException::class)
     fun DownloadImageMenuTest() {
 

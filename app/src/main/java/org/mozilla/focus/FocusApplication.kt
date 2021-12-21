@@ -5,19 +5,28 @@
 
 package org.mozilla.focus
 
+import android.content.Context
+import android.os.Build
 import android.os.StrictMode
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.lifecycle.ProcessLifecycleOwner
 import androidx.preference.PreferenceManager
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
 import mozilla.components.support.base.facts.register
 import mozilla.components.support.base.log.Log
 import mozilla.components.support.base.log.sink.AndroidLogSink
 import mozilla.components.support.ktx.android.content.isMainProcess
+import mozilla.components.support.locale.LocaleAwareApplication
+import mozilla.components.support.rusthttp.RustHttpConfig
+import mozilla.components.support.rustlog.RustLog
 import mozilla.components.support.webextensions.WebExtensionSupport
 import org.mozilla.focus.biometrics.LockObserver
-import org.mozilla.focus.locale.LocaleAwareApplication
+import org.mozilla.focus.ext.settings
 import org.mozilla.focus.navigation.StoreLink
 import org.mozilla.focus.session.VisibilityLifeCycleCallback
 import org.mozilla.focus.telemetry.FactsProcessor
@@ -40,6 +49,7 @@ open class FocusApplication : LocaleAwareApplication(), CoroutineScope {
     private val storeLink by lazy { StoreLink(components.appStore, components.store) }
     private val lockObserver by lazy { LockObserver(this, components.store, components.appStore) }
 
+    @OptIn(DelicateCoroutinesApi::class)
     override fun onCreate() {
         super.onCreate()
 
@@ -47,8 +57,11 @@ open class FocusApplication : LocaleAwareApplication(), CoroutineScope {
         components.crashReporter.install(this)
 
         if (isMainProcess()) {
+            initializeNativeComponents()
+
             PreferenceManager.setDefaultValues(this, R.xml.settings, false)
 
+            setTheme(this)
             components.engine.warmUp()
 
             TelemetryWrapper.init(this)
@@ -65,9 +78,67 @@ open class FocusApplication : LocaleAwareApplication(), CoroutineScope {
 
             storeLink.start()
 
+            GlobalScope.launch(Dispatchers.IO) {
+                components.migrator.start(this@FocusApplication)
+            }
+
             initializeWebExtensionSupport()
 
             ProcessLifecycleOwner.get().lifecycle.addObserver(lockObserver)
+        }
+    }
+
+    @OptIn(DelicateCoroutinesApi::class) // GlobalScope usage
+    private fun initializeNativeComponents() {
+        GlobalScope.launch(Dispatchers.IO) {
+            // We need to use an unwrapped client because native components do not support private
+            // requests.
+            @Suppress("Deprecation")
+            RustHttpConfig.setClient(lazy { components.client.unwrap() })
+            RustLog.enable(components.crashReporter)
+            // We want to ensure Nimbus is initialized as early as possible so we can
+            // experiment on features close to startup.
+            // But we need viaduct (the RustHttp client) to be ready before we do.
+            components.experiments.initialize()
+        }
+    }
+
+    private fun setTheme(context: Context) {
+        val settings = context.settings
+        when {
+            settings.lightThemeSelected -> {
+                AppCompatDelegate.setDefaultNightMode(
+                    AppCompatDelegate.MODE_NIGHT_NO
+                )
+            }
+
+            settings.darkThemeSelected -> {
+                AppCompatDelegate.setDefaultNightMode(
+                    AppCompatDelegate.MODE_NIGHT_YES
+                )
+            }
+
+            settings.useDefaultThemeSelected -> {
+                setDefaultTheme()
+            }
+
+            // No theme setting selected, select the default value, follow device theme.
+            else -> {
+                setDefaultTheme()
+                settings.useDefaultThemeSelected = true
+            }
+        }
+    }
+
+    private fun setDefaultTheme() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+            AppCompatDelegate.setDefaultNightMode(
+                AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM
+            )
+        } else {
+            AppCompatDelegate.setDefaultNightMode(
+                AppCompatDelegate.MODE_NIGHT_AUTO_BATTERY
+            )
         }
     }
 

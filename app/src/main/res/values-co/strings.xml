@@ -124,15 +124,15 @@
 
     <!-- Content of about focus. Argument 1 is the app name (Firefox Focus/Firefox Klar/etc).
          Argument 2 is the url for the learn-more link. -->
-    <string name="about_content"><![CDATA[<p>%1$s vi aiuta à stà à e cumande.</p>¶
-<p>Impiegatelu cum’è un navigatore privatu :¶
- · <ul>¶
- · <li>Fate ricerche è navigate da l’appiecazione</li>¶
- · <li>Bluccate i perseguitatori (o mudificà e preferenze per auturizalli)</li>¶
- · <li>Squassà i canistrelli è ancu e crunulogie di navigazione è di ricerca</li>¶
- · </ul>¶
-</p>¶
-<p>%1$s hè sviluppatu da Mozilla. A nostra missione hè d’incuragisce un Internet apertu è in bella saluta.<br/>¶
+    <string name="about_content"><![CDATA[<p>%1$s vi aiuta à stà à e cumande.</p>
+<p>Impiegatelu cum’è un navigatore privatu :
+· <ul>
+· <li>Fate ricerche è navigate cù l’appiecazione</li>
+· <li>Bluccate i perseguitatori (o mudificà e preferenze per auturizalli)</li>
+· <li>Squassà i canistrelli è ancu e crunulogie di navigazione è di ricerca</li>
+· </ul>
+</p>
+<p>%1$s hè sviluppatu da Mozilla. A nostra missione hè d’incuragisce un Internet apertu è in bella saluta.<br/>
 <a href="%2$s">Per sapene di più</a></p>]]></string>
 
     <!-- Header for the Privacy and Security settings menu -->
@@ -150,8 +150,8 @@
     <!-- %1$s will be replaced by the app name (e.g. Firefox Focus) -->
     <string name="preference_mozilla_summary">Apprupositu di %1$s, aiutu</string>
 
-    <!-- Preference category for ad blocking and tracking protection settings -->
-    <string name="preference_category_tracking_protection">Prutezzione contr’à u spiunagiu</string>
+    <!-- Preference category for ad blocking and enhanced tracking protection settings -->
+    <string name="preference_category_tracking_protection3">Prutezzione rinfurzata contr’à u spiunagiu</string>
 
     <!-- Preference category for settings related to controlling web content -->
     <string name="preference_category_web_content">Cuntenutu di u Web</string>
@@ -162,8 +162,8 @@
     <!-- Preference category for General Settings -->
     <string name="preference_category_general">Generale</string>
 
-    <!-- Preference summary for General Settings category; the three things users can find in this category -->
-    <string name="preference_general_summary">Navigatore predefinitu, unghjette, lingua</string>
+    <!-- Preference summary for General Settings category; the two things users can find in this category -->
+    <string name="preference_general_summary2">Navigatore predefinitu, lingua</string>
 
     <!-- Preference category for settings about sending usage data -->
     <string name="preference_category_data_collection_use">Culletta di dati è adopru</string>
@@ -171,7 +171,7 @@
     <string name="preference_category_search">Ricerca</string>
 
     <!-- Title of "switch" preference that enables/disables search suggestions -->
-    <string name="preference_show_search_suggestions">Ottene suggestioni di ricerca</string>
+    <string name="preference_show_search_suggestions">Ottene sugestioni di ricerca</string>
     <!-- Description of the preference that enables/disables search suggestions
         %1$s will be replaced by the app name (e.g. Firefox Focus) -->
     <string name="preference_show_search_suggestions_summary">%1$s manderà à u vostru mutore di ricerca ciò chì voi scrivite in a barra d’indirizzu</string>
@@ -194,14 +194,16 @@
     <!-- Title of "switch" preference that enables/disables autocomplete for the default list -->
     <string name="preference_switch_autocomplete_topsites">Per i siti i più populari</string>
 
-    <!-- Summary for the toggle to enable autocomplete for the topsites list -->
-    <string name="preference_autocomplete_topsite_summary">Attivà per compie autumaticamente più di 450 indirizzi populari in a barra d’indirizzu.</string>
+    <!-- Summary for the toggle to enable autocomplete for the topsites list
+    %s is a placeholder for the app name (e.g. Firefox Focus)-->
+    <string name="preference_autocomplete_topsite_summary2">Attivà per chì %s compii autumaticamente più di 450 indirizzi populari in a barra d’indirizzu.</string>
 
     <!-- Title of "switch" preference that enables/disables autocomplete for the user-defined list -->
     <string name="preference_switch_autocomplete_user_list">Per i siti chì voi aghjunghjite</string>
 
-    <!-- Summary for the toggle to enable autocomplete for the user-defined list -->
-    <string name="preference_autocomplete_user_list_summary">Attivà per compie autumaticamente più di 450 indirizzi populari in a barra d’indirizzu.</string>
+    <!-- Summary for the toggle to enable autocomplete for the user-defined list
+     %s is a placeholder for the app name (e.g. Firefox Focus)-->
+    <string name="preference_autocomplete_user_list_summary2">Attivà per chì %s compii autumaticamente i vostri indirizzi web favuriti.</string>
 
     <!-- Preference category: Manage (user-defined) sites -->
     <string name="preference_category_autocomplete_manage_sites">Urganizà i siti</string>
@@ -225,7 +227,7 @@
     <string name="custom_autocomplete_quick_add">Aghjunghje un indirizzu persunalizatu</string>
 
     <!-- Label for the button to quick add the current URL to the custom autocomplete list -->
-    <string name="add_custom_autocomplete_label">Aghjunghje una leia à a scrittura mezu-autumatica</string>
+    <string name="add_custom_autocomplete_label">Aghjunghje un liame à a scrittura mezu-autumatica</string>
 
     <!-- Preference category for settings about cookies and site data -->
     <string name="preference_category_cookies">Canistrelli è dati di siti</string>
@@ -288,6 +290,7 @@
     <string name="preference_privacy_should_block_cookies_third_party_tracker_cookies_option">Bluccà solu i canistrelli terzi impiegati per u spiunagiu</string>
     <string name="preference_privacy_should_block_cookies_third_party_only_option">Bluccà solu i canistrelli terzi</string>
 
+    <string name="preference_privacy_should_block_cookies_cross_site_option">Bluccà i canistrelli intersiti</string>
     <string name="preference_privacy_should_block_cookies_yes_option2">Iè, per piacè</string>
 
     <!-- Preference Title: Biometrics can be used to unlock Focus if the previous session's data was not erased by the user. -->
@@ -308,7 +311,7 @@
 
     <string name="preference_category_security">Sicurità</string>
 
-    <string name="preference_category_performance">Prestazioni</string>
+    <string name="preference_category_performance">Perfurmenze</string>
     <string name="preference_performance_block_webfonts">Bluccà e grafie web</string>
     <!-- This text is shown below the setting for disabling web fonts. Some websites use icons/images from a font and those do not show up if fonts are blocked.-->
     <string name="preference_performance_block_webfonts_summary">Pò impedisce certe icone o fiure d’affissassi</string>
@@ -442,15 +445,15 @@
 
     <string name="your_rights">Diritti di l’utilizatore</string>
 
-    <string name="external_app_prompt_title">Apre a leia in un’altra appiecazione</string>
+    <string name="external_app_prompt_title">Apre u liame in un’altra appiecazione</string>
     <!-- This string is shown when the user has clicked a link that needs to be opened in a different app.
          Argument 2 is the external app name, argument 1 is our name (i.e. Firefox Focus, or Firefox Klar). -->
-    <string name="external_app_prompt">Avete da lascià %1$s per apre sta leia in %2$s.</string>
+    <string name="external_app_prompt">Avete da lascià %1$s per apre stu liame in %2$s.</string>
     <!-- This text is the title of a dialog shown if no app could be found for a custom link protocol. -->
-    <string name="external_app_prompt_no_app_title">Truvà un’appiecazione capace d’apre sta leia</string>
+    <string name="external_app_prompt_no_app_title">Truvà un’appiecazione capace d’apre stu liame</string>
     <!-- This text is shown in a dialog if no app could be found for a custom link protocol. %1$s is the name of the app (i.e. Firefox Focus) and %2$s is the name of
          the app store installed on the device (usually that's Google Play). -->
-    <string name="external_app_prompt_no_app">Alcuna appiecazione di u vostru apparechju ùn hè capace d’apre sta leia. Avete da lascià %1$s per circà in %2$s un appiecazione chì ne seria capace.</string>
+    <string name="external_app_prompt_no_app">Alcuna appiecazione di u vostru apparechju ùn hè capace d’apre stu liame. Avete da lascià %1$s per circà in %2$s un appiecazione chì ne seria capace.</string>
     <!-- This label is shown above a list of apps that can be used to open a given link -->
     <string name="external_multiple_apps_matched_exit">Fermà a navigazione privata ?</string>
 
@@ -527,9 +530,9 @@
     <!-- Label of the action that will close the dialog and not add anything to the home screen (shown in the confirmation dialog). -->
     <string name="dialog_addtohomescreen_action_no">INNÒ</string>
 
-    <!-- When tracking protection is disabled for the current session then we will show this warning in the "Add to home screen" dialog to
-         let the user know that the shortcut will always be opened with tracking protection disabled. -->
-    <string name="dialog_addtohomescreen_tracking_protection">L’accurtatoghju s’aprerà cù a prutezzione contr’à u spiunagiu disattivata</string>
+    <!-- When enhanced tracking protection is disabled for the current session then we will show this warning in the "Add to home screen" dialog to
+         let the user know that the shortcut will always be opened with enhanced tracking protection disabled. -->
+    <string name="dialog_addtohomescreen_tracking_protection2">L’accurtatoghju s’aprerà cù a prutezzione rinfurzata contr’à u spiunagiu disattivata</string>
 
     <!-- The user visible name of the "notification channel" (Android 8+ feature) for the ongoing notification shown while a browsing session is active.
     The recommended maximum length is 40 characters; the value may be truncated if it is too long.
@@ -584,7 +587,7 @@
 
     <!-- Text shown in prompts for GeckoView -->
     <string name="gv_prompt_username_hint">Nome d’utilizatore</string>
-    <string name="gv_prompt_password_hint">Parolla d’entrata</string>
+    <string name="gv_prompt_password_hint">Parolla d’intesa</string>
     <string name="gv_prompt_clear">Squassà</string>
 
     <!-- Text shown in Security Information Popup -->
@@ -632,8 +635,32 @@
     <!-- Description of what a user may find in the Advanced Setting category, used for debugging -->
     <string name="preference_advanced_summary">Attrezzi di sviluppu</string>
 
+    <!-- Preference for open links in third party apps -->
+    <string name="preferences_open_links_in_apps">Apre i liami in l’appiecazioni</string>
+
     <!-- Title of Advanced Setting category -->
     <string name="preference_category_advanced">Espertu</string>
+
+    <!-- Preference for studies -->
+    <string name="preference_studies">Studii</string>
+
+    <!-- Preference for studies summary-->
+    <string name="preference_studies_summary">Firefox pò installà è lancià studii di quandu in quandu.</string>
+
+    <!-- Learn more link for studies, links to an article for more information about studies. -->
+    <string name="studies_learn_more">Sapene di più</string>
+
+    <!-- Dialog message shown when some changes are made on studies -->
+    <string name="studies_restart_app">L’appiecazione hà da piantà per appiecà i cambiamenti</string>
+
+    <!-- Title of the remove studies button -->
+    <string name="studies_remove">Caccià</string>
+
+    <!-- Title of the active section on the studies list -->
+    <string name="studies_active">Attivi</string>
+
+    <!-- Title of the completed section on the studies list -->
+    <string name="studies_completed">Compii</string>
 
     <!-- Preference to enable remote debugging of the app via USB or Wi-Fi -->
     <string name="preference_remote_debugging">Spannatura alluntanata via USB/Wi-Fi</string>
@@ -651,7 +678,7 @@
 
     <!-- Button for the fingerprint authentication dialog box that is shown to the user when sharing a link to the app
     while the user has biometric authentication enabled. When pressed, the user's previous session is cleared, and the shared link is opened. -->
-    <string name="biometric_auth_open_link_new_session">Apre a leia in nova sessione</string>
+    <string name="biometric_auth_open_link_new_session">Apre u liame in una nova sessione</string>
 
     <!-- Description for the fingerprint authentication image. Used for accessibility purposes. -->
     <string name="biometric_auth_image_description">Icona d’impronta digitale</string>
@@ -669,7 +696,7 @@
 
     <!-- Description for the prompt to enable search suggestions
         %1$s will be replaced by the app name (e.g. Firefox Focus) -->
-    <string name="enable_search_suggestion_description">Per ottene suggestioni di ricerca, %1$s hà bisognu di mandà à u mutore di ricerca ciò chì vo scrivite in a barra d’indirizzu.</string>
+    <string name="enable_search_suggestion_description">Per ottene sugestioni di ricerca, %1$s hà bisognu di mandà à u mutore di ricerca ciò chì vo scrivite in a barra d’indirizzu.</string>
 
     <!-- Label used for the "NO button" for the prompt to enable search suggestions -->
     <string name="enable_search_suggestions_no">Innò</string>
@@ -678,7 +705,7 @@
     <string name="enable_search_suggestions_yes">Iè</string>
 
     <!-- Message displayed when using a search engine that doesn't provide suggestions -->
-    <string name="no_suggestions_message">Certi mutori di ricerca ùn ponu affissà suggestioni.</string>
+    <string name="no_suggestions_message">Certi mutori di ricerca ùn ponu affissà sugestioni.</string>
 
     <!-- Button to dismiss the message displayed  when using a search engine that doesn't provide suggestions-->
     <string name="dismiss_no_suggestions_prompt_button">Ignurà</string>
@@ -690,10 +717,10 @@
     <string name="tip_disable_tracking_protection">Stu situ ùn si cumporta micca cum’è previstu ?\n
     Pruvate di disattivà a prutezzione contr’à u spiunagiu</string>
 
-    <!-- Tip displayed on home view explaining how to disable tracking protection
+    <!-- Tip displayed on home view explaining how to disable enhanced tracking protection
 The new line here must be kept as the second half of the string is clickable for the user. -->
-    <string name="tip_disable_tracking_protection2">Ci seria u cuntenutu chì manca o u situ si cumpurteria d’una manera strana ?\n
-    Pruvate di disattivà a prutezzione contr’à u spiunagiu</string>
+    <string name="tip_disable_tracking_protection3">Ci seria u cuntenutu chì manca o u situ si cumpurteria d’una manera strana ?\n
+    Pruvate di disattivà a prutezzione rinfurzata contr’à u spiunagiu</string>
 
     <!-- Tip displayed on home view explaining how to add sites to homescreen
     Argument 1 will be replaced with a line break in the application.-->
@@ -702,7 +729,7 @@ The new line here must be kept as the second half of the string is clickable for
     <!-- Tip displayed on home view explaining how to make Focus the default browser
     Argument 1 is the app name (Firefox Focus/Firefox Klar/etc).
     The new line here must be kept as the second half of the string is clickable for the user. -->
-    <string name="tip_set_default_browser">Apre ogni leia in %1$s\n
+    <string name="tip_set_default_browser">Apre ogni liame in %1$s\n
     Sceglie %1$s cum’è navigatore predefinitu
     </string>
 
@@ -712,8 +739,8 @@ The new line here must be kept as the second half of the string is clickable for
 
     <!-- Tip displayed on home view explaining how to add a custom autocomplete URL
     The new line here must be kept as the second half of the string is clickable for the user. -->
-    <string name="tip_open_in_new_tab">Apre una leia in una nova unghjetta\n
-    Effettuate una longa incalcata nant’à una leia in una pagina
+    <string name="tip_open_in_new_tab">Apre un liame in una nova unghjetta\n
+    Effettuate una longa incalcata nant’à un liame in una pagina
     </string>
 
     <!-- Tip displayed on home view explaining how to request the desktop version of a website.
@@ -726,13 +753,18 @@ The new line here must be kept as the second half of the string is clickable for
 
     <!-- Tip displayed on the home view explaining how to use the Allowlist feature.
      "Allowlist" is a replacement for the word whitelist. -->
-    <string name="tip_explain_allowlist2">Vulete disattivà a prutezzione contr’à u spiunagiu per un situ di cunfidenza chì voi cunniscite ?\n
+    <string name="tip_explain_allowlist3">Vulete disattivà a prutezzione rinfurzata contr’à u spiunagiu per un situ di cunfidenza chì voi cunniscite ?\n
         Aghjunghjelu à a lista di i siti di cunfidenza in e Preferenze
     </string>
 
     <!-- Tip displayed on the home view about the changes in the new release.
     %1$s is a placeholder for the app name -->
-    <string name="tip_fresh_look">Hè vera, avemu un aspettu tuttu novu ! Sapene di più apprupositu di què è d’altre mudificazioni nant’à %1$s.</string>
+    <string name="tip_fresh_look">Hè vera, avemu un aspettu tuttu novu !\n Sapene di più apprupositu di què è d’altre mudificazioni nant’à %1$s.</string>
+
+    <!-- Tip displayed on the home view about shortcuts
+    %1$s is a placeholder for the app name -->
+    <string name="tip_about_shortcuts">Create l’accurtatoghji per i siti chì vo visitate u più :\n
+    Selezziunate « Aghjunghje à l’accurtatoghji » in u listinu di %1$s</string>
 
     <!-- Label for the snackbar when a user opens a new tab -->
     <string name="new_tab_opened_snackbar">Nova unghjetta aperta</string>
@@ -741,7 +773,7 @@ The new line here must be kept as the second half of the string is clickable for
     <string name="open_new_tab_snackbar">Affissà</string>
 
     <!-- Preference for switching to a new tab immediately after opening -->
-    <string name="preference_open_new_tab">Affissà subitu ogni leia aperta in una nova unghjetta</string>
+    <string name="preference_open_new_tab">Affissà subitu ogni liame apertu in una nova unghjetta</string>
 
     <!-- Preference for safe browsing which when enabled, blocks dangerous or deceptive webpages that may include phishing or malware -->
     <string name="preference_category_safe_browsing">Navigazione assicurizata</string>
@@ -812,7 +844,27 @@ The new line here must be kept as the second half of the string is clickable for
     <!-- Text for the menu button to remove a top site -->
     <string name="remove_top_site">Caccià</string>
 
+    <!-- Text for the dialog title for renaming a top site -->
+    <string name="rename_top_site">Rinuminà</string>
+
     <!-- Text for context menu additional note.
     %1$s is a placeholder for the app name. -->
-    <string name="contextmenu_erased_images_note">E fiure sparte o arregistrate &lt;b&gt;ùn sò micca squassate &lt;/b&gt;quandu a crunulogia di %1s hè squassata.</string>
+    <string name="contextmenu_erased_images_note2">E fiure sparte o arregistrate &lt;b&gt;ùn sò micca squassate&lt;/b&gt; quandu a crunulogia di %1$s hè squassata</string>
+
+    <!-- Theme Preferences -->
+    <!-- Preference category for changing default theme to dark or light mode -->
+    <string name="preferences_theme">Tema</string>
+    <!-- Preference for using light theme -->
+    <string name="preference_light_theme">Chjaru</string>
+    <!-- Preference for using dark theme -->
+    <string name="preference_dark_theme">Scuru</string>
+    <!-- Preference for using using dark or light theme automatically set by battery -->
+    <string name="preference_auto_battery_theme">Definitu da l’ecunumizatore d’energia di batteria</string>
+    <!-- Preference for using following device theme -->
+    <string name="preference_follow_device_theme">Seguità u tema di l’apparechju</string>
+
+
+    <!-- Sessions List -->
+    <!-- Content description (not visible, for screen readers etc.): Button that closes a tab n the sessions list -->
+    <string name="close_tab">Chjode l’unghjetta</string>
 </resources>

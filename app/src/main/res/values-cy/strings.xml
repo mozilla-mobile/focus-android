@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:moz="http://mozac.org/tools">
     <!-- ####################################################################################### -->
     <!-- ## Put only strings into this file that should be translated. Move all other strings ## -->
     <!-- ## into a separate file like strings_references.xml                                  ## -->
@@ -150,8 +150,8 @@
     <!-- %1$s will be replaced by the app name (e.g. Firefox Focus) -->
     <string name="preference_mozilla_summary">Ynghylch %1$s, cymorth</string>
 
-    <!-- Preference category for ad blocking and tracking protection settings -->
-    <string name="preference_category_tracking_protection">Diogelwch rhag Tracio</string>
+    <!-- Preference category for ad blocking and enhanced tracking protection settings -->
+    <string name="preference_category_tracking_protection3">Diogelwch Uwch Rhag Tracio</string>
 
     <!-- Preference category for settings related to controlling web content -->
     <string name="preference_category_web_content">Cynnwys Gwe</string>
@@ -162,8 +162,8 @@
     <!-- Preference category for General Settings -->
     <string name="preference_category_general">Cyffredinol</string>
 
-    <!-- Preference summary for General Settings category; the three things users can find in this category -->
-    <string name="preference_general_summary">Porwr rhagosodedig, tabiau, iaith</string>
+    <!-- Preference summary for General Settings category; the two things users can find in this category -->
+    <string name="preference_general_summary2">Porwr rhagosodedig, iaith</string>
 
     <!-- Preference category for settings about sending usage data -->
     <string name="preference_category_data_collection_use">Casglu a Defnydd Data</string>
@@ -194,14 +194,16 @@
     <!-- Title of "switch" preference that enables/disables autocomplete for the default list -->
     <string name="preference_switch_autocomplete_topsites">Am Hoff Wefannau</string>
 
-    <!-- Summary for the toggle to enable autocomplete for the topsites list -->
-    <string name="preference_autocomplete_topsite_summary">Galluogi i awtogwblhau dros 450 URL poblogaidd yn y bar cyfeiriad.</string>
+    <!-- Summary for the toggle to enable autocomplete for the topsites list
+    %s is a placeholder for the app name (e.g. Firefox Focus)-->
+    <string name="preference_autocomplete_topsite_summary2">Galluogi i %s awtogwblhau dros 450 URL poblogaidd yn y bar cyfeiriad.</string>
 
     <!-- Title of "switch" preference that enables/disables autocomplete for the user-defined list -->
     <string name="preference_switch_autocomplete_user_list">Eich Gwefannau Chi</string>
 
-    <!-- Summary for the toggle to enable autocomplete for the user-defined list -->
-    <string name="preference_autocomplete_user_list_summary">Galluogi i awtogwblhau dros 450 URL poblogaidd yn y bar cyfeiriad.</string>
+    <!-- Summary for the toggle to enable autocomplete for the user-defined list
+     %s is a placeholder for the app name (e.g. Firefox Focus)-->
+    <string name="preference_autocomplete_user_list_summary2">Galluogi i %s awtogwblhau eich hoff URLau.</string>
 
     <!-- Preference category: Manage (user-defined) sites -->
     <string name="preference_category_autocomplete_manage_sites">Rheoli gwefannau</string>
@@ -288,6 +290,7 @@
     <string name="preference_privacy_should_block_cookies_third_party_tracker_cookies_option">Rhwystro cwcis trydydd parti\'n unig</string>
     <string name="preference_privacy_should_block_cookies_third_party_only_option">Rhwystro cwcis trydydd parti\'n unig</string>
 
+    <string name="preference_privacy_should_block_cookies_cross_site_option">Rhwystro cwcis traws-gwefan</string>
     <string name="preference_privacy_should_block_cookies_yes_option2">Iawn!</string>
 
     <!-- Preference Title: Biometrics can be used to unlock Focus if the previous session's data was not erased by the user. -->
@@ -527,9 +530,9 @@
     <!-- Label of the action that will close the dialog and not add anything to the home screen (shown in the confirmation dialog). -->
     <string name="dialog_addtohomescreen_action_no">NA</string>
 
-    <!-- When tracking protection is disabled for the current session then we will show this warning in the "Add to home screen" dialog to
-         let the user know that the shortcut will always be opened with tracking protection disabled. -->
-    <string name="dialog_addtohomescreen_tracking_protection">Bydd y Llwybr Byr yn agor gyda Diogelwch rhag Tracio wedi ei analluogi</string>
+    <!-- When enhanced tracking protection is disabled for the current session then we will show this warning in the "Add to home screen" dialog to
+         let the user know that the shortcut will always be opened with enhanced tracking protection disabled. -->
+    <string name="dialog_addtohomescreen_tracking_protection2">Bydd y Llwybr Byr yn agor gyda Diogelwch rhag Tracio wedi ei analluogi</string>
 
     <!-- The user visible name of the "notification channel" (Android 8+ feature) for the ongoing notification shown while a browsing session is active.
     The recommended maximum length is 40 characters; the value may be truncated if it is too long.
@@ -632,8 +635,32 @@
     <!-- Description of what a user may find in the Advanced Setting category, used for debugging -->
     <string name="preference_advanced_summary">Offer datblygwyr</string>
 
+    <!-- Preference for open links in third party apps -->
+    <string name="preferences_open_links_in_apps">Agor dolenni mewn apiau</string>
+
     <!-- Title of Advanced Setting category -->
     <string name="preference_category_advanced">Uwch</string>
+
+    <!-- Preference for studies -->
+    <string name="preference_studies">Astudiaethau</string>
+
+    <!-- Preference for studies summary-->
+    <string name="preference_studies_summary">Efallai y bydd Firefox yn gosod a rhedeg astudiaethau o bryd i’w gilydd.</string>
+
+    <!-- Learn more link for studies, links to an article for more information about studies. -->
+    <string name="studies_learn_more">Dysgu rhagor</string>
+
+    <!-- Dialog message shown when some changes are made on studies -->
+    <string name="studies_restart_app">Bydd yr ap yn cau er mwyn gosod y newidiadau</string>
+
+    <!-- Title of the remove studies button -->
+    <string name="studies_remove">Tynnu</string>
+
+    <!-- Title of the active section on the studies list -->
+    <string name="studies_active">Gweithredol</string>
+
+    <!-- Title of the completed section on the studies list -->
+    <string name="studies_completed">Cwblhawyd</string>
 
     <!-- Preference to enable remote debugging of the app via USB or Wi-Fi -->
     <string name="preference_remote_debugging">Dadfygio pell drwy\'r USB/Diwifr</string>
@@ -689,10 +716,10 @@
     The new line here must be kept as the second half of the string is clickable for the user. -->
     <string name="tip_disable_tracking_protection">Gwefan yn ymddwyn yn anisgwyl?\n Ceisiwch ddiffodd Diogelwch rhag Tracio</string>
 
-    <!-- Tip displayed on home view explaining how to disable tracking protection
+    <!-- Tip displayed on home view explaining how to disable enhanced tracking protection
 The new line here must be kept as the second half of the string is clickable for the user. -->
-    <string name="tip_disable_tracking_protection2">Gwefan yn brin o gynnwys neu’n ymddwyn yn rhyfedd?
-    Ceisiwch ddiffodd Diogewlch rhag Tracio</string>
+    <string name="tip_disable_tracking_protection3">Gwefan yn brin o gynnwys neu’n ymddwyn yn rhyfedd?
+    Ceisiwch ddiffodd Diogelwch Uwch rhag Tracio</string>
 
     <!-- Tip displayed on home view explaining how to add sites to homescreen
     Argument 1 will be replaced with a line break in the application.-->
@@ -721,13 +748,19 @@ The new line here must be kept as the second half of the string is clickable for
 
     <!-- Tip displayed on the home view explaining how to use the Allowlist feature.
      "Allowlist" is a replacement for the word whitelist. -->
-    <string name="tip_explain_allowlist2">Eisiau diffodd Diogelu rhag Tracio ar wefan rydych chi’n ymddiried ynddi?
+    <string name="tip_explain_allowlist3">Eisiau diffodd Diogelwch Uwch rhag Tracio ar wefan rydych chi’n ymddiried ynddi?\n
         Ychwanegwch hi i’r Rhestr Caniatáu yn y Gosodiadau
+    
     </string>
 
     <!-- Tip displayed on the home view about the changes in the new release.
     %1$s is a placeholder for the app name -->
-    <string name="tip_fresh_look">Oes, mae gennym wedd newydd a ffres! Darllenwch ragor am hyn a diweddariadau eraill i %1$s.</string>
+    <string name="tip_fresh_look">Oes, mae gennym wedd newydd a ffres!\n Darllenwch ragor am hyn a diweddariadau eraill i %1$s.</string>
+
+    <!-- Tip displayed on the home view about shortcuts
+    %1$s is a placeholder for the app name -->
+    <string name="tip_about_shortcuts">Crëwch lwybrau byr i’r gwefannau rydych chi’n ymweld â nhw amlaf:\n
+    Dewiswch Ychwanegu at y Llwybrau Byr o ddewislen %1$s</string>
 
     <!-- Label for the snackbar when a user opens a new tab -->
     <string name="new_tab_opened_snackbar">Tab newydd wedi\'i agor</string>
@@ -739,11 +772,17 @@ The new line here must be kept as the second half of the string is clickable for
     <string name="preference_open_new_tab">Newid i ddolen mewn tab newydd ar unwaith</string>
 
     <!-- Preference for safe browsing which when enabled, blocks dangerous or deceptive webpages that may include phishing or malware -->
-    <string name="preference_category_safe_browsing">Pori Diogel</string>
+    <string moz:removedIn="97" name="preference_category_safe_browsing">Pori Diogel</string>
     <!-- Preference title for safe browsing which when enabled, blocks dangerous or deceptive webpages that may include phishing or malware -->
     <string name="preference_safe_browsing_title">Rhwystro gwefannau peryglus a thwyllodrus posib</string>
     <!-- Preference summary for safe browsing which when enabled, blocks dangerous or deceptive webpages that may include phishing or malware -->
     <string name="preference_safe_browsing_summary">Rhwystro gwefannau twyllodrys ac ymosodol, rhai drwgwar, a meddalwedd diangen hysbys.</string>
+
+    <!-- Title of the preference to enable "HTTPS-Only" mode -->
+    <string name="preference_https_only_title">Modd HTTPS-yn-Unig</string>
+
+    <!-- Description of the preference to enable "HTTPS-Only" mode. %1$s will get replaced with the name of the app. -->
+    <string name="preference_https_only_summary">Mae HTTPS yn darparu cysylltiad diogel, wedi’i amgryptio rhwng %1$s a’r gwefannau rydych chi’n ymweld â nhw. Mae’r mwyafrif o wefannau yn cefnogi HTTPS, ac os yw Modd HTTPS-yn-Unig wedi’i alluogi, yna bydd %1$s yn uwchraddio’r holl gysylltiadau â HTTPS.</string>
 
     <!-- Preference for exceptions tracking protection -->
     <string name="preference_exceptions">Eithriadau</string>
@@ -807,7 +846,27 @@ The new line here must be kept as the second half of the string is clickable for
     <!-- Text for the menu button to remove a top site -->
     <string name="remove_top_site">Tynnu</string>
 
+    <!-- Text for the dialog title for renaming a top site -->
+    <string name="rename_top_site">Ailenwi</string>
+
     <!-- Text for context menu additional note.
     %1$s is a placeholder for the app name. -->
-    <string name="contextmenu_erased_images_note">Ni fydd delweddau sydd wedi eu cadw a’u rhannu &lt;b&gt;yn cael eu dileu&lt;/b&gt; pan fyddwch yn dileu hanes %1$s.</string>
+    <string name="contextmenu_erased_images_note2">Fydd delweddau sydd wedi eu cadw a’u rhannu &lt;b&gt;ddim yn cael eu dileu&lt;/b&gt; pan fyddwch yn dileu hanes %1$s.</string>
+
+    <!-- Theme Preferences -->
+    <!-- Preference category for changing default theme to dark or light mode -->
+    <string name="preferences_theme">Thema</string>
+    <!-- Preference for using light theme -->
+    <string name="preference_light_theme">Golau</string>
+    <!-- Preference for using dark theme -->
+    <string name="preference_dark_theme">Tywyll</string>
+    <!-- Preference for using using dark or light theme automatically set by battery -->
+    <string name="preference_auto_battery_theme">Gosodwyd gan yr Arbedwr Batri</string>
+    <!-- Preference for using following device theme -->
+    <string name="preference_follow_device_theme">Dilyn thema’r ddyfais</string>
+
+
+    <!-- Sessions List -->
+    <!-- Content description (not visible, for screen readers etc.): Button that closes a tab n the sessions list -->
+    <string name="close_tab">Cau tab</string>
 </resources>

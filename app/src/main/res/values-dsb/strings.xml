@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:moz="http://mozac.org/tools">
     <!-- ####################################################################################### -->
     <!-- ## Put only strings into this file that should be translated. Move all other strings ## -->
     <!-- ## into a separate file like strings_references.xml                                  ## -->
@@ -48,7 +48,7 @@
     <string name="menu_add_to_home_screen">Startowej wobrazowce pśidaś</string>
 
     <!-- Menu item: Add the current site as a shortcut on the Home screen -->
-    <string name="menu_add_to_shortcuts"></string>
+    <string name="menu_add_to_shortcuts">Zwězanjam pśidaś</string>
     <!-- Menu item: Remove the current site as a shortcut from the Home screen -->
     <string name="menu_remove_from_shortcuts">Ze zwězanjow wótwónoźeś</string>
 
@@ -150,8 +150,8 @@
     <!-- %1$s will be replaced by the app name (e.g. Firefox Focus) -->
     <string name="preference_mozilla_summary">Wó %1$s, pomoc</string>
 
-    <!-- Preference category for ad blocking and tracking protection settings -->
-    <string name="preference_category_tracking_protection">Slědowański šćit</string>
+    <!-- Preference category for ad blocking and enhanced tracking protection settings -->
+    <string name="preference_category_tracking_protection3">Pólěpšony slědowański šćit</string>
 
     <!-- Preference category for settings related to controlling web content -->
     <string name="preference_category_web_content">Webwopśimjeśe</string>
@@ -162,8 +162,8 @@
     <!-- Preference category for General Settings -->
     <string name="preference_category_general">Powšykne</string>
 
-    <!-- Preference summary for General Settings category; the three things users can find in this category -->
-    <string name="preference_general_summary">Standardny wobglědowak, rejtarki, rěc</string>
+    <!-- Preference summary for General Settings category; the two things users can find in this category -->
+    <string name="preference_general_summary2">Standardny wobglědowak, rěc</string>
 
     <!-- Preference category for settings about sending usage data -->
     <string name="preference_category_data_collection_use">Zběranje a wužywanje datow</string>
@@ -194,14 +194,16 @@
     <!-- Title of "switch" preference that enables/disables autocomplete for the default list -->
     <string name="preference_switch_autocomplete_topsites">Za nejlubše sedła</string>
 
-    <!-- Summary for the toggle to enable autocomplete for the topsites list -->
-    <string name="preference_autocomplete_topsite_summary">Zmóžniś, aby se wěcej ako 450 woblubowanych adresow w adresowem pólu wudopołniło.</string>
+    <!-- Summary for the toggle to enable autocomplete for the topsites list
+    %s is a placeholder for the app name (e.g. Firefox Focus)-->
+    <string name="preference_autocomplete_topsite_summary2">Zmóžniś, aby %s wěcej ako 450 woblubowanych adresow w adresowrm pólu wudopołnił.</string>
 
     <!-- Title of "switch" preference that enables/disables autocomplete for the user-defined list -->
     <string name="preference_switch_autocomplete_user_list">Za sedła, kótarež pśidawaśo</string>
 
-    <!-- Summary for the toggle to enable autocomplete for the user-defined list -->
-    <string name="preference_autocomplete_user_list_summary">Zmóžniś, aby se wěcej ako 450 woblubowanych adresow w adresowem pólu wudopołniło.</string>
+    <!-- Summary for the toggle to enable autocomplete for the user-defined list
+     %s is a placeholder for the app name (e.g. Firefox Focus)-->
+    <string name="preference_autocomplete_user_list_summary2">Zmóžniś, až %s waše nejlubše URL awtomatiski wudopołnjujo.</string>
 
     <!-- Preference category: Manage (user-defined) sites -->
     <string name="preference_category_autocomplete_manage_sites">Sedła zastojaś</string>
@@ -288,6 +290,7 @@
     <string name="preference_privacy_should_block_cookies_third_party_tracker_cookies_option">Jano slědujuce cookieje tśeśich póbitowarjow blokěrowaś</string>
     <string name="preference_privacy_should_block_cookies_third_party_only_option">Jano cookieje tśeśich póbitowarjow blokěrowaś</string>
 
+    <string name="preference_privacy_should_block_cookies_cross_site_option">Cookieje někotarych sedłow blokěrowaś</string>
     <string name="preference_privacy_should_block_cookies_yes_option2">Jo, pšosym</string>
 
     <!-- Preference Title: Biometrics can be used to unlock Focus if the previous session's data was not erased by the user. -->
@@ -527,9 +530,9 @@
     <!-- Label of the action that will close the dialog and not add anything to the home screen (shown in the confirmation dialog). -->
     <string name="dialog_addtohomescreen_action_no">NĚ</string>
 
-    <!-- When tracking protection is disabled for the current session then we will show this warning in the "Add to home screen" dialog to
-         let the user know that the shortcut will always be opened with tracking protection disabled. -->
-    <string name="dialog_addtohomescreen_tracking_protection">Zwězanje se ze znjemóžnjonym šlědowańskim šćitom wócynijo</string>
+    <!-- When enhanced tracking protection is disabled for the current session then we will show this warning in the "Add to home screen" dialog to
+         let the user know that the shortcut will always be opened with enhanced tracking protection disabled. -->
+    <string name="dialog_addtohomescreen_tracking_protection2">Zwězanje se ze znjemóžnjonym pólěpšonym šlědowańskim šćitom wócynijo</string>
 
     <!-- The user visible name of the "notification channel" (Android 8+ feature) for the ongoing notification shown while a browsing session is active.
     The recommended maximum length is 40 characters; the value may be truncated if it is too long.
@@ -632,8 +635,32 @@
     <!-- Description of what a user may find in the Advanced Setting category, used for debugging -->
     <string name="preference_advanced_summary">Wuwijarske rědy</string>
 
+    <!-- Preference for open links in third party apps -->
+    <string name="preferences_open_links_in_apps">Wótkaze w nałoženjach wócyniś</string>
+
     <!-- Title of Advanced Setting category -->
     <string name="preference_category_advanced">Rozšyrjone</string>
+
+    <!-- Preference for studies -->
+    <string name="preference_studies">Studije</string>
+
+    <!-- Preference for studies summary-->
+    <string name="preference_studies_summary">Firefox móžo wótergi studije instalěrowaś a pśewjasć.</string>
+
+    <!-- Learn more link for studies, links to an article for more information about studies. -->
+    <string name="studies_learn_more">Dalšne informacije</string>
+
+    <!-- Dialog message shown when some changes are made on studies -->
+    <string name="studies_restart_app">Nałoženje se skóńcyjo, aby se změny wustatkowali</string>
+
+    <!-- Title of the remove studies button -->
+    <string name="studies_remove">Wótwónoźeś</string>
+
+    <!-- Title of the active section on the studies list -->
+    <string name="studies_active">Aktiwny</string>
+
+    <!-- Title of the completed section on the studies list -->
+    <string name="studies_completed">Dokóńcone</string>
 
     <!-- Preference to enable remote debugging of the app via USB or Wi-Fi -->
     <string name="preference_remote_debugging">Daloke pytanje zmólkow pśez USB/WLAN</string>
@@ -689,10 +716,10 @@
     The new line here must be kept as the second half of the string is clickable for the user. -->
     <string name="tip_disable_tracking_protection">Sedło se na njewócakowanu wašnju zaźaržy?\nWopytajśo slědowański šćit znjemóžniś</string>
 
-    <!-- Tip displayed on home view explaining how to disable tracking protection
+    <!-- Tip displayed on home view explaining how to disable enhanced tracking protection
 The new line here must be kept as the second half of the string is clickable for the user. -->
-    <string name="tip_disable_tracking_protection2">Sedłoju wopśimjeśe felujo abo sedło se źiwnje zaźaržy?\n
-    Wopytajśo slědowański šćit znjemóžniś</string>
+    <string name="tip_disable_tracking_protection3">Sedłoju wopśimjeśe felujo abo sedło se źiwnje zaźaržy?\n
+    Wopytajśo pólěpšony slědowański šćit znjemóžniś</string>
 
     <!-- Tip displayed on home view explaining how to add sites to homescreen
     Argument 1 will be replaced with a line break in the application.-->
@@ -721,13 +748,18 @@ The new line here must be kept as the second half of the string is clickable for
 
     <!-- Tip displayed on the home view explaining how to use the Allowlist feature.
      "Allowlist" is a replacement for the word whitelist. -->
-    <string name="tip_explain_allowlist2">Cośo slědowański šćit za sedło, kótaremuž dowěriśo znjemóžniś?\n
+    <string name="tip_explain_allowlist3">Cośo pólěpšony slědowański šćit za sedło, kótaremuž dowěriśo znjemóžniś?\n
         Pśidajśo jo do běłeje lisćiny w nastajenjach
     </string>
 
     <!-- Tip displayed on the home view about the changes in the new release.
     %1$s is a placeholder for the app name -->
-    <string name="tip_fresh_look">To se wě, něnto modernjej wuglědamy! Cytajśo wěcej wó tom a drugich aktualizacijach za %1$s.</string>
+    <string name="tip_fresh_look">To se wě, něnto modernjej wuglědamy!\n Cytajśo wěcej wó tom a drugich aktualizacijach za %1$s.</string>
+
+    <!-- Tip displayed on the home view about shortcuts
+    %1$s is a placeholder for the app name -->
+    <string name="tip_about_shortcuts">Napórajśo zwězanja ze sedłami, ku kótarymž se nejcesćej woglědujośo:\n
+    Wubjeŕśo Zwězanjam pśidaś z menija %1$s</string>
 
     <!-- Label for the snackbar when a user opens a new tab -->
     <string name="new_tab_opened_snackbar">Nowy rejtark jo se wócynił</string>
@@ -739,11 +771,16 @@ The new line here must be kept as the second half of the string is clickable for
     <string name="preference_open_new_tab">Ned k wótkazoju w nowem rejtarku pśejś</string>
 
     <!-- Preference for safe browsing which when enabled, blocks dangerous or deceptive webpages that may include phishing or malware -->
-    <string name="preference_category_safe_browsing">Wěste pśeglědowanje</string>
+    <string moz:removedIn="97" name="preference_category_safe_browsing">Wěste pśeglědowanje</string>
     <!-- Preference title for safe browsing which when enabled, blocks dangerous or deceptive webpages that may include phishing or malware -->
     <string name="preference_safe_browsing_title">Ptencielnje tšašne a wobšudnikojske sedła blokěrowaś</string>
     <!-- Preference summary for safe browsing which when enabled, blocks dangerous or deceptive webpages that may include phishing or malware -->
     <string name="preference_safe_browsing_summary">Blokěrujśo wuzjawjone wobšudnikojske a napadowe sedła, škódne sedła a sedła z njewitaneju softwaru.</string>
+
+    <!-- Title of the preference to enable "HTTPS-Only" mode -->
+    <string name="preference_https_only_title">Modus Jano-HTTPS</string>
+    <!-- Description of the preference to enable "HTTPS-Only" mode. %1$s will get replaced with the name of the app. -->
+    <string name="preference_https_only_summary">HTTPS wěsty, skoděrowany zwisk mjazy %1$s a websedłami bitujo, ku kótarymž se woglědujośo. Nejwěcej websedłow HTTPS pódpěra, a jolic modus Jano-HTTPS jo zmóžnjony, %1$s buźo wše zwiski na HTTPS aktualizěrowaś.</string>
 
     <!-- Preference for exceptions tracking protection -->
     <string name="preference_exceptions">Wuwześa</string>
@@ -807,7 +844,27 @@ The new line here must be kept as the second half of the string is clickable for
     <!-- Text for the menu button to remove a top site -->
     <string name="remove_top_site">Wótwónoźeś</string>
 
+    <!-- Text for the dialog title for renaming a top site -->
+    <string name="rename_top_site">Pśemjeniś</string>
+
     <!-- Text for context menu additional note.
     %1$s is a placeholder for the app name. -->
-    <string name="contextmenu_erased_images_note">Skłaźone a źělone wobraze &lt;b&gt;se nje&lt;/b&gt;wulašuju, gaž historiju %1s lašujośo.</string>
+    <string name="contextmenu_erased_images_note2">Skłaźone a źělone wobraze &lt;b&gt;se nje&lt;/b&gt;wulašuju, gaž historiju %1$s lašujośo.</string>
+
+    <!-- Theme Preferences -->
+    <!-- Preference category for changing default theme to dark or light mode -->
+    <string name="preferences_theme">Drastwa</string>
+    <!-- Preference for using light theme -->
+    <string name="preference_light_theme">Swětły</string>
+    <!-- Preference for using dark theme -->
+    <string name="preference_dark_theme">Śamny</string>
+    <!-- Preference for using using dark or light theme automatically set by battery -->
+    <string name="preference_auto_battery_theme">Pó zažarjeńskich nastajenjach baterije</string>
+    <!-- Preference for using following device theme -->
+    <string name="preference_follow_device_theme">Na rědowu drastwu źiwaś</string>
+
+
+    <!-- Sessions List -->
+    <!-- Content description (not visible, for screen readers etc.): Button that closes a tab n the sessions list -->
+    <string name="close_tab">Rejtarik zacyniś</string>
 </resources>

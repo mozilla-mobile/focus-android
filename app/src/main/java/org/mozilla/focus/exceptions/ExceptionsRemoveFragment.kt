@@ -8,17 +8,13 @@ import android.content.Context
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
-import kotlinx.android.synthetic.main.fragment_exceptions_domains.*
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Dispatchers.Main
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
-import mozilla.components.support.ktx.kotlin.tryGetHostFromUrl
+import org.mozilla.focus.GleanMetrics.TrackingProtectionExceptions
 import org.mozilla.focus.R
 import org.mozilla.focus.ext.components
 import org.mozilla.focus.ext.requireComponents
 import org.mozilla.focus.state.AppAction
-import org.mozilla.focus.telemetry.TelemetryWrapper
 import kotlin.collections.forEach as withEach
 
 class ExceptionsRemoveFragment : ExceptionsListFragment() {
@@ -36,14 +32,14 @@ class ExceptionsRemoveFragment : ExceptionsListFragment() {
     }
 
     private fun removeSelectedDomains(context: Context) {
-        val exceptions = (exceptionList.adapter as DomainListAdapter).selection()
-        TelemetryWrapper.removeExceptionDomains(exceptions.size)
+        val exceptions = (binding.exceptionList.adapter as DomainListAdapter).selection()
+        TrackingProtectionExceptions.selectedItemsRemoved.record(
+            TrackingProtectionExceptions.SelectedItemsRemovedExtra(exceptions.size)
+        )
+
         if (exceptions.isNotEmpty()) {
             launch(Main) {
-                withContext(Dispatchers.IO) {
-                    val domains = exceptions.map { it.url.tryGetHostFromUrl() }
-                    ExceptionDomains.remove(context, domains)
-                }
+
                 exceptions.withEach { exception ->
                     context.components.trackingProtectionUseCases.removeException(exception)
                 }
