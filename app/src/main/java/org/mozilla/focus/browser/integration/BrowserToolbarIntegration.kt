@@ -96,14 +96,14 @@ class BrowserToolbarIntegration(
                 menu = ContextCompat.getColor(toolbar.context, R.color.primaryText)
             )
 
-            addTrackingProtectionIndicator()
-
-            displayIndicatorSeparator = false
-
             setOnSiteSecurityClickedListener {
                 TrackingProtection.toolbarShieldClicked.add()
                 fragment.showTrackingProtectionPanel()
             }
+
+            addTrackingProtectionIndicator()
+
+            displayIndicatorSeparator = false
 
             onUrlClicked = {
                 fragment.edit()
