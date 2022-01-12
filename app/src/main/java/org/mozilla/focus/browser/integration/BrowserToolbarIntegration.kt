@@ -4,7 +4,6 @@
 
 package org.mozilla.focus.browser.integration
 
-import android.graphics.Color
 import androidx.annotation.VisibleForTesting
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.content.ContextCompat
@@ -91,7 +90,7 @@ class BrowserToolbarIntegration(
         toolbar.display.apply {
             colors = colors.copy(
                 hint = ContextCompat.getColor(toolbar.context, R.color.urlBarHintText),
-                securityIconInsecure = Color.TRANSPARENT,
+                securityIconInsecure = ContextCompat.getColor(toolbar.context, R.color.primaryText),
                 text = ContextCompat.getColor(toolbar.context, R.color.primaryText),
                 menu = ContextCompat.getColor(toolbar.context, R.color.primaryText)
             )
