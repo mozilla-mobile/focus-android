@@ -80,9 +80,9 @@ open class MainActivity : LocaleAwareAppCompatActivity() {
 
         val intent = SafeIntent(intent)
 
-        // The performance check was added after the shouldShowFirstRun to take as much of the
+        // The performance check was added after the shouldShowOnboarding to take as much of the
         // code path as possible
-        if (settings.shouldShowFirstrun() &&
+        if (settings.shouldShowOnboarding() &&
             !Performance.processIntentIfPerformanceTest(intent, this)
         ) {
             components.appStore.dispatch(AppAction.ShowFirstRun)

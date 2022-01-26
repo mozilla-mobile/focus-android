@@ -15,8 +15,8 @@ import org.mozilla.focus.exceptions.ExceptionsListFragment
 import org.mozilla.focus.exceptions.ExceptionsRemoveFragment
 import org.mozilla.focus.fragment.AboutFragment
 import org.mozilla.focus.fragment.BrowserFragment
-import org.mozilla.focus.fragment.FirstrunFragment
 import org.mozilla.focus.fragment.UrlInputFragment
+import org.mozilla.focus.fragment.onboarding.OnboardingFragment
 import org.mozilla.focus.locale.screen.LanguageFragment
 import org.mozilla.focus.settings.AdvancedSettingsFragment
 import org.mozilla.focus.settings.GeneralSettingsFragment
@@ -132,10 +132,10 @@ class MainActivityNavigation(
     /**
      * Show first run onboarding.
      */
-    fun firstRun() {
+    fun onboarding() {
         activity.supportFragmentManager
             .beginTransaction()
-            .replace(R.id.container, FirstrunFragment.create(), FirstrunFragment.FRAGMENT_TAG)
+            .replace(R.id.container, OnboardingFragment.create(), OnboardingFragment.FRAGMENT_TAG)
             .commit()
     }
 

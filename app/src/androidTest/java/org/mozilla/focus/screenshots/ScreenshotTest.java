@@ -16,7 +16,7 @@ import org.junit.rules.TestRule;
 import org.junit.rules.TestWatcher;
 import org.junit.runner.Description;
 import org.mozilla.focus.activity.MainActivity;
-import org.mozilla.focus.helpers.MainActivityFirstrunTestRule;
+import org.mozilla.focus.helpers.MainActivityOnboardingTestRule;
 import org.mozilla.focus.idlingResources.SessionLoadedIdlingResource;
 
 import tools.fastlane.screengrab.Screengrab;
@@ -35,7 +35,7 @@ public abstract class ScreenshotTest {
     UiDevice device;
 
     @Rule
-    public ActivityTestRule<MainActivity> mActivityTestRule = new MainActivityFirstrunTestRule(true, false) {
+    public ActivityTestRule<MainActivity> mActivityTestRule = new MainActivityOnboardingTestRule(true, false) {
         @Override
         protected void beforeActivityLaunched() {
             super.beforeActivityLaunched();

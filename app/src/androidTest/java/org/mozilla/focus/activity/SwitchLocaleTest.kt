@@ -13,7 +13,7 @@ import org.junit.rules.TestRule
 import org.junit.rules.TestWatcher
 import org.junit.runner.Description
 import org.mozilla.focus.activity.robots.homeScreen
-import org.mozilla.focus.helpers.MainActivityFirstrunTestRule
+import org.mozilla.focus.helpers.MainActivityOnboardingTestRule
 import org.mozilla.focus.helpers.StringsHelper.EN_FRENCH_LOCALE
 import org.mozilla.focus.helpers.StringsHelper.EN_LANGUAGE_MENU_HEADING
 import org.mozilla.focus.helpers.StringsHelper.FR_ENGLISH_LOCALE
@@ -29,7 +29,7 @@ import java.util.Locale
 // Testing some translated elements when switching locales and using system default
 class SwitchLocaleTest {
     @get: Rule
-    var mActivityTestRule = MainActivityFirstrunTestRule(showFirstRun = false)
+    var mActivityTestRule = MainActivityOnboardingTestRule()
 
     @get: Rule
     var watcher: TestRule = object : TestWatcher() {

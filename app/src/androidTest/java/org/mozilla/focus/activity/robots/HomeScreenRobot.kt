@@ -15,6 +15,7 @@ import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.uiautomator.UiSelector
 import org.hamcrest.Matchers.not
 import org.junit.Assert.assertTrue
+import org.junit.Ignore
 import org.mozilla.focus.R
 import org.mozilla.focus.helpers.TestHelper.getStringResource
 import org.mozilla.focus.helpers.TestHelper.mDevice
@@ -28,7 +29,10 @@ class HomeScreenRobot {
         assertTrue(editURLBar.text.equals(getStringResource(R.string.urlbar_hint)))
     }
 
-    fun skipFirstRun() = onView(withId(R.id.skip)).perform(click())
+    @Ignore("First run fragment was refactored and skip view doesn't exist anymore")
+    fun skipFirstRun() {
+        // onView(withId(R.id.skip)).perform(click())
+    }
 
     fun verifyOnboardingFirstSlide() {
         firstSlide.check(matches(isDisplayed()))

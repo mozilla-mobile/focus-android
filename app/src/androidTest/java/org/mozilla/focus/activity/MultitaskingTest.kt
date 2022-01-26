@@ -16,7 +16,7 @@ import org.junit.runner.RunWith
 import org.mozilla.focus.R
 import org.mozilla.focus.activity.robots.searchScreen
 import org.mozilla.focus.ext.components
-import org.mozilla.focus.helpers.MainActivityFirstrunTestRule
+import org.mozilla.focus.helpers.MainActivityOnboardingTestRule
 import org.mozilla.focus.helpers.TestHelper.clickSnackBarActionButton
 import org.mozilla.focus.helpers.TestHelper.createMockResponseFromAsset
 import org.mozilla.focus.helpers.TestHelper.getStringResource
@@ -36,7 +36,7 @@ class MultitaskingTest {
         .store
 
     @get: Rule
-    var mActivityTestRule = MainActivityFirstrunTestRule(showFirstRun = false)
+    var mActivityTestRule = MainActivityOnboardingTestRule()
 
     @Before
     @Throws(Exception::class)

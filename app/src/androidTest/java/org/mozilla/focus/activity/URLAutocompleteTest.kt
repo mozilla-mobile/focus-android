@@ -9,7 +9,7 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.mozilla.focus.activity.robots.homeScreen
 import org.mozilla.focus.activity.robots.searchScreen
-import org.mozilla.focus.helpers.MainActivityFirstrunTestRule
+import org.mozilla.focus.helpers.MainActivityOnboardingTestRule
 import org.mozilla.focus.helpers.TestHelper.exitToTop
 import org.mozilla.focus.helpers.TestHelper.mDevice
 import org.mozilla.focus.testAnnotations.SmokeTest
@@ -23,7 +23,7 @@ class URLAutocompleteTest {
     private val customURL = "680news.com"
 
     @get: Rule
-    var mActivityTestRule = MainActivityFirstrunTestRule(showFirstRun = false)
+    var mActivityTestRule = MainActivityOnboardingTestRule()
 
     @SmokeTest
     @Test

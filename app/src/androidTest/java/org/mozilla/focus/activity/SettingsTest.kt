@@ -9,14 +9,14 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mozilla.focus.activity.robots.homeScreen
-import org.mozilla.focus.helpers.MainActivityFirstrunTestRule
+import org.mozilla.focus.helpers.MainActivityOnboardingTestRule
 import org.mozilla.focus.testAnnotations.SmokeTest
 
 // This test checks all the headings in the Settings menu are there
 @RunWith(AndroidJUnit4ClassRunner::class)
 class SettingsTest {
     @get: Rule
-    var mActivityTestRule = MainActivityFirstrunTestRule(showFirstRun = false)
+    var mActivityTestRule = MainActivityOnboardingTestRule()
 
     @SmokeTest
     @Test

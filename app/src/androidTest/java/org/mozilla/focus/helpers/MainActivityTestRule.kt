@@ -16,23 +16,23 @@ import kotlinx.coroutines.runBlocking
 import mozilla.components.support.utils.ThreadUtils
 import org.mozilla.focus.activity.MainActivity
 import org.mozilla.focus.ext.components
-import org.mozilla.focus.fragment.FirstrunFragment.Companion.FIRSTRUN_PREF
+import org.mozilla.focus.fragment.onboarding.OnboardingFragment.Companion.ONBOARDING_PREF
 import org.mozilla.focus.helpers.TestHelper.pressBackKey
 import org.mozilla.focus.state.AppAction
 import org.mozilla.focus.state.AppStore
 import org.mozilla.focus.state.Screen
 
 // Basic Test rule with pref to skip the onboarding screen
-open class MainActivityFirstrunTestRule(
+open class MainActivityOnboardingTestRule(
     launchActivity: Boolean = true,
-    private val showFirstRun: Boolean
+    private val showOnboarding: Boolean = false
 ) : ActivityTestRule<MainActivity>(MainActivity::class.java, launchActivity) {
     private val longTapUserPreference = getLongPressTimeout()
 
     @CallSuper
     override fun beforeActivityLaunched() {
         super.beforeActivityLaunched()
-        updateFirstRun(showFirstRun)
+        updateOnboarding(showOnboarding)
         setLongTapTimeout(3000)
     }
 
@@ -62,7 +62,7 @@ open class MainActivityIntentsTestRule(launchActivity: Boolean = true, private v
     @CallSuper
     override fun beforeActivityLaunched() {
         super.beforeActivityLaunched()
-        updateFirstRun(showFirstRun)
+        updateOnboarding(showFirstRun)
         setLongTapTimeout(3000)
     }
 
@@ -95,21 +95,21 @@ private fun closeNotificationShade() {
     }
 }
 
-private fun updateFirstRun(showFirstRun: Boolean) {
+private fun updateOnboarding(showOnboarding: Boolean) {
     val appContext = InstrumentationRegistry.getInstrumentation()
         .targetContext
         .applicationContext
 
     val appStore = appContext.components.appStore
-    if (appStore.state.screen is Screen.FirstRun && !showFirstRun) {
+    if (appStore.state.screen is Screen.Onboarding && !showOnboarding) {
         hideFirstRun(appStore)
-    } else if (appStore.state.screen !is Screen.FirstRun && showFirstRun) {
+    } else if (appStore.state.screen !is Screen.Onboarding && showOnboarding) {
         showFirstRun(appStore)
     }
 
     PreferenceManager.getDefaultSharedPreferences(appContext)
         .edit()
-        .putBoolean(FIRSTRUN_PREF, !showFirstRun)
+        .putBoolean(ONBOARDING_PREF, !showOnboarding)
         .apply()
 }
 
@@ -122,7 +122,7 @@ private fun showFirstRun(appStore: AppStore) {
 
 private fun hideFirstRun(appStore: AppStore) {
     val job = appStore.dispatch(
-        AppAction.FinishFirstRun(tabId = null)
+        AppAction.FinishOnboarding(tabId = null)
     )
     runBlocking { job.join() }
 }

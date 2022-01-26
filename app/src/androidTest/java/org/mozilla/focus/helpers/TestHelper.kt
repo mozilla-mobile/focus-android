@@ -84,7 +84,7 @@ object TestHelper {
         }
     }
 
-    fun restartApp(activity: MainActivityFirstrunTestRule) {
+    fun restartApp(activity: MainActivityOnboardingTestRule) {
         with(activity) {
             finishActivity()
             mDevice.waitForIdle()

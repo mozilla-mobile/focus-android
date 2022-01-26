@@ -6,6 +6,7 @@ package org.mozilla.focus.ui.theme
 
 import androidx.compose.material.Colors
 import androidx.compose.ui.graphics.Color
+import mozilla.components.ui.colors.PhotonColors
 
 /**
  * Custom Focus colors, other than baseline Material color theme.
@@ -22,7 +23,9 @@ data class FocusColors(
     val aboutPageText: Color,
     val aboutPageLink: Color,
     val radioButtonSelected: Color,
-    val toolbarColor: Color
+    val toolbarColor: Color,
+    val secondaryBackground: Color = PhotonColors.Ink20A48,
+    val onboardingButtonBackground: Color = PhotonColors.Ink20
 ) {
     val primary: Color get() = material.primary
     val primaryVariant: Color get() = material.primaryVariant

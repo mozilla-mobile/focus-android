@@ -391,7 +391,7 @@ class UrlInputFragment :
         super.onStart()
 
         activity?.let {
-            if (requireContext().settings.shouldShowFirstrun()) return@onStart
+            if (requireContext().settings.shouldShowOnboarding()) return@onStart
         }
     }
 

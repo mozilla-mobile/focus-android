@@ -10,15 +10,15 @@ import org.junit.Rule
 import org.junit.Test
 import org.mozilla.focus.activity.MainActivity
 import org.mozilla.focus.activity.robots.homeScreen
-import org.mozilla.focus.helpers.MainActivityFirstrunTestRule
+import org.mozilla.focus.helpers.MainActivityOnboardingTestRule
 import tools.fastlane.screengrab.Screengrab
 import tools.fastlane.screengrab.locale.LocaleTestRule
 
-class FirstRunScreenshots : ScreenshotTest() {
+class OnboardingScreenshots : ScreenshotTest() {
     @Rule
     @JvmField
     var mActivityTestRule: ActivityTestRule<MainActivity> =
-        object : MainActivityFirstrunTestRule(true, true) {
+        object : MainActivityOnboardingTestRule(true, true) {
         }
 
     @Rule

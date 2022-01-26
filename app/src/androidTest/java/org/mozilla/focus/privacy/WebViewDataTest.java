@@ -43,7 +43,7 @@ import static androidx.test.espresso.action.ViewActions.click;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import static org.mozilla.focus.fragment.FirstrunFragment.FIRSTRUN_PREF;
+import static org.mozilla.focus.fragment.onboarding.OnboardingFragment.ONBOARDING_PREF;
 import static org.mozilla.focus.helpers.TestHelper.waitingTime;
 
 /**
@@ -150,7 +150,7 @@ public class WebViewDataTest {
 
             PreferenceManager.getDefaultSharedPreferences(appContext)
                     .edit()
-                    .putBoolean(FIRSTRUN_PREF, true)
+                    .putBoolean(ONBOARDING_PREF, true)
                     .apply();
 
             // This test fails permanently on webview, see https://github.com/mozilla-mobile/focus-android/issues/2940")

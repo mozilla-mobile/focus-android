@@ -43,9 +43,9 @@ sealed class AppAction : Action {
     object HideTabs : AppAction()
 
     /**
-     * The user finished the first run onboarding.
+     * The user finished the onboarding.
      */
-    data class FinishFirstRun(val tabId: String?) : AppAction()
+    data class FinishOnboarding(val tabId: String?) : AppAction()
 
     /**
      * The app should get locked.

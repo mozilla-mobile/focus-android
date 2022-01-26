@@ -21,8 +21,8 @@ object AppReducer : Reducer<AppState, AppAction> {
             is AppAction.EditAction -> editAction(state, action)
             is AppAction.FinishEdit -> finishEditing(state, action)
             is AppAction.HideTabs -> hideTabs(state)
-            is AppAction.ShowFirstRun -> showFirstRun(state)
-            is AppAction.FinishFirstRun -> finishFirstRun(state, action)
+            is AppAction.ShowFirstRun -> showOnboarding(state)
+            is AppAction.FinishOnboarding -> finishFirstRun(state, action)
             is AppAction.Lock -> lock(state)
             is AppAction.Unlock -> unlock(state, action)
             is AppAction.OpenSettings -> openSettings(state, action)
@@ -38,7 +38,7 @@ object AppReducer : Reducer<AppState, AppAction> {
  * The currently selected tab has changed.
  */
 private fun selectionChanged(state: AppState, action: AppAction.SelectionChanged): AppState {
-    if (state.screen is Screen.FirstRun || state.screen is Screen.Locked) {
+    if (state.screen is Screen.Onboarding || state.screen is Screen.Locked) {
         return state
     }
 
@@ -51,7 +51,7 @@ private fun selectionChanged(state: AppState, action: AppAction.SelectionChanged
  * All tabs have been closed.
  */
 private fun noTabs(state: AppState): AppState {
-    if (state.screen is Screen.Home || state.screen is Screen.FirstRun) {
+    if (state.screen is Screen.Home || state.screen is Screen.Onboarding) {
         return state
     }
 
@@ -90,7 +90,7 @@ private fun hideTabs(state: AppState): AppState {
 /**
  * The user finished the first run onboarding.
  */
-private fun finishFirstRun(state: AppState, action: AppAction.FinishFirstRun): AppState {
+private fun finishFirstRun(state: AppState, action: AppAction.FinishOnboarding): AppState {
     return if (action.tabId != null) {
         state.copy(screen = Screen.Browser(action.tabId, showTabs = false))
     } else {
@@ -99,10 +99,10 @@ private fun finishFirstRun(state: AppState, action: AppAction.FinishFirstRun): A
 }
 
 /**
- * Force showing the first run screen (for testing).
+ * Force showing the onboarding screen (for testing).
  */
-private fun showFirstRun(state: AppState): AppState {
-    return state.copy(screen = Screen.FirstRun)
+private fun showOnboarding(state: AppState): AppState {
+    return state.copy(screen = Screen.Onboarding)
 }
 
 /**

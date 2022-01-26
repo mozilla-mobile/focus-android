@@ -9,7 +9,7 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.mozilla.focus.activity.robots.searchScreen
-import org.mozilla.focus.helpers.MainActivityFirstrunTestRule
+import org.mozilla.focus.helpers.MainActivityOnboardingTestRule
 import org.mozilla.focus.helpers.TestHelper.createMockResponseFromAsset
 import org.mozilla.focus.testAnnotations.SmokeTest
 
@@ -17,7 +17,7 @@ class MediaPlaybackTest {
     private lateinit var webServer: MockWebServer
 
     @get:Rule
-    var mActivityTestRule = MainActivityFirstrunTestRule(showFirstRun = false)
+    var mActivityTestRule = MainActivityOnboardingTestRule()
 
     @Before
     fun setUp() {

@@ -16,7 +16,7 @@ import org.junit.runner.RunWith
 import org.mozilla.focus.R
 import org.mozilla.focus.activity.robots.homeScreen
 import org.mozilla.focus.activity.robots.searchScreen
-import org.mozilla.focus.helpers.MainActivityFirstrunTestRule
+import org.mozilla.focus.helpers.MainActivityOnboardingTestRule
 import org.mozilla.focus.helpers.TestHelper.createMockResponseFromAsset
 import org.mozilla.focus.helpers.TestHelper.getStringResource
 import org.mozilla.focus.helpers.TestHelper.waitUntilSnackBarGone
@@ -24,11 +24,11 @@ import org.mozilla.focus.testAnnotations.SmokeTest
 
 // Tests the First run onboarding screens
 @RunWith(AndroidJUnit4ClassRunner::class)
-class FirstRunDialogueTest {
+class OnboardingDialogueTest {
     private lateinit var webServer: MockWebServer
 
     @get: Rule
-    val mActivityTestRule = MainActivityFirstrunTestRule(showFirstRun = true)
+    val mActivityTestRule = MainActivityOnboardingTestRule(showOnboarding = true)
 
     @Before
     fun startWebServer() {

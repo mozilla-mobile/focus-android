@@ -35,7 +35,7 @@ sealed class Screen {
     /**
      * First run onboarding.
      */
-    object FirstRun : Screen()
+    object Onboarding : Screen()
 
     /**
      * The home screen.

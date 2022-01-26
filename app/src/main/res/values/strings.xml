@@ -467,6 +467,33 @@
 
     <string name="error_hostLookup_title">Server not found</string>
 
+    <!-- Onboarding: Title -->
+    <string name="onboarding_title">Welcome to Firefox Focus!</string>
+
+    <!-- Onboarding: Description -->
+    <string name="onboarding_description">Take your private browsing to the next level.</string>
+
+    <!-- Onboarding: Incognito Title -->
+    <string name="onboarding_incognito_title">More than just incognito</string>
+
+    <!-- Onboarding: Incognito Description -->
+    <string name="onboarding_incognito_description">Focus is a dedicated privacy browser with tracking protection and content blocking.</string>
+
+    <!-- Onboarding: History Title -->
+    <string name="onboarding_history_title">Your history doesn’t follow you.</string>
+
+    <!-- Onboarding: History Title -->
+    <string name="onboarding_history_description">Erase your browsing history, passwords, bookmarks, cookies, and prevent unwanted ads from following you in a simple click!</string>
+
+    <!-- Onboarding: Protection Title -->
+    <string name="onboarding_protection_title">Protection at your own discretion</string>
+
+    <!-- Onboarding: Protection Title -->
+    <string name="onboarding_protection_description">Configure settings so you can decide how much or how little you share.</string>
+
+    <!-- Onboarding: Start browsing -->
+    <string name="onboarding_start_browsing">Start browsing</string>
+
     <!-- First run tour (Default browser): Title -->
     <string name="firstrun_defaultbrowser_title">Power up your privacy</string>
     <!-- First run tour (Default browser): Text. -->

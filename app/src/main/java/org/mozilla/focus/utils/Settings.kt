@@ -14,7 +14,7 @@ import mozilla.components.concept.engine.Engine
 import mozilla.components.concept.engine.EngineSession
 import mozilla.components.feature.sitepermissions.SitePermissionsRules
 import org.mozilla.focus.R
-import org.mozilla.focus.fragment.FirstrunFragment
+import org.mozilla.focus.fragment.onboarding.OnboardingFragment
 import org.mozilla.focus.searchsuggestions.SearchSuggestionsPreferences
 import org.mozilla.focus.settings.permissions.AutoplayOption
 import org.mozilla.focus.settings.permissions.getValueByPrefKey
@@ -235,8 +235,8 @@ class Settings(
             .apply()
     }
 
-    fun shouldShowFirstrun(): Boolean =
-        !preferences.getBoolean(FirstrunFragment.FIRSTRUN_PREF, false)
+    fun shouldShowOnboarding(): Boolean =
+        !preferences.getBoolean(OnboardingFragment.ONBOARDING_PREF, false)
 
     fun shouldUseBiometrics(): Boolean =
         preferences.getBoolean(getPreferenceKey(R.string.pref_key_biometric), false)

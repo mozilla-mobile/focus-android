@@ -9,7 +9,7 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.mozilla.focus.R
 import org.mozilla.focus.activity.robots.searchScreen
-import org.mozilla.focus.helpers.MainActivityFirstrunTestRule
+import org.mozilla.focus.helpers.MainActivityOnboardingTestRule
 import org.mozilla.focus.helpers.TestHelper.getStringResource
 import org.mozilla.focus.helpers.TestHelper.setNetworkEnabled
 
@@ -17,7 +17,7 @@ import org.mozilla.focus.helpers.TestHelper.setNetworkEnabled
 @RunWith(AndroidJUnit4ClassRunner::class)
 class ErrorPagesTest {
     @get: Rule
-    val mActivityTestRule = MainActivityFirstrunTestRule(showFirstRun = false)
+    val mActivityTestRule = MainActivityOnboardingTestRule()
 
     @Test
     fun badURLCheckTest() {

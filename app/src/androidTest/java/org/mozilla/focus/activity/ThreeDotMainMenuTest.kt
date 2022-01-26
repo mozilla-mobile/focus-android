@@ -10,7 +10,7 @@ import org.junit.Rule
 import org.junit.Test
 import org.mozilla.focus.activity.robots.homeScreen
 import org.mozilla.focus.activity.robots.searchScreen
-import org.mozilla.focus.helpers.MainActivityFirstrunTestRule
+import org.mozilla.focus.helpers.MainActivityOnboardingTestRule
 import org.mozilla.focus.helpers.TestHelper
 import org.mozilla.focus.testAnnotations.SmokeTest
 
@@ -21,7 +21,7 @@ class ThreeDotMainMenuTest {
     private lateinit var webServer: MockWebServer
 
     @get: Rule
-    val mActivityTestRule = MainActivityFirstrunTestRule(showFirstRun = false)
+    val mActivityTestRule = MainActivityOnboardingTestRule()
 
     @Before
     fun startWebServer() {

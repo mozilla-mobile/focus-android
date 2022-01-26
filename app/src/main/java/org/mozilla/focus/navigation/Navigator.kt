@@ -47,7 +47,7 @@ class Navigator(
             is Screen.EditUrl -> navigation.edit(
                 screen.tabId
             )
-            is Screen.FirstRun -> navigation.firstRun()
+            is Screen.Onboarding -> navigation.onboarding()
             is Screen.Locked -> navigation.lock()
             is Screen.Settings -> navigation.settings(screen.page)
         }

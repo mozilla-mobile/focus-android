@@ -22,7 +22,7 @@ import org.junit.Test
 import org.mozilla.focus.R
 import org.mozilla.focus.activity.MainActivity
 import org.mozilla.focus.activity.robots.homeScreen
-import org.mozilla.focus.helpers.MainActivityFirstrunTestRule
+import org.mozilla.focus.helpers.MainActivityOnboardingTestRule
 import org.mozilla.focus.helpers.TestHelper
 import org.mozilla.focus.helpers.TestHelper.waitForWebContent
 import tools.fastlane.screengrab.Screengrab
@@ -32,7 +32,7 @@ import java.util.Locale
 class HomeScreenScreenshots : ScreenshotTest() {
     @Rule @JvmField
     var mActivityTestRule: ActivityTestRule<MainActivity> =
-        object : MainActivityFirstrunTestRule(true, false) {
+        object : MainActivityOnboardingTestRule(true, false) {
         }
 
     @Rule @JvmField

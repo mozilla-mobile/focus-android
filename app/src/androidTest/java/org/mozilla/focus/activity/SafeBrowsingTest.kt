@@ -11,7 +11,7 @@ import org.junit.Test
 import org.mozilla.focus.R
 import org.mozilla.focus.activity.robots.homeScreen
 import org.mozilla.focus.activity.robots.searchScreen
-import org.mozilla.focus.helpers.MainActivityFirstrunTestRule
+import org.mozilla.focus.helpers.MainActivityOnboardingTestRule
 import org.mozilla.focus.helpers.TestHelper.createMockResponseFromAsset
 import org.mozilla.focus.helpers.TestHelper.exitToTop
 import org.mozilla.focus.helpers.TestHelper.getStringResource
@@ -28,7 +28,7 @@ class SafeBrowsingTest {
     private val tryAgainButton = getStringResource(R.string.mozac_browser_errorpages_page_refresh)
 
     @get: Rule
-    val mActivityTestRule = MainActivityFirstrunTestRule(showFirstRun = false)
+    val mActivityTestRule = MainActivityOnboardingTestRule()
 
     @Before
     fun setUp() {

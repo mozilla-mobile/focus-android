@@ -9,7 +9,7 @@ import org.junit.Test
 import org.mozilla.focus.activity.robots.browserScreen
 import org.mozilla.focus.activity.robots.homeScreen
 import org.mozilla.focus.activity.robots.searchScreen
-import org.mozilla.focus.helpers.MainActivityFirstrunTestRule
+import org.mozilla.focus.helpers.MainActivityOnboardingTestRule
 import org.mozilla.focus.helpers.TestHelper.exitToTop
 import org.mozilla.focus.helpers.TestHelper.pressEnterKey
 import org.mozilla.focus.helpers.TestHelper.webPageLoadwaitingTime
@@ -20,7 +20,7 @@ class SearchTest {
     private val enginesList = listOf("DuckDuckGo", "Google", "Amazon.com", "Wikipedia")
 
     @get: Rule
-    var mActivityTestRule = MainActivityFirstrunTestRule(showFirstRun = false)
+    var mActivityTestRule = MainActivityOnboardingTestRule()
 
     @SmokeTest
     @Test

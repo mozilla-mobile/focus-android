@@ -9,7 +9,7 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.mozilla.focus.R
 import org.mozilla.focus.activity.robots.homeScreen
-import org.mozilla.focus.helpers.MainActivityFirstrunTestRule
+import org.mozilla.focus.helpers.MainActivityOnboardingTestRule
 import org.mozilla.focus.helpers.TestHelper.appContext
 import org.mozilla.focus.helpers.TestHelper.exitToTop
 import org.mozilla.focus.testAnnotations.SmokeTest
@@ -18,7 +18,7 @@ import org.mozilla.focus.testAnnotations.SmokeTest
 @RunWith(AndroidJUnit4ClassRunner::class)
 class MozillaSupportPagesTest {
     @get: Rule
-    val mActivityTestRule = MainActivityFirstrunTestRule(showFirstRun = false)
+    val mActivityTestRule = MainActivityOnboardingTestRule()
 
     @SmokeTest
     @Test
