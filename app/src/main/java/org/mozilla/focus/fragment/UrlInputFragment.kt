@@ -304,6 +304,7 @@ class UrlInputFragment :
                 config = {
                     TopSitesConfig(
                         totalSites = TOP_SITES_MAX_LIMIT,
+                        fetchProvidedTopSites = false,
                         frecencyConfig = null
                     )
                 }
@@ -580,6 +581,8 @@ class UrlInputFragment :
             val (isUrl, url, searchTerms) = normalizeUrlAndSearchTerms(input)
 
             openUrl(url, searchTerms)
+
+            TelemetryWrapper.urlBarEvent(isUrl)
 
             if (isUrl) {
                 SearchBar.enteredUrl.record(NoExtras())
