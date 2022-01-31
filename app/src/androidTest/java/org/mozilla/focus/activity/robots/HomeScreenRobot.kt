@@ -6,14 +6,11 @@ package org.mozilla.focus.activity.robots
 
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.click
-import androidx.test.espresso.action.ViewActions.swipeLeft
-import androidx.test.espresso.action.ViewActions.swipeRight
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.uiautomator.UiSelector
-import org.hamcrest.Matchers.not
 import org.junit.Assert.assertTrue
 import org.mozilla.focus.R
 import org.mozilla.focus.helpers.TestHelper.getStringResource
@@ -50,29 +47,9 @@ class HomeScreenRobot {
 
     fun clickOnboardingFinishBtn() = finishBtn.click()
 
-    fun verifyTipsCarouselIsDisplayed(enabled: Boolean) {
-        if (enabled) {
-            homeScreenTips.check(matches(isDisplayed()))
-        } else {
-            homeScreenTips.check(matches(not(isDisplayed())))
-        }
-    }
-
     fun verifyTipText(text: String) {
         val tipText = mDevice.findObject(UiSelector().text(text))
         assertTrue(tipText.waitForExists(waitingTime))
-    }
-
-    fun scrollLeftTipsCarousel() {
-        homeScreenTips
-            .check(matches(isDisplayed()))
-            .perform(swipeLeft())
-    }
-
-    fun scrollRightTipsCarousel() {
-        homeScreenTips
-            .check(matches(isDisplayed()))
-            .perform(swipeRight())
     }
 
     class Transition {
@@ -129,5 +106,3 @@ private val finishBtn = mDevice.findObject(
         .resourceId("$packageName:id/finish")
         .enabled(true)
 )
-
-private val homeScreenTips = onView(withId(R.id.home_tips))

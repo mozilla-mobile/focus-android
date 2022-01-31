@@ -23,17 +23,10 @@ import org.mozilla.focus.idlingResources.SessionLoadedIdlingResource
 class SettingsMozillaMenuRobot {
     fun verifyMozillaMenuItems() {
         mozillaSettingsList.waitForExists(waitingTime)
-        showTipsSwitch.check(matches(isDisplayed()))
         aboutFocusPageLink.check(matches(isDisplayed()))
         helpPageLink.check(matches(isDisplayed()))
         yourRightsLink.check(matches(isDisplayed()))
         privacyNoticeLink.check(matches(isDisplayed()))
-    }
-
-    fun switchHomeScreenTips() {
-        showTipsSwitch
-            .check(matches(isDisplayed()))
-            .perform(click())
     }
 
     fun verifyVersionNumbers() {
@@ -113,8 +106,6 @@ class SettingsMozillaMenuRobot {
 
 private val mozillaSettingsList =
     UiScrollable(UiSelector().resourceId("${TestHelper.packageName}:id/recycler_view"))
-
-private val showTipsSwitch = onView(withText("Show home screen tips"))
 
 private val aboutFocusPageLink = onView(withText("About $appName"))
 

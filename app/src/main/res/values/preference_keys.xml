@@ -69,10 +69,6 @@
 
     <string name="pref_key_category_security" translatable="false"><xliff:g id="preference_key">security_category</xliff:g></string>
 
-    <string name="pref_key_homescreen_tips" translatable="false">
-        <xliff:g id="preference_key">use_homescreen_tips</xliff:g>
-    </string>
-
     <string name="pref_key_screen_exceptions" translatable="false">
         <xliff:g id="preference_key">pref_screen_exceptions</xliff:g>
     </string>

@@ -13,7 +13,6 @@ import org.mozilla.focus.activity.robots.homeScreen
 import org.mozilla.focus.ext.settings
 import org.mozilla.focus.helpers.MainActivityFirstrunTestRule
 import org.mozilla.focus.helpers.TestHelper.appContext
-import org.mozilla.focus.helpers.TestHelper.exitToTop
 import org.mozilla.focus.testAnnotations.SmokeTest
 
 // This test visits each About page and checks whether some essential elements are being displayed
@@ -103,21 +102,6 @@ class MozillaSupportPagesTest {
         }.openMozillaSettingsMenu {
         }.openPrivacyNotice {
             verifyPageURL("privacy/firefox-focus")
-        }
-    }
-
-    @SmokeTest
-    @Test
-    fun turnOffHomeScreenTipsTest() {
-        homeScreen {
-        }.openMainMenu {
-        }.openSettings {
-        }.openMozillaSettingsMenu {
-            switchHomeScreenTips()
-            exitToTop()
-        }
-        homeScreen {
-            verifyTipsCarouselIsDisplayed(false)
         }
     }
 }
