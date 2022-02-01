@@ -2,6 +2,10 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
-object AndroidComponents {
-    const val VERSION = "98.0.20220131190126"
+package org.mozilla.focus.appreview
+
+enum class AppReviewStep {
+    Pending,
+    ReviewNeeded,
+    Reviewed
 }

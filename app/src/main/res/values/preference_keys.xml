@@ -42,6 +42,9 @@
     <string name="pref_key_privacy_notice" translatable="false"><xliff:g id="preference_key">pref_privacy_notice</xliff:g></string>
 
     <string name="pref_key_locale" translatable="false"><xliff:g id="preference_key">pref_locale</xliff:g></string>
+    <string name="pref_in_app_review_openings" translatable="false"><xliff:g id="preference_key">pref_in_app_review_openings</xliff:g></string>
+    <string name="pref_in_app_review_step" translatable="false"><xliff:g id="preference_key">pref_in_app_review_step</xliff:g></string>
+    <string name="pref_in_app_review_time" translatable="false"><xliff:g id="preference_key">pref_in_app_review_time</xliff:g></string>
 
     <string name="pref_key_screen_autocomplete" translatable="false"><xliff:g id="preference_key">pref_screen_autocomplete</xliff:g></string>
     <string name="pref_key_autocomplete_preinstalled" translatable="false"><xliff:g id="preference_key">pref_autocomplete_preinstalled</xliff:g></string>
@@ -57,6 +60,8 @@
     <string name="pref_key_remote_debugging" translatable="false"><xliff:g id="preference_key">pref_remote_debugging</xliff:g></string>
     <string name="pref_key_open_links_in_external_app" translatable="false"><xliff:g id="preference_key">pref_key_open_links_in_external_app</xliff:g></string>
     <string name="pref_key_studies" translatable="false"><xliff:g id="preference_key">pref_key_studies</xliff:g></string>
+    <string name="pref_key_secret_settings" translatable="false"><xliff:g id="preference_key">pref_key_secret_settings</xliff:g></string>
+    <string name="pref_key_use_nimbus_preview" translatable="false"><xliff:g id="preference_key">pref_key_use_nimbus_preview</xliff:g></string>
 
     <string name="has_opened_new_tab" translatable="false"><xliff:g id="preference_key">has_opened_new_tab</xliff:g></string>
     <string name="has_added_to_home_screen" translatable="false"><xliff:g id="preference_key">has_added_to_home_screen</xliff:g></string>
@@ -73,7 +78,7 @@
     <string name="pref_key_screen_exceptions" translatable="false">
         <xliff:g id="preference_key">pref_screen_exceptions</xliff:g>
     </string>
-
+    <string name="pref_cfr_visibility_for_shield_toolbar_icon" translatable="false"><xliff:g id="preference_key">pref_cfr_visibility_for_shield_toolbar_icon</xliff:g></string>
     <!-- Theme Settings -->
     <string name="pref_key_light_theme" translatable="false">pref_key_light_theme</string>
     <string name="pref_key_dark_theme" translatable="false">pref_key_dark_theme</string>
