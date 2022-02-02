@@ -10,6 +10,7 @@ import org.junit.Rule
 import org.junit.Test
 import org.mozilla.focus.activity.robots.homeScreen
 import org.mozilla.focus.activity.robots.searchScreen
+import org.mozilla.focus.helpers.FeatureSettingsHelper
 import org.mozilla.focus.helpers.MainActivityFirstrunTestRule
 import org.mozilla.focus.helpers.TestHelper
 import org.mozilla.focus.testAnnotations.SmokeTest
@@ -19,6 +20,7 @@ import org.mozilla.focus.testAnnotations.SmokeTest
  */
 class ThreeDotMainMenuTest {
     private lateinit var webServer: MockWebServer
+    private val featureSettingsHelper = FeatureSettingsHelper()
 
     @get: Rule
     val mActivityTestRule = MainActivityFirstrunTestRule(showFirstRun = false)
@@ -28,11 +30,13 @@ class ThreeDotMainMenuTest {
         webServer = MockWebServer()
         webServer.enqueue(TestHelper.createMockResponseFromAsset("tab1.html"))
         webServer.start()
+        featureSettingsHelper.setShieldIconCFREnabled(false)
     }
 
     @After
-    fun stopWebServer() {
+    fun tearDown() {
         webServer.shutdown()
+        featureSettingsHelper.resetAllFeatureFlags()
     }
 
     @SmokeTest

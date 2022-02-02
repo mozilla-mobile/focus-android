@@ -21,6 +21,7 @@ import org.junit.runner.RunWith
 import org.mozilla.focus.R
 import org.mozilla.focus.activity.robots.notificationTray
 import org.mozilla.focus.activity.robots.searchScreen
+import org.mozilla.focus.helpers.FeatureSettingsHelper
 import org.mozilla.focus.helpers.MainActivityFirstrunTestRule
 import org.mozilla.focus.helpers.TestHelper.getStringResource
 import org.mozilla.focus.helpers.TestHelper.mDevice
@@ -34,12 +35,14 @@ import java.io.IOException
 @RunWith(AndroidJUnit4ClassRunner::class)
 class SwitchContextTest {
     private lateinit var webServer: MockWebServer
+    private val featureSettingsHelper = FeatureSettingsHelper()
 
     @get: Rule
     var mActivityTestRule = MainActivityFirstrunTestRule(showFirstRun = false)
 
     @Before
     fun setUp() {
+        featureSettingsHelper.setShieldIconCFREnabled(false)
         webServer = MockWebServer()
         try {
             webServer.enqueue(
@@ -77,6 +80,7 @@ class SwitchContextTest {
         } catch (e: IOException) {
             throw AssertionError("Could not stop web server", e)
         }
+        featureSettingsHelper.resetAllFeatureFlags()
     }
 
     @SmokeTest

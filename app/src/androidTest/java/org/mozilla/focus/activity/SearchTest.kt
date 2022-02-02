@@ -4,11 +4,14 @@
 package org.mozilla.focus.activity
 
 import androidx.test.espresso.Espresso.pressBack
+import org.junit.After
+import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.mozilla.focus.activity.robots.browserScreen
 import org.mozilla.focus.activity.robots.homeScreen
 import org.mozilla.focus.activity.robots.searchScreen
+import org.mozilla.focus.helpers.FeatureSettingsHelper
 import org.mozilla.focus.helpers.MainActivityFirstrunTestRule
 import org.mozilla.focus.helpers.TestHelper.exitToTop
 import org.mozilla.focus.helpers.TestHelper.pressEnterKey
@@ -18,14 +21,24 @@ import org.mozilla.focus.testAnnotations.SmokeTest
 // This test checks the search engine can be changed and that search suggestions appear
 class SearchTest {
     private val enginesList = listOf("DuckDuckGo", "Google", "Amazon.com", "Wikipedia")
+    private val featureSettingsHelper = FeatureSettingsHelper()
 
     @get: Rule
     var mActivityTestRule = MainActivityFirstrunTestRule(showFirstRun = false)
 
+    @Before
+    fun setUp() {
+        featureSettingsHelper.setShieldIconCFREnabled(false)
+    }
+
+    @After
+    fun tearDown() {
+        featureSettingsHelper.resetAllFeatureFlags()
+    }
+
     @SmokeTest
     @Test
     fun changeSearchEngineTest() {
-
         for (searchEngine in enginesList) {
             // Open [settings menu] and select Search engine
             homeScreen {

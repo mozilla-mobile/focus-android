@@ -16,6 +16,7 @@ import org.junit.runner.RunWith
 import org.mozilla.focus.activity.robots.downloadRobot
 import org.mozilla.focus.activity.robots.searchScreen
 import org.mozilla.focus.helpers.DeleteFilesHelper.deleteFileUsingDisplayName
+import org.mozilla.focus.helpers.FeatureSettingsHelper
 import org.mozilla.focus.helpers.MainActivityIntentsTestRule
 import org.mozilla.focus.helpers.TestHelper
 import org.mozilla.focus.helpers.TestHelper.mDevice
@@ -28,6 +29,7 @@ import java.io.IOException
 @RunWith(AndroidJUnit4ClassRunner::class)
 class DownloadFileTest {
     private lateinit var webServer: MockWebServer
+    private val featureSettingsHelper = FeatureSettingsHelper()
 
     @get:Rule
     var mActivityTestRule = MainActivityIntentsTestRule(showFirstRun = false)
@@ -40,6 +42,7 @@ class DownloadFileTest {
 
     @Before
     fun setUp() {
+        featureSettingsHelper.setShieldIconCFREnabled(false)
         webServer = MockWebServer()
         try {
             webServer.enqueue(
@@ -78,6 +81,7 @@ class DownloadFileTest {
         }
         val context = InstrumentationRegistry.getInstrumentation().targetContext.applicationContext
         deleteFileUsingDisplayName(context, "download.jpg")
+        featureSettingsHelper.resetAllFeatureFlags()
     }
 
     @SmokeTest

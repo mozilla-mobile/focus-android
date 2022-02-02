@@ -176,6 +176,14 @@ class Settings(
                 .commit()
         }
 
+    var isCfrForForShieldToolbarIconVisible: Boolean
+        get() = preferences.getBoolean(getPreferenceKey(R.string.pref_cfr_visibility_for_shield_toolbar_icon), true)
+        set(value) {
+            preferences.edit()
+                .putBoolean(getPreferenceKey(R.string.pref_cfr_visibility_for_shield_toolbar_icon), value)
+                .apply()
+        }
+
     private var autoplayPrefKey: String? = preferences.getString(
         getPreferenceKey(R.string.pref_key_autoplay),
         context.getString(R.string.pref_key_block_autoplay_audio_only)
@@ -353,6 +361,14 @@ class Settings(
         getPreferenceKey(R.string.pref_key_default_theme),
         false
     )
+
+    var shouldUseNimbusPreview: Boolean
+        get() = preferences.getBoolean(getPreferenceKey(R.string.pref_key_use_nimbus_preview), true)
+        set(value) {
+            preferences.edit()
+                .putBoolean(getPreferenceKey(R.string.pref_key_use_nimbus_preview), value)
+                .commit()
+        }
 
     fun getHttpsOnlyMode(): Engine.HttpsOnlyMode {
         return if (

@@ -21,6 +21,7 @@ import org.mozilla.focus.R
 import org.mozilla.focus.activity.robots.homeScreen
 import org.mozilla.focus.activity.robots.notificationTray
 import org.mozilla.focus.activity.robots.searchScreen
+import org.mozilla.focus.helpers.FeatureSettingsHelper
 import org.mozilla.focus.helpers.MainActivityFirstrunTestRule
 import org.mozilla.focus.helpers.TestHelper.getStringResource
 import org.mozilla.focus.helpers.TestHelper.mDevice
@@ -35,6 +36,7 @@ import java.io.IOException
 @RunWith(AndroidJUnit4ClassRunner::class)
 class EraseBrowsingDataTest {
     private lateinit var webServer: MockWebServer
+    private val featureSettingsHelper = FeatureSettingsHelper()
 
     @get: Rule
     var mActivityTestRule = MainActivityFirstrunTestRule(showFirstRun = false)
@@ -59,6 +61,7 @@ class EraseBrowsingDataTest {
         } catch (e: IOException) {
             throw AssertionError("Could not start web server", e)
         }
+        featureSettingsHelper.setShieldIconCFREnabled(false)
     }
 
     @After
@@ -69,6 +72,7 @@ class EraseBrowsingDataTest {
         } catch (e: IOException) {
             throw AssertionError("Could not stop web server", e)
         }
+        featureSettingsHelper.resetAllFeatureFlags()
     }
 
     @SmokeTest
