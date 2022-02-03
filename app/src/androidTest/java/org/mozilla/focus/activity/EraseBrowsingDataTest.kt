@@ -104,8 +104,8 @@ class EraseBrowsingDataTest {
         // Pull down system bar and select Erase and Open
         mDevice.openNotification()
         notificationTray {
-            verifySystemNotificationExists(getStringResource(R.string.notification_erase_text))
             expandEraseBrowsingNotification()
+            verifySystemNotificationExists(getStringResource(R.string.notification_erase_text))
         }.clickEraseAndOpenNotificationButton {
             verifySnackBarText(getStringResource(R.string.feedback_erase2))
             verifyEmptySearchBar()
@@ -141,6 +141,7 @@ class EraseBrowsingDataTest {
         pressHomeKey()
         mDevice.openNotification()
         notificationTray {
+            expandEraseBrowsingNotification()
             verifySystemNotificationExists(getStringResource(R.string.notification_erase_text))
         }.clickNotificationMessage {
             // Wait for launcher

@@ -31,21 +31,7 @@ class NotificationRobot {
     }
 
     fun expandEraseBrowsingNotification() {
-        val PINCH_PERCENT = 50
-        val PINCH_STEPS = 5
-
-        if (!notificationEraseAndOpenButton.waitForExists(waitingTime)) {
-            if (!notificationTray.ensureFullyVisible(notificationHeader)) {
-                eraseBrowsingNotification.pinchOut(
-                    PINCH_PERCENT,
-                    PINCH_STEPS
-                )
-            } else {
-                notificationHeader.click()
-            }
-            notificationTray.ensureFullyVisible(notificationEraseAndOpenButton)
-            assertTrue(notificationEraseAndOpenButton.exists())
-        }
+        notificationHeader.click()
     }
 
     fun verifySystemNotificationExists(notificationMessage: String) {

@@ -15,7 +15,7 @@ import org.mozilla.focus.activity.robots.searchScreen
 import org.mozilla.focus.helpers.FeatureSettingsHelper
 import org.mozilla.focus.helpers.MainActivityFirstrunTestRule
 import org.mozilla.focus.helpers.TestHelper.readTestAsset
-import org.mozilla.focus.helpers.TestHelper.webPageLoadwaitingTime
+import org.mozilla.focus.helpers.TestHelper.waitingTime
 import org.mozilla.focus.testAnnotations.SmokeTest
 import java.io.IOException
 
@@ -64,7 +64,7 @@ class AddToHomescreenTest {
         // Open website, and click 'Add to homescreen'
         searchScreen {
         }.loadPage(pageUrl) {
-            progressBar.waitUntilGone(webPageLoadwaitingTime)
+            progressBar.waitUntilGone(waitingTime)
         }.openThreeDotMenu {
         }.openAddToHSDialog {
             addShortcutWithTitle(pageTitle)

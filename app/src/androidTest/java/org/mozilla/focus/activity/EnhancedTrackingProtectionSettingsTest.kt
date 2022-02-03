@@ -19,7 +19,7 @@ import org.mozilla.focus.helpers.MainActivityFirstrunTestRule
 import org.mozilla.focus.helpers.TestHelper.createMockResponseFromAsset
 import org.mozilla.focus.helpers.TestHelper.exitToBrowser
 import org.mozilla.focus.helpers.TestHelper.exitToTop
-import org.mozilla.focus.helpers.TestHelper.webPageLoadwaitingTime
+import org.mozilla.focus.helpers.TestHelper.waitingTime
 import org.mozilla.focus.testAnnotations.SmokeTest
 import java.io.IOException
 
@@ -287,7 +287,7 @@ class EnhancedTrackingProtectionSettingsTest {
         }.loadPage(genericPage) {
         }.openSiteSecurityInfoSheet {
         }.clickTrackingProtectionSwitch {
-            progressBar.waitUntilGone(webPageLoadwaitingTime)
+            progressBar.waitUntilGone(waitingTime)
         }.openMainMenu {
         }.openSettings {
         }.openPrivacySettingsMenu {
