@@ -263,12 +263,19 @@ class EnhancedTrackingProtectionSettingsTest {
     @Test
     fun addURLToTPExceptionsListTest() {
         webServer.enqueue(createMockResponseFromAsset("plain_test.html"))
+        webServer.enqueue(createMockResponseFromAsset("etpPages/otherTrackers.html"))
         val genericPage = webServer.url("plain_test.html").toString()
+        val trackingPage = webServer.url("etpPages/otherTrackers.html").toString()
 
         searchScreen {
         }.loadPage(genericPage) {
+            verifyPageContent("focus test page")
+        }.openSearchBar {
+        }.loadPage(trackingPage) {
+            verifyPageContent("Tracker Blocking")
         }.openSiteSecurityInfoSheet {
         }.clickTrackingProtectionSwitch {
+            progressBar.waitUntilGone(waitingTime)
         }.openMainMenu {
         }.openSettings {
         }.openPrivacySettingsMenu {
@@ -281,10 +288,16 @@ class EnhancedTrackingProtectionSettingsTest {
     @Test
     fun removeOneExceptionURLTest() {
         webServer.enqueue(createMockResponseFromAsset("plain_test.html"))
+        webServer.enqueue(createMockResponseFromAsset("etpPages/otherTrackers.html"))
         val genericPage = webServer.url("plain_test.html").toString()
+        val trackingPage = webServer.url("etpPages/otherTrackers.html").toString()
 
         searchScreen {
         }.loadPage(genericPage) {
+            verifyPageContent("focus test page")
+        }.openSearchBar {
+        }.loadPage(trackingPage) {
+            verifyPageContent("Tracker Blocking")
         }.openSiteSecurityInfoSheet {
         }.clickTrackingProtectionSwitch {
             progressBar.waitUntilGone(waitingTime)
@@ -306,19 +319,25 @@ class EnhancedTrackingProtectionSettingsTest {
     @Test
     fun removeAllExceptionURLTest() {
         webServer.enqueue(createMockResponseFromAsset("plain_test.html"))
+        webServer.enqueue(createMockResponseFromAsset("etpPages/otherTrackers.html"))
         val genericPage = webServer.url("plain_test.html").toString()
+        val trackingPage = webServer.url("etpPages/otherTrackers.html").toString()
 
         searchScreen {
         }.loadPage(genericPage) {
+            verifyPageContent("focus test page")
+        }.openSearchBar {
+        }.loadPage(trackingPage) {
+            verifyPageContent("Tracker Blocking")
         }.openSiteSecurityInfoSheet {
         }.clickTrackingProtectionSwitch {
+            progressBar.waitUntilGone(waitingTime)
         }.openMainMenu {
         }.openSettings {
         }.openPrivacySettingsMenu {
             openExceptionsList()
             removeAllExceptions()
-            // Failing due to: https://github.com/mozilla-mobile/focus-android/issues/5738
-            // verifyExceptionsListDisabled()
+            verifyExceptionsListDisabled()
             exitToBrowser()
         }
         browserScreen {

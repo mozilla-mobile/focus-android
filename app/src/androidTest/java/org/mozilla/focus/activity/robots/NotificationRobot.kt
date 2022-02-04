@@ -4,10 +4,10 @@
 
 package org.mozilla.focus.activity.robots
 
-import android.util.Log
-import androidx.test.uiautomator.UiObjectNotFoundException
+import androidx.test.uiautomator.By
 import androidx.test.uiautomator.UiScrollable
 import androidx.test.uiautomator.UiSelector
+import androidx.test.uiautomator.Until
 import org.junit.Assert.assertTrue
 import org.mozilla.focus.R
 import org.mozilla.focus.helpers.TestHelper.appName
@@ -16,6 +16,8 @@ import org.mozilla.focus.helpers.TestHelper.mDevice
 import org.mozilla.focus.helpers.TestHelper.waitingTime
 
 class NotificationRobot {
+
+    private val NOTIFICATION_SHADE = "com.android.systemui:id/notification_stack_scroller"
 
     fun clearNotifications() {
         if (clearButton.exists()) {
@@ -35,21 +37,16 @@ class NotificationRobot {
     }
 
     fun verifySystemNotificationExists(notificationMessage: String) {
-        var notificationFound = false
+        val notificationInTray = mDevice.wait(
+            Until.hasObject(
+                By.res(NOTIFICATION_SHADE).hasDescendant(
+                    By.text(notificationMessage)
+                )
+            ),
+            waitingTime
+        )
 
-        do {
-            try {
-                notificationFound = notificationTray.getChildByText(
-                    UiSelector().text(notificationMessage), notificationMessage, true
-                ).waitForExists(waitingTime)
-                assertTrue(notificationFound)
-            } catch (e: UiObjectNotFoundException) {
-                Log.d("TestLog", e.message.toString())
-                // scrolls down the notifications until it reaches the end, then it will close
-                notificationTray.scrollForward()
-                mDevice.waitForIdle()
-            }
-        } while (!notificationFound)
+        assertTrue(notificationInTray)
     }
 
     class Transition {

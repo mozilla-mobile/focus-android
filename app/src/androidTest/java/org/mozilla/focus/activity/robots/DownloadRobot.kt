@@ -28,8 +28,6 @@ class DownloadRobot {
 
     fun verifyDownloadDialogGone() = assertTrue(downloadDialogTitle.waitUntilGone(waitingTime))
 
-    fun verifyDownloadNotification() = NotificationRobot().verifySystemNotificationExists(downloadNotificationText)
-
     fun verifyPhotosOpens() = assertPhotosOpens()
 
     fun clickDownloadIconAsset() {

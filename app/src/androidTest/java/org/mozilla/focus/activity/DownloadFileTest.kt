@@ -106,7 +106,6 @@ class DownloadFileTest {
             notificationTray {
                 expandEraseBrowsingNotification()
             }
-            verifyDownloadNotification()
         }
     }
 
