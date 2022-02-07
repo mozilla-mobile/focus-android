@@ -49,6 +49,20 @@ class NotificationRobot {
         assertTrue(notificationInTray)
     }
 
+    fun verifyDownloadNotification(notificationMessage: String, fileName: String) {
+        val notification = UiSelector().text(notificationMessage)
+        var notificationFound = mDevice.findObject(notification).waitForExists(waitingTime)
+        val downloadFilename = mDevice.findObject(UiSelector().text(fileName))
+
+        while (!notificationFound) {
+            notificationTray.swipeUp(2)
+            notificationFound = mDevice.findObject(notification).waitForExists(waitingTime)
+        }
+
+        assertTrue(notificationFound)
+        assertTrue(downloadFilename.exists())
+    }
+
     class Transition {
         fun clickEraseAndOpenNotificationButton(interact: HomeScreenRobot.() -> Unit): HomeScreenRobot.Transition {
             notificationEraseAndOpenButton.waitForExists(waitingTime)

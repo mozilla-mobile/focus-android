@@ -18,6 +18,7 @@ import org.mozilla.focus.activity.robots.searchScreen
 import org.mozilla.focus.helpers.DeleteFilesHelper.deleteFileUsingDisplayName
 import org.mozilla.focus.helpers.FeatureSettingsHelper
 import org.mozilla.focus.helpers.MainActivityIntentsTestRule
+import org.mozilla.focus.helpers.RetryTestRule
 import org.mozilla.focus.helpers.TestHelper
 import org.mozilla.focus.helpers.TestHelper.mDevice
 import org.mozilla.focus.helpers.TestHelper.readTestAsset
@@ -33,6 +34,10 @@ class DownloadFileTest {
 
     @get:Rule
     var mActivityTestRule = MainActivityIntentsTestRule(showFirstRun = false)
+
+    @Rule
+    @JvmField
+    val retryTestRule = RetryTestRule(3)
 
     @Before
     fun setUp() {
@@ -104,7 +109,7 @@ class DownloadFileTest {
             verifySnackBarText("finished")
             mDevice.openNotification()
             notificationTray {
-                expandEraseBrowsingNotification()
+                verifyDownloadNotification("Download completed", downloadFileName)
             }
         }
     }
