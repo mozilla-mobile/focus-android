@@ -25,7 +25,7 @@ android {
         targetSdkVersion 31
         versionCode 11 // This versionCode is "frozen" for local builds. For "release" builds we
                        // override this with a generated versionCode at build time.
-        versionName "98.0"
+        versionName "99.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         testInstrumentationRunnerArguments clearPackageData: 'true'
 
@@ -235,6 +235,7 @@ dependencies {
     implementation "org.mozilla.components:feature-sitepermissions:${AndroidComponents.VERSION}"
     implementation "org.mozilla.components:lib-crash:${AndroidComponents.VERSION}"
     implementation "org.mozilla.components:lib-state:${AndroidComponents.VERSION}"
+    implementation "org.mozilla.components:feature-media:${AndroidComponents.VERSION}"
 
     implementation "org.mozilla.components:service-glean:${AndroidComponents.VERSION}", {
         exclude group: 'org.mozilla.telemetry', module: 'glean-native'
