@@ -4,6 +4,7 @@
 
 package org.mozilla.focus.helpers
 
+import androidx.test.espresso.NoMatchingViewException
 import androidx.test.uiautomator.UiObjectNotFoundException
 import org.junit.rules.TestRule
 import org.junit.runner.Description
@@ -23,6 +24,10 @@ class RetryTestRule(private val retryCount: Int = 5) : TestRule {
                         throw t
                     }
                 } catch (t: UiObjectNotFoundException) {
+                    if (i == retryCount) {
+                        throw t
+                    }
+                } catch (t: NoMatchingViewException) {
                     if (i == retryCount) {
                         throw t
                     }
