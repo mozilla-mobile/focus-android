@@ -15,6 +15,7 @@ import org.mozilla.focus.R
 import org.mozilla.focus.activity.CrashListActivity
 import org.mozilla.focus.browser.LocalizedContent
 import org.mozilla.focus.ext.components
+import org.mozilla.focus.utils.SupportUtils
 
 class AppContentInterceptor(
     private val context: Context
@@ -54,16 +55,22 @@ class AppContentInterceptor(
                 RequestInterceptor.InterceptionResponse.Url("about:blank")
             }
 
-            else -> context.components.appLinksInterceptor.onLoadRequest(
-                engineSession,
-                uri,
-                lastUri,
-                hasUserGesture,
-                isSameDomain,
-                isRedirect,
-                isDirectNavigation,
-                isSubframeRequest
-            )
+            else -> {
+                if (uri.contains(SupportUtils.DEEPLINK_BROWSER_URL)) {
+                    DeepLinkInterceptor(context).createDeepLinkIntent(Intent.parseUri(uri, 0))
+                    return null
+                }
+                context.components.appLinksInterceptor.onLoadRequest(
+                    engineSession,
+                    uri,
+                    lastUri,
+                    hasUserGesture,
+                    isSameDomain,
+                    isRedirect,
+                    isDirectNavigation,
+                    isSubframeRequest
+                )
+            }
         }
     }
 

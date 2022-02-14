@@ -30,6 +30,7 @@ object SupportUtils {
     const val PRIVACY_NOTICE_KLAR_URL = "https://www.mozilla.org/de/privacy/firefox-klar/"
 
     const val OPEN_WITH_DEFAULT_BROWSER_URL = "https://www.mozilla.org/openGeneralSettings" // Fake URL
+    const val DEEPLINK_BROWSER_URL = "deeplink"
     val manifestoURL: String
         get() {
             val langTag = Locales.getLanguageTag(Locale.getDefault())
