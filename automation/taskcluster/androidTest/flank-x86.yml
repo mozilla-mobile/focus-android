@@ -42,7 +42,7 @@ gcloud:
     - package org.mozilla.focus.privacy
 
   device:
-   - model: Pixel3
+   - model: Pixel2
      version: 30
 
 flank:
