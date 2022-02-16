@@ -96,6 +96,7 @@ class SwitchContextTest {
         notificationTray {
             verifySystemNotificationExists(getStringResource(R.string.notification_erase_text))
             expandEraseBrowsingNotification()
+            verifyExpandedNotificationExists()
         }.clickNotificationOpenButton {
             verifyBrowserView()
         }
@@ -141,6 +142,7 @@ class SwitchContextTest {
         notificationTray {
             verifySystemNotificationExists(getStringResource(R.string.notification_erase_text))
             expandEraseBrowsingNotification()
+            verifyExpandedNotificationExists()
         }.clickNotificationOpenButton {
             verifyBrowserView()
         }

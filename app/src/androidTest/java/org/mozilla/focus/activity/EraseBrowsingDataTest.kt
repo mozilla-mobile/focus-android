@@ -111,6 +111,7 @@ class EraseBrowsingDataTest {
         notificationTray {
             verifySystemNotificationExists(getStringResource(R.string.notification_erase_text))
             expandEraseBrowsingNotification()
+            verifyExpandedNotificationExists()
         }.clickEraseAndOpenNotificationButton {
             verifySnackBarText(getStringResource(R.string.feedback_erase2))
             verifyEmptySearchBar()
@@ -148,6 +149,7 @@ class EraseBrowsingDataTest {
         notificationTray {
             verifySystemNotificationExists(getStringResource(R.string.notification_erase_text))
             expandEraseBrowsingNotification()
+            verifyExpandedNotificationExists()
         }.clickNotificationMessage {
             // Wait for launcher
             assertThat(launcherPackage, IsNull.notNullValue())

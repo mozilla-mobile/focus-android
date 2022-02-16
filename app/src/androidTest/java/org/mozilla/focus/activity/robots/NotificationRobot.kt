@@ -34,19 +34,43 @@ class NotificationRobot {
 
     fun expandEraseBrowsingNotification() {
         notificationHeader.click()
+        notificationTray.swipeUp(1)
     }
 
     fun verifySystemNotificationExists(notificationMessage: String) {
-        val notificationInTray = mDevice.wait(
-            Until.hasObject(
-                By.res(NOTIFICATION_SHADE).hasDescendant(
-                    By.text(notificationMessage)
-                )
-            ),
-            waitingTime
-        )
+        val notification = UiSelector().text(notificationMessage)
+        var notificationFound = mDevice.findObject(notification).waitForExists(waitingTime)
 
-        assertTrue(notificationInTray)
+        while (!notificationFound) {
+            notificationTray.swipeUp(2)
+            notificationFound = mDevice.wait(
+                Until.hasObject(
+                    By.res(NOTIFICATION_SHADE).hasDescendant(
+                        By.text(notificationMessage)
+                    )
+                ),
+                waitingTime
+            )
+        }
+        assertTrue(notificationFound)
+    }
+
+    fun verifyExpandedNotificationExists() {
+        val eraseOpenButton = UiSelector().text("Erase and Open")
+        var buttonsFound = mDevice.findObject(eraseOpenButton).waitForExists(waitingTime)
+
+        while (!buttonsFound) {
+            notificationTray.swipeUp(1)
+            buttonsFound = mDevice.wait(
+                Until.hasObject(
+                    By.res(NOTIFICATION_SHADE).hasDescendant(
+                        By.text("Erase and Open")
+                    )
+                ),
+                waitingTime
+            )
+        }
+        assertTrue(buttonsFound)
     }
 
     fun verifyDownloadNotification(notificationMessage: String, fileName: String) {
