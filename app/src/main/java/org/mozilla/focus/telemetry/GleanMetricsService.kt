@@ -85,8 +85,7 @@ class GleanMetricsService(context: Context) : MetricsService {
                     Browser.defaultSearchEngine.set(getDefaultSearchEngineIdentifierForTelemetry(context))
                 }
 
-                // Disabled until data-review r+
-                // activationPing.checkAndSend()
+                activationPing.checkAndSend()
             }
         }
     }
@@ -105,7 +104,6 @@ class GleanMetricsService(context: Context) : MetricsService {
         Browser.localeOverride.set(components.store.state.locale?.displayName ?: "none")
         val shortcutsOnHomeNumber = components.topSitesStorage.getTopSites(
             totalSites = TOP_SITES_MAX_LIMIT,
-            fetchProvidedTopSites = false,
             frecencyConfig = null
         ).size
         Shortcuts.shortcutsOnHomeNumber.set(shortcutsOnHomeNumber.toLong())

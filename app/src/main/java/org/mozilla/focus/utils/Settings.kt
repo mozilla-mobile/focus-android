@@ -176,11 +176,19 @@ class Settings(
                 .commit()
         }
 
-    var isCfrForForShieldToolbarIconVisible: Boolean
+    var shouldShowCfrForShieldToolbarIcon: Boolean
         get() = preferences.getBoolean(getPreferenceKey(R.string.pref_cfr_visibility_for_shield_toolbar_icon), true)
         set(value) {
             preferences.edit()
                 .putBoolean(getPreferenceKey(R.string.pref_cfr_visibility_for_shield_toolbar_icon), value)
+                .apply()
+        }
+
+    var shouldShowPrivacySecuritySettingsToolTip: Boolean
+        get() = preferences.getBoolean(getPreferenceKey(R.string.pref_tool_tip_privacy_security_settings), true)
+        set(value) {
+            preferences.edit()
+                .putBoolean(getPreferenceKey(R.string.pref_tool_tip_privacy_security_settings), value)
                 .apply()
         }
 
@@ -362,11 +370,16 @@ class Settings(
         false
     )
 
+    var shouldUseNimbusPreview: Boolean
+        get() = preferences.getBoolean(getPreferenceKey(R.string.pref_key_use_nimbus_preview), true)
+        set(value) {
+            preferences.edit()
+                .putBoolean(getPreferenceKey(R.string.pref_key_use_nimbus_preview), value)
+                .commit()
+        }
+
     fun getHttpsOnlyMode(): Engine.HttpsOnlyMode {
-        return if (
-            Features.HTTPS_ONLY_MODE &&
-            preferences.getBoolean(getPreferenceKey(R.string.pref_key_https_only), true)
-        ) {
+        return if (preferences.getBoolean(getPreferenceKey(R.string.pref_key_https_only), true)) {
             Engine.HttpsOnlyMode.ENABLED
         } else {
             Engine.HttpsOnlyMode.DISABLED

@@ -14,26 +14,31 @@ import org.junit.runner.RunWith
 import org.mozilla.focus.activity.robots.browserScreen
 import org.mozilla.focus.activity.robots.homeScreen
 import org.mozilla.focus.activity.robots.searchScreen
-import org.mozilla.focus.ext.settings
+import org.mozilla.focus.helpers.FeatureSettingsHelper
 import org.mozilla.focus.helpers.MainActivityFirstrunTestRule
-import org.mozilla.focus.helpers.TestHelper
+import org.mozilla.focus.helpers.RetryTestRule
 import org.mozilla.focus.helpers.TestHelper.createMockResponseFromAsset
 import org.mozilla.focus.helpers.TestHelper.exitToBrowser
 import org.mozilla.focus.helpers.TestHelper.exitToTop
-import org.mozilla.focus.helpers.TestHelper.webPageLoadwaitingTime
+import org.mozilla.focus.helpers.TestHelper.waitingTime
 import org.mozilla.focus.testAnnotations.SmokeTest
 import java.io.IOException
 
 @RunWith(AndroidJUnit4ClassRunner::class)
 class EnhancedTrackingProtectionSettingsTest {
     private lateinit var webServer: MockWebServer
+    private val featureSettingsHelper = FeatureSettingsHelper()
 
     @get: Rule
     var mActivityTestRule = MainActivityFirstrunTestRule(showFirstRun = false)
 
+    @Rule
+    @JvmField
+    val retryTestRule = RetryTestRule(3)
+
     @Before
     fun setUp() {
-        TestHelper.appContext.settings.isCfrForForShieldToolbarIconVisible = false
+        featureSettingsHelper.setShieldIconCFREnabled(false)
         webServer = MockWebServer()
         try {
             webServer.start()
@@ -50,6 +55,7 @@ class EnhancedTrackingProtectionSettingsTest {
         } catch (e: IOException) {
             throw AssertionError("Could not stop web server", e)
         }
+        featureSettingsHelper.resetAllFeatureFlags()
     }
 
     @SmokeTest
@@ -262,12 +268,19 @@ class EnhancedTrackingProtectionSettingsTest {
     @Test
     fun addURLToTPExceptionsListTest() {
         webServer.enqueue(createMockResponseFromAsset("plain_test.html"))
+        webServer.enqueue(createMockResponseFromAsset("etpPages/otherTrackers.html"))
         val genericPage = webServer.url("plain_test.html").toString()
+        val trackingPage = webServer.url("etpPages/otherTrackers.html").toString()
 
         searchScreen {
         }.loadPage(genericPage) {
+            verifyPageContent("focus test page")
+        }.openSearchBar {
+        }.loadPage(trackingPage) {
+            verifyPageContent("Tracker Blocking")
         }.openSiteSecurityInfoSheet {
         }.clickTrackingProtectionSwitch {
+            progressBar.waitUntilGone(waitingTime)
         }.openMainMenu {
         }.openSettings {
         }.openPrivacySettingsMenu {
@@ -280,13 +293,19 @@ class EnhancedTrackingProtectionSettingsTest {
     @Test
     fun removeOneExceptionURLTest() {
         webServer.enqueue(createMockResponseFromAsset("plain_test.html"))
+        webServer.enqueue(createMockResponseFromAsset("etpPages/otherTrackers.html"))
         val genericPage = webServer.url("plain_test.html").toString()
+        val trackingPage = webServer.url("etpPages/otherTrackers.html").toString()
 
         searchScreen {
         }.loadPage(genericPage) {
+            verifyPageContent("focus test page")
+        }.openSearchBar {
+        }.loadPage(trackingPage) {
+            verifyPageContent("Tracker Blocking")
         }.openSiteSecurityInfoSheet {
         }.clickTrackingProtectionSwitch {
-            progressBar.waitUntilGone(webPageLoadwaitingTime)
+            progressBar.waitUntilGone(waitingTime)
         }.openMainMenu {
         }.openSettings {
         }.openPrivacySettingsMenu {
@@ -305,19 +324,25 @@ class EnhancedTrackingProtectionSettingsTest {
     @Test
     fun removeAllExceptionURLTest() {
         webServer.enqueue(createMockResponseFromAsset("plain_test.html"))
+        webServer.enqueue(createMockResponseFromAsset("etpPages/otherTrackers.html"))
         val genericPage = webServer.url("plain_test.html").toString()
+        val trackingPage = webServer.url("etpPages/otherTrackers.html").toString()
 
         searchScreen {
         }.loadPage(genericPage) {
+            verifyPageContent("focus test page")
+        }.openSearchBar {
+        }.loadPage(trackingPage) {
+            verifyPageContent("Tracker Blocking")
         }.openSiteSecurityInfoSheet {
         }.clickTrackingProtectionSwitch {
+            progressBar.waitUntilGone(waitingTime)
         }.openMainMenu {
         }.openSettings {
         }.openPrivacySettingsMenu {
             openExceptionsList()
             removeAllExceptions()
-            // Failing due to: https://github.com/mozilla-mobile/focus-android/issues/5738
-            // verifyExceptionsListDisabled()
+            verifyExceptionsListDisabled()
             exitToBrowser()
         }
         browserScreen {

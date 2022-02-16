@@ -304,8 +304,8 @@ class UrlInputFragment :
                 config = {
                     TopSitesConfig(
                         totalSites = TOP_SITES_MAX_LIMIT,
-                        fetchProvidedTopSites = false,
-                        frecencyConfig = null
+                        frecencyConfig = null,
+                        providerConfig = null
                     )
                 }
             ),
@@ -353,7 +353,11 @@ class UrlInputFragment :
 
         binding.browserToolbar.editMode()
         setHomeMenu()
-        updateTipsLabel()
+        if (Features.SHOULD_SHOW_HOME_PAGE_PRO_TIPS) {
+            updateTipsLabel()
+        } else {
+            binding.homeTips.visibility = View.GONE
+        }
     }
 
     private fun setHomeMenu() {

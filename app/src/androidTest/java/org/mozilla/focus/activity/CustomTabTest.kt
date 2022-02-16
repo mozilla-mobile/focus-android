@@ -2,6 +2,8 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
+@file:Suppress("DEPRECATION")
+
 package org.mozilla.focus.activity
 
 import android.app.PendingIntent
@@ -29,11 +31,10 @@ import org.mozilla.focus.activity.robots.browserScreen
 import org.mozilla.focus.activity.robots.customTab
 import org.mozilla.focus.activity.robots.homeScreen
 import org.mozilla.focus.activity.robots.searchScreen
-import org.mozilla.focus.ext.settings
-import org.mozilla.focus.helpers.TestHelper
+import org.mozilla.focus.helpers.FeatureSettingsHelper
 import org.mozilla.focus.helpers.TestHelper.createMockResponseFromAsset
 import org.mozilla.focus.helpers.TestHelper.mDevice
-import org.mozilla.focus.helpers.TestHelper.webPageLoadwaitingTime
+import org.mozilla.focus.helpers.TestHelper.waitingTime
 import org.mozilla.focus.testAnnotations.SmokeTest
 import org.mozilla.focus.utils.IntentUtils
 import java.io.IOException
@@ -44,6 +45,7 @@ class CustomTabTest {
     private val MENU_ITEM_LABEL = "TestItem4223"
     private val ACTION_BUTTON_DESCRIPTION = "TestButton"
     private val TEST_PAGE_HEADER_TEXT = "focus test page"
+    private val featureSettingsHelper = FeatureSettingsHelper()
 
     @get: Rule
     val activityTestRule = ActivityTestRule(
@@ -52,7 +54,7 @@ class CustomTabTest {
 
     @Before
     fun setUp() {
-        TestHelper.appContext.settings.isCfrForForShieldToolbarIconVisible = false
+        featureSettingsHelper.setShieldIconCFREnabled(false)
         webServer = MockWebServer()
         webServer.enqueue(createMockResponseFromAsset("plain_test.html"))
         webServer.enqueue(createMockResponseFromAsset("tab1.html"))
@@ -66,8 +68,10 @@ class CustomTabTest {
         } catch (e: IOException) {
             throw AssertionError("Could not stop web server", e)
         }
+        featureSettingsHelper.resetAllFeatureFlags()
     }
 
+    @Ignore("Crashing, see: https://github.com/mozilla-mobile/focus-android/issues/6437")
     @SmokeTest
     @Test
     fun testCustomTabUI() {
@@ -75,7 +79,7 @@ class CustomTabTest {
         val customTabActivity = launchActivity<IntentReceiverActivity>(createCustomTabIntent(customTabPage))
 
         browserScreen {
-            progressBar.waitUntilGone(webPageLoadwaitingTime)
+            progressBar.waitUntilGone(waitingTime)
             verifyPageContent(TEST_PAGE_HEADER_TEXT)
             verifyPageURL(customTabPage)
         }
@@ -95,8 +99,7 @@ class CustomTabTest {
 
     @SmokeTest
     @Test
-    @Ignore("This test should be updated since kotlin extensions were migrated to view binding")
-    // https://github.com/mozilla-mobile/focus-android/issues/5767
+    @Ignore("Crashing, see: https://github.com/mozilla-mobile/focus-android/issues/5283")
     fun openCustomTabInFocusTest() {
         val browserPage = webServer.url("plain_test.html").toString()
         val customTabPage = webServer.url("tab1.html").toString()
@@ -113,7 +116,7 @@ class CustomTabTest {
 
         launchActivity<IntentReceiverActivity>(createCustomTabIntent(customTabPage))
         customTab {
-            progressBar.waitUntilGone(webPageLoadwaitingTime)
+            progressBar.waitUntilGone(waitingTime)
             verifyPageURL(customTabPage)
             openCustomTabMenu()
             clickOpenInFocusButton()

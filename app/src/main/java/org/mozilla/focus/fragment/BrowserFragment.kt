@@ -18,6 +18,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.accessibility.AccessibilityManager
 import android.webkit.MimeTypeMap
+import android.widget.PopupWindow
 import android.widget.Toast
 import androidx.core.content.pm.ShortcutManagerCompat
 import androidx.preference.PreferenceManager
@@ -39,6 +40,7 @@ import mozilla.components.feature.downloads.AbstractFetchDownloadService
 import mozilla.components.feature.downloads.DownloadsFeature
 import mozilla.components.feature.downloads.manager.FetchDownloadManager
 import mozilla.components.feature.downloads.share.ShareDownloadFeature
+import mozilla.components.feature.media.fullscreen.MediaSessionFullscreenFeature
 import mozilla.components.feature.prompts.PromptFeature
 import mozilla.components.feature.session.SessionFeature
 import mozilla.components.feature.sitepermissions.SitePermissionsFeature
@@ -88,6 +90,7 @@ import org.mozilla.focus.topsites.DefaultTopSitesView
 import org.mozilla.focus.utils.CfrUtils
 import org.mozilla.focus.utils.FocusSnackbar
 import org.mozilla.focus.utils.FocusSnackbarDelegate
+import org.mozilla.focus.utils.IntentUtils
 import org.mozilla.focus.utils.StatusBarUtils
 import java.net.URLEncoder
 
@@ -102,11 +105,12 @@ class BrowserFragment :
     private var _binding: FragmentBrowserBinding? = null
     private val binding get() = _binding!!
     private var _toolbarShieldIconCfrBinding: ToolbarShieldIconCfrBinding? = null
+    private var toolbarShieldIconCfrPopupWindow: PopupWindow? = null
 
     private val findInPageIntegration = ViewBoundFeatureWrapper<FindInPageIntegration>()
     private val fullScreenIntegration = ViewBoundFeatureWrapper<FullScreenIntegration>()
 
-    private val sessionFeature = ViewBoundFeatureWrapper<SessionFeature>()
+    internal val sessionFeature = ViewBoundFeatureWrapper<SessionFeature>()
     private val promptFeature = ViewBoundFeatureWrapper<PromptFeature>()
     private val contextMenuFeature = ViewBoundFeatureWrapper<ContextMenuFeature>()
     private val downloadsFeature = ViewBoundFeatureWrapper<DownloadsFeature>()
@@ -115,6 +119,7 @@ class BrowserFragment :
     private val appLinksFeature = ViewBoundFeatureWrapper<AppLinksFeature>()
     private val topSitesFeature = ViewBoundFeatureWrapper<TopSitesFeature>()
     private var sitePermissionsFeature = ViewBoundFeatureWrapper<SitePermissionsFeature>()
+    private var fullScreenMediaSessionFeature = ViewBoundFeatureWrapper<MediaSessionFullscreenFeature>()
 
     private val toolbarIntegration = ViewBoundFeatureWrapper<BrowserToolbarIntegration>()
 
@@ -286,8 +291,8 @@ class BrowserFragment :
                 config = {
                     TopSitesConfig(
                         totalSites = TOP_SITES_MAX_LIMIT,
-                        fetchProvidedTopSites = false,
-                        frecencyConfig = null
+                        frecencyConfig = null,
+                        providerConfig = null
                     )
                 }
             ),
@@ -318,11 +323,23 @@ class BrowserFragment :
             )
         }
 
+        // Feature that handles MediaSession state changes
+        fullScreenMediaSessionFeature.set(
+            feature = MediaSessionFullscreenFeature(requireActivity(), requireComponents.store),
+            owner = this,
+            view = view
+        )
+
         setSitePermissions(view)
-        _toolbarShieldIconCfrBinding = CfrUtils.shouldShowCFRForShieldToolbarIcon(
+    }
+
+    private fun showCfrForShieldToolbarIcon() {
+        val cfrForShieldToolbarIcon = CfrUtils.showCFRForShieldToolbarIconIfNeeded(
             rootView = binding.browserToolbar.rootView, context = requireContext(),
             isContentSecure = tab.content.securityInfo.secure
         )
+        _toolbarShieldIconCfrBinding = cfrForShieldToolbarIcon?.toolbarShieldIconCfrBinding
+        toolbarShieldIconCfrPopupWindow = cfrForShieldToolbarIcon?.toolbarShieldIconCfrPopupWindow
     }
 
     private fun setSitePermissions(rootView: View) {
@@ -409,7 +426,8 @@ class BrowserFragment :
                 sessionUseCases = requireComponents.sessionUseCases,
                 onUrlLongClicked = ::onUrlLongClicked,
                 eraseActionListener = { erase(shouldEraseAllTabs = true) },
-                tabCounterListener = ::tabCounterListener
+                tabCounterListener = ::tabCounterListener,
+                onTrackingProtectionShown = ::showCfrForShieldToolbarIcon
             ),
             owner = this,
             view = binding.browserToolbar
@@ -437,6 +455,12 @@ class BrowserFragment :
         requireContext().accessibilityManager.removeAccessibilityStateChangeListener(this)
         _binding = null
         _toolbarShieldIconCfrBinding = null
+        // PopupWindow should be dismissed because it causes Static Field Leaked
+        if (toolbarShieldIconCfrPopupWindow != null && toolbarShieldIconCfrPopupWindow?.isShowing == true) {
+            // DismissListener from CfrUtils should not be called when user exits the screen
+            toolbarShieldIconCfrPopupWindow?.setOnDismissListener(null)
+            toolbarShieldIconCfrPopupWindow?.dismiss()
+        }
     }
 
     override fun onDestroy() {
@@ -680,15 +704,16 @@ class BrowserFragment :
         }
 
         TelemetryWrapper.shareEvent()
-
-        startActivity(Intent.createChooser(shareIntent, getString(R.string.share_dialog_title)))
+        startActivity(
+            IntentUtils.getIntentChooser(
+                context = requireContext(),
+                intent = shareIntent,
+                chooserTitle = getString(R.string.share_dialog_title)
+            )
+        )
     }
 
     private fun openInBrowser() {
-        // Calling stop() on the GeckoSession helps preventing "Display already acquired" crashes from happening.
-        // See also https://bugzilla.mozilla.org/show_bug.cgi?id=1741899.
-        requireComponents.sessionUseCases.stopLoading(tabId)
-
         // Release the session from this view so that it can immediately be rendered by a different view
         sessionFeature.get()?.release()
 
