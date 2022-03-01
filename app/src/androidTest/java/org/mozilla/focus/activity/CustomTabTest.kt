@@ -2,6 +2,8 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
+@file:Suppress("DEPRECATION")
+
 package org.mozilla.focus.activity
 
 import android.app.PendingIntent
@@ -32,7 +34,7 @@ import org.mozilla.focus.activity.robots.searchScreen
 import org.mozilla.focus.helpers.FeatureSettingsHelper
 import org.mozilla.focus.helpers.TestHelper.createMockResponseFromAsset
 import org.mozilla.focus.helpers.TestHelper.mDevice
-import org.mozilla.focus.helpers.TestHelper.webPageLoadwaitingTime
+import org.mozilla.focus.helpers.TestHelper.waitingTime
 import org.mozilla.focus.testAnnotations.SmokeTest
 import org.mozilla.focus.utils.IntentUtils
 import java.io.IOException
@@ -53,6 +55,7 @@ class CustomTabTest {
     @Before
     fun setUp() {
         featureSettingsHelper.setShieldIconCFREnabled(false)
+        featureSettingsHelper.setNumberOfTabsOpened(4)
         webServer = MockWebServer()
         webServer.enqueue(createMockResponseFromAsset("plain_test.html"))
         webServer.enqueue(createMockResponseFromAsset("tab1.html"))
@@ -69,6 +72,7 @@ class CustomTabTest {
         featureSettingsHelper.resetAllFeatureFlags()
     }
 
+    @Ignore("Crashing, see: https://github.com/mozilla-mobile/focus-android/issues/6437")
     @SmokeTest
     @Test
     fun testCustomTabUI() {
@@ -76,7 +80,7 @@ class CustomTabTest {
         val customTabActivity = launchActivity<IntentReceiverActivity>(createCustomTabIntent(customTabPage))
 
         browserScreen {
-            progressBar.waitUntilGone(webPageLoadwaitingTime)
+            progressBar.waitUntilGone(waitingTime)
             verifyPageContent(TEST_PAGE_HEADER_TEXT)
             verifyPageURL(customTabPage)
         }
@@ -113,7 +117,7 @@ class CustomTabTest {
 
         launchActivity<IntentReceiverActivity>(createCustomTabIntent(customTabPage))
         customTab {
-            progressBar.waitUntilGone(webPageLoadwaitingTime)
+            progressBar.waitUntilGone(waitingTime)
             verifyPageURL(customTabPage)
             openCustomTabMenu()
             clickOpenInFocusButton()

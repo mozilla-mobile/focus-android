@@ -15,6 +15,7 @@ import org.junit.After
 import org.junit.Assert.assertThat
 import org.junit.Assert.assertTrue
 import org.junit.Before
+import org.junit.Ignore
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -43,6 +44,7 @@ class SwitchContextTest {
     @Before
     fun setUp() {
         featureSettingsHelper.setShieldIconCFREnabled(false)
+        featureSettingsHelper.setNumberOfTabsOpened(4)
         webServer = MockWebServer()
         try {
             webServer.enqueue(
@@ -85,6 +87,7 @@ class SwitchContextTest {
 
     @SmokeTest
     @Test
+    @Ignore("Failing. See https://github.com/mozilla-mobile/focus-android/issues/6486")
     fun notificationOpenButtonTest() {
         // Open a webpage
         searchScreen {

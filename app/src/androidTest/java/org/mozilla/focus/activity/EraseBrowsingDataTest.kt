@@ -23,6 +23,7 @@ import org.mozilla.focus.activity.robots.notificationTray
 import org.mozilla.focus.activity.robots.searchScreen
 import org.mozilla.focus.helpers.FeatureSettingsHelper
 import org.mozilla.focus.helpers.MainActivityFirstrunTestRule
+import org.mozilla.focus.helpers.RetryTestRule
 import org.mozilla.focus.helpers.TestHelper.getStringResource
 import org.mozilla.focus.helpers.TestHelper.mDevice
 import org.mozilla.focus.helpers.TestHelper.pressHomeKey
@@ -40,6 +41,10 @@ class EraseBrowsingDataTest {
 
     @get: Rule
     var mActivityTestRule = MainActivityFirstrunTestRule(showFirstRun = false)
+
+    @Rule
+    @JvmField
+    val retryTestRule = RetryTestRule(3)
 
     @Before
     fun setUp() {
@@ -62,6 +67,7 @@ class EraseBrowsingDataTest {
             throw AssertionError("Could not start web server", e)
         }
         featureSettingsHelper.setShieldIconCFREnabled(false)
+        featureSettingsHelper.setNumberOfTabsOpened(4)
     }
 
     @After
@@ -142,6 +148,7 @@ class EraseBrowsingDataTest {
         mDevice.openNotification()
         notificationTray {
             verifySystemNotificationExists(getStringResource(R.string.notification_erase_text))
+            expandEraseBrowsingNotification()
         }.clickNotificationMessage {
             // Wait for launcher
             assertThat(launcherPackage, IsNull.notNullValue())

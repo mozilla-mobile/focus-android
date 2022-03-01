@@ -12,6 +12,7 @@ import org.mozilla.focus.activity.robots.homeScreen
 import org.mozilla.focus.activity.robots.searchScreen
 import org.mozilla.focus.helpers.FeatureSettingsHelper
 import org.mozilla.focus.helpers.MainActivityFirstrunTestRule
+import org.mozilla.focus.helpers.RetryTestRule
 import org.mozilla.focus.helpers.TestHelper
 import org.mozilla.focus.testAnnotations.SmokeTest
 
@@ -25,12 +26,17 @@ class ThreeDotMainMenuTest {
     @get: Rule
     val mActivityTestRule = MainActivityFirstrunTestRule(showFirstRun = false)
 
+    @Rule
+    @JvmField
+    val retryTestRule = RetryTestRule(3)
+
     @Before
     fun startWebServer() {
         webServer = MockWebServer()
         webServer.enqueue(TestHelper.createMockResponseFromAsset("tab1.html"))
         webServer.start()
         featureSettingsHelper.setShieldIconCFREnabled(false)
+        featureSettingsHelper.setNumberOfTabsOpened(4)
     }
 
     @After
@@ -59,7 +65,7 @@ class ThreeDotMainMenuTest {
             verifyPageContent("Tab 1")
         }.openMainMenu {
             verifyShareButtonExists()
-            verifyAddToHSButtonExists()
+            verifyAddToHomeButtonExists()
             verifyFindInPageExists()
             verifyOpenInButtonExists()
             verifyRequestDesktopSiteExists()

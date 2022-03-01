@@ -7,7 +7,7 @@ package org.mozilla.focus.browser.integration
 import android.view.View
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.test.TestCoroutineDispatcher
+import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.setMain
 import mozilla.components.browser.state.action.ContentAction
@@ -34,11 +34,12 @@ import org.mockito.Mockito.times
 import org.mockito.Mockito.verify
 import org.mockito.MockitoAnnotations
 import org.mozilla.focus.fragment.BrowserFragment
+import org.mozilla.focus.utils.Features
 import org.robolectric.RobolectricTestRunner
 
 @RunWith(RobolectricTestRunner::class)
 class BrowserToolbarIntegrationTest {
-    private val testDispatcher = TestCoroutineDispatcher()
+    private val testDispatcher = UnconfinedTestDispatcher()
     private val selectedTab = createSecureTab()
 
     private lateinit var toolbar: BrowserToolbar
@@ -94,7 +95,6 @@ class BrowserToolbarIntegrationTest {
     @ExperimentalCoroutinesApi
     fun tearDown() {
         Dispatchers.resetMain()
-        testDispatcher.cleanupTestCoroutines()
     }
 
     @Test
@@ -105,6 +105,16 @@ class BrowserToolbarIntegrationTest {
         browserToolbarIntegration.start()
 
         verify(browserToolbarIntegration).observerSecurityIndicatorChanges()
+    }
+
+    @Test
+    fun `WHEN start method is called THEN observe erase tabs CFR changes`() {
+        doNothing().`when`(browserToolbarIntegration).observeEraseCfr()
+        Features.SHOW_ERASE_CFR = true
+
+        browserToolbarIntegration.start()
+
+        verify(browserToolbarIntegration).observeEraseCfr()
     }
 
     @Test
@@ -181,7 +191,7 @@ class BrowserToolbarIntegrationTest {
             )
         ).joinBlocking()
 
-        testDispatcher.advanceUntilIdle()
+        testDispatcher.scheduler.advanceUntilIdle()
     }
 
     private fun updateTabUrl(url: String) {
@@ -189,7 +199,7 @@ class BrowserToolbarIntegrationTest {
             ContentAction.UpdateUrlAction(selectedTab.id, url)
         ).joinBlocking()
 
-        testDispatcher.advanceUntilIdle()
+        testDispatcher.scheduler.advanceUntilIdle()
     }
 
     private fun createSecureTab(): TabSessionState {
