@@ -637,6 +637,8 @@ class BrowserFragment :
     }
 
     override fun onResume() {
+        // For testing
+        components!!.crashReporter.submitCaughtException(Exception())
         super.onResume()
 
         StatusBarUtils.getStatusBarHeight(binding.statusBarBackground) { statusBarHeight ->

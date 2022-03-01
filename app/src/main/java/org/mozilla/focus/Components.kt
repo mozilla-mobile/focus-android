@@ -43,7 +43,7 @@ import mozilla.components.lib.crash.CrashReporter
 import mozilla.components.lib.crash.service.CrashReporterService
 import mozilla.components.lib.crash.service.GleanCrashReporterService
 import mozilla.components.lib.crash.service.MozillaSocorroService
-import mozilla.components.lib.crash.service.SentryService
+import mozilla.components.lib.sentry.crash.service.SentryService
 import mozilla.components.service.location.LocationService
 import mozilla.components.service.location.MozillaLocationService
 import mozilla.components.service.nimbus.NimbusApi
@@ -217,10 +217,10 @@ class Components(
 private fun createCrashReporter(context: Context): CrashReporter {
     val services = mutableListOf<CrashReporterService>()
 
-    if (BuildConfig.SENTRY_TOKEN.isNotEmpty()) {
+    //if (BuildConfig.SENTRY_TOKEN.isNotEmpty()) {
         val sentryService = SentryService(
             context,
-            BuildConfig.SENTRY_TOKEN,
+            BuildConfig.SENTRY_TOKEN, // UPDATE WITH THE SENTRY DSN FOR TESTING
             tags = mapOf(
                 "build_flavor" to BuildConfig.FLAVOR,
                 "build_type" to BuildConfig.BUILD_TYPE,
@@ -231,7 +231,7 @@ private fun createCrashReporter(context: Context): CrashReporter {
         )
 
         services.add(sentryService)
-    }
+  //  }
 
     val socorroService = MozillaSocorroService(
         context,
