@@ -75,6 +75,7 @@ import org.mozilla.focus.ext.disableDynamicBehavior
 import org.mozilla.focus.ext.enableDynamicBehavior
 import org.mozilla.focus.ext.ifCustomTab
 import org.mozilla.focus.ext.isCustomTab
+import org.mozilla.focus.ext.isMultiTabsEnabled
 import org.mozilla.focus.ext.requireComponents
 import org.mozilla.focus.ext.settings
 import org.mozilla.focus.ext.showAsFixed
@@ -731,7 +732,7 @@ class BrowserFragment :
 
         TelemetryWrapper.openFullBrowser()
 
-        if (requireComponents.experimentalFeatures.tabs.isMultiTab) {
+        if (requireComponents.experiments.isMultiTabsEnabled) {
             requireComponents.customTabsUseCases.migrate(tab.id)
         } else {
             // A Middleware will take care of either opening a new tab for this URL or reusing an
