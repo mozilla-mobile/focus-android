@@ -31,7 +31,6 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -39,7 +38,6 @@ import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import androidx.fragment.app.Fragment
-import mozilla.components.ui.colors.PhotonColors
 import org.mozilla.focus.GleanMetrics.Onboarding
 import org.mozilla.focus.R
 import org.mozilla.focus.ext.requireComponents
@@ -68,7 +66,7 @@ class OnboardingFragment : Fragment() {
         onboardingInteractor = OnboardingInteractor(requireComponents.appStore)
         return ComposeView(requireContext()).apply {
             setContent {
-                FocusTheme(darkTheme = false) {
+                FocusTheme {
                     OnboardingContent(onboardingInteractor)
                 }
             }
@@ -159,7 +157,6 @@ class OnboardingFragment : Fragment() {
             val (image, title, description) = createRefs()
             Image(
                 painter = painterResource(iconId),
-                colorFilter = ColorFilter.tint(color = PhotonColors.Ink50),
                 contentDescription = getString(R.string.app_name),
                 modifier = Modifier.constrainAs(image) { top.linkTo(parent.top) }
             )
