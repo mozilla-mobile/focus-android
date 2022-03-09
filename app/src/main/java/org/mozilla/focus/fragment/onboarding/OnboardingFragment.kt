@@ -22,15 +22,14 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
-import androidx.compose.material.Card
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -66,7 +65,7 @@ class OnboardingFragment : Fragment() {
         onboardingInteractor = OnboardingInteractor(requireComponents.appStore)
         return ComposeView(requireContext()).apply {
             setContent {
-                FocusTheme {
+                FocusTheme(darkTheme = false) {
                     OnboardingContent(onboardingInteractor)
                 }
             }
@@ -79,73 +78,70 @@ class OnboardingFragment : Fragment() {
         Box(
             modifier = Modifier
                 .background(color = focusColors.secondaryBackground)
-                .padding(top = 36.dp)
         ) {
-            Card(shape = RoundedCornerShape(topStart = 8.dp, topEnd = 8.dp)) {
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .fillMaxHeight()
+                    .verticalScroll(rememberScrollState())
+                    .background(color = focusColors.background)
+                    .padding(top = 72.dp, start = 24.dp, end = 24.dp, bottom = 52.dp),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Image(
+                    painter = painterResource(R.drawable.onboarding_logo),
+                    contentDescription = getString(R.string.app_name),
+                    modifier = Modifier.size(60.dp, 60.dp)
+                )
+                Text(
+                    text = stringResource(id = R.string.onboarding_title, stringResource(id = R.string.app_name)),
+                    style = focusTypography.onboardingTitle,
+                    modifier = Modifier.padding(top = 16.dp, bottom = 20.dp)
+                )
                 Column(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .fillMaxHeight()
-                        .verticalScroll(rememberScrollState())
-                        .background(color = focusColors.background)
-                        .padding(top = 36.dp, start = 24.dp, end = 24.dp, bottom = 52.dp),
-                    horizontalAlignment = Alignment.CenterHorizontally
+                    verticalArrangement = Arrangement.spacedBy(20.dp),
+                    modifier = Modifier.padding(bottom = 36.dp)
                 ) {
-                    Image(
-                        painter = painterResource(R.drawable.onboarding_logo),
-                        contentDescription = getString(R.string.app_name),
-                        modifier = Modifier.size(60.dp, 60.dp)
-                    )
                     Text(
-                        text = stringResource(id = R.string.onboarding_title, stringResource(id = R.string.app_name)),
-                        style = focusTypography.onboardingTitle,
-                        modifier = Modifier.padding(top = 16.dp, bottom = 20.dp)
+                        text = stringResource(id = R.string.onboarding_description),
+                        style = focusTypography.onboardingDescription,
+                        modifier = Modifier.padding(start = 8.dp)
                     )
-                    Column(
-                        verticalArrangement = Arrangement.spacedBy(20.dp),
-                        modifier = Modifier.padding(bottom = 36.dp)
-                    ) {
-                        Text(
-                            text = stringResource(id = R.string.onboarding_description),
-                            style = focusTypography.onboardingDescription,
-                            modifier = Modifier.padding(start = 8.dp)
+                    KeyFeatureCard(
+                        iconId = R.drawable.mozac_ic_private_browsing,
+                        titleId = R.string.onboarding_incognito_title,
+                        descriptionId = R.string.onboarding_incognito_description
+                    )
+                    KeyFeatureCard(
+                        iconId = R.drawable.ic_history,
+                        titleId = R.string.onboarding_history_title,
+                        descriptionId = R.string.onboarding_history_description
+                    )
+                    KeyFeatureCard(
+                        iconId = R.drawable.mozac_ic_settings,
+                        titleId = R.string.onboarding_protection_title,
+                        descriptionId = R.string.onboarding_protection_description
+                    )
+                }
+                Button(
+                    onClick = {
+                        Onboarding.finishButtonTapped.record(Onboarding.FinishButtonTappedExtra())
+                        onboardingInteractor.finishOnboarding(
+                            requireContext(),
+                            requireComponents.store.state.selectedTabId
                         )
-                        KeyFeatureCard(
-                            iconId = R.drawable.mozac_ic_private_browsing,
-                            titleId = R.string.onboarding_incognito_title,
-                            descriptionId = R.string.onboarding_incognito_description
-                        )
-                        KeyFeatureCard(
-                            iconId = R.drawable.ic_history,
-                            titleId = R.string.onboarding_history_title,
-                            descriptionId = R.string.onboarding_history_description
-                        )
-                        KeyFeatureCard(
-                            iconId = R.drawable.mozac_ic_settings,
-                            titleId = R.string.onboarding_protection_title,
-                            descriptionId = R.string.onboarding_protection_description
-                        )
-                    }
-                    Button(
-                        onClick = {
-                            Onboarding.finishButtonTapped.record(Onboarding.FinishButtonTappedExtra())
-                            onboardingInteractor.finishOnboarding(
-                                requireContext(),
-                                requireComponents.store.state.selectedTabId
-                            )
-                        },
+                    },
+                    modifier = Modifier
+                        .width(232.dp)
+                        .height(36.dp),
+                    colors = ButtonDefaults.buttonColors(backgroundColor = focusColors.onboardingButtonBackground)
+                ) {
+                    Text(
+                        text = stringResource(id = R.string.onboarding_start_browsing),
                         modifier = Modifier
-                            .width(232.dp)
-                            .height(36.dp),
-                        colors = ButtonDefaults.buttonColors(backgroundColor = focusColors.onboardingButtonBackground)
-                    ) {
-                        Text(
-                            text = stringResource(id = R.string.onboarding_start_browsing),
-                            modifier = Modifier
-                                .align(Alignment.CenterVertically),
-                            style = focusTypography.onboardingButton,
-                        )
-                    }
+                            .align(Alignment.CenterVertically),
+                        style = focusTypography.onboardingButton,
+                    )
                 }
             }
         }
@@ -157,6 +153,7 @@ class OnboardingFragment : Fragment() {
             val (image, title, description) = createRefs()
             Image(
                 painter = painterResource(iconId),
+                colorFilter = ColorFilter.tint(color = focusColors.onboardingKeyFeatureImageTint),
                 contentDescription = getString(R.string.app_name),
                 modifier = Modifier.constrainAs(image) { top.linkTo(parent.top) }
             )
