@@ -47,7 +47,7 @@ class AddToHomescreenTest {
         } catch (e: IOException) {
             throw AssertionError("Could not start web server", e)
         }
-        featureSettingsHelper.setShieldIconCFREnabled(false)
+        featureSettingsHelper.setCfrForTrackingProtectionEnabled(false)
         featureSettingsHelper.setNumberOfTabsOpened(4)
     }
 
@@ -71,7 +71,7 @@ class AddToHomescreenTest {
         searchScreen {
         }.loadPage(pageUrl) {
             progressBar.waitUntilGone(waitingTime)
-        }.openThreeDotMenu {
+        }.openMainMenu {
         }.openAddToHSDialog {
             addShortcutWithTitle(pageTitle)
             handleAddAutomaticallyDialog()
@@ -88,7 +88,7 @@ class AddToHomescreenTest {
         // Open website, and click 'Add to homescreen'
         searchScreen {
         }.loadPage(pageUrl) {
-        }.openThreeDotMenu {
+        }.openMainMenu {
         }.openAddToHSDialog {
             // leave shortcut title empty and add it to HS
             addShortcutNoTitle()

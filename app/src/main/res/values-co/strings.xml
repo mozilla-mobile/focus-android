@@ -248,7 +248,7 @@
     <string name="preference_autocomplete_add_title">Indirizzu web à aghjunghje</string>
 
     <!-- "Hint" text for the "custom autocomplete URL" input field. Shown when the field is empty. -->
-    <string name="preference_autocomplete_add_hint">Incullà o scrive un indirizzu</string>
+    <string name="preference_autocomplete_add_hint">Incullà o stampittà un indirizzu</string>
 
     <!-- Example how a custom domain autocomplete URL be added (e.g. without http://) -->
     <string name="preference_autocomplete_add_example2">Esempiu : mozilla.org</string>
@@ -377,10 +377,10 @@
 
     <string name="search_add_confirmation">Novu mutore di ricerca aghjuntu.</string>
 
-    <string name="search_add_error_empty_name">Scrive u nome di u mutore di ricerca</string>
+    <string name="search_add_error_empty_name">Stampittà u nome di u mutore di ricerca</string>
     <string name="search_add_error_duplicate_name">Un mutore di ricerca di u listessu nome hè dighjà installatu.</string>
 
-    <string name="search_add_error_empty_search">Scrive una catena di ricerca</string>
+    <string name="search_add_error_empty_search">Stampittà una catena di ricerca</string>
 
     <string name="search_add_error_format">Verificate chì a catena di ricerca seguiteghji u furmatu di l’esempiu</string>
 
@@ -491,7 +491,36 @@
 
 
 
-  <!-- First run tour (Default browser): Title -->
+  <!-- Onboarding: Title -->
+    <!-- %1$s will be replaced by the app name and build variant(e.g. Firefox Focus, Firefox Klar Nightly) -->
+    <string name="onboarding_title">Benvenuta in %1$s !</string>
+
+    <!-- Onboarding: Description -->
+    <string name="onboarding_description">Navigazione privata di livellu superiore secondu à i vostri bisogni</string>
+
+    <!-- Onboarding: Incognito Title -->
+    <string name="onboarding_incognito_title">Induve l’incognitu scontra l’invisibile</string>
+
+    <!-- Onboarding: Incognito Description -->
+    <!-- Text %s will be replaced with the name of the app (e.g. Focus, Klar) -->
+    <string name="onboarding_incognito_description">%s hè un navigatore primurosu di cunfidenzialità cù prutezzioni integrate assai forte contr’à u spiunagiu è i canistrelli.</string>
+
+    <!-- Onboarding: History Title -->
+    <string name="onboarding_history_title">Navigate cum’è s’ella fussi a prima volta</string>
+
+    <!-- Onboarding: History Description -->
+    <string name="onboarding_history_description">Una picchicciata squassa a cronolugia di a vostra navigazione è i canistrelli - è impedisce e publicità di seguità i vostri circondi.</string>
+
+    <!-- Onboarding: Protection Title -->
+    <string name="onboarding_protection_title">A cunfidenzialità adattata à ogni situazione</string>
+
+    <!-- Onboarding: Protection Description -->
+    <string name="onboarding_protection_description">S’è a vostra navigazione richiede di cambià, hè faciule di graduà più o menu e vostre preferenze di cunfidenzialità.</string>
+
+    <!-- Onboarding: Start browsing -->
+    <string name="onboarding_start_browsing">Principià a navigazione</string>
+
+    <!-- First run tour (Default browser): Title -->
     <string name="firstrun_defaultbrowser_title">Rinfurzà a vostra vita privata</string>
     <!-- First run tour (Default browser): Text. -->
     <string name="firstrun_defaultbrowser_text2">A navigazione privata passa à u livellu insù. Bluccate e publicità è altri perseguitatori chì vi spiunanu è rallentanu u caricamentu di e pagine web.</string>
@@ -903,4 +932,23 @@ The new line here must be kept as the second half of the string is clickable for
     <!-- Sessions List -->
     <!-- Content description (not visible, for screen readers etc.): Button that closes a tab n the sessions list -->
     <string name="close_tab">Chjode l’unghjetta</string>
+
+    <!-- Contextual Feature Recommendation Popups -->
+    <!-- CFR for Toolbar Shield Icon (Banner Info Message) -->
+    <string name="cfr_for_toolbar_shield_icon">Pare chì stu situ pruvava di seguitavvi. Fate un cliccu nant’à u scudu per vede e preferenze per u situ è e statistiche di blucchime di i perseguitatori.</string>
+    <!-- Content description (not visible, for screen readers etc.): Button that closes the CFR popup -->
+    <string name="cfr_close_button_description">Chjode a finestra popup</string>
+
+    <!-- Tool Tip for: Privacy and Security Settings Screen  task : https://github.com/mozilla-mobile/focus-android/issues/6211 -->
+    <!-- Tool Tip Title -->
+    <string name="tool_tip_title">Site prutetti !</string>
+
+    <!-- Tool Tip Message -->
+    <string name="tool_tip_message">Ste preferenze predefinite furniscenu una prutezzione forte. Ma hè faciule di mudificalle per suddisfà i vostri bisogni specifichi.</string>
+    <!-- Tool Tip "X" button Content description (not visible, for screen readers etc.) :Button that closes the tool tip -->
+    <string name="tool_tip_dismiss_button_content_description">Righjittà</string>
+
+    <!-- CFR for Toolbar Delete Icon (Banner Info Message) -->
+    <string name="cfr_for_toolbar_delete_icon">Sbarazzatevi di i vostri dati persunali, cronolugia di navigazione è ancu di più di sta sessione picchichjendu nant’à u buttone di a curbella. Pruvate puru !</string>
+
 </resources>

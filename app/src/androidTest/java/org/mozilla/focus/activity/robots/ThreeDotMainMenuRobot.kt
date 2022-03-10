@@ -9,18 +9,20 @@ import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers
 import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import androidx.test.espresso.matcher.ViewMatchers.withEffectiveVisibility
-import androidx.test.espresso.matcher.ViewMatchers.withSubstring
 import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.uiautomator.By
 import androidx.test.uiautomator.UiSelector
 import androidx.test.uiautomator.Until
 import junit.framework.TestCase.assertTrue
 import org.hamcrest.Matchers.allOf
+import org.junit.Assert.assertFalse
 import org.mozilla.focus.R
 import org.mozilla.focus.helpers.TestHelper.getStringResource
 import org.mozilla.focus.helpers.TestHelper.mDevice
 import org.mozilla.focus.helpers.TestHelper.packageName
+import org.mozilla.focus.helpers.TestHelper.progressBar
 import org.mozilla.focus.helpers.TestHelper.waitingTime
+import org.mozilla.focus.helpers.TestHelper.waitingTimeShort
 
 class ThreeDotMainMenuRobot {
 
@@ -32,7 +34,13 @@ class ThreeDotMainMenuRobot {
 
     fun verifyOpenInButtonExists() = assertTrue(openInBtn.exists())
 
-    fun verifyRequestDesktopSiteExists() = requestDesktopSiteButton.check(matches(isDisplayed()))
+    fun verifyRequestDesktopSiteExists() = assertTrue(requestDesktopSiteButton.exists())
+
+    fun verifyRequestDesktopSiteIsEnabled(expectedState: Boolean) {
+        if (expectedState) {
+            assertTrue(requestDesktopSiteButton.isChecked)
+        } else assertFalse(requestDesktopSiteButton.isChecked)
+    }
 
     fun verifySettingsButtonExists() = settingsMenuButton().check(matches(isDisplayed()))
 
@@ -67,6 +75,11 @@ class ThreeDotMainMenuRobot {
         if (chromeBrowser.exists()) {
             chromeBrowser.click()
         }
+    }
+
+    fun clickAddToShortcuts() {
+        addShortcutButton.waitForExists(waitingTimeShort)
+        addShortcutButton.click()
     }
 
     class Transition {
@@ -107,6 +120,29 @@ class ThreeDotMainMenuRobot {
             BrowserRobot().interact()
             return BrowserRobot.Transition()
         }
+
+        fun clickReloadButton(interact: BrowserRobot.() -> Unit): BrowserRobot.Transition {
+            reloadButton.click()
+            progressBar.waitUntilGone(waitingTime)
+
+            BrowserRobot().interact()
+            return BrowserRobot.Transition()
+        }
+
+        fun openFindInPage(interact: BrowserRobot.() -> Unit): BrowserRobot.Transition {
+            findInPageButton.perform(click())
+
+            BrowserRobot().interact()
+            return BrowserRobot.Transition()
+        }
+
+        fun switchDesktopSiteMode(interact: BrowserRobot.() -> Unit): BrowserRobot.Transition {
+            requestDesktopSiteButton.waitForExists(waitingTime)
+            requestDesktopSiteButton.click()
+
+            BrowserRobot().interact()
+            return BrowserRobot.Transition()
+        }
     }
 }
 
@@ -118,6 +154,17 @@ private fun settingsMenuButton(localizedText: String = "Settings") =
 private val shareBtn = mDevice.findObject(
     UiSelector()
         .description("Share…")
+)
+
+private val addShortcutButton =
+    mDevice.findObject(
+        UiSelector()
+            .text("Add to Shortcuts")
+    )
+
+private val reloadButton = mDevice.findObject(
+    UiSelector()
+        .description("Reload website")
 )
 
 private val addToHomeButton = mDevice.findObject(
@@ -144,4 +191,8 @@ private val openWithList = mDevice.findObject(
         .resourceId("$packageName:id/apps")
 )
 
-private val requestDesktopSiteButton = onView(withSubstring("Desktop site"))
+private val requestDesktopSiteButton =
+    mDevice.findObject(
+        UiSelector()
+            .resourceId("$packageName:id/switch_widget")
+    )

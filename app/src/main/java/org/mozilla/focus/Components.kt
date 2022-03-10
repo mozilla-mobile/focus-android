@@ -40,10 +40,10 @@ import mozilla.components.feature.top.sites.TopSitesUseCases
 import mozilla.components.feature.webcompat.WebCompatFeature
 import mozilla.components.feature.webcompat.reporter.WebCompatReporterFeature
 import mozilla.components.lib.crash.CrashReporter
+import mozilla.components.lib.crash.sentry.SentryService
 import mozilla.components.lib.crash.service.CrashReporterService
 import mozilla.components.lib.crash.service.GleanCrashReporterService
 import mozilla.components.lib.crash.service.MozillaSocorroService
-import mozilla.components.lib.crash.service.SentryService
 import mozilla.components.service.location.LocationService
 import mozilla.components.service.location.MozillaLocationService
 import mozilla.components.service.nimbus.NimbusApi
@@ -56,7 +56,6 @@ import org.mozilla.focus.downloads.DownloadService
 import org.mozilla.focus.engine.AppContentInterceptor
 import org.mozilla.focus.engine.ClientWrapper
 import org.mozilla.focus.engine.SanityCheckMiddleware
-import org.mozilla.focus.experiments.ExperimentalFeatures
 import org.mozilla.focus.experiments.createNimbus
 import org.mozilla.focus.ext.components
 import org.mozilla.focus.ext.settings
@@ -132,7 +131,7 @@ class Components(
     }
 
     val store by lazy {
-        val cfrMiddleware = if (Features.SHOW_ERASE_CFR) {
+        val cfrMiddleware = if (Features.IS_ERASE_CFR_ENABLED || Features.IS_TRACKING_PROTECTION_CFR_ENABLED) {
             listOf(CfrMiddleware(context.components))
         } else {
             listOf()
@@ -207,10 +206,6 @@ class Components(
                 context.settings.openLinksInExternalApp
             }
         )
-    }
-
-    val experimentalFeatures by lazy {
-        ExperimentalFeatures(experiments)
     }
 }
 
