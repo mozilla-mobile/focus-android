@@ -157,7 +157,7 @@
     <string name="preference_category_web_content">ウェブコンテンツ</string>
 
     <!-- Preference category: stealth settings for while switching apps -->
-    <string name="preference_category_switching_apps">アプリを切り替え</string>
+    <string name="preference_category_switching_apps">アプリの切り替え</string>
 
     <!-- Preference category for General Settings -->
     <string name="preference_category_general">一般</string>
@@ -491,7 +491,36 @@
 
 
 
-  <!-- First run tour (Default browser): Title -->
+  <!-- Onboarding: Title -->
+    <!-- %1$s will be replaced by the app name and build variant(e.g. Firefox Focus, Firefox Klar Nightly) -->
+    <string name="onboarding_title">%1$s へようこそ！</string>
+
+    <!-- Onboarding: Description -->
+    <string name="onboarding_description">ユーザーに寄り添う先進のプライベートブラウジング</string>
+
+    <!-- Onboarding: Incognito Title -->
+    <string name="onboarding_incognito_title">匿名と不可視が出会う場所</string>
+
+    <!-- Onboarding: Incognito Description -->
+    <!-- Text %s will be replaced with the name of the app (e.g. Focus, Klar) -->
+    <string name="onboarding_incognito_description">%s は非常に強力な追跡防止と Cookie 保護が組み込まれたプライバシーファーストのブラウザーです。</string>
+
+    <!-- Onboarding: History Title -->
+    <string name="onboarding_history_title">何事もなかったかのようなブラウジング</string>
+
+    <!-- Onboarding: History Description -->
+    <string name="onboarding_history_description">ワンタップでブラウジング履歴と Cookie を消去し、ユーザーを追い回す広告を防ぎます。</string>
+
+    <!-- Onboarding: Protection Title -->
+    <string name="onboarding_protection_title">どんな状況でも適合するプライバシー機能</string>
+
+    <!-- Onboarding: Protection Description -->
+    <string name="onboarding_protection_description">ブラウジングの変更が必要な時は、簡単にプライバシーレベルの設定を上げたり下げたりできます。</string>
+
+    <!-- Onboarding: Start browsing -->
+    <string name="onboarding_start_browsing">ブラウジングを開始</string>
+
+    <!-- First run tour (Default browser): Title -->
     <string name="firstrun_defaultbrowser_title">プライバシーを強化</string>
     <!-- First run tour (Default browser): Text. -->
     <string name="firstrun_defaultbrowser_text2">プライベートブラウジングを次のレベルへと進めましょう。サイトを越えてあなたを追跡したり、ページの読み込みを遅くしたりする可能性のある広告その他のコンテンツを自動的にブロック。</string>
@@ -897,4 +926,22 @@ The new line here must be kept as the second half of the string is clickable for
     <!-- Sessions List -->
     <!-- Content description (not visible, for screen readers etc.): Button that closes a tab n the sessions list -->
     <string name="close_tab">タブを閉じる</string>
+
+    <!-- Contextual Feature Recommendation Popups -->
+    <!-- CFR for Toolbar Shield Icon (Banner Info Message) -->
+    <string name="cfr_for_toolbar_shield_icon">このサイトがあなたを追跡しようとしていたようです。サイト設定とトラッカーブロックの統計は盾アイコンをクリックしてください。</string>
+    <!-- Content description (not visible, for screen readers etc.): Button that closes the CFR popup -->
+    <string name="cfr_close_button_description">ポップアップを閉じる</string>
+
+    <!-- Tool Tip for: Privacy and Security Settings Screen  task : https://github.com/mozilla-mobile/focus-android/issues/6211 -->
+    <!-- Tool Tip Title -->
+    <string name="tool_tip_title">保護されています</string>
+    <!-- Tool Tip Message -->
+    <string name="tool_tip_message">これらの既定の設定は強力な保護を提供します。必要に応じて、簡単に設定を調整できます。</string>
+    <!-- Tool Tip "X" button Content description (not visible, for screen readers etc.) :Button that closes the tool tip -->
+    <string name="tool_tip_dismiss_button_content_description">閉じる</string>
+
+    <!-- CFR for Toolbar Delete Icon (Banner Info Message) -->
+    <string name="cfr_for_toolbar_delete_icon">ごみ箱ボタンをタップするだけで、このセッションから個人データやブラウジング履歴などを削除できます。お試しください。</string>
+
 </resources>

@@ -64,7 +64,6 @@ import org.mozilla.focus.browser.integration.BrowserMenuController
 import org.mozilla.focus.browser.integration.BrowserToolbarIntegration
 import org.mozilla.focus.browser.integration.FindInPageIntegration
 import org.mozilla.focus.browser.integration.FullScreenIntegration
-import org.mozilla.focus.compose.CFRPopup
 import org.mozilla.focus.contextmenu.ContextMenuCandidates
 import org.mozilla.focus.databinding.FragmentBrowserBinding
 import org.mozilla.focus.downloads.DownloadService
@@ -75,6 +74,7 @@ import org.mozilla.focus.ext.disableDynamicBehavior
 import org.mozilla.focus.ext.enableDynamicBehavior
 import org.mozilla.focus.ext.ifCustomTab
 import org.mozilla.focus.ext.isCustomTab
+import org.mozilla.focus.ext.isMultiTabsEnabled
 import org.mozilla.focus.ext.requireComponents
 import org.mozilla.focus.ext.settings
 import org.mozilla.focus.ext.showAsFixed
@@ -88,7 +88,6 @@ import org.mozilla.focus.state.AppAction
 import org.mozilla.focus.telemetry.TelemetryWrapper
 import org.mozilla.focus.topsites.DefaultTopSitesStorage.Companion.TOP_SITES_MAX_LIMIT
 import org.mozilla.focus.topsites.DefaultTopSitesView
-import org.mozilla.focus.utils.Features
 import org.mozilla.focus.utils.FocusSnackbar
 import org.mozilla.focus.utils.FocusSnackbarDelegate
 import org.mozilla.focus.utils.IntentUtils
@@ -341,24 +340,6 @@ class BrowserFragment :
         setSitePermissions(view)
     }
 
-    private fun showCfrForShieldToolbarIcon() {
-        if (Features.SHOULD_SHOW_CFR_FOR_SHIELD_TOOLBAR_ICON &&
-            requireContext().settings.shouldShowCfrForShieldToolbarIcon &&
-            tab.content.securityInfo.secure
-        ) {
-            CFRPopup(
-                container = binding.root,
-                text = getString(R.string.cfr_for_toolbar_shield_icon),
-                anchor = binding.browserToolbar.rootView.findViewById(
-                    R.id.mozac_browser_toolbar_tracking_protection_indicator
-                ),
-                onDismiss = { requireContext().settings.shouldShowCfrForShieldToolbarIcon = false }
-            ).apply {
-                show()
-            }
-        }
-    }
-
     private fun setSitePermissions(rootView: View) {
         sitePermissionsFeature.set(
             feature = SitePermissionsFeature(
@@ -443,8 +424,7 @@ class BrowserFragment :
                 sessionUseCases = requireComponents.sessionUseCases,
                 onUrlLongClicked = ::onUrlLongClicked,
                 eraseActionListener = { erase(shouldEraseAllTabs = true) },
-                tabCounterListener = ::tabCounterListener,
-                onTrackingProtectionShown = ::showCfrForShieldToolbarIcon
+                tabCounterListener = ::tabCounterListener
             ),
             owner = this,
             view = binding.browserToolbar
@@ -731,7 +711,7 @@ class BrowserFragment :
 
         TelemetryWrapper.openFullBrowser()
 
-        if (requireComponents.experimentalFeatures.tabs.isMultiTab) {
+        if (requireComponents.experiments.isMultiTabsEnabled) {
             requireComponents.customTabsUseCases.migrate(tab.id)
         } else {
             // A Middleware will take care of either opening a new tab for this URL or reusing an

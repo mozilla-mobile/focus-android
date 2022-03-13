@@ -491,7 +491,36 @@
 
 
 
-  <!-- First run tour (Default browser): Title -->
+  <!-- Onboarding: Title -->
+    <!-- %1$s will be replaced by the app name and build variant(e.g. Firefox Focus, Firefox Klar Nightly) -->
+    <string name="onboarding_title">%1$s’a hoş geldiniz!</string>
+
+    <!-- Onboarding: Description -->
+    <string name="onboarding_description">İstediğiniz an gizli gezinti</string>
+
+    <!-- Onboarding: Incognito Title -->
+    <string name="onboarding_incognito_title">Gizli gezinti görünmezlikle buluşuyor</string>
+
+    <!-- Onboarding: Incognito Description -->
+    <!-- Text %s will be replaced with the name of the app (e.g. Focus, Klar) -->
+    <string name="onboarding_incognito_description">%s, son derece güçlü izlenme ve çerez korumasına sahip, gizliliğe öncelik veren bir tarayıcıdır.</string>
+
+    <!-- Onboarding: History Title -->
+    <string name="onboarding_history_title">Hiç yaşanmamış gibi gezin</string>
+
+    <!-- Onboarding: History Description -->
+    <string name="onboarding_history_description">Tek dokunuşla gezinti geçmişinizi ve çerezlerinizi silebilirsiniz. Üstelik reklamlar sizi izleyemez.</string>
+
+    <!-- Onboarding: Protection Title -->
+    <string name="onboarding_protection_title">Her duruma uygun gizlilik</string>
+
+    <!-- Onboarding: Protection Description -->
+    <string name="onboarding_protection_description">Gezinme ihtiyaçlarınız değişirse gizlilik ayarlarınızı kolayca artırıp azaltabilirsiniz.</string>
+
+    <!-- Onboarding: Start browsing -->
+    <string name="onboarding_start_browsing">Gezinmeye başlayın</string>
+
+    <!-- First run tour (Default browser): Title -->
     <string name="firstrun_defaultbrowser_title">Gizliliğini güçlendir</string>
     <!-- First run tour (Default browser): Text. -->
     <string name="firstrun_defaultbrowser_text2">Gizli gezintiyi daha da geliştirdik. Gezdiğiniz siteleri takip eden ve sayfaların yüklenmesini yavaşlatan reklamları ve diğer içerikleri engelleyebilirsiniz.</string>
