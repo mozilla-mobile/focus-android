@@ -2,6 +2,12 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
-object AndroidComponents {
-    const val VERSION = "100.0.20220322143329"
+package org.mozilla.focus.helpers
+
+object Constants {
+
+    object PackageName {
+        const val GMAIL_APP = "com.google.android.gm"
+        const val PHONE_APP = "com.android.dialer"
+    }
 }
