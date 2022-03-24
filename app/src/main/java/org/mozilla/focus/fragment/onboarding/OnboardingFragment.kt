@@ -32,15 +32,17 @@ import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.SideEffect
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
+import androidx.compose.ui.graphics.luminance
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.graphics.compositeOver
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -50,6 +52,8 @@ import androidx.constraintlayout.compose.Dimension
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleEventObserver
 import org.mozilla.focus.GleanMetrics.Onboarding
 import org.mozilla.focus.R
 import org.mozilla.focus.ext.requireComponents
@@ -80,14 +84,12 @@ class OnboardingFragment : Fragment() {
             setContent {
                 FocusTheme(darkTheme = false) {
                     val view = LocalView.current
+                    val window = LocalContext.current.findWindow()
                     val windowInsetsController = ViewCompat.getWindowInsetsController(view)
                     val darkTheme = isSystemInDarkTheme()
 
-                    OnBoardingStatusBar(windowInsetsController)
-                    OnboardingContent(
-                        onboardingInteractor,
-                        resetDarkTheme = { resetDarkTheme(windowInsetsController = windowInsetsController, darkTheme = darkTheme) }
-                    )
+                    OnBoardingSystemBar(windowInsetsController,onStop = { resetDarkTheme(windowInsetsController = windowInsetsController, window = window,darkTheme = darkTheme) })
+                    OnboardingContent(onboardingInteractor)
                 }
             }
         }
@@ -96,8 +98,7 @@ class OnboardingFragment : Fragment() {
     @Composable
     @Suppress("LongMethod")
     fun OnboardingContent(
-        onboardingInteractor: OnboardingInteractor,
-        resetDarkTheme: () -> Unit
+        onboardingInteractor: OnboardingInteractor
     ) {
 
         Box(
@@ -150,7 +151,7 @@ class OnboardingFragment : Fragment() {
                 }
                 Button(
                     onClick = {
-                        resetDarkTheme()
+                        //resetDarkTheme()
                         Onboarding.finishButtonTapped.record(Onboarding.FinishButtonTappedExtra())
                         onboardingInteractor.finishOnboarding(
                             requireContext(),
@@ -174,14 +175,41 @@ class OnboardingFragment : Fragment() {
     }
 
     @Composable
-    fun OnBoardingStatusBar(windowInsetsController: WindowInsetsControllerCompat?){
+    fun OnBoardingSystemBar(
+        windowInsetsController: WindowInsetsControllerCompat?,
+        color: Color = Color.White,
+        darkIcons: Boolean = color.luminance() > 0.5f,
+        onStop: () -> Unit
+    ){
         val window = LocalContext.current.findWindow()
-        SideEffect{
+        val lifecycleOwner = LocalLifecycleOwner.current
+
+        DisposableEffect(lifecycleOwner) {
+            val observer = LifecycleEventObserver { _, event ->
+                if (event == Lifecycle.Event.ON_STOP) {
+                    onStop()
+                }
+            }
+
+            lifecycleOwner.lifecycle.addObserver(observer)
+
             setStatusBarColor(
-                color = Color.Transparent,
+                color = Color.White,
+                darkIcons = darkIcons,
                 window = window,
                 windowInsetsController = windowInsetsController,
             )
+            setNavigationBarColor(
+                color = Color.White,
+                darkIcons = darkIcons,
+                window = window,
+                windowInsetsController = windowInsetsController,
+            )
+
+            onDispose {
+                lifecycleOwner.lifecycle.removeObserver(observer)
+            }
+
         }
     }
 
@@ -246,25 +274,48 @@ class OnboardingFragment : Fragment() {
 
     private fun setStatusBarColor(
         color: Color,
+        darkIcons: Boolean,
         window:Window?,
         windowInsetsController: WindowInsetsControllerCompat?,
         transformColorForLightContent: (Color) -> Color = BlackScrimmed
     ) {
-        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.M) {
-            windowInsetsController?.isAppearanceLightStatusBars = true
-            window?.statusBarColor = color.toArgb()
+        if(darkIcons){
+            if (Build.VERSION.SDK_INT > Build.VERSION_CODES.M){
+                windowInsetsController?.isAppearanceLightStatusBars = true
+            }else{
+                window?.statusBarColor = transformColorForLightContent(color).toArgb()
+            }
+        }
+    }
+
+    private fun setNavigationBarColor(
+        color: Color,
+        darkIcons: Boolean,
+        window:Window?,
+        windowInsetsController: WindowInsetsControllerCompat?,
+        transformColorForLightContent: (Color) -> Color = BlackScrimmed
+    ) {
+        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.O) {
+            windowInsetsController?.isAppearanceLightNavigationBars = true
+            window?.navigationBarColor = color.toArgb()
         }else{
-            window?.statusBarColor = transformColorForLightContent(color).toArgb()
+            if(darkIcons)
+                window?.navigationBarColor = transformColorForLightContent(color).toArgb()
         }
 
     }
 
     private fun resetDarkTheme(
         windowInsetsController: WindowInsetsControllerCompat?,
+        window: Window?,
         darkTheme: Boolean
     ){
         if (Build.VERSION.SDK_INT > Build.VERSION_CODES.M) {
             windowInsetsController?.isAppearanceLightStatusBars = !darkTheme
+        }
+        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.Q) {
+            windowInsetsController?.isAppearanceLightNavigationBars = false
+            window?.navigationBarColor = Color.Transparent.toArgb()
         }
     }
 
