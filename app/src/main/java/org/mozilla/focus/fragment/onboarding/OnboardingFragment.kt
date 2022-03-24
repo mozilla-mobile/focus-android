@@ -4,14 +4,19 @@
 
 package org.mozilla.focus.fragment.onboarding
 
+import android.app.Activity
 import android.content.Context
+import android.content.ContextWrapper
+import android.os.Build
 import android.os.Bundle
 import android.transition.TransitionInflater
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.compose.foundation.Image
+import android.view.Window
 import androidx.compose.foundation.background
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -27,15 +32,23 @@ import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.SideEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
+import androidx.compose.ui.graphics.toArgb
+import androidx.compose.ui.graphics.compositeOver
 import androidx.compose.ui.platform.ComposeView
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsControllerCompat
 import androidx.fragment.app.Fragment
 import org.mozilla.focus.GleanMetrics.Onboarding
 import org.mozilla.focus.R
@@ -66,7 +79,15 @@ class OnboardingFragment : Fragment() {
         return ComposeView(requireContext()).apply {
             setContent {
                 FocusTheme(darkTheme = false) {
-                    OnboardingContent(onboardingInteractor)
+                    val view = LocalView.current
+                    val windowInsetsController = ViewCompat.getWindowInsetsController(view)
+                    val darkTheme = isSystemInDarkTheme()
+
+                    OnBoardingStatusBar(windowInsetsController)
+                    OnboardingContent(
+                        onboardingInteractor,
+                        resetDarkTheme = { resetDarkTheme(windowInsetsController = windowInsetsController, darkTheme = darkTheme) }
+                    )
                 }
             }
         }
@@ -74,7 +95,11 @@ class OnboardingFragment : Fragment() {
 
     @Composable
     @Suppress("LongMethod")
-    fun OnboardingContent(onboardingInteractor: OnboardingInteractor) {
+    fun OnboardingContent(
+        onboardingInteractor: OnboardingInteractor,
+        resetDarkTheme: () -> Unit
+    ) {
+
         Box(
             modifier = Modifier
                 .background(color = focusColors.secondaryBackground)
@@ -125,6 +150,7 @@ class OnboardingFragment : Fragment() {
                 }
                 Button(
                     onClick = {
+                        resetDarkTheme()
                         Onboarding.finishButtonTapped.record(Onboarding.FinishButtonTappedExtra())
                         onboardingInteractor.finishOnboarding(
                             requireContext(),
@@ -144,6 +170,18 @@ class OnboardingFragment : Fragment() {
                     )
                 }
             }
+        }
+    }
+
+    @Composable
+    fun OnBoardingStatusBar(windowInsetsController: WindowInsetsControllerCompat?){
+        val window = LocalContext.current.findWindow()
+        SideEffect{
+            setStatusBarColor(
+                color = Color.Transparent,
+                window = window,
+                windowInsetsController = windowInsetsController,
+            )
         }
     }
 
@@ -196,4 +234,43 @@ class OnboardingFragment : Fragment() {
             return fragment
         }
     }
+
+    private fun Context.findWindow(): Window? {
+        var context = this
+        while (context is ContextWrapper) {
+            if (context is Activity) return context.window
+            context = context.baseContext
+        }
+        return null
+    }
+
+    private fun setStatusBarColor(
+        color: Color,
+        window:Window?,
+        windowInsetsController: WindowInsetsControllerCompat?,
+        transformColorForLightContent: (Color) -> Color = BlackScrimmed
+    ) {
+        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.M) {
+            windowInsetsController?.isAppearanceLightStatusBars = true
+            window?.statusBarColor = color.toArgb()
+        }else{
+            window?.statusBarColor = transformColorForLightContent(color).toArgb()
+        }
+
+    }
+
+    private fun resetDarkTheme(
+        windowInsetsController: WindowInsetsControllerCompat?,
+        darkTheme: Boolean
+    ){
+        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.M) {
+            windowInsetsController?.isAppearanceLightStatusBars = !darkTheme
+        }
+    }
+
+    private val BlackScrim = Color(0f, 0f, 0f, 0.3f) // 30% opaque black
+    private val BlackScrimmed: (Color) -> Color = { original ->
+        BlackScrim.compositeOver(original)
+    }
+
 }
