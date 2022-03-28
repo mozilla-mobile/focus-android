@@ -6,6 +6,7 @@ package org.mozilla.focus.activity
 import androidx.test.internal.runner.junit4.AndroidJUnit4ClassRunner
 import org.junit.After
 import org.junit.Before
+import org.junit.Ignore
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -35,6 +36,7 @@ class ErrorPagesTest {
         featureSettingsHelper.resetAllFeatureFlags()
     }
 
+    @Ignore("Crashing, see: https://github.com/mozilla-mobile/focus-android/issues/6769")
     @Test
     fun badURLCheckTest() {
         val badURl = "bad.url"
