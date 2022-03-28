@@ -57,6 +57,9 @@ open class MainActivity : LocaleAwareAppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        // Checks if Activity is currently in PiP mode if launched from external intents, then exits it
+        checkAndExitPiP()
+
         if (!isTaskRoot) {
             if (intent.hasCategory(Intent.CATEGORY_LAUNCHER) && Intent.ACTION_MAIN == intent.action) {
                 finish()
@@ -109,6 +112,14 @@ open class MainActivity : LocaleAwareAppCompatActivity() {
         lifecycle.addObserver(navigator)
 
         AppReviewUtils.showAppReview(this)
+    }
+
+    private fun checkAndExitPiP() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N && isInPictureInPictureMode && intent != null) {
+            // Exit PiP mode
+            moveTaskToBack(false)
+            startActivity(Intent(this, this::class.java).setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT))
+        }
     }
 
     final override fun onUserLeaveHint() {
