@@ -222,7 +222,8 @@ private fun createCrashReporter(context: Context): CrashReporter {
                 "locale_lang_tag" to getLocaleTag(context)
             ),
             environment = BuildConfig.BUILD_TYPE,
-            sendEventForNativeCrashes = false // Do not send native crashes to Sentry
+            sendEventForNativeCrashes = false, // Do not send native crashes to Sentry
+            sendCaughtExceptions = true
         )
 
         services.add(sentryService)
