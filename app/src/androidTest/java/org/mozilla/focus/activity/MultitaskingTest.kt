@@ -105,7 +105,7 @@ class MultitaskingTest {
         }.clickOpenInFocusButton() {
             verifyNumberOfTabsOpened(4)
         }.openTabsTray {
-            verifyTabsOrderAndCorespondingCloseButton(tab1Title, tab3Title, tab2Title, customTabTitle)
+            verifyTabsOrder(tab1Title, tab3Title, tab2Title, customTabTitle)
         }.selectTab(tab1Title) {
             verifyPageContent("Tab 1")
         }.clearBrowsingData {
@@ -132,12 +132,32 @@ class MultitaskingTest {
             openLinkInNewTab()
             verifyNumberOfTabsOpened(3)
         }.openTabsTray {
-            verifyTabsOrderAndCorespondingCloseButton(tab1Title, tab3Title, tab2Title)
+            verifyTabsOrder(tab1Title, tab3Title, tab2Title)
         }.closeTab(tab1Title) {
         }.openTabsTray {
-            verifyTabsOrderAndCorespondingCloseButton(tab3Title, tab2Title)
+            verifyTabsOrder(tab3Title, tab2Title)
         }.closeTab(tab3Title) {
             verifyTabsCounterNotShown()
+        }
+    }
+
+    @SmokeTest
+    @Test
+    fun verifyTabsTrayListTest() {
+        val tab1Url = webServer.url("tab1.html").toString()
+        val tab1Title = webServer.hostName + "/tab1.html"
+        val tab2Title = webServer.hostName + "/tab2.html"
+
+        searchScreen {
+        }.loadPage(tab1Url) {
+            verifyPageContent("Tab 1")
+            longPressLink("Tab 2")
+            openLinkInNewTab()
+        }.openTabsTray {
+        }.selectTab(tab2Title) {
+        }.openTabsTray {
+            verifyCloseTabButton(tab1Title)
+            verifyCloseTabButton(tab2Title)
         }
     }
 }
