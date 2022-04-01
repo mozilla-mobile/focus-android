@@ -24,8 +24,8 @@ import org.mozilla.focus.activity.robots.homeScreen
 import org.mozilla.focus.activity.robots.searchScreen
 import org.mozilla.focus.helpers.FeatureSettingsHelper
 import org.mozilla.focus.helpers.MockWebServerHelper
+import org.mozilla.focus.helpers.TestAssetHelper.getGenericAsset
 import org.mozilla.focus.helpers.TestAssetHelper.getGenericTabAsset
-import org.mozilla.focus.helpers.TestAssetHelper.getPlainPageAsset
 import org.mozilla.focus.helpers.TestHelper.createCustomTabIntent
 import org.mozilla.focus.helpers.TestHelper.mDevice
 import org.mozilla.focus.helpers.TestHelper.waitingTime
@@ -68,7 +68,7 @@ class CustomTabTest {
     @SmokeTest
     @Test
     fun testCustomTabUI() {
-        val customTabPage = getPlainPageAsset(webServer)
+        val customTabPage = getGenericAsset(webServer)
         val customTabActivity =
             launchActivity<IntentReceiverActivity>(
                 createCustomTabIntent(customTabPage.url, MENU_ITEM_LABEL, ACTION_BUTTON_DESCRIPTION)
@@ -97,7 +97,7 @@ class CustomTabTest {
     @Test
     @Ignore("Crashing, see: https://github.com/mozilla-mobile/focus-android/issues/5283")
     fun openCustomTabInFocusTest() {
-        val browserPage = getPlainPageAsset(webServer)
+        val browserPage = getGenericAsset(webServer)
         val customTabPage = getGenericTabAsset(webServer, 1)
 
         launchActivity<IntentReceiverActivity>()
