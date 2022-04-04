@@ -3,14 +3,25 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 package org.mozilla.focus.helpers
 
+import android.app.PendingIntent
+import android.content.ActivityNotFoundException
+import android.content.ComponentName
 import android.content.Context
+import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.Bitmap
+import android.graphics.Canvas
+import android.graphics.Color
+import android.net.Uri
 import android.text.format.DateUtils
 import android.util.Log
 import android.view.KeyEvent
+import androidx.browser.customtabs.CustomTabsIntent
 import androidx.test.espresso.Espresso
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.click
+import androidx.test.espresso.intent.Intents.intended
+import androidx.test.espresso.intent.matcher.IntentMatchers.toPackage
 import androidx.test.espresso.matcher.ViewMatchers
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.espresso.matcher.ViewMatchers.withText
@@ -18,6 +29,7 @@ import androidx.test.espresso.web.sugar.Web
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.uiautomator.UiDevice
 import androidx.test.uiautomator.UiSelector
+import junit.framework.AssertionFailedError
 import okhttp3.mockwebserver.MockResponse
 import okio.Buffer
 import org.hamcrest.Matchers
@@ -25,7 +37,9 @@ import org.hamcrest.Matchers.allOf
 import org.junit.Assert
 import org.junit.Assert.assertTrue
 import org.mozilla.focus.R
+import org.mozilla.focus.activity.IntentReceiverActivity
 import org.mozilla.focus.utils.AppConstants.isKlarBuild
+import org.mozilla.focus.utils.IntentUtils
 import java.io.BufferedReader
 import java.io.File
 import java.io.FileInputStream
@@ -39,18 +53,19 @@ object TestHelper {
     @JvmField
     var mDevice = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation())
     const val waitingTime = DateUtils.SECOND_IN_MILLIS * 15
+    const val pageLoadingTime = DateUtils.SECOND_IN_MILLIS * 25
     const val waitingTimeShort = DateUtils.SECOND_IN_MILLIS * 5
 
     @JvmStatic
-    val appContext: Context = InstrumentationRegistry.getInstrumentation().targetContext
+    val getTargetContext: Context = InstrumentationRegistry.getInstrumentation().targetContext
 
     @JvmStatic
-    val packageName: String = appContext.packageName
+    val packageName: String = getTargetContext.packageName
 
     @JvmStatic
-    val appName: String = appContext.getString(R.string.app_name)
+    val appName: String = getTargetContext.getString(R.string.app_name)
 
-    fun getStringResource(id: Int) = appContext.resources.getString(id, appName)
+    fun getStringResource(id: Int) = getTargetContext.resources.getString(id, appName)
 
     fun verifySnackBarText(text: String) {
         val snackbarText = mDevice.findObject(UiSelector().textContains(text))
@@ -132,18 +147,26 @@ object TestHelper {
     fun verifyTranslatedTextExists(text: String) =
         assertTrue(mDevice.findObject(UiSelector().text(text)).waitForExists(waitingTime))
 
+    fun openAppFromExternalLink(url: String) {
+        val intent = Intent().apply {
+            action = Intent.ACTION_VIEW
+            data = Uri.parse(url)
+            `package` = packageName
+            flags = Intent.FLAG_ACTIVITY_NEW_TASK
+        }
+        try {
+            getTargetContext.startActivity(intent)
+        } catch (ex: ActivityNotFoundException) {
+            intent.setPackage(null)
+            getTargetContext.startActivity(intent)
+        }
+    }
+
     // wait for web area to be visible
     @JvmStatic
     fun waitForWebContent() {
         Assert.assertTrue(geckoView.waitForExists(waitingTime))
     }
-
-    @JvmField
-    var nextBtn = mDevice.findObject(
-        UiSelector()
-            .resourceId(packageName + ":id/next")
-            .enabled(true)
-    )
 
     /********* Main View Locators  */
     @JvmField
@@ -152,14 +175,6 @@ object TestHelper {
             ViewMatchers.withId(R.id.menuView),
             ViewMatchers.isDisplayed()
         )
-    )
-
-    /********* Web View Locators  */
-    @JvmField
-    var browserURLbar = mDevice.findObject(
-        UiSelector()
-            .resourceId(packageName + ":id/display_url")
-            .clickable(true)
     )
 
     @JvmField
@@ -214,21 +229,6 @@ object TestHelper {
         UiSelector()
             .text("Your browsing history has been erased.")
             .resourceId(packageName + ":id/snackbar_text")
-            .enabled(true)
-    )
-
-    @JvmField
-    var lockIcon = mDevice.findObject(
-        UiSelector()
-            .resourceId(packageName + ":id/lock")
-            .description("Secure connection")
-    )
-
-    @JvmField
-    var notificationBarDeleteItem = mDevice.findObject(
-        UiSelector()
-            .text("Erase browsing history")
-            .resourceId("android:id/text")
             .enabled(true)
     )
 
@@ -296,13 +296,6 @@ object TestHelper {
         UiSelector()
             .resourceId("android:id/resolver_list")
             .enabled(true)
-    )
-
-    /********* Settings Menu Item Locators  */
-    @JvmField
-    var settingsMenu = mDevice.findObject(
-        UiSelector()
-            .resourceId(packageName + ":id/recycler_view")
     )
 
     @JvmStatic
@@ -382,5 +375,43 @@ object TestHelper {
             .edit()
             .putBoolean("use-gecko", isKlarBuild)
             .commit()
+    }
+
+    @Suppress("Deprecation")
+    fun createCustomTabIntent(
+        pageUrl: String,
+        customMenuItemLabel: String = "",
+        customActionButtonDescription: String = ""
+    ): Intent {
+        val appContext = InstrumentationRegistry.getInstrumentation()
+            .targetContext
+            .applicationContext
+        val pendingIntent = PendingIntent.getActivity(appContext, 0, Intent(), IntentUtils.defaultIntentPendingFlags)
+        val customTabsIntent = CustomTabsIntent.Builder()
+            .addMenuItem(customMenuItemLabel, pendingIntent)
+            .addDefaultShareMenuItem()
+            .setActionButton(createTestBitmap(), customActionButtonDescription, pendingIntent, true)
+            .setToolbarColor(Color.MAGENTA)
+            .build()
+        customTabsIntent.intent.data = Uri.parse(pageUrl)
+        customTabsIntent.intent.component = ComponentName(appContext, IntentReceiverActivity::class.java)
+        return customTabsIntent.intent
+    }
+
+    fun assertNativeAppOpens(appPackageName: String) {
+        try {
+            if (isPackageInstalled(packageName)) {
+                intended(toPackage(appPackageName))
+            }
+        } catch (e: AssertionFailedError) {
+            e.printStackTrace()
+        }
+    }
+
+    private fun createTestBitmap(): Bitmap {
+        val bitmap = Bitmap.createBitmap(100, 100, Bitmap.Config.ARGB_8888)
+        val canvas = Canvas(bitmap)
+        canvas.drawColor(Color.GREEN)
+        return bitmap
     }
 }

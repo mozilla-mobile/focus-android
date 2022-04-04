@@ -12,8 +12,9 @@ import org.mozilla.focus.activity.robots.homeScreen
 import org.mozilla.focus.activity.robots.searchScreen
 import org.mozilla.focus.helpers.FeatureSettingsHelper
 import org.mozilla.focus.helpers.MainActivityFirstrunTestRule
+import org.mozilla.focus.helpers.MockWebServerHelper
 import org.mozilla.focus.helpers.RetryTestRule
-import org.mozilla.focus.helpers.TestHelper.createMockResponseFromAsset
+import org.mozilla.focus.helpers.TestAssetHelper
 import org.mozilla.focus.helpers.TestHelper.mDevice
 import org.mozilla.focus.helpers.TestHelper.waitingTime
 import org.mozilla.focus.testAnnotations.SmokeTest
@@ -34,9 +35,10 @@ class ThreeDotMainMenuTest {
 
     @Before
     fun startWebServer() {
-        webServer = MockWebServer()
-        webServer.enqueue(createMockResponseFromAsset("tab1.html"))
-        webServer.start()
+        webServer = MockWebServer().apply {
+            dispatcher = MockWebServerHelper.AndroidAssetDispatcher()
+            start()
+        }
         featureSettingsHelper.setCfrForTrackingProtectionEnabled(false)
         featureSettingsHelper.setNumberOfTabsOpened(4)
     }
@@ -60,7 +62,7 @@ class ThreeDotMainMenuTest {
     @SmokeTest
     @Test
     fun browserMenuItemsTest() {
-        val pageUrl = webServer.url("tab1.html").toString()
+        val pageUrl = TestAssetHelper.getGenericTabAsset(webServer, 1).url
 
         searchScreen {
         }.loadPage(pageUrl) {
@@ -79,9 +81,10 @@ class ThreeDotMainMenuTest {
     @SmokeTest
     @Test
     fun shareTabTest() {
-        /* Go to a webpage */
+        val pageUrl = TestAssetHelper.getGenericTabAsset(webServer, 1).url
+
         searchScreen {
-        }.loadPage(webServer.url("").toString()) {
+        }.loadPage(pageUrl) {
             progressBar.waitUntilGone(waitingTime)
         }.openMainMenu {
         }.openShareScreen {
@@ -93,8 +96,10 @@ class ThreeDotMainMenuTest {
     @SmokeTest
     @Test
     fun findInPageTest() {
+        val pageUrl = TestAssetHelper.getGenericTabAsset(webServer, 1).url
+
         searchScreen {
-        }.loadPage(webServer.url("").toString()) {
+        }.loadPage(pageUrl) {
             progressBar.waitUntilGone(waitingTime)
         }.openMainMenu {
         }.openFindInPage {
@@ -112,17 +117,20 @@ class ThreeDotMainMenuTest {
     @SmokeTest
     @Test
     fun switchDesktopModeTest() {
+        val pageUrl = TestAssetHelper.getGenericTabAsset(webServer, 1).url
+
         searchScreen {
-        }.loadPage(webServer.url("").toString()) {
+        }.loadPage(pageUrl) {
             progressBar.waitUntilGone(waitingTime)
-            verifyPageContent("Tab 1")
+            verifyPageContent("mobile-site")
         }.openMainMenu {
         }.switchDesktopSiteMode {
             progressBar.waitUntilGone(waitingTime)
-            verifyPageContent("Tab 1")
+            verifyPageContent("desktop-site")
         }.openMainMenu {
             verifyRequestDesktopSiteIsEnabled(true)
         }.switchDesktopSiteMode {
+            verifyPageContent("mobile-site")
         }.openMainMenu {
             verifyRequestDesktopSiteIsEnabled(false)
         }

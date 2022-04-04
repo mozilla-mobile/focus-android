@@ -3,13 +3,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 package org.mozilla.focus.activity
 
-import androidx.test.espresso.intent.Intents
-import androidx.test.espresso.intent.matcher.IntentMatchers
 import androidx.test.internal.runner.junit4.AndroidJUnit4ClassRunner
-import androidx.test.platform.app.InstrumentationRegistry
-import androidx.test.uiautomator.UiDevice
-import androidx.test.uiautomator.UiSelector
-import okhttp3.mockwebserver.MockResponse
 import okhttp3.mockwebserver.MockWebServer
 import org.junit.After
 import org.junit.Before
@@ -19,11 +13,11 @@ import org.junit.runner.RunWith
 import org.mozilla.focus.activity.robots.searchScreen
 import org.mozilla.focus.helpers.FeatureSettingsHelper
 import org.mozilla.focus.helpers.MainActivityIntentsTestRule
-import org.mozilla.focus.helpers.TestHelper.isPackageInstalled
-import org.mozilla.focus.helpers.TestHelper.readTestAsset
-import org.mozilla.focus.helpers.TestHelper.waitingTime
+import org.mozilla.focus.helpers.MockWebServerHelper
+import org.mozilla.focus.helpers.StringsHelper.GOOGLE_CHROME
+import org.mozilla.focus.helpers.TestAssetHelper.getGenericAsset
+import org.mozilla.focus.helpers.TestHelper.assertNativeAppOpens
 import org.mozilla.focus.testAnnotations.SmokeTest
-import java.io.IOException
 
 // This test verifies the "Open in..." option from the main menu
 @RunWith(AndroidJUnit4ClassRunner::class)
@@ -38,15 +32,9 @@ class OpenInExternalBrowserDialogueTest {
     fun setUp() {
         featureSettingsHelper.setCfrForTrackingProtectionEnabled(false)
         featureSettingsHelper.setNumberOfTabsOpened(4)
-        webServer = MockWebServer()
-        try {
-            webServer.enqueue(
-                MockResponse()
-                    .setBody(readTestAsset("plain_test.html"))
-            )
-            webServer.start()
-        } catch (e: IOException) {
-            throw AssertionError("Could not start web server", e)
+        webServer = MockWebServer().apply {
+            dispatcher = MockWebServerHelper.AndroidAssetDispatcher()
+            start()
         }
     }
 
@@ -60,7 +48,7 @@ class OpenInExternalBrowserDialogueTest {
     @SmokeTest
     @Test
     fun openPageInExternalAppTest() {
-        val pageUrl = webServer.url("").toString()
+        val pageUrl = getGenericAsset(webServer).url
 
         searchScreen {
         }.loadPage(pageUrl) {
@@ -68,17 +56,7 @@ class OpenInExternalBrowserDialogueTest {
             clickOpenInOption()
             verifyOpenInDialog()
             clickOpenInChrome()
-            assertChromeOpens()
+            assertNativeAppOpens(GOOGLE_CHROME)
         }
-    }
-}
-
-private fun assertChromeOpens() {
-    val googleChrome = "com.google.android.apps.chrome"
-    if (isPackageInstalled(googleChrome)) {
-        Intents.intended(IntentMatchers.toPackage(googleChrome))
-    } else {
-        val mDevice = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation())
-        mDevice.findObject(UiSelector().textContains("No app found")).waitForExists(waitingTime)
     }
 }

@@ -3,6 +3,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 package org.mozilla.focus.activity
 
+import androidx.test.espresso.Espresso.closeSoftKeyboard
 import androidx.test.internal.runner.junit4.AndroidJUnit4ClassRunner
 import org.junit.After
 import org.junit.Before
@@ -13,14 +14,20 @@ import org.mozilla.focus.R
 import org.mozilla.focus.activity.robots.homeScreen
 import org.mozilla.focus.helpers.FeatureSettingsHelper
 import org.mozilla.focus.helpers.MainActivityFirstrunTestRule
-import org.mozilla.focus.helpers.TestHelper.appContext
 import org.mozilla.focus.helpers.TestHelper.exitToTop
+import org.mozilla.focus.helpers.TestHelper.getStringResource
+import org.mozilla.focus.helpers.TestHelper.getTargetContext
 import org.mozilla.focus.testAnnotations.SmokeTest
 
 // This test visits each About page and checks whether some essential elements are being displayed
 @RunWith(AndroidJUnit4ClassRunner::class)
 class MozillaSupportPagesTest {
     private val featureSettingsHelper = FeatureSettingsHelper()
+    private val firstTipText = getStringResource(R.string.tip_fresh_look)
+    private val secondTipText = getStringResource(R.string.tip_about_shortcuts)
+    private val thirdTipText = getStringResource(R.string.tip_explain_allowlist3)
+    private val fourthTipText = getStringResource(R.string.tip_disable_tracking_protection3)
+    private val fifthTipText = getStringResource(R.string.tip_request_desktop2)
 
     @get: Rule
     val mActivityTestRule = MainActivityFirstrunTestRule(showFirstRun = false)
@@ -88,9 +95,9 @@ class MozillaSupportPagesTest {
     @SmokeTest
     @Test
     fun openYourRightsPageTest() {
-        val yourRightsString = appContext.getString(
+        val yourRightsString = getTargetContext.getString(
             R.string.your_rights_content1,
-            appContext.getString(R.string.app_name),
+            getTargetContext.getString(R.string.app_name),
             "Mozilla Public License"
         )
 
@@ -117,7 +124,7 @@ class MozillaSupportPagesTest {
 
     @SmokeTest
     @Test
-    fun turnOffHomeScreenTipsTest() {
+    fun turnOffAndOnHomeScreenTipsTest() {
         homeScreen {
         }.openMainMenu {
         }.openSettings {
@@ -127,6 +134,32 @@ class MozillaSupportPagesTest {
         }
         homeScreen {
             verifyTipsCarouselIsDisplayed(false)
+        }.openMainMenu {
+        }.openSettings {
+        }.openMozillaSettingsMenu {
+            switchHomeScreenTips()
+            exitToTop()
+        }
+        homeScreen {
+            closeSoftKeyboard()
+            verifyTipsCarouselIsDisplayed(true)
+            verifyTipText(firstTipText)
+            scrollLeftTipsCarousel()
+            verifyTipText(secondTipText)
+            scrollLeftTipsCarousel()
+            verifyTipText(thirdTipText)
+            scrollLeftTipsCarousel()
+            verifyTipText(fourthTipText)
+            scrollLeftTipsCarousel()
+            verifyTipText(fifthTipText)
+            scrollRightTipsCarousel()
+            verifyTipText(fourthTipText)
+            scrollRightTipsCarousel()
+            verifyTipText(thirdTipText)
+            scrollRightTipsCarousel()
+            verifyTipText(secondTipText)
+            scrollRightTipsCarousel()
+            verifyTipText(firstTipText)
         }
     }
 }

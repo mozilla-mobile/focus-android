@@ -12,9 +12,13 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.mozilla.focus.activity.robots.searchScreen
 import org.mozilla.focus.helpers.FeatureSettingsHelper
-import org.mozilla.focus.helpers.MainActivityFirstrunTestRule
+import org.mozilla.focus.helpers.MainActivityIntentsTestRule
+import org.mozilla.focus.helpers.MockWebServerHelper
 import org.mozilla.focus.helpers.RetryTestRule
-import org.mozilla.focus.helpers.TestHelper.createMockResponseFromAsset
+import org.mozilla.focus.helpers.StringsHelper.GMAIL_APP
+import org.mozilla.focus.helpers.StringsHelper.PHONE_APP
+import org.mozilla.focus.helpers.TestAssetHelper
+import org.mozilla.focus.helpers.TestHelper.assertNativeAppOpens
 import org.mozilla.focus.helpers.TestHelper.waitingTime
 import org.mozilla.focus.testAnnotations.SmokeTest
 
@@ -26,7 +30,7 @@ class WebControlsTest {
     private val featureSettingsHelper = FeatureSettingsHelper()
 
     @get: Rule
-    var mActivityTestRule = MainActivityFirstrunTestRule(showFirstRun = false)
+    var mActivityTestRule = MainActivityIntentsTestRule(showFirstRun = false)
 
     @Rule
     @JvmField
@@ -34,8 +38,10 @@ class WebControlsTest {
 
     @Before
     fun setup() {
-        webServer = MockWebServer()
-        webServer.start()
+        webServer = MockWebServer().apply {
+            dispatcher = MockWebServerHelper.AndroidAssetDispatcher()
+            start()
+        }
         featureSettingsHelper.setCfrForTrackingProtectionEnabled(false)
         featureSettingsHelper.setNumberOfTabsOpened(4)
     }
@@ -49,8 +55,7 @@ class WebControlsTest {
     @SmokeTest
     @Test
     fun verifyTextInputTest() {
-        webServer.enqueue(createMockResponseFromAsset("htmlControls.html"))
-        val htmlControlsPage = webServer.url("htmlControls.html").toString()
+        val htmlControlsPage = TestAssetHelper.getHTMLControlsPageAsset(webServer).url
 
         searchScreen {
         }.loadPage(htmlControlsPage) {
@@ -64,8 +69,7 @@ class WebControlsTest {
     @SmokeTest
     @Test
     fun verifyDropdownMenuTest() {
-        webServer.enqueue(createMockResponseFromAsset("htmlControls.html"))
-        val htmlControlsPage = webServer.url("htmlControls.html").toString()
+        val htmlControlsPage = TestAssetHelper.getHTMLControlsPageAsset(webServer).url
 
         searchScreen {
         }.loadPage(htmlControlsPage) {
@@ -80,8 +84,7 @@ class WebControlsTest {
     @SmokeTest
     @Test
     fun verifyExternalLinksTest() {
-        webServer.enqueue(createMockResponseFromAsset("htmlControls.html"))
-        val htmlControlsPage = webServer.url("htmlControls.html").toString()
+        val htmlControlsPage = TestAssetHelper.getHTMLControlsPageAsset(webServer).url
 
         searchScreen {
         }.loadPage(htmlControlsPage) {
@@ -94,12 +97,35 @@ class WebControlsTest {
 
     @SmokeTest
     @Test
-    fun verifyDismissTextSelectionToolbarTest() {
-        webServer.enqueue(createMockResponseFromAsset("tab1.html"))
-        webServer.enqueue(createMockResponseFromAsset("htmlControls.html"))
+    fun emailLinkTest() {
+        val htmlControlsPage = TestAssetHelper.getHTMLControlsPageAsset(webServer).url
 
-        val tab1Url = webServer.url("tab1.html").toString()
-        val htmlControlsPage = webServer.url("htmlControls.html").toString()
+        searchScreen {
+        }.loadPage(htmlControlsPage) {
+            clickLinkMatchingText("Email link")
+            clickOpenLinksInAppsOpenButton()
+            assertNativeAppOpens(GMAIL_APP)
+        }
+    }
+
+    @SmokeTest
+    @Test
+    fun telephoneLinkTest() {
+        val htmlControlsPage = TestAssetHelper.getHTMLControlsPageAsset(webServer).url
+
+        searchScreen {
+        }.loadPage(htmlControlsPage) {
+            clickLinkMatchingText("Telephone link")
+            clickOpenLinksInAppsOpenButton()
+            assertNativeAppOpens(PHONE_APP)
+        }
+    }
+
+    @SmokeTest
+    @Test
+    fun verifyDismissTextSelectionToolbarTest() {
+        val tab1Url = TestAssetHelper.getGenericTabAsset(webServer, 1).url
+        val htmlControlsPage = TestAssetHelper.getHTMLControlsPageAsset(webServer).url
 
         searchScreen {
         }.loadPage(tab1Url) {
@@ -116,8 +142,7 @@ class WebControlsTest {
     @SmokeTest
     @Test
     fun verifySelectTextTest() {
-        webServer.enqueue(createMockResponseFromAsset("htmlControls.html"))
-        val htmlControlsPage = webServer.url("htmlControls.html").toString()
+        val htmlControlsPage = TestAssetHelper.getHTMLControlsPageAsset(webServer).url
 
         searchScreen {
         }.loadPage(htmlControlsPage) {
@@ -132,8 +157,7 @@ class WebControlsTest {
     @SmokeTest
     @Test
     fun verifyCalendarFormTest() {
-        webServer.enqueue(createMockResponseFromAsset("htmlControls.html"))
-        val htmlControlsPage = webServer.url("htmlControls.html").toString()
+        val htmlControlsPage = TestAssetHelper.getHTMLControlsPageAsset(webServer).url
 
         searchScreen {
         }.loadPage(htmlControlsPage) {

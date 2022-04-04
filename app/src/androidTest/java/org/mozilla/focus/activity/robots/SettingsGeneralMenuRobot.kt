@@ -4,6 +4,7 @@
 
 package org.mozilla.focus.activity.robots
 
+import android.os.Build
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.ViewInteraction
 import androidx.test.espresso.action.ViewActions.click
@@ -22,6 +23,7 @@ import junit.framework.TestCase.assertTrue
 import org.hamcrest.Matchers.allOf
 import org.junit.Assert.assertFalse
 import org.mozilla.focus.R
+import org.mozilla.focus.helpers.EspressoHelper.hasCousin
 import org.mozilla.focus.helpers.TestHelper.appName
 import org.mozilla.focus.helpers.TestHelper.mDevice
 import org.mozilla.focus.helpers.TestHelper.waitingTime
@@ -31,34 +33,36 @@ class SettingsGeneralMenuRobot {
         const val ACTION_REQUEST_ROLE = "android.app.role.action.REQUEST_ROLE"
     }
 
-    fun verifyGeneralSettingsItems() {
-        defaultBrowserSwitch.check(matches(isDisplayed()))
+    fun verifyGeneralSettingsItems(defaultBrowserSwitchState: Boolean = false) {
+        verifyThemesList()
         languageMenuButton().check(matches(isDisplayed()))
+        defaultBrowserSwitch().check(matches(isDisplayed()))
+        assertDefaultBrowserSwitchState(defaultBrowserSwitchState)
     }
 
     fun clickSetDefaultBrowser() {
-        defaultBrowserSwitch
+        defaultBrowserSwitch()
             .check(matches(isDisplayed()))
             .perform(click())
     }
 
     fun verifyAndroidDefaultAppsMenuAppears() {
-        intended(IntentMatchers.hasAction(ACTION_REQUEST_ROLE))
+        // method used to assert the default apps menu on API 24 and above
+        when (Build.VERSION.SDK_INT) {
+            in Build.VERSION_CODES.N..Build.VERSION_CODES.P ->
+                assertTrue(
+                    mDevice.findObject(UiSelector().resourceId("com.android.settings:id/list"))
+                        .waitForExists(waitingTime)
+                )
+            in Build.VERSION_CODES.Q..Build.VERSION_CODES.R ->
+                intended(IntentMatchers.hasAction(ACTION_REQUEST_ROLE))
+        }
     }
 
-    fun verifyOpenWithDialog() {
-        openWithDialogTitle.waitForExists(waitingTime)
-        assertTrue(openWithDialogTitle.exists())
-        assertTrue(openWithList.exists())
-    }
-
-    fun selectAlwaysOpenWithFocus() {
+    fun selectFocusDefaultBrowser() {
+        // method used to set default browser on API 30 and above
         mDevice.findObject(UiSelector().text(appName)).click()
-        mDevice.findObject(
-            UiSelector()
-                .resourceId("android:id/button_always")
-                .enabled(true)
-        ).click()
+        mDevice.findObject(UiSelector().textContains("Set as default")).click()
     }
 
     fun verifySwitchIsToggled(checked: Boolean) {
@@ -112,7 +116,35 @@ class SettingsGeneralMenuRobot {
     }
 }
 
-private val defaultBrowserSwitch = onView(withText("Make $appName default browser"))
+private fun defaultBrowserSwitch() = onView(withText("Make $appName default browser"))
+
+private fun assertDefaultBrowserSwitchState(enabled: Boolean) {
+    if (enabled) {
+        defaultBrowserSwitch()
+            .check(
+                matches(
+                    hasCousin(
+                        allOf(
+                            withId(R.id.switch_widget),
+                            isChecked()
+                        )
+                    )
+                )
+            )
+    } else {
+        defaultBrowserSwitch()
+            .check(
+                matches(
+                    hasCousin(
+                        allOf(
+                            withId(R.id.switch_widget),
+                            isNotChecked()
+                        )
+                    )
+                )
+            )
+    }
+}
 
 private val openWithDialogTitle = mDevice.findObject(
     UiSelector()

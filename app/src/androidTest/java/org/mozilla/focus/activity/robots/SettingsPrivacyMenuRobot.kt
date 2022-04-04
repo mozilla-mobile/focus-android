@@ -19,14 +19,14 @@ import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.uiautomator.UiScrollable
 import androidx.test.uiautomator.UiSelector
+import org.hamcrest.CoreMatchers.allOf
+import org.hamcrest.CoreMatchers.containsString
 import org.hamcrest.Matchers
-import org.hamcrest.Matchers.allOf
-import org.hamcrest.Matchers.containsString
 import org.junit.Assert.assertTrue
 import org.mozilla.focus.R
 import org.mozilla.focus.helpers.EspressoHelper.hasCousin
-import org.mozilla.focus.helpers.TestHelper.appContext
 import org.mozilla.focus.helpers.TestHelper.getStringResource
+import org.mozilla.focus.helpers.TestHelper.getTargetContext
 import org.mozilla.focus.helpers.TestHelper.mDevice
 import org.mozilla.focus.helpers.TestHelper.packageName
 import org.mozilla.focus.helpers.TestHelper.waitingTime
@@ -37,19 +37,38 @@ class SettingsPrivacyMenuRobot {
     fun verifyPrivacySettingsItems() {
         privacySettingsList.waitForExists(waitingTime)
         adTrackersBlockSwitch().check(matches(isDisplayed()))
+        assertAdTrackersBlockSwitchState()
         analyticTrackersBlockSwitch().check(matches(isDisplayed()))
+        assertAnalyticTrackersBlockSwitchState()
         socialTrackersBlockSwitch().check(matches(isDisplayed()))
+        assertSocialTrackersBlockSwitchState()
         otherContentTrackersBlockSwitch().check(matches(isDisplayed()))
+        assertOtherContentTrackersBlockSwitchState()
         blockWebFontsSwitch().check(matches(isDisplayed()))
+        assertBlockWebFontsSwitchState()
         blockJavaScriptSwitch().check(matches(isDisplayed()))
+        assertBlockJavaScriptSwitchState()
         cookiesAndSiteDataSection().check(matches(isDisplayed()))
         blockCookies().check(matches(isDisplayed()))
         blockCookiesDefaultOption().check(matches(isDisplayed()))
         sitePermissions().check(matches(isDisplayed()))
+        verifyExceptionsListDisabled()
         useFingerprintSwitch().check(matches(isDisplayed()))
+        assertUseFingerprintSwitchState()
         stealthModeSwitch().check(matches(isDisplayed()))
+        assertStealthModeSwitchState()
         safeBrowsingSwitch().check(matches(isDisplayed()))
+        assertSafeBrowsingSwitchState()
+        httpsOnlyModeSwitch().check(matches(isDisplayed()))
+        assertHttpsOnlyModeSwitchState()
         sendDataSwitch().check(matches(isDisplayed()))
+        if (packageName != "org.mozilla.focus.debug") {
+            assertSendDataSwitchState(true)
+        } else {
+            assertSendDataSwitchState()
+        }
+        studiesOption().check(matches(isDisplayed()))
+        studiesDefaultOption().check(matches(isDisplayed()))
     }
 
     fun verifyCookiesAndSiteDataSection() {
@@ -216,6 +235,8 @@ class SettingsPrivacyMenuRobot {
 
     fun clickAutoPlayOption() = autoplayOption().perform(click())
 
+    fun clickYesPleaseOption() = blockCookiesYesPleaseOption.click()
+
     fun switchSafeBrowsingToggle(): ViewInteraction = safeBrowsingSwitch().perform(click())
 
     fun verifyExceptionsListDisabled() {
@@ -234,7 +255,7 @@ class SettingsPrivacyMenuRobot {
     }
 
     fun removeException() {
-        openActionBarOverflowOrOptionsMenu(appContext)
+        openActionBarOverflowOrOptionsMenu(getTargetContext)
         onView(withText("Remove"))
             .perform(click())
         onView(withId(R.id.checkbox))
@@ -248,7 +269,14 @@ class SettingsPrivacyMenuRobot {
             .perform(click())
     }
 
-    class Transition
+    class Transition {
+        fun goBackToSettings(interact: SettingsRobot.() -> Unit): SettingsRobot.Transition {
+            mDevice.pressBack()
+
+            SettingsRobot().interact()
+            return SettingsRobot.Transition()
+        }
+    }
 }
 
 private val privacySettingsList =
@@ -260,10 +288,66 @@ private fun adTrackersBlockSwitch(): ViewInteraction {
     return onView(withText("Block ad trackers"))
 }
 
+private fun assertAdTrackersBlockSwitchState(enabled: Boolean = true) {
+    if (enabled) {
+        adTrackersBlockSwitch()
+            .check(
+                matches(
+                    hasCousin(
+                        allOf(
+                            withId(R.id.switchWidget),
+                            isChecked()
+                        )
+                    )
+                )
+            )
+    } else {
+        adTrackersBlockSwitch()
+            .check(
+                matches(
+                    hasCousin(
+                        allOf(
+                            withId(R.id.switchWidget),
+                            isNotChecked()
+                        )
+                    )
+                )
+            )
+    }
+}
+
 private fun analyticTrackersBlockSwitch(): ViewInteraction {
     privacySettingsList
         .scrollTextIntoView("Block analytic trackers")
     return onView(withText("Block analytic trackers"))
+}
+
+private fun assertAnalyticTrackersBlockSwitchState(enabled: Boolean = true) {
+    if (enabled) {
+        analyticTrackersBlockSwitch()
+            .check(
+                matches(
+                    hasCousin(
+                        allOf(
+                            withId(R.id.switchWidget),
+                            isChecked()
+                        )
+                    )
+                )
+            )
+    } else {
+        analyticTrackersBlockSwitch()
+            .check(
+                matches(
+                    hasCousin(
+                        allOf(
+                            withId(R.id.switchWidget),
+                            isNotChecked()
+                        )
+                    )
+                )
+            )
+    }
 }
 
 private fun socialTrackersBlockSwitch(): ViewInteraction {
@@ -272,10 +356,66 @@ private fun socialTrackersBlockSwitch(): ViewInteraction {
     return onView(withText("Block social trackers"))
 }
 
+private fun assertSocialTrackersBlockSwitchState(enabled: Boolean = true) {
+    if (enabled) {
+        socialTrackersBlockSwitch()
+            .check(
+                matches(
+                    hasCousin(
+                        allOf(
+                            withId(R.id.switchWidget),
+                            isChecked()
+                        )
+                    )
+                )
+            )
+    } else {
+        socialTrackersBlockSwitch()
+            .check(
+                matches(
+                    hasCousin(
+                        allOf(
+                            withId(R.id.switchWidget),
+                            isNotChecked()
+                        )
+                    )
+                )
+            )
+    }
+}
+
 private fun otherContentTrackersBlockSwitch(): ViewInteraction {
     privacySettingsList
         .scrollTextIntoView("Block other content trackers")
     return onView(withText("Block other content trackers"))
+}
+
+private fun assertOtherContentTrackersBlockSwitchState(enabled: Boolean = false) {
+    if (enabled) {
+        otherContentTrackersBlockSwitch()
+            .check(
+                matches(
+                    hasCousin(
+                        allOf(
+                            withId(R.id.switchWidget),
+                            isChecked()
+                        )
+                    )
+                )
+            )
+    } else {
+        otherContentTrackersBlockSwitch()
+            .check(
+                matches(
+                    hasCousin(
+                        allOf(
+                            withId(R.id.switchWidget),
+                            isNotChecked()
+                        )
+                    )
+                )
+            )
+    }
 }
 
 private fun blockWebFontsSwitch(): ViewInteraction {
@@ -284,10 +424,66 @@ private fun blockWebFontsSwitch(): ViewInteraction {
     return onView(withText("Block web fonts"))
 }
 
+private fun assertBlockWebFontsSwitchState(enabled: Boolean = false) {
+    if (enabled) {
+        blockWebFontsSwitch()
+            .check(
+                matches(
+                    hasCousin(
+                        allOf(
+                            withId(R.id.switchWidget),
+                            isChecked()
+                        )
+                    )
+                )
+            )
+    } else {
+        blockWebFontsSwitch()
+            .check(
+                matches(
+                    hasCousin(
+                        allOf(
+                            withId(R.id.switchWidget),
+                            isNotChecked()
+                        )
+                    )
+                )
+            )
+    }
+}
+
 private fun blockJavaScriptSwitch(): ViewInteraction {
     privacySettingsList
         .scrollTextIntoView("Block JavaScript")
     return onView(withText("Block JavaScript"))
+}
+
+private fun assertBlockJavaScriptSwitchState(enabled: Boolean = false) {
+    if (enabled) {
+        blockJavaScriptSwitch()
+            .check(
+                matches(
+                    hasCousin(
+                        allOf(
+                            withId(R.id.switchWidget),
+                            isChecked()
+                        )
+                    )
+                )
+            )
+    } else {
+        blockJavaScriptSwitch()
+            .check(
+                matches(
+                    hasCousin(
+                        allOf(
+                            withId(R.id.switchWidget),
+                            isNotChecked()
+                        )
+                    )
+                )
+            )
+    }
 }
 
 private fun cookiesAndSiteDataSection(): ViewInteraction {
@@ -320,22 +516,180 @@ private fun useFingerprintSwitch(): ViewInteraction {
     return onView(withText(useFingerprintSwitchSummary))
 }
 
+private fun assertUseFingerprintSwitchState(enabled: Boolean = false) {
+    if (enabled) {
+        useFingerprintSwitch()
+            .check(
+                matches(
+                    hasCousin(
+                        allOf(
+                            withId(R.id.switchWidget),
+                            isChecked()
+                        )
+                    )
+                )
+            )
+    } else {
+        useFingerprintSwitch()
+            .check(
+                matches(
+                    hasCousin(
+                        allOf(
+                            withId(R.id.switchWidget),
+                            isNotChecked()
+                        )
+                    )
+                )
+            )
+    }
+}
+
 private fun stealthModeSwitch(): ViewInteraction {
     val stealthModeSwitchSummary = getStringResource(R.string.preference_privacy_stealth_summary)
     privacySettingsList.scrollTextIntoView(stealthModeSwitchSummary)
     return onView(withText(stealthModeSwitchSummary))
 }
 
+private fun assertStealthModeSwitchState(enabled: Boolean = false) {
+    if (enabled) {
+        stealthModeSwitch()
+            .check(
+                matches(
+                    hasCousin(
+                        allOf(
+                            withId(R.id.switchWidget),
+                            isChecked()
+                        )
+                    )
+                )
+            )
+    } else {
+        stealthModeSwitch()
+            .check(
+                matches(
+                    hasCousin(
+                        allOf(
+                            withId(R.id.switchWidget),
+                            isNotChecked()
+                        )
+                    )
+                )
+            )
+    }
+}
+
 private fun safeBrowsingSwitch(): ViewInteraction {
     val safeBrowsingSwitchText = getStringResource(R.string.preference_safe_browsing_summary)
-    privacySettingsList.scrollTextIntoView("Data Choices")
+    privacySettingsList.scrollTextIntoView(safeBrowsingSwitchText)
     return onView(withText(safeBrowsingSwitchText))
+}
+
+private fun assertSafeBrowsingSwitchState(enabled: Boolean = true) {
+    if (enabled) {
+        safeBrowsingSwitch()
+            .check(
+                matches(
+                    hasCousin(
+                        allOf(
+                            withId(R.id.switchWidget),
+                            isChecked()
+                        )
+                    )
+                )
+            )
+    } else {
+        safeBrowsingSwitch()
+            .check(
+                matches(
+                    hasCousin(
+                        allOf(
+                            withId(R.id.switchWidget),
+                            isNotChecked()
+                        )
+                    )
+                )
+            )
+    }
+}
+
+private fun httpsOnlyModeSwitch(): ViewInteraction {
+    val httpsOnlyModeSwitchText = getStringResource(R.string.preference_https_only_title)
+    privacySettingsList.scrollTextIntoView(httpsOnlyModeSwitchText)
+    return onView(withText(httpsOnlyModeSwitchText))
+}
+
+private fun assertHttpsOnlyModeSwitchState(enabled: Boolean = true) {
+    if (enabled) {
+        httpsOnlyModeSwitch()
+            .check(
+                matches(
+                    hasCousin(
+                        allOf(
+                            withId(R.id.switchWidget),
+                            isChecked()
+                        )
+                    )
+                )
+            )
+    } else {
+        httpsOnlyModeSwitch()
+            .check(
+                matches(
+                    hasCousin(
+                        allOf(
+                            withId(R.id.switchWidget),
+                            isNotChecked()
+                        )
+                    )
+                )
+            )
+    }
 }
 
 private fun sendDataSwitch(): ViewInteraction {
     val sendDataSwitchSummary = getStringResource(R.string.preference_mozilla_telemetry_summary2)
     privacySettingsList.scrollTextIntoView(sendDataSwitchSummary)
     return onView(withText(sendDataSwitchSummary))
+}
+
+private fun assertSendDataSwitchState(enabled: Boolean = false) {
+    if (enabled) {
+        sendDataSwitch()
+            .check(
+                matches(
+                    hasCousin(
+                        allOf(
+                            withId(R.id.switchWidget),
+                            isChecked()
+                        )
+                    )
+                )
+            )
+    } else {
+        sendDataSwitch()
+            .check(
+                matches(
+                    hasCousin(
+                        allOf(
+                            withId(R.id.switchWidget),
+                            isNotChecked()
+                        )
+                    )
+                )
+            )
+    }
+}
+
+private fun studiesOption(): ViewInteraction {
+    val studies = getStringResource(R.string.preference_studies)
+    privacySettingsList.scrollTextIntoView(studies)
+    return onView(withText(R.string.preference_studies))
+}
+
+private fun studiesDefaultOption(): ViewInteraction {
+    val studies = getStringResource(R.string.preference_state_on)
+    privacySettingsList.scrollTextIntoView(studies)
+    return onView(withText(R.string.preference_state_on))
 }
 
 private fun exceptionsList(): ViewInteraction {

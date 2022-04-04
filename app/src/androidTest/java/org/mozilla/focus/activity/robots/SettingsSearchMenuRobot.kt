@@ -18,8 +18,8 @@ import androidx.test.uiautomator.UiSelector
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
 import org.mozilla.focus.R
-import org.mozilla.focus.helpers.TestHelper.appContext
 import org.mozilla.focus.helpers.TestHelper.getStringResource
+import org.mozilla.focus.helpers.TestHelper.getTargetContext
 import org.mozilla.focus.helpers.TestHelper.mDevice
 import org.mozilla.focus.helpers.TestHelper.packageName
 import org.mozilla.focus.helpers.TestHelper.waitingTime
@@ -28,8 +28,13 @@ class SearchSettingsRobot {
 
     fun verifySearchSettingsItems() {
         assertTrue(searchEngineSubMenu.exists())
-        assertTrue(searchSuggestionsSwitch.exists())
+        assertTrue(searchEngineDefaultOption.exists())
+        assertTrue(searchSuggestionsHeading.exists())
+        assertTrue(searchSuggestionDescription.exists())
+        verifySearchSuggestionsSwitchState()
+        assertTrue(searchSuggestionLearnMoreLink.exists())
         assertTrue(urlAutocompleteSubMenu.exists())
+        assertTrue(urlAutocompleteDefaultOption.exists())
     }
 
     fun openSearchEngineSubMenu() {
@@ -49,7 +54,7 @@ class SearchSettingsRobot {
         searchSuggestionsSwitch.click()
     }
 
-    fun verifySearchSuggestionsEnabled(enabled: Boolean) {
+    fun verifySearchSuggestionsSwitchState(enabled: Boolean = false) {
         if (enabled) {
             assertTrue(searchSuggestionsSwitch.isChecked)
         } else {
@@ -84,7 +89,7 @@ class SearchSettingsRobot {
     }
 
     fun removeCustomUrl() {
-        Espresso.openActionBarOverflowOrOptionsMenu(appContext)
+        Espresso.openActionBarOverflowOrOptionsMenu(getTargetContext)
         onView(withText(R.string.preference_autocomplete_menu_remove)).perform(click())
         customUrlText.perform(click())
         onView(withId(R.id.remove)).perform(click())
@@ -109,10 +114,31 @@ private val searchEngineSubMenu =
     UiScrollable(UiSelector().resourceId("$packageName:id/recycler_view"))
         .getChild(UiSelector().text(getStringResource(R.string.preference_search_engine_label)))
 
+private val searchEngineDefaultOption =
+    mDevice.findObject(UiSelector().textContains("Google"))
+
 private val searchEngineList = UiScrollable(
     UiSelector()
         .resourceId("$packageName:id/search_engine_group").enabled(true)
 )
+
+private val searchSuggestionsHeading: UiObject =
+    mDevice.findObject(
+        UiSelector()
+            .textContains(getStringResource(R.string.preference_show_search_suggestions))
+    )
+
+private val searchSuggestionDescription: UiObject =
+    mDevice.findObject(
+        UiSelector()
+            .textContains(getStringResource(R.string.preference_show_search_suggestions_summary))
+    )
+
+private val searchSuggestionLearnMoreLink: UiObject =
+    mDevice.findObject(
+        UiSelector()
+            .resourceId("$packageName:id/link")
+    )
 
 private val searchSuggestionsSwitch: UiObject =
     mDevice.findObject(
@@ -126,6 +152,12 @@ private val urlAutocompleteSubMenu =
             UiSelector().text(getStringResource(R.string.preference_subitem_autocomplete)),
             getStringResource(R.string.preference_subitem_autocomplete), true,
         )
+
+private val urlAutocompleteDefaultOption =
+    mDevice.findObject(
+        UiSelector()
+            .textContains(getStringResource(R.string.preference_state_on))
+    )
 
 private val manageSitesSubMenu = onView(withText(R.string.preference_autocomplete_subitem_manage_sites))
 

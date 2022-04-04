@@ -65,7 +65,7 @@ class OnboardingFragment : Fragment() {
         onboardingInteractor = OnboardingInteractor(requireComponents.appStore)
         return ComposeView(requireContext()).apply {
             setContent {
-                FocusTheme(darkTheme = false) {
+                FocusTheme {
                     OnboardingContent(onboardingInteractor)
                 }
             }
@@ -75,10 +75,7 @@ class OnboardingFragment : Fragment() {
     @Composable
     @Suppress("LongMethod")
     fun OnboardingContent(onboardingInteractor: OnboardingInteractor) {
-        Box(
-            modifier = Modifier
-                .background(color = focusColors.secondaryBackground)
-        ) {
+        Box {
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -98,15 +95,15 @@ class OnboardingFragment : Fragment() {
                     style = focusTypography.onboardingTitle,
                     modifier = Modifier.padding(top = 16.dp, bottom = 20.dp)
                 )
+                Text(
+                    text = stringResource(id = R.string.onboarding_description),
+                    style = focusTypography.onboardingDescription,
+                    modifier = Modifier.padding(bottom = 20.dp)
+                )
                 Column(
                     verticalArrangement = Arrangement.spacedBy(20.dp),
                     modifier = Modifier.padding(bottom = 36.dp)
                 ) {
-                    Text(
-                        text = stringResource(id = R.string.onboarding_description),
-                        style = focusTypography.onboardingDescription,
-                        modifier = Modifier.padding(start = 8.dp)
-                    )
                     KeyFeatureCard(
                         iconId = R.drawable.mozac_ic_private_browsing,
                         titleId = R.string.onboarding_incognito_title,
@@ -155,7 +152,10 @@ class OnboardingFragment : Fragment() {
                 painter = painterResource(iconId),
                 colorFilter = ColorFilter.tint(color = focusColors.onboardingKeyFeatureImageTint),
                 contentDescription = getString(R.string.app_name),
-                modifier = Modifier.constrainAs(image) { top.linkTo(parent.top) }
+                modifier = Modifier.constrainAs(image) {
+                    top.linkTo(parent.top)
+                    start.linkTo(parent.start)
+                }
             )
             Text(
                 text = stringResource(id = titleId),

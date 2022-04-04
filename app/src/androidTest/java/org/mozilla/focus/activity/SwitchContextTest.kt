@@ -8,11 +8,9 @@ import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.uiautomator.By
 import androidx.test.uiautomator.UiSelector
 import androidx.test.uiautomator.Until
-import okhttp3.mockwebserver.MockResponse
 import okhttp3.mockwebserver.MockWebServer
-import org.hamcrest.core.IsNull
 import org.junit.After
-import org.junit.Assert.assertThat
+import org.junit.Assert
 import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Ignore
@@ -24,10 +22,11 @@ import org.mozilla.focus.activity.robots.notificationTray
 import org.mozilla.focus.activity.robots.searchScreen
 import org.mozilla.focus.helpers.FeatureSettingsHelper
 import org.mozilla.focus.helpers.MainActivityFirstrunTestRule
+import org.mozilla.focus.helpers.MockWebServerHelper
+import org.mozilla.focus.helpers.TestAssetHelper
 import org.mozilla.focus.helpers.TestHelper.getStringResource
 import org.mozilla.focus.helpers.TestHelper.mDevice
 import org.mozilla.focus.helpers.TestHelper.pressHomeKey
-import org.mozilla.focus.helpers.TestHelper.readTestAsset
 import org.mozilla.focus.helpers.TestHelper.waitingTime
 import org.mozilla.focus.testAnnotations.SmokeTest
 import java.io.IOException
@@ -45,27 +44,9 @@ class SwitchContextTest {
     fun setUp() {
         featureSettingsHelper.setCfrForTrackingProtectionEnabled(false)
         featureSettingsHelper.setNumberOfTabsOpened(4)
-        webServer = MockWebServer()
-        try {
-            webServer.enqueue(
-                MockResponse()
-                    .setBody(readTestAsset("image_test.html"))
-                    .addHeader(
-                        "Set-Cookie",
-                        "sphere=battery; Expires=Wed, 21 Oct 2035 07:28:00 GMT;"
-                    )
-            )
-            webServer.enqueue(
-                MockResponse()
-                    .setBody(readTestAsset("rabbit.jpg"))
-            )
-            webServer.enqueue(
-                MockResponse()
-                    .setBody(readTestAsset("download.jpg"))
-            )
-            webServer.start()
-        } catch (e: IOException) {
-            throw AssertionError("Could not start web server", e)
+        webServer = MockWebServer().apply {
+            dispatcher = MockWebServerHelper.AndroidAssetDispatcher()
+            start()
         }
 
         notificationTray {
@@ -77,7 +58,6 @@ class SwitchContextTest {
     @After
     fun tearDown() {
         try {
-            webServer.close()
             webServer.shutdown()
         } catch (e: IOException) {
             throw AssertionError("Could not stop web server", e)
@@ -89,9 +69,10 @@ class SwitchContextTest {
     @Test
     @Ignore("Failing. See https://github.com/mozilla-mobile/focus-android/issues/6486")
     fun notificationOpenButtonTest() {
-        // Open a webpage
+        val testPage = TestAssetHelper.getGenericAsset(webServer)
+
         searchScreen {
-        }.loadPage(webServer.url("").toString()) { }
+        }.loadPage(testPage.url) { }
         // Send app to background
         pressHomeKey()
         // Pull down system bar and select Open
@@ -119,16 +100,17 @@ class SwitchContextTest {
         val context = InstrumentationRegistry.getInstrumentation().targetContext.applicationContext
         val intent = context.packageManager
             .getLaunchIntentForPackage(SETTINGS_APP)
+        val testPage = TestAssetHelper.getGenericAsset(webServer)
 
         // Open a webpage
         searchScreen {
-        }.loadPage(webServer.url("").toString()) { }
+        }.loadPage(testPage.url) { }
 
         // Switch out of Focus, open settings app
         pressHomeKey()
 
         // Wait for launcher
-        assertThat(launcherPackage, IsNull.notNullValue())
+        Assert.assertNotNull(launcherPackage)
         mDevice.wait(
             Until.hasObject(By.pkg(launcherPackage).depth(0)),
             LAUNCH_TIMEOUT.toLong()
