@@ -18,12 +18,14 @@ import org.mozilla.focus.helpers.FeatureSettingsHelper
 import org.mozilla.focus.helpers.MainActivityIntentsTestRule
 import org.mozilla.focus.helpers.MockWebServerHelper
 import org.mozilla.focus.helpers.RetryTestRule
+import org.mozilla.focus.helpers.StringsHelper.GOOGLE_DRIVE
 import org.mozilla.focus.helpers.StringsHelper.GOOGLE_PHOTOS
 import org.mozilla.focus.helpers.TestAssetHelper.getImageTestAsset
-import org.mozilla.focus.helpers.TestHelper
 import org.mozilla.focus.helpers.TestHelper.assertNativeAppOpens
 import org.mozilla.focus.helpers.TestHelper.getTargetContext
 import org.mozilla.focus.helpers.TestHelper.mDevice
+import org.mozilla.focus.helpers.TestHelper.permAllowBtn
+import org.mozilla.focus.helpers.TestHelper.verifyDownloadedFileOnStorage
 import org.mozilla.focus.helpers.TestHelper.verifySnackBarText
 import org.mozilla.focus.helpers.TestHelper.waitingTime
 import org.mozilla.focus.testAnnotations.SmokeTest
@@ -33,6 +35,8 @@ import java.io.IOException
 class DownloadFileTest {
     private lateinit var webServer: MockWebServer
     private val featureSettingsHelper = FeatureSettingsHelper()
+    private val downloadTestPage = "https://storage.googleapis.com/mobile_test_assets/test_app/downloads.html"
+    private var downloadFileName: String = ""
 
     @get:Rule
     var mActivityTestRule = MainActivityIntentsTestRule(showFirstRun = false)
@@ -58,7 +62,7 @@ class DownloadFileTest {
         } catch (e: IOException) {
             throw AssertionError("Could not stop web server", e)
         }
-        deleteFileUsingDisplayName(getTargetContext.applicationContext, "download.jpg")
+        deleteFileUsingDisplayName(getTargetContext.applicationContext, downloadFileName)
         featureSettingsHelper.resetAllFeatureFlags()
     }
 
@@ -66,7 +70,7 @@ class DownloadFileTest {
     @Test
     fun downloadNotificationTest() {
         val downloadPageUrl = getImageTestAsset(webServer).url
-        val downloadFileName = "download.jpg"
+        downloadFileName = "download.jpg"
 
         notificationTray {
             mDevice.openNotification()
@@ -80,8 +84,8 @@ class DownloadFileTest {
         downloadRobot {
             clickDownloadIconAsset()
             // If permission dialog appears, grant it
-            if (TestHelper.permAllowBtn.waitForExists(waitingTime)) {
-                TestHelper.permAllowBtn.click()
+            if (permAllowBtn.waitForExists(waitingTime)) {
+                permAllowBtn.click()
             }
             verifyDownloadDialog(downloadFileName)
             clickDownloadButton()
@@ -104,8 +108,8 @@ class DownloadFileTest {
         downloadRobot {
             clickDownloadIconAsset()
             // If permission dialog appears, grant it
-            if (TestHelper.permAllowBtn.waitForExists(waitingTime)) {
-                TestHelper.permAllowBtn.click()
+            if (permAllowBtn.waitForExists(waitingTime)) {
+                permAllowBtn.click()
             }
             clickCancelDownloadButton()
             verifyDownloadDialogGone()
@@ -114,9 +118,9 @@ class DownloadFileTest {
 
     @SmokeTest
     @Test
-    fun openDownloadFileTest() {
+    fun downloadAndOpenJpgFileTest() {
         val downloadPageUrl = getImageTestAsset(webServer).url
-        val downloadFileName = "download.jpg"
+        downloadFileName = "download.jpg"
 
         // Load website with service worker
         searchScreen {
@@ -125,14 +129,82 @@ class DownloadFileTest {
         downloadRobot {
             clickDownloadIconAsset()
             // If permission dialog appears on devices with API<30, grant it
-            if (TestHelper.permAllowBtn.waitForExists(waitingTime)) {
-                TestHelper.permAllowBtn.click()
+            if (permAllowBtn.waitForExists(waitingTime)) {
+                permAllowBtn.click()
             }
             verifyDownloadDialog(downloadFileName)
             clickDownloadButton()
             verifyDownloadConfirmationMessage(downloadFileName)
             openDownloadedFile()
             assertNativeAppOpens(GOOGLE_PHOTOS)
+        }
+    }
+
+    @SmokeTest
+    @Test
+    fun downloadAndOpenPdfFileTest() {
+        downloadFileName = "washington.pdf"
+
+        searchScreen {
+        }.loadPage(downloadTestPage) {
+            progressBar.waitUntilGone(waitingTime)
+            clickLinkMatchingText(downloadFileName)
+        }
+        // If permission dialog appears on devices with API<30, grant it
+        if (permAllowBtn.waitForExists(waitingTime)) {
+            permAllowBtn.click()
+        }
+        downloadRobot {
+            verifyDownloadDialog(downloadFileName)
+            clickDownloadButton()
+            verifyDownloadConfirmationMessage(downloadFileName)
+            openDownloadedFile()
+            assertNativeAppOpens(GOOGLE_DRIVE)
+        }
+    }
+
+    @SmokeTest
+    @Test
+    fun downloadAndOpenWebmFileTest() {
+        downloadFileName = "videoSample.webm"
+
+        searchScreen {
+        }.loadPage(downloadTestPage) {
+            progressBar.waitUntilGone(waitingTime)
+            clickLinkMatchingText(downloadFileName)
+        }
+        // If permission dialog appears on devices with API<30, grant it
+        if (permAllowBtn.waitForExists(waitingTime)) {
+            permAllowBtn.click()
+        }
+        downloadRobot {
+            verifyDownloadDialog(downloadFileName)
+            clickDownloadButton()
+            verifyDownloadConfirmationMessage(downloadFileName)
+            openDownloadedFile()
+            assertNativeAppOpens(GOOGLE_PHOTOS)
+        }
+    }
+
+    @SmokeTest
+    @Test
+    fun verifyDownloadedFileOnStorageTest() {
+        downloadFileName = "textfile.txt"
+
+        searchScreen {
+        }.loadPage(downloadTestPage) {
+            progressBar.waitUntilGone(waitingTime)
+            clickLinkMatchingText(downloadFileName)
+        }
+        // If permission dialog appears on devices with API<30, grant it
+        if (permAllowBtn.waitForExists(waitingTime)) {
+            permAllowBtn.click()
+        }
+        downloadRobot {
+            verifyDownloadDialog(downloadFileName)
+            clickDownloadButton()
+            verifyDownloadConfirmationMessage(downloadFileName)
+            verifyDownloadedFileOnStorage(downloadFileName)
         }
     }
 }
