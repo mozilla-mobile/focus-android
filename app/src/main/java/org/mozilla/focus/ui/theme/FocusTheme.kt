@@ -13,9 +13,15 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.ReadOnlyComposable
 import androidx.compose.runtime.staticCompositionLocalOf
+import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import mozilla.components.ui.colors.PhotonColors
 
+private const val TABLET_SIZE = 600
+
 val localColors = staticCompositionLocalOf { lightColorPalette() }
+val localDimensions = staticCompositionLocalOf { phoneDimensions() }
 
 /**
  * The theme used for Firefox Focus/Klar for Android.
@@ -25,6 +31,11 @@ fun FocusTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
     content: @Composable () -> Unit
 ) {
+    val dimensions = if (LocalConfiguration.current.screenWidthDp <= TABLET_SIZE) {
+        phoneDimensions()
+    } else {
+        tabletDimensions()
+    }
 
     val colors = if (darkTheme) {
         darkColorPalette()
@@ -32,7 +43,7 @@ fun FocusTheme(
         lightColorPalette()
     }
 
-    CompositionLocalProvider(localColors provides colors) {
+    CompositionLocalProvider(localColors provides colors, localDimensions provides dimensions) {
         MaterialTheme(
             colors = colors.material,
             typography = focusTypography.materialTypography,
@@ -46,6 +57,11 @@ val focusColors: FocusColors
     @ReadOnlyComposable
     get() = localColors.current
 
+val focusDimensions: FocusDimensions
+    @Composable
+    @ReadOnlyComposable
+    get() = localDimensions.current
+
 private fun darkColorPalette(): FocusColors = FocusColors(
     material = darkColorsMaterial(),
     dialogActiveControls = PhotonColors.Pink40,
@@ -58,7 +74,14 @@ private fun darkColorPalette(): FocusColors = FocusColors(
     aboutPageLink = PhotonColors.Pink70,
     radioButtonSelected = PhotonColors.Pink70,
     toolbarColor = PhotonColors.White,
-    privacySecuritySettingsToolTip = PhotonColors.White
+    privacySecuritySettingsToolTip = PhotonColors.White,
+    onboardingKeyFeatureImageTint = PhotonColors.LightGrey05,
+    onboardingButtonBackground = PhotonColors.Violet50,
+    onboardingSemiBoldText = PhotonColors.LightGrey05,
+    onboardingNormalText = PhotonColors.LightGrey50,
+    settingsTextColor = PhotonColors.White,
+    settingsTextSummaryColor = PhotonColors.LightGrey50
+
 )
 
 private fun lightColorPalette(): FocusColors = FocusColors(
@@ -73,7 +96,13 @@ private fun lightColorPalette(): FocusColors = FocusColors(
     aboutPageLink = PhotonColors.Pink70,
     radioButtonSelected = PhotonColors.Pink70,
     toolbarColor = PhotonColors.Black,
-    privacySecuritySettingsToolTip = PhotonColors.White
+    privacySecuritySettingsToolTip = PhotonColors.White,
+    settingsTextColor = PhotonColors.Black,
+    settingsTextSummaryColor = PhotonColors.DarkGrey05,
+    onboardingKeyFeatureImageTint = PhotonColors.DarkGrey90,
+    onboardingButtonBackground = PhotonColors.Ink20,
+    onboardingSemiBoldText = PhotonColors.DarkGrey90,
+    onboardingNormalText = PhotonColors.DarkGrey05,
 )
 
 /**
@@ -93,4 +122,21 @@ private fun lightColorsMaterial(): Colors = lightColors(
     onSurface = PhotonColors.Ink50,
     onBackground = PhotonColors.Ink50,
     onPrimary = PhotonColors.Ink50
+)
+fun phoneDimensions() = FocusDimensions(
+    onboardingTitle = 20.sp,
+    onboardingDescription = 14.sp,
+    onboardingStartBrowsingWidth = 232.dp,
+    onboardingStartBrowsingHeight = 36.dp,
+    onboardingFeaturesPaddingBottom = 40.dp,
+    onboardingFeatureDescriptionWidth = 232.dp
+)
+
+fun tabletDimensions() = FocusDimensions(
+    onboardingTitle = 28.sp,
+    onboardingDescription = 18.sp,
+    onboardingStartBrowsingWidth = 400.dp,
+    onboardingStartBrowsingHeight = 36.dp,
+    onboardingFeaturesPaddingBottom = 180.dp,
+    onboardingFeatureDescriptionWidth = 360.dp
 )

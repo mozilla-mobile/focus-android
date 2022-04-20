@@ -55,6 +55,7 @@ open class MainActivity : LocaleAwareAppCompatActivity() {
         get() = components.store.state.privateTabs.size
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        updateSecureWindowFlags()
         super.onCreate(savedInstanceState)
 
         // Checks if Activity is currently in PiP mode if launched from external intents, then exits it
@@ -136,7 +137,6 @@ open class MainActivity : LocaleAwareAppCompatActivity() {
 
         TelemetryWrapper.startSession()
         checkBiometricStillValid()
-        updateSecureWindowFlags()
     }
 
     override fun onPause() {
@@ -255,7 +255,7 @@ open class MainActivity : LocaleAwareAppCompatActivity() {
         }
 
         val appStore = components.appStore
-        if (appStore.state.screen is Screen.Settings) {
+        if (appStore.state.screen is Screen.Settings || appStore.state.screen is Screen.SitePermissionOptionsScreen) {
             // When on a settings screen we want the same behavior as navigating "up" via the toolbar
             // and therefore dispatch the `NavigateUp` action on the app store.
             val selectedTabId = components.store.state.selectedTabId

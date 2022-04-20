@@ -17,8 +17,10 @@ import org.mozilla.focus.activity.robots.homeScreen
 import org.mozilla.focus.activity.robots.searchScreen
 import org.mozilla.focus.helpers.FeatureSettingsHelper
 import org.mozilla.focus.helpers.MainActivityFirstrunTestRule
+import org.mozilla.focus.helpers.MockWebServerHelper
 import org.mozilla.focus.helpers.RetryTestRule
-import org.mozilla.focus.helpers.TestHelper.createMockResponseFromAsset
+import org.mozilla.focus.helpers.TestAssetHelper.getEnhancedTrackingProtectionAsset
+import org.mozilla.focus.helpers.TestAssetHelper.getGenericAsset
 import org.mozilla.focus.helpers.TestHelper.exitToBrowser
 import org.mozilla.focus.helpers.TestHelper.exitToTop
 import org.mozilla.focus.helpers.TestHelper.waitingTime
@@ -41,18 +43,15 @@ class EnhancedTrackingProtectionSettingsTest {
     fun setUp() {
         featureSettingsHelper.setCfrForTrackingProtectionEnabled(false)
         featureSettingsHelper.setNumberOfTabsOpened(4)
-        webServer = MockWebServer()
-        try {
-            webServer.start()
-        } catch (e: IOException) {
-            throw AssertionError("Could not start web server", e)
+        webServer = MockWebServer().apply {
+            dispatcher = MockWebServerHelper.AndroidAssetDispatcher()
+            start()
         }
     }
 
     @After
     fun tearDown() {
         try {
-            webServer.close()
             webServer.shutdown()
         } catch (e: IOException) {
             throw AssertionError("Could not stop web server", e)
@@ -77,19 +76,17 @@ class EnhancedTrackingProtectionSettingsTest {
     @SmokeTest
     @Test
     fun blockAdTrackersTest() {
-        webServer.enqueue(createMockResponseFromAsset("plain_test.html"))
-        webServer.enqueue(createMockResponseFromAsset("etpPages/adsTrackers.html"))
-        val genericPage = webServer.url("plain_test.html").toString()
-        val trackingPage = webServer.url("etpPages/adsTrackers.html").toString()
+        val genericPage = getGenericAsset(webServer)
+        val trackingPage = getEnhancedTrackingProtectionAsset(webServer, "adsTrackers")
 
         searchScreen {
-        }.loadPage(genericPage) {
+        }.loadPage(genericPage.url) {
             // loading a generic page to allow GV to fully load on first run
-            verifyPageContent("focus test page")
+            verifyPageContent(genericPage.content)
             pressBack()
         }
         searchScreen {
-        }.loadPage(trackingPage) {
+        }.loadPage(trackingPage.url) {
             verifyTrackingProtectionAlert("ads trackers blocked")
         }
     }
@@ -97,10 +94,8 @@ class EnhancedTrackingProtectionSettingsTest {
     @SmokeTest
     @Test
     fun allowAdTrackersTest() {
-        webServer.enqueue(createMockResponseFromAsset("plain_test.html"))
-        webServer.enqueue(createMockResponseFromAsset("etpPages/adsTrackers.html"))
-        val genericPage = webServer.url("plain_test.html").toString()
-        val trackingPage = webServer.url("etpPages/adsTrackers.html").toString()
+        val genericPage = getGenericAsset(webServer)
+        val trackingPage = getEnhancedTrackingProtectionAsset(webServer, "adsTrackers")
 
         homeScreen {
         }.openMainMenu {
@@ -111,33 +106,32 @@ class EnhancedTrackingProtectionSettingsTest {
             exitToTop()
         }
         searchScreen {
-        }.loadPage(genericPage) {
+        }.loadPage(genericPage.url) {
             // loading a generic page to allow GV to fully load on first run
-            verifyPageContent("focus test page")
+            verifyPageContent(genericPage.content)
             pressBack()
         }
         searchScreen {
-        }.loadPage(trackingPage) {
+        }.loadPage(trackingPage.url) {
             verifyPageContent("ads trackers not blocked")
         }
     }
 
+    @Ignore("Failing , see https://github.com/mozilla-mobile/focus-android/issues/6812")
     @SmokeTest
     @Test
     fun blockAnalyticsTrackersTest() {
-        webServer.enqueue(createMockResponseFromAsset("plain_test.html"))
-        webServer.enqueue(createMockResponseFromAsset("etpPages/analyticsTrackers.html"))
-        val genericPage = webServer.url("plain_test.html").toString()
-        val trackingPage = webServer.url("etpPages/analyticsTrackers.html").toString()
+        val genericPage = getGenericAsset(webServer)
+        val trackingPage = getEnhancedTrackingProtectionAsset(webServer, "analyticsTrackers")
 
         searchScreen {
-        }.loadPage(genericPage) {
+        }.loadPage(genericPage.url) {
             // loading a generic page to allow GV to fully load on first run
-            verifyPageContent("focus test page")
+            verifyPageContent(genericPage.content)
             pressBack()
         }
         searchScreen {
-        }.loadPage(trackingPage) {
+        }.loadPage(trackingPage.url) {
             verifyTrackingProtectionAlert("analytics trackers blocked")
         }
     }
@@ -145,10 +139,8 @@ class EnhancedTrackingProtectionSettingsTest {
     @SmokeTest
     @Test
     fun allowAnalyticsTrackersTest() {
-        webServer.enqueue(createMockResponseFromAsset("plain_test.html"))
-        webServer.enqueue(createMockResponseFromAsset("etpPages/analyticsTrackers.html"))
-        val genericPage = webServer.url("plain_test.html").toString()
-        val trackingPage = webServer.url("etpPages/analyticsTrackers.html").toString()
+        val genericPage = getGenericAsset(webServer)
+        val trackingPage = getEnhancedTrackingProtectionAsset(webServer, "analyticsTrackers")
 
         homeScreen {
         }.openMainMenu {
@@ -159,13 +151,13 @@ class EnhancedTrackingProtectionSettingsTest {
             exitToTop()
         }
         searchScreen {
-        }.loadPage(genericPage) {
+        }.loadPage(genericPage.url) {
             // loading a generic page to allow GV to fully load on first run
-            verifyPageContent("focus test page")
+            verifyPageContent(genericPage.content)
             pressBack()
         }
         searchScreen {
-        }.loadPage(trackingPage) {
+        }.loadPage(trackingPage.url) {
             verifyPageContent("analytics trackers not blocked")
         }
     }
@@ -173,19 +165,17 @@ class EnhancedTrackingProtectionSettingsTest {
     @SmokeTest
     @Test
     fun blockSocialTrackersTest() {
-        webServer.enqueue(createMockResponseFromAsset("plain_test.html"))
-        webServer.enqueue(createMockResponseFromAsset("etpPages/socialTrackers.html"))
-        val genericPage = webServer.url("plain_test.html").toString()
-        val trackingPage = webServer.url("etpPages/socialTrackers.html").toString()
+        val genericPage = getGenericAsset(webServer)
+        val trackingPage = getEnhancedTrackingProtectionAsset(webServer, "socialTrackers")
 
         searchScreen {
-        }.loadPage(genericPage) {
+        }.loadPage(genericPage.url) {
             // loading a generic page to allow GV to fully load on first run
-            verifyPageContent("focus test page")
+            verifyPageContent(genericPage.content)
             pressBack()
         }
         searchScreen {
-        }.loadPage(trackingPage) {
+        }.loadPage(trackingPage.url) {
             verifyTrackingProtectionAlert("social trackers blocked")
         }
     }
@@ -193,10 +183,8 @@ class EnhancedTrackingProtectionSettingsTest {
     @SmokeTest
     @Test
     fun allowSocialTrackersTest() {
-        webServer.enqueue(createMockResponseFromAsset("plain_test.html"))
-        webServer.enqueue(createMockResponseFromAsset("etpPages/socialTrackers.html"))
-        val genericPage = webServer.url("plain_test.html").toString()
-        val trackingPage = webServer.url("etpPages/socialTrackers.html").toString()
+        val genericPage = getGenericAsset(webServer)
+        val trackingPage = getEnhancedTrackingProtectionAsset(webServer, "socialTrackers")
 
         homeScreen {
         }.openMainMenu {
@@ -207,13 +195,13 @@ class EnhancedTrackingProtectionSettingsTest {
             exitToTop()
         }
         searchScreen {
-        }.loadPage(genericPage) {
+        }.loadPage(genericPage.url) {
             // loading a generic page to allow GV to fully load on first run
-            verifyPageContent("focus test page")
+            verifyPageContent(genericPage.content)
             pressBack()
         }
         searchScreen {
-        }.loadPage(trackingPage) {
+        }.loadPage(trackingPage.url) {
             verifyPageContent("social trackers not blocked")
         }
     }
@@ -221,19 +209,17 @@ class EnhancedTrackingProtectionSettingsTest {
     @SmokeTest
     @Test
     fun allowOtherContentTrackersTest() {
-        webServer.enqueue(createMockResponseFromAsset("plain_test.html"))
-        webServer.enqueue(createMockResponseFromAsset("etpPages/otherTrackers.html"))
-        val genericPage = webServer.url("plain_test.html").toString()
-        val trackingPage = webServer.url("etpPages/otherTrackers.html").toString()
+        val genericPage = getGenericAsset(webServer)
+        val trackingPage = getEnhancedTrackingProtectionAsset(webServer, "otherTrackers")
 
         searchScreen {
-        }.loadPage(genericPage) {
+        }.loadPage(genericPage.url) {
             // loading a generic page to allow GV to fully load on first run
-            verifyPageContent("focus test page")
+            verifyPageContent(genericPage.content)
             pressBack()
         }
         searchScreen {
-        }.loadPage(trackingPage) {
+        }.loadPage(trackingPage.url) {
             verifyPageContent("other content trackers not blocked")
         }
     }
@@ -241,10 +227,8 @@ class EnhancedTrackingProtectionSettingsTest {
     @SmokeTest
     @Test
     fun blockOtherContentTrackersTest() {
-        webServer.enqueue(createMockResponseFromAsset("plain_test.html"))
-        webServer.enqueue(createMockResponseFromAsset("etpPages/otherTrackers.html"))
-        val genericPage = webServer.url("plain_test.html").toString()
-        val trackingPage = webServer.url("etpPages/otherTrackers.html").toString()
+        val genericPage = getGenericAsset(webServer)
+        val trackingPage = getEnhancedTrackingProtectionAsset(webServer, "otherTrackers")
 
         homeScreen {
         }.openMainMenu {
@@ -255,13 +239,13 @@ class EnhancedTrackingProtectionSettingsTest {
             exitToTop()
         }
         searchScreen {
-        }.loadPage(genericPage) {
+        }.loadPage(genericPage.url) {
             // loading a generic page to allow GV to fully load on first run
-            verifyPageContent("focus test page")
+            verifyPageContent(genericPage.content)
             pressBack()
         }
         searchScreen {
-        }.loadPage(trackingPage) {
+        }.loadPage(trackingPage.url) {
             verifyTrackingProtectionAlert("other content trackers blocked")
         }
     }
@@ -270,17 +254,15 @@ class EnhancedTrackingProtectionSettingsTest {
     @SmokeTest
     @Test
     fun addURLToTPExceptionsListTest() {
-        webServer.enqueue(createMockResponseFromAsset("plain_test.html"))
-        webServer.enqueue(createMockResponseFromAsset("etpPages/otherTrackers.html"))
-        val genericPage = webServer.url("plain_test.html").toString()
-        val trackingPage = webServer.url("etpPages/otherTrackers.html").toString()
+        val genericPage = getGenericAsset(webServer)
+        val trackingPage = getEnhancedTrackingProtectionAsset(webServer, "otherTrackers")
 
         searchScreen {
-        }.loadPage(genericPage) {
-            verifyPageContent("focus test page")
+        }.loadPage(genericPage.url) {
+            verifyPageContent(genericPage.content)
         }.openSearchBar {
-        }.loadPage(trackingPage) {
-            verifyPageContent("Tracker Blocking")
+        }.loadPage(trackingPage.url) {
+            verifyPageContent(trackingPage.content)
         }.openSiteSecurityInfoSheet {
         }.clickTrackingProtectionSwitch {
             progressBar.waitUntilGone(waitingTime)
@@ -296,17 +278,15 @@ class EnhancedTrackingProtectionSettingsTest {
     @SmokeTest
     @Test
     fun removeOneExceptionURLTest() {
-        webServer.enqueue(createMockResponseFromAsset("plain_test.html"))
-        webServer.enqueue(createMockResponseFromAsset("etpPages/otherTrackers.html"))
-        val genericPage = webServer.url("plain_test.html").toString()
-        val trackingPage = webServer.url("etpPages/otherTrackers.html").toString()
+        val genericPage = getGenericAsset(webServer)
+        val trackingPage = getEnhancedTrackingProtectionAsset(webServer, "otherTrackers")
 
         searchScreen {
-        }.loadPage(genericPage) {
-            verifyPageContent("focus test page")
+        }.loadPage(genericPage.url) {
+            verifyPageContent(genericPage.content)
         }.openSearchBar {
-        }.loadPage(trackingPage) {
-            verifyPageContent("Tracker Blocking")
+        }.loadPage(trackingPage.url) {
+            verifyPageContent(trackingPage.content)
         }.openSiteSecurityInfoSheet {
         }.clickTrackingProtectionSwitch {
             progressBar.waitUntilGone(waitingTime)
@@ -328,17 +308,15 @@ class EnhancedTrackingProtectionSettingsTest {
     @SmokeTest
     @Test
     fun removeAllExceptionURLTest() {
-        webServer.enqueue(createMockResponseFromAsset("plain_test.html"))
-        webServer.enqueue(createMockResponseFromAsset("etpPages/otherTrackers.html"))
-        val genericPage = webServer.url("plain_test.html").toString()
-        val trackingPage = webServer.url("etpPages/otherTrackers.html").toString()
+        val genericPage = getGenericAsset(webServer)
+        val trackingPage = getEnhancedTrackingProtectionAsset(webServer, "otherTrackers")
 
         searchScreen {
-        }.loadPage(genericPage) {
-            verifyPageContent("focus test page")
+        }.loadPage(genericPage.url) {
+            verifyPageContent(genericPage.content)
         }.openSearchBar {
-        }.loadPage(trackingPage) {
-            verifyPageContent("Tracker Blocking")
+        }.loadPage(trackingPage.url) {
+            verifyPageContent(trackingPage.content)
         }.openSiteSecurityInfoSheet {
         }.clickTrackingProtectionSwitch {
             progressBar.waitUntilGone(waitingTime)

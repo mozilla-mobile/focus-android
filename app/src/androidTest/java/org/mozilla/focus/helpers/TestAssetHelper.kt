@@ -23,7 +23,23 @@ object TestAssetHelper {
     fun getGenericTabAsset(server: MockWebServer, pageNum: Int): TestAsset {
         val url = server.url("tab$pageNum.html").toString()
         val content = "Tab $pageNum"
-        val title = ""
+        val title = "tab$pageNum"
+
+        return TestAsset(url, content, title)
+    }
+
+    fun getGenericAsset(server: MockWebServer): TestAsset {
+        val url = server.url("genericPage.html").toString()
+        val content = "focus test page"
+        val title = "GenericPage"
+
+        return TestAsset(url, content, title)
+    }
+
+    fun getHTMLControlsPageAsset(server: MockWebServer): TestAsset {
+        val url = server.url("htmlControls.html").toString()
+        val content = ""
+        val title = "Html_Control_Form"
 
         return TestAsset(url, content, title)
     }
@@ -35,9 +51,29 @@ object TestAssetHelper {
         return TestAsset(url, content, pageTitle)
     }
 
+    fun getPermissionsPageAsset(server: MockWebServer): TestAsset {
+        val url = server.url("permissionsPage.html").toString()
+        val content = "Location Menu"
+        val title = ""
+
+        return TestAsset(url, content, title)
+    }
+
     fun getImageTestAsset(server: MockWebServer): TestAsset {
         val url = server.url("image_test.html").toString()
 
         return TestAsset(url, "", "")
+    }
+
+    fun getStorageTestAsset(server: MockWebServer, pageTitle: String): TestAsset {
+        val url = server.url(pageTitle).toString()
+
+        return TestAsset(url, "", "")
+    }
+
+    fun getMediaTestAsset(server: MockWebServer, pageTitle: String): TestAsset {
+        val url = server.url("$pageTitle.html").toString()
+
+        return TestAsset(url, "", pageTitle)
     }
 }

@@ -15,7 +15,8 @@ import org.mozilla.focus.activity.robots.browserScreen
 import org.mozilla.focus.activity.robots.searchScreen
 import org.mozilla.focus.helpers.FeatureSettingsHelper
 import org.mozilla.focus.helpers.MainActivityFirstrunTestRule
-import org.mozilla.focus.helpers.TestHelper.createMockResponseFromAsset
+import org.mozilla.focus.helpers.MockWebServerHelper
+import org.mozilla.focus.helpers.TestAssetHelper.getGenericAsset
 import org.mozilla.focus.testAnnotations.SmokeTest
 import java.io.IOException
 
@@ -29,9 +30,10 @@ class ShortcutsTest {
     @Before
     fun setUp() {
         featureSettingsHelper.setCfrForTrackingProtectionEnabled(false)
-        webServer = MockWebServer()
-        webServer.enqueue(createMockResponseFromAsset("plain_test.html"))
-        webServer.start()
+        webServer = MockWebServer().apply {
+            dispatcher = MockWebServerHelper.AndroidAssetDispatcher()
+            start()
+        }
     }
 
     @After
@@ -48,14 +50,15 @@ class ShortcutsTest {
     @Test
     fun renameShortcutTest() {
         val webPage = object {
-            val url = webServer.url("plain_test.html").toString()
-            val title = "Plain text page"
+            val url = getGenericAsset(webServer).url
+            val title = getGenericAsset(webServer).title
+            val content = getGenericAsset(webServer).content
             val newTitle = "TestShortcut"
         }
 
         searchScreen {
         }.loadPage(webPage.url) {
-            verifyPageContent(webPage.title)
+            verifyPageContent(webPage.content)
         }.openMainMenu {
             clickAddToShortcuts()
         }
@@ -72,14 +75,11 @@ class ShortcutsTest {
     @SmokeTest
     @Test
     fun searchBarShowsPageShortcutsTest() {
-        val webPage = object {
-            val url = webServer.url("plain_test.html").toString()
-            val title = "Plain text page"
-        }
+        val webPage = getGenericAsset(webServer)
 
         searchScreen {
         }.loadPage(webPage.url) {
-            verifyPageContent(webPage.title)
+            verifyPageContent(webPage.content)
         }.openMainMenu {
             clickAddToShortcuts()
         }

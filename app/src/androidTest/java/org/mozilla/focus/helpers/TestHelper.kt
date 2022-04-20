@@ -3,8 +3,12 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 package org.mozilla.focus.helpers
 
+import android.annotation.TargetApi
 import android.app.PendingIntent
+import android.content.ActivityNotFoundException
 import android.content.ComponentName
+import android.content.ContentResolver
+import android.content.ContentUris
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -12,6 +16,11 @@ import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.Color
 import android.net.Uri
+import android.os.Build
+import android.os.Build.VERSION.SDK_INT
+import android.os.Bundle
+import android.provider.MediaStore
+import android.provider.MediaStore.setIncludePending
 import android.text.format.DateUtils
 import android.util.Log
 import android.view.KeyEvent
@@ -52,18 +61,19 @@ object TestHelper {
     @JvmField
     var mDevice = UiDevice.getInstance(InstrumentationRegistry.getInstrumentation())
     const val waitingTime = DateUtils.SECOND_IN_MILLIS * 15
+    const val pageLoadingTime = DateUtils.SECOND_IN_MILLIS * 25
     const val waitingTimeShort = DateUtils.SECOND_IN_MILLIS * 5
 
     @JvmStatic
-    val appContext: Context = InstrumentationRegistry.getInstrumentation().targetContext
+    val getTargetContext: Context = InstrumentationRegistry.getInstrumentation().targetContext
 
     @JvmStatic
-    val packageName: String = appContext.packageName
+    val packageName: String = getTargetContext.packageName
 
     @JvmStatic
-    val appName: String = appContext.getString(R.string.app_name)
+    val appName: String = getTargetContext.getString(R.string.app_name)
 
-    fun getStringResource(id: Int) = appContext.resources.getString(id, appName)
+    fun getStringResource(id: Int) = getTargetContext.resources.getString(id, appName)
 
     fun verifySnackBarText(text: String) {
         val snackbarText = mDevice.findObject(UiSelector().textContains(text))
@@ -144,6 +154,84 @@ object TestHelper {
     // verifies localized strings in different UIs
     fun verifyTranslatedTextExists(text: String) =
         assertTrue(mDevice.findObject(UiSelector().text(text)).waitForExists(waitingTime))
+
+    fun openAppFromExternalLink(url: String) {
+        val intent = Intent().apply {
+            action = Intent.ACTION_VIEW
+            data = Uri.parse(url)
+            `package` = packageName
+            flags = Intent.FLAG_ACTIVITY_NEW_TASK
+        }
+        try {
+            getTargetContext.startActivity(intent)
+        } catch (ex: ActivityNotFoundException) {
+            intent.setPackage(null)
+            getTargetContext.startActivity(intent)
+        }
+    }
+
+    fun verifyDownloadedFileOnStorage(fileName: String) {
+        val context = InstrumentationRegistry.getInstrumentation().targetContext
+        val resolver = context.contentResolver
+        val fileUri = queryDownloadMediaStore(fileName)
+
+        val fileExists: Boolean = fileUri?.let {
+            resolver.openInputStream(fileUri).use {
+                it != null
+            }
+        } ?: false
+
+        assertTrue(fileExists)
+    }
+
+    /**
+     * Check the "Downloads" public directory for [fileName] and returns an URI to it.
+     * May be `null` if there is no file with that name in "Downloads".
+     */
+    @TargetApi(Build.VERSION_CODES.Q)
+    private fun queryDownloadMediaStore(fileName: String): Uri? {
+        val context = InstrumentationRegistry.getInstrumentation().targetContext
+        val resolver = context.contentResolver
+        val queryProjection = arrayOf(MediaStore.Downloads._ID)
+        val querySelection = "${MediaStore.Downloads.DISPLAY_NAME} = ?"
+        val querySelectionArgs = arrayOf(fileName)
+
+        val queryBundle = Bundle().apply {
+            putString(ContentResolver.QUERY_ARG_SQL_SELECTION, querySelection)
+            putStringArray(ContentResolver.QUERY_ARG_SQL_SELECTION_ARGS, querySelectionArgs)
+        }
+
+        // Query if we have a pending download with the same name. This can happen
+        // if a download was interrupted, failed or cancelled before the file was
+        // written to disk. Our logic above will have generated a unique file name
+        // based on existing files on the device, but we might already have a row
+        // for the download in the content resolver.
+        val collection = MediaStore.Downloads.getContentUri(MediaStore.VOLUME_EXTERNAL_PRIMARY)
+        val queryCollection =
+            if (SDK_INT >= Build.VERSION_CODES.R) {
+                queryBundle.putInt(MediaStore.QUERY_ARG_MATCH_PENDING, MediaStore.MATCH_INCLUDE)
+                collection
+            } else {
+                @Suppress("DEPRECATION")
+                setIncludePending(collection)
+            }
+
+        var downloadUri: Uri? = null
+        resolver.query(
+            queryCollection,
+            queryProjection,
+            queryBundle,
+            null
+        )?.use {
+            if (it.count > 0) {
+                val idColumnIndex = it.getColumnIndex(MediaStore.Downloads._ID)
+                it.moveToFirst()
+                downloadUri = ContentUris.withAppendedId(collection, it.getLong(idColumnIndex))
+            }
+        }
+
+        return downloadUri
+    }
 
     // wait for web area to be visible
     @JvmStatic

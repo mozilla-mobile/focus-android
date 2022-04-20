@@ -4,6 +4,7 @@ plugins {
 
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-parcelize'
 apply plugin: 'jacoco'
 apply from: "$project.rootDir/tools/gradle/versionCode.gradle"
 
@@ -25,7 +26,7 @@ android {
         targetSdkVersion 31
         versionCode 11 // This versionCode is "frozen" for local builds. For "release" builds we
                        // override this with a generated versionCode at build time.
-        versionName "100.0"
+        versionName "101.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         testInstrumentationRunnerArguments clearPackageData: 'true'
 
@@ -227,6 +228,7 @@ dependencies {
     implementation "org.mozilla.components:feature-contextmenu:${AndroidComponents.VERSION}"
     implementation "org.mozilla.components:feature-downloads:${AndroidComponents.VERSION}"
     implementation "org.mozilla.components:feature-findinpage:${AndroidComponents.VERSION}"
+    implementation "org.mozilla.components:feature-intent:${AndroidComponents.VERSION}"
     implementation "org.mozilla.components:feature-prompts:${AndroidComponents.VERSION}"
     implementation "org.mozilla.components:feature-session:${AndroidComponents.VERSION}"
     implementation "org.mozilla.components:feature-search:${AndroidComponents.VERSION}"
@@ -282,7 +284,7 @@ dependencies {
     testImplementation Dependencies.testing_coroutines
     testImplementation Dependencies.androidx_arch_core_testing
     testImplementation "org.mozilla.components:support-test:${AndroidComponents.VERSION}"
-
+    testImplementation "org.mozilla.components:support-test-libstate:${AndroidComponents.VERSION}"
     androidTestImplementation "androidx.test.espresso:espresso-core:$espresso_version", {
         exclude group: 'com.android.support', module: 'support-annotations'
     }

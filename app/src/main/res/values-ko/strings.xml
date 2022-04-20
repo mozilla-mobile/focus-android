@@ -489,7 +489,38 @@
 
 
 
-  <!-- First run tour (Default browser): Title -->
+  <!-- Onboarding: Title -->
+    <!-- %1$s will be replaced by the app name and build variant(e.g. Firefox Focus, Firefox Klar Nightly) -->
+    <string name="onboarding_title">%1$s에 오신 것을 환영합니다!</string>
+
+    <!-- Onboarding: Description -->
+    <string name="onboarding_description">나의 차세대 개인 정보 보호 브라우징</string>
+
+    <!-- Onboarding: Incognito Title -->
+    <string name="onboarding_incognito_title">시크릿 브라우징이 보이지도 않을 때</string>
+
+    <!-- Onboarding: Incognito Description -->
+    <!-- Text %s will be replaced with the name of the app (e.g. Focus, Klar) -->
+    <string name="onboarding_incognito_description">%s는 아주 강력한 추적 방지 기능과 쿠키 보호를 내장한 개인정보 보호를 최우선으로 하는 브라우저입니다.</string>
+
+    <!-- Onboarding: History Title -->
+    <string name="onboarding_history_title">이런 브라우징은 지금까지 없었다</string>
+
+    <!-- Onboarding: History Description -->
+    <string moz:removedIn="100" name="onboarding_history_description" tools:ignore="UnusedResources">탭 한 번으로 검색 기록과 쿠키가 지워지고 광고가 사용자를 따라다니는 것을 방지합니다.</string>
+
+    <string name="onboarding_history_description2">탭 한 번으로 검색 기록과 쿠키가 지워지고 광고가 사용자를 따라다니는 것을 방지합니다.</string>
+
+    <!-- Onboarding: Protection Title -->
+    <string name="onboarding_protection_title">모든 상황에 맞는 프라이버시</string>
+
+    <!-- Onboarding: Protection Description -->
+    <string name="onboarding_protection_description">브라우징이 변경되어야 할 떄 개인 정보 설정을 쉽게 확장하거나 축소할 수 있습니다.</string>
+
+    <!-- Onboarding: Start browsing -->
+    <string name="onboarding_start_browsing">탐색 시작</string>
+
+    <!-- First run tour (Default browser): Title -->
     <string name="firstrun_defaultbrowser_title">개인정보 보호 강화하기</string>
     <!-- First run tour (Default browser): Text. -->
     <string name="firstrun_defaultbrowser_text2">한 단계 높은 개인 정보 보호 브라우징을 즐겨보세요. 사이트의 경계를 넘어 개인정보를 추적하거나, 페이지 로딩 속도를 늦추는 원인이 되는 광고 및 기타 콘텐츠를 자동으로 차단해 줍니다.</string>
@@ -642,6 +673,48 @@
 
     <!-- Preference for autoplay -->
     <string name="preference_autoplay">자동 재생</string>
+
+    <!-- Heading for the instructions to allow a permission -->
+    <string name="phone_feature_blocked_intro">허용하려면:</string>
+
+    <!-- First step for the allowing a permission -->
+    <string name="phone_feature_blocked_step_settings">1. Android 설정으로 이동</string>
+
+    <!-- Second step for the allowing a permission -->
+    <string name="phone_feature_blocked_step_permissions"><![CDATA[2. <b>권한</b>을 탭]]></string>
+
+    <!-- Button label that take the user to the Android App setting -->
+    <string name="phone_feature_go_to_settings">설정으로 이동</string>
+
+    <!-- Third step for allowing a permission. The placeholder will be updated by, for example, "Camera" -->
+    <string name="phone_feature_blocked_step_feature"><![CDATA[3. <b>%1$s</b>를 켜기로 전환]]></string>
+
+    <!-- Preference for altering the camera access for all websites -->
+    <string name="preference_phone_feature_camera">카메라</string>
+
+    <!-- Preference for altering the microphone access for all websites -->
+    <string name="preference_phone_feature_microphone">마이크</string>
+
+    <!-- Preference for altering the location access for all websites -->
+    <string name="preference_phone_feature_location">위치</string>
+
+    <!-- Preference for altering the notification access for all websites -->
+    <string name="preference_phone_feature_notification">알림</string>
+
+    <!-- Preference for altering the EME access for all websites -->
+    <string name="preference_phone_feature_media_key_system_access">DRM 제어 콘텐츠</string>
+
+    <!-- Label that indicates that a permission must be asked always -->
+    <string name="preference_option_phone_feature_ask_to_allow">허용 요청</string>
+
+    <!-- Label that indicates that a permission must be blocked -->
+    <string name="preference_option_phone_feature_blocked">차단됨</string>
+
+    <!-- Label that indicates that a permission must be allowed -->
+    <string name="preference_option_phone_feature_allowed">허용됨</string>
+
+    <!--Label that indicates a permission is by the Android OS-->
+    <string name="phone_feature_blocked_by_android">Android에 의해 차단됨</string>
 
     <!-- Preference for allow autoplay audio and video-->
     <string name="preference_allow_audio_video_autoplay">오디오 및 비디오 허용</string>
