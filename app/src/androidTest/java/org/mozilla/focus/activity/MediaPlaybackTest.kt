@@ -105,4 +105,23 @@ class MediaPlaybackTest {
             verifyNotificationGone(notificationMessage)
         }
     }
+
+    @SmokeTest
+    @Test
+    fun testFullScreenVideoPlayback() {
+        val videoPageUrl = getMediaTestAsset(webServer, "videoPage").url
+
+        searchScreen {
+        }.loadPage(videoPageUrl) {
+            clickPlayButton()
+            waitForPlaybackToStart()
+            // need this alert hack to check the video is playing,
+            // currently the test cannot verify the text in the page
+            dismissMediaPlayingAlert()
+            clickFullScreenButton()
+            enterPictureInPicture()
+            expandPictureInPicture()
+            verifyPictureInPictureButtons()
+        }
+    }
 }

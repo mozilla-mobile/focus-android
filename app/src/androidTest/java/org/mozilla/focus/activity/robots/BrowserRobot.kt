@@ -133,6 +133,14 @@ class BrowserRobot {
         pauseButton.click()
     }
 
+    fun clickFullScreenButton() {
+        val fullScreen =
+            mDevice.findObject(UiSelector().text("Full Screen"))
+        fullScreen.waitForExists(waitingTime)
+        fullScreen.click()
+        mDevice.waitForIdle(waitingTime)
+    }
+
     fun waitForPlaybackToStart() {
         val playStateMessage = mDevice.findObject(UiSelector().text("Media file is playing"))
         assertTrue(playStateMessage.waitForExists(waitingTime))
@@ -145,6 +153,34 @@ class BrowserRobot {
 
     fun dismissMediaPlayingAlert() {
         mDevice.findObject(UiSelector().textContains("OK")).click()
+    }
+
+    fun enterPictureInPicture() {
+        mDevice.pressHome()
+        mDevice.waitForIdle(waitingTime)
+    }
+
+    fun expandPictureInPicture() =
+        mDevice.findObject(
+            UiSelector()
+                .resourceId("android:id/content")
+                .className("android.widget.FrameLayout")
+                .packageName("com.android.systemui")
+        ).also { it.click() }
+
+    fun verifyPictureInPictureButtons() {
+        mDevice.findObject(
+            UiSelector()
+                .resourceId("com.android.systemui:id/actions_group")
+                .className("android.widget.LinearLayout")
+                .packageName("com.android.systemui")
+        ).waitForExists(waitingTime)
+
+        assertTrue(pictureInPictureSettingsButton.waitForExists(waitingTime))
+        assertTrue(pictureInPictureCloseButton.waitForExists(waitingTime))
+        assertTrue(pictureInPictureSkipPreviousButton.waitForExists(waitingTime))
+        assertTrue(pictureInPicturePauseButton.waitForExists(waitingTime))
+        assertTrue(pictureInPictureSkipNextButton.waitForExists(waitingTime))
     }
 
     fun verifySiteTrackingProtectionIconShown() = assertTrue(securityIcon.waitForExists(waitingTime))
@@ -599,4 +635,55 @@ val submitDateButton =
         UiSelector()
             .textContains("Submit date")
             .resourceId("submitDate")
+    )
+
+private val pictureInPictureSettingsButton =
+    mDevice.findObject(
+        UiSelector()
+            .resourceId("com.android.systemui:id/settings")
+            .className("android.widget.ImageButton")
+            .packageName("com.android.systemui")
+            .descriptionContains("Settings")
+    )
+
+private val pictureInPictureCloseButton =
+    mDevice.findObject(
+        UiSelector()
+            .resourceId("com.android.systemui:id/dismiss")
+            .className("android.widget.ImageButton")
+            .packageName("com.android.systemui")
+            .descriptionContains("Close")
+    )
+
+private val pictureInPictureExpandButton =
+    mDevice.findObject(
+        UiSelector()
+            .resourceId("com.android.systemui:id/expand_button")
+            .className("android.widget.ImageButton")
+            .packageName("com.android.systemui")
+            .descriptionContains("Expand")
+    )
+
+private val pictureInPictureSkipPreviousButton =
+    mDevice.findObject(
+        UiSelector()
+            .className("android.widget.ImageButton")
+            .packageName("com.android.systemui")
+            .descriptionContains("Skip to previous")
+    )
+
+private val pictureInPictureSkipNextButton =
+    mDevice.findObject(
+        UiSelector()
+            .className("android.widget.ImageButton")
+            .packageName("com.android.systemui")
+            .descriptionContains("Skip to next")
+    )
+
+private val pictureInPicturePauseButton =
+    mDevice.findObject(
+        UiSelector()
+            .className("android.widget.ImageButton")
+            .packageName("com.android.systemui")
+            .descriptionContains("Pause")
     )
