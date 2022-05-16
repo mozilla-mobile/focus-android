@@ -35,6 +35,14 @@ android {
         multiDexEnabled true
     }
 
+    configurations.all {
+        resolutionStrategy.eachDependency { details ->
+            if (details.requested.group == 'org.mozilla.geckoview') {
+                details.useVersion "102.0.20220513093538"
+            }
+        }
+    }
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
