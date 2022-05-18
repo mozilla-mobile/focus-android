@@ -100,8 +100,6 @@ class UrlInputFragment :
 
         private val ANIMATION_DURATION = 200
 
-        private lateinit var searchSuggestionsViewModel: SearchSuggestionsViewModel
-
         @JvmStatic
         fun createWithoutSession(): UrlInputFragment {
             val arguments = Bundle()
@@ -149,6 +147,7 @@ class UrlInputFragment :
 
     private val toolbarIntegration = ViewBoundFeatureWrapper<InputToolbarIntegration>()
     private val topSitesFeature = ViewBoundFeatureWrapper<TopSitesFeature>()
+    private lateinit var searchSuggestionsViewModel: SearchSuggestionsViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -231,7 +230,7 @@ class UrlInputFragment :
 
     private fun updateTipsLabel() {
         val context = context ?: return
-        val tips = TipManager.getAvailableTips(context)
+        val tips = TipManager().getAvailableTips(context)
         binding.homeTips.tipsAdapter.submitList(tips)
         updateTipsPosition()
     }

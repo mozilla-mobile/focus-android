@@ -131,16 +131,17 @@ class Tip(
 
 // Yes, this a large class with a lot of functions. But it's very simple and still easy to read.
 @Suppress("TooManyFunctions")
-object TipManager {
+class TipManager {
 
     private val listOfTips = mutableListOf<Tip>()
-    private var listInitialized = false
 
-    private const val FRESH_LOOK_TIP = "fresh_look_tip"
-    private const val SHORTCUTS_TIP = "shortcuts_tip"
-    private const val ALLOW_LIST_TIP = "allow_list_tip"
-    private const val ETP_TIP = "etp_tip"
-    private const val REQUEST_DESKTOP_TIP = "request_desktop_tip"
+    companion object {
+        private const val FRESH_LOOK_TIP = "fresh_look_tip"
+        private const val SHORTCUTS_TIP = "shortcuts_tip"
+        private const val ALLOW_LIST_TIP = "allow_list_tip"
+        private const val ETP_TIP = "etp_tip"
+        private const val REQUEST_DESKTOP_TIP = "request_desktop_tip"
+    }
 
     private fun populateListOfTips(context: Context) {
         addFreshLookTip(context)
@@ -153,11 +154,7 @@ object TipManager {
     fun getAvailableTips(context: Context): List<Tip>? {
         if (!context.settings.shouldDisplayHomescreenTips()) return null
 
-        if (!listInitialized) {
-            listOfTips.clear()
-            populateListOfTips(context)
-            listInitialized = true
-        }
+        populateListOfTips(context)
 
         // All tips should be filtered by 'shouldDisplay' but for now we are sending the list as it is
         // listOfTips.filter { tip -> tip.shouldDisplay() }
