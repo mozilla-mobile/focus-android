@@ -47,10 +47,10 @@ class SettingsPrivacyMenuRobot {
         assertBlockWebFontsSwitchState()
         blockJavaScriptSwitch().check(matches(isDisplayed()))
         assertBlockJavaScriptSwitchState()
-        cookiesAndSiteDataSection().check(matches(isDisplayed()))
-        blockCookies().check(matches(isDisplayed()))
-        blockCookiesDefaultOption().check(matches(isDisplayed()))
-        sitePermissions().check(matches(isDisplayed()))
+        assertTrue(cookiesAndSiteDataSection().exists())
+        assertTrue(blockCookiesMenuButton().exists())
+        assertTrue(blockCookiesDefaultOption().exists())
+        assertTrue(sitePermissions().exists())
         verifyExceptionsListDisabled()
         useFingerprintSwitch().check(matches(isDisplayed()))
         assertUseFingerprintSwitchState()
@@ -72,10 +72,10 @@ class SettingsPrivacyMenuRobot {
 
     fun verifyCookiesAndSiteDataSection() {
         privacySettingsList.waitForExists(waitingTime)
-        cookiesAndSiteDataSection().check(matches(isDisplayed()))
-        blockCookies().check(matches(isDisplayed()))
-        blockCookiesDefaultOption().check(matches(isDisplayed()))
-        sitePermissions().check(matches(isDisplayed()))
+        assertTrue(cookiesAndSiteDataSection().exists())
+        assertTrue(blockCookiesMenuButton().exists())
+        assertTrue(blockCookiesDefaultOption().exists())
+        assertTrue(sitePermissions().exists())
     }
 
     fun verifyBlockCookiesPrompt() {
@@ -208,7 +208,7 @@ class SettingsPrivacyMenuRobot {
 
     fun clickOtherContentTrackersBlockSwitch() = otherContentTrackersBlockSwitch().perform(click())
 
-    fun clickBlockCookies() = blockCookies().perform(click())
+    fun clickBlockCookies() = blockCookiesMenuButton().click()
 
     fun clickCancelBlockCookiesPrompt() {
         cancelBlockCookiesPrompt.click()
@@ -258,7 +258,8 @@ class SettingsPrivacyMenuRobot {
         }
 
         fun clickSitePermissionsSettings(interact: SettingsSitePermissionsRobot.() -> Unit): SettingsSitePermissionsRobot.Transition {
-            sitePermissions().perform(click())
+            sitePermissions().waitForExists(waitingTime)
+            sitePermissions().click()
 
             SettingsSitePermissionsRobot().interact()
             return SettingsSitePermissionsRobot.Transition()
@@ -473,32 +474,36 @@ private fun assertBlockJavaScriptSwitchState(enabled: Boolean = false) {
     }
 }
 
-private fun cookiesAndSiteDataSection(): ViewInteraction {
+private fun cookiesAndSiteDataSection() =
     privacySettingsList
-        .scrollTextIntoView("Cookies and Site Data")
-    return onView(withText(R.string.preference_category_cookies))
-}
+        .getChildByText(
+            UiSelector().text("Cookies and Site Data"),
+            "Cookies and Site Data",
+            true
+        )
 
-private fun blockCookies(): ViewInteraction {
+private fun blockCookiesMenuButton() =
     privacySettingsList
-        .scrollTextIntoView("Cookies and Site Data")
-    return onView(withText(R.string.preference_privacy_category_cookies))
-}
+        .getChildByText(
+            UiSelector().text("Block cookies"),
+            "Block cookies",
+            true
+        )
 
-private fun blockCookiesDefaultOption(): ViewInteraction {
+private fun blockCookiesDefaultOption() =
     privacySettingsList
-        .scrollTextIntoView("Cookies and Site Data")
-    return onView(withText(R.string.preference_privacy_should_block_cookies_cross_site_option))
-}
+        .getChildByText(
+            UiSelector().text("Block cross-site cookies"),
+            "Block cross-site cookies",
+            true
+        )
 
-private fun sitePermissions(): ViewInteraction {
+private fun sitePermissions() =
     privacySettingsList
-        .scrollTextIntoView("Cookies and Site Data")
-    return onView(withText(R.string.preference_site_permissions))
-}
+        .getChildByText(UiSelector().text("Site permissions"), "Site permissions", true)
 
 private fun useFingerprintSwitch(): ViewInteraction {
-    val useFingerprintSwitchSummary = getStringResource(R.string.preference_security_biometric_summary)
+    val useFingerprintSwitchSummary = getStringResource(R.string.preference_security_biometric_summary2)
     privacySettingsList.scrollTextIntoView(useFingerprintSwitchSummary)
     return onView(withText(useFingerprintSwitchSummary))
 }
@@ -566,9 +571,15 @@ private fun assertStealthModeSwitchState(enabled: Boolean = false) {
 }
 
 private fun safeBrowsingSwitch(): ViewInteraction {
-    val safeBrowsingSwitchText = getStringResource(R.string.preference_safe_browsing_summary)
-    privacySettingsList.scrollTextIntoView(safeBrowsingSwitchText)
-    return onView(withText(safeBrowsingSwitchText))
+    val safeBrowsingSwitchText =
+        mDevice.findObject(
+            UiSelector().text(
+                getStringResource(R.string.preference_safe_browsing_summary)
+            )
+        )
+    privacySettingsList.scrollToEnd(3)
+    privacySettingsList.scrollIntoView(safeBrowsingSwitchText)
+    return onView(withText(getStringResource(R.string.preference_safe_browsing_summary)))
 }
 
 private fun assertSafeBrowsingSwitchState(enabled: Boolean = true) {
