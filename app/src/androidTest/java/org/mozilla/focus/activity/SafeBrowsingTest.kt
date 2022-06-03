@@ -132,7 +132,8 @@ class SafeBrowsingTest {
         }.openSiteSecurityInfoSheet {
             verifySiteConnectionInfoIsSecure(true)
         }.closeSecurityInfoSheet {
-        }.openSearchBar {
+        }.clearBrowsingData {}
+        searchScreen {
         }.loadPage(insecurePageUrl) {
             verifyPageURL(insecurePageUrl)
             verifySiteSecurityIndicatorShown()
