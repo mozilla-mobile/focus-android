@@ -6,9 +6,11 @@ package org.mozilla.focus.activity
 
 import android.content.Context
 import android.hardware.camera2.CameraManager
+import android.os.Build
+import androidx.test.filters.SdkSuppress
 import okhttp3.mockwebserver.MockWebServer
 import org.junit.After
-import org.junit.Assume
+import org.junit.Assume.assumeTrue
 import org.junit.Before
 import org.junit.Ignore
 import org.junit.Rule
@@ -231,14 +233,13 @@ class SitePermissionsTest {
         }
     }
 
-    @Ignore(
-        "Camera not available on some AVDs: " +
-            "https://github.com/mozilla-mobile/mobile-test-eng/issues/622"
-    )
+    @SdkSuppress(maxSdkVersion = Build.VERSION_CODES.P, codeName = "P")
     @SmokeTest
     @Test
     fun allowCameraPermissionsTest() {
-        Assume.assumeTrue(cameraManager.cameraIdList.isNotEmpty())
+        // skips the test if the AVD doesn't have a camera
+        assumeTrue(cameraManager.cameraIdList.isNotEmpty())
+
         searchScreen {
         }.loadPage(permissionsPage) {
             clickGetCameraButton()
@@ -249,14 +250,13 @@ class SitePermissionsTest {
         }
     }
 
-    @Ignore(
-        "Camera not available on some AVDs: " +
-            "https://github.com/mozilla-mobile/mobile-test-eng/issues/622"
-    )
+    @SdkSuppress(maxSdkVersion = Build.VERSION_CODES.P, codeName = "P")
     @SmokeTest
     @Test
     fun denyCameraPermissionsTest() {
-        Assume.assumeTrue(cameraManager.cameraIdList.isNotEmpty())
+        // skips the test if the AVD doesn't have a camera
+        assumeTrue(cameraManager.cameraIdList.isNotEmpty())
+
         searchScreen {
         }.loadPage(permissionsPage) {
             clickGetCameraButton()
