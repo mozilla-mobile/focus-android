@@ -111,9 +111,11 @@ class AboutFragment : BaseSettingsLikeFragment() {
         val packageInfo = requireContext().packageManager.getPackageInfo(requireContext().packageName, 0)
         val versionCode = PackageInfoCompat.getLongVersionCode(packageInfo).toString()
 
+        // \u200F is just a unicode character which helps the system to know the text alignment, say LTR.
+        // The paragraph usually uses the direction of its first character.
         @Suppress("ImplicitDefaultLocale")
         return String.format(
-            "%s (Build #%s)\n%s: %s\n%s: %s",
+            "\u200F" + "%s (Build #%s)\n%s: %s\n%s: %s",
             packageInfo.versionName,
             versionCode + engineIndicator,
             componentsAbbreviation,
