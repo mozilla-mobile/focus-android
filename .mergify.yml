@@ -43,7 +43,8 @@ pull_request_rules:
   - name: Relbot - Auto Merge
     conditions:
       - base=main
-      - files~=AndroidComponents.kt
+      - files=buildSrc/src/main/java/AndroidComponents.kt
+      - -files~=^(?!buildSrc/src/main/java/AndroidComponents.kt).+$
       - author=github-actions[bot]
     actions:
       review:
