@@ -40,6 +40,19 @@ pull_request_rules:
         method: rebase
         name: default
         rebase_fallback: none
+  - name: Relbot - Auto Merge
+    conditions:
+      - base=main
+      - files~=AndroidComponents.kt
+      - author=github-actions[bot]
+    actions:
+      review:
+        type: APPROVE
+        message: ✅ Cleared to land.
+      queue:
+        method: rebase
+        name: default
+        rebase_fallback: none
   - name: Needs landing - Rebase
     conditions:
       - base=main
@@ -60,19 +73,6 @@ pull_request_rules:
     actions:
       queue:
         method: squash
-        name: default
-        rebase_fallback: none
-  - name: Relbot - Auto Merge
-    conditions:
-      - base=main
-      - files~=AndroidComponents.kt
-      - author=github-actions[bot]
-    actions:
-      review:
-        type: APPROVE
-        message: ✅ Cleared to land.
-      queue:
-        method: rebase
         name: default
         rebase_fallback: none
   - name: Relbot - delete head branch after merge
