@@ -4,6 +4,7 @@
 
 package org.mozilla.focus.activity.robots
 
+import android.util.Log
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.IdlingRegistry
 import androidx.test.espresso.IdlingResource
@@ -19,6 +20,7 @@ import androidx.test.uiautomator.By
 import androidx.test.uiautomator.UiSelector
 import androidx.test.uiautomator.Until
 import org.hamcrest.Matchers.not
+import org.junit.Assert
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
 import org.mozilla.focus.R
@@ -318,19 +320,27 @@ class BrowserRobot {
     }
 
     fun longClickAndCopyText(expectedText: String) {
-        var currentTries = 0
-        while (currentTries++ < 3) {
+        for (i in 1..RETRY_COUNT) {
             try {
-                mDevice.findObject(UiSelector().textContains(expectedText)).waitForExists(waitingTime)
-                mDevice.findObject(By.textContains(expectedText)).also { it.longClick() }
+                mDevice.wait(Until.findObject(By.textContains(expectedText)), waitingTime)
+                Assert.assertNotNull(mDevice.findObject(By.textContains(expectedText)))
+                mDevice.findObject(By.textContains(expectedText)).longClick()
 
-                mDevice.findObject(UiSelector().textContains("Copy")).waitForExists(waitingTime)
-                mDevice.findObject(By.textContains("Copy")).also { it.click() }
+                mDevice.wait(Until.findObject(By.textContains("Copy")), waitingTime)
+                Assert.assertNotNull(mDevice.findObject(By.textContains("Copy")))
+                mDevice.findObject(By.textContains("Copy")).click()
+
                 break
             } catch (e: NullPointerException) {
-                browserScreen {
-                }.openMainMenu {
-                }.clickReloadButton {}
+                if (i == RETRY_COUNT) {
+                    throw e
+                } else {
+                    Log.e("TestLog", "Failed to click Copy button ${e.localizedMessage}")
+
+                    browserScreen {
+                    }.openMainMenu {
+                    }.clickReloadButton {}
+                }
             }
         }
     }
@@ -339,14 +349,25 @@ class BrowserRobot {
         assertFalse(mDevice.findObject(UiSelector().textContains("Copy")).waitForExists(waitingTime))
 
     fun clickAndPasteTextInInputBox() {
-        var currentTries = 0
-        while (currentTries++ < 3) {
+        for (i in 1..RETRY_COUNT) {
             try {
-                mDevice.findObject(UiSelector().textContains("Paste")).waitForExists(waitingTime)
-                mDevice.findObject(By.textContains("Paste")).also { it.click() }
+                longPressTextInputBox()
+
+                mDevice.wait(Until.findObject(By.textContains("Paste")), waitingTime)
+                Assert.assertNotNull(mDevice.findObject(By.textContains("Paste")))
+                mDevice.findObject(By.textContains("Paste")).click()
+
                 break
             } catch (e: NullPointerException) {
-                longPressTextInputBox()
+                if (i == RETRY_COUNT) {
+                    throw e
+                } else {
+                    Log.e("TestLog", "Failed to click Paste button ${e.localizedMessage}")
+
+                    browserScreen {
+                    }.openMainMenu {
+                    }.clickReloadButton {}
+                }
             }
         }
     }

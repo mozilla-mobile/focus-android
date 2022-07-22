@@ -9,7 +9,6 @@ import androidx.test.uiautomator.UiObjectNotFoundException
 import org.junit.rules.TestRule
 import org.junit.runner.Description
 import org.junit.runners.model.Statement
-import java.lang.AssertionError
 
 class RetryTestRule(private val retryCount: Int = 5) : TestRule {
 
@@ -28,6 +27,10 @@ class RetryTestRule(private val retryCount: Int = 5) : TestRule {
                         throw t
                     }
                 } catch (t: NoMatchingViewException) {
+                    if (i == retryCount) {
+                        throw t
+                    }
+                } catch (t: NullPointerException) {
                     if (i == retryCount) {
                         throw t
                     }
