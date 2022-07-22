@@ -4,10 +4,16 @@ queue_rules:
       - or:
         - status-success=complete-pr
         - and:
-          # For more context, see "L10N - Auto Merge" rule down below
-          - base~=^releases[_/].*
-          - head~=^automation/sync-strings-\d+
+          # For more context, see "Auto Merge" rules down below
           - status-success=complete-push
+          - or:
+            - and:
+              - base~=^releases[_/].*
+              - head~=^(relbot/focus|automation/sync-strings)-\d+
+            - and:
+              - base=main
+              - head~=relbot/AC-Nightly-.+
+
 pull_request_rules:
   - name: L10N - Auto Merge
     conditions:
@@ -40,16 +46,24 @@ pull_request_rules:
         method: rebase
         name: default
         rebase_fallback: none
-  - name: Relbot - Auto Merge
+  - name: Android-Components bump - Auto Merge
     conditions:
-      - base=main
-      - files=buildSrc/src/main/java/AndroidComponents.kt
-      - -files~=^(?!buildSrc/src/main/java/AndroidComponents.kt).+$
-      - author=github-actions[bot]
+      - and:
+        - files=buildSrc/src/main/java/AndroidComponents.kt
+        - -files~=^(?!buildSrc/src/main/java/AndroidComponents.kt).+$
+        - author=github-actions[bot]
+        - status-success=complete-push
+        - or:
+          - and:
+            - base=main
+            - head~=relbot/AC-Nightly-.+
+          - and:
+            - base~=^releases[_/].*
+            - head~=^relbot/focus-\d+
     actions:
       review:
         type: APPROVE
-        message: ✅ Cleared to land.
+        message: 🚢
       queue:
         method: rebase
         name: default
