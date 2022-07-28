@@ -9,14 +9,15 @@ import android.os.Build
 import android.os.Bundle
 import androidx.preference.Preference
 import androidx.preference.SwitchPreferenceCompat
+import mozilla.components.lib.auth.canUseBiometricFeature
 import mozilla.components.service.glean.private.NoExtras
 import org.mozilla.focus.GleanMetrics.PrivacySettings
 import org.mozilla.focus.GleanMetrics.TrackingProtectionExceptions
 import org.mozilla.focus.R
-import org.mozilla.focus.biometrics.Biometrics
 import org.mozilla.focus.engine.EngineSharedPreferencesListener
 import org.mozilla.focus.ext.requireComponents
 import org.mozilla.focus.ext.settings
+import org.mozilla.focus.ext.showToolbar
 import org.mozilla.focus.nimbus.FocusNimbus
 import org.mozilla.focus.settings.BaseSettingsFragment
 import org.mozilla.focus.state.AppAction
@@ -36,9 +37,7 @@ class PrivacySecuritySettingsFragment :
             getString(R.string.preference_security_biometric_summary2, appName)
 
         // Remove the biometric toggle if the software or hardware do not support it
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M || !Biometrics.hasFingerprintHardware(
-                requireContext()
-            )
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M || !requireContext().canUseBiometricFeature()
         ) {
             preferenceScreen.removePreference(biometricPreference)
         }
@@ -76,7 +75,7 @@ class PrivacySecuritySettingsFragment :
         preferenceManager.sharedPreferences.registerOnSharedPreferenceChangeListener(this)
 
         // Update title and icons when returning to fragments.
-        updateTitle(R.string.preference_privacy_and_security_header)
+        showToolbar(getString(R.string.preference_privacy_and_security_header))
     }
 
     override fun onPause() {
@@ -117,7 +116,7 @@ class PrivacySecuritySettingsFragment :
         val switch = preferenceScreen.findPreference(resources.getString(R.string.pref_key_biometric))
             as? SwitchPreferenceCompat
 
-        if (!Biometrics.hasFingerprintHardware(requireContext())) {
+        if (!requireContext().canUseBiometricFeature()) {
             switch?.isChecked = false
             switch?.isEnabled = false
             preferenceManager.sharedPreferences

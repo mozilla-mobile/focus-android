@@ -28,6 +28,7 @@ class CfrMiddleware(private val appContext: Context) : Middleware<BrowserState, 
     private lateinit var onboardingConfig: Onboarding
     private val components = appContext.components
     private var isCurrentTabSecure = false
+    private var tpExposureAlreadyRecorded = false
 
     override fun invoke(
         context: MiddlewareContext<BrowserState, BrowserAction>,
@@ -35,16 +36,27 @@ class CfrMiddleware(private val appContext: Context) : Middleware<BrowserState, 
         action: BrowserAction
     ) {
         onboardingConfig = onboardingFeature.value(context = appContext)
+        if (onboardingConfig.isCfrEnabled) {
+            if (action is ContentAction.UpdateSecurityInfoAction) {
+                isCurrentTabSecure = action.securityInfo.secure
+            }
 
-        if (action is ContentAction.UpdateSecurityInfoAction) {
-            isCurrentTabSecure = action.securityInfo.secure
+            next(action)
+
+            showEraseTabsCfr(action, context)
+
+            showTrackingProtectionCfr(action, context)
+        } else {
+            next(action)
         }
+    }
 
-        next(action)
-
+    private fun showEraseTabsCfr(
+        action: BrowserAction,
+        context: MiddlewareContext<BrowserState, BrowserAction>
+    ) {
         if (action is TabListAction.AddTabAction &&
-            onboardingConfig.isCfrEnabled &&
-            !components.appStore.state.showTrackingProtectionCfr
+            components.appStore.state.showTrackingProtectionCfrForTab[context.state.selectedTabId] != true
         ) {
             components.settings.numberOfTabsOpened++
             if (components.settings.numberOfTabsOpened == ERASE_CFR_LIMIT) {
@@ -52,10 +64,23 @@ class CfrMiddleware(private val appContext: Context) : Middleware<BrowserState, 
                 components.appStore.dispatch(AppAction.ShowEraseTabsCfrChange(true))
             }
         }
+    }
 
+    private fun showTrackingProtectionCfr(
+        action: BrowserAction,
+        context: MiddlewareContext<BrowserState, BrowserAction>
+    ) {
         if (shouldShowCfrForTrackingProtection(action = action, browserState = context.state)) {
-            onboardingFeature.recordExposure()
-            components.appStore.dispatch(AppAction.ShowTrackingProtectionCfrChange(true))
+            if (!tpExposureAlreadyRecorded) {
+                FocusNimbus.features.onboarding.recordExposure()
+                tpExposureAlreadyRecorded = true
+            }
+
+            components.appStore.dispatch(
+                AppAction.ShowTrackingProtectionCfrChange(
+                    mapOf((action as TrackingProtectionAction.TrackerBlockedAction).tabId to true)
+                )
+            )
         }
     }
 
@@ -74,7 +99,6 @@ class CfrMiddleware(private val appContext: Context) : Middleware<BrowserState, 
     ) = (
         isActionSecure(action = action) &&
             !isMozillaUrl(browserState = browserState) &&
-            onboardingConfig.isCfrEnabled &&
             components.settings.shouldShowCfrForTrackingProtection &&
             !components.appStore.state.showEraseTabsCfr
         )

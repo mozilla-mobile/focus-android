@@ -28,7 +28,6 @@ import mozilla.components.browser.state.action.ContentAction
 import mozilla.components.browser.state.selector.findTab
 import mozilla.components.browser.state.state.SessionState
 import mozilla.components.browser.state.state.TabSessionState
-import mozilla.components.browser.state.state.selectedOrDefaultSearchEngine
 import mozilla.components.feature.top.sites.TopSitesConfig
 import mozilla.components.feature.top.sites.TopSitesFeature
 import mozilla.components.service.glean.private.NoExtras
@@ -38,6 +37,7 @@ import mozilla.components.support.utils.ThreadUtils
 import org.mozilla.focus.GleanMetrics.BrowserSearch
 import org.mozilla.focus.GleanMetrics.SearchBar
 import org.mozilla.focus.R
+import org.mozilla.focus.activity.MainActivity
 import org.mozilla.focus.databinding.FragmentUrlinputBinding
 import org.mozilla.focus.ext.components
 import org.mozilla.focus.ext.defaultSearchEngineName
@@ -58,7 +58,6 @@ import org.mozilla.focus.topsites.DefaultTopSitesView
 import org.mozilla.focus.topsites.TopSitesOverlay
 import org.mozilla.focus.ui.theme.FocusTheme
 import org.mozilla.focus.utils.AppConstants
-import org.mozilla.focus.utils.Features
 import org.mozilla.focus.utils.OneShotOnPreDrawListener
 import org.mozilla.focus.utils.SearchUtils
 import org.mozilla.focus.utils.StatusBarUtils
@@ -205,6 +204,8 @@ class UrlInputFragment :
             customDomainsProvider.initialize(it.applicationContext)
         }
 
+        // Hide status bar background if the parent activity can be casted to MainActivity
+        (requireActivity() as? MainActivity)?.hideStatusBarBackground()
         StatusBarUtils.getStatusBarHeight(binding.landingLayout) {
             adjustViewToStatusBarHeight(it)
         }
@@ -333,19 +334,12 @@ class UrlInputFragment :
             binding.menuView.visibility = View.VISIBLE
         }
 
-        val isDDG: Boolean =
-            requireComponents.store.state.search.selectedOrDefaultSearchEngine?.name == duckDuckGo
-
         tab?.let { tab ->
-            binding.browserToolbar.url =
-                if (tab.content.isSearch &&
-                    !isDDG &&
-                    Features.SEARCH_TERMS_OR_URL
-                ) {
-                    tab.content.searchTerms
-                } else {
-                    tab.content.url
-                }
+            binding.browserToolbar.url = if (tab.content.isSearch) {
+                tab.content.searchTerms
+            } else {
+                tab.content.url
+            }
 
             binding.searchViewContainer.visibility = View.GONE
             binding.menuView.visibility = View.GONE

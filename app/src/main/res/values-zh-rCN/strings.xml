@@ -183,10 +183,10 @@
     <string name="preference_search_engine_label">搜索引擎</string>
 
     <!-- Text that is shown below a "switch" preference that is enabled. -->
-    <string name="preference_state_on">开</string>
+    <string name="preference_state_on">开启</string>
 
     <!-- Text that is shown below a "switch" preference that is disabled. -->
-    <string name="preference_state_off">关</string>
+    <string name="preference_state_off">关闭</string>
 
     <!-- Item in settings that will open a new preference screen for configuring the URL autocomplete behavior. -->
     <string name="preference_subitem_autocomplete">网址自动补全</string>
@@ -512,8 +512,6 @@
     <string name="onboarding_history_title">浏览无痕迹</string>
 
     <!-- Onboarding: History Description -->
-    <string moz:removedIn="100" name="onboarding_history_description" tools:ignore="UnusedResources">点一下即可清除浏览历史和 Cookie，防止被广告跟踪。</string>
-
     <string name="onboarding_history_description2">点一下即可清除浏览历史和 Cookie，防止被广告跟踪。</string>
 
     <!-- Onboarding: Protection Title -->
@@ -761,14 +759,23 @@
 
     <!-- Title for the fingerprint authentication dialog box that is shown to the user when opening the app.
      %1$s is replaced with the app name -->
-    <string name="biometric_auth_title">解锁 %1$s</string>
+    <string moz:removedIn="103" name="biometric_auth_title">解锁 %1$s</string>
+
+    <!-- Text Button for show biometric prompt -->
+    <string name="show_biometric_button_text">解锁</string>
+
+    <!-- Title text for biometric prompt pop-up -->
+    <string name="biometric_prompt_title">指纹确认</string>
+
+    <!-- Subtitle text for biometric prompt pop-up -->
+    <string name="biometric_prompt_subtitle">你可以验证指纹以继续当前应用会话。</string>
 
     <!-- Description for the fingerprint authentication dialog box that is shown to the user when opening the app -->
-    <string name="biometric_auth_description">触摸指纹传感器以继续。</string>
+    <string moz:removedIn="103" name="biometric_auth_description">触摸指纹传感器以继续。</string>
 
     <!-- New session button for the fingerprint authentication dialog box that is shown to the user when opening the app.
      When pressed, the user's previous session is cleared, and authentication is not required. -->
-    <string name="biometric_auth_new_session">新会话</string>
+    <string moz:removedIn="103" name="biometric_auth_new_session">新会话</string>
 
     <!-- Button for the fingerprint authentication dialog box that is shown to the user when sharing a link to the app
     while the user has biometric authentication enabled. When pressed, the user's previous session is cleared, and the shared link is opened. -->
@@ -870,8 +877,6 @@ The new line here must be kept as the second half of the string is clickable for
     <!-- Preference for switching to a new tab immediately after opening -->
     <string name="preference_open_new_tab">立即显示新建打开的链接</string>
 
-    <!-- Preference for safe browsing which when enabled, blocks dangerous or deceptive webpages that may include phishing or malware -->
-    <string moz:removedIn="97" name="preference_category_safe_browsing">安全浏览</string>
     <!-- Preference title for safe browsing which when enabled, blocks dangerous or deceptive webpages that may include phishing or malware -->
     <string name="preference_safe_browsing_title">拦截潜在的危险与诈骗网站</string>
     <!-- Preference summary for safe browsing which when enabled, blocks dangerous or deceptive webpages that may include phishing or malware -->
@@ -881,8 +886,6 @@ The new line here must be kept as the second half of the string is clickable for
     <string name="preference_https_only_title">HTTPS-Only 模式</string>
 
     <!-- Description of the preference to enable "HTTPS-Only" mode. -->
-    <string moz:removedIn="98" name="preference_https_only_summary2" tools:ignore="UnusedResources">自动尝试使用 HTTPS 连接到网站以增强安全性。HTTPS 可在您与访问的网站之间提供安全、加密的连接。</string>
-
     <string name="preference_https_only_summary3">自动尝试使用 HTTPS 加密协议连接至网站，以增强安全性。</string>
 
     <!-- Preference for exceptions tracking protection -->

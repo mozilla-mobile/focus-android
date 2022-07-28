@@ -25,6 +25,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.Start
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.style.TextDirection
 import androidx.compose.ui.unit.dp
 import androidx.core.content.pm.PackageInfoCompat
 import kotlinx.coroutines.Job
@@ -32,6 +33,7 @@ import mozilla.components.browser.state.state.SessionState
 import org.mozilla.focus.R
 import org.mozilla.focus.databinding.FragmentAboutBinding
 import org.mozilla.focus.ext.components
+import org.mozilla.focus.ext.showToolbar
 import org.mozilla.focus.settings.BaseSettingsLikeFragment
 import org.mozilla.focus.state.AppAction
 import org.mozilla.focus.ui.theme.FocusTheme
@@ -56,7 +58,7 @@ class AboutFragment : BaseSettingsLikeFragment() {
 
     override fun onResume() {
         super.onResume()
-        updateTitle(R.string.menu_about)
+        showToolbar(getString(R.string.menu_about))
         secretSettingsUnlocker.resetCounter()
     }
 
@@ -110,7 +112,7 @@ class AboutFragment : BaseSettingsLikeFragment() {
         val packageInfo = requireContext().packageManager.getPackageInfo(requireContext().packageName, 0)
         val versionCode = PackageInfoCompat.getLongVersionCode(packageInfo).toString()
 
-        @Suppress("ImplicitDefaultLocale")
+        @Suppress("ImplicitDefaultLocale") // We want LTR in all cases as the version is not translatable.
         return String.format(
             "%s (Build #%s)\n%s: %s\n%s: %s",
             packageInfo.versionName,
@@ -168,7 +170,10 @@ private fun VersionInfo(aboutVersion: String) {
     Text(
         text = aboutVersion,
         color = focusColors.aboutPageText,
-        style = focusTypography.body1,
+        style = focusTypography.body1.copy(
+            // Use LTR in all cases since the version is not translatable.
+            textDirection = TextDirection.Ltr
+        ),
         modifier = Modifier
             .padding(10.dp)
     )

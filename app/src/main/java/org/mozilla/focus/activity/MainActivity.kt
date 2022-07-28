@@ -14,11 +14,15 @@ import android.util.AttributeSet
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewTreeObserver
+import androidx.appcompat.app.ActionBar
+import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
+import androidx.core.view.isVisible
 import androidx.preference.PreferenceManager
 import mozilla.components.browser.state.selector.privateTabs
 import mozilla.components.concept.engine.EngineView
+import mozilla.components.lib.auth.canUseBiometricFeature
 import mozilla.components.lib.crash.Crash
 import mozilla.components.service.glean.private.NoExtras
 import mozilla.components.support.base.feature.UserInteractionHandler
@@ -30,8 +34,9 @@ import org.mozilla.focus.GleanMetrics.AppOpened
 import org.mozilla.focus.GleanMetrics.Notifications
 import org.mozilla.focus.R
 import org.mozilla.focus.appreview.AppReviewUtils
-import org.mozilla.focus.biometrics.Biometrics
+import org.mozilla.focus.databinding.ActivityMainBinding
 import org.mozilla.focus.ext.components
+import org.mozilla.focus.ext.setNavigationIcon
 import org.mozilla.focus.ext.settings
 import org.mozilla.focus.ext.updateSecureWindowFlags
 import org.mozilla.focus.fragment.BrowserFragment
@@ -44,12 +49,16 @@ import org.mozilla.focus.shortcut.HomeScreen
 import org.mozilla.focus.state.AppAction
 import org.mozilla.focus.state.Screen
 import org.mozilla.focus.telemetry.TelemetryWrapper
+import org.mozilla.focus.telemetry.startuptelemetry.StartupPathProvider
+import org.mozilla.focus.telemetry.startuptelemetry.StartupTypeTelemetry
+import org.mozilla.focus.utils.StatusBarUtils
 import org.mozilla.focus.utils.SupportUtils
 
 private const val REQUEST_TIME_OUT = 2000L
 
 @Suppress("TooManyFunctions", "LargeClass")
 open class MainActivity : LocaleAwareAppCompatActivity() {
+    private var isToolbarInflated = false
     private val intentProcessor by lazy {
         IntentProcessor(this, components.tabsUseCases, components.customTabsUseCases)
     }
@@ -58,12 +67,19 @@ open class MainActivity : LocaleAwareAppCompatActivity() {
     private val tabCount: Int
         get() = components.store.state.privateTabs.size
 
+    private val startupPathProvider = StartupPathProvider()
+    private lateinit var startupTypeTelemetry: StartupTypeTelemetry
+    private var _binding: ActivityMainBinding? = null
+    private val binding get() = _binding!!
+
     override fun onCreate(savedInstanceState: Bundle?) {
         installSplashScreen()
 
         updateSecureWindowFlags()
 
         super.onCreate(savedInstanceState)
+
+        _binding = ActivityMainBinding.inflate(layoutInflater)
 
         // Checks if Activity is currently in PiP mode if launched from external intents, then exits it
         checkAndExitPiP()
@@ -89,28 +105,26 @@ open class MainActivity : LocaleAwareAppCompatActivity() {
                 clearLightSystemBars()
             }
         }
-        setContentView(R.layout.activity_main)
+        setContentView(binding.root)
 
-        val isTheFirstLaunch = settings.getAppLaunchCount() == 0
-        if (isTheFirstLaunch) {
-            setSplashScreenPreDrawListener()
+        startupPathProvider.attachOnActivityOnCreate(lifecycle, intent)
+        startupTypeTelemetry = StartupTypeTelemetry(components.startupStateProvider, startupPathProvider).apply {
+            attachOnMainActivityOnCreate(lifecycle)
         }
 
-        val intent = SafeIntent(intent)
-
-        // The performance check was added after the shouldShowFirstRun to take as much of the
-        // code path as possible
-        if (settings.isFirstRun() &&
-            !Performance.processIntentIfPerformanceTest(intent, this)
-        ) {
-            components.appStore.dispatch(AppAction.ShowFirstRun)
+        val safeIntent = SafeIntent(intent)
+        val isTheFirstLaunch = settings.getAppLaunchCount() == 0
+        if (isTheFirstLaunch) {
+            setSplashScreenPreDrawListener(safeIntent)
+        } else {
+            showFirstScreen(safeIntent)
         }
 
         if (intent.hasExtra(HomeScreen.ADD_TO_HOMESCREEN_TAG)) {
-            intentProcessor.handleNewIntent(this, intent)
+            intentProcessor.handleNewIntent(this, safeIntent)
         }
 
-        if (intent.isLauncherIntent) {
+        if (safeIntent.isLauncherIntent) {
             AppOpened.fromIcons.record(AppOpened.FromIconsExtra(AppOpenType.LAUNCH.type))
 
             TelemetryWrapper.openFromIconEvent()
@@ -122,19 +136,16 @@ open class MainActivity : LocaleAwareAppCompatActivity() {
             .putInt(getString(R.string.app_launch_count), launchCount + 1)
             .apply()
 
-        lifecycle.addObserver(navigator)
-
         AppReviewUtils.showAppReview(this)
     }
 
-    private fun setSplashScreenPreDrawListener() {
-        val content: View = findViewById(android.R.id.content)
+    private fun setSplashScreenPreDrawListener(safeIntent: SafeIntent) {
         val endTime = System.currentTimeMillis() + REQUEST_TIME_OUT
-        content.viewTreeObserver.addOnPreDrawListener(object : ViewTreeObserver.OnPreDrawListener {
+        binding.container.viewTreeObserver.addOnPreDrawListener(object : ViewTreeObserver.OnPreDrawListener {
             override fun onPreDraw(): Boolean {
                 return if (System.currentTimeMillis() >= endTime) {
-                    components.experiments.applyPendingExperiments()
-                    content.viewTreeObserver.removeOnPreDrawListener(this)
+                    showFirstScreen(safeIntent)
+                    binding.container.viewTreeObserver.removeOnPreDrawListener(this)
                     true
                 } else {
                     false
@@ -142,6 +153,17 @@ open class MainActivity : LocaleAwareAppCompatActivity() {
             }
         }
         )
+    }
+
+    private fun showFirstScreen(safeIntent: SafeIntent) {
+        // The performance check was added after the shouldShowFirstRun to take as much of the
+        // code path as possible
+        if (settings.isFirstRun() &&
+            !Performance.processIntentIfPerformanceTest(safeIntent, this)
+        ) {
+            components.appStore.dispatch(AppAction.ShowFirstRun)
+        }
+        lifecycle.addObserver(navigator)
     }
 
     private fun checkAndExitPiP() {
@@ -197,7 +219,7 @@ open class MainActivity : LocaleAwareAppCompatActivity() {
 
             browserFragment?.handleTabCrash(crash)
         }
-
+        startupPathProvider.onIntentReceived(intent)
         val intent = SafeIntent(unsafeIntent)
 
         if (intent.dataString.equals(SupportUtils.OPEN_WITH_DEFAULT_BROWSER_URL)) {
@@ -310,7 +332,7 @@ open class MainActivity : LocaleAwareAppCompatActivity() {
     // Handles the edge case of a user removing all enrolled prints while auth was enabled
     private fun checkBiometricStillValid() {
         // Disable biometrics if the user is no longer eligible due to un-enrolling fingerprints:
-        if (!Biometrics.hasFingerprintHardware(this)) {
+        if (!canUseBiometricFeature()) {
             PreferenceManager.getDefaultSharedPreferences(this)
                 .edit().putBoolean(
                     getString(R.string.pref_key_biometric),
@@ -348,6 +370,37 @@ open class MainActivity : LocaleAwareAppCompatActivity() {
             // API level can display handle light navigation bar color
             window.getWindowInsetsController().isAppearanceLightNavigationBars = false
         }
+    }
+
+    fun getToolbar(): ActionBar {
+        if (!isToolbarInflated) {
+            val toolbar = binding.toolbar.inflate() as Toolbar
+            setSupportActionBar(toolbar)
+            setNavigationIcon(R.drawable.ic_back_button)
+            isToolbarInflated = true
+        }
+        return supportActionBar!!
+    }
+
+    fun customizeStatusBar(backgroundColorId: Int? = null) {
+        with(binding.statusBarBackground) {
+            binding.statusBarBackground.isVisible = true
+            StatusBarUtils.getStatusBarHeight(this) { statusBarHeight ->
+                layoutParams.height = statusBarHeight
+                backgroundColorId?.let { color ->
+                    setBackgroundColor(ContextCompat.getColor(context, color))
+                }
+            }
+        }
+    }
+
+    fun hideStatusBarBackground() {
+        binding.statusBarBackground.isVisible = false
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
     }
 
     enum class AppOpenType(val type: String) {

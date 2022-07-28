@@ -61,7 +61,6 @@ import org.mozilla.focus.experiments.createNimbus
 import org.mozilla.focus.ext.components
 import org.mozilla.focus.ext.settings
 import org.mozilla.focus.media.MediaSessionService
-import org.mozilla.focus.nimbus.FocusNimbus
 import org.mozilla.focus.notification.PrivateNotificationMiddleware
 import org.mozilla.focus.search.SearchFilterMiddleware
 import org.mozilla.focus.search.SearchMigration
@@ -71,6 +70,9 @@ import org.mozilla.focus.state.Screen
 import org.mozilla.focus.tabs.MergeTabsMiddleware
 import org.mozilla.focus.telemetry.GleanMetricsService
 import org.mozilla.focus.telemetry.TelemetryMiddleware
+import org.mozilla.focus.telemetry.startuptelemetry.AppStartReasonProvider
+import org.mozilla.focus.telemetry.startuptelemetry.StartupActivityLog
+import org.mozilla.focus.telemetry.startuptelemetry.StartupStateProvider
 import org.mozilla.focus.tips.TipManager
 import org.mozilla.focus.topsites.DefaultTopSitesStorage
 import org.mozilla.focus.utils.Settings
@@ -92,6 +94,12 @@ class Components(
             )
         )
     }
+
+    val appStartReasonProvider by lazy { AppStartReasonProvider() }
+
+    val startupActivityLog by lazy { StartupActivityLog() }
+
+    val startupStateProvider by lazy { StartupStateProvider(startupActivityLog, appStartReasonProvider) }
 
     val settings by lazy { Settings(context) }
 
@@ -134,12 +142,6 @@ class Components(
     }
 
     val store by lazy {
-        val onboardingFeature = FocusNimbus.features.onboarding
-        val cfrMiddleware = if (onboardingFeature.value(context = context).isCfrEnabled) {
-            listOf(CfrMiddleware(context))
-        } else {
-            listOf()
-        }
         BrowserStore(
             middleware = listOf(
                 PrivateNotificationMiddleware(context),
@@ -157,7 +159,7 @@ class Components(
                 BlockedTrackersMiddleware(context),
                 MergeTabsMiddleware(context),
                 RecordingDevicesMiddleware(context),
-            ) + EngineMiddleware.create(engine) + cfrMiddleware
+            ) + EngineMiddleware.create(engine) + CfrMiddleware(context)
         ).apply {
             MediaSessionFeature(context, MediaSessionService::class.java, this).start()
         }
@@ -189,9 +191,7 @@ class Components(
     val metrics: GleanMetricsService by lazy { GleanMetricsService(context) }
 
     val experiments: NimbusApi by lazy {
-        createNimbus(context, BuildConfig.NIMBUS_ENDPOINT).also { api ->
-            FocusNimbus.api = api
-        }
+        createNimbus(context, BuildConfig.NIMBUS_ENDPOINT)
     }
 
     val adsTelemetry: AdsTelemetry by lazy { AdsTelemetry() }

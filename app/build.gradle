@@ -12,7 +12,7 @@ import com.android.build.OutputFile
 import groovy.json.JsonOutput
 
 android {
-    compileSdkVersion 31
+    compileSdkVersion 32
 
     if (project.hasProperty("testBuildType")) {
         // Allowing to configure the test build type via command line flag (./gradlew -PtestBuildType=beta ..)
@@ -23,10 +23,10 @@ android {
     defaultConfig {
         applicationId "org.mozilla"
         minSdkVersion 21
-        targetSdkVersion 31
+        targetSdkVersion 32
         versionCode 11 // This versionCode is "frozen" for local builds. For "release" builds we
                        // override this with a generated versionCode at build time.
-        versionName "103.0"
+        versionName "104.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         testInstrumentationRunnerArguments clearPackageData: 'true'
 
@@ -218,8 +218,9 @@ dependencies {
     implementation Dependencies.androidx_compose_material
     implementation Dependencies.androidx_compose_constraint_layout
     implementation Dependencies.androidx_compose_runtime_livedata
+    implementation Dependencies.androidx_constraint_layout
     implementation Dependencies.androidx_core_ktx
-    implementation Dependencies.androidx_lifecycle_extensions
+    implementation Dependencies.androidx_lifecycle_process
     implementation Dependencies.androidx_palette
     implementation Dependencies.androidx_preferences
     implementation Dependencies.androidx_recyclerview
@@ -230,9 +231,6 @@ dependencies {
     implementation Dependencies.google_material
 
     implementation Dependencies.sentry
-
-    compileOnly 'net.jcip:jcip-annotations:1.0'
-    implementation("com.google.code.findbugs:jsr305:3.0.2")
 
     implementation "org.mozilla.components:browser-engine-gecko:${AndroidComponents.VERSION}"
     implementation "org.mozilla.components:browser-domains:${AndroidComponents.VERSION}"
@@ -267,6 +265,7 @@ dependencies {
     implementation "org.mozilla.components:lib-crash-sentry:${AndroidComponents.VERSION}"
     implementation "org.mozilla.components:lib-state:${AndroidComponents.VERSION}"
     implementation "org.mozilla.components:feature-media:${AndroidComponents.VERSION}"
+    implementation "org.mozilla.components:lib-auth:${AndroidComponents.VERSION}"
 
     implementation "org.mozilla.components:service-glean:${AndroidComponents.VERSION}", {
         exclude group: 'org.mozilla.telemetry', module: 'glean-native'
@@ -294,21 +293,20 @@ dependencies {
     implementation Dependencies.kotlin_coroutines
     debugImplementation Dependencies.leakcanary
 
-    focusImplementation 'com.adjust.sdk:adjust-android:4.11.4'
-    focusImplementation 'com.android.installreferrer:installreferrer:1.1' // Required by Adjust
+    focusImplementation Dependencies.adjust
+    focusImplementation Dependencies.install_referrer // Required by Adjust
 
     jnaForTest "net.java.dev.jna:jna:${jna_version}@jar"
     testImplementation files(configurations.jnaForTest.copyRecursive().files)
     testImplementation "org.mozilla.telemetry:glean-native-forUnitTests:${project.ext.glean_version}"
 
-    testImplementation "org.junit.jupiter:junit-jupiter-api:5.3.1"
-    testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:5.3.1"
-    testImplementation "org.junit.jupiter:junit-jupiter-params:5.3.1"
-    testImplementation "junit:junit:4.12"
-    testRuntimeOnly "org.junit.vintage:junit-vintage-engine:5.3.1"
+    testImplementation Dependencies.testing_junit_api
+    testRuntimeOnly Dependencies.testing_junit_engine
+    testImplementation Dependencies.testing_junit_params
     testImplementation Dependencies.testing_robolectric
     testImplementation Dependencies.testing_mockito
     testImplementation Dependencies.testing_coroutines
+    testImplementation Dependencies.androidx_work_testing
     testImplementation Dependencies.androidx_arch_core_testing
     testImplementation "org.mozilla.components:support-test:${AndroidComponents.VERSION}"
     testImplementation "org.mozilla.components:support-test-libstate:${AndroidComponents.VERSION}"
@@ -345,8 +343,6 @@ dependencies {
     androidTestImplementation 'androidx.test:runner:1.4.0'
     androidTestUtil 'androidx.test:orchestrator:1.4.1'
 
-
-    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
 }
 // -------------------------------------------------------------------------------------------------
 //  Dynamically set versionCode (See tools/build/versionCode.gradle
