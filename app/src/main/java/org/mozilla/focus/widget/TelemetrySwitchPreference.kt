@@ -11,7 +11,6 @@ import android.util.AttributeSet
 import org.mozilla.focus.R
 import org.mozilla.focus.settings.LearnMoreSwitchPreference
 import org.mozilla.focus.telemetry.TelemetryWrapper
-import org.mozilla.focus.utils.SupportUtils
 import org.mozilla.telemetry.TelemetryHolder
 
 /**
@@ -24,6 +23,10 @@ internal class TelemetrySwitchPreference(context: Context?, attrs: AttributeSet?
         if (context != null) {
             isChecked = TelemetryWrapper.isTelemetryEnabled(context)
         }
+        description = context?.resources?.getString(
+            R.string.preference_mozilla_telemetry_summary2,
+            context.resources.getString(R.string.app_name)
+        )
     }
 
     override fun onClick() {
@@ -31,16 +34,5 @@ internal class TelemetrySwitchPreference(context: Context?, attrs: AttributeSet?
         TelemetryHolder.get()
             .configuration
             .setUploadEnabled(isChecked).isCollectionEnabled = isChecked
-    }
-
-    override fun getDescription(): String {
-        return context.resources.getString(
-            R.string.preference_mozilla_telemetry_summary2,
-            context.resources.getString(R.string.app_name)
-        )
-    }
-
-    override fun getLearnMoreUrl(): String {
-        return SupportUtils.getSumoURLForTopic(context, SupportUtils.SumoTopic.USAGE_DATA)
     }
 }

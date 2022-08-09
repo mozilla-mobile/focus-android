@@ -6,39 +6,29 @@ import android.view.View
 import android.widget.TextView
 import androidx.preference.PreferenceViewHolder
 import androidx.preference.SwitchPreferenceCompat
-import mozilla.components.browser.state.state.SessionState
 import org.mozilla.focus.R
-import org.mozilla.focus.ext.components
-import org.mozilla.focus.state.AppAction
 
-abstract class LearnMoreSwitchPreference(context: Context?, attrs: AttributeSet?) :
+open class LearnMoreSwitchPreference(context: Context?, attrs: AttributeSet?) :
     SwitchPreferenceCompat(context, attrs) {
+    var description: String? = null
+    var onLearMoreClick: () -> Unit = {}
 
     init {
         layoutResource = R.layout.preference_switch_learn_more
     }
 
-    override fun onBindViewHolder(holder: PreferenceViewHolder?) {
+    override fun onBindViewHolder(holder: PreferenceViewHolder) {
         super.onBindViewHolder(holder)
 
-        getDescription()?.let {
-            val summaryView = holder!!.findViewById(android.R.id.summary) as TextView
+        description?.let {
+            val summaryView = holder.findViewById(android.R.id.summary) as TextView
             summaryView.text = it
             summaryView.visibility = View.VISIBLE
         }
 
-        val learnMoreLink = holder!!.findViewById(R.id.link) as TextView
+        val learnMoreLink = holder.findViewById(R.id.link) as TextView
         learnMoreLink.setOnClickListener {
-            val tabId = context.components.tabsUseCases.addTab(
-                getLearnMoreUrl(),
-                source = SessionState.Source.Internal.Menu,
-                selectTab = true,
-                private = true
-            )
-
-            context.components.appStore.dispatch(
-                AppAction.OpenTab(tabId)
-            )
+            onLearMoreClick.invoke()
         }
 
         val backgroundDrawableArray =
@@ -47,8 +37,4 @@ abstract class LearnMoreSwitchPreference(context: Context?, attrs: AttributeSet?
         backgroundDrawableArray.recycle()
         learnMoreLink.background = backgroundDrawable
     }
-
-    open fun getDescription(): String? = null
-
-    abstract fun getLearnMoreUrl(): String
 }

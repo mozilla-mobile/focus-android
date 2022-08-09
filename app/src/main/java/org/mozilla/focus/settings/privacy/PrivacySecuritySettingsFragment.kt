@@ -12,17 +12,21 @@ import androidx.preference.SwitchPreferenceCompat
 import mozilla.components.lib.auth.canUseBiometricFeature
 import mozilla.components.service.glean.private.NoExtras
 import org.mozilla.focus.GleanMetrics.PrivacySettings
+import org.mozilla.focus.GleanMetrics.SearchEngines
 import org.mozilla.focus.GleanMetrics.TrackingProtectionExceptions
 import org.mozilla.focus.R
 import org.mozilla.focus.engine.EngineSharedPreferencesListener
 import org.mozilla.focus.ext.requireComponents
+import org.mozilla.focus.ext.requirePreference
 import org.mozilla.focus.ext.settings
 import org.mozilla.focus.ext.showToolbar
 import org.mozilla.focus.nimbus.FocusNimbus
 import org.mozilla.focus.settings.BaseSettingsFragment
+import org.mozilla.focus.settings.LearnMoreSwitchPreference
 import org.mozilla.focus.state.AppAction
 import org.mozilla.focus.state.Screen
 import org.mozilla.focus.telemetry.TelemetryWrapper
+import org.mozilla.focus.utils.SupportUtils
 import org.mozilla.focus.widget.CookiesPreference
 
 class PrivacySecuritySettingsFragment :
@@ -54,16 +58,43 @@ class PrivacySecuritySettingsFragment :
         cookiesPreference?.updateSummary()
 
         val safeBrowsingSwitchPreference =
-            findPreference(getString(R.string.pref_key_safe_browsing)) as? SwitchPreferenceCompat
+            requirePreference<LearnMoreSwitchPreference>(R.string.pref_key_safe_browsing)
+        safeBrowsingSwitchPreference.onLearMoreClick = {
+            val learnMoreUrl = SupportUtils.getSafeBrowsingURL()
+            openLearnMorePage(learnMoreUrl)
+        }
+
         val javaScriptPreference =
             findPreference(getString(R.string.pref_key_performance_block_javascript)) as? SwitchPreferenceCompat
         val webFontsPreference =
             findPreference(getString(R.string.pref_key_performance_block_webfonts)) as? SwitchPreferenceCompat
 
+        val telemetryPreference =
+            requirePreference<LearnMoreSwitchPreference>(R.string.pref_key_telemetry)
+        telemetryPreference.onLearMoreClick = {
+            val learnMoreUrl =
+                SupportUtils.getSumoURLForTopic(requireContext(), SupportUtils.SumoTopic.USAGE_DATA)
+            openLearnMorePage(learnMoreUrl)
+        }
+
+        val httpsOnlyModePreference =
+            requirePreference<LearnMoreSwitchPreference>(R.string.pref_key_https_only)
+        httpsOnlyModePreference.onLearMoreClick = {
+            val learnMoreUrl =
+                SupportUtils.getGenericSumoURLForTopic(SupportUtils.SumoTopic.HTTPS_ONLY)
+            openLearnMorePage(learnMoreUrl)
+        }
+
+        httpsOnlyModePreference.onPreferenceChangeListener = preferencesListener
         cookiesPreference?.onPreferenceChangeListener = preferencesListener
-        safeBrowsingSwitchPreference?.onPreferenceChangeListener = preferencesListener
+        safeBrowsingSwitchPreference.onPreferenceChangeListener = preferencesListener
         javaScriptPreference?.onPreferenceChangeListener = preferencesListener
         webFontsPreference?.onPreferenceChangeListener = preferencesListener
+    }
+
+    private fun openLearnMorePage(learnMoreUrl: String) {
+        SupportUtils.openUrlInCustomTab(requireActivity(), learnMoreUrl)
+        SearchEngines.learnMoreTapped.record(NoExtras())
     }
 
     override fun onResume() {

@@ -6,6 +6,7 @@ package org.mozilla.focus.engine
 
 import android.content.Context
 import androidx.preference.Preference
+import mozilla.components.concept.engine.Engine
 import org.mozilla.focus.GleanMetrics.TrackingProtection
 import org.mozilla.focus.R
 import org.mozilla.focus.ext.components
@@ -31,6 +32,9 @@ class EngineSharedPreferencesListener(
 
             context.getString(R.string.pref_key_performance_block_webfonts) ->
                 updateWebFontsBlocking(newValue as Boolean)
+
+            context.getString(R.string.pref_key_https_only) ->
+                updateHttpsOnly(newValue as Boolean)
         }
 
         return true
@@ -79,6 +83,14 @@ class EngineSharedPreferencesListener(
         components.engineDefaultSettings.webFontsEnabled = !newValue
         components.engine.settings.webFontsEnabled = !newValue
         components.sessionUseCases.reload()
+    }
+
+    private fun updateHttpsOnly(enableHttpsOnly: Boolean) {
+        context.components.engine.settings.httpsOnlyMode = if (enableHttpsOnly) {
+            Engine.HttpsOnlyMode.ENABLED
+        } else {
+            Engine.HttpsOnlyMode.DISABLED
+        }
     }
 
     enum class ChangeSource(val source: String) {

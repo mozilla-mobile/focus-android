@@ -12,16 +12,37 @@ import org.mozilla.focus.GleanMetrics.SearchEngines
 import org.mozilla.focus.GleanMetrics.ShowSearchSuggestions
 import org.mozilla.focus.R
 import org.mozilla.focus.ext.requireComponents
+import org.mozilla.focus.ext.requirePreference
 import org.mozilla.focus.ext.showToolbar
 import org.mozilla.focus.state.AppAction
 import org.mozilla.focus.state.Screen
 import org.mozilla.focus.telemetry.TelemetryWrapper
+import org.mozilla.focus.utils.SupportUtils
 
 class SearchSettingsFragment :
     BaseSettingsFragment(),
     SharedPreferences.OnSharedPreferenceChangeListener {
     override fun onCreatePreferences(p0: Bundle?, p1: String?) {
         addPreferencesFromResource(R.xml.search_settings)
+
+        requirePreference<LearnMoreSwitchPreference>(R.string.pref_key_show_search_suggestions).apply {
+            description = context.getString(
+                R.string.preference_show_search_suggestions_summary,
+                context.getString(R.string.app_name)
+            )
+            onLearMoreClick = {
+                openLearnMorePage()
+            }
+        }
+    }
+
+    private fun openLearnMorePage() {
+        val learnMoreUrl = SupportUtils.getSumoURLForTopic(
+            requireContext(),
+            SupportUtils.SumoTopic.SEARCH_SUGGESTIONS
+        )
+        SupportUtils.openUrlInCustomTab(requireActivity(), learnMoreUrl)
+        SearchEngines.learnMoreTapped.record(NoExtras())
     }
 
     override fun onResume() {

@@ -112,7 +112,7 @@ object SupportUtils {
         val openCustomTabActivityIntent =
             Intent(activity, CustomTabActivity::class.java).apply {
                 action = Intent.ACTION_VIEW
-                data = Uri.parse(getSumoURLForTopic(activity, SumoTopic.ADD_SEARCH_ENGINE))
+                data = Uri.parse(destinationUrl)
                 putExtra(CustomTabActivity.CUSTOM_TAB_ID, tabId)
             }
 

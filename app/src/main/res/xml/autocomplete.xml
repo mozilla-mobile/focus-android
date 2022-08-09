@@ -5,7 +5,7 @@
 
     <androidx.preference.PreferenceCategory>
 
-        <org.mozilla.focus.autocomplete.AutocompleteDefaultDomainsPreference
+        <org.mozilla.focus.settings.LearnMoreSwitchPreference
             android:defaultValue="true"
             android:key="@string/pref_key_autocomplete_preinstalled"
             android:summary="@string/preference_autocomplete_topsite_summary2"
@@ -15,7 +15,7 @@
 
     <androidx.preference.PreferenceCategory>
 
-        <org.mozilla.focus.autocomplete.AutocompleteCustomDomainsPreference
+        <org.mozilla.focus.settings.LearnMoreSwitchPreference
             android:defaultValue="true"
             android:key="@string/pref_key_autocomplete_custom"
             android:summary="@string/preference_autocomplete_user_list_summary2"

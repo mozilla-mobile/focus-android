@@ -6,38 +6,55 @@ package org.mozilla.focus.autocomplete
 
 import android.content.SharedPreferences
 import android.os.Bundle
+import mozilla.components.service.glean.private.NoExtras
 import org.mozilla.focus.GleanMetrics.Autocomplete
+import org.mozilla.focus.GleanMetrics.SearchEngines
 import org.mozilla.focus.R
 import org.mozilla.focus.ext.requireComponents
 import org.mozilla.focus.ext.requirePreference
 import org.mozilla.focus.ext.showToolbar
 import org.mozilla.focus.settings.BaseSettingsFragment
+import org.mozilla.focus.settings.LearnMoreSwitchPreference
 import org.mozilla.focus.state.AppAction
 import org.mozilla.focus.state.Screen
 import org.mozilla.focus.telemetry.TelemetryWrapper
+import org.mozilla.focus.utils.SupportUtils
 
 /**
  * Settings UI for configuring autocomplete.
  */
 class AutocompleteSettingsFragment : BaseSettingsFragment(), SharedPreferences.OnSharedPreferenceChangeListener {
 
-    private lateinit var topSitesAutocomplete: AutocompleteDefaultDomainsPreference
-    private lateinit var favoriteSitesAutocomplete: AutocompleteCustomDomainsPreference
+    private lateinit var topSitesAutocomplete: LearnMoreSwitchPreference
+    private lateinit var favoriteSitesAutocomplete: LearnMoreSwitchPreference
 
     override fun onCreatePreferences(p0: Bundle?, p1: String?) {
         addPreferencesFromResource(R.xml.autocomplete)
         val appName = requireContext().getString(R.string.app_name)
 
         topSitesAutocomplete =
-            requirePreference<AutocompleteDefaultDomainsPreference>(R.string.pref_key_autocomplete_preinstalled).apply {
-                summary =
-                    context.getString(R.string.preference_autocomplete_topsite_summary2, appName)
+            requirePreference<LearnMoreSwitchPreference>(R.string.pref_key_autocomplete_preinstalled).apply {
+                summary = context.getString(R.string.preference_autocomplete_topsite_summary2, appName)
+                onLearMoreClick = {
+                    openLearnMorePage()
+                }
             }
         favoriteSitesAutocomplete =
-            requirePreference<AutocompleteCustomDomainsPreference>(R.string.pref_key_autocomplete_custom).apply {
-                summary =
-                    context.getString(R.string.preference_autocomplete_user_list_summary2, appName)
+            requirePreference<LearnMoreSwitchPreference>(R.string.pref_key_autocomplete_custom).apply {
+                summary = context.getString(R.string.preference_autocomplete_user_list_summary2, appName)
+                onLearMoreClick = {
+                    openLearnMorePage()
+                }
             }
+    }
+
+    private fun openLearnMorePage() {
+        val learnMoreUrl = SupportUtils.getSumoURLForTopic(
+            requireContext(),
+            SupportUtils.SumoTopic.AUTOCOMPLETE
+        )
+        SupportUtils.openUrlInCustomTab(requireActivity(), learnMoreUrl)
+        SearchEngines.learnMoreTapped.record(NoExtras())
     }
 
     override fun onResume() {

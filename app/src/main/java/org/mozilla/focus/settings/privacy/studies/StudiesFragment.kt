@@ -15,13 +15,12 @@ import androidx.appcompat.app.AlertDialog
 import androidx.core.text.HtmlCompat
 import androidx.core.text.getSpans
 import androidx.lifecycle.ViewModelProvider
-import mozilla.components.browser.state.state.SessionState
+import mozilla.components.service.glean.private.NoExtras
+import org.mozilla.focus.GleanMetrics.SearchEngines
 import org.mozilla.focus.R
 import org.mozilla.focus.databinding.FragmentStudiesBinding
-import org.mozilla.focus.ext.components
 import org.mozilla.focus.ext.showToolbar
 import org.mozilla.focus.settings.BaseSettingsLikeFragment
-import org.mozilla.focus.state.AppAction
 import org.mozilla.focus.utils.SupportUtils
 import kotlin.system.exitProcess
 
@@ -84,13 +83,10 @@ class StudiesFragment : BaseSettingsLikeFragment() {
     }
 
     private val openLearnMore = {
-        val tabId = requireContext().components.tabsUseCases.addTab(
-            url = SupportUtils.getGenericSumoURLForTopic(SupportUtils.SumoTopic.STUDIES),
-            source = SessionState.Source.Internal.Menu,
-            selectTab = true,
-            private = true
-        )
-        requireContext().components.appStore.dispatch(AppAction.OpenTab(tabId))
+        val learnMoreUrl =
+            SupportUtils.getSumoURLForTopic(requireContext(), SupportUtils.SumoTopic.STUDIES)
+        SupportUtils.openUrlInCustomTab(requireActivity(), learnMoreUrl)
+        SearchEngines.learnMoreTapped.record(NoExtras())
     }
 
     private fun setStudiesTitleByState(switchState: Boolean) {

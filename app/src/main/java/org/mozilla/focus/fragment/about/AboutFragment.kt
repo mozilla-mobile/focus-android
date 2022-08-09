@@ -28,17 +28,16 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextDirection
 import androidx.compose.ui.unit.dp
 import androidx.core.content.pm.PackageInfoCompat
-import kotlinx.coroutines.Job
-import mozilla.components.browser.state.state.SessionState
+import mozilla.components.service.glean.private.NoExtras
+import org.mozilla.focus.GleanMetrics.SearchEngines
 import org.mozilla.focus.R
 import org.mozilla.focus.databinding.FragmentAboutBinding
-import org.mozilla.focus.ext.components
 import org.mozilla.focus.ext.showToolbar
 import org.mozilla.focus.settings.BaseSettingsLikeFragment
-import org.mozilla.focus.state.AppAction
 import org.mozilla.focus.ui.theme.FocusTheme
 import org.mozilla.focus.ui.theme.focusColors
 import org.mozilla.focus.ui.theme.focusTypography
+import org.mozilla.focus.utils.SupportUtils
 import org.mozilla.focus.utils.SupportUtils.manifestoURL
 import org.mozilla.geckoview.BuildConfig
 
@@ -47,13 +46,8 @@ class AboutFragment : BaseSettingsLikeFragment() {
     private lateinit var secretSettingsUnlocker: SecretSettingsUnlocker
 
     private val openLearnMore = {
-        val tabId = requireContext().components.tabsUseCases.addTab(
-            url = manifestoURL,
-            source = SessionState.Source.Internal.Menu,
-            selectTab = true,
-            private = true
-        )
-        requireContext().components.appStore.dispatch(AppAction.OpenTab(tabId))
+        SupportUtils.openUrlInCustomTab(requireActivity(), manifestoURL)
+        SearchEngines.learnMoreTapped.record(NoExtras())
     }
 
     override fun onResume() {
@@ -131,7 +125,7 @@ private fun AboutPageContent(
     content: String,
     learnMore: String,
     secretSettingsUnlocker: SecretSettingsUnlocker,
-    openLearnMore: () -> Job
+    openLearnMore: () -> Unit
 ) {
 
     FocusTheme {
@@ -193,7 +187,7 @@ private fun AboutContent(content: String) {
 @Composable
 fun ColumnScope.LearnMoreLink(
     learnMore: String,
-    openLearnMore: () -> Job
+    openLearnMore: () -> Unit
 ) {
     Text(
         text = learnMore,
