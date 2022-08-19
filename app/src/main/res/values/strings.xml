@@ -959,4 +959,7 @@ The new line here must be kept as the second half of the string is clickable for
     <!-- CFR for Toolbar Delete Icon (Banner Info Message) -->
     <string name="cfr_for_toolbar_delete_icon">Get rid of your personal data, browsing history and more from this session by tapping the trash button. Give it a try!</string>
 
+    <!-- CFR for Start your private browsing session-->
+    <string name="cfr_for_start_browsing">Start your private browsing session, and we’ll block trackers and other bad stuff as you go.</string>
+
 </resources>

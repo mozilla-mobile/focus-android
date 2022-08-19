@@ -4,21 +4,34 @@
 
 package org.mozilla.focus.input
 
+import androidx.annotation.VisibleForTesting
+import androidx.appcompat.widget.AppCompatEditText
+import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.cancel
+import kotlinx.coroutines.flow.mapNotNull
 import mozilla.components.browser.domains.autocomplete.CustomDomainsProvider
 import mozilla.components.browser.domains.autocomplete.DomainAutocompleteResult
 import mozilla.components.browser.domains.autocomplete.ShippedDomainsProvider
 import mozilla.components.browser.toolbar.BrowserToolbar
 import mozilla.components.concept.toolbar.Toolbar
+import mozilla.components.lib.state.ext.flowScoped
 import mozilla.components.support.base.feature.LifecycleAwareFeature
+import mozilla.components.support.ktx.kotlinx.coroutines.flow.ifChanged
 import org.mozilla.focus.R
+import org.mozilla.focus.compose.CFRPopup
+import org.mozilla.focus.compose.CFRPopupProperties
+import org.mozilla.focus.compose.LayoutGravity
+import org.mozilla.focus.ext.components
 import org.mozilla.focus.ext.settings
 import org.mozilla.focus.fragment.UrlInputFragment
+import org.mozilla.focus.state.AppAction
 
 class InputToolbarIntegration(
-    toolbar: BrowserToolbar,
-    fragment: UrlInputFragment,
+    private val toolbar: BrowserToolbar,
+    private val fragment: UrlInputFragment,
     shippedDomainsProvider: ShippedDomainsProvider,
     customDomainsProvider: CustomDomainsProvider
 ) : LifecycleAwareFeature {
@@ -27,16 +40,19 @@ class InputToolbarIntegration(
     private var useShippedDomainProvider: Boolean = false
     private var useCustomDomainProvider: Boolean = false
 
+    @VisibleForTesting
+    internal var startBrowsingCfrScope: CoroutineScope? = null
+
     init {
         with(toolbar.display) {
             indicators = emptyList()
-            hint = fragment.getString(R.string.urlbar_hint)
+            hint = fragment.resources.getString(R.string.urlbar_hint)
             colors = toolbar.display.colors.copy(
                 hint = ContextCompat.getColor(toolbar.context, R.color.urlBarHintText),
                 text = ContextCompat.getColor(toolbar.context, R.color.primaryText)
             )
         }
-        toolbar.edit.hint = fragment.getString(R.string.urlbar_hint)
+        toolbar.edit.hint = fragment.resources.getString(R.string.urlbar_hint)
         toolbar.private = true
         toolbar.edit.colors = toolbar.edit.colors.copy(
             hint = ContextCompat.getColor(toolbar.context, R.color.urlBarHintText),
@@ -99,9 +115,44 @@ class InputToolbarIntegration(
     override fun start() {
         useCustomDomainProvider = settings.shouldAutocompleteFromCustomDomainList()
         useShippedDomainProvider = settings.shouldAutocompleteFromShippedDomainList()
+        observeStartBrowserCfrVisibility()
+    }
+
+    @VisibleForTesting
+    internal fun observeStartBrowserCfrVisibility() {
+        startBrowsingCfrScope = fragment.components?.appStore?.flowScoped { flow ->
+            flow.mapNotNull { state -> state.showStartBrowsingTabsCfr }
+                .ifChanged()
+                .collect { showStartBrowsingCfr ->
+                    if (showStartBrowsingCfr) {
+                        val editUrlView =
+                            toolbar.findViewById<AppCompatEditText>(R.id.mozac_browser_toolbar_edit_url_view)
+                        CFRPopup(
+                            container = fragment.requireView(),
+                            text = fragment.resources.getString(R.string.cfr_for_start_browsing),
+                            anchor = editUrlView,
+                            properties = CFRPopupProperties(
+                                layoutGravity = LayoutGravity.START,
+                                indicatorArrowStartOffset = 10.dp
+                            ),
+                            onDismiss = { onDismissStartBrowsingCfr(editUrlView = editUrlView) }
+                        ).apply {
+                            show()
+                        }
+                    }
+                }
+        }
+    }
+
+    private fun onDismissStartBrowsingCfr(editUrlView: AppCompatEditText) {
+        fragment.components?.appStore?.dispatch(AppAction.ShowStartBrowsingCfrChange(false))
+        editUrlView.apply {
+            isFocusable = true
+            isFocusableInTouchMode = true
+        }
     }
 
     override fun stop() {
-        // Do nothing
+        startBrowsingCfrScope?.cancel()
     }
 }

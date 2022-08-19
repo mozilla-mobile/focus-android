@@ -13,6 +13,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
 import androidx.appcompat.content.res.AppCompatResources
+import androidx.appcompat.widget.AppCompatEditText
 import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
 import kotlinx.coroutines.CoroutineScope
@@ -237,6 +238,13 @@ class UrlInputFragment :
             FocusTheme {
                 TopSitesOverlay()
             }
+        }
+
+        // Don't show the keyboard while start browsing cfr is displayed
+        if (requireComponents.appStore.state.showStartBrowsingTabsCfr) {
+            binding.browserToolbar.findViewById<AppCompatEditText>(
+                R.id.mozac_browser_toolbar_edit_url_view
+            ).isFocusable = false
         }
 
         return binding.root

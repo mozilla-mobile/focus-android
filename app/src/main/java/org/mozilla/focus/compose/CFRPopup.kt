@@ -87,6 +87,13 @@ internal data class PopupHorizontalBounds(
 )
 
 /**
+ * Options available for popup gravity
+ */
+enum class LayoutGravity {
+    START, CENTER, END
+}
+
+/**
  * Properties used to customize the behavior of a [CFRPopup].
  *
  * @property dismissOnBackPress Whether the popup can be dismissed by pressing the back button.
@@ -95,13 +102,14 @@ internal data class PopupHorizontalBounds(
  * popup's bounds. If true, clicking outside the popup will call onDismiss().
  * @property overlapAnchor How the popup will be anchored with it's top-start corner:
  *   - true - popup will be anchored in the exactly in the middle horizontally and vertically
- *   - false - popup will be anchored horizontally in the middle of the anchor but immediately below it
+ *   - false - popup will be anchored horizontally to the anchor but immediately below it
  * @property indicatorArrowStartOffset Maximum distance between the popup start and the indicator arrow.
  * If there isn't enough space this could automatically be overridden up to 0.
  * @property indicatorArrowHeight How tall the indicator arrow should be.
  * This will also affect how wide the base of the indicator arrow will be.
  * @property elevation The z-coordinate at which to place the popup.
  * This controls the size of the shadow below the popup.
+ * @property layoutGravity How the popup will be placed related to the anchor view
  */
 data class CFRPopupProperties(
     val dismissOnBackPress: Boolean = true,
@@ -109,7 +117,8 @@ data class CFRPopupProperties(
     val overlapAnchor: Boolean = false,
     val indicatorArrowStartOffset: Dp = 30.dp,
     val indicatorArrowHeight: Dp = 10.dp,
-    val elevation: Dp = 10.dp
+    val elevation: Dp = 10.dp,
+    val layoutGravity: LayoutGravity = LayoutGravity.CENTER
 )
 
 /**
@@ -208,15 +217,15 @@ internal class CFRPopupFullScreenLayout(
             anchor.getLocationOnScreen(this)
         }
 
-        val anchorXCoordMiddle = Pixels(anchorLocation.first() + anchor.width / 2)
+        val anchorXGravityCoord = getAnchorXCoord(anchorLocation, properties.layoutGravity)
         val indicatorArrowHeight = Pixels(properties.indicatorArrowHeight.toPx())
 
         val popupBounds = computePopupHorizontalBounds(
-            anchorMiddleXCoord = anchorXCoordMiddle,
+            anchorXGravityCoord = anchorXGravityCoord,
             arrowIndicatorWidth = Pixels(CFRPopupShape.getIndicatorBaseWidthForHeight(indicatorArrowHeight.value)),
         )
         val indicatorOffset = computeIndicatorArrowStartCoord(
-            anchorMiddleXCoord = anchorXCoordMiddle,
+            anchorXGravityCoord = anchorXGravityCoord,
             popupStartCoord = popupBounds.startCoord,
             arrowIndicatorWidth = Pixels(
                 CFRPopupShape.getIndicatorBaseWidthForHeight(
@@ -233,7 +242,7 @@ internal class CFRPopupFullScreenLayout(
                     layoutDirection: LayoutDirection,
                     popupContentSize: IntSize
                 ): IntOffset {
-                    // Popup will be anchored such that the indicator arrow will point to the middle of the anchor View
+                    // Popup will be anchored such that the indicator arrow will point to the anchor View
                     // but the popup is allowed some space as start padding in which it can be displayed such that
                     // the indicator arrow is now exactly at the top-start corner but slightly translated to end.
                     // Values are in pixels.
@@ -277,17 +286,27 @@ internal class CFRPopupFullScreenLayout(
     }
 
     /**
+     * The popup will be anchored based on [LayoutGravity] from properties
+     */
+    private fun getAnchorXCoord(anchorLocation: IntArray, layoutGravity: LayoutGravity): Pixels =
+        when (layoutGravity) {
+            LayoutGravity.START -> Pixels(anchorLocation.first())
+            LayoutGravity.CENTER -> Pixels(anchorLocation.first() + anchor.width / 2)
+            LayoutGravity.END -> Pixels(anchorLocation.first() + anchor.width)
+        }
+
+    /**
      * Compute the x-coordinates for the absolute start and end position of the popup, including any padding.
-     * This assumes anchoring is indicated with an arrow to the horizontal middle of the anchor with the popup's
+     * This assumes anchoring is indicated with an arrow to the start,center,end of the anchor with the popup's
      * body potentially extending to the `start` of the arrow indicator.
      *
-     * @param anchorMiddleXCoord x-coordinate for the middle of the anchor.
+     * @param anchorXGravityCoord x-coordinate of start, center, end of the anchor.
      * @param arrowIndicatorWidth x-distance the arrow indicator occupies.
      */
     @Composable
     @VisibleForTesting
     internal fun computePopupHorizontalBounds(
-        anchorMiddleXCoord: Pixels,
+        anchorXGravityCoord: Pixels,
         arrowIndicatorWidth: Pixels
     ): PopupHorizontalBounds {
         val arrowIndicatorHalfWidth = arrowIndicatorWidth.value / 2
@@ -295,8 +314,7 @@ internal class CFRPopupFullScreenLayout(
         if (LocalConfiguration.current.layoutDirection == View.LAYOUT_DIRECTION_LTR) {
             // Push the popup as far to the start as needed including any needed paddings.
             val startCoord = Pixels(
-                (anchorMiddleXCoord.value - arrowIndicatorHalfWidth)
-                    .minus(properties.indicatorArrowStartOffset.toPx())
+                (anchorXGravityCoord.value - arrowIndicatorHalfWidth)
                     .minus(HORIZONTAL_PADDING.dp.toPx())
                     .coerceAtLeast(getLeftInsets())
             )
@@ -310,9 +328,8 @@ internal class CFRPopupFullScreenLayout(
         } else {
             val startCoord = Pixels(
                 // Push the popup as far to the start (in RTL) as possible.
-                anchorMiddleXCoord.value
+                anchorXGravityCoord.value
                     .plus(arrowIndicatorHalfWidth)
-                    .plus(properties.indicatorArrowStartOffset.toPx())
                     .plus(HORIZONTAL_PADDING.dp.toPx())
                     .coerceAtMost(
                         LocalDensity.current.run {
@@ -335,13 +352,13 @@ internal class CFRPopupFullScreenLayout(
      * Compute the x-coordinate for where the popup's indicator arrow should start
      * relative to the available distance between it and the popup's starting x-coordinate.
      *
-     * @param anchorMiddleXCoord x-coordinate for the middle of the anchor.
+     * @param anchorXGravityCoord x-coordinate for the start,center,end of the anchor.
      * @param popupStartCoord x-coordinate for the popup start
      * @param arrowIndicatorWidth Width of the arrow indicator.
      */
     @Composable
     private fun computeIndicatorArrowStartCoord(
-        anchorMiddleXCoord: Pixels,
+        anchorXGravityCoord: Pixels,
         popupStartCoord: Pixels,
         arrowIndicatorWidth: Pixels
     ): Pixels {
@@ -349,12 +366,13 @@ internal class CFRPopupFullScreenLayout(
 
         return if (LocalConfiguration.current.layoutDirection == View.LAYOUT_DIRECTION_LTR) {
             val visiblePopupStartCoord = popupStartCoord.value + HORIZONTAL_PADDING.dp.toPx()
-            val arrowIndicatorStartCoord = anchorMiddleXCoord.value - arrowIndicatorHalfWidth
+            val arrowIndicatorStartCoord =
+                anchorXGravityCoord.value - arrowIndicatorHalfWidth + properties.indicatorArrowStartOffset.toPx()
 
             Pixels((visiblePopupStartCoord - arrowIndicatorStartCoord).absoluteValue)
         } else {
             val indicatorStartCoord = popupStartCoord.value - HORIZONTAL_PADDING.dp.toPx() -
-                anchorMiddleXCoord.value - arrowIndicatorHalfWidth
+                anchorXGravityCoord.value - arrowIndicatorHalfWidth - properties.indicatorArrowStartOffset.toPx()
 
             Pixels(indicatorStartCoord.absoluteValue)
         }

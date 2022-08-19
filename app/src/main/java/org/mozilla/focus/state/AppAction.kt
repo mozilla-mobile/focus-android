@@ -103,4 +103,9 @@ sealed class AppAction : Action {
      * State of show Tracking Protection CFR has changed
      */
     data class ShowTrackingProtectionCfrChange(val value: Map<String, Boolean>) : AppAction()
+
+    /**
+     * State of start browsing CFR has changed
+     */
+    data class ShowStartBrowsingCfrChange(val value: Boolean) : AppAction()
 }

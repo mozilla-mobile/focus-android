@@ -18,5 +18,6 @@ class OnboardingInteractor(val appStore: AppStore) {
             .apply()
 
         appStore.dispatch(AppAction.FinishFirstRun(selectedTabId))
+        appStore.dispatch(AppAction.ShowStartBrowsingCfrChange(true))
     }
 }
