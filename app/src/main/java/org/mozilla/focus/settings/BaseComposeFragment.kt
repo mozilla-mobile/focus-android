@@ -13,13 +13,13 @@ import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.fragment.app.Fragment
 import com.google.accompanist.insets.LocalWindowInsets
@@ -27,6 +27,7 @@ import com.google.accompanist.insets.rememberInsetsPaddingValues
 import com.google.accompanist.insets.ui.TopAppBar
 import org.mozilla.focus.R
 import org.mozilla.focus.activity.MainActivity
+import org.mozilla.focus.compose.autoMirror
 import org.mozilla.focus.ext.hideToolbar
 import org.mozilla.focus.ui.theme.FocusTheme
 import org.mozilla.focus.ui.theme.focusColors
@@ -98,8 +99,9 @@ abstract class BaseComposeFragment : Fragment() {
                                                 onClick = onNavigateUp()
                                             ) {
                                                 Icon(
-                                                    Icons.Filled.ArrowBack,
+                                                    painterResource(id = R.drawable.mozac_ic_back),
                                                     stringResource(R.string.go_back),
+                                                    modifier = Modifier.autoMirror(),
                                                     tint = focusColors.toolbarColor
                                                 )
                                             }

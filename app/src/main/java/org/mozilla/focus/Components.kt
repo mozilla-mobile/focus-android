@@ -112,7 +112,8 @@ class Components(
             javascriptEnabled = !settings.shouldBlockJavaScript(),
             remoteDebuggingEnabled = settings.shouldEnableRemoteDebugging(),
             webFontsEnabled = !settings.shouldBlockWebFonts(),
-            httpsOnlyMode = settings.getHttpsOnlyMode()
+            httpsOnlyMode = settings.getHttpsOnlyMode(),
+            preferredColorScheme = settings.getPreferredColorScheme()
         )
     }
 
@@ -164,8 +165,6 @@ class Components(
             MediaSessionFeature(context, MediaSessionService::class.java, this).start()
         }
     }
-
-    val migrator by lazy { EngineProvider.provideTrackingProtectionMigrator(context) }
 
     /**
      * The [CustomTabsServiceStore] holds global custom tabs related data.
