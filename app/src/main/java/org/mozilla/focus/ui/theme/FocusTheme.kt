@@ -14,7 +14,6 @@ import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.ReadOnlyComposable
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.platform.LocalConfiguration
-import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import mozilla.components.ui.colors.PhotonColors
 
@@ -29,7 +28,7 @@ val localDimensions = staticCompositionLocalOf { phoneDimensions() }
 @Composable
 fun FocusTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
-    content: @Composable () -> Unit
+    content: @Composable () -> Unit,
 ) {
     val dimensions = if (LocalConfiguration.current.screenWidthDp <= TABLET_SIZE) {
         phoneDimensions()
@@ -80,7 +79,7 @@ private fun darkColorPalette(): FocusColors = FocusColors(
     onboardingSemiBoldText = PhotonColors.LightGrey05,
     onboardingNormalText = PhotonColors.LightGrey50,
     settingsTextColor = PhotonColors.White,
-    settingsTextSummaryColor = PhotonColors.LightGrey50
+    settingsTextSummaryColor = PhotonColors.LightGrey50,
 
 )
 
@@ -113,7 +112,7 @@ private fun darkColorsMaterial(): Colors = darkColors(
     surface = PhotonColors.Ink60,
     onSurface = PhotonColors.LightGrey05,
     onBackground = PhotonColors.LightGrey05,
-    onPrimary = PhotonColors.LightGrey05
+    onPrimary = PhotonColors.LightGrey05,
 )
 
 private fun lightColorsMaterial(): Colors = lightColors(
@@ -121,22 +120,16 @@ private fun lightColorsMaterial(): Colors = lightColors(
     surface = PhotonColors.Violet05,
     onSurface = PhotonColors.Ink50,
     onBackground = PhotonColors.Ink50,
-    onPrimary = PhotonColors.Ink50
+    onPrimary = PhotonColors.Ink50,
 )
 fun phoneDimensions() = FocusDimensions(
-    onboardingTitle = 20.sp,
-    onboardingDescription = 14.sp,
-    onboardingStartBrowsingWidth = 232.dp,
-    onboardingStartBrowsingHeight = 36.dp,
-    onboardingFeaturesPaddingBottom = 40.dp,
-    onboardingFeatureDescriptionWidth = 232.dp
+    onboardingTitle = 24.sp,
+    onboardingSubtitleOne = 16.sp,
+    onboardingSubtitleTwo = 14.sp,
 )
 
 fun tabletDimensions() = FocusDimensions(
     onboardingTitle = 28.sp,
-    onboardingDescription = 18.sp,
-    onboardingStartBrowsingWidth = 400.dp,
-    onboardingStartBrowsingHeight = 36.dp,
-    onboardingFeaturesPaddingBottom = 180.dp,
-    onboardingFeatureDescriptionWidth = 360.dp
+    onboardingSubtitleOne = 18.sp,
+    onboardingSubtitleTwo = 18.sp,
 )

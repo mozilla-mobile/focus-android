@@ -6,7 +6,6 @@ package org.mozilla.focus.fragment
 
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
-import android.content.SharedPreferences
 import android.content.res.Configuration
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -14,11 +13,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
 import androidx.appcompat.content.res.AppCompatResources
-import androidx.core.text.TextUtilsCompat
-import androidx.core.view.ViewCompat
 import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
-import androidx.preference.PreferenceManager
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -39,7 +35,6 @@ import org.mozilla.focus.GleanMetrics.SearchBar
 import org.mozilla.focus.R
 import org.mozilla.focus.activity.MainActivity
 import org.mozilla.focus.databinding.FragmentUrlinputBinding
-import org.mozilla.focus.ext.components
 import org.mozilla.focus.ext.defaultSearchEngineName
 import org.mozilla.focus.ext.isSearch
 import org.mozilla.focus.ext.requireComponents
@@ -47,7 +42,6 @@ import org.mozilla.focus.ext.settings
 import org.mozilla.focus.input.InputToolbarIntegration
 import org.mozilla.focus.menu.home.HomeMenu
 import org.mozilla.focus.menu.home.HomeMenuItem
-import org.mozilla.focus.nimbus.FocusNimbus
 import org.mozilla.focus.searchsuggestions.SearchSuggestionsViewModel
 import org.mozilla.focus.searchsuggestions.ui.SearchSuggestionsFragment
 import org.mozilla.focus.state.AppAction
@@ -57,21 +51,13 @@ import org.mozilla.focus.topsites.DefaultTopSitesStorage.Companion.TOP_SITES_MAX
 import org.mozilla.focus.topsites.DefaultTopSitesView
 import org.mozilla.focus.topsites.TopSitesOverlay
 import org.mozilla.focus.ui.theme.FocusTheme
-import org.mozilla.focus.utils.AppConstants
 import org.mozilla.focus.utils.OneShotOnPreDrawListener
 import org.mozilla.focus.utils.SearchUtils
 import org.mozilla.focus.utils.StatusBarUtils
 import org.mozilla.focus.utils.SupportUtils
 import org.mozilla.focus.utils.UrlUtils
 import org.mozilla.focus.utils.ViewUtils
-import java.util.Locale
 import kotlin.coroutines.CoroutineContext
-
-private const val TIP_ONE_CAROUSEL_POSITION = 1
-private const val TIP_TWO_CAROUSEL_POSITION = 2
-private const val TIP_THREE_CAROUSEL_POSITION = 3
-private const val TIP_FOUR_CAROUSEL_POSITION = 4
-private const val TIP_FIVE_CAROUSEL_POSITION = 5
 
 class FocusCrashException : Exception()
 
@@ -84,20 +70,16 @@ class FocusCrashException : Exception()
 class UrlInputFragment :
     BaseFragment(),
     View.OnClickListener,
-    SharedPreferences.OnSharedPreferenceChangeListener,
     CoroutineScope {
     companion object {
-        @JvmField
-        val FRAGMENT_TAG = "url_input"
+        const val FRAGMENT_TAG = "url_input"
 
-        private const val duckDuckGo = "DuckDuckGo"
+        private const val ARGUMENT_ANIMATION = "animation"
+        private const val ARGUMENT_SESSION_UUID = "sesssion_uuid"
 
-        private val ARGUMENT_ANIMATION = "animation"
-        private val ARGUMENT_SESSION_UUID = "sesssion_uuid"
+        private const val ANIMATION_BROWSER_SCREEN = "browser_screen"
 
-        private val ANIMATION_BROWSER_SCREEN = "browser_screen"
-
-        private val ANIMATION_DURATION = 200
+        private const val ANIMATION_DURATION = 200
 
         @JvmStatic
         fun createWithoutSession(): UrlInputFragment {
@@ -111,7 +93,7 @@ class UrlInputFragment :
 
         @JvmStatic
         fun createWithTab(
-            tabId: String
+            tabId: String,
         ): UrlInputFragment {
             val arguments = Bundle()
 
@@ -151,9 +133,6 @@ class UrlInputFragment :
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        PreferenceManager.getDefaultSharedPreferences(context)
-            .registerOnSharedPreferenceChangeListener(this)
-
         // Get session from session manager if there's a session UUID in the fragment's arguments
         arguments?.getString(ARGUMENT_SESSION_UUID)?.let { id ->
             tab = requireComponents.store.state.findTab(id)
@@ -164,14 +143,15 @@ class UrlInputFragment :
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        searchSuggestionsViewModel = ViewModelProvider(this).get(SearchSuggestionsViewModel::class.java)
+        searchSuggestionsViewModel =
+            ViewModelProvider(this).get(SearchSuggestionsViewModel::class.java)
 
         childFragmentManager.beginTransaction()
             .replace(binding.searchViewContainer.id, SearchSuggestionsFragment.create())
             .commit()
 
         searchSuggestionsViewModel.selectedSearchSuggestion.observe(
-            viewLifecycleOwner
+            viewLifecycleOwner,
         ) {
             val isSuggestion = searchSuggestionsViewModel.searchQuery.value != it
             it?.let {
@@ -229,26 +209,6 @@ class UrlInputFragment :
         _binding = null
     }
 
-    private fun updateTipsLabel() {
-        val context = context ?: return
-        val tips = context.components.tipManager.getAvailableTips()
-        binding.homeTips.tipsAdapter.submitList(tips)
-        updateTipsPosition()
-    }
-
-    /**
-     * The pro tips should start from right to left if the language is read right to left
-     * (example Persian)
-     */
-    private fun updateTipsPosition() {
-        val isRightToLeftLanguage = TextUtilsCompat.getLayoutDirectionFromLocale(
-            Locale.getDefault()
-        ) == ViewCompat.LAYOUT_DIRECTION_RTL
-        if (isRightToLeftLanguage) {
-            binding.homeTips.scrollToPosition(binding.homeTips.tipsAdapter.itemCount - 1)
-        }
-    }
-
     private fun adjustViewToStatusBarHeight(statusBarHeight: Int) {
         val inputHeight = resources.getDimension(R.dimen.urlinput_height)
 
@@ -257,7 +217,8 @@ class UrlInputFragment :
         val topMargin = (inputHeight + statusBarHeight).toInt()
 
         if (binding.searchViewContainer.layoutParams is ViewGroup.MarginLayoutParams) {
-            val marginParams = binding.searchViewContainer.layoutParams as ViewGroup.MarginLayoutParams
+            val marginParams =
+                binding.searchViewContainer.layoutParams as ViewGroup.MarginLayoutParams
             marginParams.topMargin = topMargin
         }
 
@@ -270,7 +231,7 @@ class UrlInputFragment :
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View {
         _binding = FragmentUrlinputBinding.inflate(inflater, container, false)
 
@@ -292,10 +253,10 @@ class UrlInputFragment :
                 binding.browserToolbar,
                 fragment = this,
                 shippedDomainsProvider = shippedDomainsProvider,
-                customDomainsProvider = customDomainsProvider
+                customDomainsProvider = customDomainsProvider,
             ),
             owner = this,
-            view = binding.browserToolbar
+            view = binding.browserToolbar,
         )
 
         topSitesFeature.set(
@@ -306,12 +267,12 @@ class UrlInputFragment :
                     TopSitesConfig(
                         totalSites = TOP_SITES_MAX_LIMIT,
                         frecencyConfig = null,
-                        providerConfig = null
+                        providerConfig = null,
                     )
-                }
+                },
             ),
             owner = this,
-            view = view
+            view = view,
         )
 
         binding.dismissView.setOnClickListener(this)
@@ -326,7 +287,7 @@ class UrlInputFragment :
         } else {
             binding.backgroundView.background = AppCompatResources.getDrawable(
                 requireContext(),
-                R.drawable.home_background
+                R.drawable.home_background,
             )
 
             binding.dismissView.visibility = View.GONE
@@ -347,11 +308,6 @@ class UrlInputFragment :
 
         binding.browserToolbar.editMode()
         setHomeMenu()
-        if (!FocusNimbus.features.onboarding.value().isCfrEnabled) {
-            updateTipsLabel()
-        } else {
-            binding.homeTips.visibility = View.GONE
-        }
     }
 
     private fun setHomeMenu() {
@@ -367,13 +323,13 @@ class UrlInputFragment :
         requireComponents.tabsUseCases.addTab(
             SupportUtils.HELP_URL,
             source = SessionState.Source.Internal.Menu,
-            private = true
+            private = true,
         )
     }
 
     private fun openSettingsPage() {
         requireComponents.appStore.dispatch(
-            AppAction.OpenSettings(page = Screen.Settings.Page.Start)
+            AppAction.OpenSettings(page = Screen.Settings.Page.Start),
         )
     }
 
@@ -390,7 +346,7 @@ class UrlInputFragment :
         super.onStart()
 
         activity?.let {
-            if (requireContext().settings.isFirstRun()) return@onStart
+            if (requireContext().settings.isFirstRun) return@onStart
         }
     }
 
@@ -401,7 +357,7 @@ class UrlInputFragment :
             // Make sure we update the background for landscape / portrait orientations.
             binding.backgroundView.background = AppCompatResources.getDrawable(
                 requireContext(),
-                R.drawable.home_background
+                R.drawable.home_background,
             )
         }
     }
@@ -473,24 +429,27 @@ class UrlInputFragment :
         isAnimating = true
 
         val xyOffset = (
-            if (isOverlay)
+            if (isOverlay) {
                 (binding.urlInputContainerView.layoutParams as FrameLayout.LayoutParams).bottomMargin
-            else
+            } else {
                 0
+            }
             ).toFloat()
 
         val width = binding.urlInputBackgroundView.width.toFloat()
         val height = binding.urlInputBackgroundView.height.toFloat()
 
-        val widthScale = if (isOverlay)
+        val widthScale = if (isOverlay) {
             (width + 2 * xyOffset) / width
-        else
+        } else {
             1f
+        }
 
-        val heightScale = if (isOverlay)
+        val heightScale = if (isOverlay) {
             (height + 2 * xyOffset) / height
-        else
+        } else {
             1f
+        }
 
         if (!reverse) {
             binding.urlInputBackgroundView.apply {
@@ -511,17 +470,19 @@ class UrlInputFragment :
             .alpha((if (reverse && isOverlay) 0 else 1).toFloat())
             .translationX(if (reverse) -xyOffset else 0f)
             .translationY(if (reverse) -xyOffset else 0f)
-            .setListener(object : AnimatorListenerAdapter() {
-                override fun onAnimationEnd(animation: Animator) {
-                    if (reverse) {
-                        if (isOverlay) {
-                            dismiss()
+            .setListener(
+                object : AnimatorListenerAdapter() {
+                    override fun onAnimationEnd(animation: Animator) {
+                        if (reverse) {
+                            if (isOverlay) {
+                                dismiss()
+                            }
                         }
-                    }
 
-                    isAnimating = false
-                }
-            })
+                        isAnimating = false
+                    }
+                },
+            )
 
         // We only need to animate the toolbar if we are an overlay.
         /*
@@ -574,8 +535,6 @@ class UrlInputFragment :
 
             ViewUtils.hideKeyboard(binding.browserToolbar)
 
-            if (handleL10NTrigger(input)) return
-
             val (isUrl, url, searchTerms) = normalizeUrlAndSearchTerms(input)
 
             openUrl(url, searchTerms)
@@ -585,37 +544,15 @@ class UrlInputFragment :
             if (isUrl) {
                 SearchBar.enteredUrl.record(NoExtras())
             } else {
-                val defaultSearchEngineName = requireComponents.store.defaultSearchEngineName()
+                val defaultSearchEngineName =
+                    requireComponents.store.defaultSearchEngineName().lowercase()
                 SearchBar.performedSearch.record(
-                    SearchBar.PerformedSearchExtra(defaultSearchEngineName)
+                    SearchBar.PerformedSearchExtra(defaultSearchEngineName),
                 )
                 TelemetryWrapper.searchEnterEvent()
-                BrowserSearch.searchCount["action"].add()
+                BrowserSearch.searchCount["$defaultSearchEngineName.action"].add()
             }
         }
-    }
-
-    // This isn't that complex, and is only used for l10n screenshots.
-    @Suppress("ComplexMethod")
-    private fun handleL10NTrigger(input: String): Boolean {
-        if (!AppConstants.isDevBuild) return false
-
-        var triggerHandled = true
-
-        when (input) {
-            "l10n:tip:1" -> binding.homeTips.scrollToPosition(TIP_ONE_CAROUSEL_POSITION)
-            "l10n:tip:2" -> binding.homeTips.scrollToPosition(TIP_TWO_CAROUSEL_POSITION)
-            "l10n:tip:3" -> binding.homeTips.scrollToPosition(TIP_THREE_CAROUSEL_POSITION)
-            "l10n:tip:4" -> binding.homeTips.scrollToPosition(TIP_FOUR_CAROUSEL_POSITION)
-            "l10n:tip:5" -> binding.homeTips.scrollToPosition(TIP_FIVE_CAROUSEL_POSITION)
-            else -> triggerHandled = false
-        }
-
-        if (triggerHandled) {
-            binding.browserToolbar.displayMode()
-            binding.browserToolbar.editMode()
-        }
-        return triggerHandled
     }
 
     private fun handleCrashTrigger(input: String) {
@@ -627,19 +564,25 @@ class UrlInputFragment :
     private fun normalizeUrlAndSearchTerms(input: String): Triple<Boolean, String, String?> {
         val isUrl = UrlUtils.isUrl(input)
 
-        val url = if (isUrl)
+        val url = if (isUrl) {
             UrlUtils.normalize(input)
-        else
+        } else {
             SearchUtils.createSearchUrl(context, input)
+        }
 
-        val searchTerms = if (isUrl)
+        val searchTerms = if (isUrl) {
             null
-        else
+        } else {
             input.trim { it <= ' ' }
+        }
         return Triple(isUrl, url, searchTerms)
     }
 
-    private fun onSearch(query: String, isSuggestion: Boolean = false, alwaysSearch: Boolean = false) {
+    private fun onSearch(
+        query: String,
+        isSuggestion: Boolean = false,
+        alwaysSearch: Boolean = false,
+    ) {
         if (alwaysSearch) {
             val url = SearchUtils.createSearchUrl(context, query)
             openUrl(url, query)
@@ -655,14 +598,16 @@ class UrlInputFragment :
         }
 
         TelemetryWrapper.searchSelectEvent(isSuggestion)
-        BrowserSearch.searchCount["suggestion"].add()
+
+        val defaultSearchEngineName = requireComponents.store.defaultSearchEngineName().lowercase()
+        BrowserSearch.searchCount["$defaultSearchEngineName.suggestion"].add()
     }
 
     private fun openUrl(url: String, searchTerms: String?) {
         when (url) {
             "focus:about" -> {
                 requireComponents.appStore.dispatch(
-                    AppAction.OpenSettings(Screen.Settings.Page.About)
+                    AppAction.OpenSettings(Screen.Settings.Page.About),
                 )
                 return
             }
@@ -670,7 +615,12 @@ class UrlInputFragment :
 
         if (!searchTerms.isNullOrEmpty()) {
             tab?.let {
-                requireComponents.store.dispatch(ContentAction.UpdateSearchTermsAction(it.id, searchTerms))
+                requireComponents.store.dispatch(
+                    ContentAction.UpdateSearchTermsAction(
+                        it.id,
+                        searchTerms,
+                    ),
+                )
             }
         }
 
@@ -684,11 +634,16 @@ class UrlInputFragment :
                 url,
                 source = SessionState.Source.Internal.UserEntered,
                 selectTab = true,
-                private = true
+                private = true,
             )
 
             if (!searchTerms.isNullOrEmpty()) {
-                requireComponents.store.dispatch(ContentAction.UpdateSearchTermsAction(tabId, searchTerms))
+                requireComponents.store.dispatch(
+                    ContentAction.UpdateSearchTermsAction(
+                        tabId,
+                        searchTerms,
+                    ),
+                )
             }
         }
     }
@@ -722,9 +677,5 @@ class UrlInputFragment :
 
             binding.searchViewContainer.visibility = View.VISIBLE
         }
-    }
-
-    override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences, key: String) {
-        if (key == activity?.getString(R.string.pref_key_homescreen_tips)) { updateTipsLabel() }
     }
 }

@@ -11,12 +11,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.preference.PreferenceManager
 import androidx.viewpager.widget.ViewPager
 import org.mozilla.focus.GleanMetrics.Onboarding
 import org.mozilla.focus.R
 import org.mozilla.focus.databinding.FragmentFirstrunBinding
 import org.mozilla.focus.ext.requireComponents
+import org.mozilla.focus.ext.settings
 import org.mozilla.focus.firstrun.FirstrunPagerAdapter
 import org.mozilla.focus.state.AppAction
 import org.mozilla.focus.telemetry.TelemetryWrapper
@@ -31,7 +31,8 @@ class FirstrunFragment : Fragment(), View.OnClickListener {
     override fun onAttach(context: Context) {
         super.onAttach(context)
 
-        val transition = TransitionInflater.from(context).inflateTransition(R.transition.firstrun_exit)
+        val transition =
+            TransitionInflater.from(context).inflateTransition(R.transition.firstrun_exit)
 
         exitTransition = transition
 
@@ -41,7 +42,11 @@ class FirstrunFragment : Fragment(), View.OnClickListener {
         TelemetryWrapper.showFirstRunPageEvent(0)
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?,
+    ): View {
         _binding = FragmentFirstrunBinding.inflate(inflater, container, false)
 
         setupPager()
@@ -92,28 +97,30 @@ class FirstrunFragment : Fragment(), View.OnClickListener {
 
             clipToPadding = false
             adapter = firstRunPagerAdapter
-            addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
-                override fun onPageSelected(position: Int) {
-                    Onboarding.pageDisplayed.record(Onboarding.PageDisplayedExtra(0))
-                    TelemetryWrapper.showFirstRunPageEvent(position)
+            addOnPageChangeListener(
+                object : ViewPager.OnPageChangeListener {
+                    override fun onPageSelected(position: Int) {
+                        Onboarding.pageDisplayed.record(Onboarding.PageDisplayedExtra(0))
+                        TelemetryWrapper.showFirstRunPageEvent(position)
 
-                    contentDescription =
-                        firstRunPagerAdapter.getPageAccessibilityDescription(position)
-                }
+                        contentDescription =
+                            firstRunPagerAdapter.getPageAccessibilityDescription(position)
+                    }
 
-                override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {}
+                    override fun onPageScrolled(
+                        position: Int,
+                        positionOffset: Float,
+                        positionOffsetPixels: Int,
+                    ) {}
 
-                override fun onPageScrollStateChanged(state: Int) {}
-            })
+                    override fun onPageScrollStateChanged(state: Int) {}
+                },
+            )
         }
     }
 
     private fun finishFirstrun() {
-        PreferenceManager.getDefaultSharedPreferences(requireContext())
-            .edit()
-            .putBoolean(FIRSTRUN_PREF, true)
-            .apply()
-
+        requireContext().settings.isFirstRun = false
         val selectedTabId = requireComponents.store.state.selectedTabId
         requireComponents.appStore.dispatch(AppAction.FinishFirstRun(selectedTabId))
     }
@@ -125,7 +132,7 @@ class FirstrunFragment : Fragment(), View.OnClickListener {
                 0,
                 statusBarHeight,
                 0,
-                0
+                0,
             )
         }
     }
@@ -137,7 +144,6 @@ class FirstrunFragment : Fragment(), View.OnClickListener {
 
     companion object {
         const val FRAGMENT_TAG = "firstrun"
-        const val FIRSTRUN_PREF = "firstrun_shown"
 
         fun create(): FirstrunFragment {
             val arguments = Bundle()

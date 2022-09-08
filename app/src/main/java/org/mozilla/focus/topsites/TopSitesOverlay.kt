@@ -23,6 +23,7 @@ import mozilla.components.lib.state.ext.observeAsComposableState
 import org.mozilla.focus.Components
 import org.mozilla.focus.GleanMetrics.Shortcuts
 import org.mozilla.focus.components
+import org.mozilla.focus.state.AppAction
 
 @OptIn(DelicateCoroutinesApi::class)
 @Composable
@@ -36,29 +37,20 @@ fun TopSitesOverlay(modifier: Modifier = Modifier) {
     if (!topSites.isNullOrEmpty()) {
         Column(
             modifier = modifier,
-            horizontalAlignment = Alignment.CenterHorizontally
+            horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             Spacer(modifier = Modifier.height(24.dp))
 
             TopSites(
                 topSites = topSites,
-                onTopSiteClicked = { item ->
-                    Shortcuts.shortcutOpenedCounter.add()
-
-                    components.tabsUseCases.addTab(
-                        url = item.url,
-                        source = SessionState.Source.Internal.HomeScreen,
-                        selectTab = true,
-                        private = true
-                    )
-                },
+                onTopSiteClicked = { item -> openTopSite(item, components) },
                 onRemoveTopSiteClicked = { item ->
                     removeTopSite(item, components)
                 },
                 onRenameTopSiteClicked = { topSite ->
                     showRenameDialog.value = true
                     topSiteItem.value = topSite
-                }
+                },
             )
             Spacer(modifier = Modifier.height(24.dp))
         }
@@ -75,11 +67,28 @@ fun TopSitesOverlay(modifier: Modifier = Modifier) {
                     onDismiss = {
                         showRenameDialog.value = false
                         topSiteItem.value = null
-                    }
+                    },
                 )
             }
         }
     }
+}
+
+private fun openTopSite(item: TopSite, components: Components) {
+    val currentTabId = components.store.state.selectedTabId
+    if (currentTabId.isNullOrEmpty()) {
+        components.tabsUseCases.addTab(
+            url = item.url,
+            source = SessionState.Source.Internal.HomeScreen,
+            selectTab = true,
+            private = true,
+        )
+    } else {
+        components.sessionUseCases.loadUrl(item.url, currentTabId)
+        components.appStore.dispatch(AppAction.FinishEdit(currentTabId))
+    }
+
+    Shortcuts.shortcutOpenedCounter.add()
 }
 
 @OptIn(DelicateCoroutinesApi::class)
@@ -97,7 +106,7 @@ fun renameTopSite(selectedTopSite: TopSite, newTitle: String, components: Compon
         components.topSitesUseCases.updateTopSites.invoke(
             selectedTopSite,
             newTitle,
-            selectedTopSite.url
+            selectedTopSite.url,
         )
     }
 }

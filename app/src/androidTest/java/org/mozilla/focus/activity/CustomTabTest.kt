@@ -41,13 +41,14 @@ class CustomTabTest {
 
     @get: Rule
     val activityTestRule = ActivityTestRule(
-        IntentReceiverActivity::class.java, true, false
+        IntentReceiverActivity::class.java,
+        true,
+        false,
     )
 
     @Before
     fun setUp() {
         featureSettingsHelper.setCfrForTrackingProtectionEnabled(false)
-        featureSettingsHelper.setNumberOfTabsOpened(4)
         webServer = MockWebServer().apply {
             dispatcher = MockWebServerHelper.AndroidAssetDispatcher()
             start()
@@ -71,7 +72,7 @@ class CustomTabTest {
         val customTabPage = getGenericAsset(webServer)
         val customTabActivity =
             launchActivity<IntentReceiverActivity>(
-                createCustomTabIntent(customTabPage.url, MENU_ITEM_LABEL, ACTION_BUTTON_DESCRIPTION)
+                createCustomTabIntent(customTabPage.url, MENU_ITEM_LABEL, ACTION_BUTTON_DESCRIPTION),
             )
 
         browserScreen {
@@ -95,6 +96,7 @@ class CustomTabTest {
 
     @SmokeTest
     @Test
+    @Ignore("See https://github.com/mozilla-mobile/focus-android/issues/7580")
     fun openCustomTabInFocusTest() {
         val browserPage = getGenericAsset(webServer)
         val customTabPage = getGenericTabAsset(webServer, 1)

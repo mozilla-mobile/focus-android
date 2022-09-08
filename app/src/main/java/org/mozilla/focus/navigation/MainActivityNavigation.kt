@@ -18,7 +18,10 @@ import org.mozilla.focus.fragment.BrowserFragment
 import org.mozilla.focus.fragment.FirstrunFragment
 import org.mozilla.focus.fragment.UrlInputFragment
 import org.mozilla.focus.fragment.about.AboutFragment
-import org.mozilla.focus.fragment.onboarding.OnboardingFragment
+import org.mozilla.focus.fragment.onboarding.OnboardingFirstFragment
+import org.mozilla.focus.fragment.onboarding.OnboardingSecondFragment
+import org.mozilla.focus.fragment.onboarding.OnboardingStep
+import org.mozilla.focus.fragment.onboarding.OnboardingStorage
 import org.mozilla.focus.locale.screen.LanguageFragment
 import org.mozilla.focus.nimbus.FocusNimbus
 import org.mozilla.focus.settings.GeneralSettingsFragment
@@ -44,7 +47,7 @@ import kotlin.collections.forEach as withEach
  * needed.
  */
 class MainActivityNavigation(
-    private val activity: MainActivity
+    private val activity: MainActivity,
 ) {
     /**
      * Home screen.
@@ -60,7 +63,7 @@ class MainActivityNavigation(
             ViewUtils.showBrandedSnackbar(
                 activity.findViewById(android.R.id.content),
                 R.string.feedback_erase2,
-                activity.resources.getInteger(R.integer.erase_snackbar_delay)
+                activity.resources.getInteger(R.integer.erase_snackbar_delay),
             )
         }
 
@@ -116,7 +119,7 @@ class MainActivityNavigation(
      * Edit URL of tab with the given [tabId].
      */
     fun edit(
-        tabId: String
+        tabId: String,
     ) {
         val fragmentManager = activity.supportFragmentManager
 
@@ -135,20 +138,36 @@ class MainActivityNavigation(
     }
 
     /**
-     * Show first run onboarding.
+     * Show first run onBoarding.
      */
     fun firstRun() {
         val onboardingFeature = FocusNimbus.features.onboarding
         val onboardingConfig = onboardingFeature.value(activity)
         val onboardingFragment = if (onboardingConfig.isEnabled) {
             onboardingFeature.recordExposure()
-            OnboardingFragment.create()
+            val onBoardingStorage = OnboardingStorage(activity)
+            when (onBoardingStorage.getCurrentOnboardingStep()) {
+                OnboardingStep.ON_BOARDING_FIRST_SCREEN -> {
+                    OnboardingFirstFragment()
+                }
+                OnboardingStep.ON_BOARDING_SECOND_SCREEN -> {
+                    OnboardingSecondFragment()
+                }
+            }
         } else {
             FirstrunFragment.create()
         }
+
         activity.supportFragmentManager
             .beginTransaction()
-            .replace(R.id.container, onboardingFragment, FirstrunFragment.FRAGMENT_TAG)
+            .replace(R.id.container, onboardingFragment, onboardingFragment::class.java.simpleName)
+            .commit()
+    }
+
+    fun showOnBoardingSecondScreen() {
+        activity.supportFragmentManager
+            .beginTransaction()
+            .replace(R.id.container, OnboardingSecondFragment(), OnboardingSecondFragment::class.java.simpleName)
             .commit()
     }
 
@@ -225,7 +244,7 @@ class MainActivityNavigation(
             .replace(
                 R.id.container,
                 SitePermissionOptionsFragment.addSitePermission(sitePermission = sitePermission),
-                SitePermissionOptionsFragment.FRAGMENT_TAG
+                SitePermissionOptionsFragment.FRAGMENT_TAG,
             )
             .commit()
     }

@@ -21,7 +21,9 @@ import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.view.isVisible
 import androidx.preference.PreferenceManager
 import mozilla.components.browser.state.selector.privateTabs
+import mozilla.components.browser.state.state.SessionState
 import mozilla.components.concept.engine.EngineView
+import mozilla.components.feature.search.widget.BaseVoiceSearchActivity
 import mozilla.components.lib.auth.canUseBiometricFeature
 import mozilla.components.lib.crash.Crash
 import mozilla.components.service.glean.private.NoExtras
@@ -32,6 +34,7 @@ import mozilla.components.support.locale.LocaleAwareAppCompatActivity
 import mozilla.components.support.utils.SafeIntent
 import org.mozilla.focus.GleanMetrics.AppOpened
 import org.mozilla.focus.GleanMetrics.Notifications
+import org.mozilla.focus.GleanMetrics.SearchWidget
 import org.mozilla.focus.R
 import org.mozilla.focus.appreview.AppReviewUtils
 import org.mozilla.focus.databinding.ActivityMainBinding
@@ -51,6 +54,7 @@ import org.mozilla.focus.state.Screen
 import org.mozilla.focus.telemetry.TelemetryWrapper
 import org.mozilla.focus.telemetry.startuptelemetry.StartupPathProvider
 import org.mozilla.focus.telemetry.startuptelemetry.StartupTypeTelemetry
+import org.mozilla.focus.utils.SearchUtils
 import org.mozilla.focus.utils.StatusBarUtils
 import org.mozilla.focus.utils.SupportUtils
 
@@ -78,7 +82,6 @@ open class MainActivity : LocaleAwareAppCompatActivity() {
         updateSecureWindowFlags()
 
         super.onCreate(savedInstanceState)
-
         _binding = ActivityMainBinding.inflate(layoutInflater)
 
         // Checks if Activity is currently in PiP mode if launched from external intents, then exits it
@@ -98,7 +101,8 @@ open class MainActivity : LocaleAwareAppCompatActivity() {
         window.statusBarColor = ContextCompat.getColor(this, android.R.color.transparent)
         when (resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) {
             Configuration.UI_MODE_NIGHT_UNDEFINED, // We assume light here per Android doc's recommendation
-            Configuration.UI_MODE_NIGHT_NO -> {
+            Configuration.UI_MODE_NIGHT_NO,
+            -> {
                 updateLightSystemBars()
             }
             Configuration.UI_MODE_NIGHT_YES -> {
@@ -113,12 +117,8 @@ open class MainActivity : LocaleAwareAppCompatActivity() {
         }
 
         val safeIntent = SafeIntent(intent)
-        val isTheFirstLaunch = settings.getAppLaunchCount() == 0
-        if (isTheFirstLaunch) {
-            setSplashScreenPreDrawListener(safeIntent)
-        } else {
-            showFirstScreen(safeIntent)
-        }
+
+        handleSearchWidgetNavigation(safeIntent)
 
         if (intent.hasExtra(HomeScreen.ADD_TO_HOMESCREEN_TAG)) {
             intentProcessor.handleNewIntent(this, safeIntent)
@@ -139,26 +139,69 @@ open class MainActivity : LocaleAwareAppCompatActivity() {
         AppReviewUtils.showAppReview(this)
     }
 
+    private fun handleSearchWidgetNavigation(safeIntent: SafeIntent) {
+        val voiceSearchText = safeIntent.getStringExtra(BaseVoiceSearchActivity.SPEECH_PROCESSING)
+        if (!voiceSearchText.isNullOrEmpty()) {
+            openVoiceSearchBrowser(voiceSearchText)
+            return
+        }
+
+        val searchWidgetIntent = safeIntent.getBooleanExtra(IntentReceiverActivity.SEARCH_WIDGET_EXTRA, false)
+        if (searchWidgetIntent) {
+            SearchWidget.newTabButton.record(NoExtras())
+            showHomeScreen()
+            return
+        }
+
+        val isTheFirstLaunch = settings.getAppLaunchCount() == 0
+        if (isTheFirstLaunch) {
+            setSplashScreenPreDrawListener(safeIntent)
+        } else {
+            showFirstScreen(safeIntent)
+        }
+    }
+
     private fun setSplashScreenPreDrawListener(safeIntent: SafeIntent) {
         val endTime = System.currentTimeMillis() + REQUEST_TIME_OUT
-        binding.container.viewTreeObserver.addOnPreDrawListener(object : ViewTreeObserver.OnPreDrawListener {
-            override fun onPreDraw(): Boolean {
-                return if (System.currentTimeMillis() >= endTime) {
-                    showFirstScreen(safeIntent)
-                    binding.container.viewTreeObserver.removeOnPreDrawListener(this)
-                    true
-                } else {
-                    false
+        binding.container.viewTreeObserver.addOnPreDrawListener(
+            object : ViewTreeObserver.OnPreDrawListener {
+                override fun onPreDraw(): Boolean {
+                    return if (System.currentTimeMillis() >= endTime) {
+                        showFirstScreen(safeIntent)
+                        binding.container.viewTreeObserver.removeOnPreDrawListener(this)
+                        true
+                    } else {
+                        false
+                    }
                 }
-            }
-        }
+            },
         )
+    }
+
+    private fun openVoiceSearchBrowser(voiceSearchText: String) {
+        val tabId = this.components.tabsUseCases.addTab(
+            url = SearchUtils.createSearchUrl(
+                this,
+                voiceSearchText,
+            ),
+            source = SessionState.Source.External.ActionSend(null),
+            searchTerms = voiceSearchText,
+            selectTab = true,
+            private = true,
+        )
+        components.appStore.dispatch(AppAction.OpenTab(tabId))
+        lifecycle.addObserver(navigator)
+    }
+
+    private fun showHomeScreen() {
+        components.appStore.dispatch(AppAction.ShowHomeScreen)
+        lifecycle.addObserver(navigator)
     }
 
     private fun showFirstScreen(safeIntent: SafeIntent) {
         // The performance check was added after the shouldShowFirstRun to take as much of the
         // code path as possible
-        if (settings.isFirstRun() &&
+        if (settings.isFirstRun &&
             !Performance.processIntentIfPerformanceTest(safeIntent, this)
         ) {
             components.appStore.dispatch(AppAction.ShowFirstRun)
@@ -222,11 +265,13 @@ open class MainActivity : LocaleAwareAppCompatActivity() {
         startupPathProvider.onIntentReceived(intent)
         val intent = SafeIntent(unsafeIntent)
 
+        handleSearchWidgetNavigation(intent)
+
         if (intent.dataString.equals(SupportUtils.OPEN_WITH_DEFAULT_BROWSER_URL)) {
             components.appStore.dispatch(
                 AppAction.OpenSettings(
-                    page = Screen.Settings.Page.General
-                )
+                    page = Screen.Settings.Page.General,
+                ),
             )
             super.onNewIntent(unsafeIntent)
             return
@@ -277,7 +322,9 @@ open class MainActivity : LocaleAwareAppCompatActivity() {
     override fun onCreateView(parent: View?, name: String, context: Context, attrs: AttributeSet): View? {
         return if (name == EngineView::class.java.name) {
             components.engine.createView(context, attrs).asView()
-        } else super.onCreateView(parent, name, context, attrs)
+        } else {
+            super.onCreateView(parent, name, context, attrs)
+        }
     }
 
     override fun onBackPressed() {
@@ -336,7 +383,7 @@ open class MainActivity : LocaleAwareAppCompatActivity() {
             PreferenceManager.getDefaultSharedPreferences(this)
                 .edit().putBoolean(
                     getString(R.string.pref_key_biometric),
-                    false
+                    false,
                 ).apply()
         }
     }
@@ -405,7 +452,7 @@ open class MainActivity : LocaleAwareAppCompatActivity() {
 
     enum class AppOpenType(val type: String) {
         LAUNCH("Launch"),
-        RESUME("Resume")
+        RESUME("Resume"),
     }
 
     companion object {

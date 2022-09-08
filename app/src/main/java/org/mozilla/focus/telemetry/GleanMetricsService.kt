@@ -24,6 +24,7 @@ import org.mozilla.focus.Components
 import org.mozilla.focus.GleanMetrics.Browser
 import org.mozilla.focus.GleanMetrics.GleanBuildInfo
 import org.mozilla.focus.GleanMetrics.LegacyIds
+import org.mozilla.focus.GleanMetrics.Metrics
 import org.mozilla.focus.GleanMetrics.MozillaProducts
 import org.mozilla.focus.GleanMetrics.Pings
 import org.mozilla.focus.GleanMetrics.Preferences
@@ -59,10 +60,10 @@ class GleanMetricsService(context: Context) : MetricsService {
                 channel = BuildConfig.FLAVOR,
                 httpClient = ConceptFetchHttpUploader(
                     client = lazy(LazyThreadSafetyMode.NONE) { components.client },
-                    usePrivateRequest = true
-                )
+                    usePrivateRequest = true,
+                ),
             ),
-            buildInfo = GleanBuildInfo.buildInfo
+            buildInfo = GleanBuildInfo.buildInfo,
         )
 
         Glean.registerPings(Pings)
@@ -73,9 +74,8 @@ class GleanMetricsService(context: Context) : MetricsService {
 
         // Do this immediately after init.
         GlobalScope.launch(IO) {
-
             // Wait for preferences to be collected before we send the activation ping.
-            collectPrefMetrics(components, settings, context).await()
+            collectPrefMetricsAsync(components, settings, context).await()
 
             // Set the client ID in Glean as part of the deletion-request.
             LegacyIds.clientId.set(UUID.fromString(TelemetryWrapper.clientId))
@@ -90,21 +90,23 @@ class GleanMetricsService(context: Context) : MetricsService {
         }
     }
 
-    private fun collectPrefMetrics(
+    private fun collectPrefMetricsAsync(
         components: Components,
         settings: Settings,
-        context: Context
+        context: Context,
     ) = CoroutineScope(IO).async {
         val installedBrowsers = BrowsersCache.all(context)
         val hasFenixInstalled = FenixProductDetector.getInstalledFenixVersions(context).isNotEmpty()
         val isFenixDefaultBrowser = FenixProductDetector.isFenixDefaultBrowser(installedBrowsers.defaultBrowser)
         val isFocusDefaultBrowser = installedBrowsers.isDefaultBrowser
 
+        Metrics.searchWidgetInstalled.set(settings.searchWidgetInstalled)
+
         Browser.isDefault.set(isFocusDefaultBrowser)
         Browser.localeOverride.set(components.store.state.locale?.displayName ?: "none")
         val shortcutsOnHomeNumber = components.topSitesStorage.getTopSites(
             totalSites = TOP_SITES_MAX_LIMIT,
-            frecencyConfig = null
+            frecencyConfig = null,
         ).size
         Shortcuts.shortcutsOnHomeNumber.set(shortcutsOnHomeNumber.toLong())
 

@@ -3,7 +3,8 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
 object Versions {
-    const val compose_version = "1.1.1"
+    const val compose_version = "1.2.1"
+    const val compose_compiler = "1.1.1"
     const val leakcanary = "2.8.1"
     const val sentry = "5.7.3"
 
@@ -38,7 +39,7 @@ object Versions {
 
     object Gradle {
         const val kotlin_plugin = Kotlin.version
-        const val android_plugin = "7.0.0"
+        const val android_plugin = "7.2.1"
     }
 
     object Test {
