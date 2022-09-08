@@ -67,7 +67,6 @@ import org.mozilla.focus.search.SearchMigration
 import org.mozilla.focus.state.AppState
 import org.mozilla.focus.state.AppStore
 import org.mozilla.focus.state.Screen
-import org.mozilla.focus.tabs.MergeTabsMiddleware
 import org.mozilla.focus.telemetry.GleanMetricsService
 import org.mozilla.focus.telemetry.TelemetryMiddleware
 import org.mozilla.focus.telemetry.startuptelemetry.AppStartReasonProvider
@@ -83,14 +82,14 @@ import java.util.Locale
 class Components(
     context: Context,
     private val engineOverride: Engine? = null,
-    private val clientOverride: Client? = null
+    private val clientOverride: Client? = null,
 ) {
     val appStore: AppStore by lazy {
         AppStore(
             AppState(
                 screen = Screen.Home,
-                topSites = emptyList()
-            )
+                topSites = emptyList(),
+            ),
         )
     }
 
@@ -110,7 +109,7 @@ class Components(
             remoteDebuggingEnabled = settings.shouldEnableRemoteDebugging(),
             webFontsEnabled = !settings.shouldBlockWebFonts(),
             httpsOnlyMode = settings.getHttpsOnlyMode(),
-            preferredColorScheme = settings.getPreferredColorScheme()
+            preferredColorScheme = settings.getPreferredColorScheme(),
         )
     }
 
@@ -155,9 +154,8 @@ class Components(
                 PromptMiddleware(),
                 AdsTelemetryMiddleware(adsTelemetry),
                 BlockedTrackersMiddleware(context),
-                MergeTabsMiddleware(context),
                 RecordingDevicesMiddleware(context),
-            ) + EngineMiddleware.create(engine) + CfrMiddleware(context)
+            ) + EngineMiddleware.create(engine) + CfrMiddleware(context),
         ).apply {
             MediaSessionFeature(context, MediaSessionService::class.java, this).start()
         }
@@ -208,7 +206,7 @@ class Components(
             interceptLinkClicks = true,
             launchInApp = {
                 context.settings.openLinksInExternalApp
-            }
+            },
         )
     }
 }
@@ -223,10 +221,10 @@ private fun createCrashReporter(context: Context): CrashReporter {
             tags = mapOf(
                 "build_flavor" to BuildConfig.FLAVOR,
                 "build_type" to BuildConfig.BUILD_TYPE,
-                "locale_lang_tag" to getLocaleTag(context)
+                "locale_lang_tag" to getLocaleTag(context),
             ),
             environment = BuildConfig.BUILD_TYPE,
-            sendEventForNativeCrashes = false // Do not send native crashes to Sentry
+            sendEventForNativeCrashes = false, // Do not send native crashes to Sentry
         )
 
         services.add(sentryService)
@@ -238,7 +236,7 @@ private fun createCrashReporter(context: Context): CrashReporter {
         version = org.mozilla.geckoview.BuildConfig.MOZ_APP_VERSION,
         buildId = org.mozilla.geckoview.BuildConfig.MOZ_APP_BUILDID,
         vendor = org.mozilla.geckoview.BuildConfig.MOZ_APP_VENDOR,
-        releaseChannel = org.mozilla.geckoview.BuildConfig.MOZ_UPDATE_CHANNEL
+        releaseChannel = org.mozilla.geckoview.BuildConfig.MOZ_UPDATE_CHANNEL,
     )
     services.add(socorroService)
 
@@ -256,7 +254,7 @@ private fun createCrashReporter(context: Context): CrashReporter {
         context,
         0,
         intent,
-        crashReportingIntentFlags
+        crashReportingIntentFlags,
     )
 
     return CrashReporter(
@@ -264,11 +262,11 @@ private fun createCrashReporter(context: Context): CrashReporter {
         services = services,
         telemetryServices = listOf(GleanCrashReporterService(context)),
         promptConfiguration = CrashReporter.PromptConfiguration(
-            appName = context.resources.getString(R.string.app_name)
+            appName = context.resources.getString(R.string.app_name),
         ),
         shouldPrompt = CrashReporter.Prompt.ALWAYS,
         enabled = true,
-        nonFatalCrashIntent = pendingIntent
+        nonFatalCrashIntent = pendingIntent,
     )
 }
 

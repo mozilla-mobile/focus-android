@@ -101,7 +101,8 @@ open class MainActivity : LocaleAwareAppCompatActivity() {
         window.statusBarColor = ContextCompat.getColor(this, android.R.color.transparent)
         when (resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) {
             Configuration.UI_MODE_NIGHT_UNDEFINED, // We assume light here per Android doc's recommendation
-            Configuration.UI_MODE_NIGHT_NO -> {
+            Configuration.UI_MODE_NIGHT_NO,
+            -> {
                 updateLightSystemBars()
             }
             Configuration.UI_MODE_NIGHT_YES -> {
@@ -162,17 +163,18 @@ open class MainActivity : LocaleAwareAppCompatActivity() {
 
     private fun setSplashScreenPreDrawListener(safeIntent: SafeIntent) {
         val endTime = System.currentTimeMillis() + REQUEST_TIME_OUT
-        binding.container.viewTreeObserver.addOnPreDrawListener(object : ViewTreeObserver.OnPreDrawListener {
-            override fun onPreDraw(): Boolean {
-                return if (System.currentTimeMillis() >= endTime) {
-                    showFirstScreen(safeIntent)
-                    binding.container.viewTreeObserver.removeOnPreDrawListener(this)
-                    true
-                } else {
-                    false
+        binding.container.viewTreeObserver.addOnPreDrawListener(
+            object : ViewTreeObserver.OnPreDrawListener {
+                override fun onPreDraw(): Boolean {
+                    return if (System.currentTimeMillis() >= endTime) {
+                        showFirstScreen(safeIntent)
+                        binding.container.viewTreeObserver.removeOnPreDrawListener(this)
+                        true
+                    } else {
+                        false
+                    }
                 }
-            }
-        }
+            },
         )
     }
 
@@ -180,12 +182,12 @@ open class MainActivity : LocaleAwareAppCompatActivity() {
         val tabId = this.components.tabsUseCases.addTab(
             url = SearchUtils.createSearchUrl(
                 this,
-                voiceSearchText
+                voiceSearchText,
             ),
             source = SessionState.Source.External.ActionSend(null),
             searchTerms = voiceSearchText,
             selectTab = true,
-            private = true
+            private = true,
         )
         components.appStore.dispatch(AppAction.OpenTab(tabId))
         lifecycle.addObserver(navigator)
@@ -253,7 +255,6 @@ open class MainActivity : LocaleAwareAppCompatActivity() {
     }
 
     override fun onNewIntent(unsafeIntent: Intent) {
-
         if (Crash.isCrashIntent(unsafeIntent)) {
             val browserFragment = supportFragmentManager
                 .findFragmentByTag(BrowserFragment.FRAGMENT_TAG) as BrowserFragment?
@@ -269,8 +270,8 @@ open class MainActivity : LocaleAwareAppCompatActivity() {
         if (intent.dataString.equals(SupportUtils.OPEN_WITH_DEFAULT_BROWSER_URL)) {
             components.appStore.dispatch(
                 AppAction.OpenSettings(
-                    page = Screen.Settings.Page.General
-                )
+                    page = Screen.Settings.Page.General,
+                ),
             )
             super.onNewIntent(unsafeIntent)
             return
@@ -321,7 +322,9 @@ open class MainActivity : LocaleAwareAppCompatActivity() {
     override fun onCreateView(parent: View?, name: String, context: Context, attrs: AttributeSet): View? {
         return if (name == EngineView::class.java.name) {
             components.engine.createView(context, attrs).asView()
-        } else super.onCreateView(parent, name, context, attrs)
+        } else {
+            super.onCreateView(parent, name, context, attrs)
+        }
     }
 
     override fun onBackPressed() {
@@ -380,7 +383,7 @@ open class MainActivity : LocaleAwareAppCompatActivity() {
             PreferenceManager.getDefaultSharedPreferences(this)
                 .edit().putBoolean(
                     getString(R.string.pref_key_biometric),
-                    false
+                    false,
                 ).apply()
         }
     }
@@ -449,7 +452,7 @@ open class MainActivity : LocaleAwareAppCompatActivity() {
 
     enum class AppOpenType(val type: String) {
         LAUNCH("Launch"),
-        RESUME("Resume")
+        RESUME("Resume"),
     }
 
     companion object {
