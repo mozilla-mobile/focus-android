@@ -99,7 +99,7 @@ To push without running the pre-push hook (e.g. doc updates):
 git push <remote> --no-verify
 ```
 
-## Test Channel on Google PlayStore
+## Test Channel on Google Play Store
 To get Focus Nightly on your device, follow these steps:
 
 1) Visit https://groups.google.com/g/firefox-focus-pre-release and join the Google Group
