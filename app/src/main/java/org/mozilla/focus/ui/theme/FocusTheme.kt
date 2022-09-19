@@ -28,7 +28,7 @@ val localDimensions = staticCompositionLocalOf { phoneDimensions() }
 @Composable
 fun FocusTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
-    content: @Composable () -> Unit
+    content: @Composable () -> Unit,
 ) {
     val dimensions = if (LocalConfiguration.current.screenWidthDp <= TABLET_SIZE) {
         phoneDimensions()
@@ -79,8 +79,8 @@ private fun darkColorPalette(): FocusColors = FocusColors(
     onboardingSemiBoldText = PhotonColors.LightGrey05,
     onboardingNormalText = PhotonColors.LightGrey50,
     settingsTextColor = PhotonColors.White,
-    settingsTextSummaryColor = PhotonColors.LightGrey50
-
+    settingsTextSummaryColor = PhotonColors.LightGrey50,
+    closeIcon = PhotonColors.LightGrey70,
 )
 
 private fun lightColorPalette(): FocusColors = FocusColors(
@@ -102,6 +102,7 @@ private fun lightColorPalette(): FocusColors = FocusColors(
     onboardingButtonBackground = PhotonColors.Ink20,
     onboardingSemiBoldText = PhotonColors.DarkGrey90,
     onboardingNormalText = PhotonColors.DarkGrey05,
+    closeIcon = PhotonColors.LightGrey90,
 )
 
 /**
@@ -112,7 +113,7 @@ private fun darkColorsMaterial(): Colors = darkColors(
     surface = PhotonColors.Ink60,
     onSurface = PhotonColors.LightGrey05,
     onBackground = PhotonColors.LightGrey05,
-    onPrimary = PhotonColors.LightGrey05
+    onPrimary = PhotonColors.LightGrey05,
 )
 
 private fun lightColorsMaterial(): Colors = lightColors(
@@ -120,7 +121,7 @@ private fun lightColorsMaterial(): Colors = lightColors(
     surface = PhotonColors.Violet05,
     onSurface = PhotonColors.Ink50,
     onBackground = PhotonColors.Ink50,
-    onPrimary = PhotonColors.Ink50
+    onPrimary = PhotonColors.Ink50,
 )
 fun phoneDimensions() = FocusDimensions(
     onboardingTitle = 24.sp,

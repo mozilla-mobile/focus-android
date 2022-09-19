@@ -17,6 +17,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
+import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -35,6 +36,7 @@ import androidx.compose.ui.unit.dp
 import mozilla.components.ui.colors.PhotonColors
 import org.mozilla.focus.R
 import org.mozilla.focus.ui.theme.FocusTheme
+import org.mozilla.focus.ui.theme.focusColors
 import org.mozilla.focus.ui.theme.focusTypography
 
 @Composable
@@ -57,7 +59,7 @@ private fun OnBoardingSecondScreenComposePreview() {
 fun OnBoardingSecondScreenCompose(
     setAsDefaultBrowser: () -> Unit,
     skipScreen: () -> Unit,
-    onCloseButtonClick: () -> Unit
+    onCloseButtonClick: () -> Unit,
 ) {
     Column(
         modifier = Modifier
@@ -73,15 +75,15 @@ fun OnBoardingSecondScreenCompose(
                         colorResource(R.color.home_screen_modal_gradient_six),
                     ),
                     end = Offset(0f, Float.POSITIVE_INFINITY),
-                    start = Offset(Float.POSITIVE_INFINITY, 0f)
-                )
-            )
+                    start = Offset(Float.POSITIVE_INFINITY, 0f),
+                ),
+            ),
     ) {
         Column(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(top = 60.dp, end = 20.dp),
-            horizontalAlignment = Alignment.End
+            horizontalAlignment = Alignment.End,
         ) {
             CloseButton(onCloseButtonClick)
         }
@@ -90,42 +92,42 @@ fun OnBoardingSecondScreenCompose(
                 .fillMaxSize()
                 .verticalScroll(rememberScrollState()),
             verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally
+            horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             Image(
                 painter = painterResource(R.drawable.onboarding_second_screen_icon),
                 contentDescription = LocalContext.current.getString(R.string.app_name),
                 modifier = Modifier
-                    .size(200.dp, 300.dp)
+                    .size(200.dp, 300.dp),
             )
             Text(
                 text = stringResource(
-                    R.string.onboarding_second_screen_title
+                    R.string.onboarding_second_screen_title,
                 ),
                 modifier = Modifier
                     .padding(top = 32.dp, start = 16.dp, end = 16.dp),
                 textAlign = TextAlign.Center,
-                style = focusTypography.onboardingTitle
+                style = focusTypography.onboardingTitle,
             )
             Text(
                 text = stringResource(
                     R.string.onboarding_second_screen_subtitle_one,
-                    stringResource(R.string.app_name)
+                    stringResource(R.string.app_name),
                 ),
                 modifier = Modifier
                     .padding(top = 16.dp, start = 16.dp, end = 16.dp),
                 textAlign = TextAlign.Center,
-                style = focusTypography.onboardingSubtitle
+                style = focusTypography.onboardingSubtitle,
             )
             Text(
                 text = stringResource(
                     R.string.onboarding_second_screen_subtitle_two,
-                    stringResource(R.string.app_name)
+                    stringResource(R.string.app_name),
                 ),
                 modifier = Modifier
                     .padding(top = 16.dp, start = 16.dp, end = 16.dp),
                 textAlign = TextAlign.Center,
-                style = focusTypography.onboardingSubtitle
+                style = focusTypography.onboardingSubtitle,
             )
             ComponentOnBoardingSecondScreenButtons(setAsDefaultBrowser, skipScreen)
         }
@@ -136,16 +138,17 @@ fun OnBoardingSecondScreenCompose(
 private fun CloseButton(onCloseButtonClick: () -> Unit) {
     IconButton(
         modifier = Modifier
-            .then(Modifier.size(30.dp, 30.dp))
+            .size(48.dp)
             .background(
                 colorResource(id = R.color.onboardingCloseButtonColor),
-                shape = CircleShape
+                shape = CircleShape,
             ),
-        onClick = onCloseButtonClick
+        onClick = onCloseButtonClick,
     ) {
-        Image(
-            painter = painterResource(R.drawable.ic_onboarding_close),
-            contentDescription = stringResource(id = R.string.onboarding_close_button_content_description)
+        Icon(
+            painter = painterResource(R.drawable.mozac_ic_close),
+            contentDescription = stringResource(R.string.onboarding_close_button_content_description),
+            tint = focusColors.closeIcon,
         )
     }
 }
@@ -158,16 +161,16 @@ private fun ComponentOnBoardingSecondScreenButtons(setAsDefaultBrowser: () -> Un
             .padding(top = 33.dp, start = 16.dp, end = 16.dp)
             .fillMaxWidth(),
         colors = ButtonDefaults.textButtonColors(
-            backgroundColor = colorResource(R.color.onboardingButtonOneColor)
-        )
+            backgroundColor = colorResource(R.color.onboardingButtonOneColor),
+        ),
     ) {
         Text(
             text = AnnotatedString(
                 LocalContext.current.resources.getString(
-                    R.string.onboarding_second_screen_default_browser_button_text
-                )
+                    R.string.onboarding_second_screen_default_browser_button_text,
+                ),
             ),
-            color = PhotonColors.White
+            color = PhotonColors.White,
         )
     }
     Button(
@@ -176,16 +179,16 @@ private fun ComponentOnBoardingSecondScreenButtons(setAsDefaultBrowser: () -> Un
             .padding(top = 8.dp, start = 16.dp, end = 16.dp)
             .fillMaxWidth(),
         colors = ButtonDefaults.textButtonColors(
-            backgroundColor = colorResource(R.color.onboardingButtonTwoColor)
-        )
+            backgroundColor = colorResource(R.color.onboardingButtonTwoColor),
+        ),
     ) {
         Text(
             text = AnnotatedString(
                 LocalContext.current.resources.getString(
-                    R.string.onboarding_second_screen_skip_button_text
-                )
+                    R.string.onboarding_second_screen_skip_button_text,
+                ),
             ),
-            color = PhotonColors.Black
+            color = PhotonColors.Black,
         )
     }
 }
