@@ -3,6 +3,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 package org.mozilla.focus.onboarding
 
+import android.app.Activity
 import android.os.Build
 import androidx.preference.PreferenceManager
 import androidx.test.core.app.ApplicationProvider
@@ -34,6 +35,9 @@ class OnboardingControllerTest {
     private lateinit var onboardingStorage: OnboardingStorage
     private lateinit var onboardingController: OnboardingController
 
+    @Mock
+    private lateinit var activity: Activity
+
     @Before
     fun init() {
         MockitoAnnotations.openMocks(this)
@@ -41,7 +45,7 @@ class OnboardingControllerTest {
             DefaultOnboardingController(
                 onboardingStorage,
                 appStore,
-                ApplicationProvider.getApplicationContext(),
+                activity,
                 "1",
             ),
         )

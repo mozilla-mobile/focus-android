@@ -13,6 +13,7 @@ interface OnboardingInteractor {
     fun onGetStartedButtonClicked()
     fun onMakeFocusDefaultBrowserButtonClicked(activityResultLauncher: ActivityResultLauncher<Intent>)
     fun onActivityResultImplementation(activityResult: ActivityResult)
+    fun onOnboardingStarted()
 }
 
 class DefaultOnboardingInteractor(private val controller: OnboardingController) : OnboardingInteractor {
@@ -30,5 +31,9 @@ class DefaultOnboardingInteractor(private val controller: OnboardingController) 
 
     override fun onActivityResultImplementation(activityResult: ActivityResult) {
         controller.handleActivityResultImplementation(activityResult)
+    }
+
+    override fun onOnboardingStarted() {
+        controller.handleOnboardingStarted()
     }
 }

@@ -21,6 +21,19 @@ import org.mozilla.focus.ui.theme.FocusTheme
 class OnboardingFirstFragment : Fragment() {
     private lateinit var onboardingInteractor: OnboardingInteractor
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        onboardingInteractor = DefaultOnboardingInteractor(
+            DefaultOnboardingController(
+                onboardingStorage = OnboardingStorage(requireContext()),
+                appStore = requireComponents.appStore,
+                activity = requireActivity(),
+                selectedTabId = requireComponents.store.state.selectedTabId,
+            ),
+        )
+        onboardingInteractor.onOnboardingStarted()
+    }
+
     override fun onAttach(context: Context) {
         super.onAttach(context)
         val transition =
@@ -33,14 +46,6 @@ class OnboardingFirstFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-        onboardingInteractor = DefaultOnboardingInteractor(
-            DefaultOnboardingController(
-                onboardingStorage = OnboardingStorage(requireContext()),
-                appStore = requireComponents.appStore,
-                context = requireActivity(),
-                selectedTabId = requireComponents.store.state.selectedTabId,
-            ),
-        )
         return ComposeView(requireContext()).apply {
             setContent {
                 FocusTheme {

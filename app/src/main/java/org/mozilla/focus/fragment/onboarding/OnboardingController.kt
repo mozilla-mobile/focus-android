@@ -4,11 +4,12 @@
 
 package org.mozilla.focus.fragment.onboarding
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.role.RoleManager
 import android.content.ActivityNotFoundException
-import android.content.Context
 import android.content.Intent
+import android.content.pm.ActivityInfo
 import android.os.Build
 import android.provider.Settings
 import androidx.activity.result.ActivityResult
@@ -28,22 +29,24 @@ interface OnboardingController {
     fun handleGetStartedButtonClicked()
     fun handleMakeFocusDefaultBrowserButtonClicked(activityResultLauncher: ActivityResultLauncher<Intent>)
     fun handleActivityResultImplementation(activityResult: ActivityResult)
+    fun handleOnboardingStarted()
 }
 
 class DefaultOnboardingController(
     private val onboardingStorage: OnboardingStorage,
     val appStore: AppStore,
-    val context: Context,
+    val activity: Activity,
     val selectedTabId: String?,
 ) : OnboardingController {
 
     override fun handleFinishOnBoarding() {
-        context.settings.isFirstRun = false
+        activity.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED
+        activity.settings.isFirstRun = false
         appStore.dispatch(AppAction.FinishFirstRun(selectedTabId))
     }
 
     override fun handleGetStartedButtonClicked() {
-        if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.M || Browsers.all(context).isDefaultBrowser) {
+        if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.M || Browsers.all(activity).isDefaultBrowser) {
             handleFinishOnBoarding()
         } else {
             navigateToOnBoardingSecondScreen()
@@ -51,7 +54,7 @@ class DefaultOnboardingController(
     }
 
     override fun handleMakeFocusDefaultBrowserButtonClicked(activityResultLauncher: ActivityResultLauncher<Intent>) {
-        val isDefault = Browsers.all(context).isDefaultBrowser
+        val isDefault = Browsers.all(activity).isDefaultBrowser
         if (isDefault) {
             handleFinishOnBoarding()
         } else {
@@ -60,9 +63,14 @@ class DefaultOnboardingController(
     }
 
     override fun handleActivityResultImplementation(activityResult: ActivityResult) {
-        if (activityResult.resultCode == Activity.RESULT_OK && Browsers.all(context).isDefaultBrowser) {
+        if (activityResult.resultCode == Activity.RESULT_OK && Browsers.all(activity).isDefaultBrowser) {
             handleFinishOnBoarding()
         }
+    }
+
+    @SuppressLint("SourceLockedOrientationActivity")
+    override fun handleOnboardingStarted() {
+        activity.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
     }
 
     private fun navigateToOnBoardingSecondScreen() {
@@ -73,7 +81,7 @@ class DefaultOnboardingController(
     private fun makeFocusDefaultBrowser(activityResultLauncher: ActivityResultLauncher<Intent>) {
         when {
             Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q -> {
-                context.getSystemService(RoleManager::class.java).also {
+                activity.getSystemService(RoleManager::class.java).also {
                     if (
                         it.isRoleAvailable(RoleManager.ROLE_BROWSER) &&
                         !it.isRoleHeld(RoleManager.ROLE_BROWSER)
@@ -114,7 +122,7 @@ class DefaultOnboardingController(
                     ),
                 )
             }
-            context.startActivity(intent)
+            activity.startActivity(intent)
         }
     }
 }
