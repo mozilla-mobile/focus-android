@@ -38,8 +38,7 @@ gcloud:
   performance-metrics: true
 
   test-targets:
-    - package org.mozilla.focus.activity
-    - package org.mozilla.focus.privacy
+    - class org.mozilla.focus.activity.SettingsAdvancedTest#openLinksInAppsTest
 
   device:
    - model: Pixel3
@@ -52,7 +51,7 @@ flank:
   max-test-shards: -1
   # num-test-runs: the amount of times to run the tests.
   # 1 runs the tests once. 10 runs all the tests 10x
-  num-test-runs: 1
+  num-test-runs: 75
   ### Output Style flag
   ## Output style of execution status. May be one of [verbose, multi, single, compact].
   ## For runs with only one test execution the default value is 'verbose', in other cases
