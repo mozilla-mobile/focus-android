@@ -9,11 +9,14 @@ import android.os.Build
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.preference.Preference
+import androidx.preference.Preference.OnPreferenceChangeListener
 import androidx.preference.PreferenceManager
+import androidx.preference.SwitchPreference
 import org.mozilla.focus.R
 import org.mozilla.focus.ext.requireComponents
 import org.mozilla.focus.ext.requirePreference
 import org.mozilla.focus.ext.showToolbar
+import org.mozilla.focus.ext.settings
 import org.mozilla.focus.locale.screen.LanguageStorage.Companion.LOCALE_SYSTEM_DEFAULT
 import org.mozilla.focus.locale.screen.LocaleDescriptor
 import org.mozilla.focus.state.AppAction
@@ -43,6 +46,7 @@ class GeneralSettingsFragment :
 
     private fun setupPreferences() {
         setupDefaultBrowserPreference()
+        setupTabSwipePreference()
         bindLocalePreference()
         bindLightTheme()
         bindDarkTheme()
@@ -92,6 +96,17 @@ class GeneralSettingsFragment :
             onClickListener {
                 setDefaultTheme()
             }
+        }
+    }
+
+    private fun setupTabSwipePreference() {
+        requirePreference<SwitchPreference>(R.string.pref_key_swipe_toolbar_switch_tabs).apply {
+            isChecked = context.settings.isSwipeToolbarToSwitchTabsEnabled
+            onPreferenceChangeListener =
+                OnPreferenceChangeListener { _, newValue ->
+                    context.settings.isSwipeToolbarToSwitchTabsEnabled = newValue as? Boolean ?: true
+                    true
+                }
         }
     }
 

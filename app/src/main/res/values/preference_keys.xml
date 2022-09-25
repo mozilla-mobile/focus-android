@@ -104,4 +104,5 @@
     <string name="pref_key_second_screen" translatable="false"><xliff:g id="preference_key">pref_key_second_screen</xliff:g></string>
     <string name="firstrun_shown" translatable="false"><xliff:g id="preference_key">firstrun_shown</xliff:g></string>
 
+    <string name="pref_key_swipe_toolbar_switch_tabs" translatable="false"><xliff:g id="preference_key">pref_key_swipe_toolbar_switch_tabs</xliff:g></string>
 </resources>

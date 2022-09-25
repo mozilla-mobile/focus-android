@@ -84,4 +84,7 @@
     <dimen name="radio_button_preference_start_margin">18dp</dimen>
     <dimen name="radio_button_preference_title_margins">16dp</dimen>
 
+    <dimen name="minimum_keyboard_height">100dp</dimen>
+    <dimen name="browser_fragment_gesture_preview_offset">48dp</dimen>
+
 </resources>

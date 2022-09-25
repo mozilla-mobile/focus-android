@@ -345,6 +345,7 @@ class BrowserFragment :
         )
 
         customizeToolbar()
+        setupSwipeToSwitchTabs()
 
         val customTabConfig = tab.ifCustomTab()?.config
         if (customTabConfig != null) {
@@ -476,6 +477,20 @@ class BrowserFragment :
             owner = this,
             view = binding.browserToolbar,
         )
+    }
+
+    private fun setupSwipeToSwitchTabs() {
+        if (requireContext().settings.isSwipeToolbarToSwitchTabsEnabled) {
+            binding.gestureFrameLayout.addGestureListener(
+                ToolbarGestureHandler(
+                    activity = requireActivity(),
+                    contentLayout = binding.browserContainer,
+                    toolbarLayout = binding.browserToolbar,
+                    store = requireComponents.store,
+                    selectTabUseCase = requireComponents.tabsUseCases.selectTab
+                )
+            )
+        }
     }
 
     private fun initialiseNormalBrowserUi() {

@@ -349,6 +349,17 @@ class Settings(
         false,
     )
 
+    var isSwipeToolbarToSwitchTabsEnabled: Boolean
+        get() = preferences.getBoolean(
+            getPreferenceKey(R.string.pref_key_swipe_toolbar_switch_tabs),
+            true
+        )
+        set(value) {
+            preferences.edit()
+                .putBoolean(getPreferenceKey(R.string.pref_key_swipe_toolbar_switch_tabs), value)
+                .apply()
+        }
+
     /**
      * Sets Preferred Color scheme based on Dark/Light Theme Settings or Current Configuration
      */
