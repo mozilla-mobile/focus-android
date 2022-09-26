@@ -22,6 +22,7 @@ import org.mozilla.focus.GleanMetrics.RecentApps
 import org.mozilla.focus.R
 import org.mozilla.focus.activity.MainActivity
 import org.mozilla.focus.ext.components
+import org.mozilla.focus.ext.stopForegroundCompat
 import org.mozilla.focus.telemetry.TelemetryWrapper
 import org.mozilla.focus.utils.IntentUtils
 
@@ -76,7 +77,7 @@ class SessionNotificationService : Service() {
 
         components.tabsUseCases.removeAllTabs()
 
-        stopForeground(true)
+        stopForegroundCompat(true)
         stopSelf()
     }
 

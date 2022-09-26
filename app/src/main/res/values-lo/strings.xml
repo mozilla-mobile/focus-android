@@ -489,28 +489,48 @@
 
   <!-- Onboarding: Title -->
     <!-- %1$s will be replaced by the app name and build variant(e.g. Firefox Focus, Firefox Klar Nightly) -->
-    <string name="onboarding_title">ຍິນດີຕ້ອນຮັບສູ່ %s!</string>
+    <string moz:removedIn="106" name="onboarding_title">ຍິນດີຕ້ອນຮັບສູ່ %s!</string>
+
+    <!-- Content description (not visible, for screen readers etc.): This is the description for the close button from the new onboarding flow screen one and two -->
+    <string name="onboarding_close_button_content_description">ປິດ</string>
+
+    <!-- New Onboarding flow first screen title -->
+    <!-- %1$s will be replaced by the app name and build variant(e.g. Firefox Focus, Firefox Klar Nightly) -->
+    <string name="onboarding_first_screen_title">ຍິນດີຕ້ອນຮັບສູ່ %1$s</string>
+
+    <!-- New Onboarding flow first screen subtitle the one that appears under title -->
+    <string name="onboarding_first_screen_subtitle">ໄວ. ສ່ວນຕົວ. ບໍ່ມີສິ່ງລົບກວນ.</string>
+
+    <!-- New Onboarding flow first screen button label-->
+    <string name="onboarding_first_screen_button_text">ເລີ່ມຕົ້ນໃຊ້ງານ</string>
+
+    <!-- New Onboarding flow second screen make Focus default browser button label-->
+    <string name="onboarding_second_screen_default_browser_button_text">ຕັ້ງເປັນຕົວທ່ອງເວັບເລີ່ມຕົ້ນ</string>
+
+    <!-- New Onboarding flow second screen skip onboarding button label-->
+    <string name="onboarding_second_screen_skip_button_text">ຂ້າມ</string>
+
 
     <!-- Onboarding: Description -->
-    <string name="onboarding_description">ການຊອກຫາສ່ວນຕົວລະດັບຕໍ່ໄປເມື່ອທ່ານຕ້ອງການ</string>
+    <string moz:removedIn="106" name="onboarding_description">ການຊອກຫາສ່ວນຕົວລະດັບຕໍ່ໄປເມື່ອທ່ານຕ້ອງການ</string>
 
     <!-- Onboarding: Incognito Title -->
-    <string name="onboarding_incognito_title">ບ່ອນທີ່ incognito ພົບກັບ invisible</string>
+    <string moz:removedIn="106" name="onboarding_incognito_title">ບ່ອນທີ່ incognito ພົບກັບ invisible</string>
 
     <!-- Onboarding: History Title -->
-    <string name="onboarding_history_title">ຊອກຫາແບບທີ່ບໍ່ເຄີຍເກີດຂຶ້ນ</string>
+    <string moz:removedIn="106" name="onboarding_history_title">ຊອກຫາແບບທີ່ບໍ່ເຄີຍເກີດຂຶ້ນ</string>
 
     <!-- Onboarding: History Description -->
-    <string name="onboarding_history_description2">ແຕະຄັ້ງດຽວຈະລຶບປະຫວັດການທ່ອງເວັບ ແລະຄຸກກີ້ຂອງເຈົ້າ — ແລະ ຈະຢຸດໂຄສະນາບໍ່ໃຫ້ຕິດຕາມເຈົ້າໄປນຳ.</string>
+    <string moz:removedIn="106" name="onboarding_history_description2">ແຕະຄັ້ງດຽວຈະລຶບປະຫວັດການທ່ອງເວັບ ແລະຄຸກກີ້ຂອງເຈົ້າ — ແລະ ຈະຢຸດໂຄສະນາບໍ່ໃຫ້ຕິດຕາມເຈົ້າໄປນຳ.</string>
 
     <!-- Onboarding: Protection Title -->
-    <string name="onboarding_protection_title">ຄວາມເປັນສ່ວນຕົວທີ່ເໝາະກັບທຸກສະຖານະການ</string>
+    <string moz:removedIn="106" name="onboarding_protection_title">ຄວາມເປັນສ່ວນຕົວທີ່ເໝາະກັບທຸກສະຖານະການ</string>
 
     <!-- Onboarding: Protection Description -->
-    <string name="onboarding_protection_description">ຖ້າການທ່ອງເວັບຂອງທ່ານຕ້ອງການປ່ຽນແປງ, ມັນງ່າຍທີ່ຈະປັບຂະໜາດການຕັ້ງຄ່າຄວາມເປັນສ່ວນຕົວຂອງທ່ານຕາມໃຈ</string>
+    <string moz:removedIn="106" name="onboarding_protection_description">ຖ້າການທ່ອງເວັບຂອງທ່ານຕ້ອງການປ່ຽນແປງ, ມັນງ່າຍທີ່ຈະປັບຂະໜາດການຕັ້ງຄ່າຄວາມເປັນສ່ວນຕົວຂອງທ່ານຕາມໃຈ</string>
 
     <!-- Onboarding: Start browsing -->
-    <string name="onboarding_start_browsing">ເລີ່ມການທ່ອງເວັບ</string>
+    <string moz:removedIn="106" name="onboarding_start_browsing">ເລີ່ມການທ່ອງເວັບ</string>
 
     <!-- First run tour (Default browser): Title -->
     <string name="firstrun_defaultbrowser_title">ເພີ່ມຄວາມເປັນສ່ວນໂຕຂອງທ່ານ</string>
@@ -704,8 +724,14 @@
     <!-- Preference for studies -->
     <string name="preference_studies">ການສຶກສາ</string>
 
+    <!-- Preference for studies summary-->
+    <string name="preference_studies_summary">Firefox ອາດຈະຕິດຕັ້ງແລະດໍາເນີນການສຶກສາເປັນບາງເວລາ.</string>
+
     <!-- Learn more link for studies, links to an article for more information about studies. -->
     <string name="studies_learn_more">ຮຽນຮູ້ເພີ່ມເຕີມ</string>
+
+    <!-- Dialog message shown when some changes are made on studies -->
+    <string name="studies_restart_app">ແອັບພລິເຄຊັນຈະປິດເພື່ອນຳໃຊ້ການປ່ຽນແປງ</string>
 
     <!-- Title of the remove studies button -->
     <string name="studies_remove">ລຶບ</string>
@@ -795,6 +821,10 @@
     <!-- Tip displayed on home view explaining how to add a custom autocomplete URL -->
     <string name="tip_disable_tips2">ປິດເຄັດລັບໃນໜ້າຈໍເລີ່ມຕົ້ນ</string>
 
+    <!-- Tip displayed on the home view about the changes in the new release.
+    %1$s is a placeholder for the app name -->
+    <string moz:removedIn="105" name="tip_fresh_look" tools:ignore="UnusedResources">ເປັນຫຍັງຄື, ພວກເຮົາມີຮູບຊົງໃໝ່ໃໝ່!\n ອ່ານເພີ່ມເຕີມກ່ຽວກັບເລື່ອງນີ້ ແລະອັບເດດອື່ນໆຕໍ່ກັບ %1$s.</string>
+
     <!-- Label for the snackbar when a user opens a new tab -->
     <string name="new_tab_opened_snackbar">ເປີດແທັບໃຫມ່ແລ້ວ</string>
 
@@ -824,6 +854,9 @@
     <!-- Title for Preference screen for cookie blocking for exceptions tracking protection -->
     <string name="preference_block_cookies_title">ບລັອກຄຸກກີ້</string>
 
+    <!-- Message for Preference screen for cookie blocking for exceptions tracking protection -->
+    <string name="preference_category_block_cookies">ທ່ານຕ້ອງການບລັອກຄຸກກີບໍ?</string>
+
     <!-- Title for the tab crash report screen-->
     <string name="tab_crash_report_title">ແທັບຂັດຂ້ອງ</string>
     <!-- Headline for the tab crash report screen -->
@@ -841,6 +874,8 @@
 
     <!-- Tracking protection bottom sheet -->
 
+    <!-- Label for the total number of trackers blocked. %s represents the app install date -->
+    <string name="trackers_count_note">ບລັອກຕົວຕິດຕາມຕັ້ງແຕ່ %s</string>
     <!-- Category of trackers (content) that can be blocked by Enhanced Tracking Protection -->
     <string name="content">ເນື້ອຫາ</string>
     <!-- Category of trackers (advertising) that can be blocked by Enhanced Tracking Protection -->
@@ -851,10 +886,19 @@
     <!-- Category of trackers (analytics) that can be blocked by Enhanced Tracking Protection -->
     <string name="analytics">ການວິເຄາະ</string>
 
+    <!-- Preference title for enhanced tracking protection settings -->
+    <string name="enhanced_tracking_protection">ເພີ່ມການປ້ອງກັນການຕິດຕາມ</string>
+    <!-- Enhanced tracking protection preference description when the tracking protection is disabled for this site-->
+    <string name="enhanced_tracking_protection_state_off">ການປົກປ້ອງຖືກປິດໄວ້ສຳລັບເວັບໄຊນີ້</string>
+    <!-- Enhanced tracking protection preference description when the tracking protection is enabled for this site-->
+    <string name="enhanced_tracking_protection_state_on">ການປົກປ້ອງແມ່ນເປີດຢູ່ສຳລັບເວັບໄຊນີ້</string>
     <!-- Label that indicates a site is using a secure connection -->
     <string name="secure_connection">ການເຊື່ອມຕໍ່ແມ່ນປອດໄພ</string>
     <!-- Label that indicates a site is using a insecure connection -->
     <string name="insecure_connection">ການເຊື່ອມຕໍ່ບໍ່ປອດໄພ</string>
+
+    <!-- Title for the list of trackers enhanced tracking ptotection can block-->
+    <string name="trackers_and_scripts"> ຕົວຕິດຕາມແລະສະຄິບຈະຖືກບ໋ອກ</string>
 
     <!-- Content description (not visible, for screen readers etc.): Navigate back button description -->
     <string name="go_back">ກັບຄືນ</string>
@@ -882,6 +926,9 @@
     <!-- Preference for using following device theme -->
     <string name="preference_follow_device_theme">ຕາມຊຸດຕົກແຕ່ງອຸປະກອນ</string>
 
+    <!-- The title of the error page for websites that do not support HTTPS when HTTPS-Only is turned on  -->
+    <string name="errorpage_httpsonly_title">ເວັບໄຊທີ່ທ່ານຮ້ອງຂໍບໍ່ຮອງຮັບ HTTPS</string>
+
     <!-- Sessions List -->
     <!-- Content description (not visible, for screen readers etc.): Button that closes a tab n the sessions list -->
     <string name="close_tab">ປິດແທັບ</string>
@@ -895,4 +942,24 @@
     <!-- Tool Tip "X" button Content description (not visible, for screen readers etc.) :Button that closes the tool tip -->
     <string name="tool_tip_dismiss_button_content_description">ປິດ</string>
 
-    </resources>
+    <!-- Promote SearchWidget Dialog -->
+
+    !-- Content description (not visible, for screen readers etc.): This is the description for
+    picture of search widget from promote search widget dialog. --&gt;
+    <string name="promote_search_widget_dialog_content_description">ປິດ</string>
+
+    !-- Content description (not visible, for screen readers etc.): This is the description for
+    picture of search widget from promote search widget dialog. --&gt;
+    <string name="promote_search_widget_dialog_picture_content_description">ຊອກຫາ widget</string>
+
+    !-- This is the title of promote search widget dialog. --&gt;
+    <string name="promote_search_widget_dialog_title">ລຶບລ້າງປະຫວັດການທ່ອງເວັບແລ້ວ! 🎉</string>
+
+    !-- This is the subtitle of promote search widget dialog. %1$s will get replaced with the name
+    of the app (e.g. &quot;Focus&quot;) --&gt;
+    <string name="promote_search_widget_button_text">ເພີ່ມ widget ໃສ່ຫນ້າຈໍຫຼັກ</string>
+
+    !-- This is te text of the snackbar that appears after the search widget was added successfully
+    to the home screen. --&gt;
+    <string name="promote_search_widget_snackbar_message">ເພີ່ມວິດເຈັດໃສ່ໜ້າຈໍຫຼັກແລ້ວ</string>
+</resources>

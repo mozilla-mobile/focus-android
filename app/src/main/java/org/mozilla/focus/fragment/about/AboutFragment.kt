@@ -33,6 +33,7 @@ import mozilla.components.browser.state.state.SessionState
 import org.mozilla.focus.R
 import org.mozilla.focus.databinding.FragmentAboutBinding
 import org.mozilla.focus.ext.components
+import org.mozilla.focus.ext.getPackageInfoCompat
 import org.mozilla.focus.ext.showToolbar
 import org.mozilla.focus.settings.BaseSettingsLikeFragment
 import org.mozilla.focus.state.AppAction
@@ -109,7 +110,7 @@ class AboutFragment : BaseSettingsLikeFragment() {
         val componentsIndicator = mozilla.components.Build.version + ", " + mozilla.components.Build.gitHash
         val servicesAbbreviation = getString(R.string.services_abbreviation)
         val servicesIndicator = mozilla.components.Build.applicationServicesVersion
-        val packageInfo = requireContext().packageManager.getPackageInfo(requireContext().packageName, 0)
+        val packageInfo = requireContext().packageManager.getPackageInfoCompat(requireContext().packageName, 0)
         val versionCode = PackageInfoCompat.getLongVersionCode(packageInfo).toString()
 
         @Suppress("ImplicitDefaultLocale") // We want LTR in all cases as the version is not translatable.

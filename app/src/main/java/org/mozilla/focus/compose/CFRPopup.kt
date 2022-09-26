@@ -140,6 +140,7 @@ class CFRPopup(
         anchor.post {
             CFRPopupFullScreenLayout(container, anchor, text, properties, onDismiss).apply {
                 this.show()
+                isTransitionGroup = true
             }
         }
     }
@@ -412,11 +413,11 @@ internal class CFRPopupFullScreenLayout(
  * [View.OnAttachStateChangeListener.onViewDetachedFromWindow].
  */
 private class OnViewDetachedListener(val onDismiss: () -> Unit) : View.OnAttachStateChangeListener {
-    override fun onViewAttachedToWindow(v: View?) {
+    override fun onViewAttachedToWindow(v: View) {
         // no-op
     }
 
-    override fun onViewDetachedFromWindow(v: View?) {
+    override fun onViewDetachedFromWindow(v: View) {
         onDismiss()
     }
 }

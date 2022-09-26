@@ -8,6 +8,7 @@ import android.content.pm.PackageManager
 import android.view.View
 import androidx.collection.ArrayMap
 import org.mozilla.focus.R
+import org.mozilla.focus.ext.getPackageInfoCompat
 import org.mozilla.focus.locale.Locales
 import org.mozilla.focus.utils.HtmlLoader
 import org.mozilla.focus.utils.SupportUtils.manifestoURL
@@ -34,7 +35,7 @@ object LocalizedContent {
         try {
             val engineIndicator = " \uD83E\uDD8E " + BuildConfig.MOZ_APP_VERSION + "-" +
                 BuildConfig.MOZ_APP_BUILDID
-            val packageInfo = context.packageManager.getPackageInfo(context.packageName, 0)
+            val packageInfo = context.packageManager.getPackageInfoCompat(context.packageName, 0)
             @Suppress("DEPRECATION")
             aboutVersion = String.format(
                 Locale.US,

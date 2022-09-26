@@ -15,6 +15,7 @@ import mozilla.components.feature.customtabs.createCustomTabConfigFromIntent
 import org.mozilla.focus.BuildConfig
 import org.mozilla.focus.activity.CustomTabActivity
 import org.mozilla.focus.ext.components
+import org.mozilla.focus.ext.getPackageInfoCompat
 import org.mozilla.focus.locale.Locales
 import org.mozilla.focus.state.AppAction
 import java.io.UnsupportedEncodingException
@@ -82,7 +83,7 @@ object SupportUtils {
 
     private fun getAppVersion(context: Context): String {
         try {
-            return context.packageManager.getPackageInfo(context.packageName, 0).versionName
+            return context.packageManager.getPackageInfoCompat(context.packageName, 0).versionName
         } catch (e: PackageManager.NameNotFoundException) {
             // This should be impossible - we should always be able to get information about ourselves:
             throw IllegalStateException("Unable find package details for Focus", e)

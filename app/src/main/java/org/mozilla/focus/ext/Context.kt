@@ -43,7 +43,7 @@ val Context.accessibilityManager: AccessibilityManager
  */
 val Context.installedDate: String
     get() {
-        val installTime = this.packageManager.getPackageInfo(this.packageName, 0).firstInstallTime
+        val installTime = this.packageManager.getPackageInfoCompat(this.packageName, 0).firstInstallTime
         return DateFormat.getDateInstance().format(installTime)
     }
 
