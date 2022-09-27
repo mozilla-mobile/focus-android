@@ -16,6 +16,7 @@ import androidx.test.espresso.matcher.ViewMatchers.withContentDescription
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.uiautomator.By
+import androidx.test.uiautomator.UiObjectNotFoundException
 import androidx.test.uiautomator.UiSelector
 import androidx.test.uiautomator.Until
 import org.hamcrest.Matchers.not
@@ -241,10 +242,24 @@ class BrowserRobot {
     fun clickOpenLinksInAppsOpenButton() = openLinksInAppsOpenButton.click()
 
     fun clickDropDownForm() {
-        mDevice.findObject(UiSelector().resourceId("$packageName:id/engineView"))
-            .waitForExists(waitingTime)
-        mDevice.findObject(UiSelector().textContains("Drop-down Form")).waitForExists(waitingTime)
-        dropDownForm.click()
+        for (i in 1..RETRY_COUNT) {
+            try {
+                dropDownForm.waitForExists(waitingTime)
+                dropDownForm.click()
+
+                break
+            } catch (e: UiObjectNotFoundException) {
+                if (i == RETRY_COUNT) {
+                    throw e
+                } else {
+                    browserScreen {
+                    }.openMainMenu {
+                    }.clickReloadButton {
+                    }
+                    progressBar.waitUntilGone(waitingTime)
+                }
+            }
+        }
     }
 
     fun clickCalendarForm() {
@@ -610,7 +625,7 @@ private val dropDownForm =
     mDevice.findObject(
         UiSelector()
             .resourceId("dropDown")
-            .className("android.widget.Spinner")
+            .className("android.view.View")
             .packageName(packageName),
     )
 
