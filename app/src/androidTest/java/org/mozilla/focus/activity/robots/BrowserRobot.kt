@@ -34,6 +34,8 @@ import java.time.LocalDate
 
 class BrowserRobot {
 
+    private lateinit var sessionLoadedIdlingResource: SessionLoadedIdlingResource
+
     val progressBar =
         mDevice.findObject(
             UiSelector().resourceId("$packageName:id/progress"),
@@ -60,9 +62,8 @@ class BrowserRobot {
     }
 
     fun verifyPageURL(expectedText: String) {
-        val sessionLoadedIdlingResource = SessionLoadedIdlingResource()
-
         browserURLbar.waitForExists(waitingTime)
+        sessionLoadedIdlingResource = SessionLoadedIdlingResource()
 
         runWithIdleRes(sessionLoadedIdlingResource) {
             assertTrue(
