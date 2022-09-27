@@ -237,8 +237,27 @@ class BrowserRobot {
     fun clickCopyImageLocation(): ViewInteraction = copyImageLocation.perform(click())
 
     fun clickLinkMatchingText(expectedText: String) {
-        mDevice.findObject(UiSelector().textContains(expectedText)).waitForExists(waitingTime)
-        mDevice.findObject(UiSelector().textContains(expectedText)).also { it.click() }
+        for (i in 1..RETRY_COUNT) {
+            try {
+                mDevice.findObject(UiSelector().textContains(expectedText))
+                    .also {
+                        it.waitForExists(waitingTime)
+                        it.click()
+                    }
+
+                break
+            } catch (e: UiObjectNotFoundException) {
+                if (i == RETRY_COUNT) {
+                    throw e
+                } else {
+                    browserScreen {
+                    }.openMainMenu {
+                    }.clickReloadButton {
+                    }
+                    progressBar.waitUntilGone(waitingTime)
+                }
+            }
+        }
     }
 
     fun verifyOpenLinksInAppsPrompt(openLinksInAppsEnabled: Boolean, link: String) = assertOpenLinksInAppsPrompt(openLinksInAppsEnabled, link)
@@ -261,18 +280,46 @@ class BrowserRobot {
     fun clickOpenLinksInAppsOpenButton() = openLinksInAppsOpenButton.click()
 
     fun clickDropDownForm() {
-        mDevice.findObject(UiSelector().resourceId("$packageName:id/engineView"))
-            .waitForExists(waitingTime)
-        mDevice.findObject(UiSelector().textContains("Drop-down Form")).waitForExists(waitingTime)
-        dropDownForm.click()
+        for (i in 1..RETRY_COUNT) {
+            try {
+                dropDownForm.waitForExists(waitingTime)
+                dropDownForm.click()
+
+                break
+            } catch (e: UiObjectNotFoundException) {
+                if (i == RETRY_COUNT) {
+                    throw e
+                } else {
+                    browserScreen {
+                    }.openMainMenu {
+                    }.clickReloadButton {
+                    }
+                    progressBar.waitUntilGone(waitingTime)
+                }
+            }
+        }
     }
 
     fun clickCalendarForm() {
-        mDevice.findObject(UiSelector().resourceId("$packageName:id/engineView"))
-            .waitForExists(waitingTime)
-        mDevice.findObject(UiSelector().textContains("Calendar Form")).waitForExists(waitingTime)
-        calendarForm.click()
-        mDevice.waitForIdle(waitingTime)
+        for (i in 1..RETRY_COUNT) {
+            try {
+                calendarForm.waitForExists(waitingTime)
+                calendarForm.click()
+                mDevice.waitForIdle(waitingTime)
+
+                break
+            } catch (e: UiObjectNotFoundException) {
+                if (i == RETRY_COUNT) {
+                    throw e
+                } else {
+                    browserScreen {
+                    }.openMainMenu {
+                    }.clickReloadButton {
+                    }
+                    progressBar.waitUntilGone(waitingTime)
+                }
+            }
+        }
     }
 
     fun selectDate() {
@@ -314,11 +361,24 @@ class BrowserRobot {
     }
 
     fun clickAndWriteTextInInputBox(text: String) {
-        mDevice.findObject(UiSelector().resourceId("$packageName:id/engineView"))
-            .waitForExists(waitingTime)
-        mDevice.findObject(UiSelector().textContains("Input Text")).waitForExists(waitingTime)
-        textInputBox.click()
-        textInputBox.setText(text)
+        for (i in 1..RETRY_COUNT) {
+            try {
+                textInputBox.waitForExists(waitingTime)
+                textInputBox.click()
+                textInputBox.setText(text)
+                break
+            } catch (e: UiObjectNotFoundException) {
+                if (i == RETRY_COUNT) {
+                    throw e
+                } else {
+                    browserScreen {
+                    }.openMainMenu {
+                    }.clickReloadButton {
+                    }
+                    progressBar.waitUntilGone(waitingTime)
+                }
+            }
+        }
     }
 
     fun longPressTextInputBox() {
@@ -630,7 +690,7 @@ private val dropDownForm =
     mDevice.findObject(
         UiSelector()
             .resourceId("dropDown")
-            .className("android.widget.Spinner")
+            .className("android.view.View")
             .packageName(packageName),
     )
 
