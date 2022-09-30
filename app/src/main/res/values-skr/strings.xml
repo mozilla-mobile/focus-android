@@ -479,32 +479,64 @@
 
     <!-- Onboarding: Title -->
     <!-- %1$s will be replaced by the app name and build variant(e.g. Firefox Focus, Firefox Klar Nightly) -->
-    <string name="onboarding_title">%1$s وچ ست بسم اللہ!</string>
+    <string moz:removedIn="106" name="onboarding_title">%1$s وچ ست بسم اللہ!</string>
+
+    <!-- Content description (not visible, for screen readers etc.): This is the description for the close button from the new onboarding flow screen one and two -->
+    <string name="onboarding_close_button_content_description">بند کرو</string>
+
+    <!-- New Onboarding flow first screen title -->
+    <!-- %1$s will be replaced by the app name and build variant(e.g. Firefox Focus, Firefox Klar Nightly) -->
+    <string name="onboarding_first_screen_title">%1$s وچ ست بسم اللہ</string>
+
+    <!-- New Onboarding flow first screen subtitle the one that appears under title -->
+    <string name="onboarding_first_screen_subtitle">تکھا۔ نجی۔ کوئی پریشانی کائنی۔</string>
+
+    <!-- New Onboarding flow first screen button label-->
+    <string name="onboarding_first_screen_button_text">شروع کرو</string>
+
+
+    <!-- Onboarding second screen: Title -->
+    <!-- %1$s will be replaced by the app short name(Focus) -->
+    <string name="onboarding_second_screen_title">%1$s ٻئے براؤزراں وانگوں کائنی</string>
+
+    <!-- New Onboarding flow second screen subtitle the one that appears under title -->
+    <string name="onboarding_second_screen_subtitle_one">تساں ایپ بند کریسو تاں اساں وادھوں رازداری کیتے تہاݙی تاریخ صاف کر ݙیسوں۔</string>
+
+    <!-- New Onboarding flow second screen subtitle two the one that appears under subtitle one -->
+    <!-- %1$s will be replaced by the app short name(Focus) -->
+    <string name="onboarding_second_screen_subtitle_two">تساں جہڑے وی لنک کھولو آپݨے ڈیٹا دی حفاظت کیتے %1$s کوں آپݨا ڈیفالٹ براؤزر بݨاؤ۔ </string>
+
+    <!-- New Onboarding flow second screen make Focus default browser button label-->
+    <string name="onboarding_second_screen_default_browser_button_text">پہلوں مقرر براؤز تے طور تے سیٹ کرو</string>
+
+    <!-- New Onboarding flow second screen skip onboarding button label-->
+    <string name="onboarding_second_screen_skip_button_text">چھوڑو</string>
+
 
     <!-- Onboarding: Description -->
-    <string name="onboarding_description">اڳلی ــ سطح نجی براؤزنگ ڄݙݨ تساں ایہ چاہسو</string>
+    <string moz:removedIn="106" name="onboarding_description">اڳلی ــ سطح نجی براؤزنگ ڄݙݨ تساں ایہ چاہسو</string>
 
     <!-- Onboarding: Incognito Title -->
-    <string name="onboarding_incognito_title">جتھ انکاگنیٹو اوڈھر تھیندی ہے</string>
+    <string moz:removedIn="106" name="onboarding_incognito_title">جتھ انکاگنیٹو اوڈھر تھیندی ہے</string>
 
     <!-- Onboarding: Incognito Description -->
     <!-- Text %s will be replaced with the name of the app (e.g. Focus, Klar) -->
-    <string name="onboarding_incognito_description">%s وادھوں  مضبوط ٹریکنگ تے کوکیاں حفاظت نال بݨیا رازداری ــ پہلا براؤزر ہے۔</string>
+    <string moz:removedIn="106" name="onboarding_incognito_description">%s وادھوں  مضبوط ٹریکنگ تے کوکیاں حفاظت نال بݨیا رازداری ــ پہلا براؤزر ہے۔</string>
 
     <!-- Onboarding: History Title -->
-    <string name="onboarding_history_title">براؤز کرو جین٘ویں ایہ کݙان٘ہ کائنی تھیا</string>
+    <string moz:removedIn="106" name="onboarding_history_title">براؤز کرو جین٘ویں ایہ کݙان٘ہ کائنی تھیا</string>
 
     <!-- Onboarding: History Description -->
-    <string name="onboarding_history_description2">ہک انگل لاوݨ تہاݙی براؤزنگ تاریخ تے کوکیاں کوں مٹا ݙیندے ـــــ تے مشہوریاں کوں تہاݙا پیچھا کرݨ کنوں روکیندے۔</string>
+    <string moz:removedIn="106" name="onboarding_history_description2">ہک انگل لاوݨ تہاݙی براؤزنگ تاریخ تے کوکیاں کوں مٹا ݙیندے ـــــ تے مشہوریاں کوں تہاݙا پیچھا کرݨ کنوں روکیندے۔</string>
 
     <!-- Onboarding: Protection Title -->
-    <string name="onboarding_protection_title">رازداری جہڑی ہر حالات وچ فِٹ آندی ہے</string>
+    <string moz:removedIn="106" name="onboarding_protection_title">رازداری جہڑی ہر حالات وچ فِٹ آندی ہے</string>
 
     <!-- Onboarding: Protection Description -->
-    <string name="onboarding_protection_description">جے تہاݙیاں  براؤزنگ ضروریات تبدیل تھیندیاں ہن تاں رازداری ترتیباں گھٹاوݨ یا ودھاوݨ سوکھا ہے۔</string>
+    <string moz:removedIn="106" name="onboarding_protection_description">جے تہاݙیاں  براؤزنگ ضروریات تبدیل تھیندیاں ہن تاں رازداری ترتیباں گھٹاوݨ یا ودھاوݨ سوکھا ہے۔</string>
 
     <!-- Onboarding: Start browsing -->
-    <string name="onboarding_start_browsing">براؤزنگ شروع کرو</string>
+    <string moz:removedIn="106" name="onboarding_start_browsing">براؤزنگ شروع کرو</string>
 
     <!-- First run tour (Default browser): Title -->
     <string name="firstrun_defaultbrowser_title">آپݨی رازداری تکڑی کرو</string>
@@ -966,7 +998,10 @@ The new line here must be kept as the second half of the string is clickable for
 
     <!-- Contextual Feature Recommendation Popups -->
     <!-- CFR for Toolbar Shield Icon (Banner Info Message) -->
-    <string name="cfr_for_toolbar_shield_icon">لڳدے جو ایہ سائٹ تہاکوں ٹریک کرݨ دی کوشش کریندی پئی ہائی۔ سائٹ ترتیباں تے ٹریکر بلاک کرݨ شماریات کیتے شیلڈ تے کلک کرو۔</string>
+    <string moz:removedIn="104" name="cfr_for_toolbar_shield_icon">لڳدے جو ایہ سائٹ تہاکوں ٹریک کرݨ دی کوشش کریندی پئی ہائی۔ سائٹ ترتیباں تے ٹریکر بلاک کرݨ شماریات کیتے شیلڈ تے کلک کرو۔</string>
+
+    <string name="cfr_for_toolbar_shield_icon2">ایں کوں سمجھ گھدے! اساں ایں سائٹ کوں تہاݙی جاسوسی کرݨ کنوں روک ݙتے۔ جہڑی شئے اساں روکی ہے اوں کوں ݙیکھݨ کیتے کہیں وی ویلے شیلڈ تے انگل لاؤ۔</string>
+
     <!-- Content description (not visible, for screen readers etc.): Button that closes the CFR popup -->
     <string name="cfr_close_button_description">پوپ اپ بند کرو</string>
 
@@ -982,4 +1017,29 @@ The new line here must be kept as the second half of the string is clickable for
     <string moz:removedIn="105" name="cfr_for_toolbar_delete_icon" tools:ignore="UnusedResources">ردی دی ٹوکری دے بٹݨ تے انگل پھیر تے ایں مجلس وچوں آپݨے ذاتی ڈیٹا، براؤزنگ تاریخ تے ٻیا ٻہوں کجھ کنوں جان چھڑواؤ۔ ایں کوں ازماؤ!</string>
     <string name="cfr_for_toolbar_delete_icon2">تاریخ، کوکیاں تے سب کجھ ــــ ایں کوں ردی دی ٹوکری وچ سٹݨ کیتے انگل لاؤ ـــ تے نویں ٹیب تے تازہ شروع کرو۔</string>
 
+    <!-- Promote SearchWidget Dialog -->
+
+    !-- Content description (not visible, for screen readers etc.): This is the description for the
+    close button from promote search widget dialog. --&gt;
+    <string name="promote_search_widget_dialog_content_description">بند کرو</string>
+
+    !-- Content description (not visible, for screen readers etc.): This is the description for
+    picture of search widget from promote search widget dialog. --&gt;
+    <string name="promote_search_widget_dialog_picture_content_description">ویجٹ ڳولو</string>
+
+    !-- This is the subtitle of promote search widget dialog. %1$s will get replaced with the name
+    of the app (e.g. &quot;Focus&quot;) --&gt;
+    <string name="promote_search_widget_dialog_title">براؤزنگ تاریخ صاف تھی ڳئی! 🎉</string>
+
+    !-- This is the subtitle of promote search widget dialog. %1$s will get replaced with the name
+    of the app (e.g. &quot;Focus&quot;) --&gt;
+    <string name="promote_search_widget_dialog_subtitle">اساں تہاکوں تہاݙی نجی براؤزنگ تے چھوڑ ݙیسوں، پر تساں اڳلی واری آپݨی ہوم سکرین تے %1$s ویجٹ نال تکھیرا شروع کرو۔ </string>
+
+    !-- This is te text from add search widget to home screen button .The button is located on
+    promote search widget dialog. --&gt;
+    <string name="promote_search_widget_button_text">ہوم سکرین تے ویجٹ شامل کرو</string>
+
+    !-- This is te text of the snackbar that appears after the search widget was added successfully
+    to the home screen. --&gt;
+    <string name="promote_search_widget_snackbar_message">ہوم سکرین تے ویجٹ شامل تھی ڳیا</string>
 </resources>
