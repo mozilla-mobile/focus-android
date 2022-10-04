@@ -18,11 +18,11 @@ import org.mozilla.focus.activity.robots.searchScreen
 import org.mozilla.focus.helpers.FeatureSettingsHelper
 import org.mozilla.focus.helpers.MainActivityFirstrunTestRule
 import org.mozilla.focus.helpers.MockWebServerHelper
-import org.mozilla.focus.helpers.RetryTestRule
 import org.mozilla.focus.helpers.TestAssetHelper.getEnhancedTrackingProtectionAsset
 import org.mozilla.focus.helpers.TestAssetHelper.getGenericAsset
 import org.mozilla.focus.helpers.TestHelper.exitToBrowser
 import org.mozilla.focus.helpers.TestHelper.exitToTop
+import org.mozilla.focus.helpers.TestHelper.pageLoadingTime
 import org.mozilla.focus.helpers.TestHelper.waitingTime
 import org.mozilla.focus.testAnnotations.SmokeTest
 import java.io.IOException
@@ -35,9 +35,9 @@ class EnhancedTrackingProtectionSettingsTest {
     @get: Rule
     var mActivityTestRule = MainActivityFirstrunTestRule(showFirstRun = false)
 
-    @Rule
-    @JvmField
-    val retryTestRule = RetryTestRule(3)
+    // @Rule
+    // @JvmField
+    // val retryTestRule = RetryTestRule(3)
 
     @Before
     fun setUp() {
@@ -73,7 +73,6 @@ class EnhancedTrackingProtectionSettingsTest {
         }
     }
 
-    @Ignore
     @SmokeTest
     @Test
     fun blockAdTrackersTest() {
@@ -88,6 +87,7 @@ class EnhancedTrackingProtectionSettingsTest {
         }
         searchScreen {
         }.loadPage(trackingPage.url) {
+            progressBar.waitUntilGone(pageLoadingTime)
             verifyTrackingProtectionAlert("ads trackers blocked")
         }
     }
@@ -118,7 +118,6 @@ class EnhancedTrackingProtectionSettingsTest {
         }
     }
 
-    @Ignore("Failing , see https://github.com/mozilla-mobile/focus-android/issues/6812")
     @SmokeTest
     @Test
     fun blockAnalyticsTrackersTest() {
@@ -133,6 +132,7 @@ class EnhancedTrackingProtectionSettingsTest {
         }
         searchScreen {
         }.loadPage(trackingPage.url) {
+            progressBar.waitUntilGone(pageLoadingTime)
             verifyTrackingProtectionAlert("analytics trackers blocked")
         }
     }
@@ -225,7 +225,6 @@ class EnhancedTrackingProtectionSettingsTest {
         }
     }
 
-    @Ignore
     @SmokeTest
     @Test
     fun blockOtherContentTrackersTest() {
@@ -248,6 +247,7 @@ class EnhancedTrackingProtectionSettingsTest {
         }
         searchScreen {
         }.loadPage(trackingPage.url) {
+            progressBar.waitUntilGone(pageLoadingTime)
             verifyTrackingProtectionAlert("other content trackers blocked")
         }
     }

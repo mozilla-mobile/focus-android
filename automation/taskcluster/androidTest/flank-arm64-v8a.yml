@@ -20,8 +20,9 @@ gcloud:
   performance-metrics: true
 
   test-targets:
-    - package org.mozilla.focus.activity
-    - package org.mozilla.focus.privacy
+    - class org.mozilla.focus.activity.EnhancedTrackingProtectionSettingsTest#blockOtherContentTrackersTest
+    - class org.mozilla.focus.activity.EnhancedTrackingProtectionSettingsTest#blockAdTrackersTest
+    - class org.mozilla.focus.activity.EnhancedTrackingProtectionSettingsTest#blockAnalyticsTrackersTest
 
   device:
     - model: Pixel2.arm
@@ -31,6 +32,6 @@ gcloud:
 flank:
   project: GOOGLE_PROJECT
   max-test-shards: 50
-  num-test-runs: 1
+  num-test-runs: 15
   output-style: compact
   full-junit-result: true

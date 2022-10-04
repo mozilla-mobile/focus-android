@@ -4,6 +4,7 @@
 
 package org.mozilla.focus.activity.robots
 
+import android.util.Log
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.IdlingRegistry
 import androidx.test.espresso.IdlingResource
@@ -39,7 +40,7 @@ class BrowserRobot {
 
     val progressBar =
         mDevice.findObject(
-            UiSelector().resourceId("$packageName:id/progress"),
+            UiSelector().resourceId("$packageName:id/mozac_browser_toolbar_progress"),
         )
 
     fun verifyBrowserView() =
@@ -53,13 +54,45 @@ class BrowserRobot {
     }
 
     fun verifyTrackingProtectionAlert(expectedText: String) {
-        mDevice.wait(Until.findObject(By.textContains(expectedText)), waitingTime)
+        for (i in 1..RETRY_COUNT) {
+            Log.i("Andi", "For loop: $i")
+            try {
+                Log.i("Andi", "Try block")
+                mDevice.wait(Until.findObject(By.textContains(expectedText)), waitingTime)
+                Log.i("Andi", "Try block: Waiting for $expectedText")
+                assertTrue(
+                    mDevice.findObject(UiSelector().textContains(expectedText))
+                        .waitForExists(waitingTime),
+                )
+                Log.i("Andi", "Try block: Asserted $expectedText")
+
+                break
+            } catch (e: AssertionError) {
+                Log.i("Andi", "Catch block")
+                if (i == RETRY_COUNT) {
+                    Log.i("Andi", "Catch block: If $i")
+                    throw e
+                } else {
+                    Log.i("Andi", "Catch block: Else")
+                    browserScreen {
+                    }.openMainMenu {
+                    }.clickReloadButton {
+                    }
+                    Log.i("Andi", "Catch block: Else: Reloaded web page")
+                    progressBar.waitUntilGone(pageLoadingTime)
+                    Log.i("Andi", "Catch block: Else: Waited for progress bar to be gone")
+                }
+            }
+        }
+        Log.i("Andi", "Out of for loop")
         assertTrue(
             mDevice.findObject(UiSelector().textContains(expectedText))
                 .waitForExists(waitingTime),
         )
+        Log.i("Andi", "Out of for loop: Asserted $expectedText")
         // close the JavaScript alert
         mDevice.pressBack()
+        Log.i("Andi", "Out of for loop: Pressed back")
     }
 
     fun verifyPageURL(expectedText: String) {
