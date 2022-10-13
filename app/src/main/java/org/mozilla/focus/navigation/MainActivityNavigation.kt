@@ -5,7 +5,7 @@
 package org.mozilla.focus.navigation
 
 import android.os.Build
-import org.mozilla.experiments.nimbus.internal.FeatureHolder
+import android.os.Bundle
 import org.mozilla.focus.R
 import org.mozilla.focus.activity.MainActivity
 import org.mozilla.focus.autocomplete.AutocompleteAddFragment
@@ -64,19 +64,8 @@ class MainActivityNavigation(
         val isShowingBrowser = browserFragment != null
         val crashReporterIsVisible = browserFragment?.crashReporterIsVisible() ?: false
 
-        val onboardingFeature = FocusNimbus.features.onboarding
-        val onboardingConfig = onboardingFeature.value(activity)
-
         if (isShowingBrowser && !crashReporterIsVisible) {
-            if (onboardingConfig.isPromoteSearchWidgetDialogEnabled) {
-                showPromoteSearchWidgetDialog(onboardingFeature)
-            } else {
-                ViewUtils.showBrandedSnackbar(
-                    activity.findViewById(android.R.id.content),
-                    R.string.feedback_erase2,
-                    activity.resources.getInteger(R.integer.erase_snackbar_delay),
-                )
-            }
+            showPromoteSearchWidgetDialogOrBrandedSnackbar()
         }
 
         // We add the url input fragment to the layout if it doesn't exist yet.
@@ -109,22 +98,38 @@ class MainActivityNavigation(
     }
 
     /**
-     * Display the widget promo at first data clearing action and if it wasn't added after 5th Focus session.
+     * Display the widget promo at first data clearing action and if it wasn't added after 5th Focus session
+     * or display branded snackbar when widget promo is not shown.
      */
     @Suppress("MagicNumber")
-    private fun showPromoteSearchWidgetDialog(onboardingFeature: FeatureHolder<Onboarding>) {
-        if (!activity.components.settings.searchWidgetInstalled) {
-            val clearBrowsingSessions = activity.components.settings.getClearBrowsingSessions()
-            activity.components.settings.addClearBrowsingSessions(1)
-            onboardingFeature.recordExposure()
+    private fun showPromoteSearchWidgetDialogOrBrandedSnackbar() {
+        val onboardingFeature = FocusNimbus.features.onboarding
+        val onboardingConfig = onboardingFeature.value(activity)
 
-            if (
-                clearBrowsingSessions == 0 ||
-                clearBrowsingSessions == 4
-            ) {
-                SearchWidgetUtils.showPromoteSearchWidgetDialog(activity)
-            }
+        val clearBrowsingSessions = activity.components.settings.getClearBrowsingSessions()
+        activity.components.settings.addClearBrowsingSessions(1)
+
+        if (shouldShowPromoteSearchWidgetDialog(onboardingConfig) &&
+            (
+                clearBrowsingSessions == 0 || clearBrowsingSessions == 4
+                )
+        ) {
+            onboardingFeature.recordExposure()
+            SearchWidgetUtils.showPromoteSearchWidgetDialog(activity)
+        } else {
+            ViewUtils.showBrandedSnackbar(
+                activity.findViewById(android.R.id.content),
+                R.string.feedback_erase2,
+                activity.resources.getInteger(R.integer.erase_snackbar_delay),
+            )
         }
+    }
+
+    private fun shouldShowPromoteSearchWidgetDialog(onboadingConfig: Onboarding): Boolean {
+        return (
+            onboadingConfig.isPromoteSearchWidgetDialogEnabled &&
+                !activity.components.settings.searchWidgetInstalled
+            )
     }
 
     /**
@@ -206,8 +211,11 @@ class MainActivityNavigation(
 
     /**
      * Lock app.
+     *
+     * @param bundle it is used for app navigation. If the user can unlock with success he should
+     * be redirected to a certain screen. It comes from the external intent.
      */
-    fun lock() {
+    fun lock(bundle: Bundle? = null) {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
             throw IllegalStateException("Trying to lock unsupported device")
         }
@@ -230,7 +238,11 @@ class MainActivityNavigation(
 
         fragmentManager
             .beginTransaction()
-            .replace(R.id.container, BiometricAuthenticationFragment(), BiometricAuthenticationFragment.FRAGMENT_TAG)
+            .replace(
+                R.id.container,
+                BiometricAuthenticationFragment.createWithDestinationData(bundle),
+                BiometricAuthenticationFragment.FRAGMENT_TAG,
+            )
             .commit()
     }
 
