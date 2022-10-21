@@ -52,6 +52,7 @@ object Versions {
         const val androidx_ext_junit = "1.1.3"
         const val androidx_orchestrator = "1.4.1"
         const val androidx_uiautomator = "2.2.0"
+        const val detekt = "1.21.0"
         const val falcon = "2.2.0"
         const val fastlane = "2.0.0"
         const val junit = "5.8.2"
@@ -70,6 +71,7 @@ object Versions {
     // Workaround for a Gradle parsing bug that prevents using nested objects directly in Gradle files.
     // These might be removable if we switch to kts files instead.
     // https://github.com/gradle/gradle/issues/9251
+    const val detekt_version = Versions.Testing.detekt
     const val google_compose_compiler = Versions.Google.compose_compiler
     const val ktlint_version = Versions.Testing.ktlint
 }
