@@ -20,8 +20,8 @@ import org.mozilla.focus.utils.UrlUtils
 class IconGenerator {
 
     companion object {
-        private val TEXT_SIZE_DP = 36f
-        private val DEFAULT_ICON_CHAR = '?'
+        private const val TEXT_SIZE_DP = 36f
+        private const val DEFAULT_ICON_CHAR = '?'
 
         /**
          * See [generateAdaptiveLauncherIcon] for more details.

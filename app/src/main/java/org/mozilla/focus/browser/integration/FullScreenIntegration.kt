@@ -23,6 +23,7 @@ import org.mozilla.focus.ext.hide
 import org.mozilla.focus.ext.showAsFixed
 import org.mozilla.focus.utils.Settings
 
+@Suppress("LongParameterList")
 class FullScreenIntegration(
     val activity: Activity,
     val store: BrowserStore,

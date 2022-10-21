@@ -482,10 +482,8 @@ class UrlInputFragment :
             .setListener(
                 object : AnimatorListenerAdapter() {
                     override fun onAnimationEnd(animation: Animator) {
-                        if (reverse) {
-                            if (isOverlay) {
-                                dismiss()
-                            }
+                        if (reverse && isOverlay) {
+                            dismiss()
                         }
 
                         isAnimating = false

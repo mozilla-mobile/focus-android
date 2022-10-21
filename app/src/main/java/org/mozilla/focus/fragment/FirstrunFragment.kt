@@ -111,9 +111,9 @@ class FirstrunFragment : Fragment(), View.OnClickListener {
                         position: Int,
                         positionOffset: Float,
                         positionOffsetPixels: Int,
-                    ) {}
+                    )
 
-                    override fun onPageScrollStateChanged(state: Int) {}
+                    override fun onPageScrollStateChanged(state: Int)
                 },
             )
         }

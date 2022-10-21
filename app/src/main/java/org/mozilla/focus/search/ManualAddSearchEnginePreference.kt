@@ -121,19 +121,19 @@ class ManualAddSearchEnginePreference(context: Context, attrs: AttributeSet) :
 
     private fun buildTextWatcherForErrorLayout(errorLayout: TextInputLayout): TextWatcher {
         return object : TextWatcher {
-            override fun beforeTextChanged(charSequence: CharSequence, i: Int, i1: Int, i2: Int) {}
+            override fun beforeTextChanged(charSequence: CharSequence, i: Int, i1: Int, i2: Int)
 
             override fun onTextChanged(charSequence: CharSequence, i: Int, i1: Int, i2: Int) {
                 errorLayout.error = null
             }
 
-            override fun afterTextChanged(editable: Editable) {}
+            override fun afterTextChanged(editable: Editable)
         }
     }
 
     companion object {
-        private val SUPER_STATE_KEY = "super-state"
-        private val SEARCH_ENGINE_NAME_KEY = "search-engine-name"
-        private val SEARCH_QUERY_KEY = "search-query"
+        private const val SUPER_STATE_KEY = "super-state"
+        private const val SEARCH_ENGINE_NAME_KEY = "search-engine-name"
+        private const val SEARCH_QUERY_KEY = "search-query"
     }
 }
