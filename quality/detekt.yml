@@ -54,13 +54,13 @@ comments:
     matchTypeParameters: true
     matchDeclarationsOrder: true
   UndocumentedPublicClass:
-    active: true
+    active: false
     searchInNestedClass: true
     searchInInnerClass: true
     searchInInnerObject: true
     searchInInnerInterface: true
   UndocumentedPublicFunction:
-    active: true
+    active: false
   UndocumentedPublicProperty:
     active: false
 
