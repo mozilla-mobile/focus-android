@@ -230,6 +230,7 @@ dependencies {
     implementation Dependencies.androidx_savedstate
     implementation Dependencies.androidx_splashscreen
     implementation Dependencies.androidx_transition
+    implementation Dependencies.androidx_work_ktx
 
     implementation Dependencies.google_accompanist_insets_ui
     implementation Dependencies.google_play
@@ -292,6 +293,7 @@ dependencies {
     implementation "org.mozilla.components:feature-webcompat-reporter:${AndroidComponents.VERSION}"
     implementation "org.mozilla.components:support-webextensions:${AndroidComponents.VERSION}"
     implementation "org.mozilla.components:support-locale:${AndroidComponents.VERSION}"
+    implementation "org.mozilla.components:compose-cfr:${AndroidComponents.VERSION}"
 
     implementation project(':service-telemetry')
 
@@ -617,6 +619,11 @@ if (gradle.hasProperty('localProperties.autoPublish.android-components.dir')) {
 if (gradle.hasProperty('localProperties.autoPublish.application-services.dir')) {
     ext.appServicesSrcDir = gradle."localProperties.autoPublish.application-services.dir"
     apply from: "../${appServicesSrcDir}/build-scripts/substitute-local-appservices.gradle"
+}
+
+if (gradle.hasProperty('localProperties.autoPublish.glean.dir')) {
+    ext.gleanSrcDir = gradle."localProperties.autoPublish.glean.dir"
+    apply from: "../${gleanSrcDir}/build-scripts/substitute-local-glean.gradle"
 }
 
 // -------------------------------------------------------------------------------------------------

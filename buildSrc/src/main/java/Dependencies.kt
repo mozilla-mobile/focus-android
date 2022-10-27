@@ -9,7 +9,7 @@ object Versions {
     }
 
     object AndroidX {
-        const val annotation = "1.1.0"
+        const val annotation = "1.5.0"
         const val appcompat = "1.3.0"
         const val arch = "2.1.0"
         const val browser = "1.3.0"
@@ -64,7 +64,7 @@ object Versions {
     object ThirdParty {
         const val jna = "5.12.1"
         const val leakcanary = "2.9.1"
-        const val sentry = "6.4.2"
+        const val sentry = "6.6.0"
     }
 
     // Workaround for a Gradle parsing bug that prevents using nested objects directly in Gradle files.
@@ -101,6 +101,7 @@ object Dependencies {
     const val androidx_splashscreen = "androidx.core:core-splashscreen:${Versions.AndroidX.splashscreen}"
     const val androidx_savedstate = "androidx.savedstate:savedstate-ktx:${Versions.AndroidX.savedstate}"
     const val androidx_transition = "androidx.transition:transition:${Versions.AndroidX.transition}"
+    const val androidx_work_ktx = "androidx.work:work-runtime-ktx:${Versions.AndroidX.work}"
     const val androidx_work_testing = "androidx.work:work-testing:${Versions.AndroidX.work}"
 
     const val google_material = "com.google.android.material:material:${Versions.Google.material}"
