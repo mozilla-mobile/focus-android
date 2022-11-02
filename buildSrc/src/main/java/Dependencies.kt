@@ -9,7 +9,7 @@ object Versions {
     }
 
     object AndroidX {
-        const val annotation = "1.1.0"
+        const val annotation = "1.5.0"
         const val appcompat = "1.3.0"
         const val arch = "2.1.0"
         const val browser = "1.3.0"
@@ -53,9 +53,9 @@ object Versions {
         const val androidx_orchestrator = "1.4.1"
         const val androidx_uiautomator = "2.2.0"
         const val falcon = "2.2.0"
-        const val fastlane = "2.0.0"
-        const val junit = "5.8.2"
-        const val ktlint = "0.47.0"
+        const val fastlane = "2.1.1"
+        const val junit = "5.9.1"
+        const val ktlint = "0.47.1"
         const val mockito = "3.12.4"
         const val mockwebserver = "4.10.0"
         const val robolectric = "4.9"
@@ -64,7 +64,7 @@ object Versions {
     object ThirdParty {
         const val jna = "5.12.1"
         const val leakcanary = "2.9.1"
-        const val sentry = "6.4.2"
+        const val sentry = "6.6.0"
     }
 
     // Workaround for a Gradle parsing bug that prevents using nested objects directly in Gradle files.
