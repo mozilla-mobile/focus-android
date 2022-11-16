@@ -16,8 +16,8 @@ buildscript {
     }
 
     dependencies {
-        classpath Dependencies.android_gradle_plugin
-        classpath Dependencies.kotlin_gradle_plugin
+        classpath FocusDependencies.android_gradle_plugin
+        classpath FocusDependencies.kotlin_gradle_plugin
         classpath "org.mozilla.components:tooling-glean-gradle:${AndroidComponents.VERSION}"
         classpath "org.mozilla.components:tooling-nimbus-gradle:${AndroidComponents.VERSION}"
 
@@ -67,7 +67,7 @@ configurations {
 }
 
 dependencies {
-    ktlint("com.pinterest:ktlint:${Versions.ktlint_version}") {
+    ktlint("com.pinterest:ktlint:${FocusVersions.ktlint_version}") {
         attributes {
             attribute(Bundling.BUNDLING_ATTRIBUTE, getObjects().named(Bundling, Bundling.EXTERNAL))
         }
