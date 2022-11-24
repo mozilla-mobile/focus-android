@@ -10,7 +10,6 @@ import android.content.ClipboardManager
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.net.Uri
 import android.os.Bundle
 import android.view.Gravity
 import android.view.LayoutInflater
@@ -22,6 +21,8 @@ import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.pm.ShortcutManagerCompat
+import androidx.core.net.toUri
+import androidx.core.view.isVisible
 import androidx.lifecycle.Lifecycle
 import androidx.preference.PreferenceManager
 import com.google.android.material.snackbar.Snackbar
@@ -543,7 +544,7 @@ class BrowserFragment :
             .add(R.id.crash_container, crashReporterFragment, CrashReporterFragment.FRAGMENT_TAG)
             .commit()
 
-        binding.crashContainer.visibility = View.VISIBLE
+        binding.crashContainer.isVisible = true
     }
 
     private fun hideCrashReporter() {
@@ -556,7 +557,7 @@ class BrowserFragment :
             .remove(fragment)
             .commit()
 
-        binding.crashContainer.visibility = View.GONE
+        binding.crashContainer.isVisible = false
     }
 
     fun crashReporterIsVisible(): Boolean = requireActivity().supportFragmentManager.let {
@@ -844,7 +845,7 @@ class BrowserFragment :
 
     private fun setShouldRequestDesktop(enabled: Boolean) {
         if (enabled) {
-            PreferenceManager.getDefaultSharedPreferences(context).edit()
+            PreferenceManager.getDefaultSharedPreferences(requireContext()).edit()
                 .putBoolean(
                     requireContext().getString(R.string.has_requested_desktop),
                     true,
@@ -915,7 +916,7 @@ class BrowserFragment :
 
         return if (tab.isCustomTab()) {
             val clipBoard = context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
-            val uri = Uri.parse(tab.content.url)
+            val uri = tab.content.url.toUri()
             clipBoard.setPrimaryClip(ClipData.newRawUri("Uri", uri))
             Toast.makeText(context, getString(R.string.custom_tab_copy_url_action), Toast.LENGTH_SHORT).show()
             true

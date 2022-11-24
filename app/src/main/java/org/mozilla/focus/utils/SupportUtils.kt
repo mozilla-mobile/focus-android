@@ -8,17 +8,17 @@ package org.mozilla.focus.utils
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.net.Uri
 import androidx.browser.customtabs.CustomTabsIntent
 import androidx.core.content.ContextCompat
+import androidx.core.net.toUri
 import androidx.fragment.app.FragmentActivity
 import mozilla.components.browser.state.state.SessionState
 import mozilla.components.feature.customtabs.createCustomTabConfigFromIntent
+import mozilla.components.support.utils.ext.getPackageInfoCompat
 import org.mozilla.focus.BuildConfig
 import org.mozilla.focus.R
 import org.mozilla.focus.activity.CustomTabActivity
 import org.mozilla.focus.ext.components
-import org.mozilla.focus.ext.getPackageInfoCompat
 import org.mozilla.focus.locale.Locales
 import org.mozilla.focus.state.AppAction
 import java.io.UnsupportedEncodingException
@@ -121,7 +121,7 @@ object SupportUtils {
         val openCustomTabActivityIntent =
             Intent(activity, CustomTabActivity::class.java).apply {
                 action = Intent.ACTION_VIEW
-                data = Uri.parse(getSumoURLForTopic(activity, SumoTopic.ADD_SEARCH_ENGINE))
+                data = getSumoURLForTopic(activity, SumoTopic.ADD_SEARCH_ENGINE).toUri()
                 putExtra(CustomTabActivity.CUSTOM_TAB_ID, tabId)
             }
 

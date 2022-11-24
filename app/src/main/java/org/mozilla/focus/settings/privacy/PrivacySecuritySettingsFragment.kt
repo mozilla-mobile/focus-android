@@ -31,7 +31,8 @@ class PrivacySecuritySettingsFragment :
     override fun onCreatePreferences(p0: Bundle?, p1: String?) {
         addPreferencesFromResource(R.xml.privacy_security_settings)
 
-        val biometricPreference: SwitchPreferenceCompat? = findPreference(getString(R.string.pref_key_biometric))
+        val biometricPreference: SwitchPreferenceCompat? =
+            findPreference(getString(R.string.pref_key_biometric))
         val appName = getString(R.string.app_name)
         biometricPreference?.summary =
             getString(R.string.preference_security_biometric_summary2, appName)
@@ -39,12 +40,14 @@ class PrivacySecuritySettingsFragment :
         // Remove the biometric toggle if the software or hardware do not support it
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M || !requireContext().canUseBiometricFeature()
         ) {
-            preferenceScreen.removePreference(biometricPreference)
+            biometricPreference?.let { preferenceScreen.removePreference(it) }
         }
         if (!FocusNimbus.features.onboarding.value().isCfrEnabled ||
             !requireContext().settings.shouldShowPrivacySecuritySettingsToolTip
         ) {
-            preferenceScreen.removePreference(findPreference(getString(R.string.pref_key_tool_tip)))
+            val privacySecuritySettingsToolTip: PreferenceToolTipCompose? =
+                findPreference(getString(R.string.pref_key_tool_tip))
+            privacySecuritySettingsToolTip?.let { preferenceScreen.removePreference(it) }
         }
 
         val preferencesListener = EngineSharedPreferencesListener(requireContext())
@@ -72,14 +75,14 @@ class PrivacySecuritySettingsFragment :
         updateStealthToggleAvailability()
         updateExceptionSettingAvailability()
 
-        preferenceManager.sharedPreferences.registerOnSharedPreferenceChangeListener(this)
+        preferenceManager.sharedPreferences?.registerOnSharedPreferenceChangeListener(this)
 
         // Update title and icons when returning to fragments.
         showToolbar(getString(R.string.preference_privacy_and_security_header))
     }
 
     override fun onPause() {
-        preferenceManager.sharedPreferences.unregisterOnSharedPreferenceChangeListener(this)
+        preferenceManager.sharedPreferences?.unregisterOnSharedPreferenceChangeListener(this)
         super.onPause()
     }
 
@@ -113,23 +116,25 @@ class PrivacySecuritySettingsFragment :
     }
 
     private fun updateBiometricsToggleAvailability() {
-        val switch = preferenceScreen.findPreference(resources.getString(R.string.pref_key_biometric))
-            as? SwitchPreferenceCompat
+        val switch =
+            preferenceScreen.findPreference(resources.getString(R.string.pref_key_biometric))
+                as? SwitchPreferenceCompat
 
         if (!requireContext().canUseBiometricFeature()) {
             switch?.isChecked = false
             switch?.isEnabled = false
             preferenceManager.sharedPreferences
-                .edit()
-                .putBoolean(resources.getString(R.string.pref_key_biometric), false)
-                .apply()
+                ?.edit()
+                ?.putBoolean(resources.getString(R.string.pref_key_biometric), false)
+                ?.apply()
         } else {
             switch?.isEnabled = true
         }
     }
 
     private fun updateExceptionSettingAvailability() {
-        val exceptionsPreference: Preference? = findPreference(getString(R.string.pref_key_screen_exceptions))
+        val exceptionsPreference: Preference? =
+            findPreference(getString(R.string.pref_key_screen_exceptions))
         exceptionsPreference?.isEnabled = false
 
         requireComponents.trackingProtectionUseCases.fetchExceptions.invoke { exceptions ->
@@ -199,17 +204,19 @@ class PrivacySecuritySettingsFragment :
     private fun updateStealthToggleAvailability() {
         val switch =
             preferenceScreen.findPreference(resources.getString(R.string.pref_key_secure)) as? SwitchPreferenceCompat
-        if (preferenceManager.sharedPreferences
-            .getBoolean(
-                    resources.getString(R.string.pref_key_biometric),
-                    false,
-                )
+
+        val sharedPreferences = preferenceManager.sharedPreferences
+
+        if (sharedPreferences?.getBoolean(
+                resources.getString(R.string.pref_key_biometric),
+                false,
+            ) == true
         ) {
-            preferenceManager.sharedPreferences
-                .edit().putBoolean(
-                    resources.getString(R.string.pref_key_secure),
-                    true,
-                ).apply()
+            sharedPreferences
+                .edit()
+                .putBoolean(resources.getString(R.string.pref_key_secure), true)
+                .apply()
+
             // Disable the stealth switch
             switch?.isChecked = true
             switch?.isEnabled = false

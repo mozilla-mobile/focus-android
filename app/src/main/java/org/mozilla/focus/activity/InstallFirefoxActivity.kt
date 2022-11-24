@@ -9,13 +9,13 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.content.pm.ActivityInfo
-import android.net.Uri
 import android.os.Bundle
 import android.webkit.WebView
+import androidx.core.net.toUri
 import mozilla.components.service.glean.private.NoExtras
 import mozilla.components.support.utils.Browsers
+import mozilla.components.support.utils.ext.resolveActivityCompat
 import org.mozilla.focus.GleanMetrics.OpenWith
-import org.mozilla.focus.ext.resolveActivityCompat
 import org.mozilla.focus.telemetry.TelemetryWrapper
 import org.mozilla.focus.utils.AppConstants
 
@@ -75,7 +75,7 @@ class InstallFirefoxActivity : Activity() {
         private fun createStoreIntent(): Intent {
             return Intent(
                 Intent.ACTION_VIEW,
-                Uri.parse("market://details?id=" + Browsers.KnownBrowser.FIREFOX.packageName),
+                ("market://details?id=" + Browsers.KnownBrowser.FIREFOX.packageName).toUri(),
             )
         }
 

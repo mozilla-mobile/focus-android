@@ -7,19 +7,19 @@ package org.mozilla.focus.search
 import android.content.Context
 import android.os.Bundle
 import android.os.Parcelable
-import android.text.Editable
 import android.text.TextUtils
-import android.text.TextWatcher
 import android.util.AttributeSet
-import android.view.View
 import android.widget.EditText
 import android.widget.ProgressBar
+import androidx.core.os.bundleOf
+import androidx.core.view.isVisible
+import androidx.core.widget.doOnTextChanged
 import androidx.preference.Preference
 import androidx.preference.PreferenceViewHolder
 import com.google.android.material.textfield.TextInputLayout
 import mozilla.components.browser.state.search.SearchEngine
+import mozilla.components.support.utils.ext.getParcelableCompat
 import org.mozilla.focus.R
-import org.mozilla.focus.ext.getParcelableCompat
 import org.mozilla.focus.utils.UrlUtils
 import org.mozilla.focus.utils.ViewUtils
 
@@ -35,26 +35,25 @@ class ManualAddSearchEnginePreference(context: Context, attrs: AttributeSet) :
     private var savedSearchEngineName: String? = null
     private var savedSearchQuery: String? = null
 
-    override fun onBindViewHolder(holder: PreferenceViewHolder?) {
+    override fun onBindViewHolder(holder: PreferenceViewHolder) {
         super.onBindViewHolder(holder)
 
         engineNameErrorLayout =
-            holder!!.findViewById(R.id.edit_engine_name_layout) as TextInputLayout
+            holder.findViewById(R.id.edit_engine_name_layout) as TextInputLayout
         searchQueryErrorLayout =
             holder.findViewById(R.id.edit_search_string_layout) as TextInputLayout
 
         engineNameEditText = holder.findViewById(R.id.edit_engine_name) as EditText
-        engineNameEditText?.addTextChangedListener(
-            buildTextWatcherForErrorLayout(
-                engineNameErrorLayout!!,
-            ),
-        )
+
+        engineNameEditText?.doOnTextChanged { _, _, _, _ ->
+            engineNameErrorLayout?.error = null
+        }
+
         searchQueryEditText = holder.findViewById(R.id.edit_search_string) as EditText
-        searchQueryEditText?.addTextChangedListener(
-            buildTextWatcherForErrorLayout(
-                searchQueryErrorLayout!!,
-            ),
-        )
+
+        searchQueryEditText?.doOnTextChanged { _, _, _, _ ->
+            searchQueryErrorLayout?.error = null
+        }
 
         progressView = holder.findViewById(R.id.progress) as ProgressBar
 
@@ -72,12 +71,12 @@ class ManualAddSearchEnginePreference(context: Context, attrs: AttributeSet) :
 
     override fun onSaveInstanceState(): Parcelable {
         val state = super.onSaveInstanceState()
-        val bundle = Bundle()
-        bundle.putParcelable(SUPER_STATE_KEY, state)
-        bundle.putString(SEARCH_ENGINE_NAME_KEY, engineNameEditText?.text.toString())
-        bundle.putString(SEARCH_QUERY_KEY, searchQueryEditText?.text.toString())
 
-        return bundle
+        return bundleOf(
+            SUPER_STATE_KEY to state,
+            SEARCH_ENGINE_NAME_KEY to engineNameEditText?.text.toString(),
+            SEARCH_QUERY_KEY to searchQueryEditText?.text.toString(),
+        )
     }
 
     fun validateEngineNameAndShowError(engineName: String, existingEngines: List<SearchEngine>): Boolean {
@@ -111,24 +110,12 @@ class ManualAddSearchEnginePreference(context: Context, attrs: AttributeSet) :
     }
 
     fun setProgressViewShown(isShown: Boolean) {
-        progressView?.visibility = if (isShown) View.VISIBLE else View.GONE
+        progressView?.isVisible = isShown
     }
 
     private fun updateState() {
         if (engineNameEditText != null) engineNameEditText?.setText(savedSearchEngineName)
         if (searchQueryEditText != null) searchQueryEditText?.setText(savedSearchQuery)
-    }
-
-    private fun buildTextWatcherForErrorLayout(errorLayout: TextInputLayout): TextWatcher {
-        return object : TextWatcher {
-            override fun beforeTextChanged(charSequence: CharSequence, i: Int, i1: Int, i2: Int) {}
-
-            override fun onTextChanged(charSequence: CharSequence, i: Int, i1: Int, i2: Int) {
-                errorLayout.error = null
-            }
-
-            override fun afterTextChanged(editable: Editable) {}
-        }
     }
 
     companion object {
