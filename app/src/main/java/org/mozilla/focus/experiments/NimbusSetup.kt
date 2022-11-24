@@ -31,7 +31,7 @@ private const val TIME_OUT_LOADING_EXPERIMENT_FROM_DISK_MS = 200L
  * Create the Nimbus singleton object for the Focus/Klar apps.
  */
 fun createNimbus(context: Context, urlString: String?): NimbusApi {
-    val isAppFirstRun = context.settings.getAppLaunchCount() == 0
+    val isAppFirstRun = context.settings.isFirstRun
 
     // These values can be used in the JEXL expressions when targeting experiments.
     val customTargetingAttributes = JSONObject().apply {
@@ -83,7 +83,7 @@ fun createNimbus(context: Context, urlString: String?): NimbusApi {
 internal fun finishNimbusInitialization(experiments: NimbusApi) =
     experiments.run {
         // We fetch experiments in all cases,
-        if (context.settings.getAppLaunchCount() == 0) {
+        if (context.settings.isFirstRun) {
             // … however on first run, we immediately apply pending experiments.
             // We also want to measure how long this will take, with Glean.
             register(
