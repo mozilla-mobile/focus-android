@@ -4,6 +4,7 @@
 
 package org.mozilla.focus.activity
 
+import android.Manifest.permission.POST_NOTIFICATIONS
 import android.content.Context
 import android.content.Intent
 import android.content.res.Configuration
@@ -14,6 +15,7 @@ import android.util.AttributeSet
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewTreeObserver
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
@@ -74,6 +76,15 @@ open class MainActivity : LocaleAwareAppCompatActivity() {
     private var _binding: ActivityMainBinding? = null
     private val binding get() = _binding!!
     private lateinit var privateNotificationObserver: PrivateNotificationFeature
+    private val notificationPermission =
+        registerForActivityResult(ActivityResultContracts.RequestPermission()) { granted ->
+            when {
+                granted -> {
+                    privateNotificationObserver.start()
+                }
+            }
+        }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         installSplashScreen()
 
@@ -109,9 +120,10 @@ open class MainActivity : LocaleAwareAppCompatActivity() {
         setContentView(binding.root)
 
         startupPathProvider.attachOnActivityOnCreate(lifecycle, intent)
-        startupTypeTelemetry = StartupTypeTelemetry(components.startupStateProvider, startupPathProvider).apply {
-            attachOnMainActivityOnCreate(lifecycle)
-        }
+        startupTypeTelemetry =
+            StartupTypeTelemetry(components.startupStateProvider, startupPathProvider).apply {
+                attachOnMainActivityOnCreate(lifecycle)
+            }
 
         val safeIntent = SafeIntent(intent)
 
@@ -142,8 +154,17 @@ open class MainActivity : LocaleAwareAppCompatActivity() {
             context = applicationContext,
             browserStore = components.store,
             sessionNotificationServiceClass = SessionNotificationService::class,
+            permissionRequestHandler = { requestNotificationPermission() },
         ).also {
             it.start()
+        }
+    }
+
+    private fun requestNotificationPermission() {
+        privateNotificationObserver.stop()
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            notificationPermission.launch(POST_NOTIFICATIONS)
         }
     }
 
@@ -171,7 +192,12 @@ open class MainActivity : LocaleAwareAppCompatActivity() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N && isInPictureInPictureMode && intent != null) {
             // Exit PiP mode
             moveTaskToBack(false)
-            startActivity(Intent(this, this::class.java).setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT))
+            startActivity(
+                Intent(
+                    this,
+                    this::class.java,
+                ).setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT),
+            )
         }
     }
 
@@ -280,7 +306,11 @@ open class MainActivity : LocaleAwareAppCompatActivity() {
         components.tabsUseCases.removeAllTabs()
 
         if (fromNotificationAction) {
-            Notifications.eraseOpenButtonTapped.record(Notifications.EraseOpenButtonTappedExtra(tabCount))
+            Notifications.eraseOpenButtonTapped.record(
+                Notifications.EraseOpenButtonTappedExtra(
+                    tabCount,
+                ),
+            )
         }
 
         if (fromShortcut) {
@@ -290,7 +320,12 @@ open class MainActivity : LocaleAwareAppCompatActivity() {
         }
     }
 
-    override fun onCreateView(parent: View?, name: String, context: Context, attrs: AttributeSet): View? {
+    override fun onCreateView(
+        parent: View?,
+        name: String,
+        context: Context,
+        attrs: AttributeSet,
+    ): View? {
         return if (name == EngineView::class.java.name) {
             components.engine.createView(context, attrs).asView()
         } else {

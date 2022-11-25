@@ -26,6 +26,7 @@ class PrivateNotificationFeature(
     context: Context,
     private val browserStore: BrowserStore,
     private val sessionNotificationServiceClass: KClass<SessionNotificationService>,
+    private val permissionRequestHandler: (() -> Unit),
 ) : LifecycleAwareFeature {
 
     private val applicationContext = context.applicationContext
@@ -37,7 +38,7 @@ class PrivateNotificationFeature(
                 .ifChanged()
                 .collect { hasPrivateTabs ->
                     if (hasPrivateTabs) {
-                        SessionNotificationService.start(applicationContext)
+                        SessionNotificationService.start(applicationContext, permissionRequestHandler)
                     } else {
                         SessionNotificationService.stop(applicationContext)
                     }
