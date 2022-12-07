@@ -593,6 +593,13 @@ class BrowserFragment :
         }
     }
 
+    override fun onPause() {
+        super.onPause()
+        // Custom tab content should always be visible, even if the app is locked.
+        if (tab.isCustomTab()) {
+            view?.isVisible = true
+        }
+    }
     private fun showDownloadCompletedSnackbar(
         state: DownloadState,
         extension: String?,
@@ -674,6 +681,11 @@ class BrowserFragment :
         (requireActivity() as? MainActivity)?.hideStatusBarBackground()
         StatusBarUtils.getStatusBarHeight(binding.statusBarBackground) { statusBarHeight ->
             binding.statusBarBackground.layoutParams.height = statusBarHeight
+        }
+
+        // Custom tab content should always be visible, even if the app is locked.
+        if (tab.isCustomTab()) {
+            view?.isVisible = true
         }
     }
 
